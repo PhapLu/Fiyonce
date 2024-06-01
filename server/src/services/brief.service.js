@@ -129,6 +129,7 @@ class BriefService{
         const user = await User.findById(userId)
         const updatedBrief = await Brief.findById(briefId)
         const talent = await User.findById(talentId)
+        
         if(!user) throw new NotFoundError('User not found!')
         if(!updatedBrief) throw new NotFoundError('Brief not found!')
         if(!talent) throw new BadRequestError('Talent not found!')

@@ -20,7 +20,7 @@ class BriefController{
     readBriefs = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all Briefs',
-            metadata: await BriefService.readBriefs()
+            metadata: await BriefService.readBriefs() 
         }).send(res)
     }
 
