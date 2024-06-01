@@ -28,45 +28,43 @@ class AccessService{
         4. generate tokens
         5. get data and  return login 
      */
-    static login = async({email, password, refreshToken = null}) =>{
-        //1. check email in dbs
-        console.log('startLogin')
-        console.log(email)
-        const foundUser = await findByEmail({email})
+    static login = async({email, password, refreshToken = null}) => {
+        // 1. Check email in the database
+        const foundUser = await findByEmail({email});
         if (!foundUser) throw new BadRequestError("User not registered");
-
-        //2. match password
-        const match = bcrypt.compare(password, foundUser.password)
+    
+        // 2. Match password
+        const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
         if (!match) throw new AuthFailureError("Authentication error");
-
-        //3. create AccessToken and RefreshToken and save
-        const privateKey = crypto.randomBytes(64).toString("hex")
-        const publicKey = crypto.randomBytes(64).toString("hex")
-
-        //4. generate tokens
-        const { _id: userId} = foundUser
-        console.log(foundUser)
+    
+        // 3. Create AccessToken and RefreshToken and save
+        const privateKey = crypto.randomBytes(64).toString("hex");
+        const publicKey = crypto.randomBytes(64).toString("hex");
+    
+        // 4. Generate tokens
+        const { _id: userId } = foundUser;
         const tokens = await createTokenPair(
-            {userId, email, role: foundUser.role},
+            { userId, email, role: foundUser.role },
             publicKey,
             privateKey
-        )
+        );
         await KeyTokenService.createKeyToken({
             refreshToken: tokens.refreshToken,
             privateKey,
             publicKey,
             userId
-        })
-
-        //5. get data and  return login 
+        });
+    
+        // 5. Exclude password from foundUser
+        const { password, ...userWithoutPassword } = foundUser;
+    
+        // 6. Return user data and tokens
         return {
-            user: getInfoData({
-                fields: ["_id", "fullname", "email", "role"],
-                object: foundUser
-            }),
+            user: userWithoutPassword,
             tokens
-        }
-    }
+        };
+    };
+        
 
     static signUp = async({fullname, email, password}) =>{
         //1. check if email exists?
