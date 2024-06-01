@@ -30,9 +30,8 @@ class AccessService{
      */
     static login = async({email, password, refreshToken = null}) => {
         // 1. Check email in the database
-        const foundUser = await findByEmail({email});
+        const foundUser = await User.findOne({email}).lean()
         if (!foundUser) throw new BadRequestError("User not registered");
-    
         // 2. Match password
         const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
         if (!match) throw new AuthFailureError("Authentication error");
@@ -56,14 +55,14 @@ class AccessService{
         });
     
         // 5. Exclude password from foundUser
-        const { password, ...userWithoutPassword } = foundUser;
-    
+        const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
         // 6. Return user data and tokens
         return {
             user: userWithoutPassword,
             tokens
         };
     };
+        
         
 
     static signUp = async({fullname, email, password}) =>{
