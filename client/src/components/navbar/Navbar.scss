@@ -1,0 +1,95 @@
+.navbar {
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .navbar--left {
+        display: flex;
+        align-items: center;
+
+        .navbar__brand-logo {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            display: inline-block;
+        }
+
+        .navbar__brand-name {
+            display: inline-block;
+            margin: 0 12px;
+        }
+
+        .navbar__search-field {
+            margin-left: 16px;
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--form-field-border-light);
+            border-radius: 16px;
+            transition: border 0.1s;
+            min-width: 300px;
+            background-color: #FBFBFB;
+            color: var(--black-text-color-light);
+
+            .navbar__search-field__ic {
+                width: 20px;
+                height: 20px;
+                margin-left: 8px;
+                color: var(--gray-text-color-light);
+            }
+
+            .navbar__search-field__input {
+                padding: 10px 10px;
+                border: none;
+                padding-left: 8px;
+                outline: none;
+                font-size: 1.4rem;
+                font-weight: 600;
+                border-radius: 16px;
+                background-color: #FBFBFB;
+                color: var(--black-text-color-light);
+
+                &::placeholder {
+                    color: var(--gray-text-color-light);
+                    font-weight: 500;
+                }
+            }
+
+            &:focus-within {
+                border: 2px solid #ff9e2f;
+            }
+        }
+    }
+
+    .navbar--right {
+        .navbar-link-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .navbar-link-item {
+                padding: 20px 20px;
+                font-size: 1.5rem;
+                font-weight: 600;
+
+                &:last-of-type {
+                    padding-right: 0;
+                }
+            }
+        }
+
+        hr {
+            width: 28px;
+            height: 1px;
+            padding: 0 20px;
+            transform: rotate(90deg);
+            background-color: var(--gray-text-color-light);
+            opacity: 0.4;
+        }
+
+        .open-register-form-btn {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
