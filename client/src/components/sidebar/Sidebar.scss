@@ -16,4 +16,18 @@
     .sidebar__fullname {
 
     }
+
+    .sidebar__btn {
+        margin-bottom: 12px;
+        width: 100%;
+        font-weight: 600;
+        padding: 8px 10px;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            object-fit: cover;
+        }
+    }
 }

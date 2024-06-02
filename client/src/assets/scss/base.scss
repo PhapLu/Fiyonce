@@ -44,7 +44,7 @@ body {
     }
 
     .outlet-content {
-        width: 60%;
+        width: 70%;
     }
 }
 
@@ -145,6 +145,11 @@ p {
     color: white;
 }
 
+.btn-3 {
+    border: 2px solid var(--light-gray-color-light);
+    // background-color: white;
+}
+
 // Commons
 .hide {
     display: none;
@@ -183,7 +188,7 @@ hr {
         width: 100%;
         border-radius: 8px;
         padding: 8px 10px;
-        border: 2px solid var(--form-field-border-light);
+        border: 2px solid var(--light-gray-color-light);
         outline: none;
 
         &:focus {

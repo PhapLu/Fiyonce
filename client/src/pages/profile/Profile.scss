@@ -1,0 +1,15 @@
+.profile-nav-container {
+    .profile-nav-item {
+        margin-right: 12px;
+        display: inline-flex;
+        align-items: center;
+        .profile-nav-item__ic {
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+
+        .profile-nav-item__title {}
+    }
+}
