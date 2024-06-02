@@ -3,8 +3,8 @@
     // Light theme colors
     --black-text-color-light: #262626;
     --gray-text-color-light: #2a2b2c;
+    --light-gray-color-light: #dddddd;
     --highlight-text-color-light: #FF6E1C;
-    --form-field-border-light: #dddddd;
 }
 
 * {
@@ -40,7 +40,7 @@ body {
     flex-wrap: wrap;
 
     .sidebar {
-        width: 40%;
+        width: 28%;
     }
 
     .outlet-content {

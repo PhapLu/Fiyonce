@@ -3,6 +3,7 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import { newRequest, apiUtils } from "../../utils/newRequest";
+import {formatEmailToName} from "../../utils/formatter";
 
 const AuthContext = createContext();
 
@@ -21,8 +22,9 @@ export const AuthProvider = ({ children }) => {
         const token = Cookies.get('accessToken');
         if (token) {
             try {
-                const decodedToken = jwtDecode(token);
-                setUserInfo(decodedToken);
+                let formattedUserInfo = jwtDecode(token);
+                formattedUserInfo.displayName = formatEmailToName(formattedUserInfo.email);
+                setUserInfo(formattedUserInfo);
             } catch (error) {
                 console.error('Failed to decode token:', error);
                 Cookies.remove('accessToken');
@@ -42,7 +44,8 @@ export const AuthProvider = ({ children }) => {
 
         if (response.data.status == 200) {
             alert("Successfully logged in as: " + response.data.metadata.user.email);
-            setUserInfo(response.data.metadata.user);
+            const formattedUserInfo = response.data.metadata.user;
+            setUserInfo(formattedUserInfo);
             setShowLoginForm(false);
             setOverlayVisible(false);
         } else {

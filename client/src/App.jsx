@@ -38,7 +38,10 @@ const Layout = ({ showSidebar }) => {
 
       <div className={`app ${showSidebar ? 'with-sidebar' : 'without-sidebar'}`}>
         {showSidebar && <Sidebar />}
-        <Outlet className="outlet-content"/>
+
+        <div className="outlet-content">
+          <Outlet />
+        </div>
       </div>
     </>
   );
