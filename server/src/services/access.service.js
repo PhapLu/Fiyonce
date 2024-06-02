@@ -30,24 +30,26 @@ class AccessService{
      */
         static login = async({email, password, refreshToken = null}) => {
             // 1. Check email in the database
-            const foundUser = await User.findOne({email}).lean()
+            const foundUser = await User.findOne({email}).lean();
             if (!foundUser) throw new BadRequestError("User not registered");
         
             // 2. Match password
             const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
             if (!match) throw new AuthFailureError("Authentication error");
-        
             // 3. Create AccessToken and RefreshToken and save
             const privateKey = crypto.randomBytes(64).toString("hex");
             const publicKey = crypto.randomBytes(64).toString("hex");
         
             // 4. Generate tokens
             const { _id: userId } = foundUser;
+            const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
+
             const tokens = await createTokenPair(
-                { userId, email, role: foundUser.role },
+                userWithoutPassword,
                 publicKey,
                 privateKey
             );
+            
             await KeyTokenService.createKeyToken({
                 refreshToken: tokens.refreshToken,
                 privateKey,
@@ -55,8 +57,6 @@ class AccessService{
                 userId
             });
         
-            // 5. Exclude password from foundUser
-            const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
         
             // 6. Return user data and tokens
             return {

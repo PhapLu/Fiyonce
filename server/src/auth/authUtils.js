@@ -52,9 +52,13 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
         6 - Ok all => return next()
     */
     const userId = req.headers[HEADER.CLIENT_ID]
+    console.log(req.headers)
+    console.log(userId)
+
     if(!userId) throw new AuthFailureError('Invalid Request')
     //2
     const keyStore = await KeyTokenService.findByUserId(userId)
+    console.log("AAA" + keyStore)
     if(!keyStore) throw new NotFoundError('Not Found KeyStore')
     //3
     if(req.headers[HEADER.REFRESHTOKEN]){
@@ -70,11 +74,13 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
             throw error
         }
     }
+   console.log(userId)
+
     const accessToken = req.cookies.accessToken
     if(!accessToken) throw new AuthFailureError('Invalid Request')
     try {
         const decodeUser = JWT.verify(accessToken, keyStore.publicKey)
-        if(userId !== decodeUser.userId) throw new AuthFailureError('Invalid UserId')
+        if(userId !== decodeUser._id) throw new AuthFailureError('Invalid UserId')
         req.keyStore = keyStore
         req.user = decodeUser
         req.accessToken = accessToken
@@ -88,6 +94,5 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
 const verifyJWT = async (token, keySecret) => {
     return await JWT.verify(token, keySecret)
 }
-
 
 export{createTokenPair, verifyJWT, authenticationV2, allowIfLoggedIn}

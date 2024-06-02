@@ -5,6 +5,7 @@ import { uploadFields } from "../../configs/multer.config.js";
 import { asyncHandler } from "../../auth/checkAuth.js";
 import { authenticationV2 } from "../../auth/authUtils.js";
 const router = express.Router()
+
 //
 router.get('/readUserProfile:profileId', asyncHandler(userController.readUserProfile))
 

@@ -16,6 +16,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 
 // Pages
 import Talent from "./pages/talent/Talent";
+import Profile from "./pages/profile/Profile";
 
 // import Artworks from "./pages/artworks/Artworks";
 // import Artwork from "./pages/artwork/Artwork";
@@ -32,11 +33,14 @@ const queryClient = new QueryClient();
 
 const Layout = ({ showSidebar }) => {
   return (
-    <div className={`app ${showSidebar ? 'with-sidebar' : 'without-sidebar'}`}>
-        <Navbar />
+    <>
+      <Navbar />
+
+      <div className={`app ${showSidebar ? 'with-sidebar' : 'without-sidebar'}`}>
         {showSidebar && <Sidebar />}
-        <Outlet /> 
-    </div>
+        <Outlet className="outlet-content"/>
+      </div>
+    </>
   );
 };
 
@@ -46,9 +50,9 @@ const router = createBrowserRouter([
     element: <Layout showSidebar={true}></Layout>,
     children: [
       {
-        path: "/talents/:id",
-        element: <Talent />,
-      },
+        path: "/users/:id",
+        element: <Profile />,
+      }
     ]
   },
   {
@@ -87,7 +91,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* <SharedDataProvider> */}
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
       {/* </SharedDataProvider> */}
     </QueryClientProvider>
   );

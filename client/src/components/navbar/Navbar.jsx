@@ -43,7 +43,7 @@ export default function Navbar() {
                     <li className="navbar-link-item">
                         <Link to="/challenges">Thử thách</Link>
                     </li>
-                    <hr />
+                    <hr className="navbar__veritcal-hr" />
                     <Auth />                    
                 </ul>
             </div>

@@ -34,6 +34,20 @@ body {
     margin: 4px 4% !important;
 }
 
+.app.with-sidebar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .sidebar {
+        width: 40%;
+    }
+
+    .outlet-content {
+        width: 60%;
+    }
+}
+
 ::selection {
     // color: white;
     // background: #c661ff;
@@ -138,9 +152,9 @@ p {
 
 hr {
     border: none;
-    height: 2px;
+    height: 1px;
     width: 100%;
-    background-color: var(--field-border-light);
+    background-color: var(--form-field-border-light);
 }
 
 .dot-delimiter {
@@ -188,9 +202,15 @@ hr {
     .user__avatar {
         width: 40px;
         height: 40px;
+        object-fit: cover;
         border-radius: 50%;
         border: 2px solid white;
         box-shadow: 1px solid;
         box-shadow: rgb(51 51 51 / 20%) 0px 2px 8px 1px;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.9;
+            transition: 0.2s;
+        }
     }
 }

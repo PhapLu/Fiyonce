@@ -7,11 +7,10 @@ import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
 import "../../assets/scss/authentication.scss";
 import "./Login.scss";
-import newRequest from "../../utils/newRequest";
 
 export default function Login() {
     const [inputs, setInputs] = useState({});
-    const { showRegisterVerificationForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible,  setOverlayVisible} = useAuth();
+    const {login, showRegisterVerificationForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible,  setOverlayVisible, userInfo, setUserInfo} = useAuth();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -21,15 +20,11 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setOverlayVisible(true);
-        inputs.role = "client";
-        const { confirm_password, ...others } = inputs;
-        console.log(others);
-        const response = await newRequest.post("access/users/login", others);
-        // const response = {data: true, status: 200};
-        // console.log(response.data);
-        // console.log(response.status);
-        console.log(response)
+        try {
+            login(inputs.email, inputs.password);
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
     };
 
     return (

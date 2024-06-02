@@ -6,9 +6,12 @@ const router = express.Router()
 //signUp
 router.post('/users/signUp', asyncHandler(accessController.signUp))
 router.post('/users/login', asyncHandler(accessController.login))
+
 //authentication
 router.use(authenticationV2)
+
 //logout
 router.post('/users/logout', asyncHandler(accessController.logout))
+
 router.post('/users/handlerRefreshToken', asyncHandler(accessController.handlerRefreshToken))
 export default router

@@ -18,10 +18,10 @@ class AccessController {
         try {
             const { tokens, user } = await AccessService.login(req.body);
             // Setting accessToken in a cookie
-            res.cookie("accessToken", tokens.accessToken, {
-                httpOnly: true,
-                maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
-            });
+            // res.cookie("accessToken", tokens.accessToken, {
+            //     httpOnly: true,
+            //     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
+            // });
             new SuccessResponse({
                 message: 'Login Success!',
                 metadata: { user, tokens }
@@ -31,6 +31,7 @@ class AccessController {
         }
     }
     logout = async(req, res, next) =>{
+        console.log("HERE")
         try {
             // Call the logout service function
             console.log("KEYSTORE:",req.keyStore)

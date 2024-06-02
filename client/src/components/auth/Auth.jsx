@@ -1,25 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
 import Login from "../login/Login";
 import Register from "../register/Register";
+import DropdownNavbar from "../dropdownNavbar/DropdownNavbar";
 
 import AuthenticationImg from "../../assets/img/authentication-img.png";
-import "../../assets/scss/authentication.scss";
 import "./Auth.scss";
 
 export default function Auth() {
-    const { user, setUser, showLoginForm, showRegisterForm, showRegisterVerificationForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible,  setOverlayVisible} = useAuth();
+    const { userInfo, logout, showLoginForm, showRegisterForm, setShowLoginForm, overlayVisible, setOverlayVisible } = useAuth();
+    const [showDropdown, setShowDropdown] = useState(false);
+    // Toggle display menu
+    const menuRef = useRef();
+    const [showMenu, setShowMenu] = useState(false);
+
+    useEffect(() => {
+        let handler = (e) => {
+            if (menuRef && menuRef.current && !menuRef.current.contains(e.target)) {
+                setShowMenu(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
+    });
 
     return (
-        <div>
-            {user ? <div className="user">
-                <img src={user.avatar} className="user__avatar" alt="Avatar"/> 
-                </div>
-            : <button className="btn btn-2 btn-md" onClick={() => { setShowLoginForm(!showLoginForm); setOverlayVisible(!overlayVisible) }}>
-            Đăng nhập
-        </button> }
-            
-
+        <div class="navbar__authentication">
+            {userInfo ? <div className="user" ref={menuRef}>
+                <img src={userInfo.avatar} className="user__avatar" alt="Avatar" onClick={() => {
+                    setShowMenu(!showMenu);
+                }} />
+                {showMenu && <DropdownNavbar />}
+            </div>
+                : <button className="btn btn-2 btn-md" onClick={() => { setShowLoginForm(!showLoginForm); setOverlayVisible(!overlayVisible) }}>
+                    Đăng nhập
+                </button>}
             {
                 overlayVisible && (
                     <div className={`overlay`}>

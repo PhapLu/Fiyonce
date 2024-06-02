@@ -28,7 +28,6 @@ export default function Register() {
         setOverlayVisible(true);
         inputs.role = "client";
         const { confirm_password, ...others } = inputs;
-        console.log(others);
         // const response = await axios.post("", others);
         const response = { data: true, status: 200 };
         if (response.status === 200) {

@@ -18,7 +18,7 @@ const dev = {
     db: {
         host: process.env.DEV_DB_HOST || '127.0.0.1',
         port: process.env.DEV_DB_PORT || '27017',
-        name: process.env.DEV_DB_NAME || 'OnisonProjectDev'
+        name: process.env.DEV_DB_NAME || 'Fiyonce'
     }
 }
 
@@ -29,7 +29,7 @@ const product = {
     db: {
         host: process.env.PRO_DB_HOST || '127.0.0.1',
         port: process.env.PRO_DB_PORT || '27017',
-        name: process.env.PRO_DB_NAME || 'OnisonProjectPro'
+        name: process.env.PRO_DB_NAME || 'Fiyonce'
     }
 }
 const config = {dev, product}
