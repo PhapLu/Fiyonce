@@ -5,7 +5,7 @@ class ApplyController{
     submitPortfolio = async(req, res, next) => {
         new SuccessResponse({
             message: 'Apply Brief success!',
-            metadata: await ApplyService.submitPortfolio(req.user.userId, req.params.briefId, req.body)
+            metadata: await ApplyService.submitPortfolio(req.userId, req.params.briefId, req.body)
         }).send(res)
     }
 
@@ -26,21 +26,21 @@ class ApplyController{
     updateApply = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update apply successfully!',
-            metadata: await ApplyService.updateApply(req.user.userId, req.params.applyId, req.body)
+            metadata: await ApplyService.updateApply(req.userId, req.params.applyId, req.body)
         }).send(res)
     }
 
     deleteApply = async(req, res, next) => {
         new SuccessResponse({
             message: 'Delete an apply successfully!',
-            metadata: await ApplyService.deleteApply(req.user.userId, req.params.applyId)
+            metadata: await ApplyService.deleteApply(req.userId, req.params.applyId)
         }).send(res)
     }
 
     viewApplyHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all Applies of a client',
-            metadata: await ApplyService.viewApplyHistory(req.user.userId)
+            metadata: await ApplyService.viewApplyHistory(req.userId)
         }).send(res)
     }
 }

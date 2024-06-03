@@ -8,13 +8,16 @@ import crypto from 'crypto'
 
 class UserService{
 //-------------------CRUD----------------------------------------------------
-    static updateProfile = async(userId, body) => {
+    static updateProfile = async(userId, profileId, body) => {
+        console.log('Hello')
+        console.log(profileId)
         //1. Check user
-        const currentUser = await User.findById(body._id)
-        if(userId != currentUser._id.toString()) throw new AuthFailureError('You can only update your account')
+        const profile = await User.findById(profileId)
+        if(!profile) throw new NotFoundError('User not found')
+        if(profileId != userId) throw new AuthFailureError('You can only update your account')
         //2. Update user
         const updatedUser = await User.findByIdAndUpdate(
-            body._id,
+            profileId,
             { $set: body},
             { new: true }   
         )
@@ -147,6 +150,25 @@ class UserService{
             { $set: {role: 'talent'} },
             { new: true }
         )
+        
+        // 4. Create AccessToken and RefreshToken and save
+        const privateKey = crypto.randomBytes(64).toString("hex");
+        const publicKey = crypto.randomBytes(64).toString("hex");
+        //5. Exclude password from foundUser
+        const { password: hiddenPassword, ...userWithoutPassword } = updatedUser;
+        // 6. Generate tokens
+        const tokens = await createTokenPair(
+            userWithoutPassword,
+            publicKey,
+            privateKey
+        );
+        
+        await KeyTokenService.createKeyToken({
+            refreshToken: tokens.refreshToken,
+            privateKey,
+            publicKey,
+            userId
+        });
 
         //4. Mark request as approved
         request.status = 'approved'
