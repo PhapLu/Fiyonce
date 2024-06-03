@@ -7,7 +7,10 @@ import accessService from '../../services/access.service.js'
 const router = express.Router()
 
 //router.post('/product', asyncHandler(uploadController.uploadFile))
-router.use(authenticationV2)
+//authentication
+//router.use(authenticationV2)
+router.use(verifyToken)
+
 router.post('/profile/avatarOrCover/:userId', uploadMemory.single('file'), accessService.grantAccess('updateOwn', 'profile'), asyncHandler(uploadController.uploadAvatarOrCover))
 router.post('/product/multiple', uploadMemory.array('files', 5), asyncHandler(uploadController.uploadImagesFromLocal))
 export default router

@@ -9,8 +9,9 @@ router.get('/search/:keySearch', asyncHandler(artworkController.searchArtworksBy
 router.get('', asyncHandler(artworkController.findAllArtworks))
 router.get('/:artworkId', asyncHandler(artworkController.findArtwork))
 
-//authentication////////////
-router.use(authenticationV2)
+//authentication
+//router.use(authenticationV2)
+router.use(verifyToken)
 
 router.post('', asyncHandler(artworkController.createArtwork))
 router.patch('/:artworkId', asyncHandler(artworkController.updateArtwork))

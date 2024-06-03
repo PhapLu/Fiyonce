@@ -8,7 +8,8 @@ router.get('/readBrief/:briefId', asyncHandler(briefController.readBrief))
 router.get('/readBriefs', asyncHandler(briefController.readBriefs))
 
 //authentication
-router.use(authenticationV2)
+//router.use(authenticationV2)
+router.use(verifyToken)
 //CRUD
 router.post('/briefCommission', asyncHandler(briefController.briefCommission))
 router.patch('/updateBrief/:briefId', asyncHandler(briefController.updateBrief))

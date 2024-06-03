@@ -9,7 +9,8 @@ const router = express.Router()
 router.get('/readUserProfile/:profileId', asyncHandler(userController.readUserProfile))
 
 //authentication
-router.use(authenticationV2)
+//router.use(authenticationV2)
+router.use(verifyToken)
 
 //update Role
 router.patch('/updateUserProfile', accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.updateProfile))

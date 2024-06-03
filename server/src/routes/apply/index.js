@@ -8,7 +8,8 @@ router.get('/readApply/:applyId', asyncHandler(briefController.readBrief))
 router.get('/readApply', asyncHandler(briefController.readBriefs))
 
 //authentication
-router.use(authenticationV2)
+//router.use(authenticationV2)
+router.use(verifyToken)
 //CRUD
 router.post('/submitPortfolio', asyncHandler(briefController.briefCommission))
 router.patch('/updateApply', asyncHandler(briefController.updateBrief))
