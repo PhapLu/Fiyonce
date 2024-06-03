@@ -50,6 +50,7 @@ const UserSchema = new Schema(
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
+    accessToken: { type: String }
   },
   {
     timestamps: true,

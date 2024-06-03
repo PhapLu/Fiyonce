@@ -74,7 +74,8 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
     if(!accessToken) throw new AuthFailureError('Invalid Request')
     try {
         const decodeUser = JWT.verify(accessToken, keyStore.publicKey)
-        if(userId !== decodeUser.userId) throw new AuthFailureError('Invalid UserId')
+        console.log(decodeUser)
+        if(userId !== decodeUser._id) throw new AuthFailureError('Invalid UserId')
         req.keyStore = keyStore
         req.user = decodeUser
         req.accessToken = accessToken
@@ -88,6 +89,5 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
 const verifyJWT = async (token, keySecret) => {
     return await JWT.verify(token, keySecret)
 }
-
 
 export{createTokenPair, verifyJWT, authenticationV2, allowIfLoggedIn}

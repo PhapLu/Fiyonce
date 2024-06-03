@@ -148,6 +148,25 @@ class UserService{
             { $set: {role: 'talent'} },
             { new: true }
         )
+        
+        // 4. Create AccessToken and RefreshToken and save
+        const privateKey = crypto.randomBytes(64).toString("hex");
+        const publicKey = crypto.randomBytes(64).toString("hex");
+        //5. Exclude password from foundUser
+        const { password: hiddenPassword, ...userWithoutPassword } = updatedUser;
+        // 6. Generate tokens
+        const tokens = await createTokenPair(
+            userWithoutPassword,
+            publicKey,
+            privateKey
+        );
+        
+        await KeyTokenService.createKeyToken({
+            refreshToken: tokens.refreshToken,
+            privateKey,
+            publicKey,
+            userId
+        });
 
         //4. Mark request as approved
         request.status = 'approved'
