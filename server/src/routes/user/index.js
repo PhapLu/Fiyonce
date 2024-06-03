@@ -7,7 +7,7 @@ import { authenticationV2 } from "../../auth/authUtils.js";
 const router = express.Router()
 
 //
-router.get('/readUserProfile:profileId', asyncHandler(userController.readUserProfile))
+router.get('/readUserProfile/:profileId', asyncHandler(userController.readUserProfile))
 
 //authentication
 router.use(authenticationV2)

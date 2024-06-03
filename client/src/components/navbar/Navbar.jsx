@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 
 import Auth from "../auth/Auth";
 import Logo from "../../assets/img/logo.png";
@@ -15,6 +15,8 @@ export default function Navbar() {
 
         isLogged = true;
     }
+
+    const location = useLocation();
 
     return (
         <div className="navbar">
@@ -31,7 +33,7 @@ export default function Navbar() {
 
             <div className="navbar--right">
                 <ul className="navbar-link-container">
-                    <li className="navbar-link-item">
+                    <li className={`navbar-link-item ` + (location.pathname.includes('/artworks') ? "active" : "")}>
                         <Link to="/artworks">Khám phá</Link>
                     </li>
                     <li className="navbar-link-item">

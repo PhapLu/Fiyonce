@@ -24,18 +24,18 @@
             margin-left: 16px;
             display: flex;
             align-items: center;
-            border: 2px solid var(--light-gray-color-light);
+            border: 2px solid var(--gray-1-color);
             border-radius: 16px;
             transition: border 0.1s;
             min-width: 300px;
-            background-color: #FBFBFB;
-            color: var(--black-text-color-light);
+            background-color: var(--gray-1-color);
+            color: var(--black-2-color);
 
             .navbar__search-field__ic {
                 width: 20px;
                 height: 20px;
-                margin-left: 8px;
-                color: var(--gray-text-color-light);
+                margin-left: 12px;
+                color: var(--black-2-color);
             }
 
             .navbar__search-field__input {
@@ -46,11 +46,11 @@
                 font-size: 1.4rem;
                 font-weight: 600;
                 border-radius: 16px;
-                background-color: #FBFBFB;
-                color: var(--black-text-color-light);
+                background-color: var(--gray-1-color);
+                color: var(--black-2-color);
 
                 &::placeholder {
-                    color: var(--gray-text-color-light);
+                    color: var(--black-2-color);
                     font-weight: 500;
                 }
             }
@@ -72,6 +72,22 @@
                 font-size: 1.5rem;
                 font-weight: 600;
 
+                &.active {
+                    position: relative;
+
+                    &::after {
+                        position: absolute;
+                        width: 12px;
+                        height: 4px;
+                        border-radius: 4px;
+                        content: "";
+                        background-color: var(--black-2-color);
+                        bottom: 12px;
+                        left: 50%;
+                        transform: translate(-50%);
+                    }
+                }
+
                 &:last-of-type {
                     padding-right: 0;
                 }
@@ -79,11 +95,11 @@
         }
 
         .navbar__veritcal-hr {
-            width: 28px;
+            width: 30px;
             height: 1px;
-            padding: 0 20px;
+            margin: 0 14px;
             transform: rotate(90deg);
-            background-color: var(--gray-text-color-light);
+            background-color: var(--black-2-color);
             opacity: 0.4;
         }
 

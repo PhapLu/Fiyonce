@@ -17,7 +17,8 @@ const getLoggedInRequestConfig = () => {
     return {
         headers: {
             'x-client-id': decodedToken._id,
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
         },
         withCredentials: true,
     };

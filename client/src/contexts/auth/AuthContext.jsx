@@ -1,9 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useQuery } from 'react-query'
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import { newRequest, apiUtils } from "../../utils/newRequest";
-import {formatEmailToName} from "../../utils/formatter";
+import { formatEmailToName } from "../../utils/formatter";
 
 const AuthContext = createContext();
 
@@ -18,28 +19,50 @@ export const AuthProvider = ({ children }) => {
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    // Fetch user profile data
+    const fetchUserProfile = async () => {
         const token = Cookies.get('accessToken');
-        if (token) {
-            try {
-                let formattedUserInfo = jwtDecode(token);
-                formattedUserInfo.displayName = formatEmailToName(formattedUserInfo.email);
-                setUserInfo(formattedUserInfo);
-            } catch (error) {
-                console.error('Failed to decode token:', error);
-                Cookies.remove('accessToken');
-            } finally {
-                setLoading(false);
-            }
-        } else {
-            setLoading(false);
+        if (!token) {
+            throw new Error('Access token not found');
         }
-    }, []);
+
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken._id;
+
+        const response = await newRequest.get(`user/readUserProfile/${userId}`);
+        return response.data.metadata.user;
+    };
+
+    const { data, error, isError, isLoading } = useQuery('fetchUserProfile', fetchUserProfile, {
+        enabled: !!Cookies.get('accessToken'),
+        onError: (error) => {
+            console.error('Error fetching user profile:', error);
+        },
+        onSuccess: (data) => {
+            data.displayName = formatEmailToName(data.email);
+            data.socialLinks = [
+                {
+                    "url": "https://facebook.com/nhatluu03",
+                },
+                {
+                    "url": "https://tiktok.com/nhatluu2003",
+                },
+            ]
+            setUserInfo(data);
+            setLoading(false);
+        },
+    });
+
+    if (isLoading) {
+        return <span>Đang tải...</span>
+    }
+
+    if (isError) {
+        return <span>Have an errors: {error.message}</span>
+    }
 
     const login = async (email, password) => {
         const response = await newRequest.post("access/users/login", { email, password });
-        // setUserInfo(response.data.metadata.user);
-        // console.log('token', response.data.metadata.tokens.accessToken);
         Cookies.set('accessToken', response.data.metadata.tokens.accessToken);
 
         if (response.data.status == 200) {
@@ -51,21 +74,14 @@ export const AuthProvider = ({ children }) => {
         } else {
             alert("Error: ", response.data.message);
         }
-
-        // const accessToken = response.data.metadata.tokens;
-        // const user = response.data.metadata.user;
-        // Cookies.set('token', accessToken, { secure: true, sameSite: 'Strict' });
-        // setUserInfo(user);
-        // setShowLoginForm(false);
-        // setOverlayVisible(false);
     };
 
     const logout = async () => {
         try {
             await apiUtils.post("access/users/logout");
 
-            Cookies.remove('accessToken'); // Ensure you're removing the correct token
-            setUserInfo(null); // Ensure you're setting the correct state
+            Cookies.remove('accessToken');
+            setUserInfo(null);
         } catch (error) {
             console.error('Logout error:', error);
         }

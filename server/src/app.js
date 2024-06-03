@@ -11,10 +11,11 @@ import router from "./routes/index.js";
 const app = express()
 //Init middlewares
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:["http://localhost:5173", "https://vapi.vnappmob.com"],
     methods:"GET, HEAD, PUT, PATCH, POST, DELETE",
     credentials: true,
-  }));
+  },
+));
 app.use(express.json());
 app.use(morgan('dev'))
 app.use(helmet())

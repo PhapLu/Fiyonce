@@ -128,7 +128,7 @@
             text-align: center;
 
             .form__extra-text__link {
-                color: var(--highlight-text-color-light);
+                color: var(--orange-2);
 
                 &:hover {
                     opacity: 0.7;
@@ -146,7 +146,7 @@
                 width: 80%;
                 display: flex;
                 align-items: center;
-                border: 2px solid var(--black-text-color-light);
+                border: 2px solid var(--black-2-color);
                 border-radius: 8px;
                 padding: 6px 10px;
                 margin-left: 50%;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
 import Login from "../login/Login";
 import Register from "../register/Register";
-import DropdownNavbar from "../dropdownNavbar/DropdownNavbar";
+import MenuBar from "../menuBar/MenuBar.jsx";
 
 import AuthenticationImg from "../../assets/img/authentication-img.png";
 import "./Auth.scss";
@@ -32,7 +32,7 @@ export default function Auth() {
                 <img src={userInfo.avatar} className="user__avatar" alt="Avatar" onClick={() => {
                     setShowMenu(!showMenu);
                 }} />
-                {showMenu && <DropdownNavbar />}
+                {showMenu && <MenuBar />}
             </div>
                 : <button className="btn btn-2 btn-md" onClick={() => { setShowLoginForm(!showLoginForm); setOverlayVisible(!overlayVisible) }}>
                     Đăng nhập

@@ -24,13 +24,12 @@ class UserService{
     }
 
     static readUserProfile = async(profileId) => {
+        console.log(profileId)
         //1. Check user
         const userProfile = await User.findById(profileId)
         if(!userProfile) throw new NotFoundError('User not found')
         //2. Return user profile
-        return{
-            userProfile
-        }
+        return {user: userProfile};
     }
 
     static deleteProfile = async(userId, profileId) => {
