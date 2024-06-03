@@ -4,6 +4,8 @@ import { asyncHandler } from '../../helpers/asyncHandler.js'
 import {uploadDisk, uploadMemory} from '../../configs/multer.config.js'
 import { authenticationV2 } from '../../auth/authUtils.js'
 import accessService from '../../services/access.service.js'
+import { verifyToken } from "../../middlewares/jwt.js";
+
 const router = express.Router()
 
 //router.post('/product', asyncHandler(uploadController.uploadFile))

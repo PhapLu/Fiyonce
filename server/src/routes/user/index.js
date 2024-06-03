@@ -4,6 +4,8 @@ import accessService from "../../services/access.service.js";
 import { uploadFields } from "../../configs/multer.config.js";
 import { asyncHandler } from "../../auth/checkAuth.js";
 import { authenticationV2 } from "../../auth/authUtils.js";
+import { verifyToken } from "../../middlewares/jwt.js";
+
 const router = express.Router()
 //
 router.get('/readUserProfile/:profileId', asyncHandler(userController.readUserProfile))

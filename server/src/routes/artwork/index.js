@@ -3,6 +3,8 @@ import artworkController from '../../controllers/artwork.controller.js'
 import { asyncHandler } from '../../helpers/asyncHandler.js'
 import { authenticationV2 } from '../../auth/authUtils.js'
 import accessService from '../../services/access.service.js'
+import { verifyToken } from "../../middlewares/jwt.js";
+
 const router = express.Router()
 
 router.get('/search/:keySearch', asyncHandler(artworkController.searchArtworksByUser))

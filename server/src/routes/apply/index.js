@@ -2,6 +2,8 @@ import express from "express";
 import { asyncHandler } from "../../auth/checkAuth.js";
 import { authenticationV2 } from "../../auth/authUtils.js";
 import briefController from "../../controllers/brief.controller.js";
+import { verifyToken } from "../../middlewares/jwt.js";
+
 const router = express.Router()
 
 router.get('/readApply/:applyId', asyncHandler(briefController.readBrief))
