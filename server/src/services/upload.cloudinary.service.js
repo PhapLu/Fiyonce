@@ -1,6 +1,9 @@
 import cloudinary from "../configs/cloudinary..config.js";
-import { BadRequestError } from "../core/error.response.js";
+import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
+import stream from 'stream'
+import {promisify} from 'util'
+const pipeline = promisify(stream.pipeline);
 //1.upload Image from URL
 const uploadImageFromURL = async() => {
     try {
@@ -18,46 +21,74 @@ const uploadImageFromURL = async() => {
 
 //2.upload image from local
 
-const uploadAvatarOrCover = async({
-    path,
+const uploadAvatarOrCover = async ({
+    buffer,
+    originalname,
     folderName = 'fiyonce/profile/avatarOrCover',
-}, userId, type) => {
-    //1.Check if user exists
-    const user = await User.findById(userId)
-    if(!user) throw new BadRequestError('User not found')
-    if(type !== 'avatar' && type !== 'cover') throw new BadRequestError('Invalid type')
-    let updatedUser
-    //2.Upload image
+}, userId, profileId, type) => {
+    // Check if user exists
+    const user = await User.findById(userId);
+    if (!user) throw new BadRequestError('User not found');
+    if (!profileId) throw new BadRequestError('ProfileId missing');
+    if (user._id.toString() !== profileId) throw new AuthFailureError('You can only set avatar/cover for your profile');
+    if (type !== 'avatar' && type !== 'cover') throw new BadRequestError('Invalid type');
+
+    let updatedUser;
+
+    const streamUpload = async (buffer) => {
+        return new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream({
+                resource_type: 'image',
+                public_id: 'avatarOrCover',
+                folder: folderName,
+            }, (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            });
+
+            const bufferStream = new stream.PassThrough();
+            bufferStream.end(buffer);
+
+            bufferStream.pipe(uploadStream);
+        });
+    };
+
     try {
-        const result = await cloudinary.uploader.upload(path, {
-            public_id: 'avatarOrCover',
-            folder: folderName,
-        })
-        if(type === 'avatar'){
-            updatedUser = await User.findByIdAndUpdate(userId, 
-                { $set: {avatar: result.secure_url} },
+        const result = await streamUpload(buffer);
+
+        if (type === 'avatar') {
+            updatedUser = await User.findByIdAndUpdate(profileId,
+                { $set: { avatar: result.secure_url } },
                 { new: true }
-            )
-        }else{
-            updatedUser = await User.findByIdAndUpdate(userId, 
-                { $set: {bg: result.secure_url} },
+            );
+        } else {
+            updatedUser = await User.findByIdAndUpdate(profileId,
+                { $set: { bg: result.secure_url } },
                 { new: true }
-            )
+            );
         }
+
+        console.log('Finish Uploading');
+
         return {
             type: type,
-            image_url : result.secure_url,
-            userId: userId,
-            thumb_url: await cloudinary.url(result.public_id, {
+            image_url: result.secure_url,
+            profileId: profileId,
+            thumb_url: cloudinary.url(result.public_id, {
                 height: 1080,
                 width: 1920,
                 format: 'jpg',
             })
-        }
+        };
     } catch (error) {
-        console.error('Error uploading image::', error)
+        console.error('Error uploading image:', error);
+        throw new Error('Error uploading image');
     }
-}
+};
+
 
 //3.upload images from local
 

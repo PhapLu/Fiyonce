@@ -13,6 +13,6 @@ const router = express.Router()
 //router.use(authenticationV2)
 router.use(verifyToken)
 
-router.post('/profile/avatarOrCover/:userId', uploadMemory.single('file'), accessService.grantAccess('updateOwn', 'profile'), asyncHandler(uploadController.uploadAvatarOrCover))
+router.post('/profile/avatarOrCover/:profileId', uploadMemory.single('file'), accessService.grantAccess('updateOwn', 'profile'), asyncHandler(uploadController.uploadAvatarOrCover))
 router.post('/product/multiple', uploadMemory.array('files', 5), asyncHandler(uploadController.uploadImagesFromLocal))
 export default router
