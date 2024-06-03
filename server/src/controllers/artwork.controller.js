@@ -7,7 +7,7 @@ class ArtworkController{
             message: 'Create new Artwork success!',
             metadata: await ArtworkService.createArtwork(req.body.artwork_type, {
                 ...req.body,
-                artwork_talent: req.user.userId
+                artwork_talent: req.userId
             })
         }).send(res)
     }
@@ -20,7 +20,7 @@ class ArtworkController{
                 req.params.artworkId,
                 {
                     ...req.body,
-                    artwork_talent: req.user.userId
+                    artwork_talent: req.userId
                 })
         }).send(res)
     }
@@ -28,7 +28,7 @@ class ArtworkController{
     likeArtwork = async(req, res, next) => {
         new SuccessResponse({
             message: 'Like an artwork success!',
-            metadata: await ArtworkService.likeArtwork(req.user.userId, req.params.artworkId)
+            metadata: await ArtworkService.likeArtwork(req.userId, req.params.artworkId)
         }).send(res)
     }
 

@@ -62,12 +62,27 @@ class AccessController {
         }).status(200).send("User has been logged out.")
     }
     
-    signUp = async(req, res, next) =>{
+    signUp = async (req, res, next) => {
         try {
             const { metadata, code } = await AccessService.signUp(req.body);
     
-            // If sign up was successful and tokens were generated
-            if (code === 201 && metadata.user && metadata.user.accessToken) {
+            // Sending response
+            new CREATED({
+                message: 'Registered! Please check your email for the OTP to verify your account.',
+                metadata,
+            }).send(res);
+        } catch (error) {
+            next(error); // Pass error to error handler middleware
+        }
+    }
+
+    verifyOtp = async (req, res, next) => {
+        try {
+            console.log(req.body)
+            const { metadata, code } = await AccessService.verifyOtp(req.body);
+    
+            // If OTP verification was successful and tokens were generated
+            if (code === 200 && metadata.user && metadata.user.accessToken) {
                 const { accessToken } = metadata.user;
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
@@ -75,18 +90,18 @@ class AccessController {
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
                 });
             }
+    
             // Sending response
-            new CREATED({
-                message: 'Registered!',
+            new SuccessResponse({
+                message: 'Account verified successfully!',
                 metadata,
-                options: {
-                    limit: 10
-                }
             }).send(res);
         } catch (error) {
             next(error); // Pass error to error handler middleware
         }
     }
+    
+    
 }
 
 export default new AccessController()

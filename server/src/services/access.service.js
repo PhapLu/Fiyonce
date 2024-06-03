@@ -13,6 +13,8 @@ import {
 import Key from "../models/keyToken.model.js"
 import role from "../middlewares/role.js"
 import jwt from 'jsonwebtoken'
+import UserOTPVerification from "../models/UserOTPVerification.js"
+import sendEmail from "../middlewares/sendMail.js"
 const RoleUser = {
     MEMBER: "member",
     WRITER: "00002",
@@ -156,39 +158,101 @@ class AccessService{
         }
     }
     
-    static signUp = async({fullname, email, password}) =>{
-        //1. check if email exists?
-        const holderUser = await User.findOne({ email }).lean()
-        if(holderUser) {
-            throw new BadRequestError("Error: User already registered")
+    static signUp = async ({ fullName, email, password }) => {
+        // 1. Check if email exists
+        const holderUser = await User.findOne({ email }).lean();
+        if (holderUser && holderUser.isVerified) {
+            throw new BadRequestError("Error: User already registered");
         }
-        //2. Hash password
-        const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = await User.create({
-            fullname,
+
+        // 2. Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        var newUser;
+        if(!holderUser){
+            newUser = await User.create({
+                fullName,
+                email,
+                password: hashedPassword,
+                role: 'member', // Use the string directly
+                isVerified: false // Add this field to manage user verification
+            });
+        }else{
+            newUser = await User.findOne({ email }).lean();
+        }
+        // 3. Create user but do not activate it yet
+
+        // 4. Generate 6-digit OTP
+        const otp = crypto.randomInt(100000, 999999).toString();
+
+        // 5. Save OTP in UserOTPVerification collection
+        const otpVerification = new UserOTPVerification({
             email,
-            password: hashedPassword,
-            role: RoleUser.MEMBER
-        })
-        //3. Create token
-        if(newUser){
-            const token = jwt.sign(
-                {
-                    id: newUser._id,
-                    email: newUser.email,
-                },
-                process.env.JWT_SECRET
-            )
-            newUser.accessToken = token
-            newUser.save()
-        }
-        const { password: hiddenPassword, ...userWithoutPassword } = newUser._doc;
+            otp,
+            expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
+        });
+        await otpVerification.save();
+
+        // 6. Send OTP email
+        const subject = 'Your OTP Code';
+        const message = `Your OTP code is ${otp}`;
+        await sendEmail(email, subject, message);
+
         return {
             code: 201,
             metadata: {
+                userId: newUser._id,
+                email: newUser.email
+            }
+        };
+    }
+
+    static verifyOtp = async ({ email, otp }) => {
+        // 1. Find the OTP in the database
+        const otpRecord = await UserOTPVerification.findOne({ email }).lean();
+        if (!otpRecord) {
+            throw new BadRequestError('OTP not found');
+        }
+
+        // 2. Check if the OTP is expired
+        if (otpRecord.expiredAt < new Date()) {
+            throw new BadRequestError('OTP has expired');
+        }
+
+        // 3. Check if the OTP is correct
+        if (otpRecord.otp !== otp) {
+            throw new BadRequestError('Incorrect OTP');
+        }
+
+        // 4. Delete the OTP record
+        await UserOTPVerification.deleteOne({ email });
+
+        // 5. Find user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw new BadRequestError('User not found');
+        }
+
+        // 6. Create token
+        const token = jwt.sign(
+            {
+                id: user._id,
+                email: user.email
+            },
+            process.env.JWT_SECRET
+        );
+
+        user.accessToken = token;
+        user.isVerified = true; // Activate user
+        user.verificationExpiry = undefined; // Remove the verificationExpiry field
+        await user.save();
+
+        const { password: hiddenPassword, ...userWithoutPassword } = user.toObject(); // Ensure toObject() is used to strip the password
+        return {
+            code: 200,
+            metadata: {
                 user: userWithoutPassword
             }
-        }
+        };
     }
 
     // static logout = async(keyStore) =>{
@@ -222,7 +286,9 @@ class AccessService{
     static grantAccess(action, resource) {
         return async (req, res, next) => {
           try {
-            const permission = role.can(req.user.role)[action](resource);
+            const userInfo = await User.findById(req.userId).lean();
+            const userRole = userInfo.role;
+            const permission = role.can(userRole)[action](resource);
             if (!permission.granted) {
               return res.status(401).json({
                 error: "You don't have enough permission to perform this action",

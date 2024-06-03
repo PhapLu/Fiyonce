@@ -3,7 +3,6 @@ import { BadRequestError } from '../core/error.response.js';
 
 export const verifyToken = (req, res, next)=> {
     const token = req.cookies.accessToken;
-    console.log(req.cookies.accessToken)
     if(!token) 
         return next(createError(401, "You are not authenticated!"));
     jwt.verify(token, process.env.JWT_SECRET, async(error, payload) =>{
@@ -12,4 +11,5 @@ export const verifyToken = (req, res, next)=> {
         req.email = payload.email;
         next();
     });
+    console.log('Finish')
 }

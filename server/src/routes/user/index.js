@@ -15,7 +15,7 @@ router.get('/readUserProfile/:profileId', asyncHandler(userController.readUserPr
 router.use(verifyToken)
 
 //update Role
-router.patch('/updateUserProfile', accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.updateProfile))
+router.patch('/updateUserProfile/:id', accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.updateProfile))
 router.post('/addToBookmarks/:artworkId', accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.addToBookmark))
 router.delete('/delete:profileId', accessService.grantAccess('deleteOwn', 'profile'), asyncHandler(userController.deleteProfile))
 router.post('/requestUpgradingToTalent', uploadFields, accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.requestUpgradingToTalent))

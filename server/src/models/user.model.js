@@ -7,8 +7,8 @@ const UserSchema = new Schema(
   {
     //user_id: {type: Number, required: true},
     //user_salf:{ type: String, default: ''},
-    stage_name:{ type: String},
-    fullname: { type: String, required: true, trim: true },
+    stageName:{ type: String},
+    fullName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, unique: true},
     password: { type: String, required: true },
     role: {
@@ -40,7 +40,6 @@ const UserSchema = new Schema(
     dob: { type: Date, default: null},
     socialLinks: [
       {
-        platform: { type: String }, 
         url: { type: String }, 
       },
     ],
@@ -50,14 +49,22 @@ const UserSchema = new Schema(
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
-    accessToken: { type: String }
+    accessToken: { type: String },
+    isVerified: { type: Boolean, default: false },
+    verificationExpiry: { type: Date, default: Date.now, index: { expires: 1800 } } // TTL Index
   },
   {
     timestamps: true,
     collection: COLLECTION_NAME
   }
 );
-
+// Middleware to set the verificationExpiry field to 30 minutes in the future
+UserSchema.pre('save', function(next) {
+  if (this.isNew || this.isModified('verificationExpiry')) {
+    this.verificationExpiry = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+  }
+  next();
+});
 // Define a list of predefined background image URLs
 // const predefinedBgImages = [
 //   'url1.jpg',
