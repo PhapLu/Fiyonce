@@ -5,11 +5,21 @@ const DOCUMENT_NAME = 'UserOTPVerification';
 const COLLECTION_NAME = 'UserOTPVerifications';
 
 const UserOTPVerificationSchema = new Schema({
-    email: {
+    fullName: { 
         type: String,
-        unique: true,
-        required: true
+        required: true,
+        trim: true 
     },
+    email: { 
+        type: String, 
+        required: true, trim: 
+        true, unique: true
+    },
+    password: { 
+        type: String, 
+        required: true 
+    },
+    
     otp: {
         type: String,
         required: true

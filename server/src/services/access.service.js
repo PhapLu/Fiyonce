@@ -161,24 +161,23 @@ class AccessService{
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
-        if (holderUser && holderUser.isVerified) {
+        if (holderUser) {
             throw new BadRequestError("Error: User already registered");
         }
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        var newUser;
-        if(!holderUser){
-            newUser = await User.create({
-                fullName,
-                email,
-                password: hashedPassword,
-                role: 'member', // Use the string directly
-                isVerified: false // Add this field to manage user verification
-            });
-        }else{
-            newUser = await User.findOne({ email }).lean();
-        }
+        // if(!holderUser){
+        //     newUser = await User.create({
+        //         fullName,
+        //         email,
+        //         password: hashedPassword,
+        //         role: 'member', // Use the string directly
+        //         isVerified: false // Add this field to manage user verification
+        //     });
+        // }else{
+        //     newUser = await User.findOne({ email }).lean();
+        // }
         // 3. Create user but do not activate it yet
 
         // 4. Generate 6-digit OTP
@@ -187,6 +186,8 @@ class AccessService{
         // 5. Save OTP in UserOTPVerification collection
         const otpVerification = new UserOTPVerification({
             email,
+            password: hashedPassword,
+            fullName,
             otp,
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
         });
@@ -200,8 +201,8 @@ class AccessService{
         return {
             code: 201,
             metadata: {
-                userId: newUser._id,
-                email: newUser.email
+                userId: otpVerification._id,
+                email: otpVerification.email
             }
         };
     }
@@ -223,30 +224,30 @@ class AccessService{
             throw new BadRequestError('Incorrect OTP');
         }
 
+        //4. Create user by otpVerification
+        const newUser = await User.create({
+            fullName: otpRecord.fullName,
+            email: otpRecord.email,
+            password: otpRecord.password,
+            role: 'member', // Use the string directly
+        });
+        newUser.save()
         // 4. Delete the OTP record
         await UserOTPVerification.deleteOne({ email });
-
-        // 5. Find user by email
-        const user = await User.findOne({ email });
-        if (!user) {
-            throw new BadRequestError('User not found');
-        }
 
         // 6. Create token
         const token = jwt.sign(
             {
-                id: user._id,
-                email: user.email
+                id: newUser._id,
+                email: newUser.email
             },
             process.env.JWT_SECRET
         );
 
-        user.accessToken = token;
-        user.isVerified = true; // Activate user
-        user.verificationExpiry = null; // Remove the verificationExpiry field
-        await user.save();
+        newUser.accessToken = token;
+        await newUser.save();
 
-        const { password: hiddenPassword, ...userWithoutPassword } = user.toObject(); // Ensure toObject() is used to strip the password
+        const { password: hiddenPassword, ...userWithoutPassword } = newUser.toObject(); // Ensure toObject() is used to strip the password
         return {
             code: 200,
             metadata: {
