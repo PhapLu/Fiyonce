@@ -10,7 +10,7 @@ const router = express.Router()
 
 //
 router.get('/readUserProfile/:profileId', asyncHandler(userController.readUserProfile))
-
+router.get('/me', asyncHandler(userController.me))
 //authentication
 //router.use(authenticationV2)
 router.use(verifyToken)
