@@ -16,6 +16,7 @@ const UserSchema = new Schema(
       enum: ['member', 'talent', 'admin'],
       default: 'member'
     },
+    jobTitle: { type: String },
     avatar: {
       type: String,
       default:
@@ -51,8 +52,6 @@ const UserSchema = new Schema(
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     accessToken: { type: String },
-    isVerified: { type: Boolean, default: false },
-    verificationExpiry: { type: Date,  index: { expires: 1800 } } // TTL Index
   },
   {
     timestamps: true,

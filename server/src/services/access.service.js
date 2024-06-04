@@ -15,6 +15,7 @@ import role from "../middlewares/role.js"
 import jwt from 'jsonwebtoken'
 import UserOTPVerification from "../models/UserOTPVerification.js"
 import sendEmail from "../middlewares/sendMail.js"
+import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
 const RoleUser = {
     MEMBER: "member",
     WRITER: "00002",
@@ -161,32 +162,34 @@ class AccessService{
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
-        if (holderUser && holderUser.isVerified) {
+        if (holderUser) {
             throw new BadRequestError("Error: User already registered");
         }
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        var newUser;
-        if(!holderUser){
-            newUser = await User.create({
-                fullName,
-                email,
-                password: hashedPassword,
-                role: 'member', // Use the string directly
-                isVerified: false // Add this field to manage user verification
-            });
-        }else{
-            newUser = await User.findOne({ email }).lean();
-        }
-        // 3. Create user but do not activate it yet
-
+        // if(!holderUser){
+        //     newUser = await User.create({
+        //         fullName,
+        //         email,
+        //         password: hashedPassword,
+        //         role: 'member', // Use the string directly
+        //         isVerified: false // Add this field to manage user verification
+        //     });
+        // }else{
+        //     newUser = await User.findOne({ email }).lean();
+        // }
+        // 3. Check if there is an existing OTP record for the email
+        const oldOtp = await UserOTPVerification.findOne({ email}).lean();
+        if(oldOtp) await UserOTPVerification.deleteOne({ email });
         // 4. Generate 6-digit OTP
         const otp = crypto.randomInt(100000, 999999).toString();
 
         // 5. Save OTP in UserOTPVerification collection
         const otpVerification = new UserOTPVerification({
             email,
+            password: hashedPassword,
+            fullName,
             otp,
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
         });
@@ -194,14 +197,14 @@ class AccessService{
 
         // 6. Send OTP email
         const subject = 'Your OTP Code';
-        const message = `Your OTP code is ${otp}`;
+        const message = `Your OTP code for verification is ${otp}`;
         await sendEmail(email, subject, message);
 
         return {
             code: 201,
             metadata: {
-                userId: newUser._id,
-                email: newUser.email
+                userId: otpVerification._id,
+                email: otpVerification.email
             }
         };
     }
@@ -223,16 +226,92 @@ class AccessService{
             throw new BadRequestError('Incorrect OTP');
         }
 
+        //4. Create user by otpVerification
+        const newUser = await User.create({
+            fullName: otpRecord.fullName,
+            email: otpRecord.email,
+            password: otpRecord.password,
+            role: 'member', // Use the string directly
+        });
+        newUser.save()
         // 4. Delete the OTP record
         await UserOTPVerification.deleteOne({ email });
 
-        // 5. Find user by email
-        const user = await User.findOne({ email });
+        // 6. Create token
+        const token = jwt.sign(
+            {
+                id: newUser._id,
+                email: newUser.email
+            },
+            process.env.JWT_SECRET
+        );
+
+        newUser.accessToken = token;
+        await newUser.save();
+
+        const { password: hiddenPassword, ...userWithoutPassword } = newUser.toObject(); // Ensure toObject() is used to strip the password
+        return {
+            code: 200,
+            metadata: {
+                user: userWithoutPassword
+            }
+        };
+    }
+
+    static forgotPassword = async ({ email }) => {
+        // 1. Find the user by email
+        const user = await User.findOne({ email }).lean();
         if (!user) {
             throw new BadRequestError('User not found');
         }
 
-        // 6. Create token
+        const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean();
+        if(oldOtp) await ForgotPasswordOTP.deleteOne({ email });
+
+        // 2. Generate 6-digit OTP
+        const otp = crypto.randomInt(100000, 999999).toString();
+
+        // 3. Save OTP in ForgotPasswordOTP collection
+        const forgotPasswordOTP = new ForgotPasswordOTP({
+            email,
+            otp,
+            expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
+        });
+        await forgotPasswordOTP.save();
+
+        // 4. Send OTP email
+        const subject = 'Your OTP Code';
+        const message = `Your OTP code for setting new password is ${otp}`;
+        await sendEmail(email, subject, message);
+
+        return {
+            code: 200,
+            metadata: {
+                email
+            }
+        };
+    }
+
+    static resetPassword = async({ email, otp, newPassword }) => {
+        // 1. Find the OTP in the database
+        const otpRecord = await ForgotPasswordOTP.findOne({ email }).lean();
+        if (!otpRecord) throw new BadRequestError('OTP not found');
+        // 2. Check if the OTP is expired
+        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired');
+
+        // 3. Check if the OTP is correct
+        if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP');
+
+        // 4. Find the user by email
+        const user = await User.findOne({ email });
+        if (!user) throw new BadRequestError('User not found');
+
+        // 5. Hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        // 6. Update the user's password
+        user.password = hashedPassword;
+        await user.save();
+        // 7. Create token
         const token = jwt.sign(
             {
                 id: user._id,
@@ -242,19 +321,21 @@ class AccessService{
         );
 
         user.accessToken = token;
-        user.isVerified = true; // Activate user
-        user.verificationExpiry = null; // Remove the verificationExpiry field
         await user.save();
 
         const { password: hiddenPassword, ...userWithoutPassword } = user.toObject(); // Ensure toObject() is used to strip the password
+        
+        // 8. Delete the OTP record
+        await ForgotPasswordOTP.deleteOne({ email });
+
         return {
             code: 200,
             metadata: {
-                user: userWithoutPassword
+                email,
+                user : userWithoutPassword
             }
         };
     }
-
     // static logout = async(keyStore) =>{
     //     const delKey = await KeyTokenService.removeTokenById(keyStore._id)
     //     console.log("delKey: ", delKey)

@@ -10,10 +10,6 @@ import jwt from 'jsonwebtoken'
 class UserService{
 //-------------------CRUD----------------------------------------------------
     static updateProfile = async(userId, profileId, body) => {
-        console.log('Hello')
-        console.log('Hello')
-        console.log(profileId)
-        console.log(body)
         //1. Check user
         const profile = await User.findById(profileId)
         if(!profile) throw new NotFoundError('User not found')
@@ -38,17 +34,18 @@ class UserService{
         const user = await User.findById(userId).select('-password')
         if(!user) throw new NotFoundError('User not found')
 
-        return {user}
+        return user
 
     }
 
     static readUserProfile = async(profileId) => {
-        console.log(profileId)
         //1. Check user
         const userProfile = await User.findById(profileId)
         if(!userProfile) throw new NotFoundError('User not found')
         //2. Return user profile
-        return {user: userProfile};
+        return{
+            userProfile
+        }
     }
 
     static deleteProfile = async(userId, profileId) => {
@@ -96,15 +93,13 @@ class UserService{
 
         // 2. Validate request body
         const { stageName, portfolioLink, phone } = req.body;
-        const requests = await TalentRequest.find()
+        const request = await TalentRequest.find({phone})
+        if(request) await TalentRequest.deleteOne({phone})
         if (!req.files || !req.files.artworks) {
             throw new BadRequestError('Please provide artwork files');
         }
         if (!userId || !stageName || !portfolioLink || !phone) {
             throw new BadRequestError('Please provide all required fields');
-        }
-        for (let request of requests){
-            if(request.phone === phone) throw new BadRequestError('Phone number already used')
         }
         // 3. Upload files to Cloudinary and get their URLs
         const uploadToCloudinary = (file) => {
@@ -167,24 +162,7 @@ class UserService{
             { new: true }
         )
         
-        // 4. Create AccessToken and RefreshToken and save
-        const privateKey = crypto.randomBytes(64).toString("hex");
-        const publicKey = crypto.randomBytes(64).toString("hex");
-        //5. Exclude password from foundUser
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser;
-        // 6. Generate tokens
-        const tokens = await createTokenPair(
-            userWithoutPassword,
-            publicKey,
-            privateKey
-        );
-        
-        await KeyTokenService.createKeyToken({
-            refreshToken: tokens.refreshToken,
-            privateKey,
-            publicKey,
-            userId
-        });
 
         //4. Mark request as approved
         request.status = 'approved'
