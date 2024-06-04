@@ -5,6 +5,7 @@ import { artwork } from '../models/artwork.model.js'
 import TalentRequest from '../models/talentRequest.model.js'
 import {User} from '../models/user.model.js'
 import crypto from 'crypto'
+import jwt from 'jsonwebtoken'
 
 class UserService{
 //-------------------CRUD----------------------------------------------------
@@ -24,6 +25,19 @@ class UserService{
         return {
             updatedUser
         }
+    }
+    
+    static me = async(accessToken) => {
+        //1. Decode accessToken
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET)
+        if(!decoded) throw new AuthFailureError('Invalid token')
+        const userId = decoded.id
+        if(!userId) throw new AuthFailureError('Invalid validation')
+        const user = await User.findById(userId).select('-password')
+        if(!user) throw new NotFoundError('User not found')
+
+        return user
+
     }
 
     static readUserProfile = async(profileId) => {

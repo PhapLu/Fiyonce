@@ -11,5 +11,4 @@ export const verifyToken = (req, res, next)=> {
         req.email = payload.email;
         next();
     });
-    console.log('Finish')
 }

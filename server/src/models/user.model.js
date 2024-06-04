@@ -51,7 +51,7 @@ const UserSchema = new Schema(
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     accessToken: { type: String },
     isVerified: { type: Boolean, default: false },
-    verificationExpiry: { type: Date, default: Date.now, index: { expires: 1800 } } // TTL Index
+    verificationExpiry: { type: Date,  index: { expires: 1800 } } // TTL Index
   },
   {
     timestamps: true,

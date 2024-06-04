@@ -243,7 +243,7 @@ class AccessService{
 
         user.accessToken = token;
         user.isVerified = true; // Activate user
-        user.verificationExpiry = undefined; // Remove the verificationExpiry field
+        user.verificationExpiry = null; // Remove the verificationExpiry field
         await user.save();
 
         const { password: hiddenPassword, ...userWithoutPassword } = user.toObject(); // Ensure toObject() is used to strip the password
