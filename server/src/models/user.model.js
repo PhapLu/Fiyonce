@@ -16,6 +16,7 @@ const UserSchema = new Schema(
       enum: ['member', 'talent', 'admin'],
       default: 'member'
     },
+    jobTitle: { type: String },
     avatar: {
       type: String,
       default:

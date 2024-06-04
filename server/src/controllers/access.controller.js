@@ -78,7 +78,6 @@ class AccessController {
 
     verifyOtp = async (req, res, next) => {
         try {
-            console.log(req.body)
             const { metadata, code } = await AccessService.verifyOtp(req.body);
     
             // If OTP verification was successful and tokens were generated
@@ -100,7 +99,36 @@ class AccessController {
             next(error); // Pass error to error handler middleware
         }
     }
-    
+
+    forgotPassword = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Forgot password success!',
+            metadata: await AccessService.forgotPassword(req.body)
+        }).send(res)
+    }
+
+    resetPassword = async(req, res, next) => {
+        try {
+            const { metadata, code } = await AccessService.resetPassword(req.body);
+
+            // If OTP verification was successful and tokens were generated
+            if (code === 200 && metadata.user && metadata.user.accessToken) {
+                const { accessToken } = metadata.user;
+                // Setting accessToken in a cookie
+                res.cookie("accessToken", accessToken, {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
+                });
+            }
+            new SuccessResponse({
+                message: 'Forgot password success!',
+                metadata,
+            }).send(res)
+        } catch (error) {
+            next(error); // Pass error to error handler middleware
+        }
+        
+    }
     
 }
 

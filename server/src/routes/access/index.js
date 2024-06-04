@@ -7,11 +7,12 @@ const router = express.Router()
 //signUp
 router.post('/users/signUp', asyncHandler(accessController.signUp))
 router.post('/users/login', asyncHandler(accessController.login))
-router.patch('/users/verify', asyncHandler(accessController.verifyOtp))
+router.post('/users/verify', asyncHandler(accessController.verifyOtp))
+router.post('/users/logout', asyncHandler(accessController.logout))
+router.post('/users/forgotPassword', asyncHandler(accessController.forgotPassword))
+router.patch('/users/resetPassword', asyncHandler(accessController.resetPassword))
 //authentication
 //router.use(authenticationV2)
 router.use(verifyToken)
-//logout
-router.post('/users/logout', asyncHandler(accessController.logout))
 router.post('/users/handlerRefreshToken', asyncHandler(accessController.handlerRefreshToken))
 export default router
