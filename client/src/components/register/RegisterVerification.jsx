@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
 import Cookies from 'js-cookie';
-import axios from 'axios';
+import { apiUtils } from "../../utils/newRequest";
 
 import AuthenticationImg from "../../assets/img/authentication-img.png";
 import FacebookLogo from "../../assets/img/facebook-logo.png";
@@ -9,40 +9,38 @@ import GoogleLogo from "../../assets/img/google-logo.png";
 import "../../assets/scss/authentication.scss";
 import "./Register.scss";
 
-export default function RegisterVerification() {
+export default function RegisterVerification({handleRegisterSubmit, registerInfo, registerEmail }) {
     const [inputs, setInputs] = useState({});
-    const { showRegisterVerificationForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible,  setOverlayVisible} = useAuth();
+    const { setShowRegisterForm, setOverlayVisible, showRegisterVerificaitonForm, setShowRegisterVerificationForm } = useAuth();
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+        console.log(inputs)
         setInputs((values) => ({ ...values, [name]: value }));
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setOverlayVisible(true);
-        inputs.role = "member";
-        const { confirm_password, ...others } = inputs;
+        // setOverlayVisible(true);
+
         // const response = await axios.post("", others);
-        const response = { data: true, status: 200 };
-        if (response.status === 200) {
-            console.log("Verification successful");
-            // Redirect or update UI based on successful verification
-            setShowRegisterForm(false);
-            // setShowLoginForm(true);
-        } else {
-            console.log("Verification failed");
-            // Handle verification failure
+        try {
+            const response = await apiUtils.post("/access/users/verifyOtp", { ...inputs, email: registerEmail })
+            console.log(response);
+        } catch (error) {
+            console.log(error);
         }
+
+
     };
 
     return (
-        <form className="form verify-registration-form">
+        <form className="form verify-registration-form" onSubmit={handleSubmit}>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowRegisterForm(false);
+                setShowRegisterVerificationForm(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -52,9 +50,10 @@ export default function RegisterVerification() {
             <p>Fiyonce vừa gửi mã xác nhận đến email của bạn.
                 Để đăng kí tài khoản, vui lòng điền mã xác thực.</p>
             <div className="form-field">
-                <label htmlFor="register-verification-code" className="form-field__label">Mã xác thực</label>
-                <input type="register-verification-code" id="register-verification-code" name="register-verification-code" value={inputs.register_verification_code || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mã xác thực" />
+                <label htmlFor="otp" className="form-field__label">Mã xác thực</label>
+                <input type="otp" id="otp" name="otp" value={inputs.otp || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mã xác thực" />
             </div>
+            <p>Không nhận được mã? <span className="highlight-text" onClick={handleRegisterSubmit}>Gửi lại</span></p>
             <div className="form-field">
                 <input
                     type="submit"

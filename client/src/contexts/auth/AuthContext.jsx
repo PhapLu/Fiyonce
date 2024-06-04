@@ -18,14 +18,14 @@ export const AuthProvider = ({ children }) => {
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const [showRegisterVerificationForm, setShowRegisterVerificationForm] = useState(false);
 
 
     // Fetch user profile data
     const fetchUserProfile = async () => {
         try {
             const response = await newRequest.get('user/me');
-            // console.log(response)
+            console.log(response)
             return response.data.metadata.user;
         } catch (error) {
             // console.log(error.response)
@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }) => {
         },
         onSuccess: (data) => {
             if (data) {
+                console.log("AAA")
+                console.log(data)
                 data.displayName = formatEmailToName(data.email);
                 data.socialLinks = [
                     {
@@ -98,6 +100,8 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         loading,
+        showRegisterVerificationForm,
+        setShowRegisterVerificationForm
     };
 
     return (

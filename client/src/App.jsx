@@ -22,7 +22,7 @@ import Profile from "./pages/profile/Profile";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import { useAuth } from "./contexts/auth/AuthContext";
 
-import Artworks from "./pages/artworks/Artworks";
+import Explore from "./pages/explore/Explore";
 // import Artwork from "./pages/artwork/Artwork";
 // import Challenges from "./pages/challenges/Challenges";
 // import Challenge from "./pages/challenge/Challenge";
@@ -93,8 +93,8 @@ const router = createBrowserRouter([
     element: <Layout showSidebar={false}></Layout>,
     children: [
       {
-        path: "/artworks",
-        element: <Artworks />,
+        path: "/explore",
+        element: <Explore />,
       },
       // {
       //   path: "/messenger",

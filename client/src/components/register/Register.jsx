@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
 import Cookies from 'js-cookie';
-import axios from 'axios';
-
+import { apiUtils } from "../../utils/newRequest";
 import RegisterVerification from "./RegisterVerification";
 
 import AuthenticationImg from "../../assets/img/authentication-img.png";
@@ -13,8 +12,8 @@ import "./Register.scss";
 
 export default function Register() {
     const [inputs, setInputs] = useState({});
-    const { setShowLoginForm, setShowRegisterForm, setOverlayVisible } = useAuth();
-    const [showRegisterVerificationForm, setShowRegisterVerificationForm] = useState(false);
+    const { setShowLoginForm, setShowRegisterForm, setOverlayVisible, showRegisterVerificationForm, setShowRegisterVerificationForm } = useAuth();
+    const [registerEmail, setRegisterEmail] = useState();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -28,23 +27,25 @@ export default function Register() {
         setOverlayVisible(true);
         inputs.role = "client";
         const { confirm_password, ...others } = inputs;
-        // const response = await axios.post("", others);
-        const response = { data: true, status: 200 };
-        if (response.status === 200) {
-            console.log("Verification successful");
-            // Redirect or update UI based on successful verification
-            // setShowRegisterForm(false);
-            setShowRegisterVerificationForm(true);
-            // setShowLoginForm(true);
-        } else {
-            console.log("Verification failed");
-            // Handle verification failure
+
+        // Validate user inputs0
+        try {
+            console.log()
+            const response = await apiUtils.post("/access/users/signUp", inputs);
+            console.log(response);
+            if (response) {
+                setShowRegisterVerificationForm(true);
+                setRegisterEmail(response.data.metadata.email);
+            }
+        } catch (error) {
+            console.log(error.response);
         }
+
     };
 
     return (
         <div className="authentication--right">
-            {showRegisterVerificationForm ? <RegisterVerification /> :
+            {showRegisterVerificationForm ? <RegisterVerification handleRegisterSubmit={handleSubmit} registerInfo={inputs} registerEmail={registerEmail} /> :
                 (
                     <>
                         <form className="form register-form" onSubmit={handleSubmit}>
@@ -69,8 +70,8 @@ export default function Register() {
                                 <input type="password" id="confirm_password" name="confirm_password" value={inputs.confirm_password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập lại mật khẩu" />
                             </div>
                             <div className="form-field">
-                                <label htmlFor="fullname" className="form-field__label">Họ và tên</label>
-                                <input type="fullname" id="fullname" name="fullname" value={inputs.fullname || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
+                                <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
+                                <input type="fullName" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
                             </div>
                             <div className="form-field">
                                 <input

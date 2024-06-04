@@ -34,7 +34,7 @@ class UserService{
         const user = await User.findById(userId).select('-password')
         if(!user) throw new NotFoundError('User not found')
 
-        return user
+        return {user}
 
     }
 

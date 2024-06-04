@@ -127,9 +127,7 @@ class AccessController {
         } catch (error) {
             next(error); // Pass error to error handler middleware
         }
-        
     }
-    
 }
 
 export default new AccessController()
