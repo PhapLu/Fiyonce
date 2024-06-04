@@ -1,24 +1,20 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from 'jwt-decode';
 
 const newRequest = axios.create({
     baseURL: "http://localhost:3000/v1/api/",
     withCredentials: true,
-})
+});
 
-const getLoggedInRequestConfig = () => {
-    const token = Cookies.get('accessToken');
-    if (!token) {
-        throw new Error('No access token found');
+const getLoggedInRequestConfig = (data) => {
+    let contentType = 'application/json';
+    if (data instanceof FormData) {
+        contentType = 'multipart/form-data';
     }
-
-    const decodedToken = jwtDecode(token);
     return {
         headers: {
-            'x-client-id': decodedToken._id,
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            "Content-Type": contentType,
         },
         withCredentials: true,
     };
@@ -31,13 +27,13 @@ const apiUtils = {
     },
 
     async post(url, data = {}, config = {}) {
-        const requestConfig = { ...getLoggedInRequestConfig(), ...config };
+        const requestConfig = { ...getLoggedInRequestConfig(data), ...config };
         return newRequest.post(url, data, requestConfig);
     },
 
-    async put(url, data = {}, config = {}) {
-        const requestConfig = { ...getLoggedInRequestConfig(), ...config };
-        return newRequest.put(url, data, requestConfig);
+    async patch(url, data = {}, config = {}) {
+        const requestConfig = { ...getLoggedInRequestConfig(data), ...config };
+        return newRequest.patch(url, data, requestConfig);
     },
 
     async delete(url, config = {}) {
@@ -47,3 +43,12 @@ const apiUtils = {
 };
 
 export { newRequest, apiUtils };
+
+// Example usage with JSON data
+const userId = "12345";
+const jsonInputs = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    // other fields
+};
+

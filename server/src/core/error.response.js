@@ -10,7 +10,7 @@ const ReasonStatusCode = {
 
 import {statusCodes, reasonPhrases} from '../utils//httpStatusCode.js'
 
-class ErrorResponse extends Error{
+class ErrorResponse extends Error {
     constructor(message, status){
         super(message)
         this.status = status
@@ -46,5 +46,5 @@ class ForbiddenError extends ErrorResponse{
     }
 } 
 
-export {ConflictRequestError, BadRequestError, AuthFailureError, NotFoundError, ForbiddenError}
+export {ErrorResponse, ConflictRequestError, BadRequestError, AuthFailureError, NotFoundError, ForbiddenError}
 

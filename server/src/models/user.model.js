@@ -46,6 +46,7 @@ const UserSchema = new Schema(
     bookmark: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Artwork' }
     ],
+    jobTitle: {type: String},
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],

@@ -24,8 +24,8 @@ export default function Navbar() {
                 <img src={Logo} alt="Logo" className="navbar__brand-logo" />
                 <h3 className="navbar__brand-name">Fiyonce</h3>
                 <div className="navbar__search-field">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" className="size-6 navbar__search-field__ic">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-6 navbar__search-field__ic">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
                     <input type="text" className="navbar__search-field__input form-field__input" placeholder="Tìm kiếm tranh vẽ và họa sĩ" />
                 </div>

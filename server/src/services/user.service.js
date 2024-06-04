@@ -11,7 +11,9 @@ class UserService{
 //-------------------CRUD----------------------------------------------------
     static updateProfile = async(userId, profileId, body) => {
         console.log('Hello')
+        console.log('Hello')
         console.log(profileId)
+        console.log(body)
         //1. Check user
         const profile = await User.findById(profileId)
         if(!profile) throw new NotFoundError('User not found')
@@ -36,7 +38,7 @@ class UserService{
         const user = await User.findById(userId).select('-password')
         if(!user) throw new NotFoundError('User not found')
 
-        return user
+        return {user}
 
     }
 

@@ -18,9 +18,31 @@
             border-radius: 50%;
             border: 4px solid white;
             box-shadow: rgba(51, 51, 51, 0.2) 0px 2px 8px;
+
+            &.loading-spinner {
+                // border: 8px solid rgba(0, 0, 0, 0.1);
+                // border-left-color: #726FFF;
+                // border-radius: 50%;
+                // width: 140px;
+                // height: 140px;
+                // animation: spin 1s linear infinite;
+                // margin: 20px auto;
+                // z-index: 1000;
+            }
+
+            // @keyframes spin {
+            //     0% {
+            //         transform: rotate(0deg);
+            //     }
+
+            //     100% {
+            //         transform: rotate(360deg);
+            //     }
+            // }
         }
 
         .sidebar__avatar__ic {
+            color: var(--black-color);
             position: absolute;
             background-color: white;
             bottom: 8px;
@@ -33,10 +55,11 @@
             box-shadow: rgba(51, 51, 51, 0.2) 0px 2px 8px;
         }
     }
-   
+
 
     .sidebar__name {
         margin-bottom: 20px;
+
         .sidebar__name__fullname {
             margin-bottom: 12px;
             color: var(--black-3-color);

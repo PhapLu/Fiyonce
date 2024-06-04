@@ -19,36 +19,37 @@ export const AuthProvider = ({ children }) => {
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
 
+
+
     // Fetch user profile data
     const fetchUserProfile = async () => {
-        const token = Cookies.get('accessToken');
-        if (!token) {
-            throw new Error('Access token not found');
+        try {
+            const response = await newRequest.get('user/me');
+            // console.log(response)
+            return response.data.metadata.user;
+        } catch (error) {
+            // console.log(error.response)
+            return null;
         }
-
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken._id;
-
-        const response = await newRequest.get(`user/readUserProfile/${userId}`);
-        return response.data.metadata.user;
     };
 
     const { data, error, isError, isLoading } = useQuery('fetchUserProfile', fetchUserProfile, {
-        enabled: !!Cookies.get('accessToken'),
         onError: (error) => {
             console.error('Error fetching user profile:', error);
         },
         onSuccess: (data) => {
-            data.displayName = formatEmailToName(data.email);
-            data.socialLinks = [
-                {
-                    "url": "https://facebook.com/nhatluu03",
-                },
-                {
-                    "url": "https://tiktok.com/nhatluu2003",
-                },
-            ]
-            setUserInfo(data);
+            if (data) {
+                data.displayName = formatEmailToName(data.email);
+                data.socialLinks = [
+                    {
+                        "url": "https://facebook.com/nhatluu03",
+                    },
+                    {
+                        "url": "https://tiktok.com/nhatluu2003",
+                    },
+                ]
+                setUserInfo(data);
+            }
             setLoading(false);
         },
     });
@@ -63,7 +64,6 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const response = await newRequest.post("access/users/login", { email, password });
-        Cookies.set('accessToken', response.data.metadata.tokens.accessToken);
 
         if (response.data.status == 200) {
             alert("Successfully logged in as: " + response.data.metadata.user.email);
@@ -79,8 +79,6 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             await apiUtils.post("access/users/logout");
-
-            Cookies.remove('accessToken');
             setUserInfo(null);
         } catch (error) {
             console.error('Logout error:', error);
@@ -104,7 +102,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     );
 };
