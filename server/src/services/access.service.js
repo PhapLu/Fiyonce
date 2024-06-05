@@ -194,6 +194,7 @@ class AccessService{
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
         });
         await otpVerification.save();
+        console.log(otpVerification)
 
         // 6. Send OTP email
         const subject = 'Your OTP Code';

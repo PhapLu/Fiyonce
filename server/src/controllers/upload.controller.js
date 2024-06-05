@@ -23,7 +23,6 @@ class UploadController{
 
     uploadAvatarOrCover = async(req, res, next) => {
         const { file } = req;
-        console.log(file);
         if (!file) throw new BadRequestError('File missing');
         
         const { buffer, originalname } = file;

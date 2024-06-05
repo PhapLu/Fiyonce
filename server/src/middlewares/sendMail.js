@@ -12,6 +12,9 @@ const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
 async function sendEmail(to, subject, message) {
+    console.log(to)
+    console.log(subject)
+    console.log(message)
     try {
         const accessToken = await oAuth2Client.getAccessToken()
         // Create a transporter using

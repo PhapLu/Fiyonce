@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const DOCUMENT_NAME = 'forgotPasswordOTP';
-const COLLECTION_NAME = 'forgotPasswordOTPs';
+const DOCUMENT_NAME = 'ForgotPasswordOTP';
+const COLLECTION_NAME = 'ForgotPasswordOTPs';
 
 const forgotPasswordOTPSchema = new Schema({
     email: { 
