@@ -6,7 +6,6 @@ import artworkRoute from './artwork/index.js'
 import uploadRoute from './upload/index.js'
 import applyRoute from './apply/index.js'
 
-
 const router = express.Router()
 //check Permission
 router.use('/v1/api/access', accessRoute)
