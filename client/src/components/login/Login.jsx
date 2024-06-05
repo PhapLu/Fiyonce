@@ -42,17 +42,18 @@ export default function Login() {
     <h2 className="form__title">Đăng nhập</h2>
     <div className="form-field">
         <label htmlFor="email" className="form-field__label">Email</label>
-        <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" />
+        <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on"/>
     </div>
     <div className="form-field">
         <label htmlFor="password" className="form-field__label">Mật khẩu</label>
-        <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" />
+        <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" autoComplete="on"/>
     </div>
     <div className="form-field">
         <input
             type="submit"
             value="Đăng nhập"
             className="form-field__input btn btn-2 btn-md"
+            autoComplete="on"
         />
     </div>
 </form>

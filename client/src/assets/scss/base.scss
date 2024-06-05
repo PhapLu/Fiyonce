@@ -22,6 +22,7 @@
 }
 
 body.dark {
+    transition: 0s linear;
     // Light theme colors
     --black-1-color: #dddddd;
     --black-2-color: #817f7f;
@@ -61,27 +62,12 @@ body {
     font-size: 1.4rem;
     font-weight: 500;
     background-color: var(--white-3-color);
-    transition: 0.2s linear;
+    // transition: 0.2s linear;
     color: var(--black-3-color);
 }
 
 #root {
     margin: 4px 4% !important;
-}
-
-.app.with-sidebar {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
-
-    .sidebar {
-        width: 28%;
-    }
-
-    .outlet-content {
-        width: 69%;
-    }
 }
 
 ::selection {
@@ -135,6 +121,13 @@ h4 {
 p {
     font-size: 1.4rem;
     line-height: 2rem;
+    width: 100%;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
 }
 
 .highlight-text {
@@ -157,9 +150,10 @@ p {
     justify-content: center;
     background-color: unset;
 
-    .btn-ic {
-        width: 16px;
-        height: 16px;
+    .btn-ic,
+    svg {
+        width: 20px;
+        height: 20px;
         object-fit: cover;
         margin-right: 8px;
     }
@@ -239,6 +233,14 @@ hr {
         display: block;
         margin-bottom: 8px;
         color: var(--black-2-color);
+    }
+
+    textarea {
+        resize: none;
+        min-height: 100px;
+        overflow-y: clip;
+        padding: 8px 10px;
+        font-family: 'Inter';
     }
 
     .form-field__input {

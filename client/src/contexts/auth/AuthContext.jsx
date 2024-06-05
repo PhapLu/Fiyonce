@@ -42,14 +42,6 @@ export const AuthProvider = ({ children }) => {
                 console.log("AAA")
                 console.log(data)
                 data.displayName = formatEmailToName(data.email);
-                data.socialLinks = [
-                    {
-                        "url": "https://facebook.com/nhatluu03",
-                    },
-                    {
-                        "url": "https://tiktok.com/nhatluu2003",
-                    },
-                ]
                 setUserInfo(data);
             }
             setLoading(false);

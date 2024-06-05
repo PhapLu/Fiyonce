@@ -9,7 +9,7 @@ import GoogleLogo from "../../assets/img/google-logo.png";
 import "../../assets/scss/authentication.scss";
 import "./Register.scss";
 
-export default function RegisterVerification({handleRegisterSubmit, registerInfo, registerEmail }) {
+export default function RegisterVerification({handleRegisterSubmit, registerEmail }) {
     const [inputs, setInputs] = useState({});
     const { setShowRegisterForm, setOverlayVisible, showRegisterVerificaitonForm, setShowRegisterVerificationForm } = useAuth();
 
@@ -47,7 +47,7 @@ export default function RegisterVerification({handleRegisterSubmit, registerInfo
             </svg>
 
             <h2 className="form__title">Đăng kí</h2>
-            <p>Fiyonce vừa gửi mã xác nhận đến email của bạn.
+            <p>Fiyonce vừa gửi mã xác nhận đến <strong>{registerEmail}</strong>.
                 Để đăng kí tài khoản, vui lòng điền mã xác thực.</p>
             <div className="form-field">
                 <label htmlFor="otp" className="form-field__label">Mã xác thực</label>

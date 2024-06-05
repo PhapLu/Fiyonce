@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from "../../contexts/auth/AuthContext";
 import "./Sidebar.scss";
 import { apiUtils } from '../../utils/newRequest';
@@ -8,34 +8,28 @@ export default function Sidebar() {
     const [openEditProfileForm, setOpenEditProfileForm] = useState(false);
     const [inputs, setInputs] = useState(userInfo);
     const [loading, setLoading] = useState(false);
-    
+
     if (!userInfo) {
-        return;
+        return null;
     }
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        console.log(inputs)
         setInputs((values) => ({ ...values, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
         try {
             const userId = userInfo._id;
             const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, inputs);
-            // const response = await axios.patch(`http://localhost:3000/v1/api/user/updateUserProfile/${userId}`, inputs, {withCredentials: true});
             setUserInfo(response.data.metadata.updatedUser);
+            alert("Successfully updated user information")
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
-
-    useEffect(() => {
-        setInputs(userInfo);
-    }, [userInfo]);
 
     const handleAvatarClick = () => {
         document.getElementById('fileInput').click();
@@ -54,7 +48,6 @@ export default function Sidebar() {
                 if (response.data.metadata.image_url) {
                     setUserInfo({ ...userInfo, avatar: response.data.metadata.image_url });
                 }
-
             } catch (error) {
                 console.error('Error:', error);
             } finally {
@@ -62,7 +55,6 @@ export default function Sidebar() {
             }
         }
     };
-
 
     return (
         <div className="sidebar">
@@ -90,11 +82,22 @@ export default function Sidebar() {
                     </div>
                     <div className="form-field">
                         <label htmlFor="province" className="form-field__label">Tỉnh thành</label>
-                        <input type="text" id="province" name="province" value={inputs.province || ""} onChange={handleChange} className="form-field__input" placeholder="-- Chọn tỉnh thành --" />
+                        <select
+                            id="province"
+                            name="province"
+                            value={inputs.province || ""}
+                            onChange={handleChange}
+                            className="form-field__input"
+                        >
+                            <option value="">-- Chọn tỉnh thành --</option>
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hochiminh">TP Hồ Chí Minh</option>
+                            <option value="other">Khác</option>
+                        </select>
                     </div>
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
-                        <input type="text" id="bio" name="bio" value={userInfo.bio || inputs.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập giới thiệu ngắn gọn về bản thân" />
+                        <textarea type="text" id="bio" name="bio" value={inputs.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập giới thiệu ngắn gọn về bản thân" />
                     </div>
                     <button className="sidebar__btn btn btn-md btn-2" onClick={handleSubmit}>
                         <span>Lưu thay đổi</span>
@@ -106,18 +109,57 @@ export default function Sidebar() {
             ) : (
                 <>
                     <div className="sidebar__name">
-                        <h4 className="sidebar__name__fullName">{userInfo.fullName}</h4>
+                        <p className="sidebar__name__fullName">{userInfo.fullName}</p>
                         <span className="sidebar__name__email">{userInfo.displayName}</span>
                     </div>
+                    <div>
+                        <span className="sidebar__job-title">
+                            {userInfo.jobTitle}
+                        </span>
+                        <br />
+                        <span className="sidebar__location">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            </svg>
+                            {userInfo.province}
+                        </span>
+                    </div>
+                    <br />
+
 
                     <div className="sidebar__follow">
                         <span className="sidebar__follow__follower">{userInfo.followers.length === 0 ? "Chưa có người theo dõi" : `${userInfo.followers.length} người theo dõi`}</span>
-                        -
+                        {" " + "-" + " "}
                         <span className="sidebar__follow__following">{userInfo.following.length === 0 ? "Chưa theo dõi" : `${userInfo.following.length} đang theo dõi`}</span>
                     </div>
+
+                    {userInfo.bio && (
+                        <div className="sidebar__section sidebar__bio">
+                            <p className="sidebar__section__title">Bio</p>
+                            <hr />
+                            <p>{userInfo.bio}</p>
+                        </div>
+                    )}
+
+                    {userInfo.socialLinks && (
+                        <div className="sidebar__section sidebar__socials">
+                            <p className="sidebar__section__title">Liên kết</p>
+                            <hr />
+                            <div className="sidebar__socials__link-container">
+                                <div className="sidebar__socials__link-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                                    </svg>
+                                    <span>vhqwfbwf.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <button className="sidebar__btn btn btn-md btn-2" onClick={() => setOpenEditProfileForm(true)}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21p.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                         </svg>
                         <span>Chỉnh sửa thông tin</span>
                     </button>
@@ -128,7 +170,8 @@ export default function Sidebar() {
                         <span>Nâng cấp tài khoản</span>
                     </button>
                 </>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

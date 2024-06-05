@@ -14,19 +14,6 @@ class UserController {
     }
 
     readUserProfile = async(req, res, next) => {
-        const {profileId} = req.params
-        const user = await User.findById(profileId);
-        let isOwner = false;
-        if (user) {
-            const viewedUserAccessToken = await KeyTokenService.findByUserId(profileId);
-            if (req.cookies) {
-                const accessToken = req.cookies['accessToken'];
-                if (accessToken === viewedUserAccessToken.accessToken) {
-                    isOwner = true;
-                }
-            }
-        }
-
         new SuccessResponse({
             message: 'Read User profile success!',
             metadata: await UserService.readUserProfile(req.params.profileId)

@@ -26,7 +26,7 @@ const UserSchema = new Schema(
       type: String,
     },
     number: { type: String },
-    city: { type: String },
+    province: { type: String },
     country: { type: String, default: "Vietnam" },
     phone: {
       type: String,
