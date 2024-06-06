@@ -20,6 +20,7 @@
 
     --box-shadow-color: rgba(99, 99, 99, 0.2);
     --form-border: unset;
+    --error-color: red;
 }
 
 body.dark {
@@ -41,6 +42,7 @@ body.dark {
     --white-3-color: #0a0a0a;
     --box-shadow-color: rgba(99, 99, 99, 0);
     --form-border: 1px solid var(--gray-1-color);
+    --error-color: #ff6a6a;
 }
 
 * {
@@ -266,7 +268,7 @@ hr {
 
         &.img-preview {
             display: flex;
-            justify-content:space-between;
+            justify-content: space-between;
             align-items: center;
             padding: 3px 6px 3px 3px;
             margin-bottom: 8px;
@@ -309,15 +311,20 @@ hr {
 
         }
     }
+
+    .form-field__error {
+        color: var(--error-color);
+        font-size: 1.3rem;
+        padding-top: 4px;
+        display: block;
+    }
 }
 
 .modal-form {
     background-color: white;
     border-radius: 8px;
 
-    .modal-form--left {
-        
-    }
+    .modal-form--left {}
 
     .modal-form--right {
         padding: 28px 52px;
