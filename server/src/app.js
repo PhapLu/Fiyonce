@@ -17,7 +17,7 @@ const app = express();
 
 // Init middlewares
 app.use(cors({
-    origin: ["http://localhost:5173", "https://vapi.vnappmob.com"],
+    origin: ["http://localhost:5173"],
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     credentials: true,
 }));
@@ -51,8 +51,8 @@ app.use((error, req, res, next) => {
 const server = http.createServer(app);
 
 // Configure Socket.IO
-const io = configureSocket(server);
+configureSocket(server);
 
-global.io.on('connection', SocketServices.connection);
+global._io.on('connection', SocketServices.connection);
 
 export default app;
