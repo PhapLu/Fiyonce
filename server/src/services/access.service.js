@@ -295,50 +295,55 @@ class AccessService{
         };
     }
 
-    static resetPassword = async({ email, otp, newPassword }) => {
-        // 1. Find the OTP in the database
+    static verifyResetPasswordOtp = async({ email, otp}) => {
+        // 1. Find, check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({ email }).lean();
+        const user = await User.findOne({ email });
+        
         if (!otpRecord) throw new BadRequestError('OTP not found');
-        // 2. Check if the OTP is expired
+        if (!user) throw new BadRequestError('User not found');
         if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired');
 
-        // 3. Check if the OTP is correct
+        // 2. Check if the OTP is correct
         if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP');
 
-        // 4. Find the user by email
-        const user = await User.findOne({ email });
-        if (!user) throw new BadRequestError('User not found');
-
-        // 5. Hash the new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        // 6. Update the user's password
-        user.password = hashedPassword;
-        await user.save();
-        // 7. Create token
-        const token = jwt.sign(
-            {
-                id: user._id,
-                email: user.email
-            },
-            process.env.JWT_SECRET
-        );
-
-        user.accessToken = token;
-        await user.save();
-
-        const { password: hiddenPassword, ...userWithoutPassword } = user.toObject(); // Ensure toObject() is used to strip the password
-        
-        // 8. Delete the OTP record
-        await ForgotPasswordOTP.deleteOne({ email });
+        //3. Mark the otp is verified
+        otpRecord.isVerified = true;
+        otpRecord.save()
 
         return {
-            code: 200,
-            metadata: {
-                email,
-                user : userWithoutPassword
-            }
-        };
+            otpRecord
+        }
     }
+
+    resetPassword = async ({ email, password }) => {
+        //1. Find and check the OTP and user in the database
+        const otpRecord = await ForgotPasswordOTP.findOne({email}).lean()
+        const user = await User.findOne({email})
+
+        if(!otpRecord) throw new BadRequestError('OTP not found')
+        if(!user) throw new BadRequestError('User not found')
+        
+        //2. Check if the OTP is verified
+        if(!otpRecord.isVerified) throw new BadRequestError('OTP not verified')
+
+        //3. Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10)
+        user.password = hashedPassword
+
+        await user.save()
+
+        //4. Delete the OTP record
+        await ForgotPasswordOTP.deleteOne({ email })
+        
+        //5. Exclude password from user
+        const { password: hiddenPassword, ...userWithoutPassword } = user.toObject()
+
+        return {
+            user: userWithoutPassword
+        }
+    }
+        
     // static logout = async(keyStore) =>{
     //     const delKey = await KeyTokenService.removeTokenById(keyStore._id)
     //     console.log("delKey: ", delKey)

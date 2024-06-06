@@ -14,6 +14,10 @@ const forgotPasswordOTPSchema = new Schema({
         type: String,
         required: true
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     expiredAt: {
         type: Date,
         required: true,
