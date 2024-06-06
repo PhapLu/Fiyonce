@@ -20,6 +20,10 @@ router.patch('/updateUserProfile/:id', accessService.grantAccess('updateOwn', 'p
 router.post('/addToBookmarks/:artworkId', accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.addToBookmark))
 router.delete('/delete:profileId', accessService.grantAccess('deleteOwn', 'profile'), asyncHandler(userController.deleteProfile))
 router.post('/requestUpgradingToTalent', uploadFields, accessService.grantAccess('updateOwn', 'profile'), asyncHandler(userController.requestUpgradingToTalent))
+// router.post('/requestUpgradingToTalent', uploadFields, function (req, res, next) {
+//     console.log(req.files);
+//     console.log(req.body);
+// })
 //admin
 router.patch('/upgradeRoleToTalent/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(userController.upgradeRoleToTalent))
 router.patch('/denyTalentRequest/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(userController.denyTalentRequest))

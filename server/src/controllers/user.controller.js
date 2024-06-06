@@ -35,6 +35,8 @@ class UserController {
     }
     //User send Request to upgrade role
     requestUpgradingToTalent = async(req, res, next) => {
+        console.log(req.files);
+        console.log(req.body);
         new SuccessResponse({
             message: 'Talent request submitted successfully.',
             metadata: await UserService.requestUpgradingToTalent(req.userId, req)

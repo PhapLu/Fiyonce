@@ -34,8 +34,7 @@ export default function RegisterVerification({handleRegisterSubmit, registerEmai
 
     return (
         <form className="form verify-registration-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
-
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
+            {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowRegisterForm(false);
                 setShowRegisterVerificationForm(false);
                 setOverlayVisible(false);
@@ -57,7 +56,7 @@ export default function RegisterVerification({handleRegisterSubmit, registerEmai
                     value="Đăng kí"
                     className="form-field__input btn btn-2 btn-md"
                 />
-            </div>
+            </div> */}
         </form>
     );
 }

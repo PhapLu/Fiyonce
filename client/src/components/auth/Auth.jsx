@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
-import Login from "../login/Login";
-import Register from "../register/Register";
+
 import MenuBar from "../menuBar/MenuBar.jsx";
+import Login from "../login/Login";
+import ResetPassword from "../resetPassword/ResetPassword"
+import Register from "../register/Register";
+import RegisterVerification from "../register/RegisterVerification.jsx";
+import SetNewPassword from "../setNewPassword/SetNewPassword.jsx";
 
 import AuthenticationImg from "../../assets/img/authentication-img.png";
 import "./Auth.scss";
 
 export default function Auth() {
-    const { userInfo, logout, showLoginForm, showRegisterForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
-    const [showDropdown, setShowDropdown] = useState(false);
+    const { userInfo, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
+
     // Toggle display menu
     const menuRef = useRef();
     const [showMenu, setShowMenu] = useState(false);
@@ -62,14 +66,27 @@ export default function Auth() {
                                 <p>Mỗi giao dịch thành công trên Fiyonce sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ em vùng cao, trồng thêm cây xanh, và tạo sân chơi nuôi dưỡng đam mê hội họa cho các thế hệ họa sĩ tiếp theo.</p>
                                 <p className="authentication__img-reference">sáng tác bởi @re_name</p>
                             </div>
+                            <div className="authentication--right" onClick={(e) => e.stopPropagation()}>
+                                {showRegisterForm && (
+                                    <Register />
+                                )}
 
-                            {showRegisterForm && (
-                                <Register />
-                            )}
+                                {setShowRegisterVerificationForm && (
+                                    <RegisterVerification />
+                                )}
 
-                            {showLoginForm && (
-                                <Login />
-                            )}
+                                {showLoginForm && (
+                                    <Login />
+                                )}
+
+                                {showResetPasswordForm && (
+                                    <ResetPassword />
+                                )}
+
+                                {showSetNewPasswordForm && (
+                                    <SetNewPassword />
+                                )}
+                            </div>
                         </div>
                     </div>
                 )

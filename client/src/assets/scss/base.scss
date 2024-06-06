@@ -21,13 +21,14 @@
     --box-shadow-color: rgba(99, 99, 99, 0.2);
     --form-border: unset;
     --error-color: red;
+    --color-scheme: light;
 }
 
 body.dark {
     transition: 0s linear;
     // Light theme colors
     --black-1-color: #dddddd;
-    --black-2-color: #817f7f;
+    --black-2-color: #a8a8a8;
     --black-3-color: rgb(187, 183, 183);
     --black-btn-color: #501dd2;
 
@@ -43,6 +44,7 @@ body.dark {
     --box-shadow-color: rgba(99, 99, 99, 0);
     --form-border: 1px solid var(--gray-1-color);
     --error-color: #ff6a6a;
+    --color-scheme: dark;
 }
 
 * {
@@ -185,7 +187,8 @@ svg {
 .btn-1 {
     border: 2px solid var(--black-2-color);
     // background-color: white;
-    color: var(--black-btn-color);
+    color: var(--white-1-color);
+    // color: var(--black-btn-color);
 }
 
 .btn-2 {
@@ -255,6 +258,7 @@ hr {
         outline: none;
         background-color: var(--white-2-color);
         color: var(--black-2-color);
+        color-scheme: var(--color-scheme);
 
         &:focus {
             border: 2px solid var(--black-2-color);

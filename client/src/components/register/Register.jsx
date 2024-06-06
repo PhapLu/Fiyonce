@@ -8,7 +8,7 @@ import AuthenticationImg from "../../assets/img/authentication-img.png";
 import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
 import "./Register.scss";
-import {isFilled, minLength, isMatch, hasSymbol, isValidEmail} from "../../utils/validator.js";
+import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
 
 export default function Register() {
     const [inputs, setInputs] = useState({});
@@ -80,59 +80,54 @@ export default function Register() {
     };
 
     return (
-        <div className="authentication--right" onClick={(e) => e.stopPropagation()}>
-            {showRegisterVerificationForm ? <RegisterVerification handleRegisterSubmit={handleSubmit} registerInfo={inputs} registerEmail={registerEmail} /> :
-                (
-                    <>
-                        <form className="form register-form" onSubmit={handleSubmit}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                                setShowRegisterForm(false);
-                                setOverlayVisible(false);
-                            }}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+        <>
+            <form className="form register-form" onSubmit={handleSubmit}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
+                    setShowRegisterForm(false);
+                    setOverlayVisible(false);
+                }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
 
-                            <h2 className="form__title">Đăng kí</h2>
-                            <div className="form-field">
-                                <label htmlFor="email" className="form-field__label">Email</label>
-                                <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
-                                {errors.email && <span className="form-field__error">{errors.email}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label htmlFor="password" className="form-field__label">Mật khẩu</label>
-                                <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" autoComplete="on" />
-                                {errors.password && <span className="form-field__error">{errors.password}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label htmlFor="confirmPassword" className="form-field__label">Xác nhận mật khẩu</label>
-                                <input type="password" id="confirmPassword" name="confirmPassword" value={inputs.confirmPassword || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập lại mật khẩu" autoComplete="on" />
-                                {errors.confirmPassword && <span className="form-field__error">{errors.confirmPassword}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
-                                <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" autoComplete="on" />
-                                {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
-                            </div>
-                            <div className="form-field">
-                                {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-                            </div>
-                            <div className="form-field">
-                                <input
-                                    type="submit"
-                                    value="Tiếp tục"
-                                    className="form-field__input btn btn-2 btn-md"
-                                />
-                            </div>
-                        </form>
-                        <p className="form__extra-text">
-                            Đã có tài khoản?{" "}
-                            <span className="form__extra-text__link" onClick={() => {
-                                setShowRegisterForm(false);
-                                setShowLoginForm(true);
-                            }}>Đăng nhập</span>
-                        </p>
-                    </>
-                )}
-        </div>
+                <h2 className="form__title">Đăng kí</h2>
+                <div className="form-field">
+                    <label htmlFor="email" className="form-field__label">Email</label>
+                    <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
+                    {errors.email && <span className="form-field__error">{errors.email}</span>}
+                </div>
+                <div className="form-field">
+                    <label htmlFor="password" className="form-field__label">Mật khẩu</label>
+                    <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" autoComplete="on" />
+                    {errors.password && <span className="form-field__error">{errors.password}</span>}
+                </div>
+                <div className="form-field">
+                    <label htmlFor="confirmPassword" className="form-field__label">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" value={inputs.confirmPassword || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập lại mật khẩu" autoComplete="on" />
+                    {errors.confirmPassword && <span className="form-field__error">{errors.confirmPassword}</span>}
+                </div>
+                <div className="form-field">
+                    <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
+                    <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" autoComplete="on" />
+                    {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
+                </div>
+                <div className="form-field">
+                    {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                </div>
+                <div className="form-field">
+                    <input
+                        type="submit"
+                        value="Tiếp tục"
+                        className="form-field__input btn btn-2 btn-md"
+                    />
+                </div>
+            </form>
+            <p className="form__extra-text">
+                Đã có tài khoản?{" "}
+                <span className="form__extra-text__link" onClick={() => {
+                    setShowRegisterForm(false);
+                    setShowLoginForm(true);
+                }}>Đăng nhập</span>
+            </p>
+        </>
     );
 }

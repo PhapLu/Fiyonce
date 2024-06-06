@@ -14,6 +14,8 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
+    const [showSetNewPasswordForm, setShowSetNewPasswordForm] = useState(false);
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
@@ -77,10 +79,13 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-
     const value = {
         showLoginForm,
         setShowLoginForm,
+        showResetPasswordForm,
+        setShowResetPasswordForm,
+        showSetNewPasswordForm,
+        setShowSetNewPasswordForm,
         showRegisterForm,
         setShowRegisterForm,
         overlayVisible,

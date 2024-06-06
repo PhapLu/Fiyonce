@@ -107,7 +107,10 @@
         }
     }
 
-    .sidebar__job-title {}
+    .sidebar__job-title {
+        display: block;
+        text-align: center;
+    }
 
     .sidebar__location {
         display: flex;

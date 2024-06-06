@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useParams } from "react-router-dom";
+
 import "./UpgradeAccount.scss";
 import UpgradeAccountImg from "../../assets/img/upgrade-account-img.png";
 import { trimString, bytesToKilobytes, formatFloat } from "../../utils/formatter";
-import {isFilled, minLength} from "../../utils/validator.js";
-
+import { isFilled, minLength } from "../../utils/validator.js";
+import { apiUtils } from '../../utils/newRequest.js';
 const UpgradeAccount = ({ closeModal }) => {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [artworks, setArtworks] = useState([]);
+    const { id } = useParams();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -30,8 +33,6 @@ const UpgradeAccount = ({ closeModal }) => {
                 setErrors((values) => ({ ...values, artworks: "Bạn có thể chọn tối đa 3 tác phẩm." }));
             }
         });
-        console.log(newArtworks);
-
         setArtworks(newArtworks);
     };
 
@@ -39,7 +40,7 @@ const UpgradeAccount = ({ closeModal }) => {
         let errors = {};
         if (!isFilled(inputs.stageName)) {
             errors.stageName = 'Vui lòng nhập nghệ danh';
-        } else if (!minLength(inputs.stageName, 6)) {
+        } else if (!minLength(inputs.stageName, 4)) {
             errors.stageName = 'Nghệ danh phải có ít nhất 4 ký tự';
         }
 
@@ -47,9 +48,9 @@ const UpgradeAccount = ({ closeModal }) => {
             errors.portfolioLink = 'Vui lòng nhập đường dẫn đến hồ sơ của bạn';
         }
 
-        if (artworks.length != 3) {
-            errors.artworks = 'Vui lòng chọn 3 tác phẩm có chữ kí của bạn';
-        }
+        // if (artworks.length != 3) {
+        // errors.artworks = 'Vui lòng chọn 3 tác phẩm có chữ kí của bạn';
+        // }
 
         return errors;
     };
@@ -70,22 +71,24 @@ const UpgradeAccount = ({ closeModal }) => {
             const formData = new FormData();
             formData.append("stageName", inputs.stageName);
             formData.append("portfolioLink", inputs.portfolioLink);
-            formData.append(`artworks`, artworks);
-            
-            console.log(formData.get("stageName"));
-            console.log(formData.get("portfolioLink"));
-            console.log(formData.get("artworks"));
+            artworks.forEach((file, index) => {
+                formData.append("files", file);
+            });
 
-            const response = await apiUtils.post("/access/users/signUp", formData);
-            // if (response) {
-            //     setShowRegisterVerificationForm(true);
-            //     setRegisterEmail(response.data.metadata.email);
-            // }
+            const response = await apiUtils.post(`/user/requestUpgradingToTalent`, formData);
+            console.log(response);
+            if (response.data.status == 200) {
+                alert("Successfully request for upgrading account")
+                closeModal()
+            }
         } catch (error) {
+            console.log("Error")
+            console.log(error);
             console.log(error.response.data.message);
             setErrors((values) => ({ ...values, serverError: error.response.data.message }));
         }
     };
+
 
     const removeImage = (index) => {
         const newArtworks = [...artworks];
@@ -105,8 +108,8 @@ const UpgradeAccount = ({ closeModal }) => {
                 </div>
 
                 <div className="authentication--right">
-                    <svg onClick={closeModal} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 form__close-ic">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    <svg onClick={closeModal} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__close-ic">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                     <h3 className="form__title">Nâng cấp tài khoản</h3>
                     <div className="form-field">
@@ -151,6 +154,9 @@ const UpgradeAccount = ({ closeModal }) => {
                         </div>
 
                         {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
+                    </div>
+                    <div className="form-field">
+                        {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                     </div>
 
                     <div className="form-field">
