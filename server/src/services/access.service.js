@@ -194,11 +194,13 @@ class AccessService{
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
         });
         await otpVerification.save();
+        console.log(otpVerification)
 
         // 6. Send OTP email
         const subject = 'Your OTP Code';
-        const message = `Your OTP code for verification is ${otp}`;
-        const sendEmailResponse = await sendEmail(email, subject, message);
+        const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`;
+        const verificationCode = otp;
+        await sendEmail(email, subject, subjectMessage, verificationCode);
 
         return {
             code: 201,
@@ -281,8 +283,9 @@ class AccessService{
 
         // 4. Send OTP email
         const subject = 'Your OTP Code';
-        const message = `Your OTP code for setting new password is ${otp}`;
-        await sendEmail(email, subject, message);
+        const subjectMessage = 'Mã xác thực đổi mật khẩu của bạn là: '
+        const verificationCode = otp
+        await sendEmail(email, subject, subjectMessage, verificationCode);
 
         return {
             code: 200,

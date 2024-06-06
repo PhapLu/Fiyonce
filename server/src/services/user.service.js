@@ -92,13 +92,13 @@ class UserService{
         if (currentUser.role === 'talent') throw new BadRequestError('User already a talent');
 
         // 2. Validate request body
-        const { stageName, portfolioLink, phone } = req.body;
-        const request = await TalentRequest.find({phone})
-        if(request) await TalentRequest.deleteOne({phone})
+        const { stageName, portfolioLink } = req.body;
+        const request = await TalentRequest.find({userId})
+        if(request) await TalentRequest.deleteOne({userId})
         if (!req.files || !req.files.artworks) {
             throw new BadRequestError('Please provide artwork files');
         }
-        if (!userId || !stageName || !portfolioLink || !phone) {
+        if (!userId || !stageName || !portfolioLink) {
             throw new BadRequestError('Please provide all required fields');
         }
         // 3. Upload files to Cloudinary and get their URLs
@@ -129,7 +129,6 @@ class UserService{
             userId,
             stageName,
             portfolioLink,
-            phone,
             artworks
         });
         await talentRequest.save();

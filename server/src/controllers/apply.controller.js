@@ -19,7 +19,7 @@ class ApplyController{
     readApplies = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all Applies',
-            metadata: await ApplyService.readApplies()
+            metadata: await ApplyService.readApplies(req.params.briefId)
         }).send(res)
     }
 
@@ -37,12 +37,13 @@ class ApplyController{
         }).send(res)
     }
 
-    viewApplyHistory = async(req, res, next) =>{
+    viewAppliesHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all Applies of a client',
-            metadata: await ApplyService.viewApplyHistory(req.userId)
+            metadata: await ApplyService.viewAppliesHistory(req.userId)
         }).send(res)
     }
+
 }
 
 export default new ApplyController()

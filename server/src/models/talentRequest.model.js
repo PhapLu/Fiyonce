@@ -18,11 +18,6 @@ const TalentRequestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone: {
-        type: String,
-        required: true,
-        unique: true
-    },
     artworks: {
         type: [String],
         required: true

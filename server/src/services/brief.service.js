@@ -17,7 +17,6 @@ class BriefService{
             body.toMarket = false
             body.talentChosen = talentChosenId
         }
-        console.log(body)
         const brief = new Brief({
             briefOwner: userId,
             ...body
@@ -34,7 +33,7 @@ class BriefService{
     }
     
     static readBriefs = async() => {
-        const briefs = await Brief.find()
+        const briefs = await Brief.find({toMarket: true})
         return briefs
     }
 
@@ -83,46 +82,46 @@ class BriefService{
     static applyBrief = async (userId, briefId) => {
     }
 
-    static submitPortfolio = async(talentId, briefId, body) => {
-        //1. Check brief and talent
-        const talent = await User.findById(talentId)
-        const brief = await Brief.findById(briefId)
-        if(!brief) throw new NotFoundError('Brief not found!')
-        if(!talent) throw new BadRequestError('Talent not found!')
-        if(talent.role != 'talent') throw new AuthFailureError('You are not a talent!')
+    // static submitPortfolio = async(talentId, briefId, body) => {
+    //     //1. Check brief and talent
+    //     const talent = await User.findById(talentId)
+    //     const brief = await Brief.findById(briefId)
+    //     if(!brief) throw new NotFoundError('Brief not found!')
+    //     if(!talent) throw new BadRequestError('Talent not found!')
+    //     if(talent.role != 'talent') throw new AuthFailureError('You are not a talent!')
         
-        //2. Talent accept brief
-        const updatedBrief = await Brief.findById(briefId)
-        if(talent._id == updatedBrief.briefOwner.toString()) throw new BadRequestError('You cannot submit portfolio to your own brief!')
+    //     //2. Talent accept brief
+    //     const updatedBrief = await Brief.findById(briefId)
+    //     if(talent._id == updatedBrief.briefOwner.toString()) throw new BadRequestError('You cannot submit portfolio to your own brief!')
 
-        updatedBrief.talentsAccepted.push(talentId)
-        updatedBrief.save()
+    //     updatedBrief.talentsAccepted.push(talentId)
+    //     updatedBrief.save()
 
-        const talentInfo = {
-            talentName: talent.stage_name,
-            talentFullName: talent.fullname,
-            bio: talent.bio,
-            email: talent.email,
-            avatar: talent.avatar,
-            background: talent.bg,
-            city: talent.city,
-            country: talent.country,
-            socialLinks: talent.socialLinks,
-            followers: talent.followers.length,
-            following: talent.following.length,
-        }
-        const artworksInfo = body.artworks.map((artwork) => {
-            return {
-                artworkThumb: artwork.artwork_thumb,
-            }
-        })
+    //     const talentInfo = {
+    //         talentName: talent.stage_name,
+    //         talentFullName: talent.fullname,
+    //         bio: talent.bio,
+    //         email: talent.email,
+    //         avatar: talent.avatar,
+    //         background: talent.bg,
+    //         city: talent.city,
+    //         country: talent.country,
+    //         socialLinks: talent.socialLinks,
+    //         followers: talent.followers.length,
+    //         following: talent.following.length,
+    //     }
+    //     const artworksInfo = body.artworks.map((artwork) => {
+    //         return {
+    //             artworkThumb: artwork.artwork_thumb,
+    //         }
+    //     })
             
-        return {
-            talentInfo,
-            briefInfo: updatedBrief,
-            artworksInfo
-        }
-    }
+    //     return {
+    //         talentInfo,
+    //         briefInfo: updatedBrief,
+    //         artworksInfo
+    //     }
+    // }
 
     static chooseTalent = async(userId, briefId, talentId) => {
         //1. Check user, brief and talent

@@ -26,11 +26,7 @@ const ApplySchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-    },
-    message: {
-        type: String,
-    },
-   
+    }
 },{
     timestamps: true,
     collection: COLLECTION_NAME
