@@ -39,8 +39,6 @@ export const AuthProvider = ({ children }) => {
         },
         onSuccess: (data) => {
             if (data) {
-                console.log("AAA")
-                console.log(data)
                 data.displayName = formatEmailToName(data.email);
                 setUserInfo(data);
             }

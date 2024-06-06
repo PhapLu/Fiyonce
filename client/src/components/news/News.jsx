@@ -75,7 +75,7 @@ export default function News() {
             console.error('Error fetching news:', error);
         },
         onSuccess: (news) => {
-            console.log('Fetched news:', news);
+            // console.log('Fetched news:', news);
         },
     });
 

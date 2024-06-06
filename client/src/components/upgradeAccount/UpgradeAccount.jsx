@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./UpgradeAccount.scss";
 import UpgradeAccountImg from "../../assets/img/upgrade-account-img.png";
 import { trimString, bytesToKilobytes, formatFloat } from "../../utils/formatter";
+import {isFilled, minLength} from "../../utils/validator.js";
 
 const UpgradeAccount = ({ closeModal }) => {
     const [inputs, setInputs] = useState({});
@@ -34,6 +35,25 @@ const UpgradeAccount = ({ closeModal }) => {
         setArtworks(newArtworks);
     };
 
+    const validateInputs = () => {
+        let errors = {};
+        if (!isFilled(inputs.stageName)) {
+            errors.stageName = 'Vui lòng nhập nghệ danh';
+        } else if (!minLength(inputs.stageName, 6)) {
+            errors.stageName = 'Nghệ danh phải có ít nhất 4 ký tự';
+        }
+
+        if (!isFilled(inputs.portfolioLink)) {
+            errors.portfolioLink = 'Vui lòng nhập đường dẫn đến hồ sơ của bạn';
+        }
+
+        if (artworks.length != 3) {
+            errors.artworks = 'Vui lòng chọn 3 tác phẩm có chữ kí của bạn';
+        }
+
+        return errors;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validateInputs();
@@ -46,24 +66,21 @@ const UpgradeAccount = ({ closeModal }) => {
             setErrors((values) => ({ ...values, artworks: "Please upload at least 3 images." }));
             return;
         }
-
-        inputs.role = "client";
-        const { confirmPassword, ...others } = inputs;
-
         try {
             const formData = new FormData();
-            Object.keys(others).forEach(key => {
-                formData.append(key, others[key]);
-            });
-            artworks.forEach((artwork, index) => {
-                formData.append(`artworks[${index}]`, artwork);
-            });
+            formData.append("stageName", inputs.stageName);
+            formData.append("portfolioLink", inputs.portfolioLink);
+            formData.append(`artworks`, artworks);
+            
+            console.log(formData.get("stageName"));
+            console.log(formData.get("portfolioLink"));
+            console.log(formData.get("artworks"));
 
             const response = await apiUtils.post("/access/users/signUp", formData);
-            if (response) {
-                setShowRegisterVerificationForm(true);
-                setRegisterEmail(response.data.metadata.email);
-            }
+            // if (response) {
+            //     setShowRegisterVerificationForm(true);
+            //     setRegisterEmail(response.data.metadata.email);
+            // }
         } catch (error) {
             console.log(error.response.data.message);
             setErrors((values) => ({ ...values, serverError: error.response.data.message }));
@@ -88,6 +105,9 @@ const UpgradeAccount = ({ closeModal }) => {
                 </div>
 
                 <div className="authentication--right">
+                    <svg onClick={closeModal} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 form__close-ic">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
                     <h3 className="form__title">Nâng cấp tài khoản</h3>
                     <div className="form-field">
                         <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>

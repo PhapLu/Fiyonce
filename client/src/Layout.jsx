@@ -48,12 +48,14 @@ export default function Layout({ showSidebar }) {
     const location = useLocation();
 
     const fetchProfileById = async () => {
-        try {
-            const response = await newRequest.get(`user/readUserProfile/${id}`);
-            return response.data.metadata.user;
-        } catch (error) {
-            console.error(error);
-            return null;
+        if (id) {
+            try {
+                const response = await newRequest.get(`user/readUserProfile/${id}`);
+                return response.data.metadata.user;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
         }
     };
 
@@ -62,8 +64,10 @@ export default function Layout({ showSidebar }) {
             console.error('Error fetching profile:', error);
         },
         onSuccess: (profileInfo) => {
-            profileInfo.displayName = formatEmailToName(profileInfo.email);
-            console.log('Fetched profile:', profileInfo);
+            if (profileInfo) {
+                profileInfo.displayName = formatEmailToName(profileInfo.email);
+                console.log('Fetched profile:', profileInfo);
+            }
         },
     });
 
@@ -75,15 +79,15 @@ export default function Layout({ showSidebar }) {
         return <span>Have an error: {error.message}</span>;
     }
 
-    if (id && !profileInfo) {
-        return;
-    }
+    // if (id && !profileInfo) {
+    //     return;
+    // }
 
     return (
         <>
             <Navbar />
             <div className={`app ${showSidebar ? 'with-sidebar' : 'without-sidebar'}`}>
-                {showSidebar && <Sidebar profileInfo={profileInfo}/>}
+                {showSidebar && <Sidebar profileInfo={profileInfo} />}
 
                 <div className="outlet-content">
                     {showSidebar && (<div className="profile">

@@ -8,6 +8,7 @@ import AuthenticationImg from "../../assets/img/authentication-img.png";
 import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
 import "./Register.scss";
+import {isFilled, minLength, isMatch, hasSymbol, isValidEmail} from "../../utils/validator.js";
 
 export default function Register() {
     const [inputs, setInputs] = useState({});
@@ -21,26 +22,6 @@ export default function Register() {
         setInputs((values) => ({ ...values, [name]: value }));
         setErrors((values) => ({ ...values, [name]: '' })); // Clear the error for this field
     };
-
-    function isValidEmail(val) {
-        return /\S+@\S+\.\S+/.test(val);
-    }
-
-    function isFilled(val) {
-        return val != null && val != undefined && val.trim() !== "";
-    }
-
-    function minLength(val, length) {
-        return val.length >= length;
-    }
-
-    function isMatch(val1, val2) {
-        return val1 === val2;
-    }
-
-    function hasSymbol(val) {
-        return /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(val);
-    }
 
     const validateInputs = () => {
         let errors = {};

@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/users/:id/order-history",
-        element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
+        element: <OrderHistory />,
       },
       {
         path: "/users/:id/basic-info",
