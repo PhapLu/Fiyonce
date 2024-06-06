@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
 //     return <Navigate to="/explore" />;
 //   }
 
-  if (userInfo._id !== id) {
+if (userInfo && userInfo._id !== id) {
     // If the userInfo is trying to access someone else's data, show a forbidden message or redirect
     return <Navigate to="/forbidden" />;
   }

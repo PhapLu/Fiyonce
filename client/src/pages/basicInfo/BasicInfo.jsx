@@ -3,19 +3,23 @@ import { newRequest } from '../../utils/newRequest';
 import './BasicInfo.scss';
 import { useAuth } from "../../contexts/auth/AuthContext";
 import { apiUtils } from '../../utils/newRequest';
+import { useOutletContext } from "react-router-dom";
 
 export default function BasicInfo() {
-    const { userInfo, setUserInfo } = useAuth();
+    const profileInfo = useOutletContext();
+    // const { userInfo, setUserInfo } = useAuth();
 
-    const [inputs, setInputs] = useState(userInfo);
-    const [socialLinks, setSocialLinks] = useState(userInfo.socialLinks || []);
-
+    const [inputs, setInputs] = useState(profileInfo);
+    const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
+    if (!profileInfo) {
+        return null;
+    }
     useEffect(() => {
-        if (userInfo) {
-            setInputs(userInfo);
-            setSocialLinks(userInfo.socialLinks || []);
+        if (profileInfo) {
+            setInputs(profileInfo);
+            setSocialLinks(profileInfo.socialLinks || []);
         }
-    }, [userInfo]);
+    }, [profileInfo]);
 
     const handleChange = (event) => {
         const { id, value } = event.target;
@@ -48,7 +52,7 @@ export default function BasicInfo() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userId = userInfo._id;
+            const userId = profileInfo._id;
             const submittedSocialLinks = socialLinks.map(link => ({ url: link.url }));
             const updatedData = inputs;
             updatedData.socialLinks = submittedSocialLinks;
@@ -62,13 +66,13 @@ export default function BasicInfo() {
 
     const handleCancel = (e) => {
         e.preventDefault();
-        if (userInfo) {
-            setInputs(userInfo);
-            setSocialLinks(userInfo.socialLinks || []);
+        if (profileInfo) {
+            setInputs(profileInfo);
+            setSocialLinks(profileInfo.socialLinks || []);
         }
     }
 
-    if (!userInfo) {
+    if (!profileInfo) {
         return null;
     }
 

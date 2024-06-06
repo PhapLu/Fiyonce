@@ -19,6 +19,7 @@
     --white-3-color: white;
 
     --box-shadow-color: rgba(99, 99, 99, 0.2);
+    --form-border: unset;
 }
 
 body.dark {
@@ -36,9 +37,10 @@ body.dark {
     --orange-2: #FF6E1C;
 
     --white-1-color: rgb(224, 220, 220);
-    --white-2-color: #8d8d8d;
+    --white-2-color: #292929;
     --white-3-color: #0a0a0a;
     --box-shadow-color: rgba(99, 99, 99, 0);
+    --form-border: 1px solid var(--gray-1-color);
 }
 
 * {
@@ -249,7 +251,7 @@ hr {
         padding: 8px 10px;
         border: 2px solid var(--gray-1-color);
         outline: none;
-        background-color: var(--white-3-color);
+        background-color: var(--white-2-color);
         color: var(--black-2-color);
 
         &:focus {
@@ -261,6 +263,65 @@ hr {
             color: var(--white-1-color);
             background-color: var(--black-btn-color);
         }
+
+        &.img-preview {
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            padding: 3px 6px 3px 3px;
+            margin-bottom: 8px;
+
+            .img-preview--left {
+                display: flex;
+                align-items: center;
+
+                .img-preview__img {
+                    width: 36px;
+                    height: 36px;
+                    object-fit: cover;
+                    border-radius: 6px;
+                    margin-right: 8px;
+                }
+
+                .img-preview__info {
+                    font-size: 1.2rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    .img-preview__name {
+                        font-weight: bold;
+                    }
+
+                    .img-preview__size {
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .img-preview--right {
+                svg {
+                    &:hover {
+                        opacity: 0.7;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.modal-form {
+    background-color: white;
+    border-radius: 8px;
+
+    .modal-form--left {
+        
+    }
+
+    .modal-form--right {
+        padding: 28px 52px;
+        position: relative;
     }
 }
 

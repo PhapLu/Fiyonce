@@ -7,7 +7,6 @@ import RegisterVerification from "./RegisterVerification";
 import AuthenticationImg from "../../assets/img/authentication-img.png";
 import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
-import "../../assets/scss/authentication.scss";
 import "./Register.scss";
 
 export default function Register() {
@@ -100,7 +99,7 @@ export default function Register() {
     };
 
     return (
-        <div className="authentication--right">
+        <div className="authentication--right" onClick={(e) => e.stopPropagation()}>
             {showRegisterVerificationForm ? <RegisterVerification handleRegisterSubmit={handleSubmit} registerInfo={inputs} registerEmail={registerEmail} /> :
                 (
                     <>

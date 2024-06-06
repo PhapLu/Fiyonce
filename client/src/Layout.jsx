@@ -9,6 +9,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { useAuth } from "./contexts/auth/AuthContext.jsx";
 import { Outlet } from "react-router-dom";
 import { apiUtils } from "./utils/newRequest.js";
+import { formatEmailToName } from "./utils/formatter.js";
 
 export default function Layout({ showSidebar }) {
     const [profileBtnActive, setProfileNavActive] = useState(null);
@@ -33,6 +34,7 @@ export default function Layout({ showSidebar }) {
                 console.log(response)
                 if (response.data.metadata.image_url) {
                     setUserInfo({ ...userInfo, bg: response.data.metadata.image_url });
+                    profileInfo.bg = response.data.metadata.image_url;
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -60,6 +62,7 @@ export default function Layout({ showSidebar }) {
             console.error('Error fetching profile:', error);
         },
         onSuccess: (profileInfo) => {
+            profileInfo.displayName = formatEmailToName(profileInfo.email);
             console.log('Fetched profile:', profileInfo);
         },
     });
@@ -79,9 +82,8 @@ export default function Layout({ showSidebar }) {
     return (
         <>
             <Navbar />
-
             <div className={`app ${showSidebar ? 'with-sidebar' : 'without-sidebar'}`}>
-                {showSidebar && <Sidebar />}
+                {showSidebar && <Sidebar profileInfo={profileInfo}/>}
 
                 <div className="outlet-content">
                     {showSidebar && (<div className="profile">

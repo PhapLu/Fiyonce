@@ -1,7 +1,7 @@
 .sidebar {
     border: 2px solid var(--gray-1-color);
     border-radius: 12px;
-    text-align: center;
+    // text-align: center;
     padding: 44px 56px;
 
     .sidebar__avatar {
@@ -66,6 +66,7 @@
     .sidebar__section {
         text-align: start;
         margin-bottom: 32px;
+
         p {
             margin: 0;
         }
@@ -80,15 +81,18 @@
             .sidebar__socials__link-item {
                 display: flex;
                 align-items: center;
+
                 svg {
                     margin-right: 8px;
                 }
+
                 margin-bottom: 12px;
             }
         }
     }
 
     .sidebar__name {
+        text-align: center;
         margin-bottom: 20px;
 
         .sidebar__name__fullName {
@@ -103,21 +107,21 @@
         }
     }
 
-    .sidebar__job-title {
-
-    }
+    .sidebar__job-title {}
 
     .sidebar__location {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 6px;
+
         svg {
             margin-right: 6px;
         }
     }
 
     .sidebar__follow {
+        text-align: center;
         margin-bottom: 20px;
     }
 

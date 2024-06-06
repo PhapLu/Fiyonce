@@ -6,7 +6,6 @@ import { apiUtils } from "../../utils/newRequest";
 import AuthenticationImg from "../../assets/img/authentication-img.png";
 import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
-import "../../assets/scss/authentication.scss";
 import "./Register.scss";
 
 export default function RegisterVerification({handleRegisterSubmit, registerEmail }) {
@@ -31,12 +30,10 @@ export default function RegisterVerification({handleRegisterSubmit, registerEmai
         } catch (error) {
             console.log(error);
         }
-
-
     };
 
     return (
-        <form className="form verify-registration-form" onSubmit={handleSubmit}>
+        <form className="form verify-registration-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowRegisterForm(false);
