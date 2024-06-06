@@ -46,7 +46,6 @@ app.use((error, req, res, next) => {
         message: error.message || 'Internal Server Error'
     });
 });
-
 // Create HTTP server
 const server = http.createServer(app);
 

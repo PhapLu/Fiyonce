@@ -95,7 +95,7 @@ class UserService{
         const { stageName, portfolioLink } = req.body;
         const request = await TalentRequest.find({userId})
         if(request) await TalentRequest.deleteOne({userId})
-        if (!req.files || !req.files.artworks) {
+        if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
         if (!userId || !stageName || !portfolioLink) {
@@ -121,7 +121,7 @@ class UserService{
             });
         };
 
-        const uploadPromises = req.files.artworks.map(uploadToCloudinary);
+        const uploadPromises = req.files.files.map(uploadToCloudinary);
         const artworks = await Promise.all(uploadPromises);
 
         // 4. Create and save talent request
