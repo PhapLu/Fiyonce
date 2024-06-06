@@ -71,8 +71,6 @@ const uploadAvatarOrCover = async ({
             );
         }
 
-        console.log('Finish Uploading');
-
         return {
             type: type,
             image_url: result.secure_url,

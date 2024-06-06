@@ -13,7 +13,7 @@ class ApplyService{
         if(!brief) throw new NotFoundError('Brief not found')
 
         //2. Check if user is a talent
-        if(user.role !== 'talent') 
+        if(user.role !== 'talent')
             throw new AuthFailureError('You are not a talent')
 
         //3. Check if user has already applied for the brief
