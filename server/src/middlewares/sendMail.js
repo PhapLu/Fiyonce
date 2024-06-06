@@ -11,10 +11,7 @@ const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
-async function sendEmail(to, subject, message) {
-    console.log(to)
-    console.log(subject)
-    console.log(message)
+async function sendEmail(to, subject, subjectMessage, verificationCode) {
     try {
         const accessToken = await oAuth2Client.getAccessToken()
         // Create a transporter using
@@ -33,14 +30,109 @@ async function sendEmail(to, subject, message) {
         const htmlContent = `
         <!DOCTYPE html>
         <html>
+        <head>
+            <style>
+                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                .container {
+                    width: 600px;
+                    margin: 0 auto;
+                    border: 1px solid #ccc;
+                    padding: 20px;
+                    border-radius: 10px;
+                    background-color: #fff;
+                }
+                .header {
+                    text-align: left;
+                }
+                .header img {
+                    width: 100px;
+                }
+                .content {
+                    background-image: url('https://res.cloudinary.com/fiyonce/image/upload/v1717646501/fiyonce/system/email_cover_kgziwd.jpg');
+                    background-size: cover;
+                    text-align: center;
+                    margin-top: 20px;
+                    padding: 20px;
+                    font-size: 20px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                }
+                .content_container {
+                    background-color: white;
+                    padding: 5px 30px;
+                    text-align: left;
+                    border-radius: 10px;
+                    display: inline-block;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+                }
+                .verification-code {
+                    font-size: 28px;
+                    font-weight: bold;
+                    margin: 16px 0;
+                    text-align: center;
+                }
+                .content_head{
+                    font-weight: bold;
+                }
+                .content_note {
+                    font-size: 14px;
+                }
+                .footer {
+                    margin-top: 20px;
+                    text-align: left;
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+                .footer_final_p{
+                    margin: 0;
+                }
+                .fiyonce_help{
+                    color: #ff9027;
+                    text-decoration: none;
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+                .social-icons i {
+                    font-size: 20px;
+                    width: fit-content;
+                    margin: 0 6px;
+                    color: #0e0d13;
+                }
+            </style>
+        </head>
         <body>
-            <div>
-                <h1 style="color: blue;">${subject}</h1>
-                <p>${message}</p>
+            <div class="container">
+                <div class="header">
+                    <img src="https://res.cloudinary.com/fiyonce/image/upload/v1717647058/fiyonce/system/email_logo_aedc4w.png" alt="Pastal">
+                </div>
+                <div class="content">
+                    <div class="content_container">
+                        <p class="content_head">Chào ${to},</p>
+                        <p>${subjectMessage}</p>
+                        <div class="verification-code">${verificationCode}</div>
+                        <p class="content_note">*Mã có hiệu lực trong vòng 30 phút.</p>
+                    </div>
+                </div>
+                <div class="footer">
+                    <p>Fiyonce là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
+                    <span>Hiện tại Fiyonce vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
+                    <p class="footer_final_p">Hẹn gặp lại trên Fiyonce.</p>
+                    <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                </div>
             </div>
         </body>
         </html>
         `;
+
         // Define the email options
         const mailOptions = {
             from: '"Fiyonce" <phapluudev2k5@gmail.com>',
