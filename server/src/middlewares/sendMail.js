@@ -84,7 +84,7 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
                 .footer {
                     margin-top: 20px;
                     text-align: left;
-                    font-size: 15px;
+                    
                     font-weight: 400;
                 }
                 .footer_final_p{
@@ -94,7 +94,7 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
                     color: #ff9027;
                     text-decoration: none;
                     font-weight: bold;
-                    font-size: 20px;
+                    
                 }
                 .social-icons i {
                     font-size: 20px;
@@ -117,11 +117,11 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
                         <p class="content_note">*Mã có hiệu lực trong vòng 30 phút.</p>
                     </div>
                 </div>
-                <div class="footer">
+                <div style='font-size: 15px;' class="footer">
                     <p>Fiyonce là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
                     <span>Hiện tại Fiyonce vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
                     <p class="footer_final_p">Hẹn gặp lại trên Fiyonce.</p>
-                    <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
+                    <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
                     <div class="social-icons">
                         <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -137,7 +137,7 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
         // Define the email options
         const mailOptions = {
             from: '"Fiyonce" <phapluudev2k5@gmail.com>',
-            to: toEmail,
+            to,
             subject,
             html: htmlContent
         };
