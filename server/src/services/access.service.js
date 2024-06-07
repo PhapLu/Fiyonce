@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 import KeyTokenService from "./keyToken.service.js"
 import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
-import { getInfoData } from '../utils/index.js'
-import { findByEmail } from '../utils/index.js'
+import { getInfoData} from '../utils/index.js'
+import { findByEmail} from '../utils/index.js'
 import {
     AuthFailureError,
     BadRequestError,
@@ -23,7 +23,7 @@ const RoleUser = {
     ADMIN: "00004",
 };
 
-class AccessService {
+class AccessService{
     /*
         1. check email in dbs,
         2. match password
@@ -35,18 +35,18 @@ class AccessService {
     //     // 1. Check email in the database
     //     const foundUser = await User.findOne({email}).lean()
     //     if (!foundUser) throw new BadRequestError("User not registered");
-
+        
     //     // 2. Match password
     //     const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
     //     if (!match) throw new AuthFailureError("Authentication error");
-
+        
     //     // 3. Exclude password from foundUser
     //     const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
 
     //     // 4. Create AccessToken and RefreshToken and save
     //     const privateKey = crypto.randomBytes(64).toString("hex");
     //     const publicKey = crypto.randomBytes(64).toString("hex");
-
+    
     //     // 5. Generate tokens
     //     const { _id: userId } = foundUser;
     //     const tokens = await createTokenPair(
@@ -60,14 +60,14 @@ class AccessService {
     //         publicKey,
     //         userId
     //     });
-
+    
     //     // 6. Return user data and tokens
     //     return {
     //         user: userWithoutPassword,
     //         tokens
     //     };
     // };
-
+        
 
     // static signUp = async({fullname, email, password}) =>{
     //     //1. check if email exists?
@@ -131,17 +131,17 @@ class AccessService {
     //         metadata: null
     //     }
     // }
-    static login = async ({ email, password }) => {
+    static login = async({email, password}) => {
         // 1. Check email in the database
-        const foundUser = await User.findOne({ email }).lean()
+        const foundUser = await User.findOne({email}).lean()
         if (!foundUser) throw new BadRequestError("User not registered");
-
+        
         // 2. Match password
         const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
         if (!match) throw new AuthFailureError("Authentication error");
-
+        
         // 3. Exclude password from foundUser
-
+        
         const token = jwt.sign(
             {
                 id: foundUser._id,
@@ -158,7 +158,7 @@ class AccessService {
             }
         }
     }
-
+    
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
@@ -180,8 +180,8 @@ class AccessService {
         //     newUser = await User.findOne({ email }).lean();
         // }
         // 3. Check if there is an existing OTP record for the email
-        const oldOtp = await UserOTPVerification.findOne({ email }).lean();
-        if (oldOtp) await UserOTPVerification.deleteOne({ email });
+        const oldOtp = await UserOTPVerification.findOne({ email}).lean();
+        if(oldOtp) await UserOTPVerification.deleteOne({ email });
         // 4. Generate 6-digit OTP
         const otp = crypto.randomInt(100000, 999999).toString();
 
@@ -268,7 +268,7 @@ class AccessService {
         }
 
         const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean();
-        if (oldOtp) await ForgotPasswordOTP.deleteOne({ email });
+        if(oldOtp) await ForgotPasswordOTP.deleteOne({ email });
 
         // 2. Generate 6-digit OTP
         const otp = crypto.randomInt(100000, 999999).toString();
@@ -295,68 +295,73 @@ class AccessService {
         };
     }
 
-    static resetPassword = async ({ email, otp, newPassword }) => {
-        // 1. Find the OTP in the database
+    static verifyResetPasswordOtp = async({ email, otp}) => {
+        // 1. Find, check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({ email }).lean();
+        const user = await User.findOne({ email });
+        
         if (!otpRecord) throw new BadRequestError('OTP not found');
-        // 2. Check if the OTP is expired
+        if (!user) throw new BadRequestError('User not found');
         if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired');
 
-        // 3. Check if the OTP is correct
+        // 2. Check if the OTP is correct
         if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP');
 
-        // 4. Find the user by email
-        const user = await User.findOne({ email });
-        if (!user) throw new BadRequestError('User not found');
-
-        // 5. Hash the new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        // 6. Update the user's password
-        user.password = hashedPassword;
-        await user.save();
-        // 7. Create token
-        const token = jwt.sign(
-            {
-                id: user._id,
-                email: user.email
-            },
-            process.env.JWT_SECRET
-        );
-
-        user.accessToken = token;
-        await user.save();
-
-        const { password: hiddenPassword, ...userWithoutPassword } = user.toObject(); // Ensure toObject() is used to strip the password
-
-        // 8. Delete the OTP record
-        await ForgotPasswordOTP.deleteOne({ email });
+        //3. Mark the otp is verified
+        otpRecord.isVerified = true;
+        otpRecord.save()
 
         return {
-            code: 200,
-            metadata: {
-                email,
-                user: userWithoutPassword
-            }
-        };
+            otpRecord
+        }
     }
+
+    resetPassword = async ({ email, password }) => {
+        //1. Find and check the OTP and user in the database
+        const otpRecord = await ForgotPasswordOTP.findOne({email}).lean()
+        const user = await User.findOne({email})
+
+        if(!otpRecord) throw new BadRequestError('OTP not found')
+        if(!user) throw new BadRequestError('User not found')
+        
+        //2. Check if the OTP is verified
+        if(!otpRecord.isVerified) throw new BadRequestError('OTP not verified')
+
+        //3. Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10)
+        user.password = hashedPassword
+
+        await user.save()
+
+        //4. Delete the OTP record
+        await ForgotPasswordOTP.deleteOne({ email })
+        
+        //5. Exclude password from user
+        const { password: hiddenPassword, ...userWithoutPassword } = user.toObject()
+
+        return {
+            user: userWithoutPassword
+        }
+    }
+        
     // static logout = async(keyStore) =>{
     //     const delKey = await KeyTokenService.removeTokenById(keyStore._id)
     //     console.log("delKey: ", delKey)
     //     return delKey
     // }
 
-    static handlerRefreshToken = async ({ keyStore, user, refreshToken }) => {
-        const { userId, email } = user
-        if (keyStore.refreshTokensUsed.includes(refreshToken)) {
+    static handlerRefreshToken = async ({keyStore, user, refreshToken}) =>{
+        const {userId, email} = user
+        if(keyStore.refreshTokensUsed.includes(refreshToken)){
             await KeyTokenService.deleteKeyById(userId)
             throw new ForbiddenError('Something wrong happened, Please login again')
         }
-        if (keyStore.refreshToken !== refreshToken) throw new AuthFailureError('User not registered')
-        const foundUser = await findByEmail({ email })
-        if (!foundUser) throw new AuthFailureError('User not registered 2')
+        if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('User not registered')
+        const foundUser = await findByEmail({email})
+        if(!foundUser) throw new AuthFailureError('User not registered 2')
         //create token pair
         const tokens = await createTokenPair(
-            { userId, email },
+            {userId, email},
             keyStore.publicKey,
             keyStore.privateKey
         )
@@ -369,21 +374,19 @@ class AccessService {
     }
     static grantAccess(action, resource) {
         return async (req, res, next) => {
-            console.log(req.files);
-            console.log(req.body);
-            try {
-                const userInfo = await User.findById(req.userId).lean();
-                const userRole = userInfo.role;
-                const permission = role.can(userRole)[action](resource);
-                if (!permission.granted) {
-                    return res.status(401).json({
-                        error: "You don't have enough permission to perform this action",
-                    });
-                }
-                next();
-            } catch (error) {
-                next(error);
+          try {
+            const userInfo = await User.findById(req.userId).lean();
+            const userRole = userInfo.role;
+            const permission = role.can(userRole)[action](resource);
+            if (!permission.granted) {
+              return res.status(401).json({
+                error: "You don't have enough permission to perform this action",
+              });
             }
+            next();
+          } catch (error) {
+            next(error);
+          }
         };
     }
 

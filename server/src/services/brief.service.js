@@ -21,30 +21,36 @@ class BriefService{
             briefOwner: userId,
             ...body
         })
-
         const newBrief = await brief.save()
-        return newBrief
+
+        return {
+            brief: newBrief
+        }
     }
 
     static readBrief = async(briefId) => {
         const brief = await Brief.findById(briefId)
         if(!brief) throw new NotFoundError('Brief not found!')
-        return brief
+        return {
+            brief
+        }
     }
     
     static readBriefs = async() => {
         const briefs = await Brief.find({toMarket: true})
-        return briefs
+        return {
+            briefs
+        }
     }
 
     static updateBrief = async(userId, briefId, body) => {
         //1. check brief and user
         const oldBrief = await Brief.findById(briefId)
         const foundUser = await User.findById(userId)
-
         if(!foundUser) throw new NotFoundError('User not found!')
         if(!oldBrief) throw new NotFoundError('Brief not found!')
         if(oldBrief.briefOwner.toString() != userId) throw new AuthFailureError("You can update only your brief")
+        
         //2. update brief
         const updatedBrief = await Brief.findByIdAndUpdate(
             briefId,
@@ -53,7 +59,9 @@ class BriefService{
             },
             { new: true }
         )
-        return updatedBrief
+        return {
+            brief: updatedBrief
+        }
         
     }
 
@@ -61,10 +69,10 @@ class BriefService{
         //1. Check user and brief
         const foundUser = await User.findById(userId)
         const brief = await Brief.findById(briefId)
-
         if(!foundUser) throw new NotFoundError('User not found!')
         if(!brief) throw new NotFoundError('Brief not found!')
         if(foundUser._id != brief.briefOwner.toString()) throw new AuthFailureError('You can delete only your brief!')
+        
         //2. Delete brief
         return await Brief.findByIdAndDelete(briefId)
     }
@@ -74,61 +82,19 @@ class BriefService{
         //1. Check user
         const foundUser = await User.findById(clientId)
         if(!foundUser) throw new NotFoundError('User not found!')
+        
         //2. Get briefs
         const briefs = await Brief.find({ briefOwner: clientId });
-        return briefs;
+        return {
+            briefs
+        };
     }
-
-    static applyBrief = async (userId, briefId) => {
-    }
-
-    // static submitPortfolio = async(talentId, briefId, body) => {
-    //     //1. Check brief and talent
-    //     const talent = await User.findById(talentId)
-    //     const brief = await Brief.findById(briefId)
-    //     if(!brief) throw new NotFoundError('Brief not found!')
-    //     if(!talent) throw new BadRequestError('Talent not found!')
-    //     if(talent.role != 'talent') throw new AuthFailureError('You are not a talent!')
-        
-    //     //2. Talent accept brief
-    //     const updatedBrief = await Brief.findById(briefId)
-    //     if(talent._id == updatedBrief.briefOwner.toString()) throw new BadRequestError('You cannot submit portfolio to your own brief!')
-
-    //     updatedBrief.talentsAccepted.push(talentId)
-    //     updatedBrief.save()
-
-    //     const talentInfo = {
-    //         talentName: talent.stage_name,
-    //         talentFullName: talent.fullname,
-    //         bio: talent.bio,
-    //         email: talent.email,
-    //         avatar: talent.avatar,
-    //         background: talent.bg,
-    //         city: talent.city,
-    //         country: talent.country,
-    //         socialLinks: talent.socialLinks,
-    //         followers: talent.followers.length,
-    //         following: talent.following.length,
-    //     }
-    //     const artworksInfo = body.artworks.map((artwork) => {
-    //         return {
-    //             artworkThumb: artwork.artwork_thumb,
-    //         }
-    //     })
-            
-    //     return {
-    //         talentInfo,
-    //         briefInfo: updatedBrief,
-    //         artworksInfo
-    //     }
-    // }
 
     static chooseTalent = async(userId, briefId, talentId) => {
         //1. Check user, brief and talent
         const user = await User.findById(userId)
         const updatedBrief = await Brief.findById(briefId)
         const talent = await User.findById(talentId)
-        
         if(!user) throw new NotFoundError('User not found!')
         if(!updatedBrief) throw new NotFoundError('Brief not found!')
         if(!talent) throw new BadRequestError('Talent not found!')
@@ -141,7 +107,9 @@ class BriefService{
         updatedBrief.talentChosen = talentId
         updatedBrief.save()
 
-        return updatedBrief
+        return {
+            brief: updatedBrief
+        }
     }
 }
 

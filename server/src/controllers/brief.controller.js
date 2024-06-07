@@ -46,19 +46,6 @@ class BriefController{
         }).send(res)
     }
 
-    applyBrief = async (req, res, next) => {
-        new SuccessResponse({
-            message: 'Apply Brief success!',
-            metadata: await BriefService.applyBrief(req.userId, req.params.briefId, req.body)
-        }).send(res)
-    }
-    submitPortfolio = async (req, res, next) => {
-        new SuccessResponse({
-            message: 'Apply Brief success!',
-            metadata: await BriefService.submitPortfolio(req.userId, req.params.briefId, req.body)
-        }).send(res)
-    }
-
     chooseTalent = async (req, res, next) => {
         new SuccessResponse({
             message: 'Choose talent success!',

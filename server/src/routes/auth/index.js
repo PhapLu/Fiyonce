@@ -10,6 +10,7 @@ router.post('/users/login', asyncHandler(accessController.login))
 router.post('/users/verifyOtp', asyncHandler(accessController.verifyOtp))
 router.post('/users/logout', asyncHandler(accessController.logout))
 router.post('/users/forgotPassword', asyncHandler(accessController.forgotPassword))
+router.post('/users/verifyResetPasswordOtp', asyncHandler(accessController.verifyResetPasswordOtp))
 router.patch('/users/resetPassword', asyncHandler(accessController.resetPassword))
 //authentication
 //router.use(authenticationV2)
