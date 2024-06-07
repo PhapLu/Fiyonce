@@ -1,5 +1,5 @@
 import express from 'express'
-import accessRoute from './access/index.js'
+import authRoute from './auth/index.js'
 import userRoute from './user/index.js'
 import briefRoute from './brief/index.js'
 import artworkRoute from './artwork/index.js'
@@ -8,7 +8,7 @@ import applyRoute from './apply/index.js'
 
 const router = express.Router()
 //check Permission
-router.use('/v1/api/access', accessRoute)
+router.use('/v1/api/auth', authRoute)
 router.use('/v1/api/user', userRoute)
 router.use('/v1/api/artwork', artworkRoute)
 router.use('/v1/api/brief', briefRoute)
