@@ -7,7 +7,7 @@ const UserSchema = new Schema(
   {
     //user_id: {type: Number, required: true},
     //user_salf:{ type: String, default: ''},
-    stageName:{ type: String},
+    stageName:{ type: String, default: ''},
     fullName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, unique: true},
     password: { type: String, required: true },
@@ -27,13 +27,13 @@ const UserSchema = new Schema(
       default: 
         ".././uploads/default_background.png",
     },
-    number: { type: String },
-    city: { type: String },
+    address: { type: String, default: '' },
     country: { type: String, default: "Vietnam" },
     phone: {
       type: String,
       minlength: [10, "Phone number must have at least 10 characters"],
       maxlength: [10, "Phone number cannot exceed 10 characters"],
+      default: ''
     },
     bio: {
         type: String,
@@ -49,7 +49,7 @@ const UserSchema = new Schema(
     bookmark: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Artwork' }
     ],
-    jobTitle: {type: String},
+    jobTitle: {type: String, default: ''},
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],

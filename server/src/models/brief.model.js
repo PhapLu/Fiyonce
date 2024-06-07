@@ -9,6 +9,7 @@ const BriefSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        default: '',
     },
     briefOwner: {
         type: mongoose.Schema.Types.ObjectId,
