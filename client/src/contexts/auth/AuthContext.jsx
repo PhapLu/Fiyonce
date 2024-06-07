@@ -13,6 +13,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+    const [showResetPasswordVerificationForm, setShowResetPasswordVerificationForm] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
     const [showSetNewPasswordForm, setShowSetNewPasswordForm] = useState(false);
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (email, password) => {
-        const response = await newRequest.post("access/users/login", { email, password });
+        const response = await newRequest.post("auth/users/login", { email, password });
 
         if (response.data.status == 200) {
             alert("Successfully logged in as: " + response.data.metadata.user.email);
@@ -72,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await apiUtils.post("access/users/logout");
+            await apiUtils.post("auth/users/logout");
             setUserInfo(null);
         } catch (error) {
             console.error('Logout error:', error);
@@ -85,6 +86,8 @@ export const AuthProvider = ({ children }) => {
         showResetPasswordForm,
         setShowResetPasswordForm,
         showSetNewPasswordForm,
+        showResetPasswordVerificationForm,
+        setShowResetPasswordVerificationForm,
         setShowSetNewPasswordForm,
         showRegisterForm,
         setShowRegisterForm,

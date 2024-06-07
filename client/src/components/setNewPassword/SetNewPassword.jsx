@@ -35,7 +35,7 @@ export default function SetNewPassword() {
         }
         setOverlayVisible(true);
         try {
-            const response = await apiUtils.post("/access/users/resetPassword", inputs);
+            const response = await apiUtils.post("/auth/users/resetPassword", inputs);
             if (response.data.status == 200) {
                 setShowResetPasswordForm(false);
                 setShowSetNewPasswordForm(true);
@@ -57,7 +57,7 @@ export default function SetNewPassword() {
                     </svg>
 
                     <h2 className="form__title">Đặt lại mật khẩu</h2>
-                    <p>Nhập email đăng nhập của bạn và hệ thống sẽ gửi mã đặt lại mật khẩu</p>
+                    <p>Đặt lại mật khẩu cho {}</p>
                     <div className="form-field">
                         <label htmlFor="email" className="form-field__label">Email</label>
                         <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
