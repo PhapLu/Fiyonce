@@ -10,7 +10,7 @@ import "./Register.scss";
 
 export default function RegisterVerification({handleRegisterSubmit, registerInputs}) {
     const [inputs, setInputs] = useState({});
-    const { login, setShowRegisterForm, setOverlayVisible, setShowRegisterVerificationForm } = useAuth();
+    const { setShowMenu, login, setShowRegisterForm, setOverlayVisible, setShowRegisterVerificationForm } = useAuth();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -30,6 +30,7 @@ export default function RegisterVerification({handleRegisterSubmit, registerInpu
             if (response) {
                 alert("Successfully register for an account");
                 login(registerInputs.email, registerInputs.password);
+                setShowMenu();
             }
         } catch (error) {
             console.log(error);

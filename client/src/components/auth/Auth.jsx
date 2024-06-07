@@ -12,11 +12,10 @@ import AuthenticationImg from "../../assets/img/authentication-img.png";
 import "./Auth.scss";
 
 export default function Auth() {
-    const { userInfo, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, showRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
+    const { userInfo, showMenu, setShowMenu, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, showRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
 
     // Toggle display menu
     const menuRef = useRef();
-    const [showMenu, setShowMenu] = useState(false);
 
     // useEffect(() => {
     //     setShowRegisterForm(false);
@@ -49,7 +48,7 @@ export default function Auth() {
                 </button>}
             {
                 overlayVisible && (
-                    <div className={`overlay`} onClick={(e) => { e.stopPropagation()}}>
+                    <div className={`overlay`} onClick={(e) => { e.stopPropagation() }}>
                         {/* setOverlayVisible(false); setShowRegisterForm(false); setShowRegisterVerificationForm(false)  */}
                         <div className="authentication login">
                             <div className="authentication--left">

@@ -20,7 +20,7 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
         let errors = {};
         if (!isFilled(inputs.otp)) {
             errors.otp = 'Vui lòng nhập mã xác thực';
-        } 
+        }
         return errors;
     };
 
@@ -35,14 +35,14 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
         setOverlayVisible(true);
 
         try {
-            setShowResetPasswordVerificationForm(false);
-            setShowSetNewPasswordForm(true);
-            // const response = await apiUtils.post("/auth/users/verifyResetPasswordOtp", inputs);
-            // console.log(response);
-            // if (response.data.status == 200) {
-            //     setShowResetPasswordVerificationForm(false);
-            //     setShowSetNewPasswordForm(true);
-            // }
+            inputs.email = resetPasswordEmail;
+            console.log(inputs)
+            const response = await apiUtils.post("/auth/users/verifyResetPasswordOtp", inputs);
+            console.log(response);
+            if (response) {
+                setShowResetPasswordVerificationForm(false);
+                setShowSetNewPasswordForm(true);
+            }
         } catch (error) {
             console.log(error.response.data.message);
             errors.serverError = error.response.data.message;

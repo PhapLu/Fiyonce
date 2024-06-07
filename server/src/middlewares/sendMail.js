@@ -137,7 +137,7 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
         // Define the email options
         const mailOptions = {
             from: '"Fiyonce" <phapluudev2k5@gmail.com>',
-            to: toEmail,
+            to,
             subject,
             html: htmlContent
         };

@@ -7,15 +7,6 @@ import Logo from "../../assets/img/logo.png";
 import './Navbar.scss';
 
 export default function Navbar() {
-    // Check is logged in
-    const accessToken = Cookies.get("access-token");
-    let isLogged = false;
-    if (accessToken) {
-        // Request to server 
-
-        isLogged = true;
-    }
-
     const location = useLocation();
 
     return (

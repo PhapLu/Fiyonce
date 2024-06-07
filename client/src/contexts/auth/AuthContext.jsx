@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showRegisterVerificationForm, setShowRegisterVerificationForm] = useState(false);
-
+    const [showMenu, setShowMenu] = useState(false);
 
     // Fetch user profile data
     const fetchUserProfile = async () => {
@@ -85,6 +85,8 @@ export const AuthProvider = ({ children }) => {
         setShowLoginForm,
         showResetPasswordForm,
         setShowResetPasswordForm,
+        showMenu,
+        setShowMenu,
         showSetNewPasswordForm,
         showResetPasswordVerificationForm,
         setShowResetPasswordVerificationForm,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/auth/AuthContext";
 import { apiUtils } from "../../utils/newRequest";
 import Confetti from 'react-confetti';
@@ -8,9 +9,10 @@ import { isFilled, minLength, isMatch } from "../../utils/validator.js";
 export default function SetNewPassword({ resetPasswordEmail }) {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm } = useAuth();
+    const { setShowMenu, login, setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm } = useAuth();
     const [isSuccessSetNewPassword, setIsSuccessSetNewPassword] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -40,6 +42,12 @@ export default function SetNewPassword({ resetPasswordEmail }) {
         return errors;
     };
 
+    const handleNavigate = (event) => {
+        event.preventDefault();
+        navigate('/explore');
+        setShowMenu(false);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validateInputs();
@@ -48,21 +56,23 @@ export default function SetNewPassword({ resetPasswordEmail }) {
             return;
         }
 
-        setIsSuccessSetNewPassword(true);
-        setShowConfetti(true);
+
         // setTimeout(() => {
         //     setShowConfetti(false);
         // }, 5000); // Show confetti for 3 seconds
 
         try {
-            // const response = await apiUtils.post("/auth/users/resetPassword", inputs);
-            // if (response.data.status == 200) {
-            //     setShowSetNewPasswordForm(false);
-            //     setIsSuccessSetNewPassword(true);
-            // }
+            console.log({password: inputs.password, email: resetPasswordEmail});
+            const response = await apiUtils.patch("/auth/users/resetPassword", {password: inputs.password, email: resetPasswordEmail});
+            console.log(response)
+            if (response) {
+                setIsSuccessSetNewPassword(true);
+                setShowConfetti(true);
+                login(resetPasswordEmail, inputs.password);
+            }
         } catch (error) {
-            console.log(error.response.data.message);
-            errors.serverError = error.response.data.message;
+            console.log(error);
+            errors.serverError = error.response.message;
         }
     };
 
@@ -89,6 +99,7 @@ export default function SetNewPassword({ resetPasswordEmail }) {
                                 type="submit"
                                 value="Đi đến trang chủ"
                                 className="form-field__input btn btn-2 btn-md"
+                                onClick={handleNavigate}
                             />
                         </div>
                     </form >
