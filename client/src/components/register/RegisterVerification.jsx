@@ -8,9 +8,9 @@ import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
 import "./Register.scss";
 
-export default function RegisterVerification({handleRegisterSubmit, registerEmail }) {
+export default function RegisterVerification({handleRegisterSubmit, registerInputs}) {
     const [inputs, setInputs] = useState({});
-    const { setShowRegisterForm, setOverlayVisible, showRegisterVerificaitonForm, setShowRegisterVerificationForm } = useAuth();
+    const { login, setShowRegisterForm, setOverlayVisible, setShowRegisterVerificationForm } = useAuth();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -25,8 +25,12 @@ export default function RegisterVerification({handleRegisterSubmit, registerEmai
 
         // const response = await axios.post("", others);
         try {
-            const response = await apiUtils.post("/access/users/verifyOtp", { ...inputs, email: registerEmail })
+            const response = await apiUtils.post("/auth/users/verifyOtp", { ...inputs, email: registerInputs.email })
             console.log(response);
+            if (response) {
+                alert("Successfully register for an account");
+                login(registerInputs.email, registerInputs.password);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -34,16 +38,17 @@ export default function RegisterVerification({handleRegisterSubmit, registerEmai
 
     return (
         <form className="form verify-registration-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowRegisterForm(false);
                 setShowRegisterVerificationForm(false);
                 setOverlayVisible(false);
             }}>
+                {registerInputs.email}
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
             <h2 className="form__title">Đăng kí</h2>
-            <p>Fiyonce vừa gửi mã xác nhận đến <strong>{registerEmail}</strong>.
+            <p>Fiyonce vừa gửi mã xác nhận đến <strong>{registerInputs.email}</strong>.
                 Để đăng kí tài khoản, vui lòng điền mã xác thực.</p>
             <div className="form-field">
                 <label htmlFor="otp" className="form-field__label">Mã xác thực</label>
@@ -56,7 +61,7 @@ export default function RegisterVerification({handleRegisterSubmit, registerEmai
                     value="Đăng kí"
                     className="form-field__input btn btn-2 btn-md"
                 />
-            </div> */}
+            </div>
         </form>
     );
 }

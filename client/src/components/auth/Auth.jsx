@@ -12,7 +12,7 @@ import AuthenticationImg from "../../assets/img/authentication-img.png";
 import "./Auth.scss";
 
 export default function Auth() {
-    const { userInfo, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, setShowRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
+    const { userInfo, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, showRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
 
     // Toggle display menu
     const menuRef = useRef();
@@ -49,7 +49,8 @@ export default function Auth() {
                 </button>}
             {
                 overlayVisible && (
-                    <div className={`overlay`} onClick={() => { setOverlayVisible(false), setShowRegisterForm(false), setShowRegisterVerificationForm(false) }}>
+                    <div className={`overlay`} onClick={(e) => { e.stopPropagation()}}>
+                        {/* setOverlayVisible(false); setShowRegisterForm(false); setShowRegisterVerificationForm(false)  */}
                         <div className="authentication login">
                             <div className="authentication--left">
                                 <img src={AuthenticationImg} className="authentication__img" alt="Authentication image" />
@@ -66,13 +67,9 @@ export default function Auth() {
                                 <p>Mỗi giao dịch thành công trên Fiyonce sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ em vùng cao, trồng thêm cây xanh, và tạo sân chơi nuôi dưỡng đam mê hội họa cho các thế hệ họa sĩ tiếp theo.</p>
                                 <p className="authentication__img-reference">sáng tác bởi @re_name</p>
                             </div>
-                            <div className="authentication--right" onClick={(e) => e.stopPropagation()}>
+                            <div className="authentication--right">
                                 {showRegisterForm && (
                                     <Register />
-                                )}
-
-                                {setShowRegisterVerificationForm && (
-                                    <RegisterVerification />
                                 )}
 
                                 {showLoginForm && (
