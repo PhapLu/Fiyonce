@@ -80,9 +80,6 @@ export default function Auth() {
                                     <ResetPassword />
                                 )}
 
-                                {showSetNewPasswordForm && (
-                                    <SetNewPassword />
-                                )}
                             </div>
                         </div>
                     </div>

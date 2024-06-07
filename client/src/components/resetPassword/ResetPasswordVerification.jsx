@@ -18,29 +18,31 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
 
     const validateInputs = () => {
         let errors = {};
-        if (!isFilled(inputs.email)) {
-            errors.email = 'Vui lòng nhập email';
-        } else if (!isValidEmail(inputs.email)) {
-            errors.email = 'Email không hợp lệ';
-        }
+        if (!isFilled(inputs.otp)) {
+            errors.otp = 'Vui lòng nhập mã xác thực';
+        } 
         return errors;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
         setOverlayVisible(true);
+
         try {
-            const response = await apiUtils.post("/auth/users/verifyResetPasswordOtp", inputs);
-            console.log(response);
-            if (response.data.status == 200) {
-                setShowResetPasswordForm(false);
-                setShowSetNewPasswordForm(true);
-            }
+            setShowResetPasswordVerificationForm(false);
+            setShowSetNewPasswordForm(true);
+            // const response = await apiUtils.post("/auth/users/verifyResetPasswordOtp", inputs);
+            // console.log(response);
+            // if (response.data.status == 200) {
+            //     setShowResetPasswordVerificationForm(false);
+            //     setShowSetNewPasswordForm(true);
+            // }
         } catch (error) {
             console.log(error.response.data.message);
             errors.serverError = error.response.data.message;
@@ -51,7 +53,7 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
         <>
             <form className="form register-form" onSubmit={handleSubmit}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                    setShowResetPasswordForm(false);
+                    setShowResetPasswordVerificationForm(false);
                     setOverlayVisible(false);
                 }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

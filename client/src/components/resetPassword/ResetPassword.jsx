@@ -4,11 +4,12 @@ import { apiUtils } from "../../utils/newRequest";
 import "./ResetPassword.scss";
 import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
 import ResetPasswordVerification from "./ResetPasswordVerification.jsx";
+import SetNewPassword from "../setNewPassword/SetNewPassword";
 
 export default function ResetPassword() {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm, showResetPasswordVerificationForm, setShowResetPasswordVerificationForm } = useAuth();
+    const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, showSetNewPasswordForm, setShowSetNewPasswordForm, showResetPasswordVerificationForm, setShowResetPasswordVerificationForm } = useAuth();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -38,6 +39,7 @@ export default function ResetPassword() {
         try {
             const response = await apiUtils.post("/auth/users/forgotPassword", inputs);
             console.log(response);
+            alert("Successfully reset password")
             if (response.data.status == 200) {
                 setShowResetPasswordVerificationForm(true);
                 // setShowSetNewPasswordForm(true);
@@ -50,9 +52,9 @@ export default function ResetPassword() {
 
     return (
         <>
-            {showResetPasswordVerificationForm ? (
-                <ResetPasswordVerification resetPasswordEmail={inputs.email}/>
-            ) :
+            {showResetPasswordVerificationForm && <ResetPasswordVerification resetPasswordEmail={inputs.email} />}
+            {showSetNewPasswordForm && <SetNewPassword resetPasswordEmail={inputs.email} />}
+            {!showResetPasswordVerificationForm && !showSetNewPasswordForm && (
                 <>
                     <form className="form register-form" onSubmit={handleSubmit}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
@@ -88,7 +90,7 @@ export default function ResetPassword() {
                         }}>đăng nhập</span>
                     </p>
                 </>
-            }
+            )}
 
         </>
     );

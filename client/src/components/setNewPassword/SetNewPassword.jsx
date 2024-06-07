@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
 import { apiUtils } from "../../utils/newRequest";
+import Confetti from 'react-confetti';
 import "./SetNewPassword.scss";
-import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
+import { isFilled, minLength, isMatch } from "../../utils/validator.js";
 
-export default function SetNewPassword() {
+export default function SetNewPassword({ resetPasswordEmail }) {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm } = useAuth();
+    const [isSuccessSetNewPassword, setIsSuccessSetNewPassword] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -18,10 +21,21 @@ export default function SetNewPassword() {
 
     const validateInputs = () => {
         let errors = {};
-        if (!isFilled(inputs.email)) {
-            errors.email = 'Vui lòng nhập email';
-        } else if (!isValidEmail(inputs.email)) {
-            errors.email = 'Email không hợp lệ';
+        if (!isFilled(inputs.password)) {
+            errors.password = 'Vui lòng nhập mật khẩu';
+        } else if (!minLength(inputs.password, 6)) {
+            errors.password = 'Mật khẩu nên chứa ít nhất 6 kí tự';
+        }
+
+        if (!isFilled(inputs.confirmPassword)) {
+            errors.confirmPassword = 'Vui lòng nhập mật khẩu xác nhận';
+        } else if (!isMatch(inputs.confirmPassword, inputs.password)) {
+            errors.confirmPassword = 'Mật khẩu xác nhận không khớp';
+        }
+
+        if (!isMatch(inputs.confirmPassword, inputs.password)) {
+            errors.password = 'Mật khẩu không khớp';
+            errors.confirmPassword = 'Mật khẩu xác nhận không khớp';
         }
         return errors;
     };
@@ -33,13 +47,19 @@ export default function SetNewPassword() {
             setErrors(validationErrors);
             return;
         }
-        setOverlayVisible(true);
+
+        setIsSuccessSetNewPassword(true);
+        setShowConfetti(true);
+        // setTimeout(() => {
+        //     setShowConfetti(false);
+        // }, 5000); // Show confetti for 3 seconds
+
         try {
-            const response = await apiUtils.post("/auth/users/resetPassword", inputs);
-            if (response.data.status == 200) {
-                setShowResetPasswordForm(false);
-                setShowSetNewPasswordForm(true);
-            }
+            // const response = await apiUtils.post("/auth/users/resetPassword", inputs);
+            // if (response.data.status == 200) {
+            //     setShowSetNewPasswordForm(false);
+            //     setIsSuccessSetNewPassword(true);
+            // }
         } catch (error) {
             console.log(error.response.data.message);
             errors.serverError = error.response.data.message;
@@ -47,40 +67,75 @@ export default function SetNewPassword() {
     };
 
     return (
-            <>
-                <form className="form register-form" onSubmit={handleSubmit}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                        setShowResetPasswordForm(false);
-                        setOverlayVisible(false);
-                    }}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+        <>
+            {isSuccessSetNewPassword ? (
+                <div className="success-reset-password">
+                    {showConfetti && <Confetti />}
+                    <form className="form register-form" onSubmit={handleSubmit}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={
+                            () => {
+                                setShowSetNewPasswordForm(false);
+                                setOverlayVisible(false);
+                            }
+                        }>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg >
 
-                    <h2 className="form__title">Đặt lại mật khẩu</h2>
-                    <p>Đặt lại mật khẩu cho {}</p>
-                    <div className="form-field">
-                        <label htmlFor="email" className="form-field__label">Email</label>
-                        <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
-                        {errors.email && <span className="form-field__error">{errors.email}</span>}
-                    </div>
+                        <h2 className="form__title">Đặt lại mật khẩu</h2>
+                        <p>Đã đặt lại mật khẩu cho {resetPasswordEmail}</p>
+                        <br />
+                        <div className="form-field">
+                            <input
+                                type="submit"
+                                value="Đi đến trang chủ"
+                                className="form-field__input btn btn-2 btn-md"
+                            />
+                        </div>
+                    </form >
+                </div>
+            ) :
+                <>
+                    <form className="form register-form" onSubmit={handleSubmit}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={
+                            () => {
+                                setShowSetNewPasswordForm(false);
+                                setOverlayVisible(false);
+                            }
+                        }>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg >
 
-                    <div className="form-field">
-                        {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-                    </div>
-                    <div className="form-field">
-                        <input
-                            type="submit"
-                            value="Tiếp tục"
-                            className="form-field__input btn btn-2 btn-md"
-                        />
-                    </div>
-                </form>
-                <p className="form__extra-text">
-                    Quay lại <span className="form__extra-text__link" onClick={() => {
-                        setShowResetPasswordForm(false);
-                        setShowLoginForm(true);
-                    }}>đăng nhập</span>
-                </p>
-            </>
+                        <h2 className="form__title">Đặt lại mật khẩu</h2>
+                        <p>Đặt lại mật khẩu cho {resetPasswordEmail}</p>
+                        <div className="form-field">
+                            <label htmlFor="password" className="form-field__label">Mật khẩu mới</label>
+                            <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu mới" autoComplete="on" />
+                            {errors.password && <span className="form-field__error">{errors.password}</span>}
+                        </div>
+                        <div className="form-field">
+                            <label htmlFor="confirmPassword" className="form-field__label">Xác nhận mật khẩu mới</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" value={inputs.confirmPassword || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu mới" autoComplete="on" />
+                            {errors.confirmPassword && <span className="form-field__error">{errors.confirmPassword}</span>}
+                        </div>
+
+                        <div className="form-field">
+                            {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                        </div>
+                        <div className="form-field">
+                            <input
+                                type="submit"
+                                value="Xác nhận"
+                                className="form-field__input btn btn-2 btn-md"
+                            />
+                        </div>
+                    </form >
+                    <p className="form__extra-text">
+                        Quay lại <span className="form__extra-text__link" onClick={() => {
+                            setShowSetNewPasswordForm(false);
+                            setShowLoginForm(true);
+                        }}>đăng nhập</span>
+                    </p>
+                </>}
+        </>
     );
 }
