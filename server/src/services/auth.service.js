@@ -23,7 +23,7 @@ const RoleUser = {
     ADMIN: "00004",
 };
 
-class AccessService{
+class AuthService{
     /*
         1. check email in dbs,
         2. match password
@@ -168,17 +168,7 @@ class AccessService{
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        // if(!holderUser){
-        //     newUser = await User.create({
-        //         fullName,
-        //         email,
-        //         password: hashedPassword,
-        //         role: 'member', // Use the string directly
-        //         isVerified: false // Add this field to manage user verification
-        //     });
-        // }else{
-        //     newUser = await User.findOne({ email }).lean();
-        // }
+
         // 3. Check if there is an existing OTP record for the email
         const oldOtp = await UserOTPVerification.findOne({ email}).lean();
         if(oldOtp) await UserOTPVerification.deleteOne({ email });
@@ -316,7 +306,7 @@ class AccessService{
         }
     }
 
-    resetPassword = async ({ email, password }) => {
+    static resetPassword = async ({ email, password }) => {
         //1. Find and check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({email}).lean()
         const user = await User.findOne({email})
@@ -392,4 +382,4 @@ class AccessService{
 
 }
 
-export default AccessService
+export default AuthService

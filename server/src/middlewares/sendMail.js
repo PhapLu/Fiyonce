@@ -12,6 +12,7 @@ const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
 async function sendEmail(to, subject, subjectMessage, verificationCode) {
+    const toEmail = to.replace('@gmail.com', '');
     try {
         const accessToken = await oAuth2Client.getAccessToken()
         // Create a transporter using
@@ -110,7 +111,7 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
                 </div>
                 <div class="content">
                     <div class="content_container">
-                        <p class="content_head">Chào ${to},</p>
+                        <p class="content_head">Chào ${toEmail},</p>
                         <p>${subjectMessage}</p>
                         <div class="verification-code">${verificationCode}</div>
                         <p class="content_note">*Mã có hiệu lực trong vòng 30 phút.</p>
@@ -136,7 +137,7 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
         // Define the email options
         const mailOptions = {
             from: '"Fiyonce" <phapluudev2k5@gmail.com>',
-            to,
+            to: toEmail,
             subject,
             html: htmlContent
         };

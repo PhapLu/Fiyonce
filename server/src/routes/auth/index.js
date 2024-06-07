@@ -1,19 +1,19 @@
 import express from "express";
-import accessController from "../../controllers/access.controller.js";
+import authController from "../../controllers/auth.controller.js";
 import { asyncHandler } from "../../auth/checkAuth.js";
 import { authenticationV2 } from "../../auth/authUtils.js";
 import { verifyToken } from "../../middlewares/jwt.js";
 const router = express.Router()
 //signUp
-router.post('/users/signUp', asyncHandler(accessController.signUp))
-router.post('/users/login', asyncHandler(accessController.login))
-router.post('/users/verifyOtp', asyncHandler(accessController.verifyOtp))
-router.post('/users/logout', asyncHandler(accessController.logout))
-router.post('/users/forgotPassword', asyncHandler(accessController.forgotPassword))
-router.post('/users/verifyResetPasswordOtp', asyncHandler(accessController.verifyResetPasswordOtp))
-router.patch('/users/resetPassword', asyncHandler(accessController.resetPassword))
+router.post('/users/signUp', asyncHandler(authController.signUp))
+router.post('/users/login', asyncHandler(authController.login))
+router.post('/users/verifyOtp', asyncHandler(authController.verifyOtp))
+router.post('/users/logout', asyncHandler(authController.logout))
+router.post('/users/forgotPassword', asyncHandler(authController.forgotPassword))
+router.post('/users/verifyResetPasswordOtp', asyncHandler(authController.verifyResetPasswordOtp))
+router.patch('/users/resetPassword', asyncHandler(authController.resetPassword))
 //authentication
 //router.use(authenticationV2)
 router.use(verifyToken)
-router.post('/users/handlerRefreshToken', asyncHandler(accessController.handlerRefreshToken))
+router.post('/users/handlerRefreshToken', asyncHandler(authController.handlerRefreshToken))
 export default router

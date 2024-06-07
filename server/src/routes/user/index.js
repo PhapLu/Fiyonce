@@ -1,6 +1,6 @@
 import express from "express";
 import userController from "../../controllers/user.controller.js";
-import accessService from "../../services/access.service.js";
+import accessService from "../../services/auth.service.js";
 import { uploadFields } from "../../configs/multer.config.js";
 import { asyncHandler } from "../../auth/checkAuth.js";
 import { authenticationV2 } from "../../auth/authUtils.js";
