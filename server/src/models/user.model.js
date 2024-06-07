@@ -20,10 +20,12 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
       default:
-        "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png",
+        ".././uploads/default_avatar.png",
     },
     bg: {
       type: String,
+      default: 
+        ".././uploads/default_background.png",
     },
     number: { type: String },
     province: { type: String },
