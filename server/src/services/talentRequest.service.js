@@ -2,6 +2,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.
 import TalentRequest from '../models/talentRequest.model.js'
 import { User } from '../models/user.model.js'
 import sendEmail from '../middlewares/sendMail.js'
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
 class TalentRequestService{
     static requestUpgradingToTalent = async (userId, req) => {
@@ -86,7 +87,7 @@ class TalentRequestService{
         sendEmail(foundUser.email, 'Role Updated', 'Your role has been updated to talent')
         
         return {
-            user: userWithoutPassword
+            user: userWithoutPassword._doc
         }
     }
 

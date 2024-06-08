@@ -26,13 +26,12 @@ const uploadAvatarOrCover = async ({
     buffer,
     originalname,
 }, userId, profileId, type) => {
-    const folderName = `fiyonce/profile/avatarOrCover/${profileId}`
     //1. Check user, profileId, type is valid
     const user = await User.findById(userId);
     if (!user) throw new BadRequestError('User not found');
     if (!profileId) throw new BadRequestError('ProfileId missing');
     if (user._id.toString() !== profileId) throw new AuthFailureError('You can only set avatar/cover for your profile');
-    if (type !== 'avatar' && type !== 'cover') throw new BadRequestError('Invalid type');
+    if (type !== 'avatar' && type !== 'bg') throw new BadRequestError('Invalid type of update');
 
     let updatedUser
     let imagePublicId
@@ -40,17 +39,27 @@ const uploadAvatarOrCover = async ({
     try {
         //2. Delete the old image in cloudinary
         if(type == 'avatar'){
-            imagePublicId = extractPublicIdFromUrl(user.avatar)
-            await deleteFileByPublicId(imagePublicId)
-        } else if(type == 'cover'){
-            imagePublicId = extractPublicIdFromUrl(user.bg)
-            await deleteFileByPublicId(imagePublicId)
+            //Do not delete the default image
+            if(!user.avatar.includes('default')){
+                imagePublicId = extractPublicIdFromUrl(user.avatar)
+                await deleteFileByPublicId(imagePublicId)
+            }
+        } else if(type == 'bg'){
+            //Do not delete the default image
+            if(!user.bg.includes('default')){
+                imagePublicId = extractPublicIdFromUrl(user.bg)
+                await deleteFileByPublicId(imagePublicId)
+            }
         } else{
             throw new BadRequestError('Invalid type')
         }
 
         //3. Compress and upload the new image
-        const result = await compressAndUploadImage(buffer, originalname, folderName);
+        const result = await compressAndUploadImage({
+            buffer: buffer,
+            originalname: originalname,
+            folderName: `fiyonce/profile/avatarOrCover/${profileId}`
+        })
 
         //4. Update the user with the new image
         if (type === 'avatar') {
@@ -88,7 +97,6 @@ const uploadImagesFromLocal = async({
     folderName = 'product/2404',
 }) => {
     try {
-        console.log(`files::`, files, folderName)
         if(!files || !files.length) return
         const uploadURLs = []
         for (const file of files){
