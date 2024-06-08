@@ -3,7 +3,7 @@ import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
 import stream from 'stream'
 import {promisify} from 'util'
-import { compressAndUploadImage } from "../utils/compressImage.js";
+import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js";
 const pipeline = promisify(stream.pipeline);
 //1.upload Image from URL
 const uploadImageFromURL = async() => {
@@ -25,20 +25,34 @@ const uploadImageFromURL = async() => {
 const uploadAvatarOrCover = async ({
     buffer,
     originalname,
-    folderName = 'fiyonce/profile/avatarOrCover',
 }, userId, profileId, type) => {
-    // Check if user exists
+    const folderName = `fiyonce/profile/avatarOrCover/${profileId}`
+    //1. Check user, profileId, type is valid
     const user = await User.findById(userId);
     if (!user) throw new BadRequestError('User not found');
     if (!profileId) throw new BadRequestError('ProfileId missing');
     if (user._id.toString() !== profileId) throw new AuthFailureError('You can only set avatar/cover for your profile');
     if (type !== 'avatar' && type !== 'cover') throw new BadRequestError('Invalid type');
 
-    let updatedUser;
+    let updatedUser
+    let imagePublicId
 
     try {
-        const result = await compressAndUploadImage(buffer, folderName);
+        //2. Delete the old image in cloudinary
+        if(type == 'avatar'){
+            imagePublicId = extractPublicIdFromUrl(user.avatar)
+            await deleteFileByPublicId(imagePublicId)
+        } else if(type == 'cover'){
+            imagePublicId = extractPublicIdFromUrl(user.bg)
+            await deleteFileByPublicId(imagePublicId)
+        } else{
+            throw new BadRequestError('Invalid type')
+        }
 
+        //3. Compress and upload the new image
+        const result = await compressAndUploadImage(buffer, originalname, folderName);
+
+        //4. Update the user with the new image
         if (type === 'avatar') {
             updatedUser = await User.findByIdAndUpdate(profileId,
                 { $set: { avatar: result.secure_url } },

@@ -1,10 +1,9 @@
-import cloudinary from '../configs/cloudinary..config.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
-import sendEmail from '../middlewares/sendMail.js'
-import { artwork } from '../models/artwork.model.js'
 import TalentRequest from '../models/talentRequest.model.js'
-import {User} from '../models/user.model.js'
-import crypto from 'crypto'
+import { artwork } from '../models/artwork.model.js'
+import { User } from '../models/user.model.js'
+import sendEmail from '../middlewares/sendMail.js'
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 import jwt from 'jsonwebtoken'
 
 class UserService{
@@ -86,6 +85,7 @@ class UserService{
     }
 
     static requestUpgradingToTalent = async (userId, req) => {
+        console.log(req.files)
         // 1. Check user exists and is not a talent
         const currentUser = await User.findById(userId);
         if (!currentUser) throw new NotFoundError('User not found');
@@ -93,48 +93,44 @@ class UserService{
 
         // 2. Validate request body
         const { stageName, portfolioLink } = req.body;
-        const request = await TalentRequest.find({userId})
-        if(request) await TalentRequest.deleteOne({userId})
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
         if (!userId || !stageName || !portfolioLink) {
             throw new BadRequestError('Please provide all required fields');
         }
-        // 3. Upload files to Cloudinary and get their URLs
-        const uploadToCloudinary = (file) => {
-            return new Promise((resolve, reject) => {
-                const uploadStream = cloudinary.uploader.upload_stream(
-                    {
-                        public_id: `${Date.now()}-${file.originalname}`,
-                        folder: `fiyonce/talentRequests/${userId}`
-                    },
-                    (error, result) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve(result.secure_url);
-                        }
-                    }
-                );
-                uploadStream.end(file.buffer);
-            });
-        };
 
-        const uploadPromises = req.files.files.map(uploadToCloudinary);
-        const artworks = await Promise.all(uploadPromises);
+        //3. Check if user has requested before
+        const talentRequest = await TalentRequest.findOne({userId})
+        if(talentRequest){
+            //Extract the artwork public_id by using util function
+            const publicIds = talentRequest.artworks.map(artwork => extractPublicIdFromUrl(artwork))
+            //Delete the files from Cloudinary
+            await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+            //Delete the request from database
+            await TalentRequest.deleteOne({userId})
+        }
 
-        // 4. Create and save talent request
-        const talentRequest = new TalentRequest({
+        // 4. Upload files to Cloudinary(compressed) and get their URLs
+        const uploadPromises = req.files.files.map(file => compressAndUploadImage({
+            buffer: file.buffer,
+            originalname: file.originalname,
+            folderName: `fiyonce/talentRequests/${userId}`
+          }));
+        const uploadResults = await Promise.all(uploadPromises);
+        const artworkUrls = uploadResults.map(result => result.secure_url);
+
+        // 5. Create and save talent request
+        const newTalentRequest = new TalentRequest({
             userId,
             stageName,
             portfolioLink,
-            artworks
+            artworks: artworkUrls
         });
-        await talentRequest.save();
+        await newTalentRequest.save();
     
         return {
-            talentRequest
+            newTalentRequest
         };
     }
 

@@ -26,7 +26,7 @@ class AuthController {
             }
             // Sending response
             new SuccessResponse({
-                message: 'Registered!',
+                message: 'User has been logged in!',
                 metadata,
             }).send(res);
         } catch (error) {
