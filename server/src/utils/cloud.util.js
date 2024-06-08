@@ -37,10 +37,8 @@ export const compressAndUploadImage = async ({ buffer, originalname, folderName 
       throw error;
     }
   };
-  
 
 export const extractPublicIdFromUrl = (url) => {
-    console.log(url)
     const urlObj = new URL(url);
     const pathParts = urlObj.pathname.split('/');
     const versionIndex = pathParts.findIndex(part => part.startsWith('v'));
@@ -50,7 +48,6 @@ export const extractPublicIdFromUrl = (url) => {
   };
 
 export const deleteFileByPublicId = async (publicId) => {
-  console.log(publicId)
     try {
       const result = await cloudinary.uploader.destroy(publicId);
       return result;
