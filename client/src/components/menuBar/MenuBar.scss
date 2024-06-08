@@ -23,8 +23,9 @@
 
     .dropdown-menu-container__fullname {
         font-size: 1.6rem;
+        font-weight: 600;
         line-height: 2.2rem;
-        padding: 0 8px;
+        padding: 0 8px 8px;
     }
 
     .dropdown-menu-container__email {
@@ -56,7 +57,7 @@
     .dropdown-menu-item:last-child {
         &:hover {
             opacity: 1;
-            background-color: var(--black-2-color);
+            background-color: var(--black-btn-color);
             color: white;
         }
     }

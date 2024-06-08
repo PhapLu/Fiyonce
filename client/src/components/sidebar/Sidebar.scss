@@ -65,7 +65,7 @@
 
     .sidebar__section {
         text-align: start;
-        margin-bottom: 32px;
+        margin-bottom: 28px;
 
         p {
             margin: 0;
@@ -81,12 +81,16 @@
             .sidebar__socials__link-item {
                 display: flex;
                 align-items: center;
+                margin-bottom: 12px;
 
                 svg {
                     margin-right: 8px;
                 }
 
-                margin-bottom: 12px;
+                &:last-of-type {
+                    margin-bottom: 0;
+                }
+
             }
         }
     }
@@ -99,7 +103,7 @@
             margin-bottom: 6px;
             font-weight: bold;
             font-size: 1.6rem;
-            color: var(--black-3-color);
+            color: var(--black-1-color);
         }
 
         .sidebar__name__email {
@@ -129,7 +133,7 @@
     }
 
     .sidebar__btn {
-        margin-top: 12px;
+        margin-bottom: 12px;
         width: 100%;
         font-weight: 600;
         // padding: 8px 10px;

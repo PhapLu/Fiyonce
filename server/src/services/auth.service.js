@@ -13,7 +13,7 @@ import {
 import Key from "../models/keyToken.model.js"
 import role from "../middlewares/role.js"
 import jwt from 'jsonwebtoken'
-import UserOTPVerification from "../models/UserOTPVerification.js"
+import UserOTPVerification from "../models/userOTPVerification.js"
 import sendEmail from "../middlewares/sendMail.js"
 import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
 const RoleUser = {

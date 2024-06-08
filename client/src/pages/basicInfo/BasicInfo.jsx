@@ -7,15 +7,15 @@ import { useOutletContext } from "react-router-dom";
 
 export default function BasicInfo() {
     const profileInfo = useOutletContext();
-    // const { userInfo, setUserInfo } = useAuth();
-
+    const { userInfo, setUserInfo } = useAuth();
     const [inputs, setInputs] = useState(profileInfo);
     const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
     if (!profileInfo) {
         return null;
     }
     useEffect(() => {
-        if (profileInfo) {
+        console.log(profileInfo)
+        if (userInfo) {
             setInputs(profileInfo);
             setSocialLinks(profileInfo.socialLinks || []);
         }
@@ -129,32 +129,15 @@ export default function BasicInfo() {
                         />
                     </div>
                     <div className="form-field">
-                        <label htmlFor="country" className="form-field__label">Quốc gia</label>
-                        <select
-                            id="country"
-                            value={inputs.country || ""}
-                            onChange={handleChange}
-                            className="form-field__input"
-                        >
-                            <option value="">-- Chọn quốc gia --</option>
-                            <option value="vietnam">Việt Nam</option>
-                            <option value="usa">Hoa Kỳ</option>
-                            <option value="other">Khác</option>
-                        </select>
-                    </div>
-                    <div className="form-field">
                         <label htmlFor="province" className="form-field__label">Tỉnh thành</label>
-                        <select
+                        <input
+                            type="text"
                             id="province"
                             value={inputs.province || ""}
                             onChange={handleChange}
                             className="form-field__input"
-                        >
-                            <option value="">-- Chọn tỉnh thành --</option>
-                            <option value="hanoi">Hà Nội</option>
-                            <option value="hochiminh">TP Hồ Chí Minh</option>
-                            <option value="other">Khác</option>
-                        </select>
+                            placeholder="Nhập tỉnh thành"
+                        />
                     </div>
                     <div className="form-field">
                         <label htmlFor="phone" className="form-field__label">Điện thoại</label>

@@ -7,7 +7,7 @@ const UserSchema = new Schema(
   {
     //user_id: {type: Number, required: true},
     //user_salf:{ type: String, default: ''},
-    stageName:{ type: String},
+    stageName:{ type: String, default: ''},
     fullName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, unique: true},
     password: { type: String, required: true },
@@ -20,12 +20,12 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
       default:
-        ".././uploads/default_avatar.png",
+        "/uploads/default_avatar.png",
     },
     bg: {
       type: String,
       default: 
-        ".././uploads/default_background.png",
+        "/uploads/default_background.png",
     },
     number: { type: String },
     province: { type: String },

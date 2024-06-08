@@ -57,20 +57,22 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
-        setOverlayVisible(true);
-        inputs.role = "client";
+
+        // inputs.role = "client";
         const { confirmPassword, ...others } = inputs;
 
+        // Handle register request
         try {
             const response = await apiUtils.post("/auth/users/signUp", others);
             if (response) {
                 console.log(response);
-                // setShowRegisterForm(false);
                 setShowRegisterVerificationForm(true);
             }
         } catch (error) {

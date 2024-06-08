@@ -89,18 +89,14 @@ export default function Sidebar({ profileInfo }) {
                     </div>
                     <div className="form-field">
                         <label htmlFor="province" className="form-field__label">Tỉnh thành</label>
-                        <select
+                        <input
+                            type="text"
                             id="province"
-                            name="province"
                             value={inputs.province || ""}
                             onChange={handleChange}
                             className="form-field__input"
-                        >
-                            <option value="">-- Chọn tỉnh thành --</option>
-                            <option value="hanoi">Hà Nội</option>
-                            <option value="hochiminh">TP Hồ Chí Minh</option>
-                            <option value="other">Khác</option>
-                        </select>
+                            placeholder="Nhập tỉnh thành"
+                        />
                     </div>
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
@@ -117,7 +113,7 @@ export default function Sidebar({ profileInfo }) {
                 <>
                     <div className="sidebar__name">
                         <p className="sidebar__name__fullName">{profileInfo.fullName}</p>
-                        <span className="sidebar__name__email">{profileInfo.displayName}</span>
+                        <span className="sidebar__name__email">{profileInfo.stageName || profileInfo.displayName}</span>
                     </div>
                     <div>
                         {profileInfo.jobTitle && (
@@ -154,20 +150,22 @@ export default function Sidebar({ profileInfo }) {
                         </div>
                     )}
 
-                    {profileInfo.socialLinks && (
+                    {profileInfo.socialLinks && profileInfo.socialLinks.length > 0 &&
                         <div className="sidebar__section sidebar__socials">
                             <p className="sidebar__section__title">Liên kết</p>
                             <hr />
                             <div className="sidebar__socials__link-container">
-                                <div className="sidebar__socials__link-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                                    </svg>
-                                    <span>vhqwfbwf.com</span>
-                                </div>
+
+                                {profileInfo.socialLinks.map((socialLink, key) => (
+                                    <div key={key} className="sidebar__socials__link-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                                        </svg>
+                                        <a href="https://www.facebook.com/">{socialLink.url}</a>
+                                    </div>
+                                ))}
                             </div>
-                        </div>
-                    )}
+                        </div>}
 
                     <button className="sidebar__btn btn btn-md btn-2" onClick={() => setOpenEditProfileForm(true)}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -176,12 +174,17 @@ export default function Sidebar({ profileInfo }) {
 
                         <span>Chỉnh sửa thông tin</span>
                     </button>
-                    <button className="sidebar__btn btn btn-1" onClick={() => setUpgradeAccountForm(true)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
-                            <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
-                        </svg>
-                        <span>Nâng cấp tài khoản</span>
-                    </button>
+
+                    {
+                        profileInfo.role === "artist" && (
+                            <button className="sidebar__btn btn btn-1" onClick={() => setUpgradeAccountForm(true)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
+                                    <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
+                                </svg>
+                                <span>Nâng cấp tài khoản</span>
+                            </button>
+                        )
+                    }
                 </>
             )}
             {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setUpgradeAccountForm(false)} />}

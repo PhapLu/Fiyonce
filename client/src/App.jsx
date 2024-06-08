@@ -76,7 +76,8 @@ const router = createBrowserRouter([
       //   element: <Talents />,
       // },
     ]
-  }, {
+  },
+  {
     path: "/forbidden",
     element: <Forbidden />,
   },
