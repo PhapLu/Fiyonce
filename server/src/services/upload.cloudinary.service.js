@@ -3,6 +3,7 @@ import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
 import stream from 'stream'
 import {promisify} from 'util'
+import { compressAndUploadImage } from "../utils/compressImage.js";
 const pipeline = promisify(stream.pipeline);
 //1.upload Image from URL
 const uploadImageFromURL = async() => {
@@ -35,29 +36,8 @@ const uploadAvatarOrCover = async ({
 
     let updatedUser;
 
-    const streamUpload = async (buffer) => {
-        return new Promise((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream({
-                resource_type: 'image',
-                public_id: 'avatarOrCover',
-                folder: folderName,
-            }, (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result);
-                }
-            });
-
-            const bufferStream = new stream.PassThrough();
-            bufferStream.end(buffer);
-
-            bufferStream.pipe(uploadStream);
-        });
-    };
-
     try {
-        const result = await streamUpload(buffer);
+        const result = await compressAndUploadImage(buffer, folderName);
 
         if (type === 'avatar') {
             updatedUser = await User.findByIdAndUpdate(profileId,
@@ -89,7 +69,6 @@ const uploadAvatarOrCover = async ({
 
 
 //3.upload images from local
-
 const uploadImagesFromLocal = async({
     files,
     folderName = 'product/2404',
