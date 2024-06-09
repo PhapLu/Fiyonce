@@ -2,21 +2,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
 
-
-import Layout from "./Layout.jsx";
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
-
+import Layout from "./Layout";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
 // import Login from "./components/login/Login";
 
 // Pages
+import Profile from "./pages/profile/Profile";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
-
 import Explore from "./pages/explore/Explore";
 // import Artwork from "./pages/artwork/Artwork";
 // import Challenges from "./pages/challenges/Challenges";
@@ -30,12 +28,10 @@ import Explore from "./pages/explore/Explore";
 
 const queryClient = new QueryClient();
 
-
-
 const router = createBrowserRouter([
   {
     path: "/users/:id",
-    element: <Layout showSidebar={true}></Layout>,
+    element: <Profile/>,
     children: [
       {
         path: "/users/:id/order-history",
@@ -49,7 +45,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout showSidebar={false}></Layout>,
+    element: <Layout></Layout>,
     children: [
       {
         path: "/explore",
