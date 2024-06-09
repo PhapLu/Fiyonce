@@ -3,6 +3,7 @@ import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
 import stream from 'stream'
 import {promisify} from 'util'
+import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js";
 const pipeline = promisify(stream.pipeline);
 //1.upload Image from URL
 const uploadImageFromURL = async() => {
@@ -24,41 +25,43 @@ const uploadImageFromURL = async() => {
 const uploadAvatarOrCover = async ({
     buffer,
     originalname,
-    folderName = 'fiyonce/profile/avatarOrCover',
 }, userId, profileId, type) => {
-    // Check if user exists
+    //1. Check user, profileId, type is valid
     const user = await User.findById(userId);
     if (!user) throw new BadRequestError('User not found');
     if (!profileId) throw new BadRequestError('ProfileId missing');
     if (user._id.toString() !== profileId) throw new AuthFailureError('You can only set avatar/cover for your profile');
-    if (type !== 'avatar' && type !== 'cover') throw new BadRequestError('Invalid type');
+    if (type !== 'avatar' && type !== 'bg') throw new BadRequestError('Invalid type of update');
 
-    let updatedUser;
-
-    const streamUpload = async (buffer) => {
-        return new Promise((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream({
-                resource_type: 'image',
-                public_id: 'avatarOrCover',
-                folder: folderName,
-            }, (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result);
-                }
-            });
-
-            const bufferStream = new stream.PassThrough();
-            bufferStream.end(buffer);
-
-            bufferStream.pipe(uploadStream);
-        });
-    };
+    let updatedUser
+    let imagePublicId
 
     try {
-        const result = await streamUpload(buffer);
+        //2. Delete the old image in cloudinary
+        if(type == 'avatar'){
+            //Do not delete the default image
+            if(!user.avatar.includes('default')){
+                imagePublicId = extractPublicIdFromUrl(user.avatar)
+                await deleteFileByPublicId(imagePublicId)
+            }
+        } else if(type == 'bg'){
+            //Do not delete the default image
+            if(!user.bg.includes('default')){
+                imagePublicId = extractPublicIdFromUrl(user.bg)
+                await deleteFileByPublicId(imagePublicId)
+            }
+        } else{
+            throw new BadRequestError('Invalid type')
+        }
 
+        //3. Compress and upload the new image
+        const result = await compressAndUploadImage({
+            buffer: buffer,
+            originalname: originalname,
+            folderName: `fiyonce/profile/avatarOrCover/${profileId}`
+        })
+
+        //4. Update the user with the new image
         if (type === 'avatar') {
             updatedUser = await User.findByIdAndUpdate(profileId,
                 { $set: { avatar: result.secure_url } },
@@ -89,13 +92,11 @@ const uploadAvatarOrCover = async ({
 
 
 //3.upload images from local
-
 const uploadImagesFromLocal = async({
     files,
     folderName = 'product/2404',
 }) => {
     try {
-        console.log(`files::`, files, folderName)
         if(!files || !files.length) return
         const uploadURLs = []
         for (const file of files){

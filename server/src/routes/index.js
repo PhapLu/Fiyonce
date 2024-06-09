@@ -5,6 +5,7 @@ import briefRoute from './brief/index.js'
 import artworkRoute from './artwork/index.js'
 import uploadRoute from './upload/index.js'
 import applyRoute from './apply/index.js'
+import talentRequest from './talentRequest/index.js'
 
 const router = express.Router()
 //check Permission
@@ -14,5 +15,7 @@ router.use('/v1/api/artwork', artworkRoute)
 router.use('/v1/api/brief', briefRoute)
 router.use('/v1/api/upload', uploadRoute)
 router.use('/v1/api/apply', applyRoute)
+router.use('/v1/api/talentRequest', talentRequest)
+
 
 export default router

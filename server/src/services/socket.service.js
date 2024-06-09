@@ -36,6 +36,14 @@ class SocketServices {
                 text,
             })
           });
+
+        socket.on("sendTalentRequest", ({senderId, receiverId, talentRequest}) => {
+            const user = getUser(receiverId);
+            global._io.to(user?.socketId).emit("getTalentRequest", {
+                senderId,
+                talentRequest
+            })
+        })
     }
 }
 

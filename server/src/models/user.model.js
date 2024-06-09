@@ -20,20 +20,20 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
       default:
-        "/uploads/default_avatar.png",
+        ".././uploads/default_avatar.png",
     },
     bg: {
       type: String,
       default: 
-        "/uploads/default_background.png",
+        ".././uploads/default_background.png",
     },
-    number: { type: String },
-    province: { type: String },
+    address: { type: String, default: '' },
     country: { type: String, default: "Vietnam" },
     phone: {
       type: String,
       minlength: [10, "Phone number must have at least 10 characters"],
       maxlength: [10, "Phone number cannot exceed 10 characters"],
+      default: ''
     },
     bio: {
         type: String,
@@ -49,7 +49,7 @@ const UserSchema = new Schema(
     bookmark: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Artwork' }
     ],
-    jobTitle: {type: String},
+    jobTitle: {type: String, default: ''},
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],

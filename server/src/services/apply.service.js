@@ -22,21 +22,22 @@ class ApplyService{
             throw new BadRequestError('You have already applied for this brief')
 
         //4. Check if artworks are valid
-        // if(body.artworks){
-        //     const artworks = await artwork.find({_id: body.artworks})
-        //     if(artworks.length !== body.artworks.length)
-        //         throw new BadRequestError('Several artworks are not found')
-        // }
+        if(body.artworks){
+            const artworks = await artwork.find({_id: body.artworks})
+            if(artworks.length !== body.artworks.length)
+                throw new BadRequestError('Several artworks are not found')
+        }
         //5. Modify the acceptedTalent
         brief.talentsAccepted.push(userId)
         brief.save()
-        //5.Check if price is valid
+
+        //6.Check if price is valid
         if(body.price < 0)
             throw new BadRequestError('Price must be greater than 0')
         if(body.price < brief.minPrice*90/100 || body.price > brief.maxPrice*110/100)
             throw new BadRequestError('Price must be within the range of the brief')
         
-        //6. Submit portfolio
+        //7. Submit portfolio
         const apply = new Apply({
             briefId: briefId,
             userId: brief.briefOwner,
@@ -99,7 +100,6 @@ class ApplyService{
         return {
             apply: updatedApply
         }
-
     }
 
     static deleteApply = async(userId, applyId) => {
