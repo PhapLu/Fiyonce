@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const DOCUMENT_NAME = 'Apply'
-const COLLECTION_NAME = 'Applies'
+const DOCUMENT_NAME = 'Proposal'
+const COLLECTION_NAME = 'Proposals'
 
-const ApplySchema = new mongoose.Schema({
+const ProposalSchema = new mongoose.Schema({
     briefId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Brief',
@@ -32,6 +32,6 @@ const ApplySchema = new mongoose.Schema({
     collection: COLLECTION_NAME
 })
 
-const Apply = mongoose.model(DOCUMENT_NAME, ApplySchema)
+const Proposal = mongoose.model(DOCUMENT_NAME, ProposalSchema)
 
-export default Apply
+export default Proposal

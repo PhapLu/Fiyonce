@@ -3,25 +3,14 @@ import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 import KeyTokenService from "./keyToken.service.js"
 import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
-import { getInfoData} from '../utils/index.js'
 import { findByEmail} from '../utils/index.js'
-import {
-    AuthFailureError,
-    BadRequestError,
-    ForbiddenError,
-} from "../core/error.response.js";
+import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js";
 import Key from "../models/keyToken.model.js"
-import role from "../middlewares/role.js"
-import jwt from 'jsonwebtoken'
-import UserOTPVerification from "../models/UserOTPVerification.js"
-import sendEmail from "../middlewares/sendMail.js"
+import UserOTPVerification from "../models/userOTPVerification.model.js"
 import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
-const RoleUser = {
-    MEMBER: "member",
-    WRITER: "00002",
-    EDITOR: "00003",
-    ADMIN: "00004",
-};
+import jwt from 'jsonwebtoken'
+import role from "../middlewares/role.js"
+import sendEmail from "../middlewares/sendMail.js"
 
 class AuthService{
     /*
@@ -340,28 +329,28 @@ class AuthService{
     //     return delKey
     // }
 
-    static handlerRefreshToken = async ({keyStore, user, refreshToken}) =>{
-        const {userId, email} = user
-        if(keyStore.refreshTokensUsed.includes(refreshToken)){
-            await KeyTokenService.deleteKeyById(userId)
-            throw new ForbiddenError('Something wrong happened, Please login again')
-        }
-        if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('User not registered')
-        const foundUser = await findByEmail({email})
-        if(!foundUser) throw new AuthFailureError('User not registered 2')
-        //create token pair
-        const tokens = await createTokenPair(
-            {userId, email},
-            keyStore.publicKey,
-            keyStore.privateKey
-        )
-        //update token
-        await KeyTokenService.updateTokens(tokens, keyStore, refreshToken);
-        return {
-            user,
-            tokens
-        }
-    }
+    // static handlerRefreshToken = async ({keyStore, user, refreshToken}) =>{
+    //     const {userId, email} = user
+    //     if(keyStore.refreshTokensUsed.includes(refreshToken)){
+    //         await KeyTokenService.deleteKeyById(userId)
+    //         throw new ForbiddenError('Something wrong happened, Please login again')
+    //     }
+    //     if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('User not registered')
+    //     const foundUser = await findByEmail({email})
+    //     if(!foundUser) throw new AuthFailureError('User not registered 2')
+    //     //create token pair
+    //     const tokens = await createTokenPair(
+    //         {userId, email},
+    //         keyStore.publicKey,
+    //         keyStore.privateKey
+    //     )
+    //     //update token
+    //     await KeyTokenService.updateTokens(tokens, keyStore, refreshToken);
+    //     return {
+    //         user,
+    //         tokens
+    //     }
+    // }
     static grantAccess(action, resource) {
         return async (req, res, next) => {
           try {

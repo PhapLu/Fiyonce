@@ -23,11 +23,11 @@ const BriefSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    character: {
-        photo: { type: String },
-        name: { type: String },
-        description: { type: String }
-    },
+    // character: {
+    //     photo: { type: String },
+    //     name: { type: String },
+    //     description: { type: String }
+    // },
     toMarket: {type: Boolean, required: true},
     referencePhotos: [{ type: String }],
     minPrice: { type: Number },
@@ -35,8 +35,7 @@ const BriefSchema = new mongoose.Schema({
     isCommercialPurpose: { type: Boolean},
     isPrivate: { type: Boolean },
     deadline: { type: Date},
-    fileName: { type: String }
-    
+    fileFormats: [{ type: String }],
 },{
     timestamps: true,
     collection: COLLECTION_NAME

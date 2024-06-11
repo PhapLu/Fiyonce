@@ -18,7 +18,6 @@ router.patch('/updateBrief/:briefId', asyncHandler(briefController.updateBrief))
 router.delete('/deleteBrief/:briefId', asyncHandler(briefController.deleteBrief))
 //END CRUD
 router.get('/viewBriefHistory', asyncHandler(briefController.viewBriefHistory))
-router.patch('/submitPortfolio/:briefId', asyncHandler(briefController.submitPortfolio))
 router.patch('/chooseTalent/:briefId', asyncHandler(briefController.chooseTalent))
 
 export default router

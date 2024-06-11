@@ -9,7 +9,7 @@ class UserController {
     updateProfile = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update userProfile successfully!',
-            metadata: await UserService.updateProfile(req.userId, req.params.id, req.body)
+            metadata: await UserService.updateProfile(req.userId, req.params.profileId, req.body)
         }).send(res)
     }
 
