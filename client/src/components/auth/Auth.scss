@@ -1,6 +1,7 @@
 .navbar__authentication {
     position: relative;
 }
+
 .overlay {
     position: fixed;
     top: 50%;
@@ -29,6 +30,7 @@
         transform: translate(-50%, -50%) scale(0.95);
         opacity: 0;
     }
+
     100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
@@ -44,19 +46,19 @@
 .authentication {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
     margin-left: 50%;
-    margin-top: 15vh;
-    height: 70vh;
+    min-height: 70vh;
     width: 50%;
     transform: translate(-50%);
-    background-color: white;
-    overflow: none;
+    background-color: var(--white-3-color);
+    /* overflow: unset; */
     border-radius: 12px;
+    border: var(--form-border);
 
     .authentication--left {
         width: 50%;
-        height: 100%;
+        /* height: 100%; */
         position: relative;
         text-align: center;
         color: white;
@@ -87,7 +89,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 12px 0 0 12px;
-            background: linear-gradient(to top, rgb(12 12 12 / 70%), rgba(0, 0, 0, 0));
+            background: linear-gradient(to top, rgba(12, 12, 12, 0.7), rgba(0, 0, 0, 0));
         }
 
         .authentication__img-reference {
@@ -106,6 +108,7 @@
         width: 52%;
         padding: 28px 52px;
         position: relative;
+        align-self: center;
 
         .form__title {
             text-align: center;

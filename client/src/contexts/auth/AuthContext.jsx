@@ -13,13 +13,16 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+    const [showResetPasswordVerificationForm, setShowResetPasswordVerificationForm] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
+    const [showSetNewPasswordForm, setShowSetNewPasswordForm] = useState(false);
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showRegisterVerificationForm, setShowRegisterVerificationForm] = useState(false);
-
+    const [showMenu, setShowMenu] = useState(false);
 
     // Fetch user profile data
     const fetchUserProfile = async () => {
@@ -39,17 +42,7 @@ export const AuthProvider = ({ children }) => {
         },
         onSuccess: (data) => {
             if (data) {
-                console.log("AAA")
-                console.log(data)
                 data.displayName = formatEmailToName(data.email);
-                data.socialLinks = [
-                    {
-                        "url": "https://facebook.com/nhatluu03",
-                    },
-                    {
-                        "url": "https://tiktok.com/nhatluu2003",
-                    },
-                ]
                 setUserInfo(data);
             }
             setLoading(false);
@@ -65,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (email, password) => {
-        const response = await newRequest.post("access/users/login", { email, password });
+        const response = await newRequest.post("auth/users/login", { email, password });
 
         if (response.data.status == 200) {
             alert("Successfully logged in as: " + response.data.metadata.user.email);
@@ -80,17 +73,24 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await apiUtils.post("access/users/logout");
+            await apiUtils.post("auth/users/logout");
             setUserInfo(null);
         } catch (error) {
             console.error('Logout error:', error);
         }
     };
 
-
     const value = {
         showLoginForm,
         setShowLoginForm,
+        showResetPasswordForm,
+        setShowResetPasswordForm,
+        showMenu,
+        setShowMenu,
+        showSetNewPasswordForm,
+        showResetPasswordVerificationForm,
+        setShowResetPasswordVerificationForm,
+        setShowSetNewPasswordForm,
         showRegisterForm,
         setShowRegisterForm,
         overlayVisible,

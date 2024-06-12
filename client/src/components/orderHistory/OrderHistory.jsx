@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../contexts/auth/AuthContext"
+import { useAuth } from "../../contexts/auth/AuthContext";
+import { useOutletContext } from "react-router-dom";
 import "./OrderHistory.scss";
 
 export default function OrderHistory() {
     const { userInfo } = useAuth();
     const [myOrders, setMyOrders] = useState([]);
+    const profileInfo = useOutletContext();
 
     // Fetch orders by user id
     useEffect(() => {

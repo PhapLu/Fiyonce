@@ -5,11 +5,12 @@
     --black-1-color: #2a2b2c;
     --black-2-color: #262626;
     --black-3-color: #191919;
+
     --black-btn-color: #191919;
     --black-color: #191919;
 
     --gray-1-color: #dddddd;
-    --gray-2-color: #626262;
+    --gray-2-color: #cac9c9;
     --gray-3-color: #4D4D4D;
 
     --orange-2-color: #FF6E1C;
@@ -19,25 +20,32 @@
     --white-3-color: white;
 
     --box-shadow-color: rgba(99, 99, 99, 0.2);
+    --form-border: unset;
+    --error-color: red;
+    --color-scheme: light;
 }
 
 body.dark {
+    transition: 0s linear;
     // Light theme colors
     --black-1-color: #dddddd;
-    --black-2-color: #817f7f;
+    --black-2-color: #a8a8a8;
     --black-3-color: rgb(187, 183, 183);
     --black-btn-color: #501dd2;
 
     --gray-1-color: #2a2b2c;
-    --gray-2-color: #262626;
+    --gray-2-color: #938f8f;
     --gray-3-color: #191919;
 
     --orange-2: #FF6E1C;
 
     --white-1-color: rgb(224, 220, 220);
-    --white-2-color: #8d8d8d;
+    --white-2-color: #292929;
     --white-3-color: #0a0a0a;
     --box-shadow-color: rgba(99, 99, 99, 0);
+    --form-border: 1px solid var(--gray-2-color);
+    --error-color: #ff6a6a;
+    --color-scheme: dark;
 }
 
 * {
@@ -61,27 +69,12 @@ body {
     font-size: 1.4rem;
     font-weight: 500;
     background-color: var(--white-3-color);
-    transition: 0.2s linear;
+    // transition: 0.2s linear;
     color: var(--black-3-color);
 }
 
 #root {
     margin: 4px 4% !important;
-}
-
-.app.with-sidebar {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
-
-    .sidebar {
-        width: 28%;
-    }
-
-    .outlet-content {
-        width: 69%;
-    }
 }
 
 ::selection {
@@ -135,6 +128,13 @@ h4 {
 p {
     font-size: 1.4rem;
     line-height: 2rem;
+    width: 100%;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
 }
 
 .highlight-text {
@@ -157,9 +157,10 @@ p {
     justify-content: center;
     background-color: unset;
 
-    .btn-ic {
-        width: 16px;
-        height: 16px;
+    .btn-ic,
+    svg {
+        width: 20px;
+        height: 20px;
         object-fit: cover;
         margin-right: 8px;
     }
@@ -186,8 +187,7 @@ p {
 
 .btn-1 {
     border: 2px solid var(--black-2-color);
-    // background-color: white;
-    color: var(--black-btn-color);
+    color: var(--black-1-color);
 }
 
 .btn-2 {
@@ -202,7 +202,7 @@ p {
 
 .btn-4 {
     // border: 2px solid var(--gray-1-color);
-    background-color: var(--gray-1-color);
+    background-color: var(--gray-2-color);
 }
 
 // Commons
@@ -241,14 +241,23 @@ hr {
         color: var(--black-2-color);
     }
 
+    textarea {
+        resize: none;
+        min-height: 100px;
+        overflow-y: clip;
+        padding: 8px 10px;
+        font-family: 'Inter';
+    }
+
     .form-field__input {
         width: 100%;
         border-radius: 8px;
         padding: 8px 10px;
         border: 2px solid var(--gray-1-color);
         outline: none;
-        background-color: var(--white-3-color);
+        background-color: var(--white-2-color);
         color: var(--black-2-color);
+        color-scheme: var(--color-scheme);
 
         &:focus {
             border: 2px solid var(--black-2-color);
@@ -259,6 +268,70 @@ hr {
             color: var(--white-1-color);
             background-color: var(--black-btn-color);
         }
+
+        &.img-preview {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 6px 3px 3px;
+            margin-bottom: 8px;
+
+            .img-preview--left {
+                display: flex;
+                align-items: center;
+
+                .img-preview__img {
+                    width: 36px;
+                    height: 36px;
+                    object-fit: cover;
+                    border-radius: 6px;
+                    margin-right: 8px;
+                }
+
+                .img-preview__info {
+                    font-size: 1.2rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    .img-preview__name {
+                        font-weight: bold;
+                    }
+
+                    .img-preview__size {
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .img-preview--right {
+                svg {
+                    &:hover {
+                        opacity: 0.7;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .form-field__error {
+        color: var(--error-color);
+        font-size: 1.3rem;
+        padding-top: 4px;
+        display: block;
+    }
+}
+
+.modal-form {
+    background-color: white;
+    border-radius: 8px;
+
+    .modal-form--left {}
+
+    .modal-form--right {
+        padding: 28px 52px;
+        position: relative;
     }
 }
 
@@ -269,7 +342,7 @@ hr {
     border-radius: 8px;
     padding: 8px 10px;
     transition: border 0.1s;
-
+    background-color: var(--white-2-color);
 
     .form-field__ic {
         width: 16px;
@@ -336,14 +409,13 @@ hr {
     }
 }
 
-.loading-spinner {
-    border: 8px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #726FFF;
+.spinner {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #000;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 16px;
+    height: 16px;
     animation: spin 1s linear infinite;
-    margin: 20px auto;
 }
 
 @keyframes spin {
@@ -354,4 +426,44 @@ hr {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.btn-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-top-color: rgba(255, 255, 255, 1);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+/* animation.css */
+@keyframes confetti {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.confetti-piece {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    /* You can change colors or use multiple colors */
+    animation: confetti 5s linear infinite;
+}
+
+.confetti-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }

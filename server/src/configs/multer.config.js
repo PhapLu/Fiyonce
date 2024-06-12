@@ -1,9 +1,5 @@
 import multer from 'multer'
 
-const uploadMemory = multer({
-    storage: multer.memoryStorage()
-})
-
 const uploadDisk = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
@@ -14,6 +10,11 @@ const uploadDisk = multer({
         }
     })
 })
+
+const uploadMemory = multer({
+    storage: multer.memoryStorage()
+})
+
 const uploadFields = uploadMemory.fields([
     { name: 'files', maxCount: 5 },
     { name: 'portfolioLink', maxCount: 1 },

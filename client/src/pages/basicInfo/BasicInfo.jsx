@@ -2,38 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { newRequest } from '../../utils/newRequest';
 import './BasicInfo.scss';
 import { useAuth } from "../../contexts/auth/AuthContext";
+import { apiUtils } from '../../utils/newRequest';
+import { useOutletContext } from "react-router-dom";
 
 export default function BasicInfo() {
+    const profileInfo = useOutletContext();
     const { userInfo, setUserInfo } = useAuth();
-
-    const [inputs, setInputs] = useState({
-        fullName: '',
-        stagename: '',
-        gender: '',
-        dob: '',
-        country: '',
-        province: '',
-        phone: '',
-        email: '',
-    });
-
-    const [socialLinks, setSocialLinks] = useState([]);
-
+    const [inputs, setInputs] = useState(profileInfo);
+    const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
+    if (!profileInfo) {
+        return null;
+    }
     useEffect(() => {
+        console.log(profileInfo)
         if (userInfo) {
-            setInputs({
-                fullName: userInfo.fullName || '',
-                stagename: userInfo.stagename || '',
-                gender: userInfo.gender || '',
-                dob: userInfo.dob || '',
-                country: userInfo.country || '',
-                province: userInfo.province || '',
-                phone: userInfo.phone || '',
-                email: userInfo.email || '',
-            });
-            setSocialLinks(userInfo.socialLinks || []);
+            setInputs(profileInfo);
+            setSocialLinks(profileInfo.socialLinks || []);
         }
-    }, [userInfo]);
+    }, [profileInfo]);
 
     const handleChange = (event) => {
         const { id, value } = event.target;
@@ -46,7 +32,7 @@ export default function BasicInfo() {
     const handleLinkChange = (event, id, field) => {
         const { value } = event.target;
         const updatedLinks = socialLinks.map(link => {
-            if (link.id === id) {
+            if (link._id === id) {
                 return { ...link, [field]: value };
             }
             return link;
@@ -59,34 +45,34 @@ export default function BasicInfo() {
     };
 
     const deleteLinkInput = (id) => {
-        const updatedLinks = socialLinks.filter(link => link.id !== id);
+        const updatedLinks = socialLinks.filter(link => link._id !== id);
         setSocialLinks(updatedLinks);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', { ...inputs, socialLinks });
-        // Handle form submission logic here
+        try {
+            const userId = profileInfo._id;
+            const submittedSocialLinks = socialLinks.map(link => ({ url: link.url }));
+            const updatedData = inputs;
+            updatedData.socialLinks = submittedSocialLinks;
+            const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
+            setUserInfo(response.data.metadata.updatedUser);
+            alert("Successfully updated user information");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleCancel = (e) => {
         e.preventDefault();
-        if (userInfo) {
-            setInputs({
-                fullName: userInfo.fullName || '',
-                stagename: userInfo.stagename || '',
-                gender: userInfo.gender || '',
-                dob: userInfo.dob || '',
-                country: userInfo.country || '',
-                province: userInfo.province || '',
-                phone: userInfo.phone || '',
-                email: userInfo.email || '',
-            });
-            setSocialLinks(userInfo.socialLinks || []);
+        if (profileInfo) {
+            setInputs(profileInfo);
+            setSocialLinks(profileInfo.socialLinks || []);
         }
     }
 
-    if (!userInfo) {
+    if (!profileInfo) {
         return null;
     }
 
@@ -100,18 +86,18 @@ export default function BasicInfo() {
                         <input
                             type="text"
                             id="fullName"
-                            value={inputs.fullName}
+                            value={inputs.fullName || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập họ và tên"
                         />
                     </div>
                     <div className="form-field">
-                        <label htmlFor="stagename" className="form-field__label">Nghệ danh</label>
+                        <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
                         <input
                             type="text"
-                            id="stagename"
-                            value={inputs.stagename}
+                            id="stageName"
+                            value={inputs.stageName || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập nghệ danh"
@@ -121,7 +107,7 @@ export default function BasicInfo() {
                         <label htmlFor="gender" className="form-field__label">Giới tính</label>
                         <select
                             id="gender"
-                            value={inputs.gender}
+                            value={inputs.gender || ""}
                             onChange={handleChange}
                             className="form-field__input"
                         >
@@ -136,46 +122,29 @@ export default function BasicInfo() {
                         <input
                             type="date"
                             id="dob"
-                            value={inputs.dob}
+                            value={inputs.dob || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập ngày sinh"
                         />
                     </div>
                     <div className="form-field">
-                        <label htmlFor="country" className="form-field__label">Quốc gia</label>
-                        <select
-                            id="country"
-                            value={inputs.country}
-                            onChange={handleChange}
-                            className="form-field__input"
-                        >
-                            <option value="">-- Chọn quốc gia --</option>
-                            <option value="vietnam">Việt Nam</option>
-                            <option value="usa">Hoa Kỳ</option>
-                            <option value="other">Khác</option>
-                        </select>
-                    </div>
-                    <div className="form-field">
                         <label htmlFor="province" className="form-field__label">Tỉnh thành</label>
-                        <select
+                        <input
+                            type="text"
                             id="province"
-                            value={inputs.province}
+                            value={inputs.province || ""}
                             onChange={handleChange}
                             className="form-field__input"
-                        >
-                            <option value="">-- Chọn tỉnh thành --</option>
-                            <option value="hanoi">Hà Nội</option>
-                            <option value="hochiminh">TP Hồ Chí Minh</option>
-                            <option value="other">Khác</option>
-                        </select>
+                            placeholder="Nhập tỉnh thành"
+                        />
                     </div>
                     <div className="form-field">
                         <label htmlFor="phone" className="form-field__label">Điện thoại</label>
                         <input
                             type="text"
                             id="phone"
-                            value={inputs.phone}
+                            value={inputs.phone || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập số điện thoại"
@@ -192,7 +161,7 @@ export default function BasicInfo() {
                         <input
                             type="text"
                             id="email"
-                            value={inputs.email}
+                            value={inputs.email || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập email đăng nhập"
@@ -213,11 +182,11 @@ export default function BasicInfo() {
                             <input
                                 type="text"
                                 value={link.url}
-                                onChange={(e) => handleLinkChange(e, link.id, 'url')}
+                                onChange={(e) => handleLinkChange(e, link._id, 'url')}
                                 className="form-field__input"
                                 placeholder="Nhập liên kết"
                             />
-                            <svg onClick={() => deleteLinkInput(link.id)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic delete-ic">
+                            <svg onClick={() => deleteLinkInput(link._id)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic delete-ic">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </div>
