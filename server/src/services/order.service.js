@@ -6,23 +6,32 @@ import {artwork} from "../models/artwork.model.js"
 class OrderService{
     //Order CRUD
     static createOrder = async(userId, body) => {
+        //1. Get type and talentChosenId
         const {type, talentChosenId} = body
-        if(type == 'toMarket'){
-            body.toMarket = true
+
+        //2. Check type of order
+        if(type == 'inDirect'){
+            //inDirect order
+            body.isDirect = false
             body.talentChosenId = null
-        }else if(type == 'toTalent'){
+        }else if(type == 'direct'){
+            //direct order
             const talent = await User.findById(talentChosenId)
             if(!talent) throw new BadRequestError('Talent not found!')
             if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
-            body.toMarket = false
+            body.isDirect = true
             body.talentChosenId = talentChosenId
+        }else{
+            throw new BadRequestError('Type must be direct or inDirect!')
         }
+
+        //3. Create order
         const order = new Order({
             memberId: userId,
             ...body
         })
         await order.save()
-
+        console.log(order)
         return {
             order
         }
@@ -37,7 +46,7 @@ class OrderService{
     }
     
     static readOrders = async() => {
-        const orders = await Order.find({toMarket: true})
+        const orders = await Order.find({isDirect: true})
         return {
             orders
         }
@@ -49,9 +58,13 @@ class OrderService{
         const foundUser = await User.findById(userId)
         if(!foundUser) throw new NotFoundError('User not found!')
         if(!oldOrder) throw new NotFoundError('Order not found!')
-        if(oldOrder.memberId.toString() != userId) throw new AuthFailureError("You can update only your order")
+        if(oldOrder.memberId.toString() !== userId) throw new AuthFailureError("You can update only your order")
+
+        //2. Check order status
+        if(oldOrder.status != 'pending')
+        throw new BadRequestError('You cannot update order on this stage!')
         
-        //2. update Order
+        //3. update Order
         const updatedOrder = await Order.findByIdAndUpdate(
             orderId,
             {
@@ -62,7 +75,6 @@ class OrderService{
         return {
             order: updatedOrder
         }
-        
     }
 
     static deleteOrder = async(userId, orderId) => {
@@ -73,7 +85,11 @@ class OrderService{
         if(!order) throw new NotFoundError('Order not found!')
         if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
         
-        //2. Delete order
+        //2. Check order status
+        if(oldOrder.status != 'pending')
+        throw new BadRequestError('You cannot delete order on this stage!')
+
+        //3. Delete order
         return await Order.findByIdAndDelete(orderId)
     }
     //End Order CRUD
@@ -101,8 +117,8 @@ class OrderService{
         if(!talent) throw new BadRequestError('Talent not found!')
         if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
         if(user._id != updatedOrder.memberId.toString()) throw new AuthFailureError('You can choose talent only in your Order!')
+        if(updatedOrder.isDirect) throw new BadRequestError('You have already chosen a talent!')
         if(updatedOrder.talentChosenId) throw new BadRequestError('You have already chosen a talent!')
-        if(talentId != updatedOrder.talentsAccepted.find(talent => talent == talentId)) throw new BadRequestError('You can choose only accepted talent!')
 
         //2 Choose talent
         updatedOrder.talentChosenId = talentId

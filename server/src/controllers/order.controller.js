@@ -5,7 +5,7 @@ class OrderController{
     //Order CRUD
     createOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Send commission request to talent success!',
+            message: 'Create order success!',
             metadata: await OrderService.createOrder(req.userId, req.body)
         }).send(res)
     }

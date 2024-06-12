@@ -12,11 +12,13 @@ router.get('/readOrders', asyncHandler(orderController.readOrders))
 //authentication
 //router.use(authenticationV2)
 router.use(verifyToken)
+
 //CRUD
-router.post('/order', asyncHandler(orderController.createOrder))
+router.post('/createOrder', asyncHandler(orderController.createOrder))
 router.patch('/updateOrder/:orderId', asyncHandler(orderController.updateOrder))
 router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder))
 //END CRUD
+
 router.get('/viewOrderHistory', asyncHandler(orderController.viewOrderHistory))
 router.patch('/chooseTalent/:orderId', asyncHandler(orderController.chooseTalent))
 
