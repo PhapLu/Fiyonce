@@ -20,21 +20,15 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
       default:
-        ".././uploads/default_avatar.png",
+        "./public/uploads/default_avatar.png",
     },
     bg: {
       type: String,
       default: 
-        ".././uploads/default_background.png",
+        "./public/uploads/default_background.png",
     },
     address: { type: String, default: '' },
     country: { type: String, default: "Vietnam" },
-    phone: {
-      type: String,
-      minlength: [10, "Phone number must have at least 10 characters"],
-      maxlength: [10, "Phone number cannot exceed 10 characters"],
-      default: ''
-    },
     bio: {
         type: String,
         maxlength: [200, "Bio cannot exceed 200 characters"],
@@ -99,9 +93,9 @@ const TalentUser = User.discriminator(
   new Schema({
     // Add role-specific fields here
     rating: {
-        type: Number, 
-        default: 5, 
-        min: [0, "Rating cannot be negative"], 
+        type: Number,
+        default: 5,
+        min: [0, "Rating cannot be negative"],
         max: [5, "Rating cannot exceed 5"] 
     },
     creativeFields: [
@@ -111,6 +105,17 @@ const TalentUser = User.discriminator(
       type: String,
       enum: ['trusted', 'topContributor', 'emerging']
     },
+    termsOfService: {
+      general: {type: String, required: true},
+      payments: {type: String, required: true},
+      revisions: {type: String, required: true},
+      deadlines_and_delivery: {type: String, required: true},
+      use: {type: String, required: true},
+      intellectual_property_rights: {type: String, required: true},
+      refunds: {type: String, required: true},
+      communication: {type: String, required: true},
+      updatedAt: {type: Date}
+    }
   })
 );
 
