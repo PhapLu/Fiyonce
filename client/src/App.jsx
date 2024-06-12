@@ -2,6 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
 
+// Dashboard
+import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard"
+
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
@@ -42,6 +45,10 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
       }
     ]
+  },
+  {
+    path: "/dashboard/accounts",
+    element: <AccountDashboard />,
   },
   {
     path: "/",

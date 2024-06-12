@@ -13,6 +13,7 @@ class TalentRequestService{
 
         // 2. Validate request body
         const { stageName, portfolioLink } = req.body;
+        console.log(req.body)
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
@@ -120,7 +121,9 @@ class TalentRequestService{
 
     static viewTalentRequests = async(adminId) => {
         //1. Check admin account
+        console.log(adminId)
         const adminUser = await User.findById(adminId)
+        console.log(adminUser)
         if(!adminUser) throw new NotFoundError('User not found')
         if(!adminUser || adminUser.role !== 'admin') throw new AuthFailureError('You do not have enough permission')
 
