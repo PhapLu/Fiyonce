@@ -1,10 +1,10 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
-import Apply from "../models/apply.model.js"
+import Proposal from "../models/proposal.model.js"
 import Brief from "../models/brief.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
 
-class ApplyService{
+class ProposalService{
     static submitPortfolio = async(userId, briefId, body) => {
         //1. Check if user, brief exists
         const user = await User.findById(userId)
@@ -16,10 +16,10 @@ class ApplyService{
         if(user.role !== 'talent')
             throw new AuthFailureError('You are not a talent')
 
-        //3. Check if user has already applied for the brief
-        const existingApply = await Apply.findOne({talentId: userId, briefId: briefId})
-        if(existingApply) 
-            throw new BadRequestError('You have already applied for this brief')
+        //3. Check if user has already given proposal for the brief
+        const existingProposal = await Proposal.findOne({talentId: userId, briefId: briefId})
+        if(existingProposal) 
+            throw new BadRequestError('You have already given proposal for this brief')
 
         //4. Check if artworks are valid
         if(body.artworks){
@@ -38,47 +38,47 @@ class ApplyService{
             throw new BadRequestError('Price must be within the range of the brief')
         
         //7. Submit portfolio
-        const apply = new Apply({
+        const proposal = new Proposal({
             briefId: briefId,
             userId: brief.briefOwner,
             talentId: userId,
             artworks: body.artworks,
             price: body.price,
         })
-        await apply.save()
+        await proposal.save()
         return {
-            apply
+            proposal
         }
     }
-    static readApply = async(applyId) => {
-        //1. Check if apply exists
-        const apply = await Apply.findById(applyId)
-        if(!apply) throw new NotFoundError('Apply not found')
+    static readProposal = async(proposalId) => {
+        //1. Check if proposal exists
+        const proposal = await Proposal.findById(proposalId)
+        if(!proposal) throw new NotFoundError('Proposal not found')
         return {
-            apply
+            proposal
         }
     }
-    static readApplies = async(briefId) => {
+    static readProposals = async(briefId) => {
         //1. Check if brief exists
         const brief = await Brief.findById(briefId)
         if(!brief) throw new NotFoundError('Brief not found')
 
-        //2. Read all applies of a brief
-        const applies = await Apply.find({briefId: briefId})
+        //2. Read all proposals of a brief
+        const proposals = await Proposal.find({briefId: briefId})
         return {
-            applies
+            proposals
         }
     }
-    static updateApply = async(userId, applyId, body) => {
-        //1. Check if apply, user exists
+    static updateProposal = async(userId, proposalId, body) => {
+        //1. Check if proposal, user exists
         const user = await User.findById(userId)
-        const apply = await Apply.findById(applyId)
-        if(!apply) throw new NotFoundError('Apply not found')
+        const proposal = await Proposal.findById(proposalId)
+        if(!proposal) throw new NotFoundError('Proposal not found')
         if(!user) throw new NotFoundError('User not found')
 
-        //2. Check if user is authorized to update apply
-        if(apply.talentId.toString() !== userId) 
-            throw new AuthFailureError('You are not authorized to update this apply')
+        //2. Check if user is authorized to update proposal
+        if(proposal.talentId.toString() !== userId) 
+            throw new AuthFailureError('You are not authorized to update this proposal')
         
         //3. Check if artworks are valid
         if(body.artworks){
@@ -87,49 +87,49 @@ class ApplyService{
                 throw new BadRequestError('Several artworks are not found')
         }
 
-        //4. Update apply
-        const updatedApply = await Apply.findByIdAndUpdate(
-            applyId,
+        //4. Update proposal
+        const updatedProposal = await Proposal.findByIdAndUpdate(
+            proposalId,
             {
                 $set: body
             },
             {new: true}
         )
-        await apply.save()
+        await proposal.save()
 
         return {
-            apply: updatedApply
+            proposal: updatedProposal
         }
     }
 
-    static deleteApply = async(userId, applyId) => {
-        //1. Check apply, user exists
-        const apply = await Apply.findById(applyId)
+    static deleteProposal = async(userId, proposalId) => {
+        //1. Check proposal, user exists
+        const proposal = await Proposal.findById(proposalId)
         const user = await User.findById(userId)
-        if(!apply) throw new NotFoundError('Apply not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
         if(!user) throw new NotFoundError('User not found')
 
-        //2. Check if user is authorized to delete apply
-        if(apply.talentId.toString() !== userId) 
-            throw new AuthFailureError('You are not authorized to delete this apply')
+        //2. Check if user is authorized to delete proposal
+        if(proposal.talentId.toString() !== userId) 
+            throw new AuthFailureError('You are not authorized to delete this proposal')
         
-        //3. Delete apply
-        await apply.remove()
+        //3. Delete proposal
+        await proposal.remove()
         return {
-            apply
+            proposal
         }
     }
-    static viewAppliesHistory = async(userId) => {
+    static viewProposalsHistory = async(userId) => {
         //1. Check if user exists
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError('User not found')
 
-        //2. View all applies of a talent
-        const applies = await Apply.find({talentId: userId})
+        //2. View all proposals of a talent
+        const proposals = await Proposal.find({talentId: userId})
         return {
-            applies
+            proposals
         }
     }
 }
 
-export default ApplyService
+export default ProposalService

@@ -1,16 +1,16 @@
 import AuthService from "../services/auth.service.js";
 import { CREATED, SuccessResponse } from "../core/success.response.js";
 class AuthController {
-    handlerRefreshToken = async(req, res, next) =>{
-        new SuccessResponse({
-            message: 'Get token success!',
-            metadata: await AuthService.handlerRefreshToken({
-                refreshToken: req.refreshToken,
-                user: req.user,
-                keyStore: req.keyStore
-            })
-        })
-    }
+    // handlerRefreshToken = async(req, res, next) =>{
+    //     new SuccessResponse({
+    //         message: 'Get token success!',
+    //         metadata: await AuthService.handlerRefreshToken({
+    //             refreshToken: req.refreshToken,
+    //             user: req.user,
+    //             keyStore: req.keyStore
+    //         })
+    //     })
+    // }
 
     login = async(req, res, next) =>{
         try {

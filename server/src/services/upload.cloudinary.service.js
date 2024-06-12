@@ -1,10 +1,7 @@
 import cloudinary from "../configs/cloudinary..config.js";
 import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
-import stream from 'stream'
-import {promisify} from 'util'
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js";
-const pipeline = promisify(stream.pipeline);
 //1.upload Image from URL
 const uploadImageFromURL = async() => {
     try {

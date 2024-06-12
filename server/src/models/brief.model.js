@@ -11,32 +11,34 @@ const BriefSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
-    briefOwner: {
+    memberId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    talentsAccepted:[{
+    talentAppliedIds:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],
-    talentChosen: {
+    talentChosenId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    character: {
-        photo: { type: String },
-        name: { type: String },
-        description: { type: String }
-    },
-    toMarket: {type: Boolean, required: true},
-    referencePhotos: [{ type: String }],
+    // character: {
+    //     photo: { type: String },
+    //     name: { type: String },
+    //     description: { type: String }
+    // },
+    isDirect: {type: Boolean, required: true},
+    references: [{ 
+        content: { type: String }, 
+        isMedia: { type: Boolean } 
+    }],
     minPrice: { type: Number },
     maxPrice: { type: Number },
-    isCommercialPurpose: { type: Boolean},
+    purposes: [{ type: String, enum: ['personal', 'commercial'] }],
     isPrivate: { type: Boolean },
     deadline: { type: Date},
-    fileName: { type: String }
-    
+    fileFormats: [{ type: String }],
 },{
     timestamps: true,
     collection: COLLECTION_NAME

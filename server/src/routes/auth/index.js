@@ -15,5 +15,5 @@ router.patch('/users/resetPassword', asyncHandler(authController.resetPassword))
 //authentication
 //router.use(authenticationV2)
 router.use(verifyToken)
-router.post('/users/handlerRefreshToken', asyncHandler(authController.handlerRefreshToken))
+//router.post('/users/handlerRefreshToken', asyncHandler(authController.handlerRefreshToken))
 export default router

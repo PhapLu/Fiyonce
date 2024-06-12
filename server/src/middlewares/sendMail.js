@@ -96,11 +96,8 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
                     font-weight: bold;
                     
                 }
-                .social-icons i {
-                    font-size: 20px;
-                    width: fit-content;
-                    margin: 0 6px;
-                    color: #0e0d13;
+                .social-icons {
+                    display: flex;
                 }
             </style>
         </head>
@@ -123,10 +120,10 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
                     <p class="footer_final_p">Hẹn gặp lại trên Fiyonce.</p>
                     <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
                     <div class="social-icons">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                        <a href="#" target="_blank" style='margin-right:12px;' > <img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718068817/fiyonce/system/facebook_icon_sk9jnu.png" style="object-fit: cover; border-radius:0px;display:block" class="CToWUd" data-bit="iit" /></a>
+                        <a href="#" target="_blank" style='margin-right:12px;' ><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064053/fiyonce/system/tiktok_icon_zkvjzu.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
+                        <a href="#" target="_blank" style='margin-right:12px;' ><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064137/fiyonce/system/instagram_icon_lzz8ox.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
+                        <a href="#" target="_blank" style='margin-right:12px;' ><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064187/fiyonce/system/pinterest_icon_xjzzls.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
                     </div>
                 </div>
             </div>
