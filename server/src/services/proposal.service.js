@@ -1,25 +1,25 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import Proposal from "../models/proposal.model.js"
-import Brief from "../models/brief.model.js"
+import CommissionRequest from "../models/commissionRequest.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
 
 class ProposalService{
-    static submitPortfolio = async(userId, briefId, body) => {
-        //1. Check if user, brief exists
+    static submitPortfolio = async(userId, commissionRequestId, body) => {
+        //1. Check if user, commissionRequest exists
         const user = await User.findById(userId)
-        const brief = await Brief.findById(briefId)
+        const commissionRequest = await CommissionRequest.findById(commissionRequestId)
         if(!user) throw new NotFoundError('User not found')
-        if(!brief) throw new NotFoundError('Brief not found')
+        if(!commissionRequest) throw new NotFoundError('CommissionRequest not found')
 
         //2. Check if user is a talent
         if(user.role !== 'talent')
             throw new AuthFailureError('You are not a talent')
 
-        //3. Check if user has already given proposal for the brief
-        const existingProposal = await Proposal.findOne({talentId: userId, briefId: briefId})
-        if(existingProposal) 
-            throw new BadRequestError('You have already given proposal for this brief')
+        //3. Check if user has already given proposal for the commissionRequest
+        const existingProposal = await Proposal.findOne({talentId: userId, commissionRequestId: commissionRequestId})
+        if(existingProposal)
+            throw new BadRequestError('You have already given proposal for this commissionRequest')
 
         //4. Check if artworks are valid
         if(body.artworks){
@@ -28,19 +28,17 @@ class ProposalService{
                 throw new BadRequestError('Several artworks are not found')
         }
         //5. Modify the acceptedTalent
-        brief.talentsAccepted.push(userId)
-        brief.save()
+        commissionRequest.talentsAccepted.push(userId)
+        commissionRequest.save()
 
         //6.Check if price is valid
         if(body.price < 0)
             throw new BadRequestError('Price must be greater than 0')
-        if(body.price < brief.minPrice*90/100 || body.price > brief.maxPrice*110/100)
-            throw new BadRequestError('Price must be within the range of the brief')
         
         //7. Submit portfolio
         const proposal = new Proposal({
-            briefId: briefId,
-            userId: brief.briefOwner,
+            commissionRequestId: commissionRequestId,
+            userId: commissionRequest.memberId,
             talentId: userId,
             artworks: body.artworks,
             price: body.price,
@@ -58,13 +56,13 @@ class ProposalService{
             proposal
         }
     }
-    static readProposals = async(briefId) => {
-        //1. Check if brief exists
-        const brief = await Brief.findById(briefId)
-        if(!brief) throw new NotFoundError('Brief not found')
+    static readProposals = async(commissionRequestId) => {
+        //1. Check if commissionRequest exists
+        const commissionRequest = await CommissionRequest.findById(commissionRequestId)
+        if(!commissionRequest) throw new NotFoundError('CommissionRequest not found')
 
-        //2. Read all proposals of a brief
-        const proposals = await Proposal.find({briefId: briefId})
+        //2. Read all proposals of a commissionRequest
+        const proposals = await Proposal.find({commissionRequestId: commissionRequestId})
         return {
             proposals
         }

@@ -7,14 +7,14 @@ import { verifyToken } from "../../middlewares/jwt.js";
 const router = express.Router()
 //Member
 router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
-router.get('/readProposals/:briefId', asyncHandler(proposalController.readProposals))
+router.get('/readProposals/:commissionRequestId', asyncHandler(proposalController.readProposals))
 
 //authentication
 //router.use(authenticationV2)
 router.use(verifyToken)
 //CRUD
 //Talent
-router.post('/submitPortfolio/:briefId', asyncHandler(proposalController.submitPortfolio))
+router.post('/submitPortfolio/:commissionRequestId', asyncHandler(proposalController.submitPortfolio))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 //END CRUD

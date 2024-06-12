@@ -4,9 +4,9 @@ const DOCUMENT_NAME = 'Proposal'
 const COLLECTION_NAME = 'Proposals'
 
 const ProposalSchema = new mongoose.Schema({
-    briefId: {
+    commissionRequestId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Brief',
+        ref: 'CommissionRequest',
         required: true
     },
     userId: {

@@ -1,8 +1,8 @@
 import mongoose, { mongo } from "mongoose";
-const DOCUMENT_NAME = 'Brief'
-const COLLECTION_NAME = 'Briefs'
+const DOCUMENT_NAME = 'CommissionRequest'
+const COLLECTION_NAME = 'CommissionRequests'
 
-const BriefSchema = new mongoose.Schema({
+const CommissionRequestSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -43,6 +43,6 @@ const BriefSchema = new mongoose.Schema({
     timestamps: true,
     collection: COLLECTION_NAME
 })
-const Brief = mongoose.model(DOCUMENT_NAME, BriefSchema)
+const CommissionRequest = mongoose.model(DOCUMENT_NAME, CommissionRequestSchema)
 
-export default Brief
+export default CommissionRequest

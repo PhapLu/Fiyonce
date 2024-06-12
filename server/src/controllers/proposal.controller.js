@@ -4,8 +4,8 @@ import ProposalService from "../services/proposal.service.js"
 class ProposalController{
     submitPortfolio = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Proposal Brief success!',
-            metadata: await ProposalService.submitPortfolio(req.userId, req.params.briefId, req.body)
+            message: 'Proposal commissionRequest success!',
+            metadata: await ProposalService.submitPortfolio(req.userId, req.params.commissionRequestId, req.body)
         }).send(res)
     }
 
@@ -19,7 +19,7 @@ class ProposalController{
     readProposals = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all Proposals',
-            metadata: await ProposalService.readProposals(req.params.briefId)
+            metadata: await ProposalService.readProposals(req.params.commissionRequestId)
         }).send(res)
     }
 
