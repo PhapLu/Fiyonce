@@ -6,6 +6,10 @@ import UpgradeAccountImg from "../../assets/img/upgrade-account-img.png";
 import { trimString, bytesToKilobytes, formatFloat } from "../../utils/formatter";
 import { isFilled, minLength } from "../../utils/validator.js";
 import { apiUtils } from '../../utils/newRequest.js';
+
+import { io } from 'socket.io-client';
+const SOCKET_SERVER_URL = "http://localhost:8900"; // Update this with your server URL
+
 const UpgradeAccount = ({ closeModal }) => {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
@@ -63,6 +67,17 @@ const UpgradeAccount = ({ closeModal }) => {
             return;
         }
 
+        const socket = io(SOCKET_SERVER_URL, {
+            withCredentials: true
+        });
+
+        socket.on('connect', () => {
+            console.log('Connected to socket server:', socket.id);
+
+            // Add user to socket (for demonstration, assuming userId is 1)
+            socket.emit('addUser', "665929dd1937df564df71660");
+        });
+
         if (artworks.length < 3) {
             setErrors((values) => ({ ...values, artworks: "Please upload at least 3 images." }));
             return;
@@ -75,12 +90,18 @@ const UpgradeAccount = ({ closeModal }) => {
                 formData.append("files", file);
             });
 
-            const response = await apiUtils.post(`/user/requestUpgradingToTalent`, formData);
+            const response = await apiUtils.post(`/talentRequest/requestUpgradingToTalent`, formData);
             console.log(response);
-            if (response.data.status == 200) {
+            if (response) {
                 alert("Successfully request for upgrading account")
                 closeModal()
             }
+
+            
+        socket.emit('sendTalentRequest', {
+            senderId: "665929dd1937df564df71660",
+            talentRequest: response.data.metadata.talentRequest,
+        });
         } catch (error) {
             console.log("Error")
             console.log(error);

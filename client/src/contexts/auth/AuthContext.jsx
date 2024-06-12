@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import { newRequest, apiUtils } from "../../utils/newRequest";
 import { formatEmailToName } from "../../utils/formatter";
+// import socketIOClient from 'socket.io-client';
 
 const AuthContext = createContext();
 
@@ -23,6 +24,26 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [showRegisterVerificationForm, setShowRegisterVerificationForm] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+
+    // const [socket, setSocket] = useState(null);
+    // useEffect(() => {
+    //     if (userInfo) {
+    //         const newSocket = socketIOClient('http://localhost:3000'); // Adjust URL to your backend
+    //         setSocket(newSocket);
+
+    //         newSocket.on('connect', () => {
+    //             console.log('Connected to socket server with ID:', newSocket.id);
+    //         });
+
+    //         newSocket.on('disconnect', () => {
+    //             console.log('Disconnected from socket server');
+    //         });
+
+    //         return () => {
+    //             newSocket.disconnect();
+    //         };
+    //     }
+    // }, [userInfo]);
 
     // Fetch user profile data
     const fetchUserProfile = async () => {

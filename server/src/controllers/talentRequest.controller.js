@@ -3,6 +3,7 @@ import TalentRequestService from "../services/talentRequest.service.js";
 
 class TalentRequestController {
     requestUpgradingToTalent = async(req, res, next) => {
+        console.log(req.files)
         new SuccessResponse({
             message: 'Talent request submitted successfully.',
             metadata: await TalentRequestService.requestUpgradingToTalent(req.userId, req)

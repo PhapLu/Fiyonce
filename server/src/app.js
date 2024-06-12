@@ -46,6 +46,7 @@ app.use((error, req, res, next) => {
         message: error.message || 'Internal Server Error'
     });
 });
+
 // Create HTTP server
 const server = http.createServer(app);
 
@@ -53,5 +54,15 @@ const server = http.createServer(app);
 configureSocket(server);
 
 global._io.on('connection', SocketServices.connection);
+
+// // Start the server
+// const PORT = process.env.PORT || 3052;
+// server.listen(PORT, () => {
+//     console.log(`Server is starting with Port: ${PORT}`);
+// });
+
+process.on('SIGINT', () => {
+    server.close(() => console.log(`Exit Server Express`));
+});
 
 export default app;
