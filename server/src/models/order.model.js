@@ -1,8 +1,8 @@
 import mongoose, { mongo } from "mongoose";
-const DOCUMENT_NAME = 'CommissionRequest'
-const COLLECTION_NAME = 'CommissionRequests'
+const DOCUMENT_NAME = 'Order'
+const COLLECTION_NAME = 'Orders'
 
-const CommissionRequestSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -15,13 +15,14 @@ const CommissionRequestSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    talentAppliedIds:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
     talentChosenId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', 'confirmed', 'in_progress', 'finished'],
+        default: 'pending'
     },
     // character: {
     //     photo: { type: String },
@@ -30,12 +31,12 @@ const CommissionRequestSchema = new mongoose.Schema({
     // },
     isDirect: {type: Boolean, required: true},
     references: [{ 
-        content: { type: String }, 
-        isMedia: { type: Boolean } 
+        content: { type: String },
+        isMedia: { type: Boolean }
     }],
     minPrice: { type: Number },
     maxPrice: { type: Number },
-    purposes: [{ type: String, enum: ['personal', 'commercial'] }],
+    purpose: { type: String, enum: ['personal', 'commercial'] },
     isPrivate: { type: Boolean },
     deadline: { type: Date},
     fileFormats: [{ type: String }],
@@ -43,6 +44,6 @@ const CommissionRequestSchema = new mongoose.Schema({
     timestamps: true,
     collection: COLLECTION_NAME
 })
-const CommissionRequest = mongoose.model(DOCUMENT_NAME, CommissionRequestSchema)
+const Order = mongoose.model(DOCUMENT_NAME, OrderSchema)
 
-export default CommissionRequest
+export default Order
