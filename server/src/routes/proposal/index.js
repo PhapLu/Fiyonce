@@ -6,7 +6,6 @@ import { verifyToken } from "../../middlewares/jwt.js";
 
 const router = express.Router()
 //Member
-router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.get('/readProposals/:orderId', asyncHandler(proposalController.readProposals))
 
 //authentication
@@ -14,6 +13,7 @@ router.get('/readProposals/:orderId', asyncHandler(proposalController.readPropos
 router.use(verifyToken)
 //CRUD
 //Talent
+router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.post('/sendProposal/:orderId', asyncHandler(proposalController.sendProposal))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))

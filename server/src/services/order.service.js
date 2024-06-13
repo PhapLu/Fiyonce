@@ -2,6 +2,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
+import Proposal from "../models/proposal.model.js"
 
 class OrderService{
     //Order CRUD
@@ -39,18 +40,28 @@ class OrderService{
 
     static readOrder = async(orderId) => {
         const order = await Order.findById(orderId)
-        if(!order) throw new NotFoundError('Order not found!')
+            .populate('talentChosenId', 'stageName avatar')
+        if (!order) throw new NotFoundError('Order not found!')
         return {
             order
-        }
-    }
+        };
+    };
     
     static readOrders = async() => {
-        const orders = await Order.find({isDirect: true})
+        //1. Get all orders
+        const orders = await Order.find({ isDirect: true })
+            .populate('talentChosenId', 'stageName avatar');
+        //2. Iterate over each order to add talentsAcceptedCount
+        const ordersWithCounts = await Promise.all(orders.map(async (order) => {
+            const talentsAcceptedCount = await Proposal.find({ orderId: order._id, status: 'accepted' }).countDocuments();
+            order._doc.talentsAcceptedCount = talentsAcceptedCount;  // Add the count to the order
+            return order;
+        }));
+    
         return {
-            orders
-        }
-    }
+            orders: ordersWithCounts
+        };
+    };
 
     static updateOrder = async(userId, orderId, body) => {
         //1. check order and user
@@ -100,7 +111,8 @@ class OrderService{
         if(!foundUser) throw new NotFoundError('User not found!')
         
         //2. Get orders
-        const orders = await Order.find({ memberId: clientId });
+        const orders = await Order.find({ memberId: clientId })
+            .populate('talentChosenId', 'stageName avatar');
         return {
             orders
         };

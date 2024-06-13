@@ -37,13 +37,13 @@ const uploadAvatarOrCover = async ({
         //2. Delete the old image in cloudinary
         if(type == 'avatar'){
             //Do not delete the default image
-            if(!user.avatar.includes('default')){
+            if(!user.avatar.includes('pastal_system_default_avatar')){
                 imagePublicId = extractPublicIdFromUrl(user.avatar)
                 await deleteFileByPublicId(imagePublicId)
             }
         } else if(type == 'bg'){
             //Do not delete the default image
-            if(!user.bg.includes('default')){
+            if(!user.bg.includes('pastal_system_default_background')){
                 imagePublicId = extractPublicIdFromUrl(user.bg)
                 await deleteFileByPublicId(imagePublicId)
             }

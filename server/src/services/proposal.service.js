@@ -48,10 +48,12 @@ class ProposalService{
             proposal
         }
     }
-    static readProposal = async(proposalId) => {
+    static readProposal = async(userId, proposalId) => {
         //1. Check if proposal exists
-        const proposal = await Proposal.findById(proposalId)
+        
+        const proposal = await Proposal.findById(proposalId).populate('orderId') 
         if(!proposal) throw new NotFoundError('Proposal not found')
+
         return {
             proposal
         }

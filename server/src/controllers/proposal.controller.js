@@ -12,7 +12,7 @@ class ProposalController{
     readProposal = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read an proposal',
-            metadata: await ProposalService.readProposal(req.params.proposalId)
+            metadata: await ProposalService.readProposal(req.userId, req.params.proposalId)
         }).send(res)
     }
 
