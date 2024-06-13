@@ -7,7 +7,7 @@ const ReasonStatusCode = {
     FORBIDDEN: 'Bad request error',
     CONFLICT: 'Conflict error'
 }
-
+import myLogger from '../loggers/mylogger.log.js'
 import {statusCodes, reasonPhrases} from '../utils//httpStatusCode.js'
 
 class ErrorResponse extends Error {
@@ -15,6 +15,8 @@ class ErrorResponse extends Error {
         super(message)
         this.status = status
         this.now = Date.now()
+        //Log the error use winston
+        myLogger.error(this.message, ['api/v1/login', 'vv33344', {error: 'Bad request error'}])
     }
 }
 

@@ -30,9 +30,8 @@ const OrderSchema = new mongoose.Schema({
     //     description: { type: String }
     // },
     isDirect: {type: Boolean, required: true},
-    references: [{ 
-        content: { type: String },
-        isMedia: { type: Boolean }
+    references: [{
+        type: String
     }],
     minPrice: { type: Number },
     maxPrice: { type: Number },

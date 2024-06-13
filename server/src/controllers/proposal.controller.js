@@ -2,23 +2,23 @@ import { SuccessResponse } from "../core/success.response.js"
 import ProposalService from "../services/proposal.service.js"
 
 class ProposalController{
-    submitPortfolio = async(req, res, next) => {
+    sendProposal = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Proposal order success!',
-            metadata: await ProposalService.submitPortfolio(req.userId, req.params.orderId, req.body)
+            message: 'send proposal success!',
+            metadata: await ProposalService.sendProposal(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
 
     readProposal = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read an Proposal',
+            message: 'Read an proposal',
             metadata: await ProposalService.readProposal(req.params.proposalId)
         }).send(res)
     }
 
     readProposals = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read all Proposals',
+            message: 'Read all proposals of an order',
             metadata: await ProposalService.readProposals(req.params.orderId)
         }).send(res)
     }
@@ -43,7 +43,6 @@ class ProposalController{
             metadata: await ProposalService.viewProposalsHistory(req.userId)
         }).send(res)
     }
-
 }
 
 export default new ProposalController()

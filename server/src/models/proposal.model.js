@@ -19,6 +19,18 @@ const ProposalSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    title:{
+        type: String,
+        required: true
+    },
+    scope: {
+        type: String,
+        required: true
+    },
+    timeline: {
+        type: String,
+        required: true
+    },
     artworks:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Artwork'

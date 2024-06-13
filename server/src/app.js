@@ -12,7 +12,8 @@ import router from "./routes/index.js";
 import configureSocket from './configs/socket.config.js';
 import SocketServices from './services/socket.service.js';
 import './db/init.mongodb.js'; // Ensure this is properly set up
-
+import {v4 as uuidv4} from 'uuid'
+import myLogger from './loggers/mylogger.log.js';
 const app = express();
 
 // Init middlewares
@@ -29,6 +30,18 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
+app.use((req, res, next)=> {
+    const requestId = req.headers['x-request-id']
+    req.requestId = requestId ? requestId : uuidv4()
+    myLogger.log(`input-params ::${req.method}::`, [
+        req.path,
+        { requestId: req.requestId},
+        req.method === 'POST' ? req.body : req.query
+    ])
+
+    next()
+}) 
 // Init routes
 app.use('', router);
 

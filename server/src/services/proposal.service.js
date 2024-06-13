@@ -5,7 +5,7 @@ import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
 
 class ProposalService{
-    static submitPortfolio = async(userId, orderId, body) => {
+    static sendProposal = async(userId, orderId, body) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
@@ -78,12 +78,9 @@ class ProposalService{
         if(proposal.talentId.toString() !== userId) 
             throw new AuthFailureError('You are not authorized to update this proposal')
         
-        //3. Check if artworks are valid
-        if(body.artworks){
-            const artworks = await artwork.find({_id: body.artworks})
-            if(artworks.length !== body.artworks.length)
-                throw new BadRequestError('Several artworks are not found')
-        }
+        //3. Check order status
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'pending' && order.status !== 'accepted') throw new BadRequestError('You cannot update proposal on this stage')
 
         //4. Update proposal
         const updatedProposal = await Proposal.findByIdAndUpdate(

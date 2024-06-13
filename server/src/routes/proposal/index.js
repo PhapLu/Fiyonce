@@ -14,7 +14,7 @@ router.get('/readProposals/:orderId', asyncHandler(proposalController.readPropos
 router.use(verifyToken)
 //CRUD
 //Talent
-router.post('/submitPortfolio/:orderId', asyncHandler(proposalController.submitPortfolio))
+router.post('/sendProposal/:orderId', asyncHandler(proposalController.sendProposal))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 //END CRUD

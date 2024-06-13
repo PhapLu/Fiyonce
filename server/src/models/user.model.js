@@ -47,6 +47,12 @@ const UserSchema = new Schema(
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
+    rating: {
+      type: Number,
+      default: 5,
+      min: [0, "Rating cannot be negative"],
+      max: [5, "Rating cannot exceed 5"] 
+    },
     accessToken: { type: String },
   },
   {
@@ -92,12 +98,7 @@ const TalentUser = User.discriminator(
   "talent",
   new Schema({
     // Add role-specific fields here
-    rating: {
-        type: Number,
-        default: 5,
-        min: [0, "Rating cannot be negative"],
-        max: [5, "Rating cannot exceed 5"] 
-    },
+    
     creativeFields: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Field' }
     ],
