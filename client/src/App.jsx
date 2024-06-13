@@ -19,13 +19,14 @@ import Profile from "./pages/profile/Profile";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
+import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
+
 // import Artwork from "./pages/artwork/Artwork";
 // import Challenges from "./pages/challenges/Challenges";
 // import Challenge from "./pages/challenge/Challenge";
 // import Talents from "./pages/talents/Talents";
 // import Talent from "./pages/talent/Talent";
 // import Messenger from './pages/messenger/Messenger'
-
 // import Success from "./pages/success/Success";
 // ... (other imports)
 
@@ -58,10 +59,10 @@ const router = createBrowserRouter([
         path: "/explore",
         element: <Explore />,
       },
-      // {
-      //   path: "/messenger",
-      //   element:<Messenger/>
-      // },
+      {
+        path: "/commission_market",
+        element:<CommissionMarket/>
+      },
       // {
       //   path: "/artworks/:id",
       //   element: <Artwork />,

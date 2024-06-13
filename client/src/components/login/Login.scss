@@ -1,0 +1,26 @@
+.modal-form--right {
+    .login-option-container {
+        margin-left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+
+        .login-option-item {
+            width: 80%;
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--black-2-color);
+            border-radius: 8px;
+            padding: 6px 10px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 12px;
+
+            .login-option-item__img {
+                width: 20px;
+                height: 20px;
+                margin-right: 12px;
+                object-fit: cover;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.order-commission.modal-form {
+    .step-container {
+        .step-item {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+
+            &.checked {
+                font-weight: 700;
+            }
+        }
+    }
+}

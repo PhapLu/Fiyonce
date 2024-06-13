@@ -27,13 +27,13 @@ export default function Navbar() {
                     <li className={`navbar-link-item ` + (location.pathname.includes('/explore') ? "active" : "")}>
                         <Link to="/explore">Khám phá</Link>
                     </li>
-                    <li className="navbar-link-item">
+                    <li className={`navbar-link-item ` + (location.pathname.includes('/marketplace') ? "active" : "")}>
                         <Link to="/marketplace">Mua bán</Link>
                     </li>
-                    <li className="navbar-link-item">
-                        <Link to="/briefs">Chợ Commission</Link>
+                    <li className={`navbar-link-item ` + (location.pathname.includes('/commission_market') ? "active" : "")}>
+                        <Link to="/commission_market">Chợ Commission</Link>
                     </li>
-                    <li className="navbar-link-item">
+                    <li className={`navbar-link-item ` + (location.pathname.includes('/challenges') ? "active" : "")}>
                         <Link to="/challenges">Thử thách</Link>
                     </li>
                     <hr className="navbar__veritcal-hr" />

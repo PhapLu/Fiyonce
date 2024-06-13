@@ -155,7 +155,6 @@ export default function Sidebar({ profileInfo }) {
                             <p className="sidebar__section__title">Liên kết</p>
                             <hr />
                             <div className="sidebar__socials__link-container">
-
                                 {profileInfo.socialLinks.map((socialLink, key) => (
                                     <div key={key} className="sidebar__socials__link-item">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">

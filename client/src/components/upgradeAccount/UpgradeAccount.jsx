@@ -56,6 +56,11 @@ const UpgradeAccount = ({ closeModal }) => {
         // errors.artworks = 'Vui lòng chọn 3 tác phẩm có chữ kí của bạn';
         // }
 
+        
+        if (artworks.length < 3) {
+            errors.artworks ="Please upload at least 3 images.";
+        }
+
         return errors;
     };
 
@@ -78,10 +83,6 @@ const UpgradeAccount = ({ closeModal }) => {
             socket.emit('addUser', "665929dd1937df564df71660");
         });
 
-        if (artworks.length < 3) {
-            setErrors((values) => ({ ...values, artworks: "Please upload at least 3 images." }));
-            return;
-        }
         try {
             const formData = new FormData();
             formData.append("stageName", inputs.stageName);
@@ -123,12 +124,12 @@ const UpgradeAccount = ({ closeModal }) => {
 
     return (
         <div className="overlay" onClick={closeModal}>
-            <form className="form authentication upgrade-account-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
-                <div className="authentication--left">
-                    <img src={UpgradeAccountImg} className="authentication__img" alt="Authentication image" />
+            <form className="form modal-form upgrade-account-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
+                <div className="modal-form--left">
+                    <img src={UpgradeAccountImg} className="modal-form__img" alt="Authentication image" />
                 </div>
 
-                <div className="authentication--right">
+                <div className="modal-form--right">
                     <svg onClick={closeModal} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__close-ic">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
