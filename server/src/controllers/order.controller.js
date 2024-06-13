@@ -13,7 +13,7 @@ class OrderController{
     readOrder = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read a order',
-            metadata: await OrderService.readOrder(req.params.order)
+            metadata: await OrderService.readOrder(req.params.orderId)
         }).send(res)
     }
 

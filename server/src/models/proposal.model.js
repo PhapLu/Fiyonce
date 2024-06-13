@@ -27,9 +27,8 @@ const ProposalSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    timeline: {
-        type: String,
-        required: true
+    deadLine: {
+        type: Date,
     },
     artworks:[{
         type: mongoose.Schema.Types.ObjectId,

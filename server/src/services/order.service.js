@@ -20,6 +20,7 @@ class OrderService{
             const talent = await User.findById(talentChosenId)
             if(!talent) throw new BadRequestError('Talent not found!')
             if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
+            if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true
             body.talentChosenId = talentChosenId
         }else{
@@ -32,15 +33,15 @@ class OrderService{
             ...body
         })
         await order.save()
-        console.log(order)
         return {
             order
         }
     }
 
     static readOrder = async(orderId) => {
-        const order = await Order.findById(orderId)
-            .populate('talentChosenId', 'stageName avatar')
+        console.log(orderId)
+        const order = await Order.findById(orderId).populate('talentChosenId', 'stageName avatar')
+        console.log(order)
         if (!order) throw new NotFoundError('Order not found!')
         return {
             order
@@ -49,7 +50,7 @@ class OrderService{
     
     static readOrders = async() => {
         //1. Get all orders
-        const orders = await Order.find({ isDirect: true })
+        const orders = await Order.find({ isDirect: false })
             .populate('talentChosenId', 'stageName avatar');
         //2. Iterate over each order to add talentsAcceptedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {

@@ -13,8 +13,8 @@ router.get('/readProposals/:orderId', asyncHandler(proposalController.readPropos
 router.use(verifyToken)
 //CRUD
 //Talent
-router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.post('/sendProposal/:orderId', asyncHandler(proposalController.sendProposal))
+router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 //END CRUD

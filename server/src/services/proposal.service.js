@@ -21,31 +21,35 @@ class ProposalService{
         if(existingProposal)
             throw new BadRequestError('You have already given proposal for this order')
 
-        //4. Check if artworks are valid
-        if(body.artworks){
-            const artworks = await artwork.find({_id: body.artworks})
-            if(artworks.length !== body.artworks.length)
-                throw new BadRequestError('Several artworks are not found')
-        }
-        //5. Modify the acceptedTalent
-        order.talentsAccepted.push(userId)
-        order.save()
-
-        //6.Check if price is valid
+        // //4. Check if artworks are valid
+        // if(body.artworks){
+        //     const artworks = await artwork.find({_id: body.artworks})
+        //     if(artworks.length !== body.artworks.length)
+        //         throw new BadRequestError('Several artworks are not found')
+        // }
+        
+        //5.Check if price is valid
         if(body.price < 0)
             throw new BadRequestError('Price must be greater than 0')
         
+        //6. Modify the order status to accepted
+        order.status = 'accepted'
+        order.save()
+
         //7. Submit portfolio
         const proposal = new Proposal({
             orderId,
-            userId: order.memberId,
+            memberId: order.memberId,
             talentId: userId,
             artworks: body.artworks,
             price: body.price,
+            ...body
         })
         await proposal.save()
+        const showedProposal = await proposal.populate('orderId')
+        console.log('Proposal:', showedProposal);
         return {
-            proposal
+            proposal: showedProposal
         }
     }
     static readProposal = async(userId, proposalId) => {

@@ -13,7 +13,6 @@ class TalentRequestService{
 
         // 2. Validate request body
         const { stageName, portfolioLink } = req.body;
-        console.log(req.body)
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
