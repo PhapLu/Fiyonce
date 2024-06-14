@@ -110,9 +110,9 @@ const TalentUser = User.discriminator(
       general: {type: String, required: true},
       payments: {type: String, required: true},
       revisions: {type: String, required: true},
-      deadlines_and_delivery: {type: String, required: true},
+      deadlinesAndDelivery: {type: String, required: true},
       use: {type: String, required: true},
-      intellectual_property_rights: {type: String, required: true},
+      intellectualPropertyRights: {type: String, required: true},
       refunds: {type: String, required: true},
       communication: {type: String, required: true},
       updatedAt: {type: Date}

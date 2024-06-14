@@ -54,7 +54,6 @@ class ProposalService{
     }
     static readProposal = async(userId, proposalId) => {
         //1. Check if proposal exists
-        
         const proposal = await Proposal.findById(proposalId).populate('orderId') 
         if(!proposal) throw new NotFoundError('Proposal not found')
 
@@ -86,7 +85,8 @@ class ProposalService{
         
         //3. Check order status
         const order = await Order.findById(proposal.orderId)
-        if(order.status !== 'pending' && order.status !== 'accepted') throw new BadRequestError('You cannot update proposal on this stage')
+        if(order.status !== 'pending' && order.status !== 'accepted') 
+            throw new BadRequestError('You cannot update proposal on this stage')
 
         //4. Update proposal
         const updatedProposal = await Proposal.findByIdAndUpdate(
@@ -114,7 +114,12 @@ class ProposalService{
         if(proposal.talentId.toString() !== userId) 
             throw new AuthFailureError('You are not authorized to delete this proposal')
         
-        //3. Delete proposal
+        //3. Check status of order
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'pending' && order.status !== 'accepted')
+            throw new BadRequestError('You cannot update proposal on this stage')
+
+        //4. Delete proposal
         await proposal.remove()
         return {
             proposal

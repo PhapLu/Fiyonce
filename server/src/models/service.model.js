@@ -9,7 +9,7 @@ const ServiceSchema = new mongoose.Schema({
     title: { type: String, required: true },
     serviceCategory: {
         type: mongoose.Types.ObjectId, 
-        ref:'serviceCategory', 
+        ref:'ServiceCategory', 
         required: true
     },
     fromPrice: { type: Number, required: true },

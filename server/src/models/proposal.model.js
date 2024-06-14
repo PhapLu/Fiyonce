@@ -32,7 +32,7 @@ const ProposalSchema = new mongoose.Schema({
     },
     artworks:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Artwork'
+        ref: 'Artwork',
     }],
     price: {
         type: Number,
