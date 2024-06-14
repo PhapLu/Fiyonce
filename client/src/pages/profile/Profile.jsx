@@ -22,10 +22,12 @@ export default function Profile() {
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('type', "cover");
+        formData.append('type', "bg");
 
         if (file) {
             setLoading(true);
+            console.log(formData.get('file'));
+            console.log(userInfo._id);
 
             try {
                 const response = await apiUtils.post(`upload/profile/avatarOrCover/${userInfo._id}`, formData);
@@ -91,7 +93,7 @@ export default function Profile() {
                     <div className="profile">
                         <div className="profile__bg">
                             <img
-                                src={profileInfo.bg || "https://i.pinimg.com/736x/f9/ad/30/f9ad3071831de9aef6ebe8dd0daf508d.jpg"}
+                                src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
                                 alt={`${profileInfo.fullName}'s cover photo`}
                                 className={`profile__bg__img ${loading ? "skeleton-img" : ""}`}
                             />
@@ -114,10 +116,10 @@ export default function Profile() {
                             </button>
                             <input type="file" id="coverPhoto" style={{ display: 'none' }} onChange={handleCoverChange} />
                         </div>
-                        <div className="profile-nav-container">
+                        <div className="subnav-container">
                             <Link
                                 to={`/users/${id}/order-history`}
-                                className={`profile-nav-item btn btn-md ${location.pathname.includes('/order-history') ? "btn-2" : "btn-3"}`}
+                                className={`subnav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +127,7 @@ export default function Profile() {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="currentColor"
-                                    className="size-6 profile-nav-item__ic"
+                                    className="size-6 subnav-item__ic"
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -137,7 +139,7 @@ export default function Profile() {
                             </Link>
                             <Link
                                 to={`/users/${id}/basic-info`}
-                                className={`profile-nav-item btn btn-md ${location.pathname.includes('/basic-info') ? "btn-2" : "btn-3"}`}
+                                className={`subnav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +147,7 @@ export default function Profile() {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="currentColor"
-                                    className="size-6 profile-nav-item__ic"
+                                    className="size-6 subnav-item__ic"
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -155,6 +157,7 @@ export default function Profile() {
                                 </svg>
                                 <span>Thông tin cơ bản</span>
                             </Link>
+                            <hr />
                         </div>
                     </div>
                     <Outlet context={profileInfo} />

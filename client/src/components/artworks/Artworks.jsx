@@ -1,9 +1,13 @@
+// Imports
+import {Link} from "react-router-dom";
+
 
 export default function Artworks() {
     return (
         <div className="artworks">
+            Hello
             <div className="artwork-container">
-                <Libk className="artwork-item">
+                <Link className="artwork-item">
                     <img src="" alt="" className="artwork-item__thumbnail" />
                     <div className="user">
                         <div className="user--left">
@@ -16,7 +20,7 @@ export default function Artworks() {
                             </span>
                         </div>
                     </div>
-                </Libk>
+                </Link>
             </div>
         </div>
     )

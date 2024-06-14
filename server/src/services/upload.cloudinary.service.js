@@ -3,7 +3,7 @@ import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js";
 //1.upload Image from URL
-const uploadImageFromURL = async() => {
+const uploadImageFromURL = async () => {
     try {
         const urlImage = 'https://www.example.com/image.jpg'
         const folderName = 'product/userId', newFileName = 'testDemo'
@@ -23,6 +23,7 @@ const uploadAvatarOrCover = async ({
     buffer,
     originalname,
 }, userId, profileId, type) => {
+    console.log(type)
     //1. Check user, profileId, type is valid
     const user = await User.findById(userId);
     if (!user) throw new BadRequestError('User not found');
@@ -35,19 +36,19 @@ const uploadAvatarOrCover = async ({
 
     try {
         //2. Delete the old image in cloudinary
-        if(type == 'avatar'){
+        if (type == 'avatar') {
             //Do not delete the default image
-            if(!user.avatar.includes('default')){
+            if (!user.avatar.includes('pastal_system_default_avatar')) {
                 imagePublicId = extractPublicIdFromUrl(user.avatar)
                 await deleteFileByPublicId(imagePublicId)
             }
-        } else if(type == 'bg'){
+        } else if (type == 'bg') {
             //Do not delete the default image
-            if(!user.bg.includes('default')){
+            if (!user.bg.includes('pastal_system_default_background')) {
                 imagePublicId = extractPublicIdFromUrl(user.bg)
                 await deleteFileByPublicId(imagePublicId)
             }
-        } else{
+        } else {
             throw new BadRequestError('Invalid type')
         }
 
@@ -89,14 +90,14 @@ const uploadAvatarOrCover = async ({
 
 
 //3.upload images from local
-const uploadImagesFromLocal = async({
+const uploadImagesFromLocal = async ({
     files,
     folderName = 'product/2404',
 }) => {
     try {
-        if(!files || !files.length) return
+        if (!files || !files.length) return
         const uploadURLs = []
-        for (const file of files){
+        for (const file of files) {
             const result = await cloudinary.uploader.upload(file.path, {
                 folder: folderName,
             })
@@ -116,5 +117,5 @@ const uploadImagesFromLocal = async({
     }
 }
 
-export {uploadImageFromURL, uploadAvatarOrCover, uploadImagesFromLocal}
+export { uploadImageFromURL, uploadAvatarOrCover, uploadImagesFromLocal }
 

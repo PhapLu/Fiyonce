@@ -1,8 +1,7 @@
 .sidebar {
     border: 2px solid var(--gray-1-color);
     border-radius: 12px;
-    // text-align: center;
-    padding: 44px 56px;
+    padding: 40px 44px;
 
     .sidebar__avatar {
         margin-left: 50%;
@@ -72,7 +71,7 @@
         }
 
         .sidebar__section__title {
-            font-weight: 600;
+            font-weight: bold;
         }
     }
 
@@ -111,12 +110,10 @@
         }
     }
 
-    .sidebar__job-title {
-        display: block;
-        text-align: center;
-    }
+    
 
-    .sidebar__location {
+    .sidebar__location,
+    .sidebar__job-title {
         display: flex;
         justify-content: center;
         align-items: center;

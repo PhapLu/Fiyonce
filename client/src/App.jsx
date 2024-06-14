@@ -57,7 +57,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/explore",
-        element: <Explore />,
+        element: <Explore showArtworks={true}/>,
       },
       {
         path: "/commission_market",

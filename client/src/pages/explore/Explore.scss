@@ -1,0 +1,32 @@
+.explore {
+
+    .explore-navigation-container {
+
+        .explore-navigation-item {
+        }
+    }
+
+    .explore__filter-container {
+        display: flex;
+
+        .explore__filter-item {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                border-radius: 6px;
+            }
+
+            .explore__filter-item__details {
+                .explore__filter-item__details__title {
+                    margin-bottom: 8px;
+                }
+
+                .explore__filter-item__details__statistics {}
+            }
+        }
+    }
+}
