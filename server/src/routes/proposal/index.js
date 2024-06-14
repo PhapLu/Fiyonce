@@ -14,10 +14,13 @@ router.use(verifyToken)
 //CRUD
 //Talent
 router.post('/sendProposal/:orderId', asyncHandler(proposalController.sendProposal))
+router.post('/sendDirectOrderProposal/:orderId', asyncHandler(proposalController.sendDirectOrderProposal))
 router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 //END CRUD
 router.get('/viewProposalsHistory', asyncHandler(proposalController.viewProposalsHistory))
+router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
+router.patch('/confirmDirectOrderProposal/:proposalId', asyncHandler(proposalController.confirmDirectOrderProposal))
 
 export default router

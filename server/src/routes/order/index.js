@@ -20,6 +20,6 @@ router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder)
 //END CRUD
 
 router.get('/viewOrderHistory', asyncHandler(orderController.viewOrderHistory))
-router.patch('/chooseTalent/:orderId', asyncHandler(orderController.chooseTalent))
+router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 
 export default router

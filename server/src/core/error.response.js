@@ -18,7 +18,6 @@ class ErrorResponse extends Error {
         this.now = Date.now()
         
         //Log the error use winston
-        //myLogger.error(this.message, ['api/v1/login', 'vv33344', {error: 'Bad request error'}])
         //logger.error(`${this.status} - ${this.message}`)
     }
 }

@@ -46,10 +46,10 @@ class OrderController{
         }).send(res)
     }
 
-    chooseTalent = async (req, res, next) => {
+    chooseProposal = async (req, res, next) => {
         new SuccessResponse({
             message: 'Choose talent success!',
-            metadata: await OrderService.chooseTalent(req.userId, req.params.orderId, req.body.talentId)
+            metadata: await OrderService.chooseProposal(req.userId, req.params.orderId, req.body.proposalId)
         }).send(res)
     }
 }

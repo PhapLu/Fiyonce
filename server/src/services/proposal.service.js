@@ -5,6 +5,45 @@ import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
 
 class ProposalService{
+    static sendDirectOrderProposal = async(userId, orderId, body) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if(!user) throw new NotFoundError('User not found')
+        if(!order) throw new NotFoundError('Order not found')
+
+        //2. Further checking
+        if(user.role !== 'talent') throw new AuthFailureError('You are not a talent')
+        if(order.status !== 'pending') throw new BadRequestError('Order is not pending')
+        if(order.talentChosenId !== userId) throw new BadRequestError('You are not chosen for this order or you have sent proposal already')
+
+        //3. Check if price is valid
+        if(body.price < 0) throw new BadRequestError('Price must be greater than 0')
+
+        //4. Check if artworks are empty
+        if(body.artworks.length === 0) throw new BadRequestError('Artworks must not be empty')
+
+        //5. Submit proposal
+        const proposal = new Proposal({
+            orderId,
+            memberId: order.memberId,
+            talentId: userId,
+            artworks: body.artworks,
+            price: body.price,
+            ...body
+        })
+        await proposal.save()
+
+        //6. Modify the order status to accepted
+        order.status = 'accepted'
+        order.save()
+
+        const showedProposal = await proposal.populate('orderId')
+        console.log('Proposal:', showedProposal);
+        return {
+            proposal: showedProposal
+        }
+    }
     static sendProposal = async(userId, orderId, body) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
@@ -32,11 +71,9 @@ class ProposalService{
         if(body.price < 0)
             throw new BadRequestError('Price must be greater than 0')
         
-        //6. Modify the order status to accepted
-        order.status = 'accepted'
-        order.save()
+        
 
-        //7. Submit portfolio
+        //6. Submit portfolio
         const proposal = new Proposal({
             orderId,
             memberId: order.memberId,
@@ -46,6 +83,11 @@ class ProposalService{
             ...body
         })
         await proposal.save()
+
+        //7. Modify the order status to accepted
+        order.status = 'accepted'
+        order.save()
+
         const showedProposal = await proposal.populate('orderId')
         console.log('Proposal:', showedProposal);
         return {
@@ -134,6 +176,63 @@ class ProposalService{
         const proposals = await Proposal.find({talentId: userId})
         return {
             proposals
+        }
+    }
+
+    static confirmDirectOrderProposal = async(userId, proposalId) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        const proposal = await Proposal.findById(proposalId)
+        if(!user) throw new NotFoundError('User not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
+
+        //2. Check if user is authorized to confirm proposal
+        if(userId !== proposal.memberId.toString())
+            throw new AuthFailureError('You are not authorized to confirm this proposal')
+
+        //4. Check if order status is accepted
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'accepted')
+            throw new BadRequestError('Order is not accepted')
+        if(order.status == 'confirmed')
+            throw new BadRequestError('Order is already confirmed')
+
+        //5. Confirm proposal
+        order.status = 'confirmed'
+        order.save()
+        
+        const showedProposal = await proposal.populate('orderId')
+        return {
+            proposal: showedProposal
+        }
+    }
+
+    static confirmProposal = async(userId, proposalId) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        const proposal = await Proposal.findById(proposalId)
+        if(!user) throw new NotFoundError('User not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
+
+        //2. Check if user is authorized to confirm proposal
+        if(userId !== proposal.memberId.toString())
+            throw new AuthFailureError('You are not authorized to confirm this proposal')
+
+        //3. Check if order status is accepted
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'accepted')
+            throw new BadRequestError('Order is not accepted')
+        if(order.status == 'confirmed')
+            throw new BadRequestError('Order is already confirmed')
+
+        //4. Confirm proposal
+        order.status = 'confirmed'
+        order.talentChosenId = proposal.talentId
+        order.save()
+
+        const showedProposal = await proposal.populate('orderId')
+        return {
+            proposal: showedProposal
         }
     }
 }

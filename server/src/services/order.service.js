@@ -74,7 +74,7 @@ class OrderService{
 
         //2. Check order status
         if(oldOrder.status != 'pending')
-        throw new BadRequestError('You cannot update order on this stage!')
+            throw new BadRequestError('You cannot update order on this stage!')
         
         //3. update Order
         const updatedOrder = await Order.findByIdAndUpdate(
@@ -98,8 +98,8 @@ class OrderService{
         if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
         
         //2. Check order status
-        if(oldOrder.status != 'pending')
-        throw new BadRequestError('You cannot delete order on this stage!')
+        if(oldOrder.status != 'pending' && oldOrder.status != 'accepted')
+            throw new BadRequestError('You cannot delete order on this stage!')
 
         //3. Delete order
         return await Order.findByIdAndDelete(orderId)
@@ -119,22 +119,24 @@ class OrderService{
         };
     }
 
-    static chooseTalent = async(userId, orderId, talentId) => {
-        //1. Check user, order and talent
+    static chooseProposal = async(userId, orderId, proposalId) => {
+        //1. Check user, order and proposal
         const user = await User.findById(userId)
         const updatedOrder = await Order.findById(orderId)
-        const talent = await User.findById(talentId)
+        const proposal = await Proposal.findById(proposalId)
 
         if(!user) throw new NotFoundError('User not found!')
         if(!updatedOrder) throw new NotFoundError('Order not found!')
-        if(!talent) throw new BadRequestError('Talent not found!')
-        if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
-        if(user._id != updatedOrder.memberId.toString()) throw new AuthFailureError('You can choose talent only in your Order!')
-        if(updatedOrder.isDirect) throw new BadRequestError('You have already chosen a talent!')
+        if(!proposal) throw new BadRequestError('Proposal not found!')
+
+        //2. Further checking
+        if(user._id != updatedOrder.memberId.toString()) throw new AuthFailureError('You can choose talent only for your Order!')
+        if(proposal.orderId.toString() != updatedOrder._id.toString()) throw new BadRequestError('Proposal does not belong to this order!')
         if(updatedOrder.talentChosenId) throw new BadRequestError('You have already chosen a talent!')
 
-        //2 Choose talent
-        updatedOrder.talentChosenId = talentId
+        //3. Choose proposal
+        updatedOrder.status = 'confirmed'
+        updatedOrder.talentChosenId = proposal.talentId
         updatedOrder.save()
 
         return {
