@@ -1,0 +1,1 @@
+2024-06-14 12:50:02::error::/v1/api/auth/users/login::b80e2c6c-bd1e-43d1-b993-54fb0accd981::401 - 1ms - Response: {"status":401,"now":1718344202824}::{"message":"Authentication error"}
