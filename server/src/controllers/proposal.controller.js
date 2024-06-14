@@ -2,13 +2,6 @@ import { SuccessResponse } from "../core/success.response.js"
 import ProposalService from "../services/proposal.service.js"
 
 class ProposalController{
-    sendDirectOrderProposal = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Send proposal to direct order success!',
-            metadata: await ProposalService.sendDirectOrderProposal(req.userId, req.params.orderId, req.body)
-        }).send(res)
-    }
-
     sendProposal = async(req, res, next) => {
         new SuccessResponse({
             message: 'send proposal to inDirect order success!',
@@ -51,20 +44,12 @@ class ProposalController{
         }).send(res)
     }
 
-    confirmDirectOrderProposal = async(req, res, next) =>{
-        new SuccessResponse({
-            message: 'Confirm proposal for direct order success!',
-            metadata: await ProposalService.confirmDirectOrderProposal(req.userId, req.params.proposalId)
-        }).send(res)
-    }
-
     confirmProposal = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Confirm proposal for inDirect order success!',
             metadata: await ProposalService.confirmProposal(req.userId, req.params.proposalId)
         }).send(res)
     }
-
     
 }
 

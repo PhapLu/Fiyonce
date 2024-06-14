@@ -1,3 +1,7 @@
 2024-06-14 12:49:35::info::/v1/api/auth/users/login::1d43d32f-e5d4-46d1-bd3b-3dd5944f27f4::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
 2024-06-14 12:50:02::info::/v1/api/auth/users/login::b80e2c6c-bd1e-43d1-b993-54fb0accd981::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"1234567890"}
 2024-06-14 12:50:02::error::/v1/api/auth/users/login::b80e2c6c-bd1e-43d1-b993-54fb0accd981::401 - 1ms - Response: {"status":401,"now":1718344202824}::{"message":"Authentication error"}
+2024-06-14 20:36:44::info::/v1/api/auth/users/login::c944dddb-27ff-4ee1-ad71-153a8acc47e7::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-14 20:42:46::info::/v1/api/proposal/sendProposal/666aa68d5a40b73e7f404702::bb4cd28e-58f1-4e8e-ac73-eb5b6eb1a88e::input-params ::POST::::{"title":"France's order","scope":"You will get a file","timeline":"","price":9}
+2024-06-14 20:42:46::error::/v1/api/proposal/sendProposal/666aa68d5a40b73e7f404702::bb4cd28e-58f1-4e8e-ac73-eb5b6eb1a88e::403 - 1ms - Response: {"status":403,"now":1718372566056}::{"message":"You have already given proposal for this order"}
+2024-06-14 20:42:51::info::/v1/api/proposal/sendProposal/666aa7aabb23e20c8735a633::e6f81d4a-d1ad-4bde-8961-a52c52153b48::input-params ::POST::::{"title":"France's order","scope":"You will get a file","timeline":"","price":9}
