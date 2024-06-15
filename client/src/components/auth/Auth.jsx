@@ -37,7 +37,7 @@ export default function Auth() {
 
     return (
         <div className="navbar__authentication">
-            {userInfo ? <div className="user" ref={menuRef}>
+            {userInfo ? <div className="user md" ref={menuRef}>
                 <img src={userInfo.avatar} className="user__avatar" alt="Avatar" onClick={() => {
                     setShowMenu(!showMenu);
                 }} />

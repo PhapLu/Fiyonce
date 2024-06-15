@@ -9,6 +9,9 @@ import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard"
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
+import Artworks from "./components/artworks/Artworks";
+import Talents from "./components/talents/Talents";
+import CommissionServices from "./components/commissionServices/CommissionServices";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
@@ -33,52 +36,51 @@ import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-  {
-    path: "/users/:id",
-    element: <Profile/>,
-    children: [
-      {
-        path: "/users/:id/order-history",
-        element: <OrderHistory />,
-      },
-      {
-        path: "/users/:id/basic-info",
-        element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
-      }
-    ]
-  },
-  {
-    path: "/dashboard/accounts",
-    element: <AccountDashboard />,
-  },
+  // {
+  //   path: "/users/:id",
+  //   element: <Profile/>,
+  //   children: [
+  //     {
+  //       path: "/users/:id/order-history",
+  //       element: <OrderHistory />,
+  //     },
+  //     {
+  //       path: "/users/:id/basic-info",
+  //       element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: "/dashboard/accounts",
+  //   element: <AccountDashboard />,
+  // },
   {
     path: "/",
     element: <Layout></Layout>,
     children: [
       {
         path: "/explore",
-        element: <Explore showArtworks={true}/>,
+        element: <Explore></Explore>,
+        children: [
+          {
+            path: "/explore/artworks",
+            element: <Artworks showArtworks={true} />,
+          },
+          {
+            path: "/explore/talents",
+            element: <Talents showTalents={true} />,
+          },
+          {
+            path: "/explore/commissionServices",
+            element: <CommissionServices showCommissionServices={true} />,
+          },
+        ]
       },
       {
         path: "/commission_market",
-        element:<CommissionMarket/>
+        element: <CommissionMarket />
       },
-      // {
-      //   path: "/artworks/:id",
-      //   element: <Artwork />,
-      // },
-      // {
-      //   path: "/challenges",
-      //   element: <Challenges />,
-      // },
-      // {
-      //   path: "/challenges/:id",
-      //   element: <Challenge />,
-      // },
-      // {
-      //   path: "/talents",
-      //   element: <Talents />,
-      // },
+
     ]
   },
   {

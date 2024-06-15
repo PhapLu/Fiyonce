@@ -25,3 +25,11 @@ export function formatFloat(number, n) {
     }
     return number.toFixed(n);
 }
+
+export function formatNumber(num, digits) {
+    const units = ["", "K", "M", "B", "T"];
+    const unitIndex = Math.floor((num.toString().length - 1) / 3);
+    const unitValue = num / Math.pow(1000, unitIndex);
+
+    return unitValue.toFixed(digits) + units[unitIndex];
+}

@@ -1,8 +1,19 @@
 .navbar {
-    margin: 8px 0 20px;
+    padding: 10px 4%;
+
+    /* padding: 10px 0; */
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--white-3-color);
+
+    &.with-shadow {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
     .navbar--left {
         display: flex;
