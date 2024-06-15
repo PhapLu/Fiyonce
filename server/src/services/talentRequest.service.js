@@ -10,7 +10,7 @@ class TalentRequestService{
         const currentUser = await User.findById(userId);
         if (!currentUser) throw new NotFoundError('User not found');
         if (currentUser.role === 'talent') throw new BadRequestError('User already a talent');
-
+    
         // 2. Validate request body
         const { stageName, portfolioLink } = req.body;
         if (!req.files || !req.files.files) {
@@ -19,77 +19,90 @@ class TalentRequestService{
         if (!userId || !stageName || !portfolioLink) {
             throw new BadRequestError('Please provide all required fields');
         }
-
-        //3. Check if user has requested before
-        const talentRequest = await TalentRequest.findOne({userId})
-        if(talentRequest){
-            //Extract the artwork public_id by using cloud util function
-            const publicIds = talentRequest.artworks.map(artwork => extractPublicIdFromUrl(artwork))
-            //Delete the files from Cloudinary
-            await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
-            //Delete the request from database
-            await TalentRequest.deleteOne({userId})
-        }
-
-        // 4. Upload files to Cloudinary(compressed) and get their URLs
-        const uploadPromises = req.files.files.map(file => compressAndUploadImage({
-            buffer: file.buffer,
-            originalname: file.originalname,
-            folderName: `fiyonce/talentRequests/${userId}`
-          }));
-        const uploadResults = await Promise.all(uploadPromises);
-        const artworkUrls = uploadResults.map(result => result.secure_url);
-
-        // 5. Create and save talent request
-        const newTalentRequest = new TalentRequest({
-            userId,
-            stageName,
-            portfolioLink,
-            artworks: artworkUrls
-        });
-        await newTalentRequest.save();
     
-        return {
-            talentRequest: newTalentRequest
-        };
-    }
+        // 3. Check if user has requested before
+        const talentRequest = await TalentRequest.findOne({ userId });
+        if (talentRequest) {
+            // Extract the artwork public_id by using cloud util function
+            const publicIds = talentRequest.artworks.map(artwork => extractPublicIdFromUrl(artwork));
+            // Delete the files from Cloudinary
+            await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+            // Delete the request from database
+            await TalentRequest.deleteOne({ userId });
+        }
+    
+        // 4. Upload files to Cloudinary (compressed) and get their URLs
+        try {
+            const uploadPromises = req.files.files.map(file => compressAndUploadImage({
+                buffer: file.buffer,
+                originalname: file.originalname,
+                folderName: `fiyonce/talentRequests/${userId}`
+            }));
+            const uploadResults = await Promise.all(uploadPromises);
+            const artworkUrls = uploadResults.map(result => result.secure_url);
+    
+            // 5. Create and save talent request
+            const newTalentRequest = new TalentRequest({
+                userId,
+                stageName,
+                portfolioLink,
+                artworks: artworkUrls
+            });
+            await newTalentRequest.save();
+    
+            return {
+                talentRequest: newTalentRequest
+            };
+        } catch (error) {
+            throw new Error('File upload or database save failed');
+        }
+    }    
 
 //------------------Admin----------------------------------------------------------
-    static upgradeRoleToTalent = async(adminId, requestId) => {
-        //1. Find and check request
-        const request = await TalentRequest.findById(requestId)
-        if(!request) throw new NotFoundError('Request not found')
-        if(request.status === 'approved') throw new BadRequestError('Request already approved')
+    static upgradeRoleToTalent = async (adminId, requestId) => {
+        // 1. Find and check request
+        const request = await TalentRequest.findById(requestId);
+        if (!request) throw new NotFoundError('Request not found');
+        if (request.status === 'approved') throw new BadRequestError('Request already approved');
 
-        //2. Find and check admin, user and user role
+        // 2. Find and check admin user and user role
+        const adminUser = await User.findById(adminId);
+        if (!adminUser || adminUser.role !== 'admin') throw new AuthFailureError('You do not have enough permission');
+
+        // 3. Find and check the user related to the request
         const userId = request.userId;
-        const adminUser = await User.findById(adminId)
-        const foundUser = await User.findById(userId)
+        const foundUser = await User.findById(userId);
+        if (!foundUser) throw new NotFoundError('User not found');
+        if (foundUser.role === 'talent') throw new BadRequestError('User already a talent');
 
-        if(!adminUser || adminUser.role !== 'admin') throw new AuthFailureError('You do not have enough permission')
-        if(!foundUser) throw new NotFoundError('User not found')
-        if(foundUser.role === 'talent') throw new BadRequestError('User already a talent')
-
-        //3. update role to talent
+        // 4. Update role to talent
         const updatedUser = await User.findByIdAndUpdate(
             userId,
-            { $set: {role: 'talent'} },
+            { $set: { role: 'talent' } },
             { new: true }
-        )
-        //4. Exclude password from user object
+        );
+
+        // 5. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser;
 
-        //5. Mark request as approved
-        request.status = 'approved'
-        await request.save()
+        // 6. Mark request as approved
+        request.status = 'approved';
+        await request.save();
 
-        //6. Send email to user
-        sendEmail(foundUser.email, 'Role Updated', 'Your role has been updated to talent')
-        
+        // 7. Send email to user
+        try {
+            await sendEmail(foundUser.email, 'Role Updated', 'Your role has been updated to talent');
+        } catch (error) {
+            console.error('Failed to send email:', error);
+            throw new Error('Email service error');
+        }
+
         return {
             user: userWithoutPassword._doc
-        }
-    }
+        };
+    };
+
+
 
     static denyTalentRequest = async(adminId, requestId) => {
         //1. Find and check request
