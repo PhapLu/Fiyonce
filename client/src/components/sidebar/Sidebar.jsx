@@ -1,26 +1,42 @@
+// Imports
 import React, { useState, useEffect } from 'react';
-import "./Sidebar.scss";
-import UpgradeAccount from "../upgradeAccount/UpgradeAccount";
-import { apiUtils } from '../../utils/newRequest';
-// import { useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
+
+// Resources
 import { useAuth } from '../../contexts/auth/AuthContext';
+import UpgradeAccount from "../upgradeAccount/UpgradeAccount";
+
+// Utils
+import { apiUtils } from '../../utils/newRequest';
+import { isFilled, hasSymbol } from "../../utils/validator.js"
+
+
+// Styling
+import "./Sidebar.scss";
 
 export default function Sidebar({ profileInfo }) {
-    // const profileInfo = useOutletContext();
+    // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
-    const [openEditProfileForm, setOpenEditProfileForm] = useState(false);
+
+    // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState(profileInfo);
-    const [loading, setLoading] = useState(false);
-    const [openUpgradeAccountForm, setUpgradeAccountForm] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [isSubmitSidebarInfoLoading, setIsSubmitSidebarInfoLoading] = useState(false);
+
     const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
 
+    const [openEditProfileForm, setOpenEditProfileForm] = useState(false);
+    const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+    const [openUpgradeAccountForm, setOpenUpgradeAccountForm] = useState(false);
+
+    // Return null if profile information does not exist
+    // Otherwise, assign values for form fields
     if (!profileInfo) {
         return null;
     }
 
     useEffect(() => {
-        console.log(profileInfo)
-        if (userInfo) {
+        if (profileInfo) {
             setInputs(profileInfo);
             setSocialLinks(profileInfo.socialLinks || []);
         }
@@ -30,24 +46,71 @@ export default function Sidebar({ profileInfo }) {
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+
+        // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
+        setErrors((values) => ({ ...values, [name]: '' }));
+    };
+
+    const handleLinkChange = (event, index) => {
+        const { value } = event.target;
+        const updatedLinks = socialLinks.map((link, i) => (i === index ? value : link));
+        setSocialLinks(updatedLinks);
+    };
+
+    const addLinkInput = () => {
+        setSocialLinks([...socialLinks, '']);
+    };
+
+    const deleteLinkInput = (index) => {
+        const updatedLinks = socialLinks.filter((_, i) => i !== index);
+        setSocialLinks(updatedLinks);
+    };
+
+    const validateInputs = () => {
+        let errors = {};
+
+        // Validate fullname
+        if (!isFilled(inputs.fullName)) {
+            errors.fullName = 'Vui lòng nhập họ và tên';
+        } else if (hasSymbol(inputs.fullName)) {
+            errors.fullName = 'Tên không được chứa kí tự đặc biệt';
+        }
+
+        return errors;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Initialize loading effect for the submit button
+        setIsSubmitSidebarInfoLoading(true);
+
+        // Validate user inputs
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            // Clear the loading effect if validation failed
+            setIsSubmitSidebarInfoLoading(false);
+            return;
+        }
+
         try {
             const userId = profileInfo._id;
-            const submittedSocialLinks = socialLinks.map(link => ({ url: link.url }));
-            const updatedData = inputs;
-            updatedData.socialLinks = submittedSocialLinks;
-            const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, inputs);
-            setUserInfo(response.data.metadata.updatedUser);
-            alert("Successfully updated user information")
-
-            // Close the edit form once successfully update the user information
-            setOpenEditProfileForm();
+            const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
+            const updatedData = { ...inputs, socialLinks: submittedSocialLinks };
+            const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
+            if (response) {
+                alert("Successfully updated user information");
+                setUserInfo(response.data.metadata.updatedUser);
+                setOpenEditProfileForm(false);
+            }
         } catch (error) {
-            console.log(error);
+            console.error("Failed to update basic info:", error);
+            setErrors((prevErrors) => ({ ...prevErrors, serverError: error.response.data.message }));
+        } finally {
+            // Clear the loading effect
+            setIsSubmitSidebarInfoLoading(false);
         }
     };
 
@@ -77,29 +140,9 @@ export default function Sidebar({ profileInfo }) {
         }
     };
 
-    const handleLinkChange = (event, id, field) => {
-        const { value } = event.target;
-        const updatedLinks = socialLinks.map(link => {
-            if (link._id === id) {
-                return { ...link, [field]: value };
-            }
-            return link;
-        });
-        setSocialLinks(updatedLinks);
-    };
-
-    const addLinkInput = () => {
-        setSocialLinks([...socialLinks, { id: Math.random().toString(), platform: '', url: '' }]);
-    };
-
-    const deleteLinkInput = (id) => {
-        const updatedLinks = socialLinks.filter(link => link._id !== id);
-        setSocialLinks(updatedLinks);
-    };
-
     return (
         <div className="sidebar">
-            <div className={'sidebar__avatar ' + (loading ? " skeleton-img" : "")}>
+            <div className={'sidebar__avatar ' + (isAvatarLoading ? " skeleton-img" : "")}>
                 <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
                 <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 sidebar__avatar__ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -112,44 +155,49 @@ export default function Sidebar({ profileInfo }) {
                     <div className="form-field">
                         <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
                         <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
+                        {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                     </div>
                     <div className="form-field">
                         <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
                         <input type="text" id="stageName" name="stageName" value={inputs.stageName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập nghệ danh" />
+                        {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
                     </div>
                     <div className="form-field">
                         <label htmlFor="jobTitle" className="form-field__label">Vị trí công việc</label>
                         <input type="text" id="jobTitle" name="jobTitle" value={inputs.jobTitle || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" />
+                        {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
                     </div>
                     <div className="form-field">
-                        <label htmlFor="province" className="form-field__label">Tỉnh thành</label>
+                        <label htmlFor="address" className="form-field__label">Địa chỉ</label>
                         <input
                             type="text"
-                            id="province"
-                            value={inputs.province || ""}
+                            id="address"
+                            value={inputs.address || ""}
                             onChange={handleChange}
                             className="form-field__input"
-                            placeholder="Nhập tỉnh thành"
+                            placeholder="Nhập địa chỉ"
                         />
+                        {errors.address && <span className="form-field__error">{errors.address}</span>}
                     </div>
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
                         <textarea type="text" id="bio" name="bio" value={inputs.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập giới thiệu ngắn gọn về bản thân" />
+                        {errors.bio && <span className="form-field__error">{errors.bio}</span>}
                     </div>
 
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Liên kết</label>
-                        {socialLinks.map((link, index) => (
+                        {socialLinks.map((socialLink, index) => (
                             <div key={index} className="link-form">
-                                <span>{link.platform}</span>
+                                <span>{socialLink.platform}</span>
                                 <div className="form-field with-ic btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                     </svg>
                                     <input
                                         type="text"
-                                        value={link.url}
-                                        onChange={(e) => handleLinkChange(e, link._id, 'url')}
+                                        value={socialLink}
+                                        onChange={(e) => handleLinkChange(e, socialLink._id, 'url')}
                                         className="form-field__input"
                                         placeholder="Nhập liên kết"
                                     />
@@ -165,13 +213,28 @@ export default function Sidebar({ profileInfo }) {
                             </svg>
                             <span>Thêm liên kết</span>
                         </div>
+                        {errors.socialLinks && <span className="form-field__error">{errors.socialLinks}</span>}
                     </div>
-                    <button className="sidebar__btn btn btn-md btn-2" onClick={handleSubmit}>
-                        <span>Lưu thay đổi</span>
-                    </button>
-                    <button className="sidebar__btn btn btn-4 btn-md" onClick={() => setOpenEditProfileForm(false)}>
-                        <span>Hủy</span>
-                    </button>
+
+                    <div className="form-field">
+                        {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                    </div>
+
+                    <div className="basic-info__button-container">
+                        <button
+                            type="submit"
+                            className="sidebar__btn form-field__input btn btn-2 btn-md"
+                            disabled={isSubmitSidebarInfoLoading}
+                            onClick={handleSubmit}
+                        >
+                            {isSubmitSidebarInfoLoading ? (
+                                <span className="btn-spinner"></span>
+                            ) : (
+                                "Lưu thay đổi"
+                            )}
+                        </button>
+                        <button className="sidebar__btn btn btn-4 btn-md" onClick={() => setOpenEditProfileForm(false)}>Hủy</button>
+                    </div>
                 </div>
             ) : (
                 <>
@@ -188,13 +251,13 @@ export default function Sidebar({ profileInfo }) {
                                 {profileInfo.jobTitle}
                             </span>
                         )}
-                        {profileInfo.province && (
+                        {profileInfo.address && (
                             <span className="sidebar__location">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                 </svg>
-                                {profileInfo.province}
+                                {profileInfo.address}
                             </span>
                         )}
                     </div>
@@ -225,7 +288,7 @@ export default function Sidebar({ profileInfo }) {
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                         </svg>
-                                        <a href="https://www.facebook.com/">{socialLink.url}</a>
+                                        <a href="https://www.facebook.com/">{socialLink}</a>
                                     </div>
                                 ))}
                             </div>
@@ -241,7 +304,7 @@ export default function Sidebar({ profileInfo }) {
 
                     {
                         profileInfo.role != "artist" && (
-                            <button className="sidebar__btn btn btn-1" onClick={() => setUpgradeAccountForm(true)}>
+                            <button className="sidebar__btn btn btn-1" onClick={() => setOpenUpgradeAccountForm(true)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
                                     <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
                                 </svg>
@@ -251,7 +314,7 @@ export default function Sidebar({ profileInfo }) {
                     }
                 </>
             )}
-            {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setUpgradeAccountForm(false)} />}
+            {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />}
         </div>
     );
 }

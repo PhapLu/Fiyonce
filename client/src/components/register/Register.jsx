@@ -82,12 +82,12 @@ export default function Register() {
             return;
         }
 
-
         // Handle register request
         try {
             const { confirmPassword, ...others } = inputs;
             const response = await apiUtils.post("/auth/users/signUp", others);
             if (response) {
+                alert("Successfully registered for an account");
                 setShowRegisterVerificationForm(true);
             }
         } catch (error) {

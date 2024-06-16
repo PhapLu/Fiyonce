@@ -10,9 +10,10 @@
     top: 0;
     width: 100%;
     background-color: var(--white-3-color);
+    transition: 0.2s linear;
 
     &.with-shadow {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
     }
 
     .navbar--left {

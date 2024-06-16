@@ -9,8 +9,8 @@
     --black-btn-color: #191919;
     --black-color: #191919;
 
-    --gray-1-color: #dddddd;
-    --gray-2-color: #cac9c9;
+    --gray-1-color: #eeeeee;
+    --gray-2-color: #d8d7d7;
     --gray-3-color: #4D4D4D;
 
     --orange-2-color: #FF6E1C;
@@ -82,7 +82,7 @@ body {
 }
 
 .app {
-    margin: 72px 4%  0!important;
+    margin: 72px 4% 0 !important;
 }
 
 ::selection {
@@ -248,7 +248,7 @@ svg {
 }
 
 .btn-3 {
-    border: 2px solid var(--gray-1-color);
+    border: 2px solid var(--gray-2-color);
     color: var(--black-2-color);
 }
 
@@ -320,7 +320,7 @@ hr {
     border: none;
     height: 1px;
     width: 100%;
-    background-color: var(--gray-1-color);
+    background-color: var(--gray-2-color);
 }
 
 .dot-delimiter {
@@ -431,7 +431,7 @@ hr {
         width: 100%;
         border-radius: 8px;
         padding: 8px 10px;
-        border: 2px solid var(--gray-1-color);
+        border: 2px solid var(--gray-2-color);
         outline: none;
         background-color: var(--white-2-color);
         color: var(--black-2-color);
@@ -508,11 +508,15 @@ hr {
 .form-field.with-ic {
     display: flex;
     align-items: center;
-    border: 2px solid var(--gray-1-color);
+    border: 2px solid var(--gray-2-color);
     border-radius: 8px;
     padding: 8px 10px;
     transition: border 0.1s;
     background-color: var(--white-2-color);
+
+    &:has(.form-field__input:focus) {
+        border: 2px solid var(--black-2-color);
+    }
 
     .form-field__ic {
         width: 16px;
@@ -552,6 +556,8 @@ hr {
         .user__avatar {
             width: 32px;
             height: 32px;
+            border: 2px solid var(--white-2-color);
+            box-shadow: unset;
         }
 
         .user__name__title {
@@ -563,6 +569,7 @@ hr {
         .user__avatar {
             width: 40px;
             height: 40px;
+            border: 3px solid var(--white-2-color);
         }
 
 
@@ -582,7 +589,6 @@ hr {
     .user__avatar {
         object-fit: cover;
         border-radius: 50%;
-        border: 3px solid var(--white-2-color);
         box-shadow: var(--box-shadow);
 
         &:hover {

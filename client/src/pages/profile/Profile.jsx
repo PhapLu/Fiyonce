@@ -116,49 +116,57 @@ export default function Profile() {
                             </button>
                             <input type="file" id="coverPhoto" style={{ display: 'none' }} onChange={handleCoverChange} />
                         </div>
-                        <div className="subnav-container">
-                            <Link
-                                to={`/users/${id}/order-history`}
-                                className={`subnav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="size-6 subnav-item__ic"
+                        <div className="sub-nav-container">
+                            <div className="sub-nav-container--left">
+
+                                <Link
+                                    to={`/users/${id}/order-history`}
+                                    className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                                    />
-                                </svg>
-                                <span>Đơn hàng của tôi</span>
-                            </Link>
-                            <Link
-                                to={`/users/${id}/basic-info`}
-                                className={`subnav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="size-6 subnav-item__ic"
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="size-6 sub-nav-item__ic"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                                        />
+                                    </svg>
+                                    <span>Đơn hàng của tôi</span>
+                                </Link>
+                                <Link
+                                    to={`/users/${id}/basic-info`}
+                                    className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                                    />
-                                </svg>
-                                <span>Thông tin cơ bản</span>
-                            </Link>
-                            <hr />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="size-6 sub-nav-item__ic"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                                        />
+                                    </svg>
+                                    <span>Thông tin cơ bản</span>
+                                </Link>
+                            </div>
+
+                            <div className="sub-nav-container--right">
+                                <button className="btn btn-3">Hello</button>
+                            </div>
                         </div>
+                        <hr />
+
                     </div>
                     <Outlet context={profileInfo} />
                 </div>

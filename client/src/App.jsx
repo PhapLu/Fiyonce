@@ -36,24 +36,24 @@ import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/users/:id",
-  //   element: <Profile/>,
-  //   children: [
-  //     {
-  //       path: "/users/:id/order-history",
-  //       element: <OrderHistory />,
-  //     },
-  //     {
-  //       path: "/users/:id/basic-info",
-  //       element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/dashboard/accounts",
-  //   element: <AccountDashboard />,
-  // },
+  {
+    path: "/users/:id",
+    element: <Profile />,
+    children: [
+      {
+        path: "/users/:id/order-history",
+        element: <OrderHistory />,
+      },
+      {
+        path: "/users/:id/basic-info",
+        element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
+      }
+    ]
+  },
+  {
+    path: "/dashboard/accounts",
+    element: <AccountDashboard />,
+  },
   {
     path: "/",
     element: <Layout></Layout>,

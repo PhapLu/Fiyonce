@@ -13,6 +13,7 @@
         .show-recommender-btn {
             position: relative;
             font-weight: 500;
+            margin-right: 18px;
 
             .recommender-container {
                 width: 200px;
@@ -23,6 +24,7 @@
                 border: 2px solid var(--gray-1-color);
                 background-color: var(--white-1-color);
                 padding: 6px;
+                z-index: 10;
 
                 .recommender-item {
                     text-align: start;
@@ -40,7 +42,6 @@
         .explore__filter-item {
             display: flex;
             align-items: center;
-            margin-left: 18px;
             min-width: 170px;
             padding: 6px 8px;
             border-radius: 8px;

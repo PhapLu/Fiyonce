@@ -25,3 +25,13 @@ export function hasSymbol(val) {
 export function isValidEmail(val) {
     return /\S+@\S+\.\S+/.test(val);
 }
+
+export function isValidPhone(val) {
+    const phoneRegex = /^(?:\+?(61))? ?(?:\((0)[1-9]\))? ?(?:[1-9][0-9]{0,3})? ?[0-9]{5,6}?$/;
+
+    if (phoneRegex.test(val)) {
+        return true;
+    } else {
+        return false;
+    }
+}
