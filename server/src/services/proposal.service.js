@@ -3,6 +3,7 @@ import Proposal from "../models/proposal.model.js"
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
+import sendEmail from '../middlewares/sendMail.js'
 
 class ProposalService{
     static sendProposal = async(userId, orderId, body) => {
@@ -50,9 +51,12 @@ class ProposalService{
             proposal: showedProposal
         }
     }
+
     static readProposal = async(userId, proposalId) => {
-        //1. Check if proposal exists
+        //1. Check if proposal, user exists
         const proposal = await Proposal.findById(proposalId).populate('orderId') 
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError('User not found')
         if(!proposal) throw new NotFoundError('Proposal not found')
 
         return {
@@ -66,6 +70,7 @@ class ProposalService{
 
         //2. Read all proposals of a order
         const proposals = await Proposal.find({orderId: orderId})
+
         return {
             proposals
         }
@@ -74,6 +79,7 @@ class ProposalService{
         //1. Check if proposal, user exists
         const user = await User.findById(userId)
         const proposal = await Proposal.findById(proposalId)
+        const member = await User.findById(proposal.memberId)
         if(!proposal) throw new NotFoundError('Proposal not found')
         if(!user) throw new NotFoundError('User not found')
 
@@ -95,6 +101,13 @@ class ProposalService{
             {new: true}
         )
         await proposal.save()
+
+        //5. Send email to user
+        // try {
+        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
 
         return {
             proposal: updatedProposal
@@ -119,6 +132,7 @@ class ProposalService{
 
         //4. Delete proposal
         await proposal.remove()
+
         return {
             proposal
         }
@@ -139,8 +153,11 @@ class ProposalService{
         //1. Check if user exists
         const user = await User.findById(userId)
         const proposal = await Proposal.findById(proposalId)
+        const talent = await User.findById(proposal.talentId)
+
         if(!user) throw new NotFoundError('User not found')
         if(!proposal) throw new NotFoundError('Proposal not found')
+        if(!talent) throw new NotFoundError('Talent not found')
 
         //2. Check if user is authorized to confirm proposal
         if(userId !== proposal.memberId.toString())
@@ -163,6 +180,51 @@ class ProposalService{
         order.save()
 
         const showedProposal = await proposal.populate('orderId')
+
+        //5. Send email to talent
+        // try {
+        //     await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
+
+        return {
+            proposal: showedProposal
+        }
+    }
+
+    static denyProposal = async(userId, proposalId) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        const proposal = await Proposal.findById(proposalId)
+        const talent = await User.findById(proposal.talentId)
+
+        if(!user) throw new NotFoundError('User not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
+        if(!talent) throw new NotFoundError('Talent not found')
+
+        //2. Check if user is authorized to deny proposal
+        if(userId !== proposal.memberId.toString())
+            throw new AuthFailureError('You are not authorized to deny this proposal')
+
+        //3. Check if order status is accepted
+        const order = await Order.findById
+        (proposal.orderId)
+        if(order.status !== 'accepted')
+            throw new BadRequestError('Order is not accepted')
+
+        //4. Deny proposal
+        order.status = 'rejected'
+        order.save()
+        const showedProposal = await proposal.populate('orderId')
+
+        //5. Send email to talent
+        // try {
+        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
+
         return {
             proposal: showedProposal
         }

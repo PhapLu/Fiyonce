@@ -11,6 +11,10 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
+    serviceId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service'
+    },
     memberId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

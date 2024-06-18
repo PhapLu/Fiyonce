@@ -3,12 +3,13 @@ import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
+import Service from "../models/service.model.js"
 
 class OrderService{
     //Order CRUD
     static createOrder = async(userId, body) => {
         //1. Get type and talentChosenId
-        const {type, talentChosenId} = body
+        const {type, talentChosenId, serviceId} = body
 
         //2. Check type of order
         if(type == 'inDirect'){
@@ -18,10 +19,14 @@ class OrderService{
         }else if(type == 'direct'){
             //direct order
             const talent = await User.findById(talentChosenId)
+            const service = await Service.findById(serviceId)
+
             if(!talent) throw new BadRequestError('Talent not found!')
+            if(!service) throw new BadRequestError('Service not found!')
             if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
             if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true
+            body.serviceId = serviceId
             body.talentChosenId = talentChosenId
         }else{
             throw new BadRequestError('Type must be direct or inDirect!')
@@ -33,16 +38,16 @@ class OrderService{
             ...body
         })
         await order.save()
+
         return {
             order
         }
     }
 
     static readOrder = async(orderId) => {
-        console.log(orderId)
         const order = await Order.findById(orderId).populate('talentChosenId', 'stageName avatar')
-        console.log(order)
         if (!order) throw new NotFoundError('Order not found!')
+
         return {
             order
         };
@@ -84,6 +89,8 @@ class OrderService{
             },
             { new: true }
         )
+        await updatedOrder.save()
+
         return {
             order: updatedOrder
         }
@@ -114,6 +121,7 @@ class OrderService{
         //2. Get orders
         const orders = await Order.find({ memberId: clientId })
             .populate('talentChosenId', 'stageName avatar');
+
         return {
             orders
         };
@@ -141,6 +149,40 @@ class OrderService{
 
         return {
             order: updatedOrder
+        }
+    }
+
+    static denyOrder = async(userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if(!user) throw new NotFoundError('User not found')
+        if(!order) throw new NotFoundError('Order not found')
+
+        //2. Check if user is authorized to deny order
+        if(user.role !== 'talent')
+            throw new AuthFailureError('You are not authorized to deny this order')
+
+        //3. Check if order status is pending
+        if(order.status !== 'pending')
+            throw new BadRequestError('You cannot deny this order')
+
+        //4. Deny order
+        order.status = 'rejected'
+        order.save()
+
+        //5. Show order
+        const showOrder = order.populate('talentChosenId', 'stageName avatar')
+
+        //6. Send email to user
+        // try {
+        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
+        
+        return {
+            order: showOrder
         }
     }
 }

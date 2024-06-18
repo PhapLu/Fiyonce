@@ -14,7 +14,12 @@ const ArtworkSchema = new Schema(
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
         }
     ],
-    artwork_saves: { type: Number, default: 0 },
+    artwork_views: { type: Number, default: 0 },
+    artwork_saves: [
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+        }
+    ],
     artwork_fields: [{type: mongoose.Schema.Types.ObjectId, ref: 'Field'}],
     artwork_comments: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

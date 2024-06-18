@@ -12,11 +12,11 @@ class TalentRequestService{
         if (currentUser.role === 'talent') throw new BadRequestError('User already a talent');
     
         // 2. Validate request body
-        const { stageName, portfolioLink } = req.body;
+        const { stageName, jobTitle, portfolioLink } = req.body;
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
-        if (!userId || !stageName || !portfolioLink) {
+        if (!userId || !stageName || !jobTitle || !portfolioLink) {
             throw new BadRequestError('Please provide all required fields');
         }
     
@@ -45,6 +45,7 @@ class TalentRequestService{
             const newTalentRequest = new TalentRequest({
                 userId,
                 stageName,
+                jobTitle,
                 portfolioLink,
                 artworks: artworkUrls
             });
@@ -124,7 +125,12 @@ class TalentRequestService{
         await request.save()
 
         //4. Send email to user
-        sendEmail(foundUser.email, 'Request Denied', 'Your request has been rejected')
+        try {
+            sendEmail(foundUser.email, 'Request Denied', 'Your request has been rejected')
+        } catch (error) {
+            throw new Error('Email service error');
+        }
+        
         return {
             success: true,
             message: 'Request denied successfully'
