@@ -12,7 +12,7 @@ export function bytesToKilobytes(bytes) {
     return kilobytes;
 }
 
-export function trimString(str, n) {
+export function limitString(str, n) {
     if (str.length <= n) {
         return str;
     }

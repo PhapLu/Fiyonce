@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./CommissionMarket.scss";
 import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
-import { trimString } from "../../utils/formatter.js";
+import { limitString } from "../../utils/formatter.js";
 import openOrderCommisison from "../../components/orderCommission/OrderCommission.jsx"
 import OrderCommission from "../../components/orderCommission/OrderCommission.jsx";
 export default function CommissionMarket() {
@@ -243,7 +243,7 @@ export default function CommissionMarket() {
                             <div className="commission-market-item__content">
                                 <h3>{indirectOrder.title}</h3>
                                 <h4><span className="highlight-text">đ{indirectOrder.priceFrom}</span> - <span className="highlight-text">đ{indirectOrder.priceTo}</span></h4>
-                                <p>{trimString(indirectOrder.description, 200)}</p>
+                                <p>{limitString(indirectOrder.description, 200)}</p>
                                 <button className="btn btn-1 explore-more-btn">Xem thêm </button>
                                 {/* <img src={indirectOrder.referencePhoto} alt="" /> */}
                             </div>

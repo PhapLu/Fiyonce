@@ -12,6 +12,8 @@ import Layout from "./Layout";
 import Artworks from "./components/artworks/Artworks";
 import Talents from "./components/talents/Talents";
 import CommissionServices from "./components/commissionServices/CommissionServices";
+import ProfileCommissionServices from "./components/profileCommissionServices/ProfileCommissionServices";
+import ProfileArtworks from "./components/profileArtworks/ProfileArtworks";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
     path: "/users/:id",
     element: <Profile />,
     children: [
+      {
+        path: "/users/:id/profile_commission_services",
+        element: <ProfileCommissionServices />,
+      },
+      {
+        path: "/users/:id/profile_artworks",
+        element: <ProfileArtworks />,
+      },
       {
         path: "/users/:id/order-history",
         element: <OrderHistory />,

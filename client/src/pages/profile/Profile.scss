@@ -40,15 +40,14 @@
                         opacity: 0.7;
                         cursor: pointer;
                     }
-                    .profile__bg__ic {
-                      
-                    }
+
+                    .profile__bg__ic {}
                 }
 
             }
         }
 
-        
+
     }
 }
 
@@ -75,6 +74,35 @@
         &:hover {
             cursor: pointer;
             opacity: 0.7;
+        }
+    }
+}
+
+
+.profile-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+
+    .profile-page__header--left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+        button {
+            margin-right: 12px;
+            border-radius: 16px;
+            min-width: 100px;
+            padding: 6px 12px !important;
+            font-size: 1.3rem;
+        }
+    }
+
+    .profile-page__header--right {
+        button {
+            margin-left: 12px;
         }
     }
 }

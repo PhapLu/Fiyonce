@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import "./UpgradeAccount.scss";
 import UpgradeAccountImg from "../../assets/img/upgrade-account-img.png";
-import { trimString, bytesToKilobytes, formatFloat } from "../../utils/formatter";
+import { limitString, bytesToKilobytes, formatFloat } from "../../utils/formatter";
 import { isFilled, minLength } from "../../utils/validator.js";
 import { apiUtils } from '../../utils/newRequest.js';
 
@@ -124,7 +124,7 @@ const UpgradeAccount = ({ closeModal }) => {
 
     return (
         <div className="overlay" onClick={closeModal}>
-            <form className="form modal-form upgrade-account-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
+            <form className="form modal-form type-1 upgrade-account-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
                 <div className="modal-form--left">
                     <img src={UpgradeAccountImg} className="modal-form__img" alt="Authentication image" />
                 </div>
@@ -153,7 +153,7 @@ const UpgradeAccount = ({ closeModal }) => {
                                     <div className="img-preview--left">
                                         <img src={URL.createObjectURL(artwork)} alt={`Artwork ${index + 1}`} className="img-preview__img" />
                                         <div className="img-preview__info">
-                                            <span className="img-preview__name">{trimString(artwork.name, 15)}</span>
+                                            <span className="img-preview__name">{limitString(artwork.name, 15)}</span>
                                             <span className="img-preview__size">{formatFloat(bytesToKilobytes(artwork.size), 1)} KB</span>
                                         </div>
                                     </div>

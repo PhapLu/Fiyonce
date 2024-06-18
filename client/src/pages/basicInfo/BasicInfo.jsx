@@ -63,8 +63,14 @@ export default function BasicInfo() {
         setSocialLinks(updatedLinks);
     };
 
+
     const validateInputs = () => {
         let errors = {};
+
+        // Validate stageName field if filled
+        if (!isFilled(inputs.stageName)) {
+            errors.stageName = 'Vui lòng điền nghệ danh';
+        }
 
         // Validate email field if filled
         if (isFilled(inputs.phone)) {

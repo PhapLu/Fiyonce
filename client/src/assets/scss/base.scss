@@ -18,8 +18,7 @@
     --white-1-color: white;
     --white-2-color: white;
     --white-3-color: white;
-
-    --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
+    --box-shadow: 0 1px 6px rgb(114 114 114 / 10%);
     --form-border: unset;
     --form-bg-color: #F7F7F7;
     --error-color: #ff3e3e;
@@ -822,27 +821,27 @@ hr {
 }
 
 .modal-form.type-2 {
-    width: 65% !important;
+    width: 70% !important;
     margin-left: 0 !important;
     transform: unset;
 
     background-color: var(--form-bg-color);
-    max-height: 85vh;
+    max-height: 90vh;
     display: flex;
     justify-content: space-between;
     border-radius: 16px;
-    padding: 36px 20px 52px;
+    padding: 42px 22px 58px;
     position: relative;
 
     .form__close-ic {
         position: absolute;
-        top: 8px;
+        top: 10px;
         right: 20px;
     }
 
     .form__help {
         position: absolute;
-        top: 8px;
+        top: 10px;
         right: 56px;
         display: flex;
         align-items: center;
@@ -884,7 +883,7 @@ hr {
 
     .form__submit-btn {
         position: absolute;
-        bottom: 10px;
+        bottom: 12px;
         right: 20px;
     }
 

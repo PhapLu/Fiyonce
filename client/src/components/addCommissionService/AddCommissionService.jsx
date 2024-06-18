@@ -7,9 +7,9 @@ import { limitString, formatFloat, bytesToKilobytes } from "../../utils/formatte
 import { isFilled, minValue } from "../../utils/validator.js";
 
 // Styling
-import "./OrderCommission.scss";
+import "./AddCommissionService.scss";
 
-export default function OrderCommission({ setShowOrderCommissionForm, setOverlayVisible }) {
+export default function AddCommissionService({ commissionServiceCategories, setShowAddCommissionServiceForm, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         description: '',
@@ -22,8 +22,8 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
         agreeTerms: false
     });
     const [errors, setErrors] = useState({});
-    const [isSubmitOrderCommissionLoading, setIsSubmitOrderCommissionLoading] = useState(false);
-    const [isSuccessOrderCommission, setIsSuccessOrderCommission] = useState(false);
+    const [isSubmitAddCommissionServiceLoading, setIsSubmitAddCommissionServiceLoading] = useState(false);
+    const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
 
     const [references, setReferences] = useState([]);
 
@@ -32,7 +32,7 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
     useEffect(() => {
         let handler = (e) => {
             if (orderCommissionRef && orderCommissionRef.current && !orderCommissionRef.current.contains(e.target)) {
-                setShowOrderCommissionForm(false);
+                setShowAddCommissionServiceForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -137,7 +137,7 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitOrderCommissionLoading(true);
+        setIsSubmitAddCommissionServiceLoading(true);
         console.log(inputs)
 
         // Validate user inputs
@@ -145,19 +145,19 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             // Clear the loading effect if validation failed
-            setIsSubmitOrderCommissionLoading(false);
+            setIsSubmitAddCommissionServiceLoading(false);
             return;
         }
 
         // Handle login request
         try {
-            setIsSuccessOrderCommission(true);
+            setIsSuccessAddCommissionService(true);
         } catch (error) {
             console.error("Failed to login:", error);
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
-            setIsSubmitOrderCommissionLoading(false);
+            setIsSubmitAddCommissionServiceLoading(false);
         }
     };
 
@@ -170,22 +170,18 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowOrderCommissionForm(false);
-                setIsSuccessOrderCommission(false);
+                setShowAddCommissionServiceForm(false);
+                setIsSuccessAddCommissionService(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
+
             <div className="modal-form--left">
-                <h3>Thủ tục đăng yêu cầu tìm họa sĩ</h3>
+                <p>Thể loại</p>
+                <h3>{inputs.title || "Tên dịch vụ"}</h3>
+                <p>Giá từ: {inputs.fromPrice || "x"} VND</p>
                 <hr />
-                <ul className="step-container">
-                    <li className="step-item checked">Mô tả yêu cầu</li>
-                    <li className="step-item">Các họa sĩ ứng hồ sơ và khách hàng chọn ra họa sĩ phù hợp nhất</li>
-                    <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                    <li className="step-item">Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                    <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
-                </ul>
 
                 <div className="form__note">
                     <p>
@@ -196,16 +192,43 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
                 </div>
             </div>
             <div className="modal-form--right">
-                <h2 className="form__title">Mô tả yêu cầu</h2>
-
-                {!isSuccessOrderCommission ?
-
+                <h2 className="form__title">Thêm dịch vụ</h2>
+                {!isSuccessAddCommissionService ?
                     (
                         <>
+                            <div className="form-field">
+                                <label htmlFor="commissionServiceCategoryId" className="form-field__label">Thể loại</label>
+                                <select
+                                    name="commissionServiceCategoryId"
+                                    value={inputs.commissionServiceCategoryId || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                >
+                                    <option value="">-- Chọn loại dịch vụ --</option>
+                                    {commissionServiceCategories.map((serviceCategory) => {
+                                        return (<option value={serviceCategory._id}>{serviceCategory.title}</option>)
+                                    })}
+                                </select>
+                                {errors.commissionServiceCategoryId && <span className="form-field__error">{errors.commissionServiceCategoryId}</span>}
+                            </div>
+
+                            <div className="form-field">
+                                <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
+                                <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
+                                <input
+                                    id="title"
+                                    name="title"
+                                    value={inputs.title}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
+                                />
+                                {errors.title && <span className="form-field__error">{errors.title}</span>}
+                            </div>
 
                             <div className="form-field">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng miêu tả yêu cầu của bạn về sản phẩm mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết thêm qua tin nhắn.</span>
+                                <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
                                 <textarea
                                     id="description"
                                     name="description"
@@ -218,8 +241,8 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
                             </div>
 
                             <div className="form-field">
-                                <label className="form-field__label">Nguồn tham khảo</label>
-                                <span className="form-field__annotation">Cung cấp tranh tham khảo hoặc đường dẫn đến chúng giúp họa sĩ hình dung ra yêu cầu của bạn tốt hơn (tối đa 5 ảnh).</span>
+                                <label className="form-field__label">Tranh mẫu</label>
+                                <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
                                 {references.map((reference, index) => (
                                     <div key={index} className="form-field__input img-preview">
                                         <div className="img-preview--left">
@@ -248,146 +271,19 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
 
                                 {errors.references && <span className="form-field__error">{errors.references}</span>}
                             </div>
-                            <div className="form-field">
-                                <label className="form-field__label">Nhu cầu sử dụng</label>
-                                <span className="form-field__annotation">Bạn cần tranh cho?</span>
-                                <label className="form-field__label">
-                                    <input
-                                        type="radio"
-                                        name="usage"
-                                        value="personal"
-                                        checked={inputs.usage === 'personal'}
-                                        onChange={handleChange}
-                                    /> Mục đích cá nhân
-                                </label>
-                                <label className="form-field__label">
-                                    <input
-                                        type="radio"
-                                        name="usage"
-                                        value="commercial"
-                                        checked={inputs.usage === 'commercial'}
-                                        onChange={handleChange}
-                                    /> Mục đích thương mại
-                                </label>
-                                {errors.usage && <span className="form-field__error">{errors.usage}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field__label">Riêng tư</label>
-                                <span className="form-field__annotation">Cho phép họa sĩ sử dụng tranh vẽ cho bạn để quảng bá hình ảnh của họ?</span>
-                                <label className="form-field__label">
-                                    <input
-                                        type="radio"
-                                        name="isPrivate"
-                                        value={"1"}
-                                        checked={inputs.isPrivate === "1"}
-                                        onChange={handleChange}
-                                    /> Cho phép
-                                </label>
-                                <label className="form-field__label">
-                                    <input
-                                        type="radio"
-                                        name="isPrivate"
-                                        value={"0"}
-                                        checked={inputs.isPrivate === "0"}
-                                        onChange={handleChange}
-                                    /> Không cho phép
-                                </label>
-                                {errors.isPrivate && <span className="form-field__error">{errors.isPrivate}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field__label">Định dạng file</label>
-                                <span className="form-field__annotation">Bạn muốn họa sĩ gửi file ở định dạng nào?</span>
-                                <div className="checkbox-container">
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="png"
-                                            checked={inputs.fileTypes.includes('png')}
-                                            onChange={handleChange}
-                                        /> png
-                                    </label>
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="jpg"
-                                            checked={inputs.fileTypes.includes('jpg')}
-                                            onChange={handleChange}
-                                        /> jpg
-                                    </label>
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="jpeg"
-                                            checked={inputs.fileTypes.includes('jpeg')}
-                                            onChange={handleChange}
-                                        /> jpeg
-                                    </label>
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="svg"
-                                            checked={inputs.fileTypes.includes('svg')}
-                                            onChange={handleChange}
-                                        /> svg
-                                    </label>
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="tif"
-                                            checked={inputs.fileTypes.includes('tif')}
-                                            onChange={handleChange}
-                                        /> tif
-                                    </label>
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="ai"
-                                            checked={inputs.fileTypes.includes('ai')}
-                                            onChange={handleChange}
-                                        /> ai
-                                    </label>
-                                    <label className="form-field__label">
-                                        <input
-                                            type="checkbox"
-                                            name="fileTypes"
-                                            value="psd"
-                                            checked={inputs.fileTypes.includes('psd')}
-                                            onChange={handleChange}
-                                        /> psd
-                                    </label>
-                                </div>
-                                {errors.fileTypes && <span className="form-field__error">{errors.fileTypes}</span>}
-                            </div>
+
                             <div className="form-field">
                                 <label className="form-field__label">Giá cả</label>
-                                <span className="form-field__annotation">Cung cấp giá tiền tối thiểu và tối đa mà bạn có thể chi trả cho họa sĩ để hoàn thành tác phẩm theo yêu cầu của mình.</span>
-                                <div className="half-split">
-                                    <input
-                                        type="number"
-                                        name="minPrice"
-                                        value={inputs.minPrice}
-                                        className="form-field__input"
-                                        onChange={handleChange}
-                                        placeholder="Nhập mức tối thiểu"
-                                    />
-                                    -
-                                    <input
-                                        type="number"
-                                        name="maxPrice"
-                                        value={inputs.maxPrice}
-                                        className="form-field__input"
-                                        onChange={handleChange}
-                                        placeholder="Nhập mức tối đa"
-                                    />
-                                </div>
+                                <span className="form-field__annotation">Cho biết mức phí cơ bản của dịch vụ (không tính kèm các dịch vụ đi kèm).</span>
+                                <input
+                                    type="number"
+                                    name="minPrice"
+                                    value={inputs.minPrice}
+                                    className="form-field__input"
+                                    onChange={handleChange}
+                                    placeholder="Nhập mức tối thiểu"
+                                />
                                 {errors.minPrice && <span className="form-field__error">{errors.minPrice}</span>}
-                                {errors.maxPrice && <span className="form-field__error">{errors.maxPrice}</span>}
                             </div>
                             <div className="form-field">
                                 <label className="form-field__label">
@@ -416,8 +312,8 @@ export default function OrderCommission({ setShowOrderCommissionForm, setOverlay
             <button type="submit"
                 className="form__submit-btn btn btn-2 btn-md"
                 onClick={handleSubmit}
-                disabled={isSubmitOrderCommissionLoading}>
-                {isSubmitOrderCommissionLoading ? (
+                disabled={isSubmitAddCommissionServiceLoading}>
+                {isSubmitAddCommissionServiceLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
                     "Gửi yêu cầu"

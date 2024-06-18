@@ -22,6 +22,7 @@ export default function Sidebar({ profileInfo }) {
     const [inputs, setInputs] = useState(profileInfo);
     const [errors, setErrors] = useState({});
     const [isSubmitSidebarInfoLoading, setIsSubmitSidebarInfoLoading] = useState(false);
+    const [isUploadAvatarLoading, setUploadAvatarLoading] = useState(false);
 
     const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
 
@@ -69,6 +70,12 @@ export default function Sidebar({ profileInfo }) {
 
     const validateInputs = () => {
         let errors = {};
+
+        // Validate stageName field if filled
+        if (!isFilled(inputs.stageName)) {
+            errors.stageName = 'Vui lòng điền nghệ danh';
+        }
+
 
         // Validate fullname
         if (!isFilled(inputs.fullName)) {
@@ -125,7 +132,7 @@ export default function Sidebar({ profileInfo }) {
         formData.append('type', "avatar");
 
         if (file) {
-            setLoading(true);
+            setUploadAvatarLoading(true);
             try {
                 const response = await apiUtils.post(`upload/profile/avatarOrCover/${profileInfo._id}`, formData);
                 if (response.data.metadata.image_url) {
@@ -135,14 +142,14 @@ export default function Sidebar({ profileInfo }) {
             } catch (error) {
                 console.error('Error:', error);
             } finally {
-                setLoading(false);
+                setUploadAvatarLoading(false);
             }
         }
     };
 
     return (
         <div className="sidebar">
-            <div className={'sidebar__avatar ' + (isAvatarLoading ? " skeleton-img" : "")}>
+            <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
                 <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
                 <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 sidebar__avatar__ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -186,22 +193,21 @@ export default function Sidebar({ profileInfo }) {
                     </div>
 
                     <div className="form-field">
-                        <label htmlFor="bio" className="form-field__label">Liên kết</label>
-                        {socialLinks.map((socialLink, index) => (
+                        <label htmlFor="socialLinks" className="form-field__label">Liên kết</label>
+                        {socialLinks.map((link, index) => (
                             <div key={index} className="link-form">
-                                <span>{socialLink.platform}</span>
-                                <div className="form-field with-ic btn">
+                                <div className="form-field with-ic">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                     </svg>
                                     <input
                                         type="text"
-                                        value={socialLink}
-                                        onChange={(e) => handleLinkChange(e, socialLink._id, 'url')}
+                                        value={link}
+                                        onChange={(e) => handleLinkChange(e, index)}
                                         className="form-field__input"
                                         placeholder="Nhập liên kết"
                                     />
-                                    <svg onClick={() => deleteLinkInput(link._id)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic delete-ic">
+                                    <svg onClick={() => deleteLinkInput(index)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic delete-ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                     </svg>
                                 </div>
@@ -240,7 +246,7 @@ export default function Sidebar({ profileInfo }) {
                 <>
                     <div className="sidebar__name">
                         <p className="sidebar__name__fullName">{profileInfo.fullName}</p>
-                        <span className="sidebar__name__email">{profileInfo.stageName || profileInfo.displayName}</span>
+                        <span className="sidebar__name__email">{profileInfo.stageName}</span>
                     </div>
                     <div>
                         {profileInfo.jobTitle && (
