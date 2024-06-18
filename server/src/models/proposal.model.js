@@ -4,12 +4,12 @@ const DOCUMENT_NAME = 'Proposal'
 const COLLECTION_NAME = 'Proposals'
 
 const ProposalSchema = new mongoose.Schema({
-    briefId: {
+    orderId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Brief',
+        ref: 'Order',
         required: true
     },
-    userId: {
+    memberId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -19,9 +19,20 @@ const ProposalSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    title:{
+        type: String,
+        required: true
+    },
+    scope: {
+        type: String,
+        required: true
+    },
+    deadLine: {
+        type: Date,
+    },
     artworks:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Artwork'
+        ref: 'Artwork',
     }],
     price: {
         type: Number,

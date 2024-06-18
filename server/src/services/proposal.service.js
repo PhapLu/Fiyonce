@@ -1,70 +1,76 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import Proposal from "../models/proposal.model.js"
-import Brief from "../models/brief.model.js"
+import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
+import sendEmail from '../middlewares/sendMail.js'
 
 class ProposalService{
-    static submitPortfolio = async(userId, briefId, body) => {
-        //1. Check if user, brief exists
+    static sendProposal = async(userId, orderId, body) => {
+        //1. Check if user, order exists
         const user = await User.findById(userId)
-        const brief = await Brief.findById(briefId)
+        const order = await Order.findById(orderId)
         if(!user) throw new NotFoundError('User not found')
-        if(!brief) throw new NotFoundError('Brief not found')
+        if(!order) throw new NotFoundError('Order not found')
 
         //2. Check if user is a talent
         if(user.role !== 'talent')
             throw new AuthFailureError('You are not a talent')
 
-        //3. Check if user has already given proposal for the brief
-        const existingProposal = await Proposal.findOne({talentId: userId, briefId: briefId})
-        if(existingProposal) 
-            throw new BadRequestError('You have already given proposal for this brief')
+        //3. Check if user has already given proposal for the order
+        const existingProposal = await Proposal.findOne({talentId: userId, orderId})
+        if(existingProposal)
+            throw new BadRequestError('You have already given proposal for this order')
 
         //4. Check if artworks are valid
-        if(body.artworks){
-            const artworks = await artwork.find({_id: body.artworks})
-            if(artworks.length !== body.artworks.length)
-                throw new BadRequestError('Several artworks are not found')
-        }
-        //5. Modify the acceptedTalent
-        brief.talentsAccepted.push(userId)
-        brief.save()
-
-        //6.Check if price is valid
+        if(body.artworks.length === 0)
+            throw new BadRequestError('Artworks are required')
+        
+        //5.Check if price is valid
         if(body.price < 0)
             throw new BadRequestError('Price must be greater than 0')
-        if(body.price < brief.minPrice*90/100 || body.price > brief.maxPrice*110/100)
-            throw new BadRequestError('Price must be within the range of the brief')
-        
-        //7. Submit portfolio
+
+        //6. Send proposal
         const proposal = new Proposal({
-            briefId: briefId,
-            userId: brief.briefOwner,
+            orderId,
+            memberId: order.memberId,
             talentId: userId,
             artworks: body.artworks,
             price: body.price,
+            ...body
         })
         await proposal.save()
-        return {
-            proposal
-        }
-    }
-    static readProposal = async(proposalId) => {
-        //1. Check if proposal exists
-        const proposal = await Proposal.findById(proposalId)
-        if(!proposal) throw new NotFoundError('Proposal not found')
-        return {
-            proposal
-        }
-    }
-    static readProposals = async(briefId) => {
-        //1. Check if brief exists
-        const brief = await Brief.findById(briefId)
-        if(!brief) throw new NotFoundError('Brief not found')
 
-        //2. Read all proposals of a brief
-        const proposals = await Proposal.find({briefId: briefId})
+        //7. Modify the order status to accepted
+        order.status = 'accepted'
+        order.save()
+
+        const showedProposal = await proposal.populate('orderId')
+        console.log('Proposal:', showedProposal);
+        return {
+            proposal: showedProposal
+        }
+    }
+
+    static readProposal = async(userId, proposalId) => {
+        //1. Check if proposal, user exists
+        const proposal = await Proposal.findById(proposalId).populate('orderId') 
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError('User not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
+
+        return {
+            proposal
+        }
+    }
+    static readProposals = async(orderId) => {
+        //1. Check if order exists
+        const order = await Order.findById(orderId)
+        if(!order) throw new NotFoundError('Order not found')
+
+        //2. Read all proposals of a order
+        const proposals = await Proposal.find({orderId: orderId})
+
         return {
             proposals
         }
@@ -73,6 +79,7 @@ class ProposalService{
         //1. Check if proposal, user exists
         const user = await User.findById(userId)
         const proposal = await Proposal.findById(proposalId)
+        const member = await User.findById(proposal.memberId)
         if(!proposal) throw new NotFoundError('Proposal not found')
         if(!user) throw new NotFoundError('User not found')
 
@@ -80,12 +87,10 @@ class ProposalService{
         if(proposal.talentId.toString() !== userId) 
             throw new AuthFailureError('You are not authorized to update this proposal')
         
-        //3. Check if artworks are valid
-        if(body.artworks){
-            const artworks = await artwork.find({_id: body.artworks})
-            if(artworks.length !== body.artworks.length)
-                throw new BadRequestError('Several artworks are not found')
-        }
+        //3. Check order status
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'pending' && order.status !== 'accepted')
+            throw new BadRequestError('You cannot update proposal on this stage')
 
         //4. Update proposal
         const updatedProposal = await Proposal.findByIdAndUpdate(
@@ -96,6 +101,13 @@ class ProposalService{
             {new: true}
         )
         await proposal.save()
+
+        //5. Send email to user
+        // try {
+        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
 
         return {
             proposal: updatedProposal
@@ -113,8 +125,14 @@ class ProposalService{
         if(proposal.talentId.toString() !== userId) 
             throw new AuthFailureError('You are not authorized to delete this proposal')
         
-        //3. Delete proposal
+        //3. Check status of order
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'pending' && order.status !== 'accepted')
+            throw new BadRequestError('You cannot update proposal on this stage')
+
+        //4. Delete proposal
         await proposal.remove()
+
         return {
             proposal
         }
@@ -128,6 +146,87 @@ class ProposalService{
         const proposals = await Proposal.find({talentId: userId})
         return {
             proposals
+        }
+    }
+
+    static confirmProposal = async(userId, proposalId) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        const proposal = await Proposal.findById(proposalId)
+        const talent = await User.findById(proposal.talentId)
+
+        if(!user) throw new NotFoundError('User not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
+        if(!talent) throw new NotFoundError('Talent not found')
+
+        //2. Check if user is authorized to confirm proposal
+        if(userId !== proposal.memberId.toString())
+            throw new AuthFailureError('You are not authorized to confirm this proposal')
+
+        //3. Check if order status is accepted
+        const order = await Order.findById(proposal.orderId)
+        if(order.status !== 'accepted')
+            throw new BadRequestError('Order is not accepted')
+        if(order.status == 'confirmed')
+            throw new BadRequestError('Order is already confirmed')
+
+        //4. Confirm proposal
+        order.status = 'confirmed'
+        if(!order.talentChosenId){
+            order.talentChosenId = proposal.talentId
+        } else{
+            
+        }
+        order.save()
+
+        const showedProposal = await proposal.populate('orderId')
+
+        //5. Send email to talent
+        // try {
+        //     await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
+
+        return {
+            proposal: showedProposal
+        }
+    }
+
+    static denyProposal = async(userId, proposalId) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        const proposal = await Proposal.findById(proposalId)
+        const talent = await User.findById(proposal.talentId)
+
+        if(!user) throw new NotFoundError('User not found')
+        if(!proposal) throw new NotFoundError('Proposal not found')
+        if(!talent) throw new NotFoundError('Talent not found')
+
+        //2. Check if user is authorized to deny proposal
+        if(userId !== proposal.memberId.toString())
+            throw new AuthFailureError('You are not authorized to deny this proposal')
+
+        //3. Check if order status is accepted
+        const order = await Order.findById
+        (proposal.orderId)
+        if(order.status !== 'accepted')
+            throw new BadRequestError('Order is not accepted')
+
+        //4. Deny proposal
+        order.status = 'rejected'
+        order.save()
+        const showedProposal = await proposal.populate('orderId')
+
+        //5. Send email to talent
+        // try {
+        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client');
+        // } catch (error) {
+        //     throw new Error('Email service error');
+        // }
+
+        return {
+            proposal: showedProposal
         }
     }
 }

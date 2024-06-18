@@ -1,8 +1,8 @@
 import mongoose, { mongo } from "mongoose";
-const DOCUMENT_NAME = 'Brief'
-const COLLECTION_NAME = 'Briefs'
+const DOCUMENT_NAME = 'Order'
+const COLLECTION_NAME = 'Orders'
 
-const BriefSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -11,17 +11,22 @@ const BriefSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
+    serviceId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service'
+    },
     memberId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    talentAppliedIds:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
     talentChosenId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', 'rejected', 'confirmed', 'canceled', 'in_progress', 'finished', 'under_processing'],
+        default: 'pending'
     },
     // character: {
     //     photo: { type: String },
@@ -29,13 +34,12 @@ const BriefSchema = new mongoose.Schema({
     //     description: { type: String }
     // },
     isDirect: {type: Boolean, required: true},
-    references: [{ 
-        content: { type: String }, 
-        isMedia: { type: Boolean } 
+    references: [{
+        type: String
     }],
     minPrice: { type: Number },
     maxPrice: { type: Number },
-    purposes: [{ type: String, enum: ['personal', 'commercial'] }],
+    purpose: { type: String, enum: ['personal', 'commercial'] },
     isPrivate: { type: Boolean },
     deadline: { type: Date},
     fileFormats: [{ type: String }],
@@ -43,6 +47,6 @@ const BriefSchema = new mongoose.Schema({
     timestamps: true,
     collection: COLLECTION_NAME
 })
-const Brief = mongoose.model(DOCUMENT_NAME, BriefSchema)
+const Order = mongoose.model(DOCUMENT_NAME, OrderSchema)
 
-export default Brief
+export default Order

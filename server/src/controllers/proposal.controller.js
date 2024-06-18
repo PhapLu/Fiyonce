@@ -2,24 +2,24 @@ import { SuccessResponse } from "../core/success.response.js"
 import ProposalService from "../services/proposal.service.js"
 
 class ProposalController{
-    submitPortfolio = async(req, res, next) => {
+    sendProposal = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Proposal Brief success!',
-            metadata: await ProposalService.submitPortfolio(req.userId, req.params.briefId, req.body)
+            message: 'send proposal to inDirect order success!',
+            metadata: await ProposalService.sendProposal(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
 
     readProposal = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read an Proposal',
-            metadata: await ProposalService.readProposal(req.params.proposalId)
+            message: 'Read an proposal',
+            metadata: await ProposalService.readProposal(req.userId, req.params.proposalId)
         }).send(res)
     }
 
     readProposals = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read all Proposals',
-            metadata: await ProposalService.readProposals(req.params.briefId)
+            message: 'Read all proposals of an order',
+            metadata: await ProposalService.readProposals(req.params.orderId)
         }).send(res)
     }
 
@@ -44,6 +44,19 @@ class ProposalController{
         }).send(res)
     }
 
+    confirmProposal = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Confirm proposal for inDirect order success!',
+            metadata: await ProposalService.confirmProposal(req.userId, req.params.proposalId)
+        }).send(res)
+    }
+    
+    denyProposal = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Deny the proposal success!',
+            metadata: await ProposalService.denyProposal(req.userId, req.params.proposalId)
+        }).send(res)
+    }
 }
 
 export default new ProposalController()

@@ -20,6 +20,7 @@ const uploadFields = uploadMemory.fields([
     { name: 'portfolioLink', maxCount: 1 },
     { name: 'stageName', maxCount: 1 },
     { name: 'price', maxCount: 1 },
+    { name: 'jobTitle', maxCount: 1 },
 ]);
 
 export {

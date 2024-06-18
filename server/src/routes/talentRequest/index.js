@@ -10,7 +10,7 @@ const router = express.Router()
 //authentication
 router.use(verifyToken)
 
-router.post('/requestUpgradingToTalent', uploadFields, accessService.grantAccess('updateOwn', 'profile'), asyncHandler(talentRequestController.requestUpgradingToTalent))
+router.post('/requestUpgradingToTalent', uploadFields, asyncHandler(talentRequestController.requestUpgradingToTalent))
 //admin
 router.patch('/upgradeRoleToTalent/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.upgradeRoleToTalent))
 router.patch('/denyTalentRequest/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.denyTalentRequest))

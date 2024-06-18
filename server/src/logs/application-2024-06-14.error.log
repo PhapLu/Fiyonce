@@ -1,0 +1,2 @@
+2024-06-14 12:50:02::error::/v1/api/auth/users/login::b80e2c6c-bd1e-43d1-b993-54fb0accd981::401 - 1ms - Response: {"status":401,"now":1718344202824}::{"message":"Authentication error"}
+2024-06-14 20:42:46::error::/v1/api/proposal/sendProposal/666aa68d5a40b73e7f404702::bb4cd28e-58f1-4e8e-ac73-eb5b6eb1a88e::403 - 1ms - Response: {"status":403,"now":1718372566056}::{"message":"You have already given proposal for this order"}

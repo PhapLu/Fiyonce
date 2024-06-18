@@ -16,16 +16,16 @@ const UserSchema = new Schema(
       enum: ['member', 'talent', 'admin'],
       default: 'member'
     },
-    jobTitle: { type: String },
+    jobTitle: { type: String, trim: true },
     avatar: {
       type: String,
       default:
-        "./public/uploads/default_avatar.png",
+        "./public/uploads/pastal_system_default_avatar.png",
     },
     bg: {
       type: String,
       default: 
-        "./public/uploads/default_background.png",
+        "./public/uploads/pastal_system_default_background.png",
     },
     address: { type: String, default: '' },
     country: { type: String, default: "Vietnam" },
@@ -45,6 +45,12 @@ const UserSchema = new Schema(
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
+    rating: {
+      type: Number,
+      default: 5,
+      min: [0, "Rating cannot be negative"],
+      max: [5, "Rating cannot exceed 5"] 
+    },
     accessToken: { type: String },
   },
   {
@@ -90,12 +96,7 @@ const TalentUser = User.discriminator(
   "talent",
   new Schema({
     // Add role-specific fields here
-    rating: {
-        type: Number,
-        default: 5,
-        min: [0, "Rating cannot be negative"],
-        max: [5, "Rating cannot exceed 5"] 
-    },
+    
     creativeFields: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Field' }
     ],
@@ -107,9 +108,9 @@ const TalentUser = User.discriminator(
       general: {type: String, required: true},
       payments: {type: String, required: true},
       revisions: {type: String, required: true},
-      deadlines_and_delivery: {type: String, required: true},
+      deadlinesAndDelivery: {type: String, required: true},
       use: {type: String, required: true},
-      intellectual_property_rights: {type: String, required: true},
+      intellectualPropertyRights: {type: String, required: true},
       refunds: {type: String, required: true},
       communication: {type: String, required: true},
       updatedAt: {type: Date}

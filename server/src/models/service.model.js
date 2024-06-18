@@ -7,11 +7,11 @@ const COLLECTION_NAME = 'Services';
 const ServiceSchema = new mongoose.Schema({
     talentId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     title: { type: String, required: true },
-    serviceCategory: {
+    serviceCategories: [{
         type: mongoose.Types.ObjectId, 
-        ref:'serviceCategory', 
+        ref:'ServiceCategory', 
         required: true
-    },
+    }],
     fromPrice: { type: Number, required: true },
     deliverables: [{type: String, required: true}],
     addOns:[{
