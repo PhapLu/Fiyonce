@@ -7,14 +7,20 @@ class ServiceService{
         //1. Check talent exists
         const talent = await User.findById(talentId)
         if(!talent) throw new NotFoundError('Talent not found!')
+        if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent!')
 
-        //2. Create service
+        //2. Validate body
+        const {title, serviceCategories, fromPrice, deliverables, portfolios} = body
+        if(portfolios.length == 0) throw new BadRequestError('Portfolios must not be empty')
+        if(!title || !serviceCategories || !fromPrice || !deliverables) throw new BadRequestError('Please fill in all required fields!')
+
+        //3. Create service
         const service = await Service.create({
             talentId: talentId,
             ...body
         })
-
         service.save()
+
         return {
             service
         }
@@ -77,10 +83,7 @@ class ServiceService{
         if(service.talentId.toString() !== talentId) throw new BadRequestError('You can only delete your service')
 
         //2. Delete service
-        await service.remove()
-        return {
-            
-        }
+        return await service.remove()
     }
 }
 
