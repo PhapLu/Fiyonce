@@ -7,13 +7,12 @@ import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumbe
 import { isFilled, minValue } from "../../utils/validator.js";
 
 // Styling
-import "./AddCommissionService.scss";
+import "./AddCommissionTos.scss";
 
-export default function AddCommissionService({ commissionServiceCategories, setShowAddCommissionServiceForm, setOverlayVisible }) {
+export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         description: '',
-        samples: Array(5).fill(null),
         usage: 'personal',
         isPrivate: "0",
         fileTypes: [],
@@ -22,18 +21,15 @@ export default function AddCommissionService({ commissionServiceCategories, setS
         agreeTerms: false
     });
     const [errors, setErrors] = useState({});
-    const [isSubmitAddCommissionServiceLoading, setIsSubmitAddCommissionServiceLoading] = useState(false);
-    const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
-    const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
-
-    const [samples, setSamples] = useState(Array(5).fill(null));
+    const [isSubmitAddCommissionTosLoading, setIsSubmitAddCommissionTosLoading] = useState(false);
+    const [isSuccessAddCommissionTos, setIsSuccessAddCommissionTos] = useState(false);
 
     // Toggle display overlay box
     const addCommissionRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (addCommissionRef && addCommissionRef.current && !addCommissionRef.current.contains(e.target)) {
-                setShowAddCommissionServiceForm(false);
+                setShowAddCommissionTosForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -45,10 +41,6 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
     const validateInputs = () => {
         let errors = {};
-
-        if (!((isAddNewCommissionServiceCategory && isFilled(inputs.newCommissionServiceCategory)) || (!isAddNewCommissionServiceCategory && isFilled(inputs.commissionServiceCategoryId)))) {
-            errors.commissionServiceCategoryId = 'Vui lòng chọn thể loại dịch vụ';
-        }
 
         // Validate category
         if (!isFilled(inputs.commissionServiceCategoryId)) {
@@ -64,13 +56,6 @@ export default function AddCommissionService({ commissionServiceCategories, setS
         // Validate description
         if (!isFilled(inputs.description)) {
             errors.description = 'Vui lòng nhập mô tả';
-        }
-
-        // Validate samples uploading
-        if (samples.filter(sample => sample !== null).length < 3) {
-            errors.samples = "Vui lòng cung cấp tối thiểu 3 tranh mẫu.";
-        } else if (samples.filter(sample => sample !== null).length > 5) {
-            errors.samples = "Vui lòng cung cấp tối đa 5 tranh mẫu.";
         }
 
         // Validate minimum price
@@ -120,71 +105,30 @@ export default function AddCommissionService({ commissionServiceCategories, setS
         setErrors((values) => ({ ...values, [name]: '' }));
     };
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        const newSamples = [...samples];
-
-        files.forEach((file, index) => {
-            if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, samples: "Dung lượng ảnh không được vượt quá 500KB." }));
-            } else {
-                const sampleIndex = newSamples.findIndex(sample => sample === null);
-                if (sampleIndex !== -1) {
-                    newSamples[sampleIndex] = file;
-                }
-            }
-        });
-
-        setSamples(newSamples);
-    };
-
-    const removeImage = (index) => {
-        const newSamples = [...samples];
-        newSamples[index] = null;
-        setSamples(newSamples);
-    };
-
-    const triggerFileInput = () => {
-        document.getElementById('file-input').click();
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitAddCommissionServiceLoading(true);
+        setIsSubmitAddCommissionTosLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             // Clear the loading effect if validation failed
-            setIsSubmitAddCommissionServiceLoading(false);
+            setIsSubmitAddCommissionTosLoading(false);
             return;
         }
 
-        // If create new commission service category
-        // if (isAddNewCommissionServiceCategory) {
-        //     try {
-        //         alert("Adding new")
-        //     } catch (error) {
-        //         errors.serverError = error.response.data.message;
-        //         return;
-        //     }
-        // } else {
-        //     alert("Not adding new")
-        // }
-
-
         // Handle submit request
         try {
-            setIsSuccessAddCommissionService(true);
+            setIsSuccessAddCommissionTos(true);
         } catch (error) {
             console.error("Failed to submit:", error);
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
-            setIsSubmitAddCommissionServiceLoading(false);
+            setIsSubmitAddCommissionTosLoading(false);
         }
     };
 
@@ -197,71 +141,18 @@ export default function AddCommissionService({ commissionServiceCategories, setS
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowAddCommissionServiceForm(false);
-                setIsSuccessAddCommissionService(false);
+                setShowAddCommissionTosForm(false);
+                setIsSuccessAddCommissionTos(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
-            <div className="modal-form--left">
-                <span>{inputs.commissionServiceCategoryId || "Thể loại"}</span>
-                <h3>{inputs.title || "Tên dịch vụ"}</h3>
-                <span>Giá từ: {formatCurrency(inputs.minPrice) || "x"} VND</span>
-                <hr />
-                <div className="images-layout-3">
-                    {samples.slice(0, 3).map((sample, index) => (
-                        <img
-                            key={index}
-                            src={sample ? URL.createObjectURL(sample) : "/uploads/default_image_placeholder.png"}
-                            alt={`sample ${index + 1}`}
-                        />
-                    ))}
-                </div>
-                <p>*Lưu ý: <i>{inputs.note || "Lưu ý cho khách hàng"}</i></p>
-            </div>
-
             <div className="modal-form--right">
                 <h2 className="form__title">Thêm dịch vụ</h2>
-                {!isSuccessAddCommissionService ?
+                {!isSuccessAddCommissionTos ?
                     (
                         <>
-                            <div className="form-field">
-                                <label htmlFor="commissionServiceCategoryId" className="form-field__label">Thể loại</label>
-
-                                {
-                                    isAddNewCommissionServiceCategory == false ? (
-                                        <>
-                                            <select
-                                                name="commissionServiceCategoryId"
-                                                value={inputs.commissionServiceCategoryId || ""}
-                                                onChange={handleChange}
-                                                className="form-field__input"
-                                            >
-                                                <option value="">-- Chọn loại dịch vụ --</option>
-                                                {commissionServiceCategories.map((serviceCategory) => {
-                                                    return (<option value={serviceCategory._id}>{serviceCategory.title}</option>)
-                                                })}
-                                            </select>
-                                            <button className="btn btn-2" onClick={() => { setIsAddNewCommissionServiceCategory(true); }}>Thêm thể loại</button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <input
-                                                name="newCommissionServiceCategory"
-                                                value={inputs.newCommissionServiceCategory}
-                                                onChange={handleChange}
-                                                className="form-field__input"
-                                                placeholder="Nhập tên thể loại"
-                                            />
-                                            <button className="btn btn-2" onClick={() => { setIsAddNewCommissionServiceCategory(false) }}>Hủy</button>
-                                        </>
-                                    )
-                                }
-
-                                {errors.commissionServiceCategoryId && <span className="form-field__error">{errors.commissionServiceCategoryId}</span>}
-                            </div>
-
                             <div className="form-field">
                                 <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
                                 <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
@@ -378,8 +269,8 @@ export default function AddCommissionService({ commissionServiceCategories, setS
             <button type="submit"
                 className="form__submit-btn btn btn-2 btn-md"
                 onClick={handleSubmit}
-                disabled={isSubmitAddCommissionServiceLoading}>
-                {isSubmitAddCommissionServiceLoading ? (
+                disabled={isSubmitAddCommissionTosLoading}>
+                {isSubmitAddCommissionTosLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
                     "Gửi yêu cầu"

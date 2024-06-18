@@ -4,12 +4,15 @@ import { useState, useEffect } from "react";
 // Utils
 import { limitString } from "../../utils/formatter.js";
 import AddCommissionService from "../addCommissionService/AddCommissionService.jsx";
+import CommissionTos from "../commissionTos/CommissionTos.jsx";
 // Styling
 import "./ProfileCommissionServices.scss";
 
 export default function ProfileCommissionServices() {
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showAddCommissionServiceForm, setShowAddCommissionServiceForm] = useState(false);
+    const [showCommissionTosView, setShowCommissionTosView] = useState(false);
+
     const [commissionServiceCategories, setCommissionServiceCategories] = useState([
         {
             title: "DIGITAL ART",
@@ -116,17 +119,17 @@ export default function ProfileCommissionServices() {
                     })}
                 </div>
                 <div className="profile-page__header--right">
-                    <button className="btn btn-3">
+                    <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
                         </svg>
-                        Điều khoản dịch vụ
+                        Điều khoản
                     </button>
                     <button className="btn btn-3" onClick={() => { setShowAddCommissionServiceForm(true); setOverlayVisible(true) }}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
-                        Thêm dịch vụ
+                        Dịch vụ
                     </button>
                 </div>
             </div>
@@ -154,7 +157,7 @@ export default function ProfileCommissionServices() {
 
                                         <div className="profile-commission-service__category-item__service-item--right">
                                             <h3>{service.title}</h3>
-                                            <h4>From {service.fromPrice}</h4>
+                                            <h4>Giá từ: {service.fromPrice} VND</h4>
                                             <p className="profile-commission-service__category-item__service-item__deliverables">{limitString(service.deliverables, 300)}</p>
                                             <p className="profile-commission-service__category-item__service-item__note">*Lưu ý: {service.notes}</p>
                                             <button className="btn btn-2 btn-md">Đặt ngay</button>
@@ -173,8 +176,8 @@ export default function ProfileCommissionServices() {
             {overlayVisible && (
                 <div className={`overlay`}>
                     {showAddCommissionServiceForm && <AddCommissionService commissionServiceCategories={commissionServiceCategories} setShowAddCommissionServiceForm={setShowAddCommissionServiceForm} setOverlayVisible={setOverlayVisible} />}
+                    {showCommissionTosView && <CommissionTos setShowCommissionTosView={setShowCommissionTosView} setOverlayVisible={setOverlayVisible} />}
                 </div>)}
-
         </div>
     );
 }
