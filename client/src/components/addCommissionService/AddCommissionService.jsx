@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // Utils
-import { limitString, formatFloat, bytesToKilobytes } from "../../utils/formatter.js";
+import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../utils/formatter.js";
 import { isFilled, minValue } from "../../utils/validator.js";
 
 // Styling
@@ -13,7 +13,7 @@ export default function AddCommissionService({ commissionServiceCategories, setS
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         description: '',
-        references: [],
+        samples: Array(5).fill(null),
         usage: 'personal',
         isPrivate: "0",
         fileTypes: [],
@@ -25,7 +25,7 @@ export default function AddCommissionService({ commissionServiceCategories, setS
     const [isSubmitAddCommissionServiceLoading, setIsSubmitAddCommissionServiceLoading] = useState(false);
     const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
 
-    const [references, setReferences] = useState([]);
+    const [samples, setSamples] = useState(Array(5).fill(null));
 
     // Toggle display overlay box
     const orderCommissionRef = useRef();
@@ -45,31 +45,39 @@ export default function AddCommissionService({ commissionServiceCategories, setS
     const validateInputs = () => {
         let errors = {};
 
-        // Validate email
+        // Validate category
+        if (!isFilled(inputs.commissionServiceCategoryId)) {
+            errors.title = 'Vui lòng chọn thể loại dịch vụ';
+        }
+
+
+         // Validate title
+         if (!isFilled(inputs.title)) {
+            errors.title = 'Vui lòng nhập tên dịch vụ';
+        }
+
+        // Validate description
         if (!isFilled(inputs.description)) {
             errors.description = 'Vui lòng nhập mô tả';
         }
 
-        // Validate references uploading
-        if (references.length < 1) {
-            errors.references = "Vui lòng cung cấp ít nhất 1 ảnh tham khảo.";
+        // Validate samples uploading
+        if (samples.filter(sample => sample !== null).length < 3) {
+            errors.samples = "Vui lòng cung cấp tối thiểu 3 tranh mẫu.";
+        } else if (samples.filter(sample => sample !== null).length > 5) {
+            errors.samples = "Vui lòng cung cấp tối đa 5 tranh mẫu.";
         }
 
         // Validate minimum price
         if (!isFilled(inputs.minPrice)) {
             errors.minPrice = 'Vui lòng nhập giá tối thiểu';
-        } else if (inputs.minPrice <= 100000) {
-            errors.minPrice = 'Giá trị đơn hàng tối thiểu là 100.000 VND';
+        } else if (inputs.minPrice <= 50000) {
+            errors.minPrice = 'Giá trị dịch vụ tối thiểu là 50.000 VND';
         }
 
-        // Validate maximum price
-        if (!isFilled(inputs.maxPrice)) {
-            errors.maxPrice = 'Vui lòng nhập giá tối đa';
-        }
-
-        // Validate minimum price
-        if (!inputs.isAgreeTerms) {
-            errors.isAgreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
+        // Validate agree to terms
+        if (!inputs.agreeTerms) {
+            errors.agreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
         }
 
         return errors;
@@ -77,7 +85,6 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        console.log(inputs)
 
         if (type === 'checkbox') {
             if (name === 'fileTypes') {
@@ -108,25 +115,26 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const newReferences = [...references];
+        const newSamples = [...samples];
 
-        files.forEach((file) => {
+        files.forEach((file, index) => {
             if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 500KB." }));
-            } else if (newReferences.length < 7) {
-                newReferences.push(file);
-                setErrors((values) => ({ ...values, references: "" }));
+                setErrors((values) => ({ ...values, samples: "Dung lượng ảnh không được vượt quá 500KB." }));
             } else {
-                setErrors((values) => ({ ...values, references: "Bạn có thể chọn tối đa 3 tác phẩm." }));
+                const sampleIndex = newSamples.findIndex(sample => sample === null);
+                if (sampleIndex !== -1) {
+                    newSamples[sampleIndex] = file;
+                }
             }
         });
-        setReferences(newReferences);
+
+        setSamples(newSamples);
     };
 
     const removeImage = (index) => {
-        const newReferences = [...references];
-        newReferences.splice(index, 1);
-        setReferences(newReferences);
+        const newSamples = [...samples];
+        newSamples[index] = null;
+        setSamples(newSamples);
     };
 
     const triggerFileInput = () => {
@@ -138,7 +146,6 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
         // Initialize loading effect for the submit button
         setIsSubmitAddCommissionServiceLoading(true);
-        console.log(inputs)
 
         // Validate user inputs
         const validationErrors = validateInputs();
@@ -149,11 +156,11 @@ export default function AddCommissionService({ commissionServiceCategories, setS
             return;
         }
 
-        // Handle login request
+        // Handle submit request
         try {
             setIsSuccessAddCommissionService(true);
         } catch (error) {
-            console.error("Failed to login:", error);
+            console.error("Failed to submit:", error);
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
@@ -163,9 +170,9 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
     return (
         <div className="order-commission modal-form type-2" ref={orderCommissionRef} onClick={(e) => { e.stopPropagation() }}>
-            <Link to="/help_center" className="form__help">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 form__help-ic">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+            <Link to="/help_center" className="form__help" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg> Trợ giúp
             </Link>
 
@@ -178,19 +185,22 @@ export default function AddCommissionService({ commissionServiceCategories, setS
             </svg>
 
             <div className="modal-form--left">
-                <p>Thể loại</p>
+                <span>{inputs.commissionServiceCategoryId || "Thể loại"}</span>
                 <h3>{inputs.title || "Tên dịch vụ"}</h3>
-                <p>Giá từ: {inputs.fromPrice || "x"} VND</p>
+                <span>Giá từ: {formatCurrency(inputs.minPrice) || "x"} VND</span>
                 <hr />
-
-                <div className="form__note">
-                    <p>
-                        <strong>*Lưu ý:</strong>
-                        <br />
-                        Mọi thông tin về đơn hàng của bạn sẽ được gửi đến hộp thư email của tài khoản mà bạn đăng kí. Vui lòng bật thông báo Gmail để nhận được thông tin mới nhất nhé!
-                    </p>
+                <div className="images-layout-3">
+                    {samples.slice(0, 3).map((sample, index) => (
+                        <img
+                            key={index}
+                            src={sample ? URL.createObjectURL(sample) : "/uploads/default_image_placeholder.png"}
+                            alt={`sample ${index + 1}`}
+                        />
+                    ))}
                 </div>
+                <p>*Lưu ý: <i>{inputs.note || "Lưu ý cho khách hàng"}</i></p>
             </div>
+
             <div className="modal-form--right">
                 <h2 className="form__title">Thêm dịch vụ</h2>
                 {!isSuccessAddCommissionService ?
@@ -243,22 +253,25 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                             <div className="form-field">
                                 <label className="form-field__label">Tranh mẫu</label>
                                 <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
-                                {references.map((reference, index) => (
-                                    <div key={index} className="form-field__input img-preview">
-                                        <div className="img-preview--left">
-                                            <img src={URL.createObjectURL(reference)} alt={`reference ${index + 1}`} className="img-preview__img" />
-                                            <div className="img-preview__info">
-                                                <span className="img-preview__name">{limitString(reference.name, 15)}</span>
-                                                <span className="img-preview__size">{formatFloat(bytesToKilobytes(reference.size), 1)} KB</span>
+                                {samples.map((reference, index) => {
+                                    return (reference && 
+                                        <div key={index} className="form-field__input img-preview">
+                                            <div className="img-preview--left">
+                                                <img src={URL.createObjectURL(reference)} alt={`reference ${index + 1}`} className="img-preview__img" />
+                                                <div className="img-preview__info">
+                                                    <span className="img-preview__name">{limitString(reference.name, 15)}</span>
+                                                    <span className="img-preview__size">{formatFloat(bytesToKilobytes(reference.size), 1)} KB</span>
+                                                </div>
+                                            </div>
+                                            <div className="img-preview--right">
+                                                <svg onClick={() => removeImage(index)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 img-preview__close-ic">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                </svg>
                                             </div>
                                         </div>
-                                        <div className="img-preview--right">
-                                            <svg onClick={() => removeImage(index)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 img-preview__close-ic">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                ))}
+                                    )
+                                }
+                                )}
 
                                 <div className="form-field with-ic add-link-btn" onClick={triggerFileInput}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
@@ -269,11 +282,11 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                                     <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
                                 </div>
 
-                                {errors.references && <span className="form-field__error">{errors.references}</span>}
+                                {errors.samples && <span className="form-field__error">{errors.samples}</span>}
                             </div>
 
                             <div className="form-field">
-                                <label className="form-field__label">Giá cả</label>
+                                <label for="minPrice" className="form-field__label">Giá cả (VND)</label>
                                 <span className="form-field__annotation">Cho biết mức phí cơ bản của dịch vụ (không tính kèm các dịch vụ đi kèm).</span>
                                 <input
                                     type="number"
@@ -285,28 +298,41 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                                 />
                                 {errors.minPrice && <span className="form-field__error">{errors.minPrice}</span>}
                             </div>
+
+                            <div className="form-field">
+                                <label for="note" className="form-field__label">Lưu ý</label>
+                                <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn.</span>
+                                <textarea
+                                    type=""
+                                    name="note"
+                                    value={inputs.note}
+                                    className="form-field__input"
+                                    onChange={handleChange}
+                                    placeholder="Nhập lưu ý ..."
+                                />
+                                {errors.note && <span className="form-field__error">{errors.note}</span>}
+                            </div>
+
                             <div className="form-field">
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="isAgreeTerms"
-                                        checked={inputs.isAgreeTerms}
+                                        name="agreeTerms"
+                                        checked={inputs.agreeTerms}
                                         onChange={handleChange}
                                     /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
                                 </label>
-                                {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
+                                {errors.agreeTerms && <span className="form-field__error">{errors.agreeTerms}</span>}
                             </div>
                             <div className="form-field">
                                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                             </div>
                         </>
                     ) : (
-                        <span>
-                            Pastal đã gửi đi yêu cầu của bạn thành công. Các họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
-
-
-                            Lưu ý: Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài phạm vi. Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng tôi tại đây.
-                        </span>
+                        <p className="text-align-center">
+                            Dịch vụ của bạn đã được thêm thành công! 
+                            <br />Chúc bạn sớm có được những đơn hàng này nhé.
+                        </p>
                     )}
             </div>
             <button type="submit"

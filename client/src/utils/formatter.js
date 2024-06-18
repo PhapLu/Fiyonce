@@ -33,3 +33,8 @@ export function formatNumber(num, digits) {
 
     return unitValue.toFixed(digits) + units[unitIndex];
 }
+
+export function formatCurrency(val) {
+    // Convert the number to a string and use a regular expression to add periods as thousand separators
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}

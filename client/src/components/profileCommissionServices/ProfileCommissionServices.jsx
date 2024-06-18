@@ -140,7 +140,7 @@ export default function ProfileCommissionServices() {
                             {category.commissionServices.map((service, index) => (
                                 <>
                                     <div key={index} className="profile-commission-service__category-item__service-item">
-                                        <div className="profile-commission-service__category-item__service-item--left">
+                                        <div className="profile-commission-service__category-item__service-item--left images-layout-3">
                                             {service.artworks.slice(0, 3).map((artwork, index) => (
                                                 <img key={index} src={artwork} alt={`Artwork ${index + 1}`} />
                                             ))}
