@@ -20,5 +20,6 @@ router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.del
 //END CRUD
 router.get('/viewProposalsHistory', asyncHandler(proposalController.viewProposalsHistory))
 router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
+router.patch('/denyProposal/:proposalId', asyncHandler(proposalController.denyProposal))
 
 export default router

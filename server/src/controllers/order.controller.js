@@ -52,6 +52,13 @@ class OrderController{
             metadata: await OrderService.chooseProposal(req.userId, req.params.orderId, req.body.proposalId)
         }).send(res)
     }
+
+    denyOrder = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Deny the order success!',
+            metadata: await OrderService.denyOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
 }
 
 export default new OrderController()

@@ -21,5 +21,6 @@ router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder)
 
 router.get('/viewOrderHistory', asyncHandler(orderController.viewOrderHistory))
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
+router.patch('/denyOrder/:orderId', asyncHandler(orderController.denyOrder))
 
 export default router

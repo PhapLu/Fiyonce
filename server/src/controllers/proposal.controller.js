@@ -51,6 +51,12 @@ class ProposalController{
         }).send(res)
     }
     
+    denyProposal = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Deny the proposal success!',
+            metadata: await ProposalService.denyProposal(req.userId, req.params.proposalId)
+        }).send(res)
+    }
 }
 
 export default new ProposalController()
