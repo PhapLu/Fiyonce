@@ -2,13 +2,6 @@ import { SuccessResponse } from "../core/success.response.js"
 import ServiceCategoryService from "../services/serviceCategory.service.js"
 
 class ServiceCategoryController{
-    createServiceCategory = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Create service success!',
-            metadata: await ServiceCategoryService.createServiceCategory(req.userId, req.body)
-        }).send(res)
-    }
-
     readServiceCategories = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read services success!',

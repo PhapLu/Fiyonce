@@ -11,7 +11,6 @@ router.post('/readServiceCategories/:talentId',asyncHandler(serviceCategoryContr
 //authentication
 router.use(verifyToken)
 
-router.post('/createServiceCategory', asyncHandler(serviceCategoryController.createServiceCategory))
 router.post('/updateServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.updateServiceCategory))
 router.post('/deleteServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.deleteServiceCategory))
 

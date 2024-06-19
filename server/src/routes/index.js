@@ -6,7 +6,7 @@ import artworkRoute from './artwork/index.js'
 import uploadRoute from './upload/index.js'
 import talentRequestRoute from './talentRequest/index.js'
 import proposalRoute from './proposal/index.js'
-import serviceRoute from './service/index.js'
+import commissionServiceRoute from './commissionService/index.js'
 import serviceCategoryRoute from './serviceCategory/index.js'
 
 const router = express.Router()
@@ -18,7 +18,7 @@ router.use('/v1/api/order', orderRoute)
 router.use('/v1/api/upload', uploadRoute)
 router.use('/v1/api/proposal', proposalRoute)
 router.use('/v1/api/talentRequest', talentRequestRoute)
-router.use('/v1/api/service', serviceRoute)
+router.use('/v1/api/commissionService', commissionServiceRoute)
 router.use('/v1/api/serviceCategory', serviceCategoryRoute)
 
 export default router

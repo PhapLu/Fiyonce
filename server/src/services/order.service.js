@@ -3,7 +3,7 @@ import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import {artwork} from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
-import Service from "../models/service.model.js"
+import commissionService from "../models/commissionService.model.js"
 
 class OrderService{
     //Order CRUD
@@ -19,10 +19,10 @@ class OrderService{
         }else if(type == 'direct'){
             //direct order
             const talent = await User.findById(talentChosenId)
-            const service = await Service.findById(serviceId)
+            const service = await commissionService.findById(serviceId)
 
             if(!talent) throw new BadRequestError('Talent not found!')
-            if(!service) throw new BadRequestError('Service not found!')
+            if(!service) throw new BadRequestError('commissionService not found!')
             if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
             if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true

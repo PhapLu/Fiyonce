@@ -3,8 +3,6 @@ import ServiceCategory from '../models/serviceCategory.model.js'
 import { User } from '../models/user.model.js'
 
 class ServiceCategoryService{
-    
-
     static readServiceCategories = async(talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
