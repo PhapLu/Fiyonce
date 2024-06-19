@@ -37,7 +37,7 @@ const ArtworkSchema = new Schema(
         required: true,
     },
     artwork_talent: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    
+    movements: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movement', maxlength: 3 }],
     // artwork_isDraft: {
     //     type: Boolean,
     //     index: true,

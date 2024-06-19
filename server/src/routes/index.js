@@ -8,6 +8,7 @@ import talentRequestRoute from './talentRequest/index.js'
 import proposalRoute from './proposal/index.js'
 import commissionServiceRoute from './commissionService/index.js'
 import serviceCategoryRoute from './serviceCategory/index.js'
+import movementRoute from './movement/index.js'
 
 const router = express.Router()
 //check Permission
@@ -20,5 +21,6 @@ router.use('/v1/api/proposal', proposalRoute)
 router.use('/v1/api/talentRequest', talentRequestRoute)
 router.use('/v1/api/commissionService', commissionServiceRoute)
 router.use('/v1/api/serviceCategory', serviceCategoryRoute)
+router.use('/v1/api/movement', movementRoute)
 
 export default router
