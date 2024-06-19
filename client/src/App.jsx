@@ -9,11 +9,10 @@ import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard"
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
-import Artworks from "./components/artworks/Artworks";
 import Talents from "./components/talents/Talents";
 import CommissionServices from "./components/commissionServices/CommissionServices";
-import ProfileCommissionServices from "./components/profileCommissionServices/ProfileCommissionServices";
-import ProfileArtworks from "./components/profileArtworks/ProfileArtworks";
+import ProfileCommissionServices from "./pages/profileCommissionServices/ProfileCommissionServices";
+import ProfileArtworks from "./pages/profileArtworks/ProfileArtworks";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
@@ -24,6 +23,7 @@ import Profile from "./pages/profile/Profile";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
+import ExploreArtworks from "./pages/exploreArtworks/ExploreArtworks";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 
 // import Artwork from "./pages/artwork/Artwork";
@@ -39,23 +39,23 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/users/:id",
+    path: "/users/:userId",
     element: <Profile />,
     children: [
       {
-        path: "/users/:id/profile_commission_services",
+        path: "/users/:userId/profile_commission_services",
         element: <ProfileCommissionServices />,
       },
       {
-        path: "/users/:id/profile_artworks",
+        path: "/users/:userId/profile_artworks",
         element: <ProfileArtworks />,
       },
       {
-        path: "/users/:id/order-history",
+        path: "/users/:userId/order-history",
         element: <OrderHistory />,
       },
       {
-        path: "/users/:id/basic-info",
+        path: "/users/:userId/basic-info",
         element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
       }
     ]
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/explore/artworks",
-            element: <Artworks showArtworks={true} />,
+            element: <ExploreArtworks showArtworks={true} />,
           },
           {
             path: "/explore/talents",

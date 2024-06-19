@@ -1,17 +1,17 @@
 .artworks {
-    .artwork-container {
-        width: 100%;
-        break-inside: avoid;
-        columns: 5;
-        column-gap: 24px;
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -16px; /* gutter size offset */
+        width: auto;
+    }
+    .my-masonry-grid_column {
+        padding-left: 16px; /* gutter size */
+        background-clip: padding-box;
     }
 
     .artwork-item {
-        display: inline-block;
-        margin-top: 20px;
-        width: 100%;
-        margin-right: 20px;
-        box-sizing: border-box;
+        display: block;
+        margin-bottom: 16px;
         text-decoration: none;
         color: inherit;
 
@@ -48,17 +48,16 @@
             display: block;
             height: 100%;
             width: 100%;
-            max-height: 360px;
             object-fit: cover;
             border-radius: 18px;
             position: relative;
             top: 0;
             left: 0;
             z-index: -1;
+            max-height: 360px;
         }
 
         &:hover {
-
             .artwork-item__img__operation-item {
                 display: block !important;
             }
@@ -67,8 +66,6 @@
                 background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)) !important;
             }
         }
-
-
 
         .artwork-item__view {
             display: flex;
@@ -83,15 +80,28 @@
     }
 }
 
-
 @media (max-width: 1200px) {
-    .artwork-container {
-        columns: 4 !important;
+    .my-masonry-grid {
+        column-count: 4 !important;
     }
 }
 
 @media (max-width: 800px) {
-    .artwork-container {
-        columns: 2 !important;
+    .my-masonry-grid {
+        column-count: 2 !important;
+    }
+
+    .artwork-item__img__thumbnail {
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+    .my-masonry-grid {
+        column-count: 1 !important;
+    }
+
+    .artwork-item__img__thumbnail {
+        max-height: 200px;
     }
 }

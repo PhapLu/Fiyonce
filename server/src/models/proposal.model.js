@@ -37,7 +37,10 @@ const ProposalSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-    }
+    },
+    rejectMessage: { 
+        type: String
+    },
 },{
     timestamps: true,
     collection: COLLECTION_NAME

@@ -155,6 +155,9 @@ export default function Explore() {
         });
     };
 
+    // Fetch artworks
+
+
 
     return (
         <div className="explore">

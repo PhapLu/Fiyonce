@@ -5,8 +5,8 @@
     --black-1-color: #2a2b2c;
     --black-2-color: #262626;
     --black-3-color: #191919;
-
     --black-4-color: #212121;
+    --black-5-color: #212121;
 
     --gray-1-color: #eeeeee;
     --gray-2-color: #d8d7d7;
@@ -15,7 +15,6 @@
 
     --red-1-color: #ff3e3e;
     --red-2-color: #e45454;
-
 
     --orange-2-color: #FF6E1C;
 
@@ -40,6 +39,7 @@ body.dark {
     --black-2-color: #a8a8a8;
     --black-3-color: rgb(187, 183, 183);
     --black-4-color: #501dd2;
+    --black-5-color: #212121;
 
     --gray-1-color: #2a2b2c;
     --gray-2-color: #2a2b2c;
@@ -59,6 +59,16 @@ body.dark {
     --color-scheme: dark;
     --form-bg-1-color: #0e0e0e;
     --form-bg-2-color: #161616;
+    // svg {
+    //     stroke: var(--gray-3-color);
+    //     stroke-width: 2px;
+
+    //     .filled-svg {
+    //         stroke: unset;
+    //         stroke-width: unset;
+    //     }
+    // }
+
 }
 
 * {
@@ -263,6 +273,11 @@ svg {
 .btn-3 {
     border: 2px solid var(--gray-2-color);
     color: var(--black-2-color);
+
+    &.active {
+        font-weight: bold;
+        border: 2px solid var(--black-3-color);
+    }
 }
 
 .btn-4 {
@@ -567,7 +582,9 @@ table {
 }
 
 .form-field.with-ic {
+    width: 100%;
     display: flex;
+    justify-content: start;
     align-items: center;
     border: 2px solid var(--gray-2-color);
     border-radius: 8px;
@@ -587,7 +604,7 @@ table {
     }
 
     .form-field__input {
-        width: 100%;
+        width: unset;
         border: none;
         outline: none;
         padding: unset;
@@ -803,8 +820,8 @@ table {
     }
 
     .form__note {
-        background-color: white;
-        padding: 10px 12px;
+        background-color: var(--form-bg-2-color);
+        padding: 12px 14px 14px;
         border-radius: 12px;
         box-shadow: var(--box-shadow);
 
@@ -1024,4 +1041,37 @@ table {
         right: 30px;
         top: 30px;
     }
+}
+
+// Scroll bar
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-button
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+    height: 16px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    height: 16px;
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.modal-form.type-2 .modal-form--right {
+    scrollbar-color: inherit !important;
+    scrollbar-width: inherit !important;
 }

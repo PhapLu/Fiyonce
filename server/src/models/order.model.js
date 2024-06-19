@@ -37,6 +37,7 @@ const OrderSchema = new mongoose.Schema({
     references: [{
         type: String
     }],
+    rejectMessage: { type: String },
     minPrice: { type: Number },
     maxPrice: { type: Number },
     purpose: { type: String, enum: ['personal', 'commercial'] },

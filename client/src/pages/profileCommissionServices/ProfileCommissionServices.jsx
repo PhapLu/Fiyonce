@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import CommissionTos from "../../components/commissionTos/CommissionTos.jsx";
 import AddCommissionTos from "../../components/addCommissionTos/AddCommissionTos.jsx";
 import AddCommissionService from "../../components/crudCommissionService/add/AddCommissionService.jsx";
+import EditCommissionService from "../../components/crudCommissionService/edit/EditCommissionService.jsx";
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 
 // Utils
@@ -14,7 +15,7 @@ import { limitString } from "../../utils/formatter.js";
 // Styling
 import "./ProfileCommissionServices.scss";
 
-export default function ProfileCommissionServices() {
+export default function Profileservices() {
     const { userInfo } = useAuth();
     const { userId } = useParams();
 
@@ -22,85 +23,91 @@ export default function ProfileCommissionServices() {
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showAddCommissionServiceForm, setShowAddCommissionServiceForm] = useState(false);
+    const [showEditCommissionServiceForm, setShowEditCommissionServiceForm] = useState(false);
+    const [selectedCommissionService, setSelectedCommissionService] = useState();
+
     const [showCommissionTosView, setShowCommissionTosView] = useState(false);
     const [showAddCommissionTosForm, setShowAddCommissionTosForm] = useState(false);
 
     const [commissionServiceCategories, setCommissionServiceCategories] = useState([
         {
+            _id: 1,
             title: "DIGITAL ART",
-            commissionServices: [
+            services: [
                 {
                     title: "Commission Service 01",
-                    artworks: [
+                    portfolios: [
                         "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
                         "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
                         'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
                         "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
                         "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
                     ],
-                    fromPrice: 200000,
+                    minPrice: 200000,
                     deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
                     notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                 },
                 {
                     title: "Commission Service 01",
-                    artworks: [
+                    portfolios: [
                         "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
                         "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
                         'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
                         "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
                         "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
                     ],
-                    fromPrice: 200000,
+                    minPrice: 200000,
                     deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
                     notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                 },
                 {
                     title: "Commission Service 01",
-                    artworks: [
+                    portfolios: [
                         "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
                         "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
                         'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
                         "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
                         "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
                     ],
-                    fromPrice: 200000,
+                    minPrice: 200000,
                     deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
                     notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                 }
             ]
         },
         {
-            title: "DIGITAL ART",
-            commissionServices: [
+            _id: 2,
+            title: "TRADITIONAL ART",
+            services: [
                 {
                     title: "Commission Service 01",
-                    artworks: [
+                    portfolios: [
                         "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
                         "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
                         'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
                         "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
                         "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
                     ],
-                    fromPrice: 200000,
+                    minPrice: 200000,
                     deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
                     notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                 }
             ]
         },
         {
-            title: "DIGITAL ART",
-            commissionServices: [
+            _id: 3,
+            title: "CUSTOM ART",
+            services: [
                 {
                     title: "Commission Service 01",
-                    artworks: [
+                    portfolios: [
                         "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
                         "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
                         'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
                         "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
                         "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
                     ],
-                    fromPrice: 200000,
+                    minPrice: 200000,
                     deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
                     notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                 }
@@ -152,11 +159,11 @@ export default function ProfileCommissionServices() {
                         <h4 className="profile-commission-service__category-item__header">{category.title}</h4>
                         <br />
                         <div className="profile-commission-service__category-item__service-container">
-                            {category.commissionServices.map((service, index) => (
+                            {category.services.map((service, index) => (
                                 <>
                                     <div key={index} className="profile-commission-service__category-item__service-item">
                                         <div className="profile-commission-service__category-item__service-item--left images-layout-3">
-                                            {service.artworks.slice(0, 3).map((artwork, index) => (
+                                            {service.portfolios.slice(0, 3).map((artwork, index) => (
                                                 <img key={index} src={artwork} alt={`Artwork ${index + 1}`} />
                                             ))}
                                         </div>
@@ -172,11 +179,11 @@ export default function ProfileCommissionServices() {
 
                                         <div className="profile-commission-service__category-item__service-item--right">
                                             <h3>{service.title}</h3>
-                                            <h4>Giá từ: {service.fromPrice} VND</h4>
+                                            <h4>Giá từ: {service.minPrice} VND</h4>
                                             <p className="profile-commission-service__category-item__service-item__deliverables">{limitString(service.deliverables, 300)}</p>
                                             <p className="profile-commission-service__category-item__service-item__note">*Lưu ý: {service.notes}</p>
                                             {isProfileOwner ? (
-                                                <>    <button className="btn btn-2 btn-md">Chỉnh sửa</button>
+                                                <>    <button className="btn btn-2 btn-md" onClick={() => { setSelectedCommissionService({...service, categoryId: category._id, categoryTitle: category.title}); setShowEditCommissionServiceForm(true); setOverlayVisible(true) }}>Chỉnh sửa</button>
                                                     <button className="btn btn-3 btn-md">Xóa</button></>
                                             ) : (
                                                 <>    <button className="btn btn-2 btn-md">Đặt ngay</button>
@@ -197,7 +204,18 @@ export default function ProfileCommissionServices() {
             {/* Modal forms */}
             {overlayVisible && (
                 <div className={`overlay`}>
-                    {showAddCommissionServiceForm && <AddCommissionService commissionServiceCategories={commissionServiceCategories} setShowAddCommissionServiceForm={setShowAddCommissionServiceForm} setOverlayVisible={setOverlayVisible} />}
+                    {showAddCommissionServiceForm &&
+
+                        <AddCommissionService
+                            commissionServiceCategories={commissionServiceCategories}
+                            setShowAddCommissionServiceForm={setShowAddCommissionServiceForm}
+                            setOverlayVisible={setOverlayVisible} />}
+
+
+                    {showEditCommissionServiceForm && <EditCommissionService
+                        selectedCommissionService={selectedCommissionService}
+                        commissionServiceCategories={commissionServiceCategories}
+                        setShowEditCommissionServiceForm={setShowEditCommissionServiceForm} setOverlayVisible={setOverlayVisible} />}
                     {showCommissionTosView && <CommissionTos setShowAddCommissionTosForm={setShowAddCommissionTosForm} setShowCommissionTosView={setShowCommissionTosView} setOverlayVisible={setOverlayVisible} />}
                     {showAddCommissionTosForm && <AddCommissionTos setShowAddCommissionTosForm={setShowAddCommissionTosForm} setOverlayVisible={setOverlayVisible} />}
                 </div>)}

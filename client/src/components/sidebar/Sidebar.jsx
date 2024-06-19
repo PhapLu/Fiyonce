@@ -8,8 +8,8 @@ import UpgradeAccount from "../upgradeAccount/UpgradeAccount";
 
 // Utils
 import { apiUtils } from '../../utils/newRequest';
-import { isFilled, hasSymbol } from "../../utils/validator.js"
-
+import { isFilled, hasSymbol, maxLength } from "../../utils/validator.js"
+import { getSocialLinkIcon } from "../../utils/iconDisplayer.js"
 
 // Styling
 import "./Sidebar.scss";
@@ -74,6 +74,11 @@ export default function Sidebar({ profileInfo }) {
         // Validate stageName field if filled
         if (!isFilled(inputs.stageName)) {
             errors.stageName = 'Vui lòng điền nghệ danh';
+        }
+
+        // Validate stageName field if filled
+        if (!maxLength(inputs.bio, 150)) {
+            errors.bio = 'Bio không được vượt quá 150 kí tự';
         }
 
 
@@ -188,30 +193,30 @@ export default function Sidebar({ profileInfo }) {
                     </div>
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
-                        <textarea type="text" id="bio" name="bio" value={inputs.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập giới thiệu ngắn gọn về bản thân" />
+                        <textarea type="text" id="bio" name="bio" value={inputs.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)" />
                         {errors.bio && <span className="form-field__error">{errors.bio}</span>}
                     </div>
 
                     <div className="form-field">
                         <label htmlFor="socialLinks" className="form-field__label">Liên kết</label>
                         {socialLinks.map((link, index) => (
-                            <div key={index} className="link-form">
-                                <div className="form-field with-ic">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                                    </svg>
-                                    <input
-                                        type="text"
-                                        value={link}
-                                        onChange={(e) => handleLinkChange(e, index)}
-                                        className="form-field__input"
-                                        placeholder="Nhập liên kết"
-                                    />
-                                    <svg onClick={() => deleteLinkInput(index)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic delete-ic">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                    </svg>
-                                </div>
+                            // <div key={index} className="link-form">
+                            <div className="form-field with-ic">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                                </svg>
+                                <input
+                                    type="text"
+                                    value={link}
+                                    onChange={(e) => handleLinkChange(e, index)}
+                                    className="form-field__input"
+                                    placeholder="Nhập liên kết"
+                                />
+                                <svg onClick={() => deleteLinkInput(index)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic delete-ic">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
                             </div>
+                            // </div>
                         ))}
                         <div className="form-field with-ic add-link-btn btn" onClick={addLinkInput}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
@@ -291,9 +296,9 @@ export default function Sidebar({ profileInfo }) {
                             <div className="sidebar__socials__link-container">
                                 {profileInfo.socialLinks.map((socialLink, key) => (
                                     <div key={key} className="sidebar__socials__link-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                                        </svg>
+                                        <span
+                                            dangerouslySetInnerHTML={{ __html: getSocialLinkIcon(socialLink) }}
+                                        />
                                         <a href="https://www.facebook.com/">{socialLink}</a>
                                     </div>
                                 ))}

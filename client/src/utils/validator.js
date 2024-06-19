@@ -6,6 +6,10 @@ export function minLength(val, length) {
     return val.length >= length;
 }
 
+export function maxLength(val, length) {
+    return val.length <= length;
+}
+
 export function isMatch(val1, val2) {
     return val1 === val2;
 }
@@ -19,7 +23,7 @@ export function maxValue(val, max) {
 }
 
 export function hasSymbol(val) {
-    return /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(val);
+    return /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(val);
 }
 
 export function isValidEmail(val) {

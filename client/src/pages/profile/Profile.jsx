@@ -49,12 +49,12 @@ export default function Profile() {
         }
     };
 
-    const { id } = useParams();
+    const { userId } = useParams();
     const location = useLocation();
 
     const fetchProfileById = async () => {
         try {
-            const response = await newRequest.get(`user/readUserProfile/${id}`);
+            const response = await newRequest.get(`user/readUserProfile/${userId}`);
             console.log(response);
             return response.data.metadata.user;
         } catch (error) {
@@ -124,7 +124,7 @@ export default function Profile() {
                                 {profileInfo.role === "talent" && (
                                     <>
                                         <Link
-                                            to={`/users/${id}/profile_commission_services`}
+                                            to={`/users/${userId}/profile_commission_services`}
                                             className={`sub-nav-item btn ${location.pathname.includes('/profile_commission_services') ? "active" : ""}`}
                                         >
                                             {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 sub-nav-item__ic">
@@ -133,7 +133,7 @@ export default function Profile() {
                                             <span>Dịch vụ</span>
                                         </Link>
                                         <Link
-                                            to={`/users/${id}/profile_artworks`}
+                                            to={`/users/${userId}/profile_artworks`}
                                             className={`sub-nav-item btn ${location.pathname.includes('/profile_artworks') ? "active" : ""}`}
                                         >
                                             {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 sub-nav-item__ic">
@@ -144,7 +144,7 @@ export default function Profile() {
                                     </>
                                 )}
                                 <Link
-                                    to={`/users/${id}/order-history`}
+                                    to={`/users/${userId}/order-history`}
                                     className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
                                 >
                                     {/* <svg
@@ -164,7 +164,7 @@ export default function Profile() {
                                     <span>Đơn hàng của tôi</span>
                                 </Link>
                                 <Link
-                                    to={`/users/${id}/basic-info`}
+                                    to={`/users/${userId}/basic-info`}
                                     className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
                                 >
                                     {/* <svg

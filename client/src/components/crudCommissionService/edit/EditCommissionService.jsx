@@ -3,37 +3,31 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // Utils
-import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../utils/formatter.js";
-import { isFilled, minValue } from "../../utils/validator.js";
+import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
+import { isFilled, minValue } from "../../../utils/validator.js";
 
 // Styling
-import "./AddCommissionService.scss";
+import "./EditCommissionService.scss";
 
-export default function AddCommissionService({ commissionServiceCategories, setShowAddCommissionServiceForm, setOverlayVisible }) {
+export default function EditCommissionService({ selectedCommissionService, commissionServiceCategories, setShowEditCommissionServiceForm, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
-    const [inputs, setInputs] = useState({
-        description: '',
-        samples: Array(5).fill(null),
-        usage: 'personal',
-        isPrivate: "0",
-        fileTypes: [],
-        minPrice: '',
-        maxPrice: '',
-        agreeTerms: false
-    });
+    const [inputs, setInputs] = useState(selectedCommissionService);
+    console.log(inputs.portfolios)
+
     const [errors, setErrors] = useState({});
-    const [isSubmitAddCommissionServiceLoading, setIsSubmitAddCommissionServiceLoading] = useState(false);
-    const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
+    const [isSubmitEditCommissionServiceLoading, setIsSubmitEditCommissionServiceLoading] = useState(false);
+    const [isSuccessEditCommissionService, setIsSuccessEditCommissionService] = useState(false);
     const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
 
-    const [samples, setSamples] = useState(Array(5).fill(null));
+    const [portfolios, setPortfolios] = useState(inputs.portfolios || Array(5).fill(null));
+    console.log(portfolios);
 
     // Toggle display overlay box
-    const addCommissionRef = useRef();
+    const editCommissionRef = useRef();
     useEffect(() => {
         let handler = (e) => {
-            if (addCommissionRef && addCommissionRef.current && !addCommissionRef.current.contains(e.target)) {
-                setShowAddCommissionServiceForm(false);
+            if (editCommissionRef && editCommissionRef.current && !editCommissionRef.current.contains(e.target)) {
+                setShowEditCommissionServiceForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -46,44 +40,44 @@ export default function AddCommissionService({ commissionServiceCategories, setS
     const validateInputs = () => {
         let errors = {};
 
-        if (!((isAddNewCommissionServiceCategory && isFilled(inputs.newCommissionServiceCategory)) || (!isAddNewCommissionServiceCategory && isFilled(inputs.commissionServiceCategoryId)))) {
-            errors.commissionServiceCategoryId = 'Vui lòng chọn thể loại dịch vụ';
-        }
+        // if (!((isAddNewCommissionServiceCategory && isFilled(inputs.newCommissionServiceCategory)) || (!isAddNewCommissionServiceCategory && isFilled(inputs._id)))) {
+        //     errors._id = 'Vui lòng chọn thể loại dịch vụ';
+        // }
 
-        // Validate category
-        if (!isFilled(inputs.commissionServiceCategoryId)) {
-            errors.title = 'Vui lòng chọn thể loại dịch vụ';
-        }
+        // // Validate category
+        // if (!isFilled(inputs._id)) {
+        //     errors.title = 'Vui lòng chọn thể loại dịch vụ';
+        // }
 
 
-        // Validate title
-        if (!isFilled(inputs.title)) {
-            errors.title = 'Vui lòng nhập tên dịch vụ';
-        }
+        // // Validate title
+        // if (!isFilled(inputs.title)) {
+        //     errors.title = 'Vui lòng nhập tên dịch vụ';
+        // }
 
-        // Validate description
-        if (!isFilled(inputs.description)) {
-            errors.description = 'Vui lòng nhập mô tả';
-        }
+        // // Validate description
+        // if (!isFilled(inputs.description)) {
+        //     errors.description = 'Vui lòng nhập mô tả';
+        // }
 
-        // Validate samples uploading
-        if (samples.filter(sample => sample !== null).length < 3) {
-            errors.samples = "Vui lòng cung cấp tối thiểu 3 tranh mẫu.";
-        } else if (samples.filter(sample => sample !== null).length > 5) {
-            errors.samples = "Vui lòng cung cấp tối đa 5 tranh mẫu.";
-        }
+        // // Validate portfolios uploading
+        // if (portfolios.filter(portfolio => portfolio !== null).length < 3) {
+        //     errors.portfolios = "Vui lòng cung cấp tối thiểu 3 tranh mẫu.";
+        // } else if (portfolios.filter(portfolio => portfolio !== null).length > 5) {
+        //     errors.portfolios = "Vui lòng cung cấp tối đa 5 tranh mẫu.";
+        // }
 
-        // Validate minimum price
-        if (!isFilled(inputs.minPrice)) {
-            errors.minPrice = 'Vui lòng nhập giá tối thiểu';
-        } else if (inputs.minPrice <= 50000) {
-            errors.minPrice = 'Giá trị dịch vụ tối thiểu là 50.000 VND';
-        }
+        // // Validate minimum price
+        // if (!isFilled(inputs.minPrice)) {
+        //     errors.minPrice = 'Vui lòng nhập giá tối thiểu';
+        // } else if (inputs.minPrice <= 50000) {
+        //     errors.minPrice = 'Giá trị dịch vụ tối thiểu là 50.000 VND';
+        // }
 
-        // Validate agree to terms
-        if (!inputs.agreeTerms) {
-            errors.agreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
-        }
+        // // Validate agree to terms
+        // if (!inputs.agreeTerms) {
+        //     errors.agreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
+        // }
 
         return errors;
     }
@@ -122,26 +116,27 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const newSamples = [...samples];
+        const newPortfolios = [...portfolios];
 
-        files.forEach((file, index) => {
+        files.forEach((file) => {
             if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, samples: "Dung lượng ảnh không được vượt quá 500KB." }));
+                setErrors((values) => ({ ...values, portfolios: "Dung lượng ảnh không được vượt quá 500KB." }));
             } else {
-                const sampleIndex = newSamples.findIndex(sample => sample === null);
-                if (sampleIndex !== -1) {
-                    newSamples[sampleIndex] = file;
+                const portfolioIndex = newPortfolios.findIndex(portfolio => portfolio === null);
+                if (portfolioIndex !== -1) {
+                    newPortfolios[portfolioIndex] = file;
                 }
             }
         });
 
-        setSamples(newSamples);
+        setPortfolios(newPortfolios);
     };
 
+
     const removeImage = (index) => {
-        const newSamples = [...samples];
-        newSamples[index] = null;
-        setSamples(newSamples);
+        const newportfolios = [...portfolios];
+        newportfolios[index] = null;
+        setPortfolios(newportfolios);
     };
 
     const triggerFileInput = () => {
@@ -152,14 +147,14 @@ export default function AddCommissionService({ commissionServiceCategories, setS
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitAddCommissionServiceLoading(true);
+        setIsSubmitEditCommissionServiceLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             // Clear the loading effect if validation failed
-            setIsSubmitAddCommissionServiceLoading(false);
+            setIsSubmitEditCommissionServiceLoading(false);
             return;
         }
 
@@ -178,18 +173,18 @@ export default function AddCommissionService({ commissionServiceCategories, setS
 
         // Handle submit request
         try {
-            setIsSuccessAddCommissionService(true);
+            setIsSuccessEditCommissionService(true);
         } catch (error) {
             console.error("Failed to submit:", error);
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
-            setIsSubmitAddCommissionServiceLoading(false);
+            setIsSubmitEditCommissionServiceLoading(false);
         }
     };
 
     return (
-        <div className="add-commission-service modal-form type-2" ref={addCommissionRef} onClick={(e) => { e.stopPropagation() }}>
+        <div className="edit-commission-service modal-form type-2" ref={editCommissionRef} onClick={(e) => { e.stopPropagation() }}>
             <Link to="/help_center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -197,44 +192,44 @@ export default function AddCommissionService({ commissionServiceCategories, setS
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowAddCommissionServiceForm(false);
-                setIsSuccessAddCommissionService(false);
+                setShowEditCommissionServiceForm(false);
+                setIsSuccessEditCommissionService(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
             <div className="modal-form--left">
-                <span>{inputs.commissionServiceCategoryId || "Thể loại"}</span>
+                <span>{inputs.categoryTitle || "Thể loại"}</span>
                 <h3>{inputs.title || "Tên dịch vụ"}</h3>
-                <span>Giá từ: {formatCurrency(inputs.minPrice) || "x"} VND</span>
+                <span>Giá từ: <span className="highlight-text">{formatCurrency(inputs.minPrice) || "x"} VND</span></span>
                 <hr />
                 <div className="images-layout-3">
-                    {samples.slice(0, 3).map((sample, index) => (
+                    {portfolios.slice(0, 3).map((portfolio, index) => (
                         <img
                             key={index}
-                            src={sample ? URL.createObjectURL(sample) : "/uploads/default_image_placeholder.png"}
-                            alt={`sample ${index + 1}`}
+                            src={portfolio ? URL.createObjectURL(portfolio) : "/uploads/default_image_placeholder.png"}
+                            alt={`portfolio ${index + 1}`}
                         />
                     ))}
                 </div>
-                <p>*Lưu ý: <i>{inputs.note || "Lưu ý cho khách hàng"}</i></p>
+                <p>*Lưu ý: <i>{inputs.notes || "Lưu ý cho khách hàng"}</i></p>
             </div>
 
             <div className="modal-form--right">
-                <h2 className="form__title">Thêm dịch vụ</h2>
-                {!isSuccessAddCommissionService ?
+                <h2 className="form__title">Chỉnh sửa dịch vụ</h2>
+                {!isSuccessEditCommissionService ?
                     (
                         <>
                             <div className="form-field">
-                                <label htmlFor="commissionServiceCategoryId" className="form-field__label">Thể loại</label>
+                                <label htmlFor="_id" className="form-field__label">Thể loại</label>
 
                                 {
                                     isAddNewCommissionServiceCategory == false ? (
                                         <>
                                             <select
-                                                name="commissionServiceCategoryId"
-                                                value={inputs.commissionServiceCategoryId || ""}
+                                                name="_id"
+                                                value={inputs.categoryId || ""}
                                                 onChange={handleChange}
                                                 className="form-field__input"
                                             >
@@ -259,7 +254,7 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                                     )
                                 }
 
-                                {errors.commissionServiceCategoryId && <span className="form-field__error">{errors.commissionServiceCategoryId}</span>}
+                                {errors._id && <span className="form-field__error">{errors._id}</span>}
                             </div>
 
                             <div className="form-field">
@@ -277,30 +272,30 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                             </div>
 
                             <div className="form-field">
-                                <label htmlFor="description" className="form-field__label">Mô tả</label>
+                                <label htmlFor="deliverables" className="form-field__label">Mô tả</label>
                                 <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
                                 <textarea
-                                    id="description"
-                                    name="description"
-                                    value={inputs.description}
+                                    id="deliverables"
+                                    name="deliverables"
+                                    value={inputs.deliverables}
                                     onChange={handleChange}
                                     className="form-field__input"
                                     placeholder="Mô tả chi tiết yêu cầu của bạn ..."
                                 />
-                                {errors.description && <span className="form-field__error">{errors.description}</span>}
+                                {errors.deliverables && <span className="form-field__error">{errors.deliverables}</span>}
                             </div>
 
                             <div className="form-field">
                                 <label className="form-field__label">Tranh mẫu</label>
                                 <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
-                                {samples.map((reference, index) => {
-                                    return (reference &&
+                                {portfolios.map((portfolio, index) => {
+                                    return (portfolio &&
                                         <div key={index} className="form-field__input img-preview">
                                             <div className="img-preview--left">
-                                                <img src={URL.createObjectURL(reference)} alt={`reference ${index + 1}`} className="img-preview__img" />
+                                                <img src={URL.createObjectURL(portfolio)} alt={`portfolio ${index + 1}`} className="img-preview__img" />
                                                 <div className="img-preview__info">
-                                                    <span className="img-preview__name">{limitString(reference.name, 15)}</span>
-                                                    <span className="img-preview__size">{formatFloat(bytesToKilobytes(reference.size), 1)} KB</span>
+                                                    {/* <span className="img-preview__name">{limitString(portfolio, 15)}</span> */}
+                                                    {/* <span className="img-preview__size">{formatFloat(bytesToKilobytes(portfolio.size), 1)} KB</span> */}
                                                 </div>
                                             </div>
                                             <div className="img-preview--right">
@@ -310,10 +305,10 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                                             </div>
                                         </div>
                                     )
-                                }
-                                )}
+                                })}
 
-                                <div className="form-field with-ic add-link-btn" onClick={triggerFileInput}>
+
+                                <div className="form-field with-ic add-link-btn btn-md" onClick={triggerFileInput}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
@@ -322,7 +317,7 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                                     <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
                                 </div>
 
-                                {errors.samples && <span className="form-field__error">{errors.samples}</span>}
+                                {errors.portfolios && <span className="form-field__error">{errors.portfolios}</span>}
                             </div>
 
                             <div className="form-field">
@@ -340,17 +335,17 @@ export default function AddCommissionService({ commissionServiceCategories, setS
                             </div>
 
                             <div className="form-field">
-                                <label htmlFor="note" className="form-field__label">Lưu ý</label>
+                                <label htmlFor="notes" className="form-field__label">Lưu ý</label>
                                 <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn.</span>
                                 <textarea
                                     type=""
-                                    name="note"
-                                    value={inputs.note}
+                                    name="notes"
+                                    value={inputs.notes}
                                     className="form-field__input"
                                     onChange={handleChange}
                                     placeholder="Nhập lưu ý ..."
                                 />
-                                {errors.note && <span className="form-field__error">{errors.note}</span>}
+                                {errors.notes && <span className="form-field__error">{errors.notes}</span>}
                             </div>
 
                             <div className="form-field">
@@ -378,11 +373,11 @@ export default function AddCommissionService({ commissionServiceCategories, setS
             <button type="submit"
                 className="form__submit-btn btn btn-2 btn-md"
                 onClick={handleSubmit}
-                disabled={isSubmitAddCommissionServiceLoading}>
-                {isSubmitAddCommissionServiceLoading ? (
+                disabled={isSubmitEditCommissionServiceLoading}>
+                {isSubmitEditCommissionServiceLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
-                    "Gửi yêu cầu"
+                    "Tiếp tục"
                 )}
             </button>
         </div >
