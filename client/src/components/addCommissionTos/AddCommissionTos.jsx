@@ -154,15 +154,15 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
                     (
                         <>
                             <div className="form-field">
-                                <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
-                                <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
+                                <label htmlFor="title" className="form-field__label">Tiêu đề</label>
+                                <span className="form-field__annotation">Đặt tên cho điều khoản để tiện ghi nhớ và sử dụng.</span>
                                 <input
                                     id="title"
                                     name="title"
                                     value={inputs.title}
                                     onChange={handleChange}
                                     className="form-field__input"
-                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
+                                    placeholder="Nhập tiêu đề điều khoản dịch vụ"
                                 />
                                 {errors.title && <span className="form-field__error">{errors.title}</span>}
                             </div>
@@ -179,41 +179,6 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
                                     placeholder="Mô tả chi tiết yêu cầu của bạn ..."
                                 />
                                 {errors.description && <span className="form-field__error">{errors.description}</span>}
-                            </div>
-
-                            <div className="form-field">
-                                <label className="form-field__label">Tranh mẫu</label>
-                                <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
-                                {samples.map((reference, index) => {
-                                    return (reference &&
-                                        <div key={index} className="form-field__input img-preview">
-                                            <div className="img-preview--left">
-                                                <img src={URL.createObjectURL(reference)} alt={`reference ${index + 1}`} className="img-preview__img" />
-                                                <div className="img-preview__info">
-                                                    <span className="img-preview__name">{limitString(reference.name, 15)}</span>
-                                                    <span className="img-preview__size">{formatFloat(bytesToKilobytes(reference.size), 1)} KB</span>
-                                                </div>
-                                            </div>
-                                            <div className="img-preview--right">
-                                                <svg onClick={() => removeImage(index)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 img-preview__close-ic">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                                )}
-
-                                <div className="form-field with-ic add-link-btn" onClick={triggerFileInput}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                    </svg>
-                                    <span>Thêm ảnh</span>
-
-                                    <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
-                                </div>
-
-                                {errors.samples && <span className="form-field__error">{errors.samples}</span>}
                             </div>
 
                             <div className="form-field">
