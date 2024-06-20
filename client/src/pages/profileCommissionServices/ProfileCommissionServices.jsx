@@ -1,5 +1,4 @@
-// Imports
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
@@ -34,6 +33,15 @@ export default function Profileservices() {
     const [showCommissionTosView, setShowCommissionTosView] = useState(false);
     const [showAddCommissionTosForm, setShowAddCommissionTosForm] = useState(false);
 
+    const categoryRefs = useRef([]);
+    categoryRefs.current = [];
+
+    const addToRefs = (el) => {
+        if (el && !categoryRefs.current.includes(el)) {
+            categoryRefs.current.push(el);
+        }
+    };
+
     const fetchCommissionServiceCategories = async () => {
         try {
             const response = await newRequest.get(`/serviceCategory/readServiceCategoriesWithServices/${userId}`);
@@ -55,90 +63,17 @@ export default function Profileservices() {
         },
     });
 
-    // const [commissionServiceCategories, setCommissionServiceCategories] = useState([
-    //     {
-    //         _id: 1,
-    //         title: "DIGITAL ART",
-    //         services: [
-    //             {
-    //                 title: "Commission Service 01",
-    //                 artworks: [
-    //                     "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
-    //                     "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
-    //                     'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
-    //                     "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
-    //                     "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
-    //                 ],
-    //                 minPrice: 250000,
-    //                 deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    //             },
-    //             {
-    //                 title: "Commission Service 01",
-    //                 artworks: [
-    //                     "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
-    //                     "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
-    //                     'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
-    //                     "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
-    //                     "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
-    //                 ],
-    //                 minPrice: 200000,
-    //                 deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    //                 notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-    //             },
-    //             {
-    //                 title: "Commission Service 01",
-    //                 artworks: [
-    //                     "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
-    //                     "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
-    //                     'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
-    //                     "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
-    //                     "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
-    //                 ],
-    //                 minPrice: 200000,
-    //                 deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    //                 notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         _id: 2,
-    //         title: "TRADITIONAL ART",
-    //         services: [
-    //             {
-    //                 title: "Commission Service 01",
-    //                 artworks: [
-    //                     "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
-    //                     "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
-    //                     'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
-    //                     "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
-    //                     "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
-    //                 ],
-    //                 minPrice: 200000,
-    //                 deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    //                 notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         _id: 3,
-    //         title: "CUSTOM ART",
-    //         services: [
-    //             {
-    //                 title: "Commission Service 01",
-    //                 artworks: [
-    //                     "https://i.pinimg.com/564x/33/e4/a3/33e4a3f37466548d5acb55e5b468a131.jpg",
-    //                     "https://i.pinimg.com/736x/43/80/08/4380081eae585a757cbc688966d0522a.jpg",
-    //                     'https://i.pinimg.com/236x/3a/81/f9/3a81f9cd5f2176f6ed8fb23d5e4d9fc1.jpg',
-    //                     "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
-    //                     "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
-    //                 ],
-    //                 minPrice: 200000,
-    //                 deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    //                 notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-    //             }
-    //         ]
-    //     }
-    // ]);
+    const scrollToCategory = (index) => {
+        const element = categoryRefs.current[index];
+        const offset = -80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset + offset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+        });
+    };
 
     const [reviews, setReviews] = useState([
         {
@@ -156,11 +91,15 @@ export default function Profileservices() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
                     </svg> {averageRating}
                         ({reviews.length} đánh giá)</button>
-                    {commissionServiceCategories?.map((category, index) => {
-                        return (
-                            <button className="btn btn-3 btn-md" key={index}>{category.title}</button>
-                        )
-                    })}
+                    {commissionServiceCategories?.map((category, index) => (
+                        <button
+                            className="btn btn-3 btn-md"
+                            key={index}
+                            onClick={() => scrollToCategory(index)}
+                        >
+                            {category.title}
+                        </button>
+                    ))}
                 </div>
                 <div className="profile-page__header--right">
                     <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
@@ -179,7 +118,11 @@ export default function Profileservices() {
             </div>
 
             {commissionServiceCategories?.map((category, index) => (
-                <div key={index} className="profile-commission-service__category-container">
+                <div
+                    key={index}
+                    ref={addToRefs}
+                    className="profile-commission-service__category-container"
+                >
                     <div className="profile-commission-service__category-item">
                         <h4 className="profile-commission-service__category-item__header">{category.title}</h4>
                         <br />
@@ -188,9 +131,8 @@ export default function Profileservices() {
                                 <>
                                     <div key={index} className="profile-commission-service__category-item__service-item">
                                         <div className="profile-commission-service__category-item__service-item--left images-layout-3">
-                                            {service.artworks.slice(0, 3)?.map((artwork, index) => (
+                                            {service?.artworks.slice(0, 3)?.map((artwork, index) => (
                                                 <>
-                                                    <span>{artwork}</span>
                                                     <img key={index} src={artwork} alt={`Artwork ${index + 1}`} />
                                                 </>
                                             ))}
@@ -206,10 +148,11 @@ export default function Profileservices() {
 
 
                                         <div className="profile-commission-service__category-item__service-item--right">
-                                            <h3>{service.title}</h3>
-                                            <h4>Giá từ: {service.minPrice} VND</h4>
-                                            <p className="profile-commission-service__category-item__service-item__deliverables">{limitString(service.deliverables, 300)}</p>
-                                            <p className="profile-commission-service__category-item__service-item__note">*Lưu ý: {service.notes}</p>
+                                            <h3>{service?.title}</h3>
+                                            <h4>Giá từ: {service?.minPrice} VND</h4>
+                                            <p className="profile-commission-service__category-item__service-item__deliverables">{limitString(service?.deliverables, 300)}</p>
+                                            {service?.notes && (<p className="profile-commission-service__category-item__service-item__note">*Lưu ý: {service?.notes}</p>)}
+                                            
                                             {isProfileOwner ? (
                                                 <>    <button className="btn btn-2 btn-md" onClick={() => { setEditCommissionService({ ...service, categoryId: category._id, categoryTitle: category.title }); setShowEditCommissionServiceForm(true); setOverlayVisible(true) }}>Chỉnh sửa</button>
                                                     <button className="btn btn-3 btn-md" onClick={() => { setDeleteCommissionService(service); setShowDeleteCommissionServiceForm(true); setOverlayVisible(true) }}>Xóa</button></>
