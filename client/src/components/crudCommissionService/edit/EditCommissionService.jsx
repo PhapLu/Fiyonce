@@ -21,7 +21,7 @@ export default function EditCommissionService({
     const [isSubmitEditCommissionServiceLoading, setIsSubmitEditCommissionServiceLoading] = useState(false);
     const [isSuccessEditCommissionService, setIsSuccessEditCommissionService] = useState(false);
     const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
-    const [portfolios, setPortfolios] = useState(inputs?.portfolios || Array(5).fill(null));
+    const [portfolios, setPortfolios] = useState(inputs?.artworks || Array(5).fill(null));
 
     const editCommissionRef = useRef();
     useEffect(() => {
