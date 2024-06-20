@@ -83,27 +83,47 @@ class CommissionServiceService{
         }
     }
 
-    static updateCommissionService = async(talentId, commissionServiceId, body) => {
-        //1. Check talent and service
-        const talent = await User.findById(talentId)
-        const service = await CommissionService.findById(commissionServiceId)
 
-        if(!talent) throw new NotFoundError('Talent not found')
-        if(!service) throw new NotFoundError('Service not found')
-        if(service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
-        
-        //2. Update Service
+    static updateCommissionService = async(talentId, commissionServiceId, body) => {
+        // 1. Check talent and service
+        const talent = await User.findById(talentId);
+        const service = await CommissionService.findById(commissionServiceId);
+    
+        if (!talent) throw new NotFoundError('Talent not found');
+        if (!service) throw new NotFoundError('Service not found');
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
+    
+        const oldCategoryId = service.serviceCategoryId; // Store the old category ID
+        console.log("aaaa")
+        console.log(oldCategoryId);
+    
+        // 2. Update Service
         let updatedService = await CommissionService.findByIdAndUpdate(
             commissionServiceId,
             { $set: body },
             { new: true }
-        )
-        updatedService = await updatedService.populate('talentId', 'stageName avatar').execPopulate()
-
+        );
+    
+        // 3. Check if the category has changed and if the old category is now empty
+        if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
+            console.log(`Old Category ID: ${oldCategoryId}`);
+            console.log(`New Category ID: ${updatedService.serviceCategoryId}`);
+    
+            const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
+            console.log(`Services in Old Category: ${servicesInOldCategory.length}`);
+    
+            if (servicesInOldCategory.length === 0) {
+                await ServiceCategory.findByIdAndDelete(oldCategoryId);
+                console.log(`Deleted Category ID: ${oldCategoryId}`);
+            }
+        }
+    
         return {
             service: updatedService
-        }
-    }   
+        };
+    }
+    
+    
 
     static deleteCommissionService = async (talentId, commissionServiceId) => {
         // 1. Check talent and service
