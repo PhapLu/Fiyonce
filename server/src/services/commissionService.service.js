@@ -29,14 +29,10 @@ class CommissionServiceService{
                 width: 1920,
                 height: 1080
             }));
-            console.log(uploadPromises)
-
             const uploadResults = await Promise.all(uploadPromises);
-            console.log(uploadResults)
     
             // Generate optimized URLs
-            const optimizedUrls = uploadResults.map(result => generateOptimizedImageUrl(result.public_id));
-            console.log(optimizedUrls)
+            const artworks = uploadResults.map(result => result.secure_url);
             // 4. Create and save commission service
             let service = new CommissionService({
                 talentId,
@@ -44,7 +40,7 @@ class CommissionServiceService{
                 serviceCategoryId,
                 minPrice,
                 deliverables,
-                artworks: optimizedUrls
+                artworks
             });
             await service.save();
     

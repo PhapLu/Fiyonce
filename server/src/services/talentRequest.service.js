@@ -2,7 +2,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.
 import TalentRequest from '../models/talentRequest.model.js'
 import { User } from '../models/user.model.js'
 import sendEmail from '../middlewares/sendMail.js'
-import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl, generateOptimizedImageUrl } from '../utils/cloud.util.js'
 
 class TalentRequestService{
     static requestUpgradingToTalent = async (userId, req) => {
@@ -34,29 +34,29 @@ class TalentRequestService{
         // 4. Upload files to Cloudinary (compressed) and get their optimized URLs
         try {
             const uploadPromises = req.files.files.map(file => compressAndUploadImage({
-                buffer: file.buffer,
-                originalname: file.originalname,
-                folderName: `fiyonce/talentRequests/${userId}`,
-                width: 1920,
-                height: 1080
+            buffer: file.buffer,
+            originalname: file.originalname,
+            folderName: `fiyonce/talentRequests/${userId}`,
+            width: 1920,
+            height: 1080
             }));
             const uploadResults = await Promise.all(uploadPromises);
-    
+
             // Generate optimized URLs
-            const optimizedUrls = uploadResults.map(result => generateOptimizedImageUrl(result.public_id));
-    
+            const artworks = uploadResults.map(result => result.secure_url);
+
             // 5. Create and save talent request
             const newTalentRequest = new TalentRequest({
-                userId,
-                stageName,
-                jobTitle,
-                portfolioLink,
-                artworks: optimizedUrls
+            userId,
+            stageName,
+            jobTitle,
+            portfolioLink,
+            artworks
             });
             await newTalentRequest.save();
-    
+
             return {
-                talentRequest: newTalentRequest
+            talentRequest: newTalentRequest
             };
         } catch (error) {
             console.error('Error uploading images:', error);

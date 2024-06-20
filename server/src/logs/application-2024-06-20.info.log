@@ -1181,3 +1181,21 @@
 2024-06-20 13:35:02::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::09560f47-a452-43cf-88a8-81b1cabebc4b::input-params ::GET::::{}
 2024-06-20 13:35:12::info::/v1/api/serviceCategory/createServiceCategory::da6a8d1c-b1d0-4838-85b5-e4abb3f1e93b::input-params ::POST::::{"title":"svbrberbt"}
 2024-06-20 13:35:12::info::/v1/api/commissionService/createCommissionService::b4287e32-fbb3-43fd-92b2-5bc0669e54b7::input-params ::POST::::{}
+2024-06-20 13:46:50::info::/v1/api/talentRequest/requestUpgradingToTalent::6dcc3509-8782-47e2-9011-1cbb1b484322::input-params ::POST::::{}
+2024-06-20 13:46:50::error::/v1/api/talentRequest/requestUpgradingToTalent::6dcc3509-8782-47e2-9011-1cbb1b484322::403 - 1ms - Response: {"status":403,"now":1718866010396}::{"message":"Please provide all required fields"}
+2024-06-20 13:48:05::info::/v1/api/talentRequest/requestUpgradingToTalent::18aa2fed-f44e-4502-a260-e0231370c879::input-params ::POST::::{}
+2024-06-20 13:48:09::error::/v1/api/talentRequest/requestUpgradingToTalent::18aa2fed-f44e-4502-a260-e0231370c879::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-20 13:48:44::info::/v1/api/talentRequest/requestUpgradingToTalent::a5e88d99-35b6-48cf-85cb-89f0ca445c0a::input-params ::POST::::{}
+2024-06-20 13:48:48::error::/v1/api/talentRequest/requestUpgradingToTalent::a5e88d99-35b6-48cf-85cb-89f0ca445c0a::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-20 13:51:44::info::/v1/api/talentRequest/requestUpgradingToTalent::f8035db0-057f-4173-946f-cedebfbd564f::input-params ::POST::::{}
+2024-06-20 13:51:52::info::/v1/api/talentRequest/requestUpgradingToTalent::69f139c6-79ad-430a-b5c1-2ef42f21a7d7::input-params ::POST::::{}
+2024-06-20 13:52:12::info::/v1/api/talentRequest/requestUpgradingToTalent::1fbce90b-9c97-41b0-9e46-f2ea4fedbfa2::input-params ::POST::::{}
+2024-06-20 13:53:40::info::/v1/api/auth/users/login::57e5313e-06d5-4240-b684-d7511dc89f1f::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-06-20 13:53:44::info::/v1/api/talentRequest/requestUpgradingToTalent::20e73183-e9f4-470b-9260-ff45b9be8eb8::input-params ::POST::::{}
+2024-06-20 13:53:48::error::/v1/api/talentRequest/requestUpgradingToTalent::20e73183-e9f4-470b-9260-ff45b9be8eb8::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-20 13:56:08::info::/v1/api/talentRequest/requestUpgradingToTalent::8fd11b8a-94f5-4ebc-8a07-a7a3ff7bd77e::input-params ::POST::::{}
+2024-06-20 13:56:33::info::/v1/api/auth/users/login::30d734fd-e4f2-4155-9d02-c22503f81c20::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-06-20 13:56:38::info::/v1/api/talentRequest/requestUpgradingToTalent::dd1b2dee-a6f0-49ca-9f19-d90f790904f3::input-params ::POST::::{}
+2024-06-20 14:00:42::info::/v1/api/talentRequest/requestUpgradingToTalent::94bde265-0323-4c05-9cd4-209541717906::input-params ::POST::::{}
+2024-06-20 14:02:53::info::/v1/api/talentRequest/requestUpgradingToTalent::e9cf9305-29d9-4421-9fda-49ba0b098970::input-params ::POST::::{}
+2024-06-20 14:10:00::info::/v1/api/talentRequest/requestUpgradingToTalent::f95e4d45-67bd-47b1-98d2-3e59a01158b0::input-params ::POST::::{}

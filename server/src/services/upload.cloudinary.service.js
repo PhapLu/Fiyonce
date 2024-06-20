@@ -76,14 +76,10 @@ const uploadAvatarOrCover = async ({
             );
         }
 
-        // 5. Generate optimized URL for the image
-        const optimizedUrl = generateOptimizedImageUrl(result.public_id);
-
         return {
             type: type,
             image_url: result.secure_url,
             profileId: profileId,
-            optimized_url: optimizedUrl
         };
     } catch (error) {
         console.error('Error uploading image:', error);

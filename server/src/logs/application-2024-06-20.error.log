@@ -37,3 +37,7 @@
 2024-06-20 13:26:29::error::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::9735d60e-ab81-4d11-90ae-9ff92881cccf::undefined - NaNms - Response: {}::{"message":"Failed to fetch services by category"}
 2024-06-20 13:26:30::error::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::6ca1357d-f4ca-4014-b4e0-53ff0d13b859::undefined - NaNms - Response: {}::{"message":"Failed to fetch services by category"}
 2024-06-20 13:26:30::error::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::cdc3ee4c-7afd-4dd1-b13d-0c7e0cbeba40::undefined - NaNms - Response: {}::{"message":"Failed to fetch services by category"}
+2024-06-20 13:46:50::error::/v1/api/talentRequest/requestUpgradingToTalent::6dcc3509-8782-47e2-9011-1cbb1b484322::403 - 1ms - Response: {"status":403,"now":1718866010396}::{"message":"Please provide all required fields"}
+2024-06-20 13:48:09::error::/v1/api/talentRequest/requestUpgradingToTalent::18aa2fed-f44e-4502-a260-e0231370c879::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-20 13:48:48::error::/v1/api/talentRequest/requestUpgradingToTalent::a5e88d99-35b6-48cf-85cb-89f0ca445c0a::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-20 13:53:48::error::/v1/api/talentRequest/requestUpgradingToTalent::20e73183-e9f4-470b-9260-ff45b9be8eb8::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}

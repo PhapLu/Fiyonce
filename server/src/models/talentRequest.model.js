@@ -22,6 +22,9 @@ const TalentRequestSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
+    jobTitle: {
+        type: String
+    },
     status: {
         type: String,
         default: 'pending', // 'pending', 'approved', 'rejected'
