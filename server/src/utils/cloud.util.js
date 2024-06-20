@@ -7,7 +7,7 @@ export const compressAndUploadImage = async ({ buffer, originalname, folderName,
     // Compress the image using sharp with specified width and height
     const compressedBuffer = await sharp(buffer)
       .resize(width, height, { fit: 'inside' }) // Resize to fit within the specified dimensions
-      .jpeg({ quality: 90 }) // Compress to JPEG with 90% quality
+      .jpeg({ quality: 80 }) // Compress to JPEG with 90% quality
       .toBuffer();
 
     // Function to upload image to Cloudinary
@@ -71,6 +71,13 @@ export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
     .join(',');
 
   // Generate the URL
-  return cloudinary.url(publicId, { transformation: transformationString });
+  const optimizedUrl = cloudinary.url(publicId, { transformation: transformationString });
+
+  // Debugging log
+  console.log('Generated Optimized URL:', optimizedUrl);
+
+  return optimizedUrl;
 };
+
+
 

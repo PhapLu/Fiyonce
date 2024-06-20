@@ -3,8 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // Utils
-import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../utils/formatter.js";
-import { isFilled } from "../../utils/validator.js";
+import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
+import { isFilled } from "../../../utils/validator.js";
 
 // Styling
 import "./AddCommissionTos.scss";

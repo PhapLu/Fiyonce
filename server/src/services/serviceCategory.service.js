@@ -35,29 +35,20 @@ class ServiceCategoryService{
         }
     }
 
-    static readServiceCategoriesWithServices = async () => {
+    static readServiceCategoriesWithServices = async (talentId) => {
         try {
             // Fetch all service categories
-            const serviceCategories = await ServiceCategory.find().lean();
+            const serviceCategories = await ServiceCategory.find({talentId}).lean();
             console.log(serviceCategories)
 
             // For each category, find associated services
             const categorizedServices = await Promise.all(serviceCategories.map(async (category) => {
                 const services = await CommissionService.find({ serviceCategoryId: category._id }).lean();
     
-                // Format each service to match the desired structure
-                const formattedServices = services.map(service => ({
-                    title: service.title,
-                    artworks: service.artworks,
-                    minPrice: service.minPrice,
-                    deliverables: service.deliverables,
-                    notes: service.notes
-                }));
-    
                 return {
                     _id: category._id,
                     title: category.title,
-                    commissionServices: formattedServices
+                    commissionServices: services
                 };
             }));
             console.log(categorizedServices)
@@ -68,7 +59,6 @@ class ServiceCategoryService{
             throw new Error('Failed to fetch services by category');
         }
     };
-
     static updateServiceCategory = async(talentId, serviceCategoryId, body) => {
         //1. Check talent and service
         const talent = await User.findById(talentId)

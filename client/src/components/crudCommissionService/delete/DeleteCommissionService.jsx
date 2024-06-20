@@ -4,12 +4,11 @@ import { useState, useRef, useEffect } from "react";
 // Styling
 import "./DeleteCommissionService.scss";
 
-export default function DeleteCommissionService({ deleteCommissionService, setShowDeleteCommissionServiceForm, setOverlayVisible }) {
+export default function DeleteCommissionService({ deleteCommissionService, setShowDeleteCommissionServiceForm, setOverlayVisible, deleteMutation }) {
     if (!deleteCommissionService) {
         return;
     }
     const [errors, setErrors] = useState({});
-
     const [isSubmitDeleteCommissionServiceLoading, setIsSubmitDeleteCommissionServiceLoading] = useState(false);
 
     // Toggle display modal form
@@ -27,12 +26,12 @@ export default function DeleteCommissionService({ deleteCommissionService, setSh
         };
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitDeleteCommissionServiceLoading(true);
 
         try {
-            setIsSuccessEditCommissionService(true);
+            await deleteMutation.mutateAsync(deleteCommissionService._id);
         } catch (error) {
             console.error("Failed to submit:", error);
             setErrors((prevErrors) => ({
@@ -54,11 +53,12 @@ export default function DeleteCommissionService({ deleteCommissionService, setSh
             </svg>
             <h2 className="form__title">Xóa dịch vụ</h2>
             <div className="form-field">
-                Bạn có chắc muốn xóa dịch vụ này khỏi trang cá nhân không?
-                <br />
-                Thông tin về dịch vụ này sẽ bị xóa vĩnh viễn khỏi nền tảng.
+                <span>
+                    Bạn có chắc muốn xóa dịch vụ <strong>{` ${deleteCommissionService.title} `}</strong> khỏi trang cá nhân không?
+                    <br />
+                    Thông tin về dịch vụ này sẽ bị xóa vĩnh viễn khỏi nền tảng.
+                </span>
             </div>
-
             <div className="form-field">
                 <div className="half-split">
                     <button
@@ -72,13 +72,15 @@ export default function DeleteCommissionService({ deleteCommissionService, setSh
                         ) : (
                             "Xác nhận"
                         )}
-
                     </button>
-                    <button type="submit" className="form__submit-btn btn btn-4 btn-md">
+                    <button type="submit" className="form__submit-btn btn btn-4 btn-md" onClick={() => {
+                        setShowDeleteCommissionServiceForm(false);
+                        setOverlayVisible(false);
+                    }}>
                         Hủy
                     </button>
                 </div>
             </div>
         </div>
-    )
+    );
 }

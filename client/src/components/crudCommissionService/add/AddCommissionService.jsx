@@ -14,7 +14,8 @@ import { createFormData, apiUtils } from "../../../utils/newRequest.js";
 export default function AddCommissionService({
     commissionServiceCategories,
     setShowAddCommissionServiceForm,
-    setOverlayVisible
+    setOverlayVisible,
+    addMutation
 }) {
 
     const [inputs, setInputs] = useState({
@@ -22,8 +23,8 @@ export default function AddCommissionService({
     });
     const [errors, setErrors] = useState({});
     const [isSubmitAddCommissionServiceLoading, setIsSubmitAddCommissionServiceLoading] = useState(false);
-    const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
     const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
+    const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
     const [portfolios, setPortfolios] = useState(Array(5).fill(null));
 
     const addCommissionRef = useRef();
@@ -101,19 +102,20 @@ export default function AddCommissionService({
             setIsSubmitAddCommissionServiceLoading(false);
             return;
         }
-    
-        
+
+
         // Add commission service category
         if (isAddNewCommissionServiceCategory) {
-            console.log({title: inputs.newCommissionServiceCategoryTitle})
+            console.log({ title: inputs.newCommissionServiceCategoryTitle })
             try {
-                const response = await apiUtils.post("/serviceCategory/createServiceCategory", {title: inputs.newCommissionServiceCategoryTitle});
+                const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs.newCommissionServiceCategoryTitle });
                 console.log(response)
                 if (response) {
                     const serviceCategoryId = response.data.metadata.serviceCategory._id;
                     inputs.serviceCategoryId = serviceCategoryId;
                     console.log(serviceCategoryId)
                     console.log(inputs.serviceCategoryId)
+                    setIsSuccessAddCommissionService(true);
                 }
             } catch (error) {
                 console.error("Failed to add new commission service category:", error);
@@ -122,11 +124,11 @@ export default function AddCommissionService({
                     serverError: error.response.data.message
                 }));
             } finally {
-                setIsSuccessAddCommissionService(true);
+                setIsSubmitAddCommissionServiceLoading(false);
             }
         }
         console.log(inputs)
-        const {isAgreeTerms, ...submissionData} = inputs;
+        const { isAgreeTerms, ...submissionData } = inputs;
         console.log(portfolios)
         console.log(submissionData)
         const fd = createFormData(submissionData, portfolios);
@@ -138,11 +140,8 @@ export default function AddCommissionService({
         console.log(fd.get("files"))
 
         try {
-            const response = await apiUtils.post("/commissionService/createCommissionService", fd);
-            console.log(response)
-            if (response) {
-                console.log(response.data.metadata)
-            }
+            // const response = await apiUtils.post("/commissionService/createCommissionService", fd);
+            await addMutation.mutateAsync(fd);
         } catch (error) {
             console.error("Failed to add new commission service:", error);
             setErrors((prevErrors) => ({
@@ -171,7 +170,6 @@ export default function AddCommissionService({
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowAddCommissionServiceForm(false);
-                setIsSuccessAddCommissionService(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

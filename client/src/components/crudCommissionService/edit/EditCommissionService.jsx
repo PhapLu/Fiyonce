@@ -14,14 +14,15 @@ export default function EditCommissionService({
     editCommissionService,
     commissionServiceCategories,
     setShowEditCommissionServiceForm,
-    setOverlayVisible
+    setOverlayVisible,
+    editMutation
 }) {
     const [inputs, setInputs] = useState(editCommissionService);
     const [errors, setErrors] = useState({});
     const [isSubmitEditCommissionServiceLoading, setIsSubmitEditCommissionServiceLoading] = useState(false);
     const [isSuccessEditCommissionService, setIsSuccessEditCommissionService] = useState(false);
     const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
-    const [portfolios, setPortfolios] = useState(inputs?.portfolios || Array(5).fill(null));
+    const [portfolios, setPortfolios] = useState(inputs?.artworks || Array(5).fill(null));
 
     const editCommissionRef = useRef();
     useEffect(() => {
@@ -89,7 +90,7 @@ export default function EditCommissionService({
         document.getElementById('file-input').click();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitEditCommissionServiceLoading(true);
         const validationErrors = validateInputs();
@@ -99,7 +100,10 @@ export default function EditCommissionService({
             return;
         }
 
+        console.log(inputs);
+
         try {
+            await editMutation.mutateAsync(inputs);
             setIsSuccessEditCommissionService(true);
         } catch (error) {
             console.error("Failed to submit:", error);
@@ -137,8 +141,8 @@ export default function EditCommissionService({
 
             <div className="modal-form--left">
                 <span>
-                    {inputs?.categoryId
-                        ? commissionServiceCategories.find((category) => category._id == inputs?.categoryId)?.title || "Thể loại"
+                    {inputs?.serviceCategoryId
+                        ? commissionServiceCategories.find((category) => category._id == inputs?.serviceCategoryId)?.title || "Thể loại"
                         : "Thể loại"}
                 </span>
                 <h3>{inputs?.title || "Tên dịch vụ"}</h3>
@@ -165,12 +169,12 @@ export default function EditCommissionService({
                 {!isSuccessEditCommissionService ? (
                     <>
                         <div className="form-field">
-                            <label htmlFor="categoryId" className="form-field__label">Thể loại</label>
+                            <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
                             {!isAddNewCommissionServiceCategory ? (
                                 <>
                                     <select
-                                        name="categoryId"
-                                        value={inputs?.categoryId || ""}
+                                        name="serviceCategoryId"
+                                        value={inputs?.serviceCategoryId || ""}
                                         onChange={handleChange}
                                         className="form-field__input"
                                     >
