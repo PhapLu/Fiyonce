@@ -1,5 +1,6 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import CommissionService from '../models/commissionService.model.js'
+import ServiceCategory from '../models/serviceCategory.model.js';
 import { User } from '../models/user.model.js'
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl, generateOptimizedImageUrl } from '../utils/cloud.util.js';
 
@@ -57,9 +58,9 @@ class CommissionServiceService{
     };
     
 
-    static readCommissionService = async(serviceId) => {
+    static readCommissionService = async(commissionServiceId) => {
         //1. Check service
-        const service = await CommissionService.findById(serviceId).populate('talentId', 'stageName avatar')
+        const service = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar')
         if(!service) throw new NotFoundError('Service not found')
 
         //2. Read service
@@ -82,45 +83,76 @@ class CommissionServiceService{
         }
     }
 
-    static updateCommissionService = async(talentId, serviceId, body) => {
-        //1. Check talent and service
-        const talent = await User.findById(talentId)
-        const service = await CommissionService.findById(serviceId)
 
-        if(!talent) throw new NotFoundError('Talent not found')
-        if(!service) throw new NotFoundError('Service not found')
-        if(service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
-        
-        //2. Update Service
-        let updatedService = await CommissionService.findByIdAndUpdate(
-            serviceId,
-            { $set: body },
-            { new: true }
-        )
-        updatedService = await updatedService.populate('talentId', 'stageName avatar').execPopulate()
-
-        return {
-            service: updatedService
-        }
-    }   
-
-    static deleteCommissionService = async (talentId, serviceId) => {
+    static updateCommissionService = async(talentId, commissionServiceId, body) => {
         // 1. Check talent and service
         const talent = await User.findById(talentId);
-        const service = await CommissionService.findById(serviceId);
+        const service = await CommissionService.findById(commissionServiceId);
     
         if (!talent) throw new NotFoundError('Talent not found');
         if (!service) throw new NotFoundError('Service not found');
-        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only delete your service');
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
     
+        const oldCategoryId = service.serviceCategoryId; // Store the old category ID
+        console.log("aaaa")
+        console.log(oldCategoryId);
+    
+        // 2. Update Service
+        let updatedService = await CommissionService.findByIdAndUpdate(
+            commissionServiceId,
+            { $set: body },
+            { new: true }
+        );
+    
+        // 3. Check if the category has changed and if the old category is now empty
+        if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
+            console.log(`Old Category ID: ${oldCategoryId}`);
+            console.log(`New Category ID: ${updatedService.serviceCategoryId}`);
+    
+            const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
+            console.log(`Services in Old Category: ${servicesInOldCategory.length}`);
+    
+            if (servicesInOldCategory.length === 0) {
+                await ServiceCategory.findByIdAndDelete(oldCategoryId);
+                console.log(`Deleted Category ID: ${oldCategoryId}`);
+            }
+        }
+    
+        return {
+            service: updatedService
+        };
+    }
+    
+    
+
+    static deleteCommissionService = async (talentId, commissionServiceId) => {
+        // 1. Check talent and service
+        const talent = await User.findById(talentId);
+        const service = await CommissionService.findById(commissionServiceId);
+        
+        if (!talent) throw new NotFoundError('Talent not found');
+        if (!service) throw new NotFoundError('Service not found');
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only delete your service');
+        
         // 2. Extract public IDs and delete files from Cloudinary
         const publicIds = service.artworks.map(artwork => extractPublicIdFromUrl(artwork));
         await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
     
-        // 3. Delete the service from the database
-        await service.remove();
+        // 3. Find the category of the service
+        const serviceCategoryId = service.serviceCategoryId;
+        
+        // 4. Delete the service from the database
+        await service.deleteOne();
+        
+        // 5. Check if the category has other services
+        const remainingServices = await CommissionService.find({ serviceCategoryId });
+        
+        // 6. Delete the category if it's empty
+        if (remainingServices.length === 0) {
+            await ServiceCategory.findByIdAndDelete(serviceCategoryId);
+        }
     
-        return { message: 'Service deleted successfully' };
+        return { message: 'Service and possibly empty category deleted successfully' };
     };
     
 }

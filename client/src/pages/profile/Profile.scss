@@ -87,21 +87,30 @@
 
     .profile-page__header--left {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        width: 65%;
+       
+        &.full {
+            width: 100%;
+        }
 
-
-        button {
-            margin-right: 12px;
-            border-radius: 16px;
-            min-width: 100px;
-            padding: 6px 12px !important;
+        .btn {
+            margin-right: 10px;
+            border-radius: 20px;
+            min-width: 80px;
+            padding: 6px 20px !important;
             font-size: 1.3rem;
+        }
+
+        .view-review-btn {
+            min-width: 150px;
         }
     }
 
     .profile-page__header--right {
-        button {
+
+        .btn {
+            min-width: 120px;
             margin-left: 12px;
         }
     }
