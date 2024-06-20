@@ -7,7 +7,6 @@ import {
     bytesToKilobytes,
     formatNumber
 } from "../../../utils/formatter.js";
-import { useAuth } from "../../../contexts/auth/AuthContext";
 import { isFilled, minValue } from "../../../utils/validator.js";
 import "./AddCommissionService.scss";
 import { createFormData, apiUtils } from "../../../utils/newRequest.js";
@@ -17,8 +16,6 @@ export default function AddCommissionService({
     setShowAddCommissionServiceForm,
     setOverlayVisible
 }) {
-
-    const { userInfo } = useAuth();
 
     const [inputs, setInputs] = useState({
         portfolios: []
@@ -108,11 +105,15 @@ export default function AddCommissionService({
         
         // Add commission service category
         if (isAddNewCommissionServiceCategory) {
+            console.log({title: inputs.newCommissionServiceCategoryTitle})
             try {
-                const response = await apiUtils.post("/serviceCategory/createServiceCategory", {title: inputs.newCommissionServiceCategory, talentId: userInfo._id});
+                const response = await apiUtils.post("/serviceCategory/createServiceCategory", {title: inputs.newCommissionServiceCategoryTitle});
+                console.log(response)
                 if (response) {
-                    const serviceCategoryId = response.data.metadata._id;
+                    const serviceCategoryId = response.data.metadata.serviceCategory._id;
                     inputs.serviceCategoryId = serviceCategoryId;
+                    console.log(serviceCategoryId)
+                    console.log(inputs.serviceCategoryId)
                 }
             } catch (error) {
                 console.error("Failed to add new commission service category:", error);
@@ -124,14 +125,21 @@ export default function AddCommissionService({
                 setIsSuccessAddCommissionService(true);
             }
         }
-
-        const fd = createFormData(inputs, portfolios);
+        console.log(inputs)
+        const {isAgreeTerms, ...submissionData} = inputs;
+        console.log(portfolios)
+        console.log(submissionData)
+        const fd = createFormData(submissionData, portfolios);
         console.log(fd.get("title"))
         console.log(fd.get("minPrice"))
         console.log(fd.get("deliverables"))
         console.log(fd.get("addOns"))
+        console.log(fd.get("serviceCategoryId"))
+        console.log(fd.get("files"))
+
         try {
             const response = await apiUtils.post("/commissionService/createCommissionService", fd);
+            console.log(response)
             if (response) {
                 console.log(response.data.metadata)
             }
@@ -218,8 +226,8 @@ export default function AddCommissionService({
                             ) : (
                                 <>
                                     <input
-                                        name="newCommissionServiceCategory"
-                                        value={inputs?.newCommissionServiceCategory}
+                                        name="newCommissionServiceCategoryTitle"
+                                        value={inputs?.newCommissionServiceCategoryTitle}
                                         onChange={handleChange}
                                         className="form-field__input"
                                         placeholder="Nhập tên thể loại"

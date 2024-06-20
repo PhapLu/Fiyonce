@@ -1,7 +1,7 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import CommissionService from '../models/commissionService.model.js'
 import { User } from '../models/user.model.js'
-import { deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js';
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl, generateOptimizedImageUrl } from '../utils/cloud.util.js';
 
 class CommissionServiceService{ 
     static createCommissionService = async (talentId, req) => {
@@ -9,13 +9,14 @@ class CommissionServiceService{
         const talent = await User.findById(talentId);
         if (!talent) throw new NotFoundError('Talent not found!');
         if (talent.role !== 'talent') throw new BadRequestError('User is not a talent!');
+        console.log(req.files)
     
         // 2. Validate request body
-        const { title, serviceCategoryId, fromPrice, deliverables } = req.body;
+        const { title, serviceCategoryId, minPrice, deliverables } = req.body;
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
-        if (!title || !serviceCategoryId || !fromPrice || !deliverables) {
+        if (!title || !serviceCategoryId || !minPrice || !deliverables) {
             throw new BadRequestError('Please provide all required fields');
         }
     
@@ -28,24 +29,27 @@ class CommissionServiceService{
                 width: 1920,
                 height: 1080
             }));
+            console.log(uploadPromises)
+
             const uploadResults = await Promise.all(uploadPromises);
+            console.log(uploadResults)
     
             // Generate optimized URLs
             const optimizedUrls = uploadResults.map(result => generateOptimizedImageUrl(result.public_id));
-    
+            console.log(optimizedUrls)
             // 4. Create and save commission service
             let service = new CommissionService({
                 talentId,
                 title,
                 serviceCategoryId,
-                fromPrice,
+                minPrice,
                 deliverables,
                 artworks: optimizedUrls
             });
             await service.save();
     
             // Populate talentId field with stageName and avatar
-            service = await service.populate('talentId', 'stageName avatar').execPopulate();
+            service = await service.populate('talentId', 'stageName avatar');
     
             return {
                 service

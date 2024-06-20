@@ -1,5 +1,6 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import ServiceCategory from '../models/serviceCategory.model.js'
+import CommissionService from '../models/commissionService.model.js'
 import { User } from '../models/user.model.js'
 
 class ServiceCategoryService{
@@ -33,6 +34,40 @@ class ServiceCategoryService{
             serviceCategories
         }
     }
+
+    static readServiceCategoriesWithServices = async () => {
+        try {
+            // Fetch all service categories
+            const serviceCategories = await ServiceCategory.find().lean();
+            console.log(serviceCategories)
+
+            // For each category, find associated services
+            const categorizedServices = await Promise.all(serviceCategories.map(async (category) => {
+                const services = await CommissionService.find({ serviceCategoryId: category._id }).lean();
+    
+                // Format each service to match the desired structure
+                const formattedServices = services.map(service => ({
+                    title: service.title,
+                    artworks: service.artworks,
+                    minPrice: service.minPrice,
+                    deliverables: service.deliverables,
+                    notes: service.notes
+                }));
+    
+                return {
+                    _id: category._id,
+                    title: category.title,
+                    commissionServices: formattedServices
+                };
+            }));
+            console.log(categorizedServices)
+    
+            return {categorizedServices};
+        } catch (error) {
+            console.error('Error fetching services by category:', error);
+            throw new Error('Failed to fetch services by category');
+        }
+    };
 
     static updateServiceCategory = async(talentId, serviceCategoryId, body) => {
         //1. Check talent and service

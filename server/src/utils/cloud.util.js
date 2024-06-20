@@ -57,6 +57,7 @@ export const deleteFileByPublicId = async (publicId) => {
   }
 };
 
+
 export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
   const defaultTransformations = {
     quality: 'auto',
@@ -64,9 +65,12 @@ export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
     ...transformations
   };
 
-  return cloudinary.url(publicId, {
-    transformation: Object.entries(defaultTransformations).map(([key, value]) => ({
-      [key]: value
-    }))
-  });
+  // Format transformations correctly
+  const transformationString = Object.entries(defaultTransformations)
+    .map(([key, value]) => `${key}_${value}`)
+    .join(',');
+
+  // Generate the URL
+  return cloudinary.url(publicId, { transformation: transformationString });
 };
+
