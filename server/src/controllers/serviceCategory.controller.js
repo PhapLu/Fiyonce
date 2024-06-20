@@ -15,6 +15,13 @@ class ServiceCategoryController{
         }).send(res)
     }
 
+    readServiceCategoriesWithServices = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Read serviceCategoriesWithServices success!',
+            metadata: await ServiceCategoryService.readServiceCategoriesWithServices(req.params.talentId)
+        }).send(res)
+    }
+    
     updateServiceCategory = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update serviceCategory success!',

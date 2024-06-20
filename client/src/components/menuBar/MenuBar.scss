@@ -1,8 +1,5 @@
 .dropdown-menu-container {
     z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     position: absolute;
     top: calc(100% + 8px);
     right: -20px;
@@ -10,15 +7,11 @@
     border: 1px solid var(--gray-1-color);
     padding: 18px 24px;
     border-radius: 8px;
-    box-shadow: var(--box-shadow-color) 0px 2px 8px 0px;
     background-color: var(--white-3-color);
-
+    box-shadow: var(--box-shadow);
+    
     .submenu {
         width: 100%;
-    }
-
-    .dropdown-menu-container {
-        
     }
 
     .dropdown-menu-container__fullname {

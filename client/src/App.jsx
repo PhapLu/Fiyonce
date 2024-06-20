@@ -9,6 +9,10 @@ import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard"
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
+import Talents from "./components/talents/Talents";
+import CommissionServices from "./components/commissionServices/CommissionServices";
+import ProfileCommissionServices from "./pages/profileCommissionServices/ProfileCommissionServices";
+import ProfileArtworks from "./pages/profileArtworks/ProfileArtworks";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
@@ -19,13 +23,15 @@ import Profile from "./pages/profile/Profile";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
+import ExploreArtworks from "./pages/exploreArtworks/ExploreArtworks";
+import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
+
 // import Artwork from "./pages/artwork/Artwork";
 // import Challenges from "./pages/challenges/Challenges";
 // import Challenge from "./pages/challenge/Challenge";
 // import Talents from "./pages/talents/Talents";
 // import Talent from "./pages/talent/Talent";
 // import Messenger from './pages/messenger/Messenger'
-
 // import Success from "./pages/success/Success";
 // ... (other imports)
 
@@ -33,15 +39,23 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/users/:id",
-    element: <Profile/>,
+    path: "/users/:userId",
+    element: <Profile />,
     children: [
       {
-        path: "/users/:id/order-history",
+        path: "/users/:userId/profile_commission_services",
+        element: <ProfileCommissionServices />,
+      },
+      {
+        path: "/users/:userId/profile_artworks",
+        element: <ProfileArtworks />,
+      },
+      {
+        path: "/users/:userId/order-history",
         element: <OrderHistory />,
       },
       {
-        path: "/users/:id/basic-info",
+        path: "/users/:userId/basic-info",
         element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
       }
     ]
@@ -56,28 +70,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/explore",
-        element: <Explore />,
+        element: <Explore></Explore>,
+        children: [
+          {
+            path: "/explore/artworks",
+            element: <ExploreArtworks showArtworks={true} />,
+          },
+          {
+            path: "/explore/talents",
+            element: <Talents showTalents={true} />,
+          },
+          {
+            path: "/explore/commissionServices",
+            element: <CommissionServices showCommissionServices={true} />,
+          },
+        ]
       },
-      // {
-      //   path: "/messenger",
-      //   element:<Messenger/>
-      // },
-      // {
-      //   path: "/artworks/:id",
-      //   element: <Artwork />,
-      // },
-      // {
-      //   path: "/challenges",
-      //   element: <Challenges />,
-      // },
-      // {
-      //   path: "/challenges/:id",
-      //   element: <Challenge />,
-      // },
-      // {
-      //   path: "/talents",
-      //   element: <Talents />,
-      // },
+      {
+        path: "/commission_market",
+        element: <CommissionMarket />
+      },
+
     ]
   },
   {

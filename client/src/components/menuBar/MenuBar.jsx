@@ -56,9 +56,8 @@ export default function MenuBar() {
 
             {!openSubMenu && (
                 <>
-
-                    <span className="dropdown-menu-container__fullname">Hi, {userInfo.fullName}</span>
-                    <span className="dropdown-menu-container__email">{userInfo.email}</span>
+                    <div className="dropdown-menu-container__fullname">Hi, {userInfo.fullName}</div>
+                    <div className="dropdown-menu-container__email">{userInfo.email}</div>
                     <hr />
                     <Link to={'/users/' + userInfo._id + '/order-history'} className="dropdown-menu-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 dropdown-menu-item__ic">

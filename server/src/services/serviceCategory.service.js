@@ -1,5 +1,6 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import ServiceCategory from '../models/serviceCategory.model.js'
+import CommissionService from '../models/commissionService.model.js'
 import { User } from '../models/user.model.js'
 
 class ServiceCategoryService{
@@ -17,20 +18,6 @@ class ServiceCategoryService{
         await serviceCategory.save()
         return {
             serviceCategory
-        }
-    }
-
-    static readServiceCategories = async(talentId) => {
-        //1. Check talent
-        const talent = await User.findById(talentId)
-        if(!talent) throw new NotFoundError('Talent not found')
-        if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
-
-        //2. Find services
-        const serviceCategories = await ServiceCategory.find({talentId: talentId}).populate('talentId', 'stageName avatar')
-
-        return {
-            serviceCategories
         }
     }
 

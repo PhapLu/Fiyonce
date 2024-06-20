@@ -37,7 +37,7 @@ export default function Auth() {
 
     return (
         <div className="navbar__authentication">
-            {userInfo ? <div className="user" ref={menuRef}>
+            {userInfo ? <div className="user md" ref={menuRef}>
                 <img src={userInfo.avatar} className="user__avatar" alt="Avatar" onClick={() => {
                     setShowMenu(!showMenu);
                 }} />
@@ -50,9 +50,9 @@ export default function Auth() {
                 overlayVisible && (
                     <div className={`overlay`} onClick={(e) => { e.stopPropagation() }}>
                         {/* setOverlayVisible(false); setShowRegisterForm(false); setShowRegisterVerificationForm(false)  */}
-                        <div className="authentication login">
-                            <div className="authentication--left">
-                                <img src={AuthenticationImg} className="authentication__img" alt="Authentication image" />
+                        <div className="modal-form type-1 login">
+                            <div className="modal-form--left">
+                                <img src={AuthenticationImg} className="modal-form__img" alt="Authentication image" />
                                 <h2>Fiyonce</h2>
                                 <span className="line"></span>
                                 <p>Nền tảng vẽ tranh theo yêu cầu <br />hàng đầu Việt Nam</p>
@@ -64,9 +64,9 @@ export default function Auth() {
                                 <br />
                                 <br />
                                 <p>Mỗi giao dịch thành công trên Fiyonce sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ em vùng cao, trồng thêm cây xanh, và tạo sân chơi nuôi dưỡng đam mê hội họa cho các thế hệ họa sĩ tiếp theo.</p>
-                                <p className="authentication__img-reference">sáng tác bởi @re_name</p>
+                                <p className="modal-form__img-reference">sáng tác bởi @re_name</p>
                             </div>
-                            <div className="authentication--right">
+                            <div className="modal-form--right">
                                 {showRegisterForm && (
                                     <Register />
                                 )}

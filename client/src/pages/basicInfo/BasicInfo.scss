@@ -30,32 +30,6 @@
     }
 
     .link-section {
-        .form-field.with-ic {
-            position: relative;
-
-            .form-field__ic.delete-ic {
-                position: absolute;
-                right: 0;
-                opacity: 0;
-                transition: 0.2s;
-                cursor: pointer;
-            }
-
-            &:hover {
-                .form-field__ic.delete-ic {
-                    right: 0;
-                    opacity: 1;
-                }
-            }
-
-            &.add-link-btn {
-                &:hover {
-                    cursor: pointer;
-                    opacity: 0.7;
-                }
-            }
-        }
-
         .link-form {}
     }
 

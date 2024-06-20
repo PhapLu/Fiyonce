@@ -12,7 +12,7 @@ export function bytesToKilobytes(bytes) {
     return kilobytes;
 }
 
-export function trimString(str, n) {
+export function limitString(str, n) {
     if (str.length <= n) {
         return str;
     }
@@ -24,4 +24,17 @@ export function formatFloat(number, n) {
         return Math.floor(number); // Alternatively, use Math.round(number) if you want to round to the nearest integer
     }
     return number.toFixed(n);
+}
+
+export function formatNumber(num, digits) {
+    const units = ["", "K", "M", "B", "T"];
+    const unitIndex = Math.floor((num.toString().length - 1) / 3);
+    const unitValue = num / Math.pow(1000, unitIndex);
+
+    return unitValue.toFixed(digits) + units[unitIndex];
+}
+
+export function formatCurrency(val) {
+    // Convert the number to a string and use a regular expression to add periods as thousand separators
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }

@@ -8,8 +8,8 @@ const ServiceSchema = new mongoose.Schema({
     talentId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     title: { type: String, required: true },
     serviceCategoryId: {
-        type: mongoose.Types.ObjectId, 
-        ref:'ServiceCategory', 
+        type: mongoose.Types.ObjectId,
+        ref:'ServiceCategory',
         required: true
     },
     minPrice: { type: Number, required: true },
@@ -19,9 +19,9 @@ const ServiceSchema = new mongoose.Schema({
         value: { type: Number, required: true},
         isPercentage: { type: Boolean, default: false}
     }],
-    notes: [{ type: String }],
+    notes: {type: String},
     isMedia: { type: Boolean, default: false },
-    artworks:[{type: String}],
+    artworks:[{ type: String}],
     reviews:[
         {
             userId: { type: Schema.Types.ObjectId, ref: 'User' },

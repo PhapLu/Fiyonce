@@ -4,14 +4,14 @@ import { useAuth } from '../../contexts/auth/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
   const { userInfo } = useAuth();
-  const { id } = useParams();
+  const { userId } = useParams();
 
 //   if (!userInfo) {
 //     // If the userInfo is not logged in, redirect to the login page
 //     return <Navigate to="/explore" />;
 //   }
 
-if (userInfo && userInfo._id !== id) {
+if (userInfo && userInfo._id !== userId) {
     // If the userInfo is trying to access someone else's data, show a forbidden message or redirect
     return <Navigate to="/forbidden" />;
   }

@@ -79,12 +79,12 @@ export default function News() {
         },
     });
 
-    const containerRef = useRef(null);
+    const scrollContainerRef = useRef(null);
     const [showLeftButton, setShowLeftButton] = useState(false);
     const [showRightButton, setShowRightButton] = useState(false);
 
     const scrollLeft = () => {
-        containerRef.current.scrollBy({
+        scrollContainerRef.current.scrollBy({
             top: 0,
             left: -300,
             behavior: 'smooth'
@@ -92,7 +92,7 @@ export default function News() {
     };
 
     const scrollRight = () => {
-        containerRef.current.scrollBy({
+        scrollContainerRef.current.scrollBy({
             top: 0,
             left: 300,
             behavior: 'smooth'
@@ -101,19 +101,19 @@ export default function News() {
 
     useEffect(() => {
         const handleScroll = () => {
-            const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
             setShowLeftButton(scrollLeft > 0);
             setShowRightButton(scrollLeft + clientWidth < scrollWidth);
         };
 
-        if (containerRef.current) {
-            containerRef.current.addEventListener('scroll', handleScroll);
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.addEventListener('scroll', handleScroll);
             handleScroll();
         }
 
         return () => {
-            if (containerRef.current) {
-                containerRef.current.removeEventListener('scroll', handleScroll);
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.removeEventListener('scroll', handleScroll);
             }
         };
     }, [news]);
@@ -125,11 +125,11 @@ export default function News() {
     }, [news]);
 
     const handleScroll = () => {
-        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
         setShowLeftButton(scrollLeft > 0);
         setShowRightButton(scrollLeft + clientWidth < scrollWidth);
 
-        const items = containerRef.current.getElementsByClassName('news-item');
+        const items = scrollContainerRef.current.getElementsByClassName('scroll-item');
         Array.from(items).forEach((item, index) => {
             if (index === items.length - 1 && scrollLeft + clientWidth < scrollWidth) {
                 item.classList.add('opacity');
@@ -148,11 +148,11 @@ export default function News() {
     }
 
     return (
-        <div className="news">
+        <div className="news scroll">
             <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
-            <div className="news-container" ref={containerRef}>
+            <div className="news-container scroll-container" ref={scrollContainerRef}>
                 {news && news.map((newItem) => (
-                    <Link className="news-item" to={`/news/${newItem._id}`} key={newItem._id}>
+                    <Link className="news-item scroll-item" to={`/news/${newItem._id}`} key={newItem._id}>
                         <img src={newItem.thumbnail} alt={newItem.title} className="news-item__thumbnail" />
                         <div className="news-item__content">
                             <h4 className="news-item__title">{newItem.title}</h4>

@@ -1,52 +1,76 @@
+// Imports
 import React, { useState } from "react";
+
+// Resources
 import { useAuth } from "../../contexts/auth/AuthContext";
-import { apiUtils } from "../../utils/newRequest";
-import "./ResetPassword.scss";
-import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
 import ResetPasswordVerification from "./ResetPasswordVerification.jsx";
 import SetNewPassword from "../setNewPassword/SetNewPassword";
 
+// Utils
+import { apiUtils } from "../../utils/newRequest";
+import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
+
+// Styling
+import "./ResetPassword.scss";
+
 export default function ResetPassword() {
+    // Resources from AuthContext
+    const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, showSetNewPasswordForm, showResetPasswordVerificationForm, setShowResetPasswordVerificationForm } = useAuth();
+
+    // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, showSetNewPasswordForm, setShowSetNewPasswordForm, showResetPasswordVerificationForm, setShowResetPasswordVerificationForm } = useAuth();
+    const [isSubmitRegisterLoading, setIsSubmitResetPasswordLoading] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+
+        // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
-        setErrors((values) => ({ ...values, [name]: '' })); // Clear the error for this field
+        setErrors((values) => ({ ...values, [name]: '' }));
     };
 
     const validateInputs = () => {
         let errors = {};
+
+        // Validate email
         if (!isFilled(inputs.email)) {
             errors.email = 'Vui lòng nhập email';
         } else if (!isValidEmail(inputs.email)) {
             errors.email = 'Email không hợp lệ';
         }
+
         return errors;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Initialize loading effect for the submit button
+        setIsSubmitResetPasswordLoading(true);
+        setOverlayVisible(true);
+
+        // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            setIsSubmitResetPasswordLoading(false);
             return;
         }
-        setOverlayVisible(true);
+
+        // Handle reset password request
         try {
             const response = await apiUtils.post("/auth/users/forgotPassword", inputs);
-            console.log(response);
-            alert("Successfully reset password")
-            if (response.data.status == 200) {
+            if (response) {
                 setShowResetPasswordVerificationForm(true);
-                // setShowSetNewPasswordForm(true);
             }
         } catch (error) {
-            console.log(error.response.data.message);
+            console.error("Failed to reset password:", error);
             errors.serverError = error.response.data.message;
+        } finally {
+            // Clear the loading effect
+            setIsSubmitResetPasswordLoading(false);
         }
     };
 
@@ -65,6 +89,7 @@ export default function ResetPassword() {
                         </svg>
 
                         <h2 className="form__title">Đặt lại mật khẩu</h2>
+
                         <p>Nhập email đăng nhập của bạn và hệ thống sẽ gửi mã đặt lại mật khẩu</p>
                         <div className="form-field">
                             <label htmlFor="email" className="form-field__label">Email</label>
@@ -75,14 +100,23 @@ export default function ResetPassword() {
                         <div className="form-field">
                             {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                         </div>
+
                         <div className="form-field">
-                            <input
+                            <button
                                 type="submit"
-                                value="Tiếp tục"
                                 className="form-field__input btn btn-2 btn-md"
-                            />
+                                disabled={isSubmitRegisterLoading}
+                            >
+                                {isSubmitRegisterLoading ? (
+                                    <span className="btn-spinner"></span>
+                                ) : (
+                                    "Tiếp tục"
+                                )}
+                            </button>
                         </div>
                     </form>
+
+                    {/* Extra section of the form */}
                     <p className="form__extra-text">
                         Quay lại <span className="form__extra-text__link" onClick={() => {
                             setShowResetPasswordForm(false);

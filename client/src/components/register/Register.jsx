@@ -1,35 +1,46 @@
+// Imports
 import React, { useState } from "react";
+
+// Resources
 import { useAuth } from "../../contexts/auth/AuthContext";
-import Cookies from 'js-cookie';
-import { apiUtils } from "../../utils/newRequest";
 import RegisterVerification from "./RegisterVerification";
 
-import AuthenticationImg from "../../assets/img/authentication-img.png";
-import FacebookLogo from "../../assets/img/facebook-logo.png";
-import GoogleLogo from "../../assets/img/google-logo.png";
-import "./Register.scss";
+// Utils
+import { apiUtils } from "../../utils/newRequest";
 import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
 
+// Styling
+import "./Register.scss";
+
 export default function Register() {
+    // Resources from AuthContext
+    const { showRegisterVerificationForm, setShowLoginForm, setShowRegisterForm, setOverlayVisible, setShowRegisterVerificationForm } = useAuth();
+
+    // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const { showRegisterVerificationForm, setShowLoginForm, setShowRegisterForm, setOverlayVisible, setShowRegisterVerificationForm } = useAuth();
+    const [isSubmitRegisterLoading, setIsSubmitRegisterLoading] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+
+        // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
-        setErrors((values) => ({ ...values, [name]: '' })); // Clear the error for this field
+        setErrors((values) => ({ ...values, [name]: '' }));
     };
 
     const validateInputs = () => {
         let errors = {};
+
+        // Validate email
         if (!isFilled(inputs.email)) {
             errors.email = 'Vui lòng nhập email';
         } else if (!isValidEmail(inputs.email)) {
             errors.email = 'Email không hợp lệ';
         }
 
+        // Validate passwords
         if (!isFilled(inputs.password)) {
             errors.password = 'Vui lòng nhập mật khẩu';
         } else if (!minLength(inputs.password, 6)) {
@@ -47,6 +58,7 @@ export default function Register() {
             errors.confirmPassword = 'Mật khẩu xác nhận không khớp';
         }
 
+        // Validate fullname
         if (!isFilled(inputs.fullName)) {
             errors.fullName = 'Vui lòng nhập họ và tên';
         } else if (hasSymbol(inputs.fullName)) {
@@ -58,26 +70,32 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Initialize loading effect for the submit button
+        setIsSubmitRegisterLoading(true);
+
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            // Clear the loading effect if validation failed
+            setIsSubmitRegisterLoading(false);
             return;
         }
 
-        // inputs.role = "client";
-        const { confirmPassword, ...others } = inputs;
-
         // Handle register request
         try {
+            const { confirmPassword, ...others } = inputs;
             const response = await apiUtils.post("/auth/users/signUp", others);
             if (response) {
-                console.log(response);
+                alert("Successfully registered for an account");
                 setShowRegisterVerificationForm(true);
             }
         } catch (error) {
-            console.log(error.response.data.message);
+            console.error("Failed to register:", error);
             errors.serverError = error.response.data.message;
+        } finally {
+            // Clear the loading effect
+            setIsSubmitRegisterLoading(false);
         }
     };
 
@@ -86,7 +104,6 @@ export default function Register() {
             {showRegisterVerificationForm ? (
                 <RegisterVerification handleRegisterSubmit={handleSubmit} registerInputs={inputs} />
             )
-
                 :
                 <>
                     <form className="form register-form" onSubmit={handleSubmit}>
@@ -98,37 +115,51 @@ export default function Register() {
                         </svg>
 
                         <h2 className="form__title">Đăng kí</h2>
+
                         <div className="form-field">
                             <label htmlFor="email" className="form-field__label">Email</label>
                             <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
                             {errors.email && <span className="form-field__error">{errors.email}</span>}
                         </div>
+
                         <div className="form-field">
                             <label htmlFor="password" className="form-field__label">Mật khẩu</label>
                             <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" autoComplete="on" />
                             {errors.password && <span className="form-field__error">{errors.password}</span>}
                         </div>
+
                         <div className="form-field">
                             <label htmlFor="confirmPassword" className="form-field__label">Xác nhận mật khẩu</label>
                             <input type="password" id="confirmPassword" name="confirmPassword" value={inputs.confirmPassword || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập lại mật khẩu" autoComplete="on" />
                             {errors.confirmPassword && <span className="form-field__error">{errors.confirmPassword}</span>}
                         </div>
+
                         <div className="form-field">
                             <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
                             <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" autoComplete="on" />
                             {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                         </div>
+
                         <div className="form-field">
                             {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                         </div>
+
                         <div className="form-field">
-                            <input
+                            <button
                                 type="submit"
-                                value="Tiếp tục"
                                 className="form-field__input btn btn-2 btn-md"
-                            />
+                                disabled={isSubmitRegisterLoading}
+                            >
+                                {isSubmitRegisterLoading ? (
+                                    <span className="btn-spinner"></span>
+                                ) : (
+                                    "Tiếp tục"
+                                )}
+                            </button>
                         </div>
                     </form>
+
+                    {/* Extra section of the form */}
                     <p className="form__extra-text">
                         Đã có tài khoản?{" "}
                         <span className="form__extra-text__link" onClick={() => {

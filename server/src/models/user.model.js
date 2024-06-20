@@ -36,9 +36,7 @@ const UserSchema = new Schema(
     gender: {type: String, enum: ["male", "female", "other"]},
     dob: { type: Date, default: null},
     socialLinks: [
-      {
-        url: { type: String }, 
-      },
+      { type: String, required: true }
     ],
     bookmark: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Artwork' }

@@ -1,34 +1,46 @@
+// Imports
 import React, { useState } from "react";
-import { useAuth } from "../../contexts/auth/AuthContext";
-import { isFilled, minLength, isValidEmail } from "../../utils/validator.js";
-import Cookies from 'js-cookie';
-import axios from 'axios';
 
+// Resources
+import { useAuth } from "../../contexts/auth/AuthContext";
+
+// Utils
+import { isFilled, minLength, isValidEmail } from "../../utils/validator.js";
+
+// Styling
 import FacebookLogo from "../../assets/img/facebook-logo.png";
 import GoogleLogo from "../../assets/img/google-logo.png";
 import "./Login.scss";
 
 export default function Login() {
-    const [inputs, setInputs] = useState({});
+    // Resources from AuthContext
     const { login, setShowLoginForm, setShowRegisterForm, setShowResetPasswordForm, setOverlayVisible } = useAuth();
-    const [isSubmitLoginLoading, setIsSubmitLoginLoading] = useState(false);
+
+    // Initialize variables for inputs, errors, loading effect
+    const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
+    const [isSubmitLoginLoading, setIsSubmitLoginLoading] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+
+        // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
-        setErrors((values) => ({ ...values, [name]: '' })); // Clear the error for this field
+        setErrors((values) => ({ ...values, [name]: '' }));
     };
 
     const validateInputs = () => {
         let errors = {};
+
+        // Validate email
         if (!isFilled(inputs.email)) {
             errors.email = 'Vui lòng nhập email';
         } else if (!isValidEmail(inputs.email)) {
             errors.email = 'Email không hợp lệ';
         }
 
+        // Validate password
         if (!isFilled(inputs.password)) {
             errors.password = 'Vui lòng nhập mật khẩu';
         } else if (!minLength(inputs.password, 6)) {
@@ -36,29 +48,31 @@ export default function Login() {
         }
 
         return errors;
-    };
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Initialize loading effect for the submit button
         setIsSubmitLoginLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            // Clear the loading effect if validation failed
             setIsSubmitLoginLoading(false);
             return;
         }
 
         // Handle login request
         try {
-            // setTimeout(() => {
-                // console.log("abc")
-            // }, 5000);
             await login(inputs.email, inputs.password);
         } catch (error) {
-            console.error("Login failed:", error);
+            console.error("Failed to login:", error);
+            errors.serverError = error.response.data.message;
         } finally {
+            // Clear the loading effect
             setIsSubmitLoginLoading(false);
         }
     };
@@ -74,16 +88,23 @@ export default function Login() {
                 </svg>
 
                 <h2 className="form__title">Đăng nhập</h2>
+
                 <div className="form-field">
                     <label htmlFor="email" className="form-field__label">Email</label>
                     <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
-                    {errors.email && <span className="error">{errors.email}</span>}
+                    {errors.email && <span className="form-field__error">{errors.email}</span>}
                 </div>
+
                 <div className="form-field">
                     <label htmlFor="password" className="form-field__label">Mật khẩu</label>
                     <input type="password" id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" autoComplete="on" />
-                    {errors.password && <span className="error">{errors.password}</span>}
+                    {errors.password && <span className="form-field__error">{errors.password}</span>}
                 </div>
+
+                <div className="form-field">
+                    {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                </div>
+
                 <div className="form-field">
                     <button
                         type="submit"
@@ -98,6 +119,8 @@ export default function Login() {
                     </button>
                 </div>
             </form>
+
+            {/* Extra section of the form */}
             <p className="form__extra-text">
                 Chưa có tài khoản?{" "}
                 <span className="form__extra-text__link" onClick={() => {
@@ -105,12 +128,15 @@ export default function Login() {
                     setShowRegisterForm(true);
                 }}>Đăng kí</span>
                 <br />
-                <span onClick={() => {
+                <span className="hover-el" onClick={() => {
                     setShowLoginForm(false);
                     setShowResetPasswordForm(true);
                 }}>Quên mật khẩu</span>
             </p>
+
             <br />
+
+            {/* Other login options: Google or Facebook */}
             <ul className="login-option-container">
                 <li className="login-option-item">
                     <img src={FacebookLogo} className="login-option-item__img" alt="Facebook logo" />
