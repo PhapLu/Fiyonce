@@ -1,7 +1,7 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import CommissionService from '../models/commissionService.model.js'
 import { User } from '../models/user.model.js'
-import { deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js';
+import { compressAndUploadImage,  deleteFileByPublicId, extractPublicIdFromUrl, generateOptimizedImageUrl } from '../utils/cloud.util.js';
 
 class CommissionServiceService{ 
     static createCommissionService = async (talentId, req) => {
@@ -11,11 +11,11 @@ class CommissionServiceService{
         if (talent.role !== 'talent') throw new BadRequestError('User is not a talent!');
     
         // 2. Validate request body
-        const { title, serviceCategoryId, fromPrice, deliverables } = req.body;
+        const { title, serviceCategoryId, minPrice, deliverables } = req.body;
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
-        if (!title || !serviceCategoryId || !fromPrice || !deliverables) {
+        if (!title || !serviceCategoryId || !minPrice || !deliverables) {
             throw new BadRequestError('Please provide all required fields');
         }
     
@@ -38,7 +38,7 @@ class CommissionServiceService{
                 talentId,
                 title,
                 serviceCategoryId,
-                fromPrice,
+                minPrice,
                 deliverables,
                 artworks: optimizedUrls
             });

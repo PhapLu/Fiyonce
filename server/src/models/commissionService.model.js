@@ -12,7 +12,7 @@ const ServiceSchema = new mongoose.Schema({
         ref:'ServiceCategory', 
         required: true
     },
-    fromPrice: { type: Number, required: true },
+    minPrice: { type: Number, required: true },
     deliverables: [{type: String, required: true}],
     addOns:[{
         title: { type: String, required: true }, 
@@ -21,7 +21,7 @@ const ServiceSchema = new mongoose.Schema({
     }],
     notes: [{ type: String }],
     isMedia: { type: Boolean, default: false },
-    artworks:[{ type: mongoose.Types.ObjectId, ref: 'Artwork' }],
+    artworks:[{type: String}],
     reviews:[
         {
             userId: { type: Schema.Types.ObjectId, ref: 'User' },

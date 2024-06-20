@@ -34,6 +34,20 @@ class ServiceCategoryService{
         }
     }
 
+    static readServiceCategories = async(talentId) => {
+        //1. Check talent
+        const talent = await User.findById(talentId)
+        if(!talent) throw new NotFoundError('Talent not found')
+        if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
+
+        //2. Find services
+        const serviceCategories = await ServiceCategory.find({talentId: talentId}).populate('talentId', 'stageName avatar')
+
+        return {
+            serviceCategories
+        }
+    }
+
     static updateServiceCategory = async(talentId, serviceCategoryId, body) => {
         //1. Check talent and service
         const talent = await User.findById(talentId)
