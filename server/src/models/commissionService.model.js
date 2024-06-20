@@ -21,7 +21,7 @@ const ServiceSchema = new mongoose.Schema({
     }],
     notes: [{ type: String }],
     isMedia: { type: Boolean, default: false },
-    portfolios:[{ type: mongoose.Types.ObjectId, ref: 'Artwork' }],
+    artworks:[{ type: mongoose.Types.ObjectId, ref: 'Artwork' }],
     reviews:[
         {
             userId: { type: Schema.Types.ObjectId, ref: 'User' },
