@@ -9,22 +9,22 @@ import "./CommissionTos.scss";
 export default function CommissionTos({ setShowAddCommissionTosForm, setShowCommissionTosView, setOverlayVisible }) {
     const [commissionTos, setCommissionTos] = useState([
         {
-            id: 1,
+            id: '1',
             title: "Quản lí điều khoản dịch vụ",
             time: "2021-01-01"
         },
         {
-            id: 2,
+            id: '2',
             title: "Quản lí điều khoản dịch vụ",
             time: "2021-01-01"
         },
         {
-            id: 3,
+            id: '3',
             title: "Quản lí điều khoản dịch vụ",
             time: "2021-01-01"
         },
         {
-            id: 4,
+            id: '4',
             title: "Quản lí điều khoản dịch vụ",
             time: "2021-01-01"
         },

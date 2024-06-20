@@ -1,0 +1,2 @@
+2024-06-20 10:50:35::error::/v1/api/createServiceCategory::bb6e532a-249d-4593-bf4b-87457939f052::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-20 10:51:39::error::/v1/api/serviceCategory/createServiceCategory::b9e6d7e7-4893-4c2d-a496-c02f76060bb0::undefined - NaNms - Response: {}::{"message":"ServiceCategoryService.createServiceCategory is not a function"}

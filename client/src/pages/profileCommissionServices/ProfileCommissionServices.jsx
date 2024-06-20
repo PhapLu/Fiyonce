@@ -7,6 +7,7 @@ import CommissionTos from "../../components/commissionTos/CommissionTos.jsx";
 import AddCommissionTos from "../../components/addCommissionTos/AddCommissionTos.jsx";
 import AddCommissionService from "../../components/crudCommissionService/add/AddCommissionService.jsx";
 import EditCommissionService from "../../components/crudCommissionService/edit/EditCommissionService.jsx";
+import DeleteCommissionService from "../../components/crudCommissionService/delete/DeleteCommissionService.jsx";
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 
 // Utils
@@ -24,7 +25,10 @@ export default function Profileservices() {
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showAddCommissionServiceForm, setShowAddCommissionServiceForm] = useState(false);
     const [showEditCommissionServiceForm, setShowEditCommissionServiceForm] = useState(false);
-    const [selectedCommissionService, setSelectedCommissionService] = useState();
+    const [showDeleteCommissionServiceForm, setShowDeleteCommissionServiceForm] = useState(false);
+
+    const [editCommissionService, setEditCommissionService] = useState();
+    const [deleteCommissionService, setDeleteCommissionService] = useState();
 
     const [showCommissionTosView, setShowCommissionTosView] = useState(false);
     const [showAddCommissionTosForm, setShowAddCommissionTosForm] = useState(false);
@@ -43,9 +47,8 @@ export default function Profileservices() {
                         "https://i.pinimg.com/736x/3e/64/01/3e6401f6db718f4936ae2cc7477b28c2.jpg",
                         "https://i.pinimg.com/564x/de/b0/f9/deb0f99b9664ca9d5641b1ef02849c6b.jpg",
                     ],
-                    minPrice: 200000,
+                    minPrice: 250000,
                     deliverables: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-                    notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                 },
                 {
                     title: "Commission Service 01",
@@ -183,8 +186,8 @@ export default function Profileservices() {
                                             <p className="profile-commission-service__category-item__service-item__deliverables">{limitString(service.deliverables, 300)}</p>
                                             <p className="profile-commission-service__category-item__service-item__note">*Lưu ý: {service.notes}</p>
                                             {isProfileOwner ? (
-                                                <>    <button className="btn btn-2 btn-md" onClick={() => { setSelectedCommissionService({...service, categoryId: category._id, categoryTitle: category.title}); setShowEditCommissionServiceForm(true); setOverlayVisible(true) }}>Chỉnh sửa</button>
-                                                    <button className="btn btn-3 btn-md">Xóa</button></>
+                                                <>    <button className="btn btn-2 btn-md" onClick={() => { setEditCommissionService({ ...service, categoryId: category._id, categoryTitle: category.title }); setShowEditCommissionServiceForm(true); setOverlayVisible(true) }}>Chỉnh sửa</button>
+                                                    <button className="btn btn-3 btn-md" onClick={() => { setDeleteCommissionService(service); setShowDeleteCommissionServiceForm(true); setOverlayVisible(true) }}>Xóa</button></>
                                             ) : (
                                                 <>    <button className="btn btn-2 btn-md">Đặt ngay</button>
                                                     <button className="btn btn-3 btn-md">Liên hệ</button></>
@@ -213,9 +216,14 @@ export default function Profileservices() {
 
 
                     {showEditCommissionServiceForm && <EditCommissionService
-                        selectedCommissionService={selectedCommissionService}
+                        editCommissionService={editCommissionService}
                         commissionServiceCategories={commissionServiceCategories}
                         setShowEditCommissionServiceForm={setShowEditCommissionServiceForm} setOverlayVisible={setOverlayVisible} />}
+
+                    {showDeleteCommissionServiceForm && <DeleteCommissionService
+                        deleteCommissionService={deleteCommissionService}
+                        setShowDeleteCommissionServiceForm={setShowDeleteCommissionServiceForm} setOverlayVisible={setOverlayVisible} />}
+                    
                     {showCommissionTosView && <CommissionTos setShowAddCommissionTosForm={setShowAddCommissionTosForm} setShowCommissionTosView={setShowCommissionTosView} setOverlayVisible={setOverlayVisible} />}
                     {showAddCommissionTosForm && <AddCommissionTos setShowAddCommissionTosForm={setShowAddCommissionTosForm} setOverlayVisible={setOverlayVisible} />}
                 </div>)}

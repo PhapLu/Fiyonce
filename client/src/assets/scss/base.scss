@@ -465,11 +465,19 @@ table {
     .half-split {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         align-items: center;
+        width: 100%;
 
         .form-field__input {
             width: 45%;
         }
+
+        
+        .form__submit-btn {
+            width: 48%;
+        }
+
     }
 
     .form-field__label {
