@@ -2232,3 +2232,15 @@
 2024-06-20 19:42:07::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::8eb7d60b-dc67-40ba-a351-f745237cbb25::input-params ::GET::::{}
 2024-06-20 19:42:07::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::7269841c-e46a-44cf-8d7b-3ba569e548cf::input-params ::GET::::{}
 >>>>>>> a9bcb9e3ae9ee9260c7aa0940dc63daa18b917dd
+2024-06-20 20:18:20::info::/v1/api/commissionService/updateCommissionService::43a88d59-e4d8-4c60-8515-ac65d624698e::input-params ::PATCH::::{}
+2024-06-20 20:18:20::error::/v1/api/commissionService/updateCommissionService::43a88d59-e4d8-4c60-8515-ac65d624698e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-20 20:21:45::info::/v1/api/commissionService/createCommissionService::ed871e33-8fe5-471f-bd34-c18a285c198e::input-params ::POST::::{}
+2024-06-20 20:21:45::error::/v1/api/commissionService/createCommissionService::ed871e33-8fe5-471f-bd34-c18a285c198e::403 - 1ms - Response: {"status":403,"now":1718889705260}::{"message":"User is not a talent!"}
+2024-06-20 20:21:58::info::/v1/api/auth/users/login::2960e503-79f7-4cfe-9b0d-ba16377690ed::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-20 20:22:02::info::/v1/api/commissionService/createCommissionService::42ff1cac-0fe8-42dc-a71b-5bd2ebbf0e42::input-params ::POST::::{}
+2024-06-20 20:22:02::error::/v1/api/commissionService/createCommissionService::42ff1cac-0fe8-42dc-a71b-5bd2ebbf0e42::403 - 1ms - Response: {"status":403,"now":1718889722883}::{"message":"Please provide all required fields"}
+2024-06-20 20:23:17::info::/v1/api/commissionService/createCommissionService::965032bb-f25c-4573-b7e5-a460411c6646::input-params ::POST::::{}
+2024-06-20 20:23:59::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::8bcd1d8d-8d66-4daa-b421-843ac5c39dff::input-params ::PATCH::::{}
+2024-06-20 20:26:21::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::71545cf0-0044-4c40-887c-1b7287666a43::input-params ::PATCH::::{}
+2024-06-20 20:30:51::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::8527e832-57ce-4283-904f-0e650b3b8728::input-params ::PATCH::::{}
+2024-06-20 20:32:07::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::75774ffe-bc94-4af9-8d3a-469452a823a1::input-params ::PATCH::::{}

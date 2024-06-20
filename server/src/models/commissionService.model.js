@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const DOCUMENT_NAME = 'Service';
-const COLLECTION_NAME = 'Services';
+const DOCUMENT_NAME = 'CommissionService';
+const COLLECTION_NAME = 'CommissionServices';
 
 const ServiceSchema = new mongoose.Schema({
     talentId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
