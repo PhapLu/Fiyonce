@@ -5,7 +5,7 @@ class ServiceController{
     createCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Create service success!',
-            metadata: await CommissionServiceService.createCommissionService(req.userId, req.body)
+            metadata: await CommissionServiceService.createCommissionService(req.userId, req)
         }).send(res)
     }
 

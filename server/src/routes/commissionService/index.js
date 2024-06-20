@@ -3,6 +3,7 @@ import { asyncHandler } from '../../helpers/asyncHandler.js'
 import accessService from '../../services/auth.service.js'
 import { verifyToken } from "../../middlewares/jwt.js";
 import commissionServiceController from '../../controllers/commissionService.controller.js';
+import { uploadFields } from '../../configs/multer.config.js';
 
 const router = express.Router()
 
@@ -12,7 +13,7 @@ router.get('/readCommissionServices/:talentId', asyncHandler(commissionServiceCo
 //authentication
 router.use(verifyToken)
 
-router.post('/createCommissionService', asyncHandler(commissionServiceController.createCommissionService))
+router.post('/createCommissionService', uploadFields, asyncHandler(commissionServiceController.createCommissionService))
 router.patch('/updateCommissionService/:commissionServiceId', asyncHandler(commissionServiceController.updateCommissionService))
 router.delete('/deleteCommissionService/:commissionServiceId', asyncHandler(commissionServiceController.deleteCommissionService))
 

@@ -21,6 +21,10 @@ const uploadFields = uploadMemory.fields([
     { name: 'stageName', maxCount: 1 },
     { name: 'price', maxCount: 1 },
     { name: 'jobTitle', maxCount: 1 },
+    { name: 'title', maxCount: 1 },
+    { name: 'serviceCategoryId', maxCount: 1 },
+    { name: 'fromPrice', maxCount: 1 },
+    { name: 'deliverables', maxCount: 1 },
 ]);
 
 export {
