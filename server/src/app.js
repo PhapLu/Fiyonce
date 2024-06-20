@@ -14,7 +14,11 @@ import SocketServices from './services/socket.service.js';
 import './db/init.mongodb.js'; // Ensure this is properly set up
 import {v4 as uuidv4} from 'uuid'
 import myLogger from './loggers/mylogger.log.js';
+import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js';
 const app = express();
+
+//Rate Limit
+app.use(globalLimiter);
 
 // Init middlewares
 app.use(cors({
