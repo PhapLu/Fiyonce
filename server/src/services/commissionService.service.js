@@ -11,24 +11,15 @@ class CommissionServiceService{
         if (talent.role !== 'talent') throw new BadRequestError('He/She is not a talent!');
     
         //2. Validate body
-        const { title, serviceCategoryTitle, fromPrice, deliverables, portfolios } = body;
-        if (!title || !serviceCategoryTitle || !fromPrice || !deliverables || portfolios.length === 0) {
+        const { title, serviceCategoryId, fromPrice, deliverables, portfolios } = body;
+        if (!title || !serviceCategoryId || !fromPrice || !deliverables || portfolios.length === 0) {
             throw new BadRequestError('Please fill in all required fields and ensure portfolios is not empty!');
         }
     
-        //3. Check service category
-        let serviceCategory = await ServiceCategory.findOne({ talentId: talentId, title: serviceCategoryTitle });
-        if (!serviceCategory) {
-            serviceCategory = await ServiceCategory.create({
-                talentId: talentId,
-                title: serviceCategoryTitle
-            });
-        }
-    
-        //4. Create service
+        //3. Create service
         let service = await CommissionService.create({
             talentId: talentId,
-            serviceCategoryId: serviceCategory._id,
+            serviceCategoryId,
             ...body
         });
     

@@ -2,24 +2,30 @@ import { SuccessResponse } from "../core/success.response.js"
 import ServiceCategoryService from "../services/serviceCategory.service.js"
 
 class ServiceCategoryController{
+    createServiceCategory = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Create serviceCategory success!',
+            metadata: await ServiceCategoryService.createServiceCategory(req.userId, req.body)
+        }).send(res)
+    }
     readServiceCategories = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read services success!',
-            metadata: await ServiceCategoryService.readServices(req.params.talentId)
+            message: 'Read serviceCategories success!',
+            metadata: await ServiceCategoryService.readServiceCategories(req.params.talentId)
         }).send(res)
     }
 
     updateServiceCategory = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Update service success!',
-            metadata: await ServiceCategoryService.updateService(req.userId, req.params.serviceCategoryId, req.body)
+            message: 'Update serviceCategory success!',
+            metadata: await ServiceCategoryService.updateServiceCategory(req.userId, req.params.serviceCategoryId, req.body)
         }).send(res)
     }
 
     deleteServiceCategory = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Delete service success!',
-            metadata: await ServiceCategoryService.deleteService(req.userId, req.params.serviceCategoryId)
+            message: 'Delete serviceCategory success!',
+            metadata: await ServiceCategoryService.deleteServiceCategory(req.userId, req.params.serviceCategoryId)
         }).send(res)
     }
 

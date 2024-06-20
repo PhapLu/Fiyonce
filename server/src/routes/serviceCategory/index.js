@@ -10,7 +10,7 @@ router.get('/readServiceCategories/:talentId',asyncHandler(serviceCategoryContro
 
 //authentication
 router.use(verifyToken)
-
+router.post('/createServiceCategory',asyncHandler(serviceCategoryController.createServiceCategory))
 router.patch('/updateServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.updateServiceCategory))
 router.delete('/deleteServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.deleteServiceCategory))
 
