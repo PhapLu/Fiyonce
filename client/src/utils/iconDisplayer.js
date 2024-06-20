@@ -70,10 +70,35 @@ export function getSocialLinkIcon(url) {
 
     for (const platform in socialPlatforms) {
         if (url.includes(socialPlatforms[platform].domain)) {
-            return socialPlatforms[platform].svg;
+            return socialPlatforms[platform].svg + `<a href=${url}>${extractUsernameFromUrl(url)}</a>`;
         }
     }
 
     // Default icon
-    return '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>' + `<a href=${url}>${extractUsernameFromUrl(url)}</a>`;
 }
+
+
+function extractUsernameFromUrl(url) {
+    try {
+        const urlObj = new URL(url);
+        const hostname = urlObj.hostname;
+        const pathname = urlObj.pathname;
+
+        // Split the path and filter out any empty strings
+        const parts = pathname.split('/').filter(Boolean);
+
+        // Assuming the username is always the first part of the path
+        if (parts.length > 0) {
+            const domain = hostname.replace('www.', '').split('.')[0];
+            return `${domain}/${parts[0]}`;
+        }
+
+        return null; // No username found
+    } catch (e) {
+        console.error("Invalid URL:", e);
+        return null;
+    }
+}
+
+console.log(extractUsernameFromUrl("https://facebook.com/abc/"))

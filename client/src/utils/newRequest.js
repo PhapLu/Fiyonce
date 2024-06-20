@@ -42,13 +42,30 @@ const apiUtils = {
     }
 };
 
-export { newRequest, apiUtils };
+function createFormData(inputs, files) {
+    const formData = new FormData();
 
-// Example usage with JSON data
-const userId = "12345";
-const jsonInputs = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    // other fields
-};
+    // Append non-file inputs
+    for (const key in inputs) {
+        if (inputs.hasOwnProperty(key)) {
+            formData.append(key, inputs[key]);
+        }
+    }
+
+    // Append file inputs
+    files.forEach(file => {
+        if (file) {
+            formData.append("files", file);
+        }
+    });
+
+    return formData;
+}
+
+
+
+export { createFormData, newRequest, apiUtils};
+
+
+
 

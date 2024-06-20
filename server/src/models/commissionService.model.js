@@ -12,7 +12,7 @@ const ServiceSchema = new mongoose.Schema({
         ref:'ServiceCategory', 
         required: true
     },
-    fromPrice: { type: Number, required: true },
+    minPrice: { type: Number, required: true },
     deliverables: [{type: String, required: true}],
     addOns:[{
         title: { type: String, required: true }, 

@@ -10,7 +10,7 @@ import {
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { isFilled, minValue } from "../../../utils/validator.js";
 import "./AddCommissionService.scss";
-import { apiUtils } from "../../../utils/newRequest.js";
+import { createFormData, apiUtils } from "../../../utils/newRequest.js";
 
 export default function AddCommissionService({
     commissionServiceCategories,
@@ -104,26 +104,39 @@ export default function AddCommissionService({
             setIsSubmitAddCommissionServiceLoading(false);
             return;
         }
-        console.log('INPUTS')
-        console.log(inputs);
+    
         
         // Add commission service category
         if (isAddNewCommissionServiceCategory) {
-            
             try {
-                const addCommissionCategoryResponse = await apiUtils.post("/serviceCategory/createServiceCategory", {title: title.newCommissionServiceCategory, talentId: userInfo._id});
-                console.log(addCommissionCategoryResponse);
+                const response = await apiUtils.post("/serviceCategory/createServiceCategory", {title: inputs.newCommissionServiceCategory, talentId: userInfo._id});
+                if (response) {
+                    const serviceCategoryId = response.data.metadata._id;
+                    inputs.serviceCategoryId = serviceCategoryId;
+                }
             } catch (error) {
-
+                console.error("Failed to add new commission service category:", error);
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    serverError: error.response.data.message
+                }));
             } finally {
                 setIsSuccessAddCommissionService(true);
             }
         }
-       
-        try {
 
+        const fd = createFormData(inputs, portfolios);
+        console.log(fd.get("title"))
+        console.log(fd.get("minPrice"))
+        console.log(fd.get("deliverables"))
+        console.log(fd.get("addOns"))
+        try {
+            const response = await apiUtils.post("/commissionService/createCommissionService", fd);
+            if (response) {
+                console.log(response.data.metadata)
+            }
         } catch (error) {
-            console.error("Failed to submit:", error);
+            console.error("Failed to add new commission service:", error);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 serverError: error.response.data.message
@@ -158,8 +171,8 @@ export default function AddCommissionService({
 
             <div className="modal-form--left">
                 <span>
-                    {inputs?.categoryId
-                        ? commissionServiceCategories.find((category) => category._id == inputs?.categoryId)?.title || "Thể loại"
+                    {inputs?.serviceCategoryId
+                        ? commissionServiceCategories.find((category) => category._id == inputs?.serviceCategoryId)?.title || "Thể loại"
                         : "Thể loại"}
                 </span>
                 <h3>{inputs?.title || "Tên dịch vụ"}</h3>
@@ -182,16 +195,16 @@ export default function AddCommissionService({
             </div>
 
             <div className="modal-form--right">
-                <h2 className="form__title">Chỉnh sửa dịch vụ</h2>
+                <h2 className="form__title">Thêm dịch vụ</h2>
                 {!isSuccessAddCommissionService ? (
                     <>
                         <div className="form-field">
-                            <label htmlFor="categoryId" className="form-field__label">Thể loại</label>
+                            <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
                             {!isAddNewCommissionServiceCategory ? (
                                 <>
                                     <select
-                                        name="categoryId"
-                                        value={inputs?.categoryId || ""}
+                                        name="serviceCategoryId"
+                                        value={inputs?.serviceCategoryId || ""}
                                         onChange={handleChange}
                                         className="form-field__input"
                                     >
@@ -336,12 +349,12 @@ export default function AddCommissionService({
                             <label className="form-field__label">
                                 <input
                                     type="checkbox"
-                                    name="agreeTerms"
-                                    checked={inputs?.agreeTerms}
+                                    name="isAgreeTerms"
+                                    checked={inputs?.isAgreeTerms}
                                     onChange={handleChange}
                                 /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
                             </label>
-                            {errors.agreeTerms && <span className="form-field__error">{errors.agreeTerms}</span>}
+                            {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                         </div>
                         <div className="form-field">
                             {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}

@@ -295,11 +295,9 @@ export default function Sidebar({ profileInfo }) {
                             <hr />
                             <div className="sidebar__socials__link-container">
                                 {profileInfo.socialLinks.map((socialLink, key) => (
-                                    <div key={key} className="sidebar__socials__link-item">
-                                        <span
-                                            dangerouslySetInnerHTML={{ __html: getSocialLinkIcon(socialLink) }}
-                                        />
-                                        <a href="https://www.facebook.com/">{socialLink}</a>
+                                    <div key={key} className="sidebar__socials__link-item" dangerouslySetInnerHTML={{ __html: getSocialLinkIcon(socialLink) }}>
+                                            
+                                        {/* <a href="https://www.facebook.com/">{socialLink}</a> */}
                                     </div>
                                 ))}
                             </div>
