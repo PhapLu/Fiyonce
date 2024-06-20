@@ -6,13 +6,12 @@ import serviceCategoryController from '../../controllers/serviceCategory.control
 
 const router = express.Router()
 
-router.post('/readServiceCategories/:talentId',asyncHandler(serviceCategoryController.readServiceCategories))
+router.get('/readServiceCategories/:talentId',asyncHandler(serviceCategoryController.readServiceCategories))
 
 //authentication
 router.use(verifyToken)
-
-router.post('/createServiceCategory', asyncHandler(serviceCategoryController.createServiceCategory))
-router.post('/updateServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.updateServiceCategory))
-router.post('/deleteServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.deleteServiceCategory))
+router.post('/createServiceCategory',asyncHandler(serviceCategoryController.createServiceCategory))
+router.patch('/updateServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.updateServiceCategory))
+router.delete('/deleteServiceCategory/:serviceCategoryId',asyncHandler(serviceCategoryController.deleteServiceCategory))
 
 export default router

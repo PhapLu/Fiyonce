@@ -3,7 +3,22 @@ import ServiceCategory from '../models/serviceCategory.model.js'
 import { User } from '../models/user.model.js'
 
 class ServiceCategoryService{
-    
+    static createServiceCategory = async(talentId, body) => {
+        //1. Check talent
+        const talent = await User.findById(talentId)
+        if(!talent) throw new NotFoundError('Talent not found')
+        if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
+
+        //2. Create service
+        const serviceCategory = new ServiceCategory({
+            title: body.title,
+            talentId
+        })
+        await serviceCategory.save()
+        return {
+            serviceCategory
+        }
+    }
 
     static readServiceCategories = async(talentId) => {
         //1. Check talent
@@ -19,7 +34,7 @@ class ServiceCategoryService{
         }
     }
 
-    static updateService = async(talentId, serviceCategoryId, body) => {
+    static updateServiceCategory = async(talentId, serviceCategoryId, body) => {
         //1. Check talent and service
         const talent = await User.findById(talentId)
         const serviceCategory = await ServiceCategory.findById(serviceCategoryId)
@@ -40,7 +55,7 @@ class ServiceCategoryService{
         }
     }   
 
-    static deleteService = async(talentId, serviceCategoryId) => {
+    static deleteServiceCategory = async(talentId, serviceCategoryId) => {
         //1. Check talent and service
         const talent = await User.findById(talentId)
         const serviceCategory = await ServiceCategory.findById(serviceCategoryId)

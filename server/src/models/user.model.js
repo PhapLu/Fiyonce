@@ -52,6 +52,7 @@ const UserSchema = new Schema(
       max: [5, "Rating cannot exceed 5"] 
     },
     accessToken: { type: String },
+    qrCode: { type: String }, //Base 64
   },
   {
     timestamps: true,
@@ -104,7 +105,6 @@ const TalentUser = User.discriminator(
       type: String,
       enum: ['trusted', 'topContributor', 'emerging']
     },
-    
   })
 );
 

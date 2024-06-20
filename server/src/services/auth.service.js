@@ -11,6 +11,7 @@ import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
 import jwt from 'jsonwebtoken'
 import role from "../middlewares/role.js"
 import sendEmail from "../middlewares/sendMail.js"
+import { createUserQRCode } from "../utils/qrcode.util.js"
 
 class AuthService {
     /*
@@ -161,6 +162,7 @@ class AuthService {
         // 3. Check if there is an existing OTP record for the email
         const oldOtp = await UserOTPVerification.findOne({ email }).lean();
         if (oldOtp) await UserOTPVerification.deleteOne({ email });
+        
         // 4. Generate 6-digit OTP
         const otp = crypto.randomInt(100000, 999999).toString();
 
@@ -173,7 +175,6 @@ class AuthService {
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
         });
         await otpVerification.save();
-        console.log(otpVerification)
 
         // 6. Send OTP email
         const subject = 'Your OTP Code';
@@ -204,7 +205,7 @@ class AuthService {
 
         // 3. Check if the OTP is correct
         if (otpRecord.otp !== otp) {
-            throw new BadRequestError('Incorrect OTP');
+            throw new BadRequestError('Incorrect OTP')
         }
 
         //4. Create user by otpVerification
@@ -214,9 +215,14 @@ class AuthService {
             password: otpRecord.password,
             role: 'member', // Use the string directly
         });
-        newUser.save()
-        // 4. Delete the OTP record
-        await UserOTPVerification.deleteOne({ email });
+
+        //Create qrCode
+        const qrCode = await createUserQRCode(newUser._id.toString())
+        newUser.qrCode = qrCode
+        await newUser.save()
+
+        // 5. Delete the OTP record
+        await UserOTPVerification.deleteOne({ email })
 
         // 6. Create token
         const token = jwt.sign(
@@ -227,10 +233,10 @@ class AuthService {
             process.env.JWT_SECRET
         );
 
-        newUser.accessToken = token;
-        await newUser.save();
+        newUser.accessToken = token
+        await newUser.save()
 
-        const { password: hiddenPassword, ...userWithoutPassword } = newUser.toObject(); // Ensure toObject() is used to strip the password
+        const { password: hiddenPassword, ...userWithoutPassword } = newUser.toObject() // Ensure toObject() is used to strip the password
         return {
             code: 200,
             metadata: {
@@ -252,13 +258,13 @@ class AuthService {
         // 2. Generate 6-digit OTP
         const otp = crypto.randomInt(100000, 999999).toString();
 
-        // 4. Send OTP email
+        // 3. Send OTP email
         const subject = 'Your OTP Code';
         const subjectMessage = 'Mã xác thực đổi mật khẩu của bạn là: '
         const verificationCode = otp
         await sendEmail(email, subject, subjectMessage, verificationCode);
 
-        // 3. Save OTP in ForgotPasswordOTP collection
+        // 4. Save OTP in ForgotPasswordOTP collection
         const forgotPasswordOTP = new ForgotPasswordOTP({
             email,
             otp,
@@ -275,7 +281,7 @@ class AuthService {
     }
 
     static verifyResetPasswordOtp = async ({ email, otp }) => {
-        // 1. Find, check the OTP and user in the database
+        //1. Find, check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({ email });
         const user = await User.findOne({ email });
 
@@ -283,7 +289,7 @@ class AuthService {
         if (!user) throw new BadRequestError('User not found');
         if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired');
 
-        // 2. Check if the OTP is correct
+        //2. Check if the OTP is correct
         if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP');
 
         //3. Mark the otp is verified

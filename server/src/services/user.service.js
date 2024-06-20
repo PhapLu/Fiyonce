@@ -1,9 +1,6 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
-import TalentRequest from '../models/talentRequest.model.js'
 import { artwork } from '../models/artwork.model.js'
 import { User } from '../models/user.model.js'
-import sendEmail from '../middlewares/sendMail.js'
-import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 import jwt from 'jsonwebtoken'
 
 class UserService{

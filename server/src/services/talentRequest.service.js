@@ -31,15 +31,19 @@ class TalentRequestService{
             await TalentRequest.deleteOne({ userId });
         }
     
-        // 4. Upload files to Cloudinary (compressed) and get their URLs
+        // 4. Upload files to Cloudinary (compressed) and get their optimized URLs
         try {
             const uploadPromises = req.files.files.map(file => compressAndUploadImage({
                 buffer: file.buffer,
                 originalname: file.originalname,
-                folderName: `fiyonce/talentRequests/${userId}`
+                folderName: `fiyonce/talentRequests/${userId}`,
+                width: 1920,
+                height: 1080
             }));
             const uploadResults = await Promise.all(uploadPromises);
-            const artworkUrls = uploadResults.map(result => result.secure_url);
+    
+            // Generate optimized URLs
+            const optimizedUrls = uploadResults.map(result => generateOptimizedImageUrl(result.public_id));
     
             // 5. Create and save talent request
             const newTalentRequest = new TalentRequest({
@@ -47,7 +51,7 @@ class TalentRequestService{
                 stageName,
                 jobTitle,
                 portfolioLink,
-                artworks: artworkUrls
+                artworks: optimizedUrls
             });
             await newTalentRequest.save();
     
@@ -55,9 +59,10 @@ class TalentRequestService{
                 talentRequest: newTalentRequest
             };
         } catch (error) {
+            console.error('Error uploading images:', error);
             throw new Error('File upload or database save failed');
         }
-    }    
+    };
 
 //------------------Admin----------------------------------------------------------
     static upgradeRoleToTalent = async (adminId, requestId) => {
