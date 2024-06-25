@@ -3,11 +3,12 @@ import mongoose, { Schema } from "mongoose";
 const DOCUMENT_NAME = 'Artwork'
 const COLLECTION_NAME = 'Artworks'
 
-const ArtworkSchema = new Schema(
-  {
+const ArtworkSchema = new Schema({
+    talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkCategory', required: true },
+    movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
     artworkTitle:{ type: String },
     artworkImages: [{ type: String, required: true }],
-    artworkThumb: { type: String, required: true },
     artworkDescription: { type: String },
     artworkLikes: [
         {
@@ -15,30 +16,26 @@ const ArtworkSchema = new Schema(
         }
     ],
     artworkViews: { type: Number, default: 0 },
-    artworkSaves: [
+    artworkBookmarks: [
         {
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
         }
     ],
-    artworkFields: [{type: mongoose.Schema.Types.ObjectId, ref: 'Field'}],
-    artworkComments: [{
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-        content: { type: String, required: true },
-        createdAt: { type: Date, default: Date.now },
-    }],
+    // artworkComments: [{
+    //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    //     content: { type: String, required: true },
+    //     createdAt: { type: Date, default: Date.now },
+    // }],
     /////////
-    artworkType:{
-        type: String,
-        enum: ['ForSelling', 'Showcasing'],
-        required: true
-    },
-    artworkAttributes:{
-        type: Schema.Types.Mixed,
-        required: true,
-    },
-    talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ServiceCategory', required: true },
-    movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
+    // artworkType:{
+    //     type: String,
+    //     enum: ['ForSelling', 'Showcasing'],
+    //     required: true
+    // },
+    // artworkAttributes:{
+    //     type: Schema.Types.Mixed,
+    //     required: true,
+    // },
     // artworkIsDraft: {
     //     type: Boolean,
     //     index: true,
@@ -79,7 +76,7 @@ ArtworkSchema.index({ description: 'text' });
 // })
 
 const ShowcasingSchema = new Schema({
-    artworkTalent:{
+    talentId:{
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
