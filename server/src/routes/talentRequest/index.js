@@ -11,6 +11,8 @@ const router = express.Router()
 router.use(verifyToken)
 
 router.post('/requestUpgradingToTalent', uploadFields, asyncHandler(talentRequestController.requestUpgradingToTalent))
+router.get('/readTalentRequestStatus/', asyncHandler(talentRequestController.readTalentRequestStatus))
+
 //admin
 router.patch('/upgradeRoleToTalent/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.upgradeRoleToTalent))
 router.patch('/denyTalentRequest/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.denyTalentRequest))
