@@ -16,7 +16,7 @@ router.get('/readTalentRequestStatus/', asyncHandler(talentRequestController.rea
 //admin
 router.patch('/upgradeRoleToTalent/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.upgradeRoleToTalent))
 router.patch('/denyTalentRequest/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.denyTalentRequest))
-router.get('/viewTalentRequest/:requestId', accessService.grantAccess('readAny', 'profile'), asyncHandler(talentRequestController.viewTalentRequest))
-router.get('/viewTalentRequests', accessService.grantAccess('readAny', 'profile'), asyncHandler(talentRequestController.viewTalentRequests))
+router.get('/readTalentRequest/:requestId', accessService.grantAccess('readAny', 'profile'), asyncHandler(talentRequestController.readTalentRequest))
+router.get('/readTalentRequestsByStatus/:status', accessService.grantAccess('readAny', 'profile'), asyncHandler(talentRequestController.readTalentRequestsByStatus))
 
 export default router

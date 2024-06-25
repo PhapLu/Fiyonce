@@ -153,22 +153,20 @@ class TalentRequestService{
         }
     }
 
-    static viewTalentRequests = async(adminId) => {
+    static readTalentRequestsByStatus = async(adminId, status) => {
         //1. Check admin account
-        console.log(adminId)
         const adminUser = await User.findById(adminId)
-        console.log(adminUser)
         if(!adminUser) throw new NotFoundError('User not found')
         if(!adminUser || adminUser.role !== 'admin') throw new AuthFailureError('You do not have enough permission')
 
         //2. Find all talent requests
-        const talentRequests = await TalentRequest.find()
+        const talentRequests = await TalentRequest.find({status: status}).populate('userId', 'email fullName')
         return {
             talentRequests
         }
     }
 
-    static viewTalentRequest = async(adminId, requestId) => {
+    static readTalentRequest = async(adminId, requestId) => {
         //1. Check admin account
         const adminUser = await User.findById(adminId)
         if(!adminUser) throw new NotFoundError('User not found')
@@ -181,7 +179,6 @@ class TalentRequestService{
             talentRequest
         }
     }
-
 }
 
 export default TalentRequestService
