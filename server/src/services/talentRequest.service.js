@@ -92,19 +92,19 @@ class TalentRequestService{
         if (!foundUser) throw new NotFoundError('User not found')
         if (foundUser.role === 'talent') throw new BadRequestError('User already a talent')
 
-        // 4. Update role to talent
+        // 4. Mark request as approved
+        request.status = 'approved'
+        await request.save();
+
+        // 5. Update role to talent
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { $set: { role: 'talent' } },
             { new: true }
         );
 
-        // 5. Exclude password from user object
+        // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser
-
-        // 6. Mark request as approved
-        request.status = 'approved'
-        await request.save();
 
         // 7. Send email to user
         try {

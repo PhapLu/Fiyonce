@@ -5,7 +5,6 @@ import { countConnect } from '../helpers/check.connect.js'
 import configMongodb from '../configs/config.mongodb.js'
 const {host, name, port} = configMongodb.db
 const connectString = `mongodb://${host}:${port}/${name}`
-console.log(connectString)
 
 class Database{
     constructor(){
