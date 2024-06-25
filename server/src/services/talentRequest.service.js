@@ -56,7 +56,7 @@ class TalentRequestService{
             await newTalentRequest.save();
 
             return {
-            talentRequest: newTalentRequest
+                talentRequest: newTalentRequest
             };
         } catch (error) {
             console.error('Error uploading images:', error);
@@ -64,6 +64,21 @@ class TalentRequestService{
         }
     };
 
+    static readTalentRequestStatus = async (userId) => {
+        // 1. Check user exists
+        const currentUser = await User.findById(userId);
+        if (!currentUser) throw new NotFoundError('User not found');
+    
+        // 2. Find talent request
+        const talentRequest = await TalentRequest.findOne({ userId });
+        if (!talentRequest) {
+            throw new NotFoundError('Talent request not found');
+        }
+    
+        return {
+            talentRequestStatus: talentRequest.status
+        };
+    }
 //------------------Admin----------------------------------------------------------
     static upgradeRoleToTalent = async (adminId, requestId) => {
         // 1. Find and check request

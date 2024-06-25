@@ -22,15 +22,111 @@ ReferenceError: Schema is not defined
 ReferenceError: Schema is not defined
     at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
-2024-06-25 10:39:32::error::undefined::undefined::uncaughtException: Schema is not defined
+2024-06-25 09:11:10::error::undefined::undefined::uncaughtException: Schema is not defined
 ReferenceError: Schema is not defined
-    at file:///E:/Fiyonce/server/src/models/order.model.js:49:29
-    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
-    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
-2024-06-25 10:39:48::error::undefined::undefined::uncaughtException: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:13:12::error::undefined::undefined::uncaughtException: Schema is not defined
 ReferenceError: Schema is not defined
-    at file:///E:/Fiyonce/server/src/models/order.model.js:49:29
-    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
-    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:13:39::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:17:25::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:17:34::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:26:24::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:27:00::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:28:22::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:30:58::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:45:33::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:49:42::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:49:54::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:53:14::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:53:48::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:54:01::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:54:57::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:56:35::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 09:57:50::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:00:56::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:01:29::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:02:14::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:03:23::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:03:33::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:04:29::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:05:19::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:05:49::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:109:25
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:10:13::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:109:25
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
