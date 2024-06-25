@@ -2,7 +2,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.
 import Proposal from "../models/proposal.model.js"
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
-import {artwork} from "../models/artwork.model.js"
+import Artwork from "../models/artwork.model.js"
 import sendEmail from '../middlewares/sendMail.js'
 
 class ProposalService{

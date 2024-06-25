@@ -74,20 +74,21 @@ ArtworkSchema.index({ description: 'text' });
 //     timestamps: true,
 //     collection: 'ForSellings'
 // })
+// const ShowcasingSchema = new Schema({
+//     talentId:{
+//         type: Schema.Types.ObjectId,
+//         ref: 'User',
+//         required: true
+//     }
+// },{
+//     timestamps: true,
+//     collection: 'Showcasings'
+// })
 
-const ShowcasingSchema = new Schema({
-    talentId:{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
-},{
-    timestamps: true,
-    collection: 'Showcasings'
-})
+// const artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema);
+// //const forSelling = mongoose.model('ForSelling', ForSellingSchema)
+// const showcasing = mongoose.model('Showcasing', ShowcasingSchema)
+// export {artwork, showcasing};
 
-const artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema);
-//const forSelling = mongoose.model('ForSelling', ForSellingSchema)
-const showcasing = mongoose.model('Showcasing', ShowcasingSchema)
-export {artwork, showcasing};
-
+const Artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema)
+export default Artwork
