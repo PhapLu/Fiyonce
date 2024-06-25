@@ -22,3 +22,15 @@ ReferenceError: Schema is not defined
 ReferenceError: Schema is not defined
     at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:49:29
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-25 10:39:32::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///E:/Fiyonce/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-06-25 10:39:48::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///E:/Fiyonce/server/src/models/order.model.js:49:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
