@@ -5,15 +5,15 @@ import { useParams, useLocation, Outlet, Link } from "react-router-dom";
 
 // Resources
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar.jsx";
+import ProfileSidebar from "../profileSidebar/ProfileSidebar";
 
 // Utils
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
 import { formatEmailToName, limitString } from "../../utils/formatter.js";
 
 // Styling
-import "./Profile.scss";
+import "./ProfileLayout.scss";
 
 export default function Profile() {
     const [profileBtnActive, setProfileNavActive] = useState(null);
@@ -90,7 +90,7 @@ export default function Profile() {
         <>
             <Navbar />
             <div className='app with-sidebar'>
-                <Sidebar profileInfo={profileInfo} />
+                <ProfileSidebar profileInfo={profileInfo} />
 
                 <div className="outlet-content">
                     <div className="profile">

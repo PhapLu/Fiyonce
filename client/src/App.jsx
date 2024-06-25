@@ -11,20 +11,24 @@ import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
 import Talents from "./components/talents/Talents";
 import CommissionServices from "./components/commissionServices/CommissionServices";
-import ProfileCommissionServices from "./pages/profileCommissionServices/ProfileCommissionServices";
-import ProfileArtworks from "./pages/profileArtworks/ProfileArtworks";
+import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices";
+import ProfileArtworks from "./profile/profileArtworks/ProfileArtworks";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
 // import Login from "./components/login/Login";
 
 // Pages
-import Profile from "./pages/profile/Profile";
+import ProfileLayout from "./profile/profileLayout/ProfileLayout";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
 import ExploreArtworks from "./pages/exploreArtworks/ExploreArtworks";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
+
+
+// Dashboard
+import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 
 // import Artwork from "./pages/artwork/Artwork";
 // import Challenges from "./pages/challenges/Challenges";
@@ -40,7 +44,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/users/:userId",
-    element: <Profile />,
+    element: <ProfileLayout />,
     children: [
       {
         path: "/users/:userId/profile_commission_services",
@@ -59,10 +63,6 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
       }
     ]
-  },
-  {
-    path: "/dashboard/accounts",
-    element: <AccountDashboard />,
   },
   {
     path: "/",
@@ -90,9 +90,12 @@ const router = createBrowserRouter([
         path: "/commission_market",
         element: <CommissionMarket />
       },
-
     ]
   },
+  // {
+  //   path: "/dashboard/",
+  //   element: <DashboardLayout />,
+  // },
   {
     path: "/forbidden",
     element: <Forbidden />,

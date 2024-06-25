@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { useParams } from "react-router-dom";
+import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 
-import "./UpgradeAccount.scss";
 import UpgradeAccountImg from "../../assets/img/upgrade-account-img.png";
 import { limitString, bytesToKilobytes, formatFloat } from "../../utils/formatter";
 import { isFilled, minLength } from "../../utils/validator.js";
 import { apiUtils } from '../../utils/newRequest.js';
+import "./UpgradeAccount.scss";
 
 import { io } from 'socket.io-client';
 const SOCKET_SERVER_URL = "http://localhost:8900"; // Update this with your server URL
@@ -14,8 +15,24 @@ const UpgradeAccount = ({ closeModal }) => {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [artworks, setArtworks] = useState([]);
+    const [talentRequestStatus, setTalentRequestStatus] = useState([]);
     const { id } = useParams();
 
+    const { userInfo } = useAuth();
+
+    useEffect(() => {
+        async function fetchTalentRequestStatus() {
+            try {
+                const response = await apiUtils.get("talentRequest/readTalentRequestStatus");
+                console.log(response);
+                setTalentRequestStatus(response.data);
+                return response;
+            } catch (error) {
+                return error;
+            }
+        }
+        fetchTalentRequestStatus();
+    })
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -124,11 +141,7 @@ const UpgradeAccount = ({ closeModal }) => {
 
     return (
         <div className="overlay" onClick={closeModal}>
-            <form className="form modal-form type-1 upgrade-account-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
-                <div className="modal-form--left">
-                    <img src={UpgradeAccountImg} className="modal-form__img" alt="Authentication image" />
-                </div>
-
+            <form className="form modal-form type-3 upgrade-account-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
                 <div className="modal-form--right">
                     <svg onClick={closeModal} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__close-ic">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -136,17 +149,20 @@ const UpgradeAccount = ({ closeModal }) => {
                     <h3 className="form__title">Nâng cấp tài khoản</h3>
                     <div className="form-field">
                         <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
+                        <span class="form-field__annotation">Bạn muốn được gọi với nghệ danh là?</span>
                         <input type="text" id="stageName" name="stageName" value={inputs.stageName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập nghệ danh của bạn" autoComplete="on" />
                         {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
                     </div>
                     <div className="form-field">
                         <label htmlFor="portfolioLink" className="form-field__label">Portfolio URL</label>
+                        <span class="form-field__annotation">Nhập đường dẫn đến hồ sơ họa sĩ của bạn (có thể là Facebook, Instagram, ...)</span>
                         <input type="text" id="portfolioLink" name="portfolioLink" value={inputs.portfolioLink || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập URL đến hồ sơ họa sĩ của bạn (vd Facebook)" autoComplete="on" />
                         {errors.portfolioLink && <span className="form-field__error">{errors.portfolioLink}</span>}
                     </div>
 
                     <div className="form-field">
                         <label className="form-field__label">Tác phẩm</label>
+                        <span class="form-field__annotation">Cung cấp 3 - 5 tác phẩm có chữ kí của bạn</span>
                         <div className="form-field">
                             {artworks.map((artwork, index) => (
                                 <div key={index} className="form-field__input img-preview">
