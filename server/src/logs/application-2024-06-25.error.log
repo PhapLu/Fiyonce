@@ -1,0 +1,13 @@
+2024-06-25 16:26:17::error::/v1/api/auth/movement/createMovement::c071586a-fa7f-4507-8316-df0ec4bede66::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:26:57::error::/v1/api/movement/createMovement::408fcfa5-66d6-420b-a11f-c71e73e272a4::undefined - NaNms - Response: {"errors":{"thumbnail":{"name":"ValidatorError","message":"Path `thumbnail` is required.","properties":{"message":"Path `thumbnail` is required.","type":"required","path":"thumbnail"},"kind":"required","path":"thumbnail"}},"_message":"Movement validation failed","name":"ValidationError","message":"Movement validation failed: thumbnail: Path `thumbnail` is required."}::{"message":"Movement validation failed: thumbnail: Path `thumbnail` is required."}
+2024-06-25 16:29:56::error::/v1/api/movement/createMovement::3895a145-76e5-4662-81cb-f39544a42e5c::undefined - NaNms - Response: {}::{"message":"req is not defined"}
+2024-06-25 16:31:01::error::/v1/api/movement/createMovement::9e1d6f94-ea77-4aec-b9c5-d766b2ad618c::undefined - NaNms - Response: {}::{"message":"body is not defined"}
+2024-06-25 16:31:33::error::/v1/api/movement/createMovement::79739d72-d75f-4c0a-a00c-f1162897b708::undefined - NaNms - Response: {}::{"message":"compressAndUploadImage is not defined"}
+2024-06-25 16:32:33::error::/v1/api/auth/movement/readMovements::f99d022a-39b9-42da-bb3e-e4835b12f7b9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:45:26::error::/v1/api/auth/movement/updateMovement::87dfa1e0-4c0a-44f3-9e5c-ecb8b5fb4322::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:45:30::error::/v1/api/movement/updateMovement::07b85cd4-b0d5-4127-a6de-4219d0c4be33::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:45:44::error::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::84290b1c-4866-4d44-aab1-d495dfbe6c8c::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:46:12::error::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::6738274a-f046-41e1-ad9d-3a2bab5a11fe::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:51:38::error::/v1/api/auth/movement/deleteMovement/667a8e904e3ac07a8f0b2344::85208de0-45a9-415f-afb1-d7e821e809c8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:57:22::error::/v1/api/movement/updateMovement/667a93b03347888e15891d91::1bcdc90c-e253-4e5f-b482-a9d85e8b3da7::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:57:43::error::/v1/api/movement/updateMovement/667a93b03347888e15891d91::3ab498f1-fa7c-4187-b26c-244ce47dcc6d::undefined - NaNms - Response: {}::{"message":"Movement update failed"}

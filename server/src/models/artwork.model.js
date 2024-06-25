@@ -7,20 +7,22 @@ const ArtworkSchema = new Schema({
     talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkCategory', required: true },
     movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
-    artworkTitle:{ type: String },
-    artworkImages: [{ type: String, required: true }],
-    artworkDescription: { type: String },
-    artworkLikes: [
-        {
+    title:{ type: String },
+    description: { type: String },
+    artworks: [{ type: String, required: true }],
+    views: { type: Number, default: 0 },
+    likes: {
+        type: [{
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-        }
-    ],
-    artworkViews: { type: Number, default: 0 },
-    artworkBookmarks: [
-        {
+        }],
+        default: []
+    },  
+    bookmarks: {
+        type: [{
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-        }
-    ],
+        }],
+        default: []
+    },
     // artworkComments: [{
     //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     //     content: { type: String, required: true },

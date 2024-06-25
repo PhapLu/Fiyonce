@@ -1,0 +1,60 @@
+2024-06-25 16:26:17::info::/v1/api/auth/movement/createMovement::c071586a-fa7f-4507-8316-df0ec4bede66::input-params ::POST::::{}
+2024-06-25 16:26:17::error::/v1/api/auth/movement/createMovement::c071586a-fa7f-4507-8316-df0ec4bede66::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:26:35::info::/v1/api/movement/createMovement::a739862c-2e1f-4e8c-a8c9-b3f1b2105983::input-params ::POST::::{}
+2024-06-25 16:26:45::info::/v1/api/auth/users/login::e1886a48-7f69-42f8-a260-c5a6fb801c2d::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-25 16:26:52::info::/v1/api/auth/users/login::64306620-35f0-4810-8bb9-616ca04eb279::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-06-25 16:26:57::info::/v1/api/movement/createMovement::408fcfa5-66d6-420b-a11f-c71e73e272a4::input-params ::POST::::{}
+2024-06-25 16:26:57::error::/v1/api/movement/createMovement::408fcfa5-66d6-420b-a11f-c71e73e272a4::undefined - NaNms - Response: {"errors":{"thumbnail":{"name":"ValidatorError","message":"Path `thumbnail` is required.","properties":{"message":"Path `thumbnail` is required.","type":"required","path":"thumbnail"},"kind":"required","path":"thumbnail"}},"_message":"Movement validation failed","name":"ValidationError","message":"Movement validation failed: thumbnail: Path `thumbnail` is required."}::{"message":"Movement validation failed: thumbnail: Path `thumbnail` is required."}
+2024-06-25 16:29:56::info::/v1/api/movement/createMovement::3895a145-76e5-4662-81cb-f39544a42e5c::input-params ::POST::::{}
+2024-06-25 16:29:56::error::/v1/api/movement/createMovement::3895a145-76e5-4662-81cb-f39544a42e5c::undefined - NaNms - Response: {}::{"message":"req is not defined"}
+2024-06-25 16:31:01::info::/v1/api/movement/createMovement::9e1d6f94-ea77-4aec-b9c5-d766b2ad618c::input-params ::POST::::{}
+2024-06-25 16:31:01::error::/v1/api/movement/createMovement::9e1d6f94-ea77-4aec-b9c5-d766b2ad618c::undefined - NaNms - Response: {}::{"message":"body is not defined"}
+2024-06-25 16:31:33::info::/v1/api/movement/createMovement::79739d72-d75f-4c0a-a00c-f1162897b708::input-params ::POST::::{}
+2024-06-25 16:31:33::error::/v1/api/movement/createMovement::79739d72-d75f-4c0a-a00c-f1162897b708::undefined - NaNms - Response: {}::{"message":"compressAndUploadImage is not defined"}
+2024-06-25 16:31:55::info::/v1/api/movement/createMovement::7fc15c41-ea68-45f6-aaa3-5b34cfaf8bd8::input-params ::POST::::{}
+2024-06-25 16:32:33::info::/v1/api/auth/movement/readMovements::f99d022a-39b9-42da-bb3e-e4835b12f7b9::input-params ::GET::::{}
+2024-06-25 16:32:33::error::/v1/api/auth/movement/readMovements::f99d022a-39b9-42da-bb3e-e4835b12f7b9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:32:38::info::/v1/api/movement/readMovements::f33ad34a-efb9-4df6-a711-b60c803567e2::input-params ::GET::::{}
+2024-06-25 16:45:26::info::/v1/api/auth/movement/updateMovement::87dfa1e0-4c0a-44f3-9e5c-ecb8b5fb4322::input-params ::PATCH::::{}
+2024-06-25 16:45:26::error::/v1/api/auth/movement/updateMovement::87dfa1e0-4c0a-44f3-9e5c-ecb8b5fb4322::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:45:30::info::/v1/api/movement/updateMovement::07b85cd4-b0d5-4127-a6de-4219d0c4be33::input-params ::PATCH::::{}
+2024-06-25 16:45:30::error::/v1/api/movement/updateMovement::07b85cd4-b0d5-4127-a6de-4219d0c4be33::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:45:44::info::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::84290b1c-4866-4d44-aab1-d495dfbe6c8c::input-params ::PATCH::::{}
+2024-06-25 16:45:44::error::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::84290b1c-4866-4d44-aab1-d495dfbe6c8c::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:46:12::info::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::6738274a-f046-41e1-ad9d-3a2bab5a11fe::input-params ::PATCH::::{}
+2024-06-25 16:46:12::error::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::6738274a-f046-41e1-ad9d-3a2bab5a11fe::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:47:05::info::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::1fad142f-c51e-42f0-b743-88801141a2b9::input-params ::PATCH::::{}
+2024-06-25 16:47:20::info::/v1/api/movement/readMovements::9fbf2b32-2f09-4e01-ac21-e99ca7123e79::input-params ::GET::::{}
+2024-06-25 16:49:46::info::/v1/api/movement/updateMovement/667a8e904e3ac07a8f0b2344::d9560610-cc4a-4b7a-85f8-a195bec7a5f8::input-params ::PATCH::::{}
+2024-06-25 16:51:38::info::/v1/api/auth/movement/deleteMovement/667a8e904e3ac07a8f0b2344::85208de0-45a9-415f-afb1-d7e821e809c8::input-params ::DELETE::::{}
+2024-06-25 16:51:38::error::/v1/api/auth/movement/deleteMovement/667a8e904e3ac07a8f0b2344::85208de0-45a9-415f-afb1-d7e821e809c8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-25 16:51:42::info::/v1/api/movement/deleteMovement/667a8e904e3ac07a8f0b2344::b4ef1d3f-5f96-4d14-b561-59d2dc8cfb47::input-params ::DELETE::::{}
+2024-06-25 16:53:41::info::/v1/api/movement/readMovements::6f27fdec-b69c-4c59-b530-329c7e77c578::input-params ::GET::::{}
+2024-06-25 16:53:48::info::/v1/api/movement/createMovement::15577e1c-8e18-48a1-b34a-58498c94b0c7::input-params ::POST::::{}
+2024-06-25 16:54:41::info::/v1/api/movement/readMovements::565d46be-c487-40d7-ae40-82d664fa8904::input-params ::GET::::{}
+2024-06-25 16:55:19::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::dd234343-ccb8-4d37-ae66-4b6c429b28e7::input-params ::PATCH::::{}
+2024-06-25 16:55:28::info::/v1/api/movement/readMovements::c64917d1-209d-4ff0-958b-eb8f4168121a::input-params ::GET::::{}
+2024-06-25 16:55:37::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::061f3213-b09f-4223-ac67-e971caa5fafe::input-params ::PATCH::::{}
+2024-06-25 16:56:38::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::36d48da9-fd50-453d-93e9-cb190ffdc331::input-params ::PATCH::::{}
+2024-06-25 16:56:56::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::edbf9682-030a-4a19-ac31-9ac3983c6d25::input-params ::PATCH::::{}
+2024-06-25 16:57:18::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::1bcdc90c-e253-4e5f-b482-a9d85e8b3da7::input-params ::PATCH::::{}
+2024-06-25 16:57:22::error::/v1/api/movement/updateMovement/667a93b03347888e15891d91::1bcdc90c-e253-4e5f-b482-a9d85e8b3da7::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:57:40::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::3ab498f1-fa7c-4187-b26c-244ce47dcc6d::input-params ::PATCH::::{}
+2024-06-25 16:57:43::error::/v1/api/movement/updateMovement/667a93b03347888e15891d91::3ab498f1-fa7c-4187-b26c-244ce47dcc6d::undefined - NaNms - Response: {}::{"message":"Movement update failed"}
+2024-06-25 16:59:11::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::aafcc39c-754b-48e1-9330-7c48ef87711a::input-params ::PATCH::::{}
+2024-06-25 17:00:18::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::d21cd21a-29f6-4017-a5f5-c7b10e142672::input-params ::PATCH::::{}
+2024-06-25 17:01:07::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::c85b1338-1a3c-4730-813e-24506a8c620d::input-params ::PATCH::::{}
+2024-06-25 17:04:52::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::c600e508-66b9-4e94-a6dd-7f9ee58e991a::input-params ::PATCH::::{}
+2024-06-25 17:05:01::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::d2002876-e2ed-48d7-8f5a-d42699702449::input-params ::PATCH::::{}
+2024-06-25 17:07:40::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::806e9d28-9c08-4ca2-a104-761bdc1f86bb::input-params ::PATCH::::{}
+2024-06-25 17:08:28::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::1abb19e9-7533-432d-8427-d765008a59f8::input-params ::PATCH::::{}
+2024-06-25 17:09:49::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::c2875ee4-d3c1-46ba-a9e6-deb83b6335af::input-params ::PATCH::::{}
+2024-06-25 17:10:03::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::b2011df2-4396-44e7-b26c-2e771631f59f::input-params ::PATCH::::{}
+2024-06-25 17:10:45::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::d86860fb-7f3e-45ae-8739-4a2e382e812e::input-params ::PATCH::::{}
+2024-06-25 17:11:23::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::507b8eae-4c20-4a7a-afa7-ea349168f248::input-params ::PATCH::::{}
+2024-06-25 17:11:51::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::84baae15-84f4-484b-b2cc-21ccc26f014e::input-params ::PATCH::::{}
+2024-06-25 17:12:03::info::/v1/api/movement/updateMovement/667a93b03347888e15891d91::49755388-a895-4791-af17-09de3802b63d::input-params ::PATCH::::{}
+2024-06-25 17:16:51::info::/v1/api/movement/createMovement::1f987c42-adc7-4f14-bced-7c7e3e695386::input-params ::POST::::{}
+2024-06-25 17:17:01::info::/v1/api/movement/readMovements::e803722a-6d29-4894-bd6f-8071f149bcf4::input-params ::GET::::{}
+2024-06-25 17:17:31::info::/v1/api/movement/updateMovement/667a99175a8198e41f205af3::e6011df2-0d04-4b33-90ee-ca8f2d9e46a5::input-params ::PATCH::::{}
+2024-06-25 17:17:45::info::/v1/api/movement/updateMovement/667a99175a8198e41f205af3::d2aea612-c3ee-4b71-a6d1-d95b9325d0a2::input-params ::PATCH::::{}

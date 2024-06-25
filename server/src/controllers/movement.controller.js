@@ -5,7 +5,7 @@ class MovementController{
     createMovement = async(req, res, next) => {
         new SuccessResponse({
             message: 'Create movements success!',
-            metadata: await MovementService.createMovement(req.userId, req.body)
+            metadata: await MovementService.createMovement(req.userId, req)
         }).send(res)
     }
 
@@ -19,7 +19,7 @@ class MovementController{
     updateMovement = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update movement success!',
-            metadata: await MovementService.updateMovement(req.userId, req.params.movementId, req.body)
+            metadata: await MovementService.updateMovement(req.userId, req.params.movementId, req)
         }).send(res)
     }
 
