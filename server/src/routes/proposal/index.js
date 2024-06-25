@@ -6,7 +6,7 @@ import { verifyToken } from "../../middlewares/jwt.js";
 
 const router = express.Router()
 //Member
-router.get('/readProposals/:orderId', asyncHandler(proposalController.readProposals))
+router.get('/readProposalsByOrderId/:orderId', asyncHandler(proposalController.readProposalsByOrderId))
 
 //authentication
 //router.use(authenticationV2)

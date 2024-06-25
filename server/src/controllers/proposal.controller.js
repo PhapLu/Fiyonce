@@ -16,10 +16,10 @@ class ProposalController{
         }).send(res)
     }
 
-    readProposals = async(req, res, next) =>{
+    readProposalsByOrderId = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all proposals of an order',
-            metadata: await ProposalService.readProposals(req.params.orderId)
+            metadata: await ProposalService.readProposalsByOrderId(req.params.orderId)
         }).send(res)
     }
 
