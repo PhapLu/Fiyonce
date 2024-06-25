@@ -6,6 +6,19 @@
             border-radius: 12px;
             padding: 24px 28px;
             margin-bottom: 20px;
+            position: relative;
+
+            .profile-commission-service__category-item__edit-btn {
+                position: absolute;
+                top: 20px;
+                right: 88px;
+            }
+
+            .profile-commission-service__category-item__delete-btn {
+                position: absolute;
+                top: 20px;
+                right: 28px;
+            }
 
             .profile-commission-service__category-item__header {
                 font-size: 1.5rem;
@@ -35,10 +48,6 @@
                         position: absolute;
                         right: 12px;
                         top: 0;
-
-                        .bookmark-service-btn__ic {
-                            margin-right: 0;
-                        }
                     }
 
                     .profile-commission-service__category-item__service-item--left {
@@ -62,7 +71,7 @@
 
 
                         .profile-commission-service__category-item__service-item__note {
-                            color: var(--gray-3-color);
+                            color: var(--black-2-color);
                             opacity: 0.8;
                             font-style: italic;
                         }

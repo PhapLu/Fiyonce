@@ -47,6 +47,7 @@ export default function Sidebar({ profileInfo }) {
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+        console.log(inputs)
 
         // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
@@ -184,6 +185,7 @@ export default function Sidebar({ profileInfo }) {
                         <input
                             type="text"
                             id="address"
+                            name="address"
                             value={inputs.address || ""}
                             onChange={handleChange}
                             className="form-field__input"
@@ -296,8 +298,6 @@ export default function Sidebar({ profileInfo }) {
                             <div className="sidebar__socials__link-container">
                                 {profileInfo.socialLinks.map((socialLink, key) => (
                                     <div key={key} className="sidebar__socials__link-item" dangerouslySetInnerHTML={{ __html: getSocialLinkIcon(socialLink) }}>
-                                            
-                                        {/* <a href="https://www.facebook.com/">{socialLink}</a> */}
                                     </div>
                                 ))}
                             </div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 // Resources
 import Artworks from "../../components/artworks/Artworks"
-import AddShowcasingArtwork from "../../components/crudShowcasingArtwork/add/AddShowcasingArtwork"
+import CreateShowcasingArtwork from "../../components/crudShowcasingArtwork/create/CreateShowcasingArtwork"
 
 // Styling
 import "./ProfileArtworks.scss";
@@ -137,8 +137,8 @@ export default function ProfileArtworks() {
     ]);
 
     const [artworks, setArtworks] = useState(artworksByCollections.map(collection => collection.artworks).flat());
-    const [portfolioCollections, setPortfolioCollections] = useState(artworksByCollections.map(collection =>{ return {_id: collection._id, title: collection.title} }));
-    const [showAddShowcasingArtworkForm, setShowAddShowcasingArtworkForm] = useState(false);
+    const [showcasingArtworkCollections, setPortfolioCollections] = useState(artworksByCollections.map(collection => { return { _id: collection._id, title: collection.title } }));
+    const [showCreateShowcasingArtworkForm, setShowCreateShowcasingArtworkForm] = useState(false);
 
     const handleCollectionClick = (collectionId) => {
         setActiveCollectionId(collectionId);
@@ -174,7 +174,7 @@ export default function ProfileArtworks() {
                         ))}
                     </div>
                     <div className="profile-page__header--right">
-                        <button className="btn btn-3" onClick={() => { setShowAddShowcasingArtworkForm(true); setOverlayVisible(true) }}>
+                        <button className="btn btn-3" onClick={() => { setShowCreateShowcasingArtworkForm(true); setOverlayVisible(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -192,7 +192,7 @@ export default function ProfileArtworks() {
 
             {overlayVisible && (
                 <div className={`overlay`}>
-                    {showAddShowcasingArtworkForm && <AddShowcasingArtwork portfolioCollections={portfolioCollections} setShowAddShowcasingArtworkForm={setShowAddShowcasingArtworkForm} setOverlayVisible={setOverlayVisible} />}
+                    {showCreateShowcasingArtworkForm && <CreateShowcasingArtwork showcasingArtworkCollections={showcasingArtworkCollections} setShowCreateShowcasingArtworkForm={setShowCreateShowcasingArtworkForm} setOverlayVisible={setOverlayVisible} />}
                 </div>
             )}
         </>

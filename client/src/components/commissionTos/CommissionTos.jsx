@@ -54,7 +54,13 @@ export default function CommissionTos({ setShowAddCommissionTosForm, setShowComm
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <h2 className="form__title">Quản lí điều khoản dịch vụ</h2>
-            <table>
+          <ul className="commission-tos-container modal-form__box">
+            <li className="commission-tos-item">
+                <strong>ABCDEF</strong>
+                
+            </li>
+          </ul>
+            {/* <table>
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -105,7 +111,7 @@ export default function CommissionTos({ setShowAddCommissionTosForm, setShowComm
                     <br />
                     <br />
                 </tbody>
-            </table>
+            </table> */}
             <div className="modal-form__button-container">
                 <button className="modal-form__button-item btn btn-2 btn-md" onClick={() => { setShowAddCommissionTosForm(true); setShowCommissionTosView(false)}}>Thêm điều khoản</button>
                 <button className="modal-form__button-item btn btn-4 btn-md" onClick={() => { setShowCommissionTosView(false); setOverlayVisible(false); }}>Đóng</button>

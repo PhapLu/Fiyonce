@@ -214,7 +214,7 @@ export default function AddCommissionService({
                                         onChange={handleChange}
                                         className="form-field__input"
                                     >
-                                        <option value="">-- Chọn loại dịch vụ --</option>
+                                        <option value="">-- Chọn thể loại dịch vụ --</option>
                                         {commissionServiceCategories.map((serviceCategory) => (
                                             <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
                                         ))}
@@ -341,7 +341,7 @@ export default function AddCommissionService({
                             <label htmlFor="notes" className="form-field__label">Lưu ý</label>
                             <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn.</span>
                             <textarea
-                                type=""
+                                type="text"
                                 name="notes"
                                 value={inputs?.notes}
                                 className="form-field__input"
