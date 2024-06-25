@@ -26,7 +26,7 @@ class ServiceController{
     updateCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update service success!',
-            metadata: await CommissionServiceService.updateCommissionService(req.userId, req.params.commissionServiceId, req.body)
+            metadata: await CommissionServiceService.updateCommissionService(req.userId, req.params.commissionServiceId, req)
         }).send(res)
     }
 

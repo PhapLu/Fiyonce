@@ -44,6 +44,12 @@ const OrderSchema = new mongoose.Schema({
     isPrivate: { type: Boolean },
     deadline: { type: Date},
     fileFormats: [{ type: String }],
+    review:
+        {
+            userId: { type: Schema.Types.ObjectId, ref: 'User' },
+            rating: { type: Number, required: true },
+            comment: { type: String, required: true },
+        }
 },{
     timestamps: true,
     collection: COLLECTION_NAME

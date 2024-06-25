@@ -5,46 +5,47 @@ const COLLECTION_NAME = 'Artworks'
 
 const ArtworkSchema = new Schema(
   {
-    artwork_title:{ type: String },
-    artwork_images: [{ type: String, required: true }],
-    artwork_thumb: { type: String, required: true },
-    artwork_description: { type: String },
-    artwork_likes: [
+    artworkTitle:{ type: String },
+    artworkImages: [{ type: String, required: true }],
+    artworkThumb: { type: String, required: true },
+    artworkDescription: { type: String },
+    artworkLikes: [
         {
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
         }
     ],
-    artwork_views: { type: Number, default: 0 },
-    artwork_saves: [
+    artworkViews: { type: Number, default: 0 },
+    artworkSaves: [
         {
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
         }
     ],
-    artwork_fields: [{type: mongoose.Schema.Types.ObjectId, ref: 'Field'}],
-    artwork_comments: [{
+    artworkFields: [{type: mongoose.Schema.Types.ObjectId, ref: 'Field'}],
+    artworkComments: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
         content: { type: String, required: true },
-        created_at: { type: Date, default: Date.now },
+        createdAt: { type: Date, default: Date.now },
     }],
     /////////
-    artwork_type:{
+    artworkType:{
         type: String,
         enum: ['ForSelling', 'Showcasing'],
         required: true
     },
-    artwork_attributes:{
+    artworkAttributes:{
         type: Schema.Types.Mixed,
         required: true,
     },
-    artwork_talent: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    movements: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movement', maxlength: 3 }],
-    // artwork_isDraft: {
+    talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ServiceCategory', required: true },
+    movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
+    // artworkIsDraft: {
     //     type: Boolean,
     //     index: true,
     //     default: true,
     //     select: false
     // },
-    // artwork_isPublished: {
+    // artworkIsPublished: {
     //     type: Boolean,
     //     index: true,
     //     default: false,
@@ -67,7 +68,7 @@ ArtworkSchema.index({ description: 'text' });
 //         type: Number,
 //         required: true
 //     },
-//     artwork_talent:{
+//     artworkTalent:{
 //         type: Schema.Types.ObjectId,
 //         ref: 'User',
 //         required: true
@@ -78,7 +79,7 @@ ArtworkSchema.index({ description: 'text' });
 // })
 
 const ShowcasingSchema = new Schema({
-    artwork_talent:{
+    artworkTalent:{
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true

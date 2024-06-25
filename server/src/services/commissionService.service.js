@@ -10,7 +10,6 @@ class CommissionServiceService{
         const talent = await User.findById(talentId);
         if (!talent) throw new NotFoundError('Talent not found!');
         if (talent.role !== 'talent') throw new BadRequestError('User is not a talent!');
-        console.log(req.files)
     
         // 2. Validate request body
         const { title, serviceCategoryId, minPrice, deliverables } = req.body;
@@ -21,7 +20,7 @@ class CommissionServiceService{
             throw new BadRequestError('Please provide all required fields');
         }
     
-        // 3. Upload files to Cloudinary (compressed) and get their optimized URLs
+        // 3. Upload files to Cloudinary (compressed) and get their URLs
         try {
             const uploadPromises = req.files.files.map(file => compressAndUploadImage({
                 buffer: file.buffer,
@@ -32,8 +31,9 @@ class CommissionServiceService{
             }));
             const uploadResults = await Promise.all(uploadPromises);
     
-            // Generate optimized URLs
+            // Generate URLs
             const artworks = uploadResults.map(result => result.secure_url);
+
             // 4. Create and save commission service
             let service = new CommissionService({
                 talentId,
@@ -84,44 +84,60 @@ class CommissionServiceService{
     }
 
 
-    static updateCommissionService = async(talentId, commissionServiceId, body) => {
-        // 1. Check talent and service
-        const talent = await User.findById(talentId);
-        const service = await CommissionService.findById(commissionServiceId);
+    static updateCommissionService = async (talentId, commissionServiceId, req) => {
+        try {
+            console.log(req.body)
+            // 1. Check talent and service
+            const talent = await User.findById(talentId);
+            const service = await CommissionService.findById(commissionServiceId);
     
-        if (!talent) throw new NotFoundError('Talent not found');
-        if (!service) throw new NotFoundError('Service not found');
-        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
+            if (!talent) throw new NotFoundError('Talent not found');
+            if (!service) throw new NotFoundError('Service not found');
+            if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
     
-        const oldCategoryId = service.serviceCategoryId; // Store the old category ID
-        console.log("aaaa")
-        console.log(oldCategoryId);
+            const oldCategoryId = service.serviceCategoryId; // Store the old category ID
     
-        // 2. Update Service
-        let updatedService = await CommissionService.findByIdAndUpdate(
-            commissionServiceId,
-            { $set: body },
-            { new: true }
-        );
+            // 2. Handle file uploads if new files were uploaded
+            if (req.files && req.files.files) {
+                // Upload new files to Cloudinary
+                const uploadPromises = req.files.files.map(file => compressAndUploadImage({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/commissionServices/${talentId}`,
+                    width: 1920,
+                    height: 1080
+                }));
+                const uploadResults = await Promise.all(uploadPromises);
+                const artworks = uploadResults.map(result => result.secure_url);
+                req.body.artworks = artworks;
     
-        // 3. Check if the category has changed and if the old category is now empty
-        if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
-            console.log(`Old Category ID: ${oldCategoryId}`);
-            console.log(`New Category ID: ${updatedService.serviceCategoryId}`);
-    
-            const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
-            console.log(`Services in Old Category: ${servicesInOldCategory.length}`);
-    
-            if (servicesInOldCategory.length === 0) {
-                await ServiceCategory.findByIdAndDelete(oldCategoryId);
-                console.log(`Deleted Category ID: ${oldCategoryId}`);
+                // Delete old files from Cloudinary
+                const publicIds = service.artworks.map(artwork => extractPublicIdFromUrl(artwork));
+                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
             }
-        }
     
-        return {
-            service: updatedService
-        };
-    }
+            // 3. Update the service
+            const updatedService = await CommissionService.findByIdAndUpdate(
+                commissionServiceId,
+                { $set: req.body },
+                { new: true }
+            );
+    
+            // 4. Check if the category has changed and if the old category is now empty
+            if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
+                const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
+                if (servicesInOldCategory.length === 0) {
+                    await ServiceCategory.findByIdAndDelete(oldCategoryId);
+                    console.log(`Deleted Category ID: ${oldCategoryId}`);
+                }
+            }
+    
+            return { service: updatedService };
+        } catch (error) {
+            console.error('Error in updating commission service:', error);
+            throw new Error('Service update failed');
+        }
+    };
     
     
 
