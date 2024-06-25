@@ -113,7 +113,7 @@ class OrderService{
     }
     //End Order CRUD
 
-    static viewOrderHistory = async (clientId) => {
+    static readOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId)
         if(!foundUser) throw new NotFoundError('User not found!')

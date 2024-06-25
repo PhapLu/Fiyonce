@@ -137,7 +137,7 @@ class ProposalService{
             proposal
         }
     }
-    static viewProposalsHistory = async(userId) => {
+    static readProposalsHistory = async(userId) => {
         //1. Check if user exists
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError('User not found')

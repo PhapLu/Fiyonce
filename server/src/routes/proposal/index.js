@@ -18,7 +18,7 @@ router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProp
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 //END CRUD
-router.get('/viewProposalsHistory', asyncHandler(proposalController.viewProposalsHistory))
+router.get('/readProposalsHistory', asyncHandler(proposalController.readProposalsHistory))
 router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
 router.patch('/denyProposal/:proposalId', asyncHandler(proposalController.denyProposal))
 

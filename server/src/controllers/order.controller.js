@@ -39,10 +39,10 @@ class OrderController{
     }
     //End Order CRUD
 
-    viewOrderHistory = async(req, res, next) =>{
+    readOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders of a client',
-            metadata: await OrderService.viewOrderHistory(req.userId)
+            metadata: await OrderService.readOrderHistory(req.userId)
         }).send(res)
     }
 
