@@ -1199,11 +1199,6 @@
 2024-06-20 14:00:42::info::/v1/api/talentRequest/requestUpgradingToTalent::94bde265-0323-4c05-9cd4-209541717906::input-params ::POST::::{}
 2024-06-20 14:02:53::info::/v1/api/talentRequest/requestUpgradingToTalent::e9cf9305-29d9-4421-9fda-49ba0b098970::input-params ::POST::::{}
 2024-06-20 14:10:00::info::/v1/api/talentRequest/requestUpgradingToTalent::f95e4d45-67bd-47b1-98d2-3e59a01158b0::input-params ::POST::::{}
-<<<<<<< HEAD
-2024-06-20 14:15:17::info::/v1/api/talentRequest/requestUpgradingToTalent::dbd3af90-e9cc-4398-8f98-1baa65f50ebc::input-params ::POST::::{}
-2024-06-20 14:17:17::info::/v1/api/talentRequest/requestUpgradingToTalent::76a30967-ad35-43e4-a329-cc9db2531d55::input-params ::POST::::{}
-2024-06-20 14:18:01::info::/v1/api/talentRequest/requestUpgradingToTalent::e8a16676-b6fc-4405-85aa-69ed0d964857::input-params ::POST::::{}
-=======
 2024-06-20 14:19:28::info::/v1/api/user/me::4b5ca0bb-d058-4af8-a34c-021787a40351::input-params ::GET::::{}
 2024-06-20 14:19:28::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::d12730a1-0b32-4f7e-a547-3e9129f76287::input-params ::GET::::{}
 2024-06-20 14:19:28::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::eb6252ac-6e76-4a98-8316-315ba8f7da3d::input-params ::GET::::{}
@@ -2231,7 +2226,6 @@
 2024-06-20 19:42:07::info::/v1/api/user/me::06f165ce-bee2-41f7-92b1-20b3f04e01eb::input-params ::GET::::{}
 2024-06-20 19:42:07::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::8eb7d60b-dc67-40ba-a351-f745237cbb25::input-params ::GET::::{}
 2024-06-20 19:42:07::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::7269841c-e46a-44cf-8d7b-3ba569e548cf::input-params ::GET::::{}
->>>>>>> a9bcb9e3ae9ee9260c7aa0940dc63daa18b917dd
 2024-06-20 20:18:20::info::/v1/api/commissionService/updateCommissionService::43a88d59-e4d8-4c60-8515-ac65d624698e::input-params ::PATCH::::{}
 2024-06-20 20:18:20::error::/v1/api/commissionService/updateCommissionService::43a88d59-e4d8-4c60-8515-ac65d624698e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-06-20 20:21:45::info::/v1/api/commissionService/createCommissionService::ed871e33-8fe5-471f-bd34-c18a285c198e::input-params ::POST::::{}
@@ -2244,3 +2238,4 @@
 2024-06-20 20:26:21::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::71545cf0-0044-4c40-887c-1b7287666a43::input-params ::PATCH::::{}
 2024-06-20 20:30:51::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::8527e832-57ce-4283-904f-0e650b3b8728::input-params ::PATCH::::{}
 2024-06-20 20:32:07::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::75774ffe-bc94-4af9-8d3a-469452a823a1::input-params ::PATCH::::{}
+2024-06-20 20:32:39::info::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::906a5163-4f0f-41ab-9783-ac59788d7188::input-params ::PATCH::::{}

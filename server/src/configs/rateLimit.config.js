@@ -4,7 +4,10 @@ import rateLimit from 'express-rate-limit';
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 400, // Limit each IP to 400 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.'
+  message: {
+    code: 429, 
+    message: 'Too many requests from this IP, please try again later.'
+  }
 });
 
 // Specific rate limiter for authentication routes
