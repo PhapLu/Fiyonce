@@ -18,10 +18,10 @@ const TalentRequestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    artworks: {
-        type: [String],
+    artworks: [{
+        type: String,
         required: true
-    },
+    }],
     jobTitle: {
         type: String
     },
