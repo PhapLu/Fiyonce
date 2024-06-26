@@ -1,0 +1,88 @@
+.profile-commission-services {
+    .profile-commission-service__category-container {
+
+        .profile-commission-service__category-item {
+            border: 2px solid var(--gray-1-color);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            position: relative;
+
+            .profile-commission-service__category-item__edit-btn {
+                position: absolute;
+                top: 20px;
+                right: 88px;
+            }
+
+            .profile-commission-service__category-item__delete-btn {
+                position: absolute;
+                top: 20px;
+                right: 28px;
+            }
+
+            .profile-commission-service__category-item__header {
+                font-size: 1.5rem;
+                margin: 0;
+                font-weight: 600;
+                color: var(--gray-3-color);
+            }
+
+            .profile-commission-service__category-item__service-container {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                hr {
+                    margin: 16px 0;
+                }
+
+                .profile-commission-service__category-item__service-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-radius: 12px;
+                    transition: 0.2s linear;
+                    position: relative;
+
+                    .bookmark-service-btn {
+                        position: absolute;
+                        right: 12px;
+                        top: 0;
+                    }
+
+                    .profile-commission-service__category-item__service-item--left {
+                        width: 45%;
+                    }
+
+                    .profile-commission-service__category-item__service-item--right {
+                        width: 52%;
+
+                        h3 {
+                            font-size: 2.2rem;
+                            margin: 0;
+                            color: var(--black-1-color);
+                        }
+
+                        h4 {
+                            margin: 8px 0;
+                            font-size: 1.8rem;
+                        }
+
+
+
+                        .profile-commission-service__category-item__service-item__note {
+                            color: var(--black-2-color);
+                            opacity: 0.8;
+                            font-style: italic;
+                        }
+
+                        button {
+                            margin-right: 12px;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

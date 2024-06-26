@@ -6,6 +6,8 @@ import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl, g
 
 class TalentRequestService{
     static requestUpgradingToTalent = async (userId, req) => {
+        console.log(req.body)
+        console.log(req.files)
         // 1. Check user exists and is not a talent
         const currentUser = await User.findById(userId)
         if (!currentUser) throw new NotFoundError('User not found')

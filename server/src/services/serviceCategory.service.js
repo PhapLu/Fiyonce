@@ -39,7 +39,6 @@ class ServiceCategoryService{
         try {
             // Fetch all service categories
             const serviceCategories = await ServiceCategory.find({talentId}).lean();
-            console.log(serviceCategories)
 
             // For each category, find associated services
             const categorizedServices = await Promise.all(serviceCategories.map(async (category) => {
@@ -51,7 +50,6 @@ class ServiceCategoryService{
                     commissionServices: services
                 };
             }));
-            console.log(categorizedServices)
     
             return {categorizedServices};
         } catch (error) {
@@ -81,6 +79,8 @@ class ServiceCategoryService{
     }   
 
     static deleteServiceCategory = async(talentId, serviceCategoryId) => {
+        console.log("abc")
+        console.log(serviceCategoryId)
         //1. Check talent and service
         const talent = await User.findById(talentId)
         const serviceCategory = await ServiceCategory.findById(serviceCategoryId)
