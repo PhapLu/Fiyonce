@@ -59,3 +59,19 @@
 2024-06-26 15:25:52::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::25a45601-a2c3-4987-80ce-e30f2bfd345c::input-params ::GET::::{}
 2024-06-26 15:26:45::info::/v1/api/review/updateReview/666aa68d5a40b73e7f404702::b261d503-c3b7-441a-b5bf-9c739bf862a0::input-params ::PATCH::::{}
 2024-06-26 15:26:51::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::4d106cb9-37a6-4fe2-82a5-2bd4d2d55dd0::input-params ::GET::::{}
+2024-06-26 15:27:52::info::/v1/api/review/updateReview/666aa68d5a40b73e7f404702::53fee383-95bf-405f-acd5-7997d8f53929::input-params ::PATCH::::{}
+2024-06-26 15:27:56::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::3f16b2c0-49f7-45e3-8691-1281a2a5641f::input-params ::GET::::{}
+2024-06-26 15:28:23::info::/v1/api/review/deleteReview/666aa68d5a40b73e7f404702::7625fcd1-2b99-45dc-8417-2ea784419e5a::input-params ::PATCH::::{}
+2024-06-26 15:28:27::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::70431c56-6aea-422e-9660-498d00bf2186::input-params ::GET::::{}
+2024-06-26 15:28:34::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::40ad5494-1c6c-4698-b626-84f0db1ac752::input-params ::PATCH::::{}
+2024-06-26 15:28:38::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::1e7184b9-7bd5-490d-95ae-9df88ccf3af7::input-params ::GET::::{}
+2024-06-26 15:28:41::info::/v1/api/review/updateReview/666aa68d5a40b73e7f404702::10154534-574b-4223-8766-f6f0ed326ca8::input-params ::PATCH::::{}
+2024-06-26 15:28:47::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::4bc0716a-b4fa-472b-bf78-64a41bcbabf2::input-params ::GET::::{}
+2024-06-26 15:28:59::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::06c090a7-879a-4f42-86c1-a48f9901e982::input-params ::PATCH::::{}
+2024-06-26 15:29:03::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::9e2480d9-9919-452a-9811-d50ea5b1478d::input-params ::GET::::{}
+2024-06-26 15:29:24::info::/v1/api/review/updateReview/666aa68d5a40b73e7f404702::eb9b0906-d524-4446-ab1e-c6f2599a1425::input-params ::PATCH::::{}
+2024-06-26 15:29:27::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::f1a78148-b318-467c-972f-6911d549ec13::input-params ::GET::::{}
+2024-06-26 15:29:30::info::/v1/api/review/deleteReview/666aa68d5a40b73e7f404702::fe5bea5a-3129-44ff-99a0-96360e184b89::input-params ::PATCH::::{}
+2024-06-26 15:29:33::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::d18b31e8-ff4b-4b73-954e-c62aa39ff2f0::input-params ::GET::::{}
+2024-06-26 15:36:55::info::/v1/api/review/updateReview/666aa68d5a40b73e7f404702::ae81c3b9-fe78-43d4-a14f-a84133517d52::input-params ::PATCH::::{"rating":4,"comment":"This is the new comment from me"}
+2024-06-26 15:36:58::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::f5677168-8133-4b84-9bf5-08dad1e46f8d::input-params ::GET::::{}

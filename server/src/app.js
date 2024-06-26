@@ -44,16 +44,17 @@ app.use(sanitizeInputs)
 
 //Advanced Logger
 app.use((req, res, next) => {
-    const requestId = req.headers['x-request-id']
-    req.requestId = requestId ? requestId : uuidv4()
+    const requestId = req.headers['x-request-id'];
+    req.requestId = requestId ? requestId : uuidv4();
+
     myLogger.log(`input-params ::${req.method}::`, [
         req.path,
-        { requestId: req.requestId},
-        req.method === 'POST' ? req.body : req.query
-    ])
+        { requestId: req.requestId },
+        (req.method === 'POST' || req.method === 'PATCH') ? req.body : req.query
+    ]);
 
-    next()
-}) 
+    next();
+});
 // Init routes
 app.use('', router);
 

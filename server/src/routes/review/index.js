@@ -1,5 +1,4 @@
 import express from 'express'
-import accessService from '../../services/auth.service.js'
 import { asyncHandler } from '../../helpers/asyncHandler.js'
 import { verifyToken } from "../../middlewares/jwt.js";
 import reviewController from '../../controllers/review.controller.js';
