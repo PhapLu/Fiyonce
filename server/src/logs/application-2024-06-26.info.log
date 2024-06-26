@@ -92,3 +92,20 @@
 2024-06-26 15:52:07::info::/v1/api/review/readReviews/66742d4af3390f5f176aea6c::88980c34-16a3-4dbb-b3bf-db802bc9e2d0::input-params ::GET::::{}
 2024-06-26 15:52:07::error::/v1/api/review/readReviews/66742d4af3390f5f176aea6c::88980c34-16a3-4dbb-b3bf-db802bc9e2d0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-06-26 15:52:34::info::/v1/api/review/readReviewsAndCommissionServiceRating/66742d4af3390f5f176aea6c::62b5f52b-139f-401c-8add-00133042454b::input-params ::GET::::{}
+2024-06-26 19:14:26::info::/v1/api/termOfService/createTermOfService::349287bf-652e-4fbf-97c7-c0e01b97a826::input-params ::POST::::{"general":"Testing TOS","payments":"Testing TOS","deadlinesAndDelivery":"Testing TOS","use":"Testing TOS","refunds":"Testing TOS"}
+2024-06-26 19:14:26::error::/v1/api/termOfService/createTermOfService::349287bf-652e-4fbf-97c7-c0e01b97a826::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 19:14:43::info::/v1/api/termOfService/createTermOfService::c78993c0-2163-4030-a327-ded121467cc7::input-params ::POST::::{"general":"Testing TOS","payments":"Testing TOS","deadlinesAndDelivery":"Testing TOS","use":"Testing TOS","refunds":"Testing TOS"}
+2024-06-26 19:14:43::error::/v1/api/termOfService/createTermOfService::c78993c0-2163-4030-a327-ded121467cc7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 19:15:11::info::/v1/api/termOfService/createTermOfService::458c1113-88d1-4bbf-8bf0-f14e41259080::input-params ::POST::::{"general":"Testing TOS","payments":"Testing TOS","deadlinesAndDelivery":"Testing TOS","use":"Testing TOS","refunds":"Testing TOS"}
+2024-06-26 19:15:11::error::/v1/api/termOfService/createTermOfService::458c1113-88d1-4bbf-8bf0-f14e41259080::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 19:15:44::info::/v1/api/termOfService/createTermOfService::2846ef19-e70b-497f-b31f-e71d45909232::input-params ::POST::::{"general":"Testing TOS","payments":"Testing TOS","deadlinesAndDelivery":"Testing TOS","use":"Testing TOS","refunds":"Testing TOS"}
+2024-06-26 19:15:44::error::/v1/api/termOfService/createTermOfService::2846ef19-e70b-497f-b31f-e71d45909232::403 - 0ms - Response: {"status":403,"now":1719404144287}::{"message":"User is not a talent"}
+2024-06-26 19:15:54::info::/v1/api/auth/users/login::88482272-667e-4dca-a0bc-67a137a717b6::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-26 19:15:59::info::/v1/api/termOfService/createTermOfService::b831f9ff-78dd-4a99-9b99-a78832cc213a::input-params ::POST::::{"general":"Testing TOS","payments":"Testing TOS","deadlinesAndDelivery":"Testing TOS","use":"Testing TOS","refunds":"Testing TOS"}
+2024-06-26 19:17:17::info::/v1/api/termOfService/readTermOfServices::dfdc1139-ed9b-4879-9bd1-2f973d056ce9::input-params ::GET::::{}
+2024-06-26 19:17:35::info::/v1/api/termOfService/readTermOfService/667c067fb292dfcb70739e4b::c9735c47-ec0f-4df2-b927-70edc555a375::input-params ::GET::::{}
+2024-06-26 19:19:03::info::/v1/api/termOfService/updateTermOfService/667c067fb292dfcb70739e4b::73919d48-fc54-4e17-8471-7e6dfdd83bbf::input-params ::PATCH::::{}
+2024-06-26 19:19:31::info::/v1/api/termOfService/updateTermOfService/667c067fb292dfcb70739e4b::a32b2792-f8c9-4f79-8302-027ed4efcb0a::input-params ::PATCH::::{"general":"Updated Testing TOS"}
+2024-06-26 19:19:45::info::/v1/api/termOfService/deleteTermOfService/667c067fb292dfcb70739e4b::ccc56b67-dee6-4eb0-a9f0-48659e7db422::input-params ::DELETE::::{}
+2024-06-26 19:19:50::info::/v1/api/termOfService/readTermOfServices::a1580fde-342a-48e0-be8a-6686d83d756e::input-params ::GET::::{}
+2024-06-26 19:19:53::info::/v1/api/termOfService/createTermOfService::f953fbea-c44e-4d5c-a1f3-9a6d3ff62671::input-params ::POST::::{"general":"Testing TOS","payments":"Testing TOS","deadlinesAndDelivery":"Testing TOS","use":"Testing TOS","refunds":"Testing TOS"}
