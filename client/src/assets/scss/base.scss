@@ -30,6 +30,12 @@
 
     --pending-status-bg-color: #ffe8d4;
     --pending-status-color: #f68038;
+
+    --rejected-status-bg-color: #ffe8d4;
+    --rejected-status-color: #f68038;
+
+    --approved-status-bg-color: #e4f7db;
+    --approved-status-color: #82c011;
 }
 
 body.dark {
@@ -59,6 +65,15 @@ body.dark {
     --color-scheme: dark;
     --form-bg-1-color: #0e0e0e;
     --form-bg-2-color: #161616;
+
+    --pending-status-bg-color: #ffe8d4;
+    --pending-status-color: #f68038;
+
+    --rejected-status-bg-color: #ffe8d4;
+    --rejected-status-color: #f68038;
+
+    --approved-status-bg-color: #e4f7db;
+    --approved-status-color: #82c011;
     // svg {
     //     stroke: var(--gray-3-color);
     //     stroke-width: 2px;
@@ -117,6 +132,14 @@ body {
 
 .app {
     margin: 72px 4% 0 !important;
+
+    &.with-sidebar {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
 }
 
 ::selection {
@@ -194,6 +217,16 @@ p {
     &.pending {
         background-color: var(--pending-status-bg-color);
         color: var(--pending-status-color);
+    }
+
+    &.rejected {
+        background-color: var(--rejected-status-bg-color);
+        color: var(--rejected-status-color);
+    }
+
+    &.approved {
+        background-color: var(--approved-status-bg-color);
+        color: var(--approved-status-color);
     }
 }
 
@@ -276,32 +309,32 @@ p {
 }
 
 .btn-1 {
-    border: 2px solid var(--black-2-color);
-    color: var(--black-1-color);
+    border: 2px solid var(--black-2-color) !important;
+    color: var(--black-1-color) !important;
 }
 
 .btn-2 {
-    background-color: var(--black-4-color);
-    color: var(--white-1-color);
+    background-color: var(--black-4-color) !important;
+    color: var(--white-1-color) !important;
 }
 
 .btn-3 {
-    border: 2px solid var(--gray-2-color);
-    color: var(--black-2-color);
+    border: 2px solid var(--gray-2-color) !important;
+    color: var(--black-2-color) !important;
 
     &.active {
         font-weight: bold;
-        border: 2px solid var(--black-3-color);
+        border: 2px solid var(--black-3-color) !important;
     }
 }
 
 .btn-4 {
     // border: 2px solid var(--gray-1-color);
-    background-color: var(--gray-4-color);
+    background-color: var(--gray-4-color) !important;
 }
 
 .btn-5 {
-    background-color: var(--red-2-color);
+    background-color: var(--red-2-color) !important;
     color: white;
 }
 
@@ -436,6 +469,7 @@ hr {
 table {
     border-collapse: collapse;
     width: 100%;
+    border-radius: 8px;
 
     tr {
         border-bottom: 2px solid var(--gray-2-color);
@@ -477,7 +511,7 @@ table {
     justify-content: space-between;
     flex-wrap: wrap;
 
-    &.with-add-btn {
+    &.with-create-btn {
         .form-field__input {
             width: 67%;
         }
@@ -552,8 +586,13 @@ table {
 
         &[type="submit"] {
             border: none;
+            font-weight: bold;
             color: var(--white-1-color);
             background-color: var(--black-4-color);
+
+            svg {
+                stroke-width: 2;
+            }
         }
 
         &.btn-md {
@@ -713,8 +752,10 @@ table {
 }
 
 .section {
-    .section__title {
-        color: var(--black-3-color);
+    .section-header {
+        .section__title {
+            color: var(--black-3-color);
+        }
     }
 }
 

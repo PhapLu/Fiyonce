@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useQuery } from 'react-query'
 import { Link } from "react-router-dom";
 import {
     formatCurrency,
@@ -8,30 +9,50 @@ import {
     formatNumber
 } from "../../../utils/formatter.js";
 import { isFilled, minValue } from "../../../utils/validator.js";
-import "./AddCommissionService.scss";
 import { createFormData, apiUtils } from "../../../utils/newRequest.js";
+import "./CreateCommissionService.scss";
+import { newRequest } from "../../../utils/newRequest.js";
 
-export default function AddCommissionService({
+export default function CreateCommissionService({
     commissionServiceCategories,
-    setShowAddCommissionServiceForm,
+    setShowCreateCommissionServiceForm,
     setOverlayVisible,
-    addMutation
+    createMutation
 }) {
+    const fetchMovements = async () => {
+        try {
+            const response = await newRequest.get('movement/readMovements');
+            return response.data.metadata.movements;
+        } catch (error) {
+            console.error(error)
+            return null;
+        }
+    };
+
+    const { data: movements, error, isError, isLoading } = useQuery('fetchMovements', fetchMovements, {
+        onError: (error) => {
+            console.error('Error fetching art movements:', error);
+        },
+        onSuccess: (movements) => {
+            console.log("Movements", movements);
+        },
+    });
+
 
     const [inputs, setInputs] = useState({
         portfolios: []
     });
     const [errors, setErrors] = useState({});
-    const [isSubmitAddCommissionServiceLoading, setIsSubmitAddCommissionServiceLoading] = useState(false);
-    const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
-    const [isSuccessAddCommissionService, setIsSuccessAddCommissionService] = useState(false);
+    const [isSubmitCreateCommissionServiceLoading, setIsSubmitCreateCommissionServiceLoading] = useState(false);
+    const [isCreateNewCommissionServiceCategory, setIsCreateNewCommissionServiceCategory] = useState(false);
+    const [isSuccessCreateCommissionService, setIsSuccessCreateCommissionService] = useState(false);
     const [portfolios, setPortfolios] = useState(Array(5).fill(null));
 
-    const addCommissionRef = useRef();
+    const createCommissionRef = useRef();
     useEffect(() => {
         const handler = (e) => {
-            if (addCommissionRef.current && !addCommissionRef.current.contains(e.target)) {
-                setShowAddCommissionServiceForm(false);
+            if (createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
+                setShowCreateCommissionServiceForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -43,6 +64,14 @@ export default function AddCommissionService({
 
     const validateInputs = () => {
         let errors = {};
+
+        if (isFilled(inputs.movementId)) {
+
+        }
+
+        if (isFilled(inputs.serviceCategoryId)) {
+
+        }
 
         // Validation logic
 
@@ -95,18 +124,17 @@ export default function AddCommissionService({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitAddCommissionServiceLoading(true);
+        setIsSubmitCreateCommissionServiceLoading(true);
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitAddCommissionServiceLoading(false);
+            setIsSubmitCreateCommissionServiceLoading(false);
             return;
         }
 
 
-        // Add commission service category
-        if (isAddNewCommissionServiceCategory) {
-            console.log({ title: inputs.newCommissionServiceCategoryTitle })
+        // Create commission service category
+        if (isCreateNewCommissionServiceCategory) {
             try {
                 const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs.newCommissionServiceCategoryTitle });
                 console.log(response)
@@ -115,41 +143,32 @@ export default function AddCommissionService({
                     inputs.serviceCategoryId = serviceCategoryId;
                     console.log(serviceCategoryId)
                     console.log(inputs.serviceCategoryId)
-                    setIsSuccessAddCommissionService(true);
+                    setIsSuccessCreateCommissionService(true);
                 }
             } catch (error) {
-                console.error("Failed to add new commission service category:", error);
+                console.error("Failed to create new commission service category:", error);
                 setErrors((prevErrors) => ({
                     ...prevErrors,
                     serverError: error.response.data.message
                 }));
             } finally {
-                setIsSubmitAddCommissionServiceLoading(false);
+                setIsSubmitCreateCommissionServiceLoading(false);
             }
         }
-        console.log(inputs)
         const { isAgreeTerms, ...submissionData } = inputs;
-        console.log(portfolios)
-        console.log(submissionData)
         const fd = createFormData(submissionData, portfolios);
-        console.log(fd.get("title"))
-        console.log(fd.get("minPrice"))
-        console.log(fd.get("deliverables"))
-        console.log(fd.get("addOns"))
-        console.log(fd.get("serviceCategoryId"))
-        console.log(fd.get("files"))
 
         try {
             // const response = await apiUtils.post("/commissionService/createCommissionService", fd);
-            await addMutation.mutateAsync(fd);
+            await createMutation.mutateAsync(fd);
         } catch (error) {
-            console.error("Failed to add new commission service:", error);
+            console.error("Failed to create new commission service:", error);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 serverError: error.response.data.message
             }));
         } finally {
-            setIsSubmitAddCommissionServiceLoading(false);
+            setIsSubmitCreateCommissionServiceLoading(false);
         }
     };
 
@@ -161,7 +180,7 @@ export default function AddCommissionService({
     }
 
     return (
-        <div className="add-commission-service modal-form type-2" ref={addCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
+        <div className="create-commission-service modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <Link to="/help_center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -169,7 +188,7 @@ export default function AddCommissionService({
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowAddCommissionServiceForm(false);
+                setShowCreateCommissionServiceForm(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -202,11 +221,25 @@ export default function AddCommissionService({
 
             <div className="modal-form--right">
                 <h2 className="form__title">Thêm dịch vụ</h2>
-                {!isSuccessAddCommissionService ? (
+                <div className="form-field">
+                    <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
+                    <select
+                        name="serviceCategoryId"
+                        value={inputs?.serviceCategoryId || ""}
+                        onChange={handleChange}
+                        className="form-field__input"
+                    >
+                        <option value="">-- Chọn trường phái --</option>
+                        {movements?.map((movement) => (
+                            <option key={movement._id} value={movement._id}>{serviceCategory.title}</option>
+                        ))}
+                    </select>
+                </div>
+                {!isSuccessCreateCommissionService ? (
                     <>
-                        <div className="form-field">
+                        <div className="form-field with-create-btn">
                             <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
-                            {!isAddNewCommissionServiceCategory ? (
+                            {!isCreateNewCommissionServiceCategory ? (
                                 <>
                                     <select
                                         name="serviceCategoryId"
@@ -219,7 +252,7 @@ export default function AddCommissionService({
                                             <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
                                         ))}
                                     </select>
-                                    <button className="btn btn-2" onClick={() => setIsAddNewCommissionServiceCategory(true)}>Thêm thể loại</button>
+                                    <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(true)}>Thêm thể loại</button>
                                 </>
                             ) : (
                                 <>
@@ -230,7 +263,7 @@ export default function AddCommissionService({
                                         className="form-field__input"
                                         placeholder="Nhập tên thể loại"
                                     />
-                                    <button className="btn btn-2" onClick={() => setIsAddNewCommissionServiceCategory(false)}>Hủy</button>
+                                    <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(false)}>Hủy</button>
                                 </>
                             )}
                             {errors._id && <span className="form-field__error">{errors._id}</span>}
@@ -312,8 +345,8 @@ export default function AddCommissionService({
                                 );
                             })}
 
-                            <div className="form-field with-ic add-link-btn btn-md" onClick={triggerFileInput}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
+                            <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
                                 <span>Thêm ảnh</span>
@@ -377,9 +410,9 @@ export default function AddCommissionService({
                 type="submit"
                 className="form__submit-btn btn btn-2 btn-md"
                 onClick={handleSubmit}
-                disabled={isSubmitAddCommissionServiceLoading}
+                disabled={isSubmitCreateCommissionServiceLoading}
             >
-                {isSubmitAddCommissionServiceLoading ? (
+                {isSubmitCreateCommissionServiceLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
                     "Tiếp tục"

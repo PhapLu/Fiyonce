@@ -1,0 +1,42 @@
+.app {
+    .dashboard-sidebar {
+        width: 13%;
+    }
+    
+    .dashboard-outlet-content {
+        width: 84%;
+        background-color: var(--gray-1-color);
+        padding: 16px 28px;
+        border-radius: 12px;
+    }
+
+    .overview-container {
+        display: flex;
+
+        .overview-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+            min-width: 120px;
+            margin-right: 12px;
+
+            .overview-item__title {
+                margin: 0 0 8px 0;
+                font-weight: bold;
+
+            }
+        }
+    }
+
+    table {
+        background-color: var(--white-2-color);
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 8px;
+        }
+
+    }
+}

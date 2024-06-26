@@ -100,7 +100,7 @@ export default function Profile() {
                                 alt={`${profileInfo.fullName}'s cover photo`}
                                 className={`profile__bg__img ${loading ? "skeleton-img" : ""}`}
                             />
-                            <button className="profile__bg__edit-btn btn btn-5" onClick={handleCoverClick}>
+                            <button className="profile__bg__edit-btn btn btn-md" onClick={handleCoverClick}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"

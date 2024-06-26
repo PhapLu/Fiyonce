@@ -7,15 +7,16 @@ import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumbe
 import { isFilled } from "../../../utils/validator.js";
 
 // Styling
-import "./AddCommissionTos.scss";
+import "./CreateCommissionTos.scss";
+import { apiUtils } from "../../../utils/newRequest.js";
 
-export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverlayVisible }) {
+export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
     });
     const [errors, setErrors] = useState({});
-    const [isSubmitAddCommissionTosLoading, setIsSubmitAddCommissionTosLoading] = useState(false);
-    const [isSuccessAddCommissionTos, setIsSuccessAddCommissionTos] = useState(false);
+    const [isSubmitCreateCommissionTosLoading, setIsSubmitCreateCommissionTosLoading] = useState(false);
+    const [isSuccessCreateCommissionTos, setIsSuccessCreateCommissionTos] = useState(false);
 
     const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -37,11 +38,11 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
     }, []);
 
     // Toggle display overlay box
-    const addCommissionRef = useRef();
+    const createCommissionRef = useRef();
     useEffect(() => {
         let handler = (e) => {
-            if (addCommissionRef && addCommissionRef.current && !addCommissionRef.current.contains(e.target)) {
-                setShowAddCommissionTosForm(false);
+            if (createCommissionRef && createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
+                setShowCreateCommissionTosForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -54,32 +55,47 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
     const validateInputs = () => {
         let errors = {};
 
-        // Validate category
-        if (!isFilled(inputs.commissionServiceCategoryId)) {
-            errors.title = 'Vui lòng chọn thể loại dịch vụ';
-        }
-
+        // title: {type: String, required: true},
+        // general: {type: String, required: true},
+        // payments: {type: String, required: true},
+        // deadlinesAndDelivery: {type: String, required: true},
+        // use: {type: String, required: true},
+        // refunds: {type: String, required: true},
+        // updatedAt: {type: Date}
 
         // Validate title
         if (!isFilled(inputs.title)) {
             errors.title = 'Vui lòng nhập tên dịch vụ';
         }
-
-        // Validate description
-        if (!isFilled(inputs.description)) {
-            errors.description = 'Vui lòng nhập mô tả';
+        
+        // Validate general article
+        if (!isFilled(inputs.general)) {
+            errors.general = 'Vui lòng nhập tên dịch vụ';
         }
 
-        // Validate minimum price
-        if (!isFilled(inputs.minPrice)) {
-            errors.minPrice = 'Vui lòng nhập giá tối thiểu';
-        } else if (inputs.minPrice <= 50000) {
-            errors.minPrice = 'Giá trị dịch vụ tối thiểu là 50.000 VND';
+        // Validate payment article
+        if (!isFilled(inputs.payments)) {
+            errors.payments = 'Vui lòng nhập mô tả';
         }
 
-        // Validate agree to terms
-        if (!inputs.agreeTerms) {
-            errors.agreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
+        // Validate deadlines & delivery article
+        if (!isFilled(inputs.deadlinesAndDelivery)) {
+            errors.deadlinesAndDelivery = 'Vui lòng nhập mô tả';
+        }
+
+        // Validate use article
+        if (!inputs.use) {
+            errors.use = 'Vui lòng xác nhận đồng ý với điều khoản';
+        }
+
+        // Validate refund article
+        if (!isFilled(inputs.refunds)) {
+            errors.refunds = 'Vui lòng nhập mô tả';
+        }
+
+        // Validate if user has agreed to paltform terms & policies
+        if (!inputs.isAgreeTerms) {
+            errors.isAgreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
         }
 
         return errors;
@@ -108,40 +124,43 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
                 [name]: value
             }));
         }
-        
+
         // Update input value & clear error
         setErrors((values) => ({ ...values, [name]: '' }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitAddCommissionTosLoading(true);
+        setIsSubmitCreateCommissionTosLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             // Clear the loading effect if validation failed
-            setIsSubmitAddCommissionTosLoading(false);
+            setIsSubmitCreateCommissionTosLoading(false);
             return;
         }
 
+        console.log(inputs)
+
         // Handle submit request
         try {
-            setIsSuccessAddCommissionTos(true);
+            await apiUtils.post("/c");
+            // setIsSuccessCreateCommissionTos(true);
         } catch (error) {
             console.error("Failed to submit:", error);
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
-            setIsSubmitAddCommissionTosLoading(false);
+            setIsSubmitCreateCommissionTosLoading(false);
         }
     };
 
     return (
-        <div className="add-commission-tos modal-form type-2" ref={addCommissionRef} onClick={(e) => { e.stopPropagation() }}>
+        <div className="create-commission-tos modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation() }}>
             <Link to="/help_center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -149,8 +168,8 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowAddCommissionTosForm(false);
-                setIsSuccessAddCommissionTos(false);
+                setShowCreateCommissionTosForm(false);
+                setIsSuccessCreateCommissionTos(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -171,14 +190,8 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
 
             <div className="modal-form--right">
                 <h2 className="form__title">Thêm điều khoản dịch vụ</h2>
-                {!isSuccessAddCommissionTos ?
+                {!isSuccessCreateCommissionTos ?
                     (
-                        // general: {type: String, required: true},
-                        // payments: {type: String, required: true},
-                        // deadlinesAndDelivery: {type: String, required: true},
-                        // use: {type: String, required: true},
-                        // refunds: {type: String, required: true},
-                        // updatedAt: {type: Date}
                         <>
                             <div className="form-field">
                                 <label htmlFor="title" className="form-field__label">Tiêu đề</label>
@@ -264,12 +277,12 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="agreeTerms"
-                                        checked={inputs.agreeTerms}
+                                        name="isAgreeTerms"
+                                        checked={inputs.isAgreeTerms}
                                         onChange={handleChange}
                                     /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
                                 </label>
-                                {errors.agreeTerms && <span className="form-field__error">{errors.agreeTerms}</span>}
+                                {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                             </div>
                             <div className="form-field">
                                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
@@ -285,8 +298,8 @@ export default function AddCommissionTos({ setShowAddCommissionTosForm, setOverl
             <button type="submit"
                 className="form__submit-btn btn btn-2 btn-md"
                 onClick={handleSubmit}
-                disabled={isSubmitAddCommissionTosLoading}>
-                {isSubmitAddCommissionTosLoading ? (
+                disabled={isSubmitCreateCommissionTosLoading}>
+                {isSubmitCreateCommissionTosLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
                     "Gửi yêu cầu"

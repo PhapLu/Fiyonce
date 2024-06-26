@@ -4,9 +4,9 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Resources
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
-import CommissionTos from "../../components/commissionTos/CommissionTos.jsx";
-import AddCommissionTos from "../../components/commissionTos/add/AddCommissionTos.jsx";
-import AddCommissionService from "../../components/crudCommissionService/add/AddCommissionService.jsx";
+import RenderCommissionTos from "../../components/crudCommissionTos/render/RenderCommissionTos.jsx";
+import CreateCommissionTos from "../../components/crudCommissionTos/create/CreateCommissionTos.jsx";
+import CreateCommissionService from "../../components/crudCommissionService/create/CreateCommissionService.jsx";
 import EditCommissionService from "../../components/crudCommissionService/edit/EditCommissionService.jsx";
 import DeleteCommissionService from "../../components/crudCommissionService/delete/DeleteCommissionService.jsx";
 
@@ -29,7 +29,7 @@ export default function Profileservices() {
     const isProfileOwner = userInfo && userInfo._id === userId;
 
     const [overlayVisible, setOverlayVisible] = useState(false);
-    const [showAddCommissionServiceForm, setShowAddCommissionServiceForm] = useState(false);
+    const [showCreateCommissionServiceForm, setShowCreateCommissionServiceForm] = useState(false);
     const [showEditCommissionServiceForm, setShowEditCommissionServiceForm] = useState(false);
     const [showDeleteCommissionServiceForm, setShowDeleteCommissionServiceForm] = useState(false);
     const [showEditCommissionServiceCategoryForm, setShowEditCommissionServiceCategoryForm] = useState(false);
@@ -43,12 +43,12 @@ export default function Profileservices() {
     const [deleteCommissionServiceCategory, setDeleteCommissionServiceCategory] = useState();
 
     const [showCommissionTosView, setShowCommissionTosView] = useState(false);
-    const [showAddCommissionTosForm, setShowAddCommissionTosForm] = useState(false);
+    const [showCreateCommissionTosForm, setShowCreateCommissionTosForm] = useState(false);
 
     const categoryRefs = useRef([]);
     categoryRefs.current = [];
 
-    const addToRefs = (el) => {
+    const createToRefs = (el) => {
         if (el && !categoryRefs.current.includes(el)) {
             categoryRefs.current.push(el);
         }
@@ -85,12 +85,12 @@ export default function Profileservices() {
         }
     );
 
-    const addMutation = useMutation(
+    const createMutation = useMutation(
         (newService) => apiUtils.post(`/commissionService/createCommissionService`, newService),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['fetchCommissionServiceCategories', userId]);
-                setShowAddCommissionServiceForm(false);
+                setShowCreateCommissionServiceForm(false);
                 setOverlayVisible(false);
             },
         }
@@ -225,7 +225,7 @@ export default function Profileservices() {
                             </svg>
                             Điều khoản
                         </button>
-                        <button className="btn btn-3" onClick={() => { setShowAddCommissionServiceForm(true); setOverlayVisible(true) }}>
+                        <button className="btn btn-3" onClick={() => { setShowCreateCommissionServiceForm(true); setOverlayVisible(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -241,7 +241,7 @@ export default function Profileservices() {
                 ) : (commissionServiceCategories?.map((category, index) => (
                     <div
                         key={index}
-                        ref={addToRefs}
+                        ref={createToRefs}
                         className="profile-commission-service__category-container"
                     >
                         <div className="profile-commission-service__category-item">
@@ -304,12 +304,12 @@ export default function Profileservices() {
             {overlayVisible && (
                 <div className={`overlay`}>
                     {/* CRUD commisssion service */}
-                    {showAddCommissionServiceForm &&
-                        <AddCommissionService
+                    {showCreateCommissionServiceForm &&
+                        <CreateCommissionService
                             commissionServiceCategories={commissionServiceCategories}
-                            setShowAddCommissionServiceForm={setShowAddCommissionServiceForm}
+                            setShowCreateCommissionServiceForm={setShowCreateCommissionServiceForm}
                             setOverlayVisible={setOverlayVisible}
-                            addMutation={addMutation}
+                            createMutation={createMutation}
                         />
                     }
 
@@ -352,16 +352,16 @@ export default function Profileservices() {
 
                     {/* Commission TOS */}
                     {showCommissionTosView &&
-                        <CommissionTos
-                            setShowAddCommissionTosForm={setShowAddCommissionTosForm}
+                        <RenderCommissionTos
+                            setShowCreateCommissionTosForm={setShowCreateCommissionTosForm}
                             setShowCommissionTosView={setShowCommissionTosView}
                             setOverlayVisible={setOverlayVisible}
                         />
                     }
 
-                    {showAddCommissionTosForm &&
-                        <AddCommissionTos
-                            setShowAddCommissionTosForm={setShowAddCommissionTosForm}
+                    {showCreateCommissionTosForm &&
+                        <CreateCommissionTos
+                            setShowCreateCommissionTosForm={setShowCreateCommissionTosForm}
                             setOverlayVisible={setOverlayVisible}
                         />
                     }

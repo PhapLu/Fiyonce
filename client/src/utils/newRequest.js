@@ -42,7 +42,7 @@ const apiUtils = {
     }
 };
 
-function createFormData(inputs, files) {
+function createFormData(inputs, filesKey, files) {
     const formData = new FormData();
 
     // Append non-file inputs
@@ -55,7 +55,7 @@ function createFormData(inputs, files) {
     // Append file inputs
     files.forEach(file => {
         if (file) {
-            formData.append("files", file);
+            formData.append(filesKey, file);
         }
     });
 

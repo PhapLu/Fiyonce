@@ -2,9 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
 
-// Dashboard
-import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard"
-
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
@@ -29,15 +26,11 @@ import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
-
-// import Artwork from "./pages/artwork/Artwork";
-// import Challenges from "./pages/challenges/Challenges";
-// import Challenge from "./pages/challenge/Challenge";
-// import Talents from "./pages/talents/Talents";
-// import Talent from "./pages/talent/Talent";
-// import Messenger from './pages/messenger/Messenger'
-// import Success from "./pages/success/Success";
-// ... (other imports)
+import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
+import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDashboard";
+import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
+import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
+import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 
 const queryClient = new QueryClient();
 
@@ -92,10 +85,32 @@ const router = createBrowserRouter([
       },
     ]
   },
-  // {
-  //   path: "/dashboard/",
-  //   element: <DashboardLayout />,
-  // },
+  {
+    path: "/dashboard/",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/dashboard/overview",
+        element: <OverviewDashboard />,
+      },
+      {
+        path: "/dashboard/transactions",
+        element: <TransactionDashboard />,
+      },
+      {
+        path: "/dashboard/accounts",
+        element: <AccountDashboard />,
+      },
+      {
+        path: "/dashboard/challenges",
+        element: <ChallengeDashboard />,
+      },
+      {
+        path: "/dashboard/help",
+        element: <HelpDashboard />,
+      },
+    ]
+  },
   {
     path: "/forbidden",
     element: <Forbidden />,
