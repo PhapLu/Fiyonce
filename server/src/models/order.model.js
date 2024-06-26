@@ -46,8 +46,8 @@ const OrderSchema = new mongoose.Schema({
     fileFormats: [{ type: String }],
     review: {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        rating: { type: Number, required: true },
-        comment: { type: String, required: true },
+        rating: { type: Number},
+        comment: { type: String},
     }
 },{
     timestamps: true,

@@ -45,9 +45,21 @@ class ReviewService{
         //1. Find commission service
         const orders = await Order.find({commissionServiceId: commissionServiceId}).populate('review.userId', 'stageName avatar')
 
-        //2. Return reviews
-        return{
-            reviews: orders.map(order => order.review)
+        //2. Calculate commissionService rating
+        let rating = 0
+        let count = 0
+        orders.forEach(order => {
+            if(order.review){
+                rating += order.review.rating
+                count++
+            }
+        })
+        rating = rating / count
+
+        //3. Return reviews and commissionService rating
+        return {
+            reviews: orders.map(order => order.review),
+            rating: rating
         }
     }
     

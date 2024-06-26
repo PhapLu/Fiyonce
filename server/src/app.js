@@ -3,19 +3,19 @@ dotenv.config();
 import express from "express";
 import http from 'http';
 import cors from 'cors';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import {v4 as uuidv4} from 'uuid'
+import bodyParser from 'body-parser';
 import compression from 'compression';
 import router from "./routes/index.js";
+import cookieParser from 'cookie-parser';
+import './db/init.mongodb.js';
+import myLogger from './loggers/mylogger.log.js';
 import configureSocket from './configs/socket.config.js';
 import SocketServices from './services/socket.service.js';
-import './db/init.mongodb.js'; // Ensure this is properly set up
-import {v4 as uuidv4} from 'uuid'
-import myLogger from './loggers/mylogger.log.js';
-import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js';
 import sanitizeInputs from './middlewares/sanitize.middleware.js';
+import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js';
 const app = express();
 
 //Rate Limit
@@ -55,6 +55,7 @@ app.use((req, res, next) => {
 
     next();
 });
+
 // Init routes
 app.use('', router);
 

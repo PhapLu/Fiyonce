@@ -6,7 +6,7 @@ import reviewController from '../../controllers/review.controller.js';
 const router = express.Router()
 
 router.get('/readReview/:orderId',asyncHandler(reviewController.readReview))
-router.get('/readReviews/:commissionServiceId',asyncHandler(reviewController.readReviews))
+router.get('/readReviewsAndCommissionServiceRating/:commissionServiceId',asyncHandler(reviewController.readReviews))
 
 //authentication
 router.use(verifyToken)
