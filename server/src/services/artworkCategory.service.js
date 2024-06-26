@@ -10,7 +10,10 @@ class ArtworkCategoryService{
         if(!talent) throw new NotFoundError('Talent not found')
         if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
 
-        //2. Create service
+        //2. Validate body
+        if(!body.title) throw new BadRequestError('Title is required')
+
+        //3. Create service
         const artworkCategory = new ArtworkCategory({
             title: body.title,
             talentId
@@ -44,7 +47,10 @@ class ArtworkCategoryService{
         if(!artworkCategory) throw new NotFoundError('Service not found')
         if(artworkCategory.talentId.toString() !== talentId) throw new AuthFailureError('You can only update your service')
         
-        //2. Update Service
+        //2. Validate body
+        if(!body.title) throw new BadRequestError('Title is required')
+
+        //3. Update Service
         const updatedArtworkCategory = await ArtworkCategory.findByIdAndUpdate(
             artworkCategoryId,
             { $set: body },
@@ -66,7 +72,7 @@ class ArtworkCategoryService{
         if(artworkCategory.talentId.toString() !== talentId) throw new AuthFailureError('You can only delete your artworkCategory')
 
         //2. Delete service
-        return await artworkCategory.remove()
+        return await artworkCategory.deleteOne()
     }
 }
 

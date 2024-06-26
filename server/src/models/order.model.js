@@ -63,14 +63,6 @@ const DOCUMENT_NAME = 'Order'
 const COLLECTION_NAME = 'Orders'
 
 const OrderSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        default: '',
-    },
     serviceId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Service'
@@ -87,6 +79,14 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'approved', 'rejected', 'confirmed', 'canceled', 'in_progress', 'finished', 'under_processing'],
         default: 'pending'
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        default: '',
     },
     // character: {
     //     photo: { type: String },

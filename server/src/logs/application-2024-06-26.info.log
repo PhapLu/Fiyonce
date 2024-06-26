@@ -1,0 +1,16 @@
+2024-06-26 09:15:22::info::/v1/api/accountDashboard/readAccountOverview::efc2b6b0-b91e-4dca-acdf-41337439a188::input-params ::GET::::{}
+2024-06-26 09:15:43::info::/v1/api/auth/users/login::fc278183-9be6-4757-8535-fe35975dca9c::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-26 09:15:46::info::/v1/api/accountDashboard/readAccountOverview::a671d7d2-8078-401c-9008-3492748be49e::input-params ::GET::::{}
+2024-06-26 09:15:46::error::/v1/api/accountDashboard/readAccountOverview::a671d7d2-8078-401c-9008-3492748be49e::401 - 0ms - Response: {"status":401,"now":1719368146104}::{"message":"You are not the admin"}
+2024-06-26 09:22:01::info::/v1/api/artworkCategory/createArtworkCategory::d54d6d24-b4e6-4837-a7f9-404c37e8722f::input-params ::POST::::{"title":"Vtuber"}
+2024-06-26 09:22:31::info::/v1/api/artworkCategory/createArtworkCategory::85a867f9-34b8-4d96-bcc5-683bc8d43e8f::input-params ::POST::::{"title":"Traditional"}
+2024-06-26 09:22:37::info::/v1/api/artworkCategory/createArtworkCategory::dfc2ddaa-4aa2-4b26-86d9-12562633d847::input-params ::POST::::{"title":"Digital Art"}
+2024-06-26 09:22:46::info::/v1/api/artworkCategory/createArtworkCategory::1d21a53f-a21e-441c-8df9-e9f700a8575b::input-params ::POST::::{"title":"YCH"}
+2024-06-26 09:23:50::info::/v1/api/artworkCategory/readArtworkCategories/66601810d3737cbcac3bc91e::039d727b-344c-40d5-acdd-dc143dae53bf::input-params ::GET::::{}
+2024-06-26 09:27:40::info::/v1/api/artworkCategory/updateArtworkCategory/667b7b49cf00088adec3216a::e53c9844-db0f-42bc-8e62-6099d2217fa8::input-params ::PATCH::::{}
+2024-06-26 09:27:56::info::/v1/api/artworkCategory/updateArtworkCategory/667b7b49cf00088adec3216a::68855e03-06c9-4f51-bc8c-6f78275b063a::input-params ::PATCH::::{}
+2024-06-26 09:59:27::info::/v1/api/artworkCategory/deleteArtworkCategory::b00aa29e-0ca4-4a45-95f2-2c1e84554b68::input-params ::DELETE::::{}
+2024-06-26 09:59:27::error::/v1/api/artworkCategory/deleteArtworkCategory::b00aa29e-0ca4-4a45-95f2-2c1e84554b68::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 09:59:38::info::/v1/api/artworkCategory/deleteArtworkCategory/667b7b49cf00088adec3216a::174482a9-3f51-4fcd-9409-8d9dd68c0291::input-params ::DELETE::::{}
+2024-06-26 09:59:38::error::/v1/api/artworkCategory/deleteArtworkCategory/667b7b49cf00088adec3216a::174482a9-3f51-4fcd-9409-8d9dd68c0291::undefined - NaNms - Response: {}::{"message":"artworkCategory.remove is not a function"}
+2024-06-26 11:18:03::info::/v1/api/artworkCategory/deleteArtworkCategory/667b7b49cf00088adec3216a::0268dd60-8363-4fb2-a6ff-86b84bd714d0::input-params ::DELETE::::{}

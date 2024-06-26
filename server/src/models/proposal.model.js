@@ -19,13 +19,16 @@ const ProposalSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    title:{
+    title: {
         type: String,
         required: true
     },
     scope: {
         type: String,
         required: true
+    },
+    startAt: {
+        type: Date,
     },
     deadLine: {
         type: Date,
@@ -38,7 +41,7 @@ const ProposalSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    rejectMessage: { 
+    rejectMessage: {
         type: String
     },
 },{
