@@ -12,6 +12,7 @@ const ServiceSchema = new mongoose.Schema({
         ref:'ServiceCategory',
         required: true
     },
+    termOfServiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'TermOfService', required: true },
     movementId: { type: Schema.Types.ObjectId, ref: 'Movement', required: true },
     minPrice: { type: Number, required: true },
     deliverables: [{type: String, required: true}],
