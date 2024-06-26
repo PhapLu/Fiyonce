@@ -15,7 +15,7 @@ import overviewDashboardRoute from './overviewDashboard/index.js'
 import transactionDashboardRoute from './transactionDashboard/index.js'
 import challengeDashboardRoute from './challengeDashboard/index.js'
 import reportDashboardRoute from './reportDashboard/index.js'
-
+import reviewRoute from './review/index.js'
 
 const router = express.Router()
 
@@ -36,5 +36,6 @@ router.use('/v1/api/overviewDashboard', overviewDashboardRoute)
 router.use('/v1/api/transactionDashboard', transactionDashboardRoute)
 router.use('/v1/api/challengeDashboard', challengeDashboardRoute)
 router.use('/v1/api/reportDashboard', reportDashboardRoute)
+router.use('/v1/api/review', reviewRoute)
 
 export default router

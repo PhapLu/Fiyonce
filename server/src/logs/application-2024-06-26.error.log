@@ -9,3 +9,8 @@
 2024-06-26 11:38:20::error::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::47421882-4774-4623-bf4e-2af5605da34d::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'toString')"}
 2024-06-26 11:39:36::error::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::784f9492-60b8-400d-8d61-3bbb8a7f4bf1::undefined - NaNms - Response: {}::{"message":"Artwork update failed"}
 2024-06-26 11:42:25::error::/v1/api/artwork/deleteArtwork/667b9a3386344d30d97995a1::4705118e-fd12-403f-b83b-37a1f6f93259::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'toString')"}
+2024-06-26 15:16:05::error::/v1/api/order/readOrders::5e21deba-eb25-4d13-ba73-eb599470a2a5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:22:04::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::9260519b-11ba-4971-847b-c2b7649ea816::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:22:57::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::dc36dd0b-65c2-4944-aaae-848d02e3c6d7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:23:56::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::efd3cf66-0f5b-4aff-bc9b-fb4420a63b4f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:25:02::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::bd0cddc7-13dd-4366-b5ff-dc630f13f54e::401 - 0ms - Response: {"status":401,"now":1719390302512}::{"message":"You are not authorized to create this review"}

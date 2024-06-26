@@ -132,7 +132,7 @@ class ProposalService{
             throw new BadRequestError('You cannot update proposal on this stage')
 
         //4. Delete proposal
-        await proposal.remove()
+        await proposal.deleteOne()
 
         return {
             proposal

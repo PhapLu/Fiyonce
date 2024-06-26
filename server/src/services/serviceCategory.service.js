@@ -90,7 +90,7 @@ class ServiceCategoryService{
         if(serviceCategory.talentId.toString() !== talentId) throw new AuthFailureError('You can only delete your service')
 
         //2. Delete service
-        return await serviceCategory.remove()
+        return await serviceCategory.deleteOne()
     }
 }
 

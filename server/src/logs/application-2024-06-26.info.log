@@ -40,3 +40,22 @@
 2024-06-26 11:40:44::info::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::0f0c8b87-dfda-4630-97f2-1dd91877055e::input-params ::PATCH::::{}
 2024-06-26 11:42:25::info::/v1/api/artwork/deleteArtwork/667b9a3386344d30d97995a1::4705118e-fd12-403f-b83b-37a1f6f93259::input-params ::DELETE::::{}
 2024-06-26 11:42:25::error::/v1/api/artwork/deleteArtwork/667b9a3386344d30d97995a1::4705118e-fd12-403f-b83b-37a1f6f93259::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'toString')"}
+2024-06-26 11:42:48::info::/v1/api/artwork/deleteArtwork/667b9a3386344d30d97995a1::cfb83be7-c416-43f5-819e-026e4bb05ccc::input-params ::DELETE::::{}
+2024-06-26 15:16:05::info::/v1/api/order/readOrders::5e21deba-eb25-4d13-ba73-eb599470a2a5::input-params ::GET::::{}
+2024-06-26 15:16:05::error::/v1/api/order/readOrders::5e21deba-eb25-4d13-ba73-eb599470a2a5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:16:38::info::/v1/api/order/readIndirectApprovedOrders::5bf9f2c4-2fb0-472b-aa8d-4dbed803af76::input-params ::GET::::{}
+2024-06-26 15:20:21::info::/v1/api/order/readIndirectApprovedOrders::e5e7d168-ecf5-4806-9eb4-e4c67e5646bf::input-params ::GET::::{}
+2024-06-26 15:20:31::info::/v1/api/auth/users/login::b4ad7ec3-34d1-4764-a665-c0d43c4d4250::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-26 15:22:04::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::9260519b-11ba-4971-847b-c2b7649ea816::input-params ::PATCH::::{}
+2024-06-26 15:22:04::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::9260519b-11ba-4971-847b-c2b7649ea816::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:22:57::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::dc36dd0b-65c2-4944-aaae-848d02e3c6d7::input-params ::PATCH::::{}
+2024-06-26 15:22:57::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::dc36dd0b-65c2-4944-aaae-848d02e3c6d7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:23:56::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::efd3cf66-0f5b-4aff-bc9b-fb4420a63b4f::input-params ::PATCH::::{}
+2024-06-26 15:23:56::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::efd3cf66-0f5b-4aff-bc9b-fb4420a63b4f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:25:02::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::bd0cddc7-13dd-4366-b5ff-dc630f13f54e::input-params ::PATCH::::{}
+2024-06-26 15:25:02::error::/v1/api/review/createReview/666aa68d5a40b73e7f404702::bd0cddc7-13dd-4366-b5ff-dc630f13f54e::401 - 0ms - Response: {"status":401,"now":1719390302512}::{"message":"You are not authorized to create this review"}
+2024-06-26 15:25:30::info::/v1/api/auth/users/login::0449d1b7-da02-4e62-b0fe-9d555d252ecf::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-06-26 15:25:35::info::/v1/api/review/createReview/666aa68d5a40b73e7f404702::9ef12eda-58ee-4e73-84df-38d61a9d53c3::input-params ::PATCH::::{}
+2024-06-26 15:25:52::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::25a45601-a2c3-4987-80ce-e30f2bfd345c::input-params ::GET::::{}
+2024-06-26 15:26:45::info::/v1/api/review/updateReview/666aa68d5a40b73e7f404702::b261d503-c3b7-441a-b5bf-9c739bf862a0::input-params ::PATCH::::{}
+2024-06-26 15:26:51::info::/v1/api/review/readReview/666aa68d5a40b73e7f404702::4d106cb9-37a6-4fe2-82a5-2bd4d2d55dd0::input-params ::GET::::{}
