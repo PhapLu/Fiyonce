@@ -55,6 +55,11 @@
             "name": "src\\logs\\application-2024-06-26.info.log",
             "hash": "fb8ea4a4d93d9e70f610f8e995ee8983c2a07e4e6019d111ea0fb0de7fbe4ecf"
 >>>>>>> d0f7171f826ef6f778c4f32def1d10795d0b61c0
+        },
+        {
+            "date": 1719367979882,
+            "name": "src\\logs\\application-2024-06-26.info.log",
+            "hash": "7323b67a492dab002eb43cb51df7089175468dc71d9735bd849501d2fafba93d"
         }
     ],
     "hashType": "sha256"

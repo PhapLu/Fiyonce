@@ -1,5 +1,5 @@
 import { getSelectData, unGetSelectData } from "../../utils/index.js";
-import { artwork } from "../artwork.model.js";
+import Artwork from "../artwork.model.js";
 
 const updateArtworkById = async({artworkId, payload, model, isNew = true}) =>{
     return  await model.findByIdAndUpdate(artworkId, payload, {new: isNew})
@@ -7,7 +7,7 @@ const updateArtworkById = async({artworkId, payload, model, isNew = true}) =>{
 const findAllArtworks = async({limit, sort, page, select}) => {
     const skip = (page -1) * limit;
     const sortBy = sort === 'ctime' ? {_id: -1} : {_id: 1}
-    const artworks = await artwork.find()
+    const artworks = await Artwork.find()
       .sort(sortBy)
       .skip(skip)
       .limit(limit)
@@ -17,12 +17,12 @@ const findAllArtworks = async({limit, sort, page, select}) => {
 }
 
 const findArtwork = async({artwork_id, unSelect}) => {
-    return await artwork.findById(artwork_id).select(unGetSelectData((unSelect)))
+    return await Artwork.findById(artwork_id).select(unGetSelectData((unSelect)))
 }
 
 const searchArtworksByUser = async ({ keySearch }) => {
     const regexSearch = new RegExp(keySearch);
-    const result = await artwork
+    const result = await Artwork
       .find(
         {
           //isPublished: true,
@@ -38,7 +38,7 @@ const searchArtworksByUser = async ({ keySearch }) => {
 };
 
 const deleteArtwork = async ({artwork_id}) => {
-    return await artwork.findByIdAndDelete(artwork_id)
+    return await Artwork.findByIdAndDelete(artwork_id)
 }
 
 export { updateArtworkById, findAllArtworks, findArtwork, searchArtworksByUser, deleteArtwork }

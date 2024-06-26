@@ -1,25 +1,20 @@
 import express from 'express'
 import artworkController from '../../controllers/artwork.controller.js'
 import { asyncHandler } from '../../helpers/asyncHandler.js'
-import { authenticationV2 } from '../../auth/authUtils.js'
 import accessService from '../../services/auth.service.js'
 import { verifyToken } from "../../middlewares/jwt.js";
+import { uploadFields } from '../../configs/multer.config.js';
 
 const router = express.Router()
 
-router.get('/search/:keySearch', asyncHandler(artworkController.searchArtworksByUser))
-router.get('', asyncHandler(artworkController.findAllArtworks))
-router.get('/:artworkId', asyncHandler(artworkController.findArtwork))
+router.get('/readArtwork/:artworkId', asyncHandler(artworkController.readArtwork))
+router.get('/readArtworksOfTalent/:talentId', asyncHandler(artworkController.readArtworksOfTalent))
 
 //authentication
-//router.use(authenticationV2)
 router.use(verifyToken)
 
-router.post('', asyncHandler(artworkController.createArtwork))
-router.patch('/:artworkId', asyncHandler(artworkController.updateArtwork))
-router.delete('/:artworkId', 
-    accessService.grantAccess('deleteOwn', 'profile'), 
-    asyncHandler(artworkController.deleteArtwork)
-)
+router.post('/createArtwork', uploadFields, asyncHandler(artworkController.createArtwork))
+router.patch('/updateArtwork/:artworkId', uploadFields, asyncHandler(artworkController.updateArtwork))
+router.delete('/deleteArtwork/:artworkId', asyncHandler(artworkController.deleteArtwork))
 
 export default router

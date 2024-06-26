@@ -2,7 +2,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.
 import Proposal from "../models/proposal.model.js"
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
-import {artwork} from "../models/artwork.model.js"
+import Artwork from "../models/artwork.model.js"
 import sendEmail from '../middlewares/sendMail.js'
 
 class ProposalService{
@@ -41,12 +41,13 @@ class ProposalService{
         })
         await proposal.save()
 
-        //7. Modify the order status to accepted
-        order.status = 'accepted'
+        //7. Modify the order status to approved
+        order.status = 'approved'
         order.save()
 
         const showedProposal = await proposal.populate('orderId')
-        console.log('Proposal:', showedProposal);
+
+        //sendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully');
         return {
             proposal: showedProposal
         }
@@ -63,7 +64,7 @@ class ProposalService{
             proposal
         }
     }
-    static readProposals = async(orderId) => {
+    static readProposalsByOrderId = async(orderId) => {
         //1. Check if order exists
         const order = await Order.findById(orderId)
         if(!order) throw new NotFoundError('Order not found')
@@ -89,7 +90,7 @@ class ProposalService{
         
         //3. Check order status
         const order = await Order.findById(proposal.orderId)
-        if(order.status !== 'pending' && order.status !== 'accepted')
+        if(order.status !== 'pending' && order.status !== 'approved')
             throw new BadRequestError('You cannot update proposal on this stage')
 
         //4. Update proposal
@@ -127,17 +128,17 @@ class ProposalService{
         
         //3. Check status of order
         const order = await Order.findById(proposal.orderId)
-        if(order.status !== 'pending' && order.status !== 'accepted')
+        if(order.status !== 'pending' && order.status !== 'approved')
             throw new BadRequestError('You cannot update proposal on this stage')
 
         //4. Delete proposal
-        await proposal.remove()
+        await proposal.deleteOne()
 
         return {
             proposal
         }
     }
-    static viewProposalsHistory = async(userId) => {
+    static readProposalsHistory = async(userId) => {
         //1. Check if user exists
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError('User not found')
@@ -163,10 +164,10 @@ class ProposalService{
         if(userId !== proposal.memberId.toString())
             throw new AuthFailureError('You are not authorized to confirm this proposal')
 
-        //3. Check if order status is accepted
+        //3. Check if order status is approved
         const order = await Order.findById(proposal.orderId)
-        if(order.status !== 'accepted')
-            throw new BadRequestError('Order is not accepted')
+        if(order.status !== 'approved')
+            throw new BadRequestError('Order is not approved')
         if(order.status == 'confirmed')
             throw new BadRequestError('Order is already confirmed')
 
@@ -207,11 +208,11 @@ class ProposalService{
         if(userId !== proposal.memberId.toString())
             throw new AuthFailureError('You are not authorized to deny this proposal')
 
-        //3. Check if order status is accepted
+        //3. Check if order status is approved
         const order = await Order.findById
         (proposal.orderId)
-        if(order.status !== 'accepted')
-            throw new BadRequestError('Order is not accepted')
+        if(order.status !== 'approved')
+            throw new BadRequestError('Order is not approved')
 
         //4. Deny proposal
         order.status = 'rejected'

@@ -7,7 +7,7 @@ import { verifyToken } from "../../middlewares/jwt.js";
 const router = express.Router()
 
 router.get('/readOrder/:orderId', asyncHandler(orderController.readOrder))
-router.get('/readOrders', asyncHandler(orderController.readOrders))
+router.get('/readIndirectApprovedOrders', asyncHandler(orderController.readIndirectApprovedOrders))
 
 //authentication
 //router.use(authenticationV2)
@@ -19,7 +19,7 @@ router.patch('/updateOrder/:orderId', asyncHandler(orderController.updateOrder))
 router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder))
 //END CRUD
 
-router.get('/viewOrderHistory', asyncHandler(orderController.viewOrderHistory))
+router.get('/readOrderHistory', asyncHandler(orderController.readOrderHistory))
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 router.patch('/denyOrder/:orderId', asyncHandler(orderController.denyOrder))
 

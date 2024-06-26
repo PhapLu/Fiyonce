@@ -1,19 +1,38 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { User } from '../models/user.model.js'
 import Movement from '../models/movement.model.js'
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
 class MovementService{
-  static createMovement = async(adminId, body) => {
+  static createMovement = async(adminId, req) => {
     //1. Check if admin exists
     const admin = await User.findById(adminId)
     if (!admin) {
       throw new AuthFailureError('Admin not found')
     }
 
-    //2. Create movement
+    //2. Validate request body
+    if (!req.body.title) {
+      throw new BadRequestError('Please provide title')
+    }
+    if(req.files && !req.files.thumbnail) {
+      throw new BadRequestError('Please provide thumbnail')
+    }
+
+    //3.Upload thumbnail to cloudinary
+    const thumbnailUploadResult = await compressAndUploadImage({
+      buffer: req.files.thumbnail[0].buffer,
+      originalname: req.files.thumbnail[0].originalname,
+      folderName: `fiyonce/movements/admin: ${adminId}`,
+      width: 1920,
+      height: 1080
+    })
+    const thumbnail = thumbnailUploadResult.secure_url
+
+    //4. Create movement
     const movement = new Movement({
-      title: body.title,
-      thumbnail: body.thumbnail
+      title: req.body.title,
+      thumbnail
     })
 
     await movement.save()
@@ -33,40 +52,83 @@ class MovementService{
         }
       },
       {
+        $lookup: {
+          from: 'CommissionServices', // Assuming the collection name is 'CommissionServices'
+          localField: '_id',
+          foreignField: 'movements', // Assuming the field name in CommissionServices is 'movements'
+          as: 'commissionServices'
+        }
+      },
+      {
         $addFields: {
-          artworkCount: { $size: '$artworks' }
+          artworkCount: { $size: '$artworks' },
+          commissionServiceCount: { $size: '$commissionServices' }
         }
       },
       {
         $project: {
-          artworks: 0 // Exclude the artworks array to reduce payload size
+          artworks: 0, // Exclude the artworks array to reduce payload size
+          commissionServices: 0 // Exclude the commissionServices array to reduce payload size
         }
       }
     ])
 
-    return {movements}
+    return {
+      movements
+    }
   }
 
-  static updateMovement = async(adminId, movementId, body) => {
-    //1. Check if admin and movement exists
-    const admin = await User.findById(adminId)
-    const movement = await Movement.findById(movementId)
-    if (!admin) {
-      throw new AuthFailureError('Admin not found')
+  static updateMovement = async (adminId, movementId, req) => {
+    // 1. Check if admin and movement exist
+    const admin = await User.findById(adminId);
+    const movement = await Movement.findById(movementId);
+  
+    if (!admin) throw new AuthFailureError('Admin not found');
+    if (!movement) throw new BadRequestError('Movement not found');
+  
+    // 2. Handle thumbnail upload
+    try {
+      let thumbnailUrl = movement.thumbnail; // Retain the existing thumbnail URL
+  
+      if (req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
+        console.log(req.files.thumbnail);
+        const thumbnailUploadResult = await compressAndUploadImage({
+          buffer: req.files.thumbnail[0].buffer,
+          originalname: req.files.thumbnail[0].originalname,
+          folderName: `fiyonce/movements/admin: ${adminId}`,
+          width: 1920,
+          height: 1080
+        });
+        thumbnailUrl = thumbnailUploadResult.secure_url;
+  
+        // 3. Delete old thumbnail from cloudinary if a new one is uploaded
+        if (thumbnailUploadResult && movement.thumbnail !== '') {
+          const publicId = extractPublicIdFromUrl(movement.thumbnail);
+          await deleteFileByPublicId(publicId);
+        }
+      }
+  
+      // 4. Merge existing movement fields with req.body to ensure fields not provided in req.body are retained
+      const updatedFields = { ...movement.toObject(), ...req.body };
+  
+      // Ensure the thumbnail is only updated if a new value is provided
+      updatedFields.thumbnail = thumbnailUrl;
+  
+      // 5. Update movement
+      const updatedMovement = await Movement.findByIdAndUpdate(
+        movementId,
+        updatedFields,
+        { new: true }
+      );
+  
+      return {
+          movement: updatedMovement
+      };
+    } catch (error) {
+      console.error('Error in updating movement:', error);
+      throw new Error('Movement update failed');
     }
-    if (!movement) {
-      throw new BadRequestError('Movement not found')
-    }
-
-    //2. Update movement
-    movement.title = body.title
-    movement.thumbnail = body.thumbnail
-    await movement.save()
-
-    return {
-      movement
-    }
-  }   
+  };
 
   static deleteMovement = async(adminId, movementId) => {
     //1. Check if admin and movement exists
@@ -79,7 +141,11 @@ class MovementService{
       throw new BadRequestError('Movement not found')
     }
 
-    //2. Delete movement
+    //2. Delete movement thumbnail from cloudinary
+    const publicId = extractPublicIdFromUrl(movement.thumbnail)
+    await deleteFileByPublicId(publicId)
+
+    //3. Delete movement
     await movement.deleteOne()
 
     return {

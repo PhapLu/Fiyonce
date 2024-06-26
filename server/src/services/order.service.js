@@ -1,7 +1,7 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
-import {artwork} from "../models/artwork.model.js"
+import Artwork from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
 import commissionService from "../models/commissionService.model.js"
 
@@ -53,14 +53,15 @@ class OrderService{
         }
     }
     
-    static readOrders = async() => {
+    //Client read approved indirect orders in commission market
+    static readIndirectApprovedOrders = async() => {
         //1. Get all orders
         const orders = await Order.find({ isDirect: false })
             .populate('talentChosenId', 'stageName avatar')
-        //2. Iterate over each order to add talentsAcceptedCount
+        //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {
-            const talentsAcceptedCount = await Proposal.find({ orderId: order._id, status: 'accepted' }).countDocuments()
-            order._doc.talentsAcceptedCount = talentsAcceptedCount;  // Add the count to the order
+            const talentsApprovedCount = await Proposal.find({ orderId: order._id, status: 'approved' }).countDocuments()
+            order._doc.talentsApprovedCount = talentsApprovedCount;  // Add the count to the order
             return order
         }))
     
@@ -105,7 +106,7 @@ class OrderService{
         if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
         
         //2. Check order status
-        if(oldOrder.status != 'pending' && oldOrder.status != 'accepted')
+        if(oldOrder.status != 'pending' && oldOrder.status != 'approved')
             throw new BadRequestError('You cannot delete order on this stage!')
 
         //3. Delete order
@@ -113,7 +114,7 @@ class OrderService{
     }
     //End Order CRUD
 
-    static viewOrderHistory = async (clientId) => {
+    static readOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId)
         if(!foundUser) throw new NotFoundError('User not found!')

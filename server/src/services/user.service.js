@@ -1,5 +1,5 @@
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
-import { artwork } from '../models/artwork.model.js'
+import Artwork from '../models/artwork.model.js'
 import { User } from '../models/user.model.js'
 import jwt from 'jsonwebtoken'
 
@@ -61,7 +61,7 @@ class UserService{
     static likeArtwork = async(userId, artworkId) => {
         //1. Check user and artwork
         const currentUser = await User.findById(userId)
-        const foundArtwork = await artwork.findById(artworkId)
+        const foundArtwork = await Artwork.findById(artworkId)
         if(!currentUser) throw new NotFoundError('User not found')
         if(!foundArtwork) throw new NotFoundError('Artwork not found')
         if(foundArtwork.artwork_likes.includes(currentUser._id.toString()))

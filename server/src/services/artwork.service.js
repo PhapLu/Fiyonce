@@ -1,150 +1,157 @@
 import { BadRequestError, NotFoundError } from "../core/error.response.js";
-import { artwork, showcasing } from "../models/artwork.model.js";
+import Artwork from "../models/artwork.model.js";
 import { findAllArtworks, updateArtworkById, findArtwork, searchArtworksByUser, deleteArtwork } from "../models/repositories/artwork.repo.js";
 import { User } from "../models/user.model.js";
-import { removeUndefinedObject, updatedNestedObjectParser } from "../utils/index.js";
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from "../utils/cloud.util.js";
 
-class ArtworkFactory{
-    static artworkRegistry = {}
+class ArtworkService{
+    static createArtwork = async(userId, req) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError('User not found')
+        if(user.role !== 'talent') throw new BadRequestError('You are not a talent')
 
-    static registerArtworkType(type, classRef){
-        ArtworkFactory.artworkRegistry[type] = classRef
-    }
+        //2. Validate request body
+        const { title, description } = req.body
+        if(!req.files || !req.files.artworks) 
+            throw new BadRequestError('Please provide artwork files')
+        if(!userId || !title || !description) 
+            throw new BadRequestError('Please provide all required fields')
 
-    static async createArtwork(type, payload){
-        const artworkClass = ArtworkFactory.artworkRegistry[type]
-        if(artworkClass)
-            throw new BadRequestError(`Invalid Artwork Type ${type}`)
-        return new artworkClass(payload).createArtwork();
-    }
-    static async updateArtwork(type, artworkId, payload) {
-        const artworkClass = ArtworkFactory.artworkRegistry[type];
-        if (!artworkClass)
-          throw new BadRequestError(`Invalid artwork Types ${type}`);
-        return new artworkClass(payload).updateArtwork(artworkId);
-      }
-    
-    static async findAllArtworks({
-        limit = 50,
-        sort = "ctime",
-        page = 1,
-    }) {
-        return await findAllArtworks({
-          limit,
-          sort,
-          page,
-          select: ["artwork_title", "artwork_attributes", "artwork_description"],
-        });
-    }
-    
-    static async findArtwork({ artwork_id }) {
-        return await findArtwork({ artwork_id, unSelect: ["__v"] });
-    }
+        //3. Upload artwork images to cloudinary
+        try {
+            const uploadPromises = req.files.artworks.map(file => compressAndUploadImage({
+                buffer: file.buffer,
+                originalname: file.originalname,
+                folderName: `fiyonce/artworks/${userId}`,
+                width: 1920,
+                height: 1080
+            }))
+            const uploadResults = await Promise.all(uploadPromises)
+            const artworks = uploadResults.map(result => result.secure_url)
 
-    static async searchArtworksByUser({ keySearch }) {
-        return await searchArtworksByUser({ keySearch });
-    }
-    static async deleteArtwork({artwork_id}) {
-        return await deleteArtwork({artwork_id})
-    }
-
-}
-
-class Artwork{
-    constructor({
-        artwork_title,
-        artwork_thumb,
-        artwork_images,
-        artwork_description,
-        artwork_type,
-        artwork_talent,
-        artwork_attributes,
-    }) {
-        (this.artwork_title = artwork_title),
-        (this.artwork_thumb = artwork_thumb),
-        (this.artwork_images = artwork_images),
-        (this.artwork_description = artwork_description),
-        (this.artwork_type = artwork_type),
-        (this.artwork_talent = artwork_talent),
-        (this.artwork_attributes = artwork_attributes);
-    }
-    //Create New Artwork
-    async createArtwork(artworkId){
-        const newArtwork = await artwork.create({ ...this, _id: artworkId})
-        return newArtwork
-    }
-
-    //Update Artwork
-    async updateArtwork ({artworkId, payload}){
-        return await updateArtworkById({ artworkId, payload, model: artwork });
-    }
-}
-// class ForSellingArtwork extends Artwork{
-//     async createArtwork(){
-//         const newForSelling = await forSelling.create({
-//             ...this.artwork_attributes,
-//             artwork_talent: this.artwork_talent,
-//         })
-//         if (!newForSelling) throw new BadRequestError("Create new ForSelling error");
-
-//         const newArtwork = await super.createProduct(newForSelling._id);
-//         if (!newArtwork) throw new BadRequestError("Create new Artwork error");
-
-//         return newArtwork;
-//     }
-
-//     async updateArtwork(artworkId){
-//         const objectParams = removeUndefinedObject(this)
-//         if(objectParams.artwork_attributes){
-//             //Update Child
-//             await updateArtworkById({
-//                 artworkId,
-//                 payload: updatedNestedObjectParser(objectParams.artwork_attributes),
-//                 model: forSelling
-//             })
-//         }
-//         const updatedArtwork = await super.updateArtwork({
-//             artworkId,
-//             payload: updatedNestedObjectParser(objectParams)
-//         })
-//         return updatedArtwork
-//     }
-// }
-
-class ShowcasingArtwork extends Artwork{
-    async createArtwork(){
-        const newShowcasing = await showcasing.create({
-            ...this.artwork_attributes,
-            artwork_talent: this.artwork_talent,
-        })
-        if (!newShowcasing) throw new BadRequestError("Create new Showcasing error");
-
-        const newArtwork = await super.createProduct(newShowcasing._id);
-        if (!newArtwork) throw new BadRequestError("Create new Artwork error");
-
-        return newArtwork;
-    }
-
-    async updateArtwork(artworkId){
-        const objectParams = removeUndefinedObject(this)
-        if(objectParams.artwork_attributes){
-            //Update Child
-            await updateArtworkById({
-                artworkId,
-                payload: updatedNestedObjectParser(objectParams.artwork_attributes),
-                model: showcasing
+            //4. Create and save artwork
+            const newArtwork = new Artwork({
+                ...req.body,
+                talentId: userId,
+                artworks
             })
+            await newArtwork.save()
+
+            return {
+                artwork: newArtwork
+            }
+        } catch (error) {
+            console.error('Error uploading images:', error);
+            throw new Error('File upload or database save failed');
         }
-        const updatedArtwork = await super.updateArtwork({
+    }
+
+    static readArtwork = async(artworkId) => {
+        //1. Find artwork
+        const artwork = await Artwork.findById(artworkId).populate('talentId', 'stageName avatar')
+        if(!artwork) throw new NotFoundError('Artwork not found')
+
+        return {
+            artwork
+        }
+    }
+
+    static readArtworksOfTalent = async(talentId) => {
+        //1. Check talent
+        const talent = await User.findById(talentId)
+        if(!talent) throw new NotFoundError('User not found')
+        if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
+
+        //2. Find artworks
+        const artworks = await Artwork.find({talentId})
+
+        return {
+            artworks
+        }
+    }
+
+    static updateArtwork = async (userId, artworkId, req) => {
+        // 1. Check user and artwork
+        const user = await User.findById(userId);
+        const artworkToUpdate = await Artwork.findById(artworkId);
+      
+        if (!user) throw new NotFoundError('User not found');
+        if (!artworkToUpdate) throw new NotFoundError('Artwork not found');
+        if (user.role !== 'talent') throw new BadRequestError('You are not a talent');
+        if (artworkToUpdate.talentId.toString() !== userId) throw new BadRequestError('You can only update your artwork');
+      
+        // 2. Handle file uploads if new files were uploaded
+        try {
+          if (req.files && req.files.artworks) {
+            // Upload new files to Cloudinary
+            const uploadPromises = req.files.artworks.map(file => compressAndUploadImage({
+              buffer: file.buffer,
+              originalname: file.originalname,
+              folderName: `fiyonce/artworks/${userId}`,
+              width: 1920,
+              height: 1080
+            }));
+      
+            const uploadResults = await Promise.all(uploadPromises);
+            const artworks = uploadResults.map(result => result.secure_url);
+            req.body.artworks = artworks;
+      
+            // Delete old files from Cloudinary
+            const publicIds = artworkToUpdate.artworks.map(url => extractPublicIdFromUrl(url));
+            await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+          }
+      
+          // 3. Merge existing artwork fields with req.body to ensure fields not provided in req.body are retained
+          const updatedFields = { ...artworkToUpdate.toObject(), ...req.body };
+      
+          // 4. Update artwork
+          const updatedArtwork = await Artwork.findByIdAndUpdate(
             artworkId,
-            payload: updatedNestedObjectParser(objectParams)
-        })
-        return updatedArtwork
+            updatedFields,
+            { new: true }
+          );
+      
+          return {
+            message: "Update artwork success!",
+            status: 200,
+            metadata: {
+              artwork: updatedArtwork
+            }
+          };
+        } catch (error) {
+          console.error('Error in updating artwork:', error);
+          throw new Error('Artwork update failed');
+        }
+      };      
+
+    static deleteArtwork = async(userId, artworkId) => {
+        //1. Check user and artwork
+        const user = await User.findById(userId)
+        const artworkToDelete = await Artwork.findById(artworkId)
+
+        if(!user) throw new NotFoundError('User not found')
+        if(!artworkToDelete) throw new NotFoundError('Artwork not found')
+        if(user.role !== 'talent') throw new BadRequestError('You are not a talent')
+        if(artworkToDelete.talentId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
+
+        //2. Delete artwork on cloudinary
+        try {
+            const publicIds = artworkToDelete.artworks.map(url => extractPublicIdFromUrl(url))
+            for(const publicId of publicIds){
+                await deleteFileByPublicId(publicId)
+            }
+        } catch (error) {
+            console.log('Error deleting artwork images:', error)
+        }
+
+        //3. Delete artwork
+        await Artwork.findByIdAndDelete(artworkId)
+
+        return {
+            message: 'Delete artwork success'
+        }
     }
 }
 
-// ArtworkFactory.registerArtworkType("ForSelling", ForSellingArtwork)
-ArtworkFactory.registerArtworkType("Showcasing", ShowcasingArtwork)
-
-export default ArtworkFactory
-
+export default ArtworkService

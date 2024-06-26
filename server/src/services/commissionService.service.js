@@ -57,7 +57,6 @@ class CommissionServiceService{
         }
     };
     
-
     static readCommissionService = async(commissionServiceId) => {
         //1. Check service
         const service = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar')
@@ -83,20 +82,17 @@ class CommissionServiceService{
         }
     }
 
-
     static updateCommissionService = async (talentId, commissionServiceId, req) => {
+        // 1. Check talent and service
+        const talent = await User.findById(talentId);
+        const service = await CommissionService.findById(commissionServiceId);
+    
+        if (!talent) throw new NotFoundError('Talent not found');
+        if (!service) throw new NotFoundError('Service not found');
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
+    
+        const oldCategoryId = service.serviceCategoryId; // Store the old category ID
         try {
-            console.log(req.body)
-            // 1. Check talent and service
-            const talent = await User.findById(talentId);
-            const service = await CommissionService.findById(commissionServiceId);
-    
-            if (!talent) throw new NotFoundError('Talent not found');
-            if (!service) throw new NotFoundError('Service not found');
-            if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
-    
-            const oldCategoryId = service.serviceCategoryId; // Store the old category ID
-    
             // 2. Handle file uploads if new files were uploaded
             if (req.files && req.files.files) {
                 // Upload new files to Cloudinary
@@ -116,14 +112,17 @@ class CommissionServiceService{
                 await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
             }
     
-            // 3. Update the service
+            // 3. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
+            const updatedFields = { ...service.toObject(), ...req.body };
+    
+            // 4. Update the service
             const updatedService = await CommissionService.findByIdAndUpdate(
                 commissionServiceId,
-                { $set: req.body },
+                updatedFields,
                 { new: true }
             );
     
-            // 4. Check if the category has changed and if the old category is now empty
+            // 5. Check if the category has changed and if the old category is now empty
             if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
                 const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
                 if (servicesInOldCategory.length === 0) {
@@ -132,14 +131,18 @@ class CommissionServiceService{
                 }
             }
     
-            return { service: updatedService };
+            return {
+                message: "Update service success!",
+                status: 200,
+                metadata: {
+                    service: updatedService
+                }
+            };
         } catch (error) {
             console.error('Error in updating commission service:', error);
             throw new Error('Service update failed');
         }
-    };
-    
-    
+    };    
 
     static deleteCommissionService = async (talentId, commissionServiceId) => {
         // 1. Check talent and service
@@ -169,8 +172,7 @@ class CommissionServiceService{
         }
     
         return { message: 'Service and possibly empty category deleted successfully' };
-    };
-    
+    }
 }
 
 export default CommissionServiceService

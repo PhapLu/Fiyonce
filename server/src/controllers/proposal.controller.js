@@ -16,10 +16,10 @@ class ProposalController{
         }).send(res)
     }
 
-    readProposals = async(req, res, next) =>{
+    readProposalsByOrderId = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all proposals of an order',
-            metadata: await ProposalService.readProposals(req.params.orderId)
+            metadata: await ProposalService.readProposalsByOrderId(req.params.orderId)
         }).send(res)
     }
 
@@ -37,10 +37,10 @@ class ProposalController{
         }).send(res)
     }
 
-    viewProposalsHistory = async(req, res, next) =>{
+    readProposalsHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all Proposals of a client',
-            metadata: await ProposalService.viewProposalsHistory(req.userId)
+            metadata: await ProposalService.readProposalsHistory(req.userId)
         }).send(res)
     }
 

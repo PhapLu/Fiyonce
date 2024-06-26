@@ -17,6 +17,8 @@ const uploadMemory = multer({
 
 const uploadFields = uploadMemory.fields([
     { name: 'files', maxCount: 5 },
+    { name: 'artworks', maxCount: 10 },
+    { name: 'thumbnail', maxCount: 1 },
     { name: 'portfolioLink', maxCount: 1 },
     { name: 'stageName', maxCount: 1 },
     { name: 'price', maxCount: 1 },

@@ -3,19 +3,19 @@ dotenv.config();
 import express from "express";
 import http from 'http';
 import cors from 'cors';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import {v4 as uuidv4} from 'uuid'
+import bodyParser from 'body-parser';
 import compression from 'compression';
 import router from "./routes/index.js";
+import cookieParser from 'cookie-parser';
+import './db/init.mongodb.js';
+import myLogger from './loggers/mylogger.log.js';
 import configureSocket from './configs/socket.config.js';
 import SocketServices from './services/socket.service.js';
-import './db/init.mongodb.js'; // Ensure this is properly set up
-import {v4 as uuidv4} from 'uuid'
-import myLogger from './loggers/mylogger.log.js';
-import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js';
 import sanitizeInputs from './middlewares/sanitize.middleware.js';
+import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js';
 const app = express();
 
 //Rate Limit
@@ -44,16 +44,18 @@ app.use(sanitizeInputs)
 
 //Advanced Logger
 app.use((req, res, next) => {
-    const requestId = req.headers['x-request-id']
-    req.requestId = requestId ? requestId : uuidv4()
+    const requestId = req.headers['x-request-id'];
+    req.requestId = requestId ? requestId : uuidv4();
+
     myLogger.log(`input-params ::${req.method}::`, [
         req.path,
-        { requestId: req.requestId},
-        req.method === 'POST' ? req.body : req.query
-    ])
+        { requestId: req.requestId },
+        (req.method === 'POST' || req.method === 'PATCH') ? req.body : req.query
+    ]);
 
-    next()
-}) 
+    next();
+});
+
 // Init routes
 app.use('', router);
 

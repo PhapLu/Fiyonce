@@ -29,17 +29,17 @@ class TalentRequestController {
         }).send(res)
     }
     
-    viewTalentRequests = async(req, res, next) => {
+    readTalentRequestsByStatus = async(req, res, next) => {
         new SuccessResponse({
             message: 'View talent requests success!',
-            metadata: await TalentRequestService.viewTalentRequests(req.userId)
+            metadata: await TalentRequestService.readTalentRequestsByStatus(req.userId, req.params.status)
         }).send(res)
     }
 
-    viewTalentRequest = async(req, res, next) => {
+    readTalentRequest = async(req, res, next) => {
         new SuccessResponse({
             message: 'View talent request success!',
-            metadata: await TalentRequestService.viewTalentRequest(req.userId, req.params.requestId)
+            metadata: await TalentRequestService.readTalentRequest(req.userId, req.params.requestId)
         }).send(res)
     }
 }

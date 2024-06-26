@@ -5,22 +5,24 @@ const COLLECTION_NAME = 'Artworks'
 
 const ArtworkSchema = new Schema({
     talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkCategory', required: true },
+    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkCategory' },
     movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
-    artworkTitle:{ type: String },
-    artworkImages: [{ type: String, required: true }],
-    artworkDescription: { type: String },
-    artworkLikes: [
-        {
+    title:{ type: String },
+    description: { type: String },
+    artworks: [{ type: String, required: true }],
+    views: { type: Number, default: 0 },
+    likes: {
+        type: [{
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-        }
-    ],
-    artworkViews: { type: Number, default: 0 },
-    artworkBookmarks: [
-        {
+        }],
+        default: []
+    },  
+    bookmarks: {
+        type: [{
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-        }
-    ],
+        }],
+        default: []
+    },
     // artworkComments: [{
     //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     //     content: { type: String, required: true },
@@ -74,20 +76,21 @@ ArtworkSchema.index({ description: 'text' });
 //     timestamps: true,
 //     collection: 'ForSellings'
 // })
+// const ShowcasingSchema = new Schema({
+//     talentId:{
+//         type: Schema.Types.ObjectId,
+//         ref: 'User',
+//         required: true
+//     }
+// },{
+//     timestamps: true,
+//     collection: 'Showcasings'
+// })
 
-const ShowcasingSchema = new Schema({
-    talentId:{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
-},{
-    timestamps: true,
-    collection: 'Showcasings'
-})
+// const artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema);
+// //const forSelling = mongoose.model('ForSelling', ForSellingSchema)
+// const showcasing = mongoose.model('Showcasing', ShowcasingSchema)
+// export {artwork, showcasing};
 
-const artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema);
-//const forSelling = mongoose.model('ForSelling', ForSellingSchema)
-const showcasing = mongoose.model('Showcasing', ShowcasingSchema)
-export {artwork, showcasing};
-
+const Artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema)
+export default Artwork

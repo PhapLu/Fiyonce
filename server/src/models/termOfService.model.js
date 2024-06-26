@@ -3,6 +3,7 @@ const DOCUMENT_NAME = 'TermOfService'
 const COLLECTION_NAME = 'TermOfServices'
 
 const TermOfServiceSchema = new mongoose.Schema({
+    talentId: {type: mongoose.Schema.Types.ObjectId, required: true},
     general: {type: String, required: true},
     payments: {type: String, required: true},
     deadlinesAndDelivery: {type: String, required: true},
