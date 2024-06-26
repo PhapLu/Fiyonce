@@ -25,3 +25,8 @@
 2024-06-26 19:14:43::error::/v1/api/termOfService/createTermOfService::c78993c0-2163-4030-a327-ded121467cc7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-06-26 19:15:11::error::/v1/api/termOfService/createTermOfService::458c1113-88d1-4bbf-8bf0-f14e41259080::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-06-26 19:15:44::error::/v1/api/termOfService/createTermOfService::2846ef19-e70b-497f-b31f-e71d45909232::403 - 0ms - Response: {"status":403,"now":1719404144287}::{"message":"User is not a talent"}
+2024-06-26 20:14:38::error::/v1/api/commissionService/readCommissionService::d5a1d6e0-03b1-4705-b59d-99a66fc50762::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 20:19:37::error::/v1/api/commissionService/createCommissionService::a600ea81-77d6-4b8a-ba5f-43dcd6b0ffb9::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-26 20:20:29::error::/v1/api/commissionService/createCommissionService::0145671f-7eff-46c5-ad07-7c94360d5fd7::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-26 20:22:35::error::/v1/api/commissionService/readCommissionService/66601810d3737cbcac3bc91e::054199a9-373e-4b35-9b52-814254770fae::404 - 1ms - Response: {"status":404,"now":1719408155305}::{"message":"Service not found"}
+2024-06-26 20:28:30::error::/v1/api/termOfService/createTermOfService::3bf7e2d1-2391-408a-bc63-40d97da99415::403 - 1ms - Response: {"status":403,"now":1719408510581}::{"message":"All fields are required"}

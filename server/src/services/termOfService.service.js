@@ -3,15 +3,15 @@ import TermOfService from '../models/termOfService.model.js'
 import { User } from '../models/user.model.js'
 
 class TermOfServiceService{
-    static createTermOfService = async(userId, termOfServiceId, body) => {
+    static createTermOfService = async(userId, body) => {
         //1. Check if user is an talent
         const user = await User.findById(userId)
         if(!user) throw new AuthFailureError('User not found')
         if(user.role !== 'talent') throw new BadRequestError('User is not a talent')
 
         //2. Validate body
-        const {general, payments, deadlinesAndDelivery, use, refunds} = body
-        if(!general || !payments || !deadlinesAndDelivery || !use || !refunds) throw new BadRequestError('All fields are required')
+        const {content} = body
+        if(!content) throw new BadRequestError('All fields are required')
 
         //3. Create termOfService
         const termOfService = new TermOfService({

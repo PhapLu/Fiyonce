@@ -507,3 +507,24 @@
 2024-06-26 19:20:58::info::/v1/api/user/me::b26079a1-671a-4998-b8fa-d30e9a1b936d::input-params ::GET::::{}
 2024-06-26 19:20:58::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::c3de37c4-06fa-4572-b338-1642c81cb641::input-params ::GET::::{}
 2024-06-26 19:20:58::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/665edd23fa87b27398b73d10::2c309659-4b74-4b67-af9d-6073e32f30f7::input-params ::GET::::{}
+2024-06-26 20:14:38::info::/v1/api/commissionService/readCommissionService::d5a1d6e0-03b1-4705-b59d-99a66fc50762::input-params ::GET::::{}
+2024-06-26 20:14:38::error::/v1/api/commissionService/readCommissionService::d5a1d6e0-03b1-4705-b59d-99a66fc50762::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 20:14:59::info::/v1/api/commissionService/readCommissionService/66742d4af3390f5f176aea6c::37f5a421-55f1-482a-b613-8d5c53889382::input-params ::GET::::{}
+2024-06-26 20:18:55::info::/v1/api/termOfService/readTermOfServices::d3938fbe-1f15-4f81-87d7-73bdec6cdee9::input-params ::GET::::{}
+2024-06-26 20:19:34::info::/v1/api/commissionService/createCommissionService::a600ea81-77d6-4b8a-ba5f-43dcd6b0ffb9::input-params ::POST::::{}
+2024-06-26 20:19:37::error::/v1/api/commissionService/createCommissionService::a600ea81-77d6-4b8a-ba5f-43dcd6b0ffb9::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-26 20:19:57::info::/v1/api/movement/readMovements::04f4daae-2c1d-49c2-b750-5428a1126d5c::input-params ::GET::::{}
+2024-06-26 20:20:24::info::/v1/api/commissionService/createCommissionService::0145671f-7eff-46c5-ad07-7c94360d5fd7::input-params ::POST::::{}
+2024-06-26 20:20:29::error::/v1/api/commissionService/createCommissionService::0145671f-7eff-46c5-ad07-7c94360d5fd7::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-26 20:21:43::info::/v1/api/commissionService/createCommissionService::30e569e2-074b-412e-a6c8-ab65566b819d::input-params ::POST::::{}
+2024-06-26 20:22:35::info::/v1/api/commissionService/readCommissionService/66601810d3737cbcac3bc91e::054199a9-373e-4b35-9b52-814254770fae::input-params ::GET::::{}
+2024-06-26 20:22:35::error::/v1/api/commissionService/readCommissionService/66601810d3737cbcac3bc91e::054199a9-373e-4b35-9b52-814254770fae::404 - 1ms - Response: {"status":404,"now":1719408155305}::{"message":"Service not found"}
+2024-06-26 20:22:58::info::/v1/api/commissionService/readCommissionService/667c15ea56a339432fd7bca6::521a02ef-16c4-4a2c-8fec-88d45fbdb0fc::input-params ::GET::::{}
+2024-06-26 20:26:35::info::/v1/api/commissionService/createCommissionService::c0a5c100-0486-441b-8eca-02c6b087089c::input-params ::POST::::{}
+2024-06-26 20:27:55::info::/v1/api/commissionService/createCommissionService::a290bf2f-91ae-4b37-be01-21552f2f9c9a::input-params ::POST::::{}
+2024-06-26 20:28:30::info::/v1/api/termOfService/createTermOfService::3bf7e2d1-2391-408a-bc63-40d97da99415::input-params ::POST::::{"content":"This is TOS"}
+2024-06-26 20:28:30::error::/v1/api/termOfService/createTermOfService::3bf7e2d1-2391-408a-bc63-40d97da99415::403 - 1ms - Response: {"status":403,"now":1719408510581}::{"message":"All fields are required"}
+2024-06-26 20:30:08::info::/v1/api/termOfService/createTermOfService::55b4f192-f991-4d49-8d1f-40487c0ec9ad::input-params ::POST::::{"content":"This is TOS"}
+2024-06-26 20:30:15::info::/v1/api/termOfService/readTermOfServices::65118658-5f03-495c-8145-431e2f3ad8f3::input-params ::GET::::{}
+2024-06-26 20:30:53::info::/v1/api/commissionService/createCommissionService::7f09f9a2-6be4-4adb-8346-13f7be15ed48::input-params ::POST::::{}
+2024-06-26 20:31:11::info::/v1/api/commissionService/readCommissionService/667c18113bf313a148ba35c4::2834dca5-b581-4a58-af3f-330485313405::input-params ::GET::::{}
