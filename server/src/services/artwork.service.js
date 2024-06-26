@@ -64,7 +64,7 @@ class ArtworkService{
         if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
 
         //2. Find artworks
-        const artworks = await Artwork.finds({userId: talentId})
+        const artworks = await Artwork.find({talentId})
 
         return {
             artworks
@@ -79,13 +79,13 @@ class ArtworkService{
         if (!user) throw new NotFoundError('User not found');
         if (!artworkToUpdate) throw new NotFoundError('Artwork not found');
         if (user.role !== 'talent') throw new BadRequestError('You are not a talent');
-        if (artworkToUpdate.userId.toString() !== userId) throw new BadRequestError('You can only update your artwork');
+        if (artworkToUpdate.talentId.toString() !== userId) throw new BadRequestError('You can only update your artwork');
       
         // 2. Handle file uploads if new files were uploaded
         try {
-          if (req.files && req.files.files) {
+          if (req.files && req.files.artworks) {
             // Upload new files to Cloudinary
-            const uploadPromises = req.files.files.map(file => compressAndUploadImage({
+            const uploadPromises = req.files.artworks.map(file => compressAndUploadImage({
               buffer: file.buffer,
               originalname: file.originalname,
               folderName: `fiyonce/artworks/${userId}`,
@@ -133,7 +133,7 @@ class ArtworkService{
         if(!user) throw new NotFoundError('User not found')
         if(!artworkToDelete) throw new NotFoundError('Artwork not found')
         if(user.role !== 'talent') throw new BadRequestError('You are not a talent')
-        if(artworkToDelete.userId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
+        if(artworkToDelete.talentId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
 
         //2. Delete artwork on cloudinary
         try {

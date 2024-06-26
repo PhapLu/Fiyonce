@@ -5,7 +5,7 @@ const COLLECTION_NAME = 'Artworks'
 
 const ArtworkSchema = new Schema({
     talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkCategory', required: true },
+    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkCategory' },
     movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
     title:{ type: String },
     description: { type: String },

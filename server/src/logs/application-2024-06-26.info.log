@@ -14,3 +14,29 @@
 2024-06-26 09:59:38::info::/v1/api/artworkCategory/deleteArtworkCategory/667b7b49cf00088adec3216a::174482a9-3f51-4fcd-9409-8d9dd68c0291::input-params ::DELETE::::{}
 2024-06-26 09:59:38::error::/v1/api/artworkCategory/deleteArtworkCategory/667b7b49cf00088adec3216a::174482a9-3f51-4fcd-9409-8d9dd68c0291::undefined - NaNms - Response: {}::{"message":"artworkCategory.remove is not a function"}
 2024-06-26 11:18:03::info::/v1/api/artworkCategory/deleteArtworkCategory/667b7b49cf00088adec3216a::0268dd60-8363-4fb2-a6ff-86b84bd714d0::input-params ::DELETE::::{}
+2024-06-26 11:30:41::info::/v1/api/artwork/createArtwork::6f3753e2-37d1-4cc0-b06e-d04f17696f38::input-params ::POST::::{}
+2024-06-26 11:30:45::error::/v1/api/artwork/createArtwork::6f3753e2-37d1-4cc0-b06e-d04f17696f38::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-26 11:32:15::info::/v1/api/artwork/createArtwork::dee76718-b8a1-413e-99f8-96fc01f23887::input-params ::POST::::{}
+2024-06-26 11:33:50::info::/v1/api/artwork/createArtwork::6b310593-4972-4905-b1fd-931074412414::input-params ::POST::::{}
+2024-06-26 11:34:00::info::/v1/api/artwork/readArtworks::7ebfcb42-b6d7-4e44-baa5-735e0f1e0c37::input-params ::GET::::{}
+2024-06-26 11:34:00::error::/v1/api/artwork/readArtworks::7ebfcb42-b6d7-4e44-baa5-735e0f1e0c37::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 11:34:41::info::/v1/api/auth/users/login::18fc34e8-b3b0-43bf-8586-022c2c128a2d::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-26 11:34:52::info::/v1/api/artwork/readArtworksOfTalent/66601810d3737cbcac3bc91e::b9aaf904-18ea-4b17-812e-d5268ae6f3b1::input-params ::GET::::{}
+2024-06-26 11:34:52::error::/v1/api/artwork/readArtworksOfTalent/66601810d3737cbcac3bc91e::b9aaf904-18ea-4b17-812e-d5268ae6f3b1::undefined - NaNms - Response: {}::{"message":"Artwork.finds is not a function"}
+2024-06-26 11:35:18::info::/v1/api/artwork/readArtworksOfTalent/66601810d3737cbcac3bc91e::74026230-4ee0-41cf-8ed7-cf36086a8c8b::input-params ::GET::::{}
+2024-06-26 11:35:38::info::/v1/api/artwork/readArtworksOfTalent/66601810d3737cbcac3bc91e::b310af9f-86c6-4a89-bebc-c670562ca84e::input-params ::GET::::{}
+2024-06-26 11:35:56::info::/v1/api/artwork/readArtworksOfTalent/66601810d3737cbcac3bc91e::328e7c1f-df17-4f1a-9b78-f1a2e1ff04b7::input-params ::GET::::{}
+2024-06-26 11:36:11::info::/v1/api/artwork/readArtwork/667b99d586344d30d979959e::484ade2f-8524-4882-be38-b2f36964c675::input-params ::GET::::{}
+2024-06-26 11:36:16::info::/v1/api/artwork/readArtwork/667b99d586344d30d979959y::e050aa93-386f-4c93-98de-5643f10bfe7d::input-params ::GET::::{}
+2024-06-26 11:36:16::error::/v1/api/artwork/readArtwork/667b99d586344d30d979959y::e050aa93-386f-4c93-98de-5643f10bfe7d::undefined - NaNms - Response: {"stringValue":"\"667b99d586344d30d979959y\"","valueType":"string","kind":"ObjectId","value":"667b99d586344d30d979959y","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"667b99d586344d30d979959y\" (type string) at path \"_id\" for model \"Artwork\""}::{"message":"Cast to ObjectId failed for value \"667b99d586344d30d979959y\" (type string) at path \"_id\" for model \"Artwork\""}
+2024-06-26 11:36:24::info::/v1/api/artwork/readArtwork/667b99d586344d30d9799599::b4ef9dfa-725f-4956-8017-1704bc943ea3::input-params ::GET::::{}
+2024-06-26 11:36:24::error::/v1/api/artwork/readArtwork/667b99d586344d30d9799599::b4ef9dfa-725f-4956-8017-1704bc943ea3::404 - 0ms - Response: {"status":404,"now":1719376584250}::{"message":"Artwork not found"}
+2024-06-26 11:36:28::info::/v1/api/artwork/readArtwork/667b99d586344d30d979959e::890c0e67-b32f-4ff1-bbd2-7e532467295b::input-params ::GET::::{}
+2024-06-26 11:38:20::info::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::47421882-4774-4623-bf4e-2af5605da34d::input-params ::PATCH::::{}
+2024-06-26 11:38:20::error::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::47421882-4774-4623-bf4e-2af5605da34d::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'toString')"}
+2024-06-26 11:39:06::info::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::89d08847-631a-4793-8f66-0bfd36527f45::input-params ::PATCH::::{}
+2024-06-26 11:39:36::info::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::784f9492-60b8-400d-8d61-3bbb8a7f4bf1::input-params ::PATCH::::{}
+2024-06-26 11:39:36::error::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::784f9492-60b8-400d-8d61-3bbb8a7f4bf1::undefined - NaNms - Response: {}::{"message":"Artwork update failed"}
+2024-06-26 11:40:44::info::/v1/api/artwork/updateArtwork/667b99d586344d30d979959e::0f0c8b87-dfda-4630-97f2-1dd91877055e::input-params ::PATCH::::{}
+2024-06-26 11:42:25::info::/v1/api/artwork/deleteArtwork/667b9a3386344d30d97995a1::4705118e-fd12-403f-b83b-37a1f6f93259::input-params ::DELETE::::{}
+2024-06-26 11:42:25::error::/v1/api/artwork/deleteArtwork/667b9a3386344d30d97995a1::4705118e-fd12-403f-b83b-37a1f6f93259::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'toString')"}
