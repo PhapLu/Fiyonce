@@ -91,3 +91,4 @@
 2024-06-26 15:52:02::info::/v1/api/review/readReview/667bd5ad8657cc300b1985e6::e009a5aa-e542-4be7-ad5e-2311dd0371c1::input-params ::GET::::{}
 2024-06-26 15:52:07::info::/v1/api/review/readReviews/66742d4af3390f5f176aea6c::88980c34-16a3-4dbb-b3bf-db802bc9e2d0::input-params ::GET::::{}
 2024-06-26 15:52:07::error::/v1/api/review/readReviews/66742d4af3390f5f176aea6c::88980c34-16a3-4dbb-b3bf-db802bc9e2d0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-26 15:52:34::info::/v1/api/review/readReviewsAndCommissionServiceRating/66742d4af3390f5f176aea6c::62b5f52b-139f-401c-8add-00133042454b::input-params ::GET::::{}

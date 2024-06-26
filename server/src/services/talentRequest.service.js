@@ -102,16 +102,20 @@ class TalentRequestService{
             { $set: { role: 'talent' } },
             { new: true }
         );
-
+        
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser
 
-        // 7. Send email to user
+        // 7. Send email to user and delete images in cloudinary
         try {
+            request.artworks.forEach(async (artwork) => {
+                const publicId = extractPublicIdFromUrl(artwork)
+                await deleteFileByPublicId(publicId)
+            })
             await sendEmail(foundUser.email, 'Role Updated', 'Your role has been updated to talent')
         } catch (error) {
-            console.error('Failed to send email:', error)
-            throw new Error('Email service error')
+            console.log('Failed:::', error)
+            throw new Error('Email service error or image deletion failed')
         }
 
         return {
@@ -140,11 +144,16 @@ class TalentRequestService{
         request.status = 'rejected'
         await request.save()
 
-        //4. Send email to user
+        //4. Send email to user and delete images in cloudinary
         try {
+            request.artworks.forEach(async (artwork) => {
+                const publicId = extractPublicIdFromUrl(artwork)
+                await deleteFileByPublicId(publicId)
+            })
             sendEmail(foundUser.email, 'Request Denied', 'Your request has been rejected')
         } catch (error) {
-            throw new Error('Email service error');
+            console.log('Failed:::', error)
+            throw new Error('Email service error or image deletion failed');
         }
         
         return {
