@@ -14,7 +14,7 @@ router.get('/readCommissionServices/:talentId', asyncHandler(commissionServiceCo
 router.use(verifyToken)
 
 router.post('/createCommissionService', uploadFields, asyncHandler(commissionServiceController.createCommissionService))
-router.patch('/updateCommissionService/:commissionServiceId', asyncHandler(commissionServiceController.updateCommissionService))
+router.patch('/updateCommissionService/:commissionServiceId', uploadFields, asyncHandler(commissionServiceController.updateCommissionService))
 router.delete('/deleteCommissionService/:commissionServiceId', asyncHandler(commissionServiceController.deleteCommissionService))
 
 export default router

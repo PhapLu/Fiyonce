@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const DOCUMENT_NAME = 'Service';
-const COLLECTION_NAME = 'Services';
+const DOCUMENT_NAME = 'CommissionService';
+const COLLECTION_NAME = 'CommissionServices';
 
 const ServiceSchema = new mongoose.Schema({
     talentId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
@@ -12,6 +12,7 @@ const ServiceSchema = new mongoose.Schema({
         ref:'ServiceCategory',
         required: true
     },
+    movementId: { type: Schema.Types.ObjectId, ref: 'Movement', required: true },
     minPrice: { type: Number, required: true },
     deliverables: [{type: String, required: true}],
     addOns:[{
@@ -22,13 +23,6 @@ const ServiceSchema = new mongoose.Schema({
     notes: {type: String},
     isMedia: { type: Boolean, default: false },
     artworks:[{ type: String}],
-    reviews:[
-        {
-            userId: { type: Schema.Types.ObjectId, ref: 'User' },
-            rating: { type: Number, required: true },
-            comment: { type: String, required: true },
-        }
-    ],
 }, {
     timestamps: true,
     collection: COLLECTION_NAME

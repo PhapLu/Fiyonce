@@ -12,7 +12,7 @@ class ServiceController{
     readCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read service success!',
-            metadata: await CommissionServiceService.readCommissionService(req.params.serviceId)
+            metadata: await CommissionServiceService.readCommissionService(req.params.commissionServiceId)
         }).send(res)
     }
 
@@ -26,14 +26,14 @@ class ServiceController{
     updateCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update service success!',
-            metadata: await CommissionServiceService.updateCommissionService(req.userId, req.params.serviceId, req.body)
+            metadata: await CommissionServiceService.updateCommissionService(req.userId, req.params.commissionServiceId, req)
         }).send(res)
     }
 
     deleteCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Delete service success!',
-            metadata: await CommissionServiceService.deleteCommissionService(req.userId, req.params.serviceId)
+            metadata: await CommissionServiceService.deleteCommissionService(req.userId, req.params.commissionServiceId)
         }).send(res)
     }
 

@@ -45,12 +45,12 @@ const UserSchema = new Schema(
     status:{ type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
     followers:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
     following:[ { type: Schema.Types.ObjectId, ref: 'User' } ],
-    rating: {
-      type: Number,
-      default: 5,
-      min: [0, "Rating cannot be negative"],
-      max: [5, "Rating cannot exceed 5"] 
-    },
+    // rating: {
+    //   type: Number,
+    //   default: 5,
+    //   min: [0, "Rating cannot be negative"],
+    //   max: [5, "Rating cannot exceed 5"] 
+    // },
     accessToken: { type: String },
     qrCode: { type: String }, //Base 64
   },

@@ -9,7 +9,7 @@ class OrderService{
     //Order CRUD
     static createOrder = async(userId, body) => {
         //1. Get type and talentChosenId
-        const {type, talentChosenId, serviceId} = body
+        const {type, talentChosenId, commissionServiceId} = body
 
         //2. Check type of order
         if(type == 'inDirect'){
@@ -19,14 +19,14 @@ class OrderService{
         }else if(type == 'direct'){
             //direct order
             const talent = await User.findById(talentChosenId)
-            const service = await commissionService.findById(serviceId)
+            const service = await commissionService.findById(commissionServiceId)
 
             if(!talent) throw new BadRequestError('Talent not found!')
             if(!service) throw new BadRequestError('commissionService not found!')
             if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
             if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true
-            body.serviceId = serviceId
+            body.commissionServiceId = commissionServiceId
             body.talentChosenId = talentChosenId
         }else{
             throw new BadRequestError('Type must be direct or inDirect!')
@@ -50,24 +50,24 @@ class OrderService{
 
         return {
             order
-        };
-    };
+        }
+    }
     
     static readOrders = async() => {
         //1. Get all orders
         const orders = await Order.find({ isDirect: false })
-            .populate('talentChosenId', 'stageName avatar');
+            .populate('talentChosenId', 'stageName avatar')
         //2. Iterate over each order to add talentsAcceptedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {
-            const talentsAcceptedCount = await Proposal.find({ orderId: order._id, status: 'accepted' }).countDocuments();
+            const talentsAcceptedCount = await Proposal.find({ orderId: order._id, status: 'accepted' }).countDocuments()
             order._doc.talentsAcceptedCount = talentsAcceptedCount;  // Add the count to the order
-            return order;
-        }));
+            return order
+        }))
     
         return {
             orders: ordersWithCounts
-        };
-    };
+        }
+    }
 
     static updateOrder = async(userId, orderId, body) => {
         //1. check order and user
@@ -120,11 +120,11 @@ class OrderService{
         
         //2. Get orders
         const orders = await Order.find({ memberId: clientId })
-            .populate('talentChosenId', 'stageName avatar');
+            .populate('talentChosenId', 'stageName avatar')
 
         return {
             orders
-        };
+        }
     }
 
     static chooseProposal = async(userId, orderId, proposalId) => {

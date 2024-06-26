@@ -2,45 +2,42 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
 
-// Dashboard
-import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard"
-
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
 import Talents from "./components/talents/Talents";
 import CommissionServices from "./components/commissionServices/CommissionServices";
-import ProfileCommissionServices from "./pages/profileCommissionServices/ProfileCommissionServices";
-import ProfileArtworks from "./pages/profileArtworks/ProfileArtworks";
+import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices";
+import ProfileArtworks from "./profile/profileArtworks/ProfileArtworks";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
 // import Login from "./components/login/Login";
 
 // Pages
-import Profile from "./pages/profile/Profile";
+import ProfileLayout from "./profile/profileLayout/ProfileLayout";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
 import ExploreArtworks from "./pages/exploreArtworks/ExploreArtworks";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 
-// import Artwork from "./pages/artwork/Artwork";
-// import Challenges from "./pages/challenges/Challenges";
-// import Challenge from "./pages/challenge/Challenge";
-// import Talents from "./pages/talents/Talents";
-// import Talent from "./pages/talent/Talent";
-// import Messenger from './pages/messenger/Messenger'
-// import Success from "./pages/success/Success";
-// ... (other imports)
+
+// Dashboard
+import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
+import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
+import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDashboard";
+import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
+import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
+import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/users/:userId",
-    element: <Profile />,
+    element: <ProfileLayout />,
     children: [
       {
         path: "/users/:userId/profile_commission_services",
@@ -59,10 +56,6 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
       }
     ]
-  },
-  {
-    path: "/dashboard/accounts",
-    element: <AccountDashboard />,
   },
   {
     path: "/",
@@ -90,7 +83,32 @@ const router = createBrowserRouter([
         path: "/commission_market",
         element: <CommissionMarket />
       },
-
+    ]
+  },
+  {
+    path: "/dashboard/",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/dashboard/overview",
+        element: <OverviewDashboard />,
+      },
+      {
+        path: "/dashboard/transactions",
+        element: <TransactionDashboard />,
+      },
+      {
+        path: "/dashboard/accounts",
+        element: <AccountDashboard />,
+      },
+      {
+        path: "/dashboard/challenges",
+        element: <ChallengeDashboard />,
+      },
+      {
+        path: "/dashboard/help",
+        element: <HelpDashboard />,
+      },
     ]
   },
   {

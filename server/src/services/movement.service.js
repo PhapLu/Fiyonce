@@ -44,11 +44,7 @@ class MovementService{
       }
     ])
 
-    if (!movements || movements.length === 0) {
-      throw new NotFoundError('Movements not found')
-    }
-
-    return movements
+    return {movements}
   }
 
   static updateMovement = async(adminId, movementId, body) => {

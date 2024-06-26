@@ -15,6 +15,7 @@ import './db/init.mongodb.js'; // Ensure this is properly set up
 import {v4 as uuidv4} from 'uuid'
 import myLogger from './loggers/mylogger.log.js';
 import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js';
+import sanitizeInputs from './middlewares/sanitize.middleware.js';
 const app = express();
 
 //Rate Limit
@@ -28,11 +29,18 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(helmet());
+app.use(helmet()); // Using Helmet
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'"]
+  }
+}));
 app.use(compression());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(sanitizeInputs)
 
 //Advanced Logger
 app.use((req, res, next) => {
@@ -79,12 +87,6 @@ const server = http.createServer(app);
 configureSocket(server);
 
 global._io.on('connection', SocketServices.connection);
-
-// // Start the server
-// const PORT = process.env.PORT || 3052;
-// server.listen(PORT, () => {
-//     console.log(`Server is starting with Port: ${PORT}`);
-// });
 
 process.on('SIGINT', () => {
     server.close(() => console.log(`Exit Server Express`));
