@@ -12,11 +12,11 @@ class CommissionServiceService{
         if (talent.role !== 'talent') throw new BadRequestError('User is not a talent!');
     
         // 2. Validate request body
-        const { title, serviceCategoryId, minPrice, deliverables } = req.body;
+        const { title, serviceCategoryId, termOfServiceId, movementId, minPrice, deliverables } = req.body;
         if (!req.files || !req.files.files) {
             throw new BadRequestError('Please provide artwork files');
         }
-        if (!title || !serviceCategoryId || !minPrice || !deliverables) {
+        if (!title || !serviceCategoryId || !minPrice || !deliverables || !termOfServiceId || !movementId) {
             throw new BadRequestError('Please provide all required fields');
         }
     
@@ -39,6 +39,8 @@ class CommissionServiceService{
                 talentId,
                 title,
                 serviceCategoryId,
+                termOfServiceId,
+                movementId,
                 minPrice,
                 deliverables,
                 artworks
@@ -58,15 +60,18 @@ class CommissionServiceService{
     };
     
     static readCommissionService = async(commissionServiceId) => {
-        //1. Check service
-        const service = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar')
+        // 1. Check service
+        const service = await CommissionService.findById(commissionServiceId)
+            .populate('talentId', 'stageName avatar')
+            .populate('termOfServiceId')
         if(!service) throw new NotFoundError('Service not found')
-
-        //2. Read service
+    
+        // 2. Read service
         return {
             service
         }
     }
+    
 
     static readCommissionServices = async(talentId) => {
         //1. Check talent

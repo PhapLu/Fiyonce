@@ -5,7 +5,7 @@ class TermOfServiceController{
     createTermOfService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Create termOfService success!',
-            metadata: await TermOfServiceService.createTermOfService(req.userId, req.params.termOfServiceId, req.body)
+            metadata: await TermOfServiceService.createTermOfService(req.userId, req.body)
         }).send(res)
     }
 

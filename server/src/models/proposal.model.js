@@ -9,6 +9,7 @@ const ProposalSchema = new mongoose.Schema({
         ref: 'Order',
         required: true
     },
+    termOfServiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'TermOfService', required: true },
     memberId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

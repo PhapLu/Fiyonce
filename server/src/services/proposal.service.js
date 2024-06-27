@@ -35,8 +35,8 @@ class ProposalService{
             orderId,
             memberId: order.memberId,
             talentId: userId,
+            termOfServiceId: body.termOfServiceId,
             artworks: body.artworks,
-            price: body.price,
             ...body
         })
         await proposal.save()
