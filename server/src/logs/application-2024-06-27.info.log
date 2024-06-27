@@ -6,3 +6,7 @@
 2024-06-27 10:23:57::info::/v1/api/order/createOrder::8a8863c2-33d0-4973-8ffb-186a1882537f::input-params ::POST::::{"title":"Finding artist part N","description":"Give brief request to market","type":"direct","maxPrice":2000,"minPrice":60,"talentChosenId":"66601810d3737cbcac3bc91e","commissionServiceId":"66742d4af3390f5f176aea6c"}
 2024-06-27 10:23:57::error::/v1/api/order/createOrder::8a8863c2-33d0-4973-8ffb-186a1882537f::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'references')"}
 2024-06-27 10:29:12::info::/v1/api/order/createOrder::ed39ce9f-94ef-4a70-b06d-c8bd4cf3767a::input-params ::POST::::{"title":"Finding artist part N","description":"Give brief request to market","type":"direct","maxPrice":2000,"minPrice":60,"talentChosenId":"66601810d3737cbcac3bc91e","commissionServiceId":"66742d4af3390f5f176aea6c"}
+2024-06-27 12:39:18::info::/v1/api/commissionService/createCommissionService::0b5c7162-ba54-407b-8006-e1e58d1b5926::input-params ::POST::::{}
+2024-06-27 12:39:19::error::/v1/api/commissionService/createCommissionService::0b5c7162-ba54-407b-8006-e1e58d1b5926::403 - 1ms - Response: {"status":403,"now":1719466759140}::{"message":"User is not a talent!"}
+2024-06-27 12:39:32::info::/v1/api/auth/users/login::fd58ade4-c3bb-4a89-b9a2-76a89fdbc2b2::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-06-27 12:39:38::info::/v1/api/commissionService/createCommissionService::4aa67bd5-4b3a-40c2-91ff-3abc4559754e::input-params ::POST::::{}

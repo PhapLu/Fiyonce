@@ -1,9 +1,11 @@
+import crypto from 'crypto'
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import Proposal from "../models/proposal.model.js"
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import Artwork from "../models/artwork.model.js"
 import sendEmail from '../middlewares/sendMail.js'
+import MomoService from './momo.service.js'
 
 class ProposalService{
     static sendProposal = async(userId, orderId, body) => {
@@ -168,10 +170,15 @@ class ProposalService{
         const order = await Order.findById(proposal.orderId)
         if(order.status !== 'approved')
             throw new BadRequestError('Order is not approved')
-        if(order.status == 'confirmed')
-            throw new BadRequestError('Order is already confirmed')
 
-        //4. Confirm proposal
+        //4. Create payment with Momo
+        const amount = '50000'
+        const orderId = partnerCode + new Date().getTime()
+        const requestId = orderId
+
+        const paymentData = await MomoService.generatePaymentData({amount, orderId, requestId})
+
+        //5. Confirm proposal
         order.status = 'confirmed'
         if(!order.talentChosenId){
             order.talentChosenId = proposal.talentId
@@ -190,7 +197,8 @@ class ProposalService{
         // }
 
         return {
-            proposal: showedProposal
+            proposal: showedProposal,
+            paymentData
         }
     }
 
