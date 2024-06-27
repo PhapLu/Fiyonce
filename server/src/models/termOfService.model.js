@@ -4,6 +4,7 @@ const COLLECTION_NAME = 'TermOfServices'
 
 const TermOfServiceSchema = new mongoose.Schema({
     talentId: {type: mongoose.Schema.Types.ObjectId, required: true},
+    title: {type: String, required: true},
     content: {type: String, required: true},
 },{
     timestamps: true,

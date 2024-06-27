@@ -137,14 +137,10 @@ class CommissionServiceService{
             }
     
             return {
-                message: "Update service success!",
-                status: 200,
-                metadata: {
-                    service: updatedService
-                }
-            };
+                commissionService: updatedService
+            }
         } catch (error) {
-            console.error('Error in updating commission service:', error);
+            console.log('Error in updating commission service:', error);
             throw new Error('Service update failed');
         }
     };    
