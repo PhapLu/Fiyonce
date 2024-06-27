@@ -173,11 +173,8 @@ class ProposalService{
 
         //4. Create payment with Momo
         const amount = '50000'
-        const orderId = partnerCode + new Date().getTime()
-        const requestId = orderId
-
-        const paymentData = await MomoService.generatePaymentData({amount, orderId, requestId})
-
+        const paymentData = await MomoService.generatePaymentData(amount)
+        
         //5. Confirm proposal
         order.status = 'confirmed'
         if(!order.talentChosenId){

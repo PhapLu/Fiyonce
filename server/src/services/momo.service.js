@@ -18,7 +18,9 @@ class MomoService{
             .digest('hex');
     }
 
-    static generatePaymentData = async({ amount, orderId, requestId }) => {
+    static generatePaymentData = async(amount) => {
+        const orderId = partnerCode + new Date().getTime()
+        const requestId = orderId
         const requestType = 'payWithMethod';
         const orderInfo = 'pay with MoMo';
         const extraData = '';
@@ -40,9 +42,8 @@ class MomoService{
             requestId,
             requestType,
         };
-
-        const signature = generateSignature(params);
-
+        
+        const signature = await this.generateSignature(params);
         return {
             partnerCode,
             partnerName,

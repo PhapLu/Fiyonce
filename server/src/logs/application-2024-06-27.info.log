@@ -10,3 +10,23 @@
 2024-06-27 12:39:19::error::/v1/api/commissionService/createCommissionService::0b5c7162-ba54-407b-8006-e1e58d1b5926::403 - 1ms - Response: {"status":403,"now":1719466759140}::{"message":"User is not a talent!"}
 2024-06-27 12:39:32::info::/v1/api/auth/users/login::fd58ade4-c3bb-4a89-b9a2-76a89fdbc2b2::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
 2024-06-27 12:39:38::info::/v1/api/commissionService/createCommissionService::4aa67bd5-4b3a-40c2-91ff-3abc4559754e::input-params ::POST::::{}
+2024-06-27 20:26:52::info::/v1/api/proposal/confirmProposal::b7e97eff-a1cc-46a7-a4d3-3609110fc362::input-params ::POST::::{}
+2024-06-27 20:26:52::error::/v1/api/proposal/confirmProposal::b7e97eff-a1cc-46a7-a4d3-3609110fc362::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-27 20:27:25::info::/v1/api/proposal/readProposals/666aa68d5a40b73e7f404702::3234fa0d-44f0-49af-ac60-6385b92a43df::input-params ::GET::::{}
+2024-06-27 20:27:25::error::/v1/api/proposal/readProposals/666aa68d5a40b73e7f404702::3234fa0d-44f0-49af-ac60-6385b92a43df::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-27 20:27:50::info::/v1/api/proposal/readProposalsByOrderId/666aa68d5a40b73e7f404702::30f20efa-154a-4614-ac56-be4a9b250372::input-params ::GET::::{}
+2024-06-27 20:28:14::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::67b54524-b579-44fd-88ed-c84bd687b5ce::input-params ::POST::::{}
+2024-06-27 20:28:14::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::67b54524-b579-44fd-88ed-c84bd687b5ce::401 - 0ms - Response: {"status":401,"now":1719494894662}::{"message":"You are not authorized to confirm this proposal"}
+2024-06-27 20:28:51::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::3528e750-0fd3-4964-b899-818a9d707d5c::input-params ::POST::::{}
+2024-06-27 20:28:51::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::3528e750-0fd3-4964-b899-818a9d707d5c::403 - 1ms - Response: {"status":403,"now":1719494931129}::{"message":"Order is not approved"}
+2024-06-27 20:29:49::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::a8135400-006c-4219-8c69-b49dccc38ed9::input-params ::POST::::{}
+2024-06-27 20:29:49::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::a8135400-006c-4219-8c69-b49dccc38ed9::undefined - NaNms - Response: {}::{"message":"partnerCode is not defined"}
+2024-06-27 20:30:19::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::b12589dd-3c2b-48a3-bd39-94d1f92358f8::input-params ::POST::::{}
+2024-06-27 20:30:19::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::b12589dd-3c2b-48a3-bd39-94d1f92358f8::undefined - NaNms - Response: {}::{"message":"partnerCode is not defined"}
+2024-06-27 20:33:22::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::9972a13e-a1a5-40e0-b398-76dd757175e1::input-params ::POST::::{}
+2024-06-27 20:33:22::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::9972a13e-a1a5-40e0-b398-76dd757175e1::undefined - NaNms - Response: {}::{"message":"partnerCode is not defined"}
+2024-06-27 20:34:26::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::d3988325-86d0-4eec-9ea9-32fd50454dcc::input-params ::POST::::{}
+2024-06-27 20:34:26::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::d3988325-86d0-4eec-9ea9-32fd50454dcc::undefined - NaNms - Response: {}::{"message":"partnerCode is not defined"}
+2024-06-27 20:36:00::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::66f17251-7fa1-428d-8f17-951d8f21ac49::input-params ::POST::::{}
+2024-06-27 20:36:00::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::66f17251-7fa1-428d-8f17-951d8f21ac49::undefined - NaNms - Response: {}::{"message":"generateSignature is not defined"}
+2024-06-27 20:36:40::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::9b6ef2c2-0d6b-49dd-a0cc-2ffda8381bc8::input-params ::POST::::{}
