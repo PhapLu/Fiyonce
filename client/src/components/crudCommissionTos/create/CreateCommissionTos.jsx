@@ -1,6 +1,10 @@
-// Imports
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // import styles
+import 'quill-emoji/dist/quill-emoji.css'; // import emoji styles
+import { Quill } from 'react-quill';
+import 'quill-emoji';
 
 // Utils
 import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
@@ -9,10 +13,61 @@ import { isFilled } from "../../../utils/validator.js";
 // Styling
 import "./CreateCommissionTos.scss";
 import { apiUtils } from "../../../utils/newRequest.js";
+import Emoji from "quill-emoji";
+
+Quill.register('modules/emoji', Emoji);
+
+const modules = {
+    toolbar: [
+        [{ 'header': [1, 2, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['link', 'image'],
+        ['emoji'], // add emoji button to toolbar
+    ],
+    'emoji-toolbar': true,
+    'emoji-textarea': true,
+    'emoji-shortname': true,
+    keyboard: {
+        bindings: {
+            bold: {
+                key: 'B',
+                shortKey: true,
+                handler: function (range, context) {
+                    this.quill.format('bold', !context.format.bold);
+                }
+            },
+            italic: {
+                key: 'I',
+                shortKey: true,
+                handler: function (range, context) {
+                    this.quill.format('italic', !context.format.italic);
+                }
+            },
+            underline: {
+                key: 'U',
+                shortKey: true,
+                handler: function (range, context) {
+                    this.quill.format('underline', !context.format.underline);
+                }
+            },
+            strike: {
+                key: 'S',
+                shortKey: true,
+                handler: function (range, context) {
+                    this.quill.format('strike', !context.format.strike);
+                }
+            }
+        }
+    }
+};
 
 export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
+        content: `<h3>GENERAL TERMS</h3>...
+        <h3>PAYMENT TERMS</h3>
+        `
     });
     const [errors, setErrors] = useState({});
     const [isSubmitCreateCommissionTosLoading, setIsSubmitCreateCommissionTosLoading] = useState(false);
@@ -55,53 +110,27 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
     const validateInputs = () => {
         let errors = {};
 
-        // title: {type: String, required: true},
-        // general: {type: String, required: true},
-        // payments: {type: String, required: true},
-        // deadlinesAndDelivery: {type: String, required: true},
-        // use: {type: String, required: true},
-        // refunds: {type: String, required: true},
-        // updatedAt: {type: Date}
-
         // Validate title
         if (!isFilled(inputs.title)) {
             errors.title = 'Vui lòng nhập tên dịch vụ';
         }
-        
-        // Validate general article
-        if (!isFilled(inputs.general)) {
-            errors.general = 'Vui lòng nhập tên dịch vụ';
-        }
 
-        // Validate payment article
-        if (!isFilled(inputs.payments)) {
-            errors.payments = 'Vui lòng nhập mô tả';
-        }
-
-        // Validate deadlines & delivery article
-        if (!isFilled(inputs.deadlinesAndDelivery)) {
-            errors.deadlinesAndDelivery = 'Vui lòng nhập mô tả';
-        }
-
-        // Validate use article
-        if (!inputs.use) {
-            errors.use = 'Vui lòng xác nhận đồng ý với điều khoản';
-        }
-
-        // Validate refund article
-        if (!isFilled(inputs.refunds)) {
-            errors.refunds = 'Vui lòng nhập mô tả';
-        }
-
-        // Validate if user has agreed to paltform terms & policies
+        // Validate if user has agreed to platform terms & policies
         if (!inputs.isAgreeTerms) {
             errors.isAgreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
         }
 
         return errors;
-    }
+    };
 
-    const handleChange = (e) => {
+    const handleChange = (value, delta, source, editor) => {
+        setInputs((prevState) => ({
+            ...prevState,
+            content: editor.getHTML()
+        }));
+    };
+
+    const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
             if (name === 'fileTypes') {
@@ -112,7 +141,6 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                         : prevState.fileTypes.filter(type => type !== value)
                 }));
             } else {
-                setInputs
                 setInputs(prevState => ({
                     ...prevState,
                     [name]: checked
@@ -144,7 +172,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
             return;
         }
 
-        console.log(inputs)
+        console.log(inputs);
 
         // Handle submit request
         try {
@@ -152,7 +180,10 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
             // setIsSuccessCreateCommissionTos(true);
         } catch (error) {
             console.error("Failed to submit:", error);
-            errors.serverError = error.response.data.message;
+            setErrors(prevState => ({
+                ...prevState,
+                serverError: error.response.data.message
+            }));
         } finally {
             // Clear the loading effect
             setIsSubmitCreateCommissionTosLoading(false);
@@ -195,116 +226,47 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                         <>
                             <div className="form-field">
                                 <label htmlFor="title" className="form-field__label">Tiêu đề</label>
-                                <span className="form-field__annotation">Đặt tên cho điều khoản để tiện ghi nhớ và sử dụng.</span>
-                                <input
-                                    id="title"
-                                    name="title"
-                                    value={inputs.title}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Nhập tiêu đề điều khoản dịch vụ"
-                                />
+                                <span className="form-field__annotation">Đặt tên cho điều khoản để tiện ghi nhớ</span>
+                                <input id="title" name="title" className="form-field__input" type="text" placeholder="Ví dụ: Quy tắc hoàn tiền" onChange={handleInputChange} />
                                 {errors.title && <span className="form-field__error">{errors.title}</span>}
                             </div>
-
                             <div className="form-field">
-                                <label htmlFor="general" className="form-field__label">Điều khoản chung</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                                <textarea
-                                    id="general"
-                                    name="general"
-                                    value={inputs.general}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                                />
-                                {errors.general && <span className="form-field__error">{errors.general}</span>}
+                                <label htmlFor="content" className="form-field__label">Nội dung</label>
+                                <span className="form-field__annotation">Thêm nội dung chi tiết điều khoản dịch vụ của bạn</span>
+                                <div className="form-field__input-wrapper">
+                                    <ReactQuill theme="snow" value={inputs.content} onChange={handleChange} modules={modules} placeholder="Nhập nội dung điều khoản của bạn" />
+                                </div>
                             </div>
-                            <div className="form-field">
-                                <label htmlFor="payments" className="form-field__label">Điều khoản thanh toán</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                                <textarea
-                                    id="payments"
-                                    name="payments"
-                                    value={inputs.payments}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                                />
-                                {errors.payments && <span className="form-field__error">{errors.payments}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label htmlFor="deadlinesAndDelivery" className="form-field__label">Thời hạn và vận chuyển</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                                <textarea
-                                    id="deadlinesAndDelivery"
-                                    name="deadlinesAndDelivery"
-                                    value={inputs.deadlinesAndDelivery}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                                />
-                                {errors.deadlinesAndDelivery && <span className="form-field__error">{errors.deadlinesAndDelivery}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label htmlFor="use" className="form-field__label">Điều khoản sử dụng</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                                <textarea
-                                    id="use"
-                                    name="use"
-                                    value={inputs.use}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                                />
-                                {errors.use && <span className="form-field__error">{errors.use}</span>}
-                            </div>
-                            <div className="form-field">
-                                <label htmlFor="refunds" className="form-field__label">Điều kiện hoàn tiền</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                                <textarea
-                                    id="refunds"
-                                    name="refunds"
-                                    value={inputs.refunds}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                                />
-                                {errors.refunds && <span className="form-field__error">{errors.refunds}</span>}
-                            </div>
-
                             <div className="form-field">
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
                                         name="isAgreeTerms"
-                                        checked={inputs.isAgreeTerms}
-                                        onChange={handleChange}
-                                    /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
+                                        checked={inputs.isAgreeTerms || false}
+                                        onChange={handleInputChange}
+                                    />
+                                    Tôi đồng ý với các điều khoản
                                 </label>
                                 {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                             </div>
                             <div className="form-field">
+                                <button type="form-field__input submit" className={`btn btn-2 btn-md ${isSubmitCreateCommissionTosLoading ? 'loading' : ''}`} onClick={handleSubmit}>
+                                    {isSubmitCreateCommissionTosLoading ? 'Đang xử lí...' : 'Tạo'}
+                                </button>
                                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                             </div>
                         </>
                     ) : (
-                        <p className="text-align-center">
-                            Điều khoản dịch vụ của bạn đã được thêm thành công!
-                            <br />Quay lại trang <span className="highlight-text">quản lí các điều khoản</span>.
-                        </p>
+                        <div className="form__success">
+                            <h3>Điều khoản dịch vụ của bạn đã được tạo!</h3>
+                            <p>Bạn có thể xem lại điều khoản dịch vụ của mình trong danh sách điều khoản dịch vụ.</p>
+                            <button className="button button__primary" onClick={() => {
+                                setShowCreateCommissionTosForm(false);
+                                setOverlayVisible(false);
+                            }}>Đóng</button>
+                        </div>
                     )}
             </div>
-            <button type="submit"
-                className="form__submit-btn btn btn-2 btn-md"
-                onClick={handleSubmit}
-                disabled={isSubmitCreateCommissionTosLoading}>
-                {isSubmitCreateCommissionTosLoading ? (
-                    <span className="btn-spinner"></span>
-                ) : (
-                    "Gửi yêu cầu"
-                )}
-            </button>
-        </div >
-    )
+        </div>
+    );
 }
