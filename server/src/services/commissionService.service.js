@@ -1,8 +1,8 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import CommissionService from '../models/commissionService.model.js'
 import ServiceCategory from '../models/serviceCategory.model.js';
 import { User } from '../models/user.model.js'
-import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl, generateOptimizedImageUrl } from '../utils/cloud.util.js';
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js';
 
 class CommissionServiceService{ 
     static createCommissionService = async (talentId, req) => {

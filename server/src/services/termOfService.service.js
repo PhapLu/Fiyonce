@@ -1,5 +1,5 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import TermOfService from '../models/termOfService.model.js'
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { User } from '../models/user.model.js'
 
 class TermOfServiceService{

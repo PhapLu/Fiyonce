@@ -1,16 +1,16 @@
-import { User } from "../models/user.model.js"
 import bcrypt from 'bcrypt'
 import crypto from 'crypto'
-import KeyTokenService from "./keyToken.service.js"
-import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
-import { findByEmail} from '../utils/index.js'
-import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js";
-import Key from "../models/keyToken.model.js"
-import UserOTPVerification from "../models/userOTPVerification.model.js"
-import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
 import jwt from 'jsonwebtoken'
 import role from "../middlewares/role.js"
 import sendEmail from "../middlewares/sendMail.js"
+import KeyTokenService from "./keyToken.service.js"
+import Key from "../models/keyToken.model.js"
+import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
+import UserOTPVerification from "../models/userOTPVerification.model.js"
+import { User } from "../models/user.model.js"
+import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
+import { findByEmail} from '../utils/index.js'
+import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js";
 import { createUserQRCode } from "../utils/qrcode.util.js"
 
 class AuthService {

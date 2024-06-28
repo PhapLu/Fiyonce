@@ -1,6 +1,6 @@
 import cloudinary from "../configs/cloudinary..config.js";
-import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
+import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId, generateOptimizedImageUrl } from "../utils/cloud.util.js";
 //1.upload Image from URL
 const uploadImageFromURL = async() => {

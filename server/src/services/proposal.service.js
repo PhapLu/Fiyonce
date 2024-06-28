@@ -1,11 +1,11 @@
 import crypto from 'crypto'
-import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
-import Proposal from "../models/proposal.model.js"
 import Order from "../models/order.model.js"
-import { User } from "../models/user.model.js"
 import Artwork from "../models/artwork.model.js"
 import sendEmail from '../middlewares/sendMail.js'
+import Proposal from "../models/proposal.model.js"
 import MomoService from './momo.service.js'
+import { User } from "../models/user.model.js"
+import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 
 class ProposalService{
     static sendProposal = async(userId, orderId, body) => {

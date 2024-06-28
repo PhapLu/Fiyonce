@@ -1,6 +1,6 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
-import { User } from '../models/user.model.js'
 import Movement from '../models/movement.model.js'
+import { User } from '../models/user.model.js'
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
 class MovementService{

@@ -1,6 +1,6 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js";
-import { User } from "../models/user.model.js";
 import TalentRequest from "../models/talentRequest.model.js";
+import { User } from "../models/user.model.js";
+import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js";
 
 class AccountDashboardService{
     static readAccountOverview = async(userId) => {

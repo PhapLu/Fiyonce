@@ -1,7 +1,6 @@
-import { BadRequestError, NotFoundError } from "../core/error.response.js";
 import Artwork from "../models/artwork.model.js";
-import { findAllArtworks, updateArtworkById, findArtwork, searchArtworksByUser, deleteArtwork } from "../models/repositories/artwork.repo.js";
 import { User } from "../models/user.model.js";
+import { BadRequestError, NotFoundError } from "../core/error.response.js";
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from "../utils/cloud.util.js";
 
 class ArtworkService{

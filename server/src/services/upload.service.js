@@ -1,7 +1,7 @@
 //1. upload file using S3Client 
-import {s3, PutObjectCommand, GetObjectCommand, DeleteBucketCommand} from '../configs/s3.config.js'
-import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 import crypto from 'crypto'
+import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
+import {s3, PutObjectCommand, GetObjectCommand, DeleteBucketCommand} from '../configs/s3.config.js'
 
 const urlImagePublic = 'https://d17lvyd50e77qu.cloudfront.net'
 const randomImageName = () => crypto.randomBytes(16).toString('hex')

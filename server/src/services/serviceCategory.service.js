@@ -1,7 +1,7 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import ServiceCategory from '../models/serviceCategory.model.js'
 import CommissionService from '../models/commissionService.model.js'
 import { User } from '../models/user.model.js'
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 
 class ServiceCategoryService{
     static createServiceCategory = async(talentId, body) => {

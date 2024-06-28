@@ -1,9 +1,9 @@
 import express from 'express'
-import { asyncHandler } from '../../helpers/asyncHandler.js'
-import accessService from '../../services/auth.service.js'
 import { verifyToken } from "../../middlewares/jwt.js";
-import commissionReportController from '../../controllers/commissionReport.controller.js';
+import { asyncHandler } from '../../helpers/asyncHandler.js'
 import { uploadFields } from '../../configs/multer.config.js';
+import accessService from '../../services/auth.service.js'
+import commissionReportController from '../../controllers/commissionReport.controller.js';
 
 const router = express.Router()
 
@@ -13,7 +13,7 @@ router.get('/readCommissionReport/:commissionReportId', asyncHandler(commissionR
 router.use(verifyToken)
 
 router.post('/createCommissionReport', uploadFields, asyncHandler(commissionReportController.createCommissionReport))
-router.get('/readCommissionReports/:talentId', accessService.grantAccess('readAny', 'profile'), asyncHandler(commissionReportController.readCommissionReports))
+router.get('/readCommissionReports', accessService.grantAccess('readAny', 'profile'), asyncHandler(commissionReportController.readCommissionReports))
 router.patch('/updateCommissionReport/:commissionReportId', uploadFields, asyncHandler(commissionReportController.updateCommissionReport))
 router.delete('/deleteCommissionReport/:commissionReportId', asyncHandler(commissionReportController.deleteCommissionReport))
 
