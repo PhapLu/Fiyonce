@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js"
 import Artwork from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
 import commissionService from "../models/commissionService.model.js"
-import { compressAndUploadImage } from "../utils/cloud.util.js"
+import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js"
 
 class OrderService{
     //Order CRUD
@@ -34,7 +34,7 @@ class OrderService{
             throw new BadRequestError('Type must be direct or inDirect!')
         }
         
-        //4. Upload req.files.files to cloudinary
+        //3. Upload req.files.files to cloudinary
         try {
             let references = [];
             
@@ -50,7 +50,7 @@ class OrderService{
                 references = uploadResults.map(result => result.secure_url);
             }
         
-            //5. Create order
+            //4. Create order
             const order = new Order({
                 memberId: userId,
                 references,
@@ -62,7 +62,7 @@ class OrderService{
                 order
             };
         } catch (error) {
-            console.error('Error uploading images or saving order:', error);
+            console.log('Error uploading images or saving order:', error);
             throw new Error('File upload or database save failed');
         }        
     }
@@ -95,7 +95,6 @@ class OrderService{
 
     static updateOrder = async(userId, orderId, req) => {
         //1. check order and user
-        const body = req.body
         const oldOrder = await Order.findById(orderId)
         const foundUser = await User.findById(userId)
         if(!foundUser) throw new NotFoundError('User not found!')
@@ -107,7 +106,7 @@ class OrderService{
             throw new BadRequestError('You cannot update order on this stage!')
         try {
             //3. Handle file uploads if new files were uploaded
-            if (req.files && req.files.files) {
+            if (req.files && req.files.files && req.files.files.length > 0) {
                 // Upload new files to Cloudinary
                 const uploadPromises = req.files.files.map(file => compressAndUploadImage({
                     buffer: file.buffer,
@@ -118,28 +117,22 @@ class OrderService{
                 }));
                 const uploadResults = await Promise.all(uploadPromises);
                 const references = uploadResults.map(result => result.secure_url);
-                body.references = references;
+                req.body.references = references;
 
                 //Delete old images from cloudinary
-                const oldReferences = oldOrder.references
-                const deletePromises = oldReferences.map(reference => deleteImage(reference))
-                await Promise.all(deletePromises)
+                const publicIds = oldOrder.references.map(reference => extractPublicIdFromUrl(reference));
+                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
             }
 
             //4. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const oldBody = oldOrder.toObject()
-            const updatedFields = { ...oldBody, ...body }
-            body = updatedFields
+            const updatedFields = { ...oldOrder.toObject(), ...req.body };
 
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
-                {
-                    $set: body
-                },
+                updatedFields,
                 { new: true }
             )
-            await updatedOrder.save()
     
             return {
                 order: updatedOrder
@@ -162,8 +155,16 @@ class OrderService{
         if(oldOrder.status != 'pending' && oldOrder.status != 'approved')
             throw new BadRequestError('You cannot delete order on this stage!')
 
-        //3. Delete order
-        return await Order.findByIdAndDelete(orderId)
+        //3. Extract public IDs and delete files from Cloudinary
+        const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference));
+        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+
+        //4. Delete order
+        await order.deleteOne()
+
+        return{
+            message: 'Order deleted successfully!'
+        }
     }
     //End Order CRUD
 

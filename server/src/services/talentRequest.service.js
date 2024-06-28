@@ -2,7 +2,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.
 import TalentRequest from '../models/talentRequest.model.js'
 import { User } from '../models/user.model.js'
 import sendEmail from '../middlewares/sendMail.js'
-import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl, generateOptimizedImageUrl } from '../utils/cloud.util.js'
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
 class TalentRequestService{
     static requestUpgradingToTalent = async (userId, req) => {
@@ -31,7 +31,7 @@ class TalentRequestService{
             await TalentRequest.deleteOne({ userId })
         }
     
-        // 4. Upload files to Cloudinary (compressed) and get their optimized URLs
+        // 4. Upload files to Cloudinary (compressed)
         try {
             const uploadPromises = req.files.files.map(file => compressAndUploadImage({
                 buffer: file.buffer,
@@ -57,7 +57,7 @@ class TalentRequestService{
                 talentRequest: newTalentRequest
             }
         } catch (error) {
-            console.error('Error uploading images:', error)
+            console.log('Error uploading images:', error)
             throw new Error('File upload or database save failed')
         }
     };

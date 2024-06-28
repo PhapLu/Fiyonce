@@ -99,7 +99,7 @@ class CommissionServiceService{
         const oldCategoryId = service.serviceCategoryId; // Store the old category ID
         try {
             // 2. Handle file uploads if new files were uploaded
-            if (req.files && req.files.files) {
+            if (req.files && req.files.files && req.files.files.length > 0) {
                 // Upload new files to Cloudinary
                 const uploadPromises = req.files.files.map(file => compressAndUploadImage({
                     buffer: file.buffer,
