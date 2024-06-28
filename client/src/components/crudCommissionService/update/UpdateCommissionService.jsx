@@ -8,27 +8,27 @@ import {
     formatNumber
 } from "../../../utils/formatter.js";
 import { isFilled, minValue } from "../../../utils/validator.js";
-import "./EditCommissionService.scss";
+import "./UpdateCommissionService.scss";
 
-export default function EditCommissionService({
-    editCommissionService,
+export default function UpdateCommissionService({
+    updateCommissionService,
     commissionServiceCategories,
-    setShowEditCommissionServiceForm,
+    setShowUpdateCommissionServiceForm,
     setOverlayVisible,
-    editMutation
+    updateMutation
 }) {
-    const [inputs, setInputs] = useState(editCommissionService);
+    const [inputs, setInputs] = useState(updateCommissionService);
     const [errors, setErrors] = useState({});
-    const [isSubmitEditCommissionServiceLoading, setIsSubmitEditCommissionServiceLoading] = useState(false);
-    const [isSuccessEditCommissionService, setIsSuccessEditCommissionService] = useState(false);
+    const [isSubmitUpdateCommissionServiceLoading, setIsSubmitUpdateCommissionServiceLoading] = useState(false);
+    const [isSuccessUpdateCommissionService, setIsSuccessUpdateCommissionService] = useState(false);
     const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
     const [portfolios, setPortfolios] = useState(inputs?.artworks || Array(5).fill(null));
 
-    const editCommissionRef = useRef();
+    const updateCommissionRef = useRef();
     useEffect(() => {
         const handler = (e) => {
-            if (editCommissionRef.current && !editCommissionRef.current.contains(e.target)) {
-                setShowEditCommissionServiceForm(false);
+            if (updateCommissionRef.current && !updateCommissionRef.current.contains(e.target)) {
+                setShowUpdateCommissionServiceForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -92,19 +92,19 @@ export default function EditCommissionService({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitEditCommissionServiceLoading(true);
+        setIsSubmitUpdateCommissionServiceLoading(true);
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitEditCommissionServiceLoading(false);
+            setIsSubmitUpdateCommissionServiceLoading(false);
             return;
         }
 
         console.log(inputs);
 
         try {
-            await editMutation.mutateAsync(inputs);
-            setIsSuccessEditCommissionService(true);
+            await updateMutation.mutateAsync(inputs);
+            setIsSuccessUpdateCommissionService(true);
         } catch (error) {
             console.error("Failed to submit:", error);
             setErrors((prevErrors) => ({
@@ -112,7 +112,7 @@ export default function EditCommissionService({
                 serverError: error.response.data.message
             }));
         } finally {
-            setIsSubmitEditCommissionServiceLoading(false);
+            setIsSubmitUpdateCommissionServiceLoading(false);
         }
     };
 
@@ -124,7 +124,7 @@ export default function EditCommissionService({
     }
 
     return (
-        <div className="edit-commission-service modal-form type-2" ref={editCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
+        <div className="update-commission-service modal-form type-2" ref={updateCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <Link to="/help_center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -132,8 +132,8 @@ export default function EditCommissionService({
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowEditCommissionServiceForm(false);
-                setIsSuccessEditCommissionService(false);
+                setShowUpdateCommissionServiceForm(false);
+                setIsSuccessUpdateCommissionService(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -166,7 +166,7 @@ export default function EditCommissionService({
 
             <div className="modal-form--right">
                 <h2 className="form__title">Chỉnh sửa dịch vụ</h2>
-                {!isSuccessEditCommissionService ? (
+                {!isSuccessUpdateCommissionService ? (
                     <>
                         <div className="form-field">
                             <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
@@ -341,9 +341,9 @@ export default function EditCommissionService({
                 type="submit"
                 className="form__submit-btn btn btn-2 btn-md"
                 onClick={handleSubmit}
-                disabled={isSubmitEditCommissionServiceLoading}
+                disabled={isSubmitUpdateCommissionServiceLoading}
             >
-                {isSubmitEditCommissionServiceLoading ? (
+                {isSubmitUpdateCommissionServiceLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
                     "Tiếp tục"

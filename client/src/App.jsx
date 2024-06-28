@@ -27,6 +27,7 @@ import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
+import ArtDashboard from "./dashboard/artDashboard/ArtDashboard";
 import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDashboard";
 import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
 import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
         element: <Explore></Explore>,
         children: [
           {
-            path: "/explore/artworks",
+            path: "/explore",
             element: <ExploreArtworks showArtworks={true} />,
           },
           {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/overview",
         element: <OverviewDashboard />,
+      },
+      {
+        path: "/dashboard/art",
+        element: <ArtDashboard />,
       },
       {
         path: "/dashboard/transactions",

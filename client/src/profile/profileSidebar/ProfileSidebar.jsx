@@ -29,6 +29,13 @@ export default function Sidebar({ profileInfo }) {
     const [openEditProfileForm, setOpenEditProfileForm] = useState(false);
     const [isAvatarLoading, setIsAvatarLoading] = useState(false);
     const [openUpgradeAccountForm, setOpenUpgradeAccountForm] = useState(false);
+    const [showAllSocialLinks, setShowAllSocialLinks] = useState(false);
+    const socialLinksToShow = showAllSocialLinks ? socialLinks : socialLinks.slice(0, 3);
+    const remainingLinksCount = socialLinks.length - socialLinksToShow.length;
+
+    const handleShowAllLinks = () => {
+        setShowAllSocialLinks(!showAllSocialLinks);
+    };
 
     // Return null if profile information does not exist
     // Otherwise, assign values for form fields
@@ -296,11 +303,19 @@ export default function Sidebar({ profileInfo }) {
                             <p className="sidebar__section__title">Liên kết</p>
                             <hr />
                             <div className="sidebar__socials__link-container">
-                                {profileInfo.socialLinks.map((socialLink, key) => (
+                                {socialLinksToShow.map((socialLink, key) => (
                                     <div key={key} className="sidebar__socials__link-item" dangerouslySetInnerHTML={{ __html: getSocialLinkIcon(socialLink) }}>
                                     </div>
                                 ))}
+                                {remainingLinksCount >= 0 && (
+                                    <div className="sidebar__socials__link-item" onClick={handleShowAllLinks}>
+                                        <i>
+                                            {showAllSocialLinks ? '__ Ẩn bớt' : `__ Hiển thị ${remainingLinksCount} liên kết khác`}
+                                        </i>
+                                    </div>
+                                )}
                             </div>
+
                         </div>}
 
                     <button className="sidebar__btn btn btn-md btn-2" onClick={() => setOpenEditProfileForm(true)}>

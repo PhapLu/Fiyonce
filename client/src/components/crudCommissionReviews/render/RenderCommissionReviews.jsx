@@ -7,9 +7,9 @@
 // Styling
 
 import { useState, useEffect, useRef } from 'react';
-import './CommissionReviews.scss';
+import './RenderCommissionReviews.scss';
 
-export default function CommissionReviews({ setShowCommissionReviews, setOverlayVisible }) {
+export default function CommissionReviews({ setShowRenderCommissionReviews, setOverlayVisible }) {
     const reviews = [
         {
             id: 1,
@@ -77,7 +77,7 @@ export default function CommissionReviews({ setShowCommissionReviews, setOverlay
     useEffect(() => {
         const handler = (e) => {
             if (commissionReviewsRef.current && !commissionReviewsRef.current.contains(e.target)) {
-                setShowCommissionReviews(false);
+                setShowRenderCommissionReviews(false);
                 setOverlayVisible(false);
             }
         };
@@ -90,7 +90,7 @@ export default function CommissionReviews({ setShowCommissionReviews, setOverlay
     return (
         <div className="commission-reviews modal-form type-3" ref={commissionReviewsRef} onClick={(e) => { e.stopPropagation(); }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCommissionReviews(false);
+                setShowRenderCommissionReviews(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -105,7 +105,7 @@ export default function CommissionReviews({ setShowCommissionReviews, setOverlay
             </p> */}
 
             <div className="rating-container">
-                <div className={`rating-item btn ${selectedRating === null ? 'selected btn-2' : 'btn-3'}`} onClick={() => handleFilterReviews(null)}>
+                {/* <div className={`rating-item btn ${selectedRating === null ? 'selected btn-2' : 'btn-3'}`} onClick={() => handleFilterReviews(null)}>
                     Tất cả ({reviews.length})
                 </div>
                 <div className={`rating-item btn ${selectedRating === 5 ? 'selected btn-2' : 'btn-3'}`} onClick={() => handleFilterReviews(5)}>
@@ -137,6 +137,66 @@ export default function CommissionReviews({ setShowCommissionReviews, setOverlay
                         <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
                     </svg>
                     ({reviews.filter(review => review.rating === 1).length})
+                </div> */}
+                <div className="rating-item">
+                    <span className="rating-item__star">
+                        5
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+                        </svg>
+                    </span>
+                    <div className="rating-item__progress-bar">
+                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 5).length / reviews.length * 100))}%` }}></div>
+                    </div>
+                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 5).length / reviews.length * 100))}%</span>
+                </div>
+                <div className="rating-item">
+                    <span className="rating-item__star">
+                        4
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+                        </svg>
+                    </span>
+                    <div className="rating-item__progress-bar">
+                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 4).length / reviews.length * 100))}%` }}></div>
+                    </div>
+                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 4).length / reviews.length * 100))}%</span>
+                </div>
+                <div className="rating-item">
+                    <span className="rating-item__star">
+                        3
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+                        </svg>
+                    </span>
+                    <div className="rating-item__progress-bar">
+                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 3).length / reviews.length * 100))}%` }}></div>
+                    </div>
+                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 3).length / reviews.length * 100))}%</span>
+                </div>
+                <div className="rating-item">
+                    <span className="rating-item__star">
+                        2
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+                        </svg>
+                    </span>
+                    <div className="rating-item__progress-bar">
+                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 2).length / reviews.length * 100))}%` }}></div>
+                    </div>
+                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 2).length / reviews.length * 100))}%</span>
+                </div>
+                <div className="rating-item">
+                    <span className="rating-item__star">
+                        1
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+                        </svg>
+                    </span>
+                    <div className="rating-item__progress-bar">
+                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 1).length / reviews.length * 100))}%` }}></div>
+                    </div>
+                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 1).length / reviews.length * 100))}%</span>
                 </div>
             </div>
 

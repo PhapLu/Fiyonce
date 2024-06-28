@@ -30,12 +30,13 @@
                 .artwork-item__img__operation-item {
                     display: none;
                     margin-left: 8px;
-                    background-color: var(--white-1-color);
+                    background-color: var(--white-4-color);
                     border-radius: 50%;
                     width: 32px;
                     height: 32px;
 
                     svg {
+                        stroke: var(--black-5-color);
                         margin-top: 50%;
                         margin-left: 50%;
                         transform: translate(-50%, -50%);

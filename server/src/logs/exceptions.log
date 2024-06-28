@@ -130,3 +130,10 @@ ReferenceError: Schema is not defined
 ReferenceError: Schema is not defined
     at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:109:25
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-27 10:40:06::error::undefined::undefined::uncaughtException: Cannot overwrite `CommissionService` model once compiled.
+OverwriteModelError: Cannot overwrite `CommissionService` model once compiled.
+    at Mongoose.model (E:\Fiyonce\server\node_modules\mongoose\lib\mongoose.js:563:13)
+    at file:///E:/Fiyonce/server/src/models/CommissionService.model.js:32:26
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined

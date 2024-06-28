@@ -38,3 +38,13 @@ export function formatCurrency(val) {
     // Convert the number to a string and use a regular expression to add periods as thousand separators
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
+
+export function formatDate(val) {
+    const date = new Date(val);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+}
+

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { isFilled, minLength, isValidEmail } from "../../../utils/validator.js";
+import { isFilled } from "../../../utils/validator.js";
+import { useModal } from "../../../contexts/modal/ModalContext";
 
-export default function EditCommissionServiceCategory({
-    editCommissionServiceCategory,
-    setShowEditCommissionServiceCategoryForm,
+export default function UpdateCommissionServiceCategory({
+    updateCommissionServiceCategory,
+    setShowUpdateCommissionServiceCategoryForm,
     setOverlayVisible,
-    editCommissionServiceCategoryMutation
+    updateCommissionServiceCategoryMutation
 }) {
-    if (!editCommissionServiceCategory) {
+    if (!updateCommissionServiceCategory) {
         return;
     }
 
     // Initialize variables for inputs, errors, loading effect
-    const [inputs, setInputs] = useState(editCommissionServiceCategory);
+    const [inputs, setInputs] = useState(updateCommissionServiceCategory);
     const [errors, setErrors] = useState({});
-    const [isSubmitEditCommissionServiceCategoryLoading, setIsSubmitEditCommissionServiceCategoryLoading] = useState(false);
+    const [isSubmitUpdateCommissionServiceCategoryLoading, setIsSubmitUpdateCommissionServiceCategoryLoading] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -40,33 +41,33 @@ export default function EditCommissionServiceCategory({
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitEditCommissionServiceCategoryLoading(true);
+        setIsSubmitUpdateCommissionServiceCategoryLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             // Clear the loading effect if validation failed
-            setIsSubmitEditCommissionServiceCategoryLoading(false);
+            setIsSubmitUpdateCommissionServiceCategoryLoading(false);
             return;
         }
 
         // Handle register request
         try {
-            editCommissionServiceCategoryMutation.mutate(inputs)
+            updateCommissionServiceCategoryMutation.mutate(inputs)
         } catch (error) {
             console.error("Failed to register:", error);
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
-            setIsSubmitEditCommissionServiceCategoryLoading(false);
+            setIsSubmitUpdateCommissionServiceCategoryLoading(false);
         }
     };
 
     return (
         <div className="modal-form type-3">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowEditCommissionServiceCategoryForm(false);
+                setShowUpdateCommissionServiceCategoryForm(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -82,9 +83,9 @@ export default function EditCommissionServiceCategory({
                     type="submit"
                     className="form-field__input btn btn-2 btn-md"
                     onClick={handleSubmit}
-                    disabled={isSubmitEditCommissionServiceCategoryLoading}
+                    disabled={isSubmitUpdateCommissionServiceCategoryLoading}
                 >
-                    {isSubmitEditCommissionServiceCategoryLoading ? (
+                    {isSubmitUpdateCommissionServiceCategoryLoading ? (
                         <span className="btn-spinner"></span>
                     ) : (
                         "Xác nhận"
@@ -95,13 +96,13 @@ export default function EditCommissionServiceCategory({
                 <span
                     className="close"
                     onClick={() => {
-                        setShowEditCommissionServiceCategoryForm(false);
+                        setShowUpdateCommissionServiceCategoryForm(false);
                         setOverlayVisible(false);
                     }}
                 >
                     &times;
                 </span>
-                <h2>Edit Commission Service Category</h2>
+                <h2>Update Commission Service Category</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>

@@ -10,7 +10,7 @@ export default function AccountDashboard() {
 
     // Fetch existing talent requests from the API
     const { data, isError, error, isLoading } = useQuery('talentRequests', () =>
-        apiUtils.get('/talentRequest/viewTalentRequestsByStatus/pending').then(res => res.data.metadata.talentRequests)
+        apiUtils.get('/talentRequest/readTalentRequestsByStatus/pending').then(res => res.data.metadata.talentRequests)
     );
 
     useEffect(() => {
@@ -83,7 +83,7 @@ export default function AccountDashboard() {
 
     return (
         <div className="dashboard-account">
-            <section className="overview">
+            <section className="section overview">
                 <div className="section-header">
                     <h3 className="section-header__title">Tổng quan</h3>
                 </div>

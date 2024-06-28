@@ -16,11 +16,14 @@
     --red-1-color: #ff3e3e;
     --red-2-color: #e45454;
 
+    --orange-1-color: #ff9c65;
     --orange-2-color: #FF6E1C;
 
     --white-1-color: white;
     --white-2-color: white;
     --white-3-color: white;
+    --white-4-color: white;
+
     --box-shadow: 0 1px 6px rgb(114 114 114 / 10%);
     --form-border: unset;
     --form-bg-1-color: #F7F7F7;
@@ -57,6 +60,8 @@ body.dark {
     --white-1-color: rgb(224, 220, 220);
     --white-2-color: #292929;
     --white-3-color: #0b0b0b;
+    --white-4-color: white;
+
     --box-shadow: rgba(99, 99, 99, 0) 0px 2px 8px;
     --form-border: unset;
     --gradient-btn-bg-color: rgba(255, 255, 255, 0.6);
@@ -510,6 +515,10 @@ table {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+
+    &.server-error-field {
+        margin-bottom: 0;
+    }
 
     &.with-create-btn {
         .form-field__input {
@@ -972,7 +981,7 @@ table {
 
     border-radius: 8px;
     border: var(--form-border);
-    background-color: white;
+    background-color: var(--white-3-color);
     position: relative;
 
     .modal-form--left {
@@ -1121,6 +1130,10 @@ table {
     min-width: 30%;
     max-height: 80vh;
     overflow: auto;
+
+    &.sm {
+        width: 35% !important;
+    }
 
     table {
         margin-top: 28px;

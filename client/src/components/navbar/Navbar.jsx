@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Cookies from "js-cookie";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 import Auth from "../auth/Auth";
 import Logo from "../../assets/img/logo.png";
@@ -28,7 +27,7 @@ export default function Navbar() {
 
     return (
         <div className={`navbar ${shadow ? 'with-shadow' : ''}`}>
-            <div className="navbar--left">
+            <Link to="/explore" className="navbar--left">
                 <img src={Logo} alt="Logo" className="navbar__brand-logo" />
                 <h3 className="navbar__brand-name">Pastal<span className="highlight-text">&#x2022;</span></h3>
                 <div className="navbar__search-field">
@@ -37,7 +36,7 @@ export default function Navbar() {
                     </svg>
                     <input type="text" className="navbar__search-field__input form-field__input" placeholder="Tìm kiếm tranh vẽ và họa sĩ" />
                 </div>
-            </div>
+            </Link>
 
             <div className="navbar--right">
                 <ul className="navbar-link-container">
