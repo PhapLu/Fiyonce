@@ -130,3 +130,33 @@ ReferenceError: Schema is not defined
 ReferenceError: Schema is not defined
     at file:///D:/Adam/OnisonProject/server/src/models/order.model.js:109:25
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-06-29 09:00:45::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'url')
+TypeError: Cannot read properties of undefined (reading 'url')
+    at file:///D:/Adam/OnisonProject/server/src/utils/cloud.util.js:62:33
+    at new Promise (<anonymous>)
+    at generateSignedUrl (file:///D:/Adam/OnisonProject/server/src/utils/cloud.util.js:61:10)
+    at file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:79:25
+    at Array.map (<anonymous>)
+    at MovementService.readMovements (file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:77:47)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async readMovements (file:///D:/Adam/OnisonProject/server/src/controllers/movement.controller.js:15:23)::undefined
+2024-06-29 09:00:45::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'url')
+TypeError: Cannot read properties of undefined (reading 'url')
+    at file:///D:/Adam/OnisonProject/server/src/utils/cloud.util.js:62:33
+    at new Promise (<anonymous>)
+    at generateSignedUrl (file:///D:/Adam/OnisonProject/server/src/utils/cloud.util.js:61:10)
+    at file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:79:25
+    at Array.map (<anonymous>)
+    at MovementService.readMovements (file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:77:47)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async readMovements (file:///D:/Adam/OnisonProject/server/src/controllers/movement.controller.js:15:23)::undefined
+2024-06-29 09:00:45::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'url')
+TypeError: Cannot read properties of undefined (reading 'url')
+    at file:///D:/Adam/OnisonProject/server/src/utils/cloud.util.js:62:33
+    at new Promise (<anonymous>)
+    at generateSignedUrl (file:///D:/Adam/OnisonProject/server/src/utils/cloud.util.js:61:10)
+    at file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:79:25
+    at Array.map (<anonymous>)
+    at MovementService.readMovements (file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:77:47)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async readMovements (file:///D:/Adam/OnisonProject/server/src/controllers/movement.controller.js:15:23)::undefined

@@ -1,0 +1,16 @@
+2024-06-29 08:49:39::info::/v1/api/auth/users/login::77e9c80c-2981-427e-802b-cb7d8c867055::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-06-29 08:50:04::info::/v1/api/movement/createMovement::633ec023-b272-4510-a5ff-1d4832547492::input-params ::POST::::{}
+2024-06-29 08:55:37::info::/v1/api/movement/readMovements::79b8fbb9-ac6a-4d68-b52d-461d752dc6bb::input-params ::GET::::{}
+2024-06-29 08:55:37::error::/v1/api/movement/readMovements::79b8fbb9-ac6a-4d68-b52d-461d752dc6bb::undefined - NaNms - Response: {}::{"message":"generateSignedUrl is not defined"}
+2024-06-29 08:55:52::info::/v1/api/movement/readMovements::1fedeae1-6a76-4ccb-82c5-40d80c3f7db4::input-params ::GET::::{}
+2024-06-29 08:56:38::info::/v1/api/movement/readMovements::e16ab044-5922-430c-bf57-df4cc6db003b::input-params ::GET::::{}
+2024-06-29 09:00:45::info::/v1/api/movement/readMovements::7202b4f8-426d-493f-b413-82b8403afc21::input-params ::GET::::{}
+2024-06-29 09:01:57::info::/v1/api/movement/readMovements::ced3d7c5-63b0-4386-afef-6dd0c3f62da7::input-params ::GET::::{}
+2024-06-29 09:01:57::error::/v1/api/movement/readMovements::ced3d7c5-63b0-4386-afef-6dd0c3f62da7::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'url')"}
+2024-06-29 09:02:48::info::/v1/api/movement/readMovements::9d17259e-69b9-4f84-b972-f9b2c0aa96a0::input-params ::GET::::{}
+2024-06-29 09:06:08::info::/v1/api/movement/readMovements::38fd53a5-ce98-4a25-a175-0b1328016ddd::input-params ::GET::::{}
+2024-06-29 09:08:19::info::/v1/api/movement/createMovement::a7ddd72f-8e5b-4f91-b8fc-978f7dff62bd::input-params ::POST::::{}
+2024-06-29 09:08:31::info::/v1/api/movement/createMovement::ea17a715-2188-4933-b1f8-b185ed859897::input-params ::POST::::{}
+2024-06-29 09:08:38::info::/v1/api/movement/readMovements::8eb15ac5-6134-4c3a-86ca-20573f323dba::input-params ::GET::::{}
+2024-06-29 09:11:49::info::/v1/api/movement/readMovements::81dff0e1-05c7-4fb4-9cf5-dba3b4d403cc::input-params ::GET::::{}
+2024-06-29 09:14:40::info::/v1/api/movement/readMovements::8caff207-bb58-4494-8e74-e8293f4e7eab::input-params ::GET::::{}

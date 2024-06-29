@@ -15,10 +15,11 @@ import myLogger from './loggers/mylogger.log.js'
 import configureSocket from './configs/socket.config.js'
 import SocketServices from './services/socket.service.js'
 import sanitizeInputs from './middlewares/sanitize.middleware.js'
-import { globalLimiter, authLimiter, uploadLimiter } from './configs/rateLimit.config.js'
+import { globalLimiter, authLimiter, uploadLimiter, blockChecker } from './configs/rateLimit.config.js'
 const app = express()
 
 //Rate Limit
+app.use(blockChecker)
 app.use(globalLimiter)
 
 // Init middlewares

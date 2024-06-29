@@ -57,14 +57,7 @@ export const deleteFileByPublicId = async (publicId) => {
   }
 }
 
-export const generateSignedUrl = async (publicId, options) => {
-  return v2.url(publicId, {
-    sign_url: true,
-    secure: true,
-    ...options
-  })
-}
-//const signedUrl = generateSignedUrl(movement.thumbnail, { expires_at: Math.floor(Date.now() / 1000) + 3600 })
+
 
 export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
   const defaultTransformations = {
