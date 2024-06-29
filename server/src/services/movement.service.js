@@ -1,6 +1,6 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
-import { User } from '../models/user.model.js'
 import Movement from '../models/movement.model.js'
+import { User } from '../models/user.model.js'
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
 class MovementService{
@@ -80,55 +80,55 @@ class MovementService{
 
   static updateMovement = async (adminId, movementId, req) => {
     // 1. Check if admin and movement exist
-    const admin = await User.findById(adminId);
-    const movement = await Movement.findById(movementId);
+    const admin = await User.findById(adminId)
+    const movement = await Movement.findById(movementId)
   
-    if (!admin) throw new AuthFailureError('Admin not found');
-    if (!movement) throw new BadRequestError('Movement not found');
+    if (!admin) throw new AuthFailureError('Admin not found')
+    if (!movement) throw new BadRequestError('Movement not found')
   
     // 2. Handle thumbnail upload
     try {
-      let thumbnailUrl = movement.thumbnail; // Retain the existing thumbnail URL
+      let thumbnailUrl = movement.thumbnail // Retain the existing thumbnail URL
   
       if (req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
-        console.log(req.files.thumbnail);
+        console.log(req.files.thumbnail)
         const thumbnailUploadResult = await compressAndUploadImage({
           buffer: req.files.thumbnail[0].buffer,
           originalname: req.files.thumbnail[0].originalname,
           folderName: `fiyonce/movements/admin: ${adminId}`,
           width: 1920,
           height: 1080
-        });
-        thumbnailUrl = thumbnailUploadResult.secure_url;
+        })
+        thumbnailUrl = thumbnailUploadResult.secure_url
   
         // 3. Delete old thumbnail from cloudinary if a new one is uploaded
         if (thumbnailUploadResult && movement.thumbnail !== '') {
-          const publicId = extractPublicIdFromUrl(movement.thumbnail);
-          await deleteFileByPublicId(publicId);
+          const publicId = extractPublicIdFromUrl(movement.thumbnail)
+          await deleteFileByPublicId(publicId)
         }
       }
   
       // 4. Merge existing movement fields with req.body to ensure fields not provided in req.body are retained
-      const updatedFields = { ...movement.toObject(), ...req.body };
+      const updatedFields = { ...movement.toObject(), ...req.body }
   
       // Ensure the thumbnail is only updated if a new value is provided
-      updatedFields.thumbnail = thumbnailUrl;
+      updatedFields.thumbnail = thumbnailUrl
   
       // 5. Update movement
       const updatedMovement = await Movement.findByIdAndUpdate(
         movementId,
         updatedFields,
         { new: true }
-      );
+      )
   
       return {
           movement: updatedMovement
-      };
+      }
     } catch (error) {
-      console.error('Error in updating movement:', error);
-      throw new Error('Movement update failed');
+      console.error('Error in updating movement:', error)
+      throw new Error('Movement update failed')
     }
-  };
+  }
 
   static deleteMovement = async(adminId, movementId) => {
     //1. Check if admin and movement exists

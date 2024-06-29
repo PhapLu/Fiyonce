@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
-const DOCUMENT_NAME = 'TalentRequest';
-const COLLECTION_NAME = 'TalentRequests';
+const DOCUMENT_NAME = 'TalentRequest'
+const COLLECTION_NAME = 'TalentRequests'
 
 const TalentRequestSchema = new mongoose.Schema({
     userId: {
@@ -33,8 +33,8 @@ const TalentRequestSchema = new mongoose.Schema({
 }, {
     timestamps: true,
     collection: COLLECTION_NAME
-});
+})
 
-const TalentRequest = mongoose.model(DOCUMENT_NAME, TalentRequestSchema);
+const TalentRequest = mongoose.model(DOCUMENT_NAME, TalentRequestSchema)
 
-export default TalentRequest;
+export default TalentRequest

@@ -1,9 +1,11 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
-import Proposal from "../models/proposal.model.js"
+import crypto from 'crypto'
 import Order from "../models/order.model.js"
-import { User } from "../models/user.model.js"
 import Artwork from "../models/artwork.model.js"
 import sendEmail from '../middlewares/sendMail.js'
+import Proposal from "../models/proposal.model.js"
+import MomoService from './momo.service.js'
+import { User } from "../models/user.model.js"
+import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 
 class ProposalService{
     static sendProposal = async(userId, orderId, body) => {
@@ -47,7 +49,7 @@ class ProposalService{
 
         const showedProposal = await proposal.populate('orderId')
 
-        //sendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully');
+        //sendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully')
         return {
             proposal: showedProposal
         }
@@ -105,9 +107,9 @@ class ProposalService{
 
         //5. Send email to user
         // try {
-        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent');
+        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
 
         return {
@@ -168,10 +170,12 @@ class ProposalService{
         const order = await Order.findById(proposal.orderId)
         if(order.status !== 'approved')
             throw new BadRequestError('Order is not approved')
-        if(order.status == 'confirmed')
-            throw new BadRequestError('Order is already confirmed')
 
-        //4. Confirm proposal
+        //4. Create payment with Momo
+        const amount = '50000'
+        const paymentData = await MomoService.generatePaymentData(amount)
+        
+        //5. Confirm proposal
         order.status = 'confirmed'
         if(!order.talentChosenId){
             order.talentChosenId = proposal.talentId
@@ -184,13 +188,14 @@ class ProposalService{
 
         //5. Send email to talent
         // try {
-        //     await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client');
+        //     await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
 
         return {
-            proposal: showedProposal
+            proposal: showedProposal,
+            paymentData
         }
     }
 
@@ -221,9 +226,9 @@ class ProposalService{
 
         //5. Send email to talent
         // try {
-        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client');
+        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
 
         return {

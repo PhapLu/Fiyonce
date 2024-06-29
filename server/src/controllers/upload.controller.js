@@ -22,19 +22,19 @@ class UploadController{
     }
 
     uploadAvatarOrCover = async(req, res, next) => {
-        const { file } = req;
-        const { buffer, originalname } = file;
-        if (!file) throw new BadRequestError('File missing');
+        const { file } = req
+        const { buffer, originalname } = file
+        if (!file) throw new BadRequestError('File missing')
         const uploadResult = await uploadAvatarOrCover({
             buffer,
             originalname,
-        }, req.userId, req.params.profileId, req.body.type);
+        }, req.userId, req.params.profileId, req.body.type)
     
         new SuccessResponse({
             message: 'Upload file successfully!',
             metadata: uploadResult
-        }).send(res);
-    };
+        }).send(res)
+    }
     
     uploadImagesFromLocal = async(req, res, next) => {
         const {files} = req

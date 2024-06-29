@@ -1,7 +1,7 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
+import jwt from 'jsonwebtoken'
 import Artwork from '../models/artwork.model.js'
 import { User } from '../models/user.model.js'
-import jwt from 'jsonwebtoken'
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 
 class UserService{
 //-------------------CRUD----------------------------------------------------
@@ -41,7 +41,7 @@ class UserService{
 
         //2. Delete profile
         await User.findByIdAndDelete(profileId)
-        return { success: true, message: 'User deleted successfully' };
+        return { success: true, message: 'User deleted successfully' }
     }
 //-------------------END CRUD----------------------------------------------------
     static addToBookmark = async(userId, artworkId) => {

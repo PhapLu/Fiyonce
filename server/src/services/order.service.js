@@ -1,14 +1,16 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import Order from "../models/order.model.js"
-import { User } from "../models/user.model.js"
 import Artwork from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
 import commissionService from "../models/commissionService.model.js"
+import { User } from "../models/user.model.js"
+import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
+import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js"
 
 class OrderService{
     //Order CRUD
-    static createOrder = async(userId, body) => {
+    static createOrder = async(userId, req) => {
         //1. Get type and talentChosenId
+        const body = req.body
         const {type, talentChosenId, commissionServiceId} = body
 
         //2. Check type of order
@@ -26,22 +28,43 @@ class OrderService{
             if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
             if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true
-            body.commissionServiceId = commissionServiceId
             body.talentChosenId = talentChosenId
+            body.commissionServiceId = commissionServiceId
         }else{
             throw new BadRequestError('Type must be direct or inDirect!')
         }
-
-        //3. Create order
-        const order = new Order({
-            memberId: userId,
-            ...body
-        })
-        await order.save()
-
-        return {
-            order
-        }
+        
+        //3. Upload req.files.files to cloudinary
+        try {
+            let references = []
+            
+            if (req.files && req.files.files && req.files.files.length > 0) {
+                const uploadPromises = req.files.files.map(file => compressAndUploadImage({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/order/${userId}`,
+                    width: 1920,
+                    height: 1080
+                }))
+                const uploadResults = await Promise.all(uploadPromises)
+                references = uploadResults.map(result => result.secure_url)
+            }
+        
+            //4. Create order
+            const order = new Order({
+                memberId: userId,
+                references,
+                ...body
+            })
+            await order.save()
+        
+            return {
+                order
+            }
+        } catch (error) {
+            console.log('Error uploading images or saving order:', error)
+            throw new Error('File upload or database save failed')
+        }        
     }
 
     static readOrder = async(orderId) => {
@@ -61,7 +84,7 @@ class OrderService{
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {
             const talentsApprovedCount = await Proposal.find({ orderId: order._id, status: 'approved' }).countDocuments()
-            order._doc.talentsApprovedCount = talentsApprovedCount;  // Add the count to the order
+            order._doc.talentsApprovedCount = talentsApprovedCount  // Add the count to the order
             return order
         }))
     
@@ -70,7 +93,7 @@ class OrderService{
         }
     }
 
-    static updateOrder = async(userId, orderId, body) => {
+    static updateOrder = async(userId, orderId, req) => {
         //1. check order and user
         const oldOrder = await Order.findById(orderId)
         const foundUser = await User.findById(userId)
@@ -81,19 +104,42 @@ class OrderService{
         //2. Check order status
         if(oldOrder.status != 'pending')
             throw new BadRequestError('You cannot update order on this stage!')
-        
-        //3. update Order
-        const updatedOrder = await Order.findByIdAndUpdate(
-            orderId,
-            {
-                $set: body
-            },
-            { new: true }
-        )
-        await updatedOrder.save()
+        try {
+            //3. Handle file uploads if new files were uploaded
+            if (req.files && req.files.files && req.files.files.length > 0) {
+                // Upload new files to Cloudinary
+                const uploadPromises = req.files.files.map(file => compressAndUploadImage({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/order/${userId}`,
+                    width: 1920,
+                    height: 1080
+                }))
+                const uploadResults = await Promise.all(uploadPromises)
+                const references = uploadResults.map(result => result.secure_url)
+                req.body.references = references
 
-        return {
-            order: updatedOrder
+                //Delete old images from cloudinary
+                const publicIds = oldOrder.references.map(reference => extractPublicIdFromUrl(reference))
+                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+            }
+
+            //4. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
+            const updatedFields = { ...oldOrder.toObject(), ...req.body }
+
+            //5. update Order
+            const updatedOrder = await Order.findByIdAndUpdate(
+                orderId,
+                updatedFields,
+                { new: true }
+            )
+    
+            return {
+                order: updatedOrder
+            }
+        } catch (error) {
+            console.log('Error in updating commission service:', error)
+            throw new Error('Service update failed')
         }
     }
 
@@ -109,8 +155,16 @@ class OrderService{
         if(oldOrder.status != 'pending' && oldOrder.status != 'approved')
             throw new BadRequestError('You cannot delete order on this stage!')
 
-        //3. Delete order
-        return await Order.findByIdAndDelete(orderId)
+        //3. Extract public IDs and delete files from Cloudinary
+        const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference))
+        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+
+        //4. Delete order
+        await order.deleteOne()
+
+        return{
+            message: 'Order deleted successfully!'
+        }
     }
     //End Order CRUD
 
@@ -128,30 +182,30 @@ class OrderService{
         }
     }
 
-    static chooseProposal = async(userId, orderId, proposalId) => {
-        //1. Check user, order and proposal
-        const user = await User.findById(userId)
-        const updatedOrder = await Order.findById(orderId)
-        const proposal = await Proposal.findById(proposalId)
+    // static chooseProposal = async(userId, orderId, proposalId) => {
+    //     //1. Check user, order and proposal
+    //     const user = await User.findById(userId)
+    //     const updatedOrder = await Order.findById(orderId)
+    //     const proposal = await Proposal.findById(proposalId)
 
-        if(!user) throw new NotFoundError('User not found!')
-        if(!updatedOrder) throw new NotFoundError('Order not found!')
-        if(!proposal) throw new BadRequestError('Proposal not found!')
+    //     if(!user) throw new NotFoundError('User not found!')
+    //     if(!updatedOrder) throw new NotFoundError('Order not found!')
+    //     if(!proposal) throw new BadRequestError('Proposal not found!')
 
-        //2. Further checking
-        if(user._id != updatedOrder.memberId.toString()) throw new AuthFailureError('You can choose talent only for your Order!')
-        if(proposal.orderId.toString() != updatedOrder._id.toString()) throw new BadRequestError('Proposal does not belong to this order!')
-        if(updatedOrder.talentChosenId) throw new BadRequestError('You have already chosen a talent!')
+    //     //2. Further checking
+    //     if(user._id != updatedOrder.memberId.toString()) throw new AuthFailureError('You can choose talent only for your Order!')
+    //     if(proposal.orderId.toString() != updatedOrder._id.toString()) throw new BadRequestError('Proposal does not belong to this order!')
+    //     if(updatedOrder.talentChosenId) throw new BadRequestError('You have already chosen a talent!')
 
-        //3. Choose proposal
-        updatedOrder.status = 'confirmed'
-        updatedOrder.talentChosenId = proposal.talentId
-        updatedOrder.save()
+    //     //3. Choose proposal
+    //     updatedOrder.status = 'confirmed'
+    //     updatedOrder.talentChosenId = proposal.talentId
+    //     updatedOrder.save()
 
-        return {
-            order: updatedOrder
-        }
-    }
+    //     return {
+    //         order: updatedOrder
+    //     }
+    // }
 
     static denyOrder = async(userId, orderId) => {
         //1. Check if user, order exists
@@ -177,9 +231,9 @@ class OrderService{
 
         //6. Send email to user
         // try {
-        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent');
+        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
         
         return {

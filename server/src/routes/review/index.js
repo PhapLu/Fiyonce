@@ -1,7 +1,7 @@
 import express from 'express'
 import { asyncHandler } from '../../helpers/asyncHandler.js'
-import { verifyToken } from "../../middlewares/jwt.js";
-import reviewController from '../../controllers/review.controller.js';
+import { verifyToken } from "../../middlewares/jwt.js"
+import reviewController from '../../controllers/review.controller.js'
 
 const router = express.Router()
 

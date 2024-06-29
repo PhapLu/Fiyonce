@@ -1,8 +1,8 @@
 import UserService from '../services/user.service.js'
-import { CREATED, SuccessResponse } from "../core/success.response.js";
-import { ErrorResponse, BadRequestError } from '../core/error.response.js';
-import { User } from '../models/user.model.js';
-import KeyTokenService from '../services/keyToken.service.js';
+import { CREATED, SuccessResponse } from "../core/success.response.js"
+import { ErrorResponse, BadRequestError } from '../core/error.response.js'
+import { User } from '../models/user.model.js'
+import KeyTokenService from '../services/keyToken.service.js'
 
 class UserController {
     //CRUD
@@ -35,7 +35,7 @@ class UserController {
     }
     
     me = async(req, res, next) => {
-        if(!req.cookies.accessToken) throw new BadRequestError('Access token missing', 403);
+        if(!req.cookies.accessToken) throw new BadRequestError('Access token missing', 403)
         new SuccessResponse({
             message: 'Me success!',
             metadata: await UserService.me(req.cookies.accessToken)

@@ -1,5 +1,5 @@
-import { CREATED, SuccessResponse } from "../core/success.response.js";
-import TalentRequestService from "../services/talentRequest.service.js";
+import { CREATED, SuccessResponse } from "../core/success.response.js"
+import TalentRequestService from "../services/talentRequest.service.js"
 
 class TalentRequestController {
     requestUpgradingToTalent = async(req, res, next) => {

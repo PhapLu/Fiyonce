@@ -1,6 +1,6 @@
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import Order from '../models/order.model.js'
 import { User } from '../models/user.model.js'
+import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 
 class ReviewService{
     static createReview = async(userId, orderId, body) => {
@@ -33,12 +33,12 @@ class ReviewService{
     static readReview = async(orderId) => {
         // 1. Check order
         const order = await Order.findById(orderId).populate('review.userId', 'stageName avatar')
-        if (!order) throw new NotFoundError('Order not found');
+        if (!order) throw new NotFoundError('Order not found')
     
         // 2. Return review
         return {
             review: order.review
-        };
+        }
     }    
 
     static readReviews = async (commissionServiceId) => {
@@ -55,11 +55,11 @@ class ReviewService{
             }
         })
         rating = rating / count
-
+        const reviews = orders.map(order => order.review)
         //3. Return reviews and commissionService rating
         return {
-            reviews: orders.map(order => order.review),
-            rating: rating
+            reviews,
+            rating
         }
     }
     

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+import mongoose from "mongoose"
+const Schema = mongoose.Schema
 const DOCUMENT_NAME = 'User'
 const COLLECTION_NAME = 'Users'
 
@@ -58,14 +58,14 @@ const UserSchema = new Schema(
     timestamps: true,
     collection: COLLECTION_NAME
   }
-);
+)
 // Middleware to set the verificationExpiry field to 30 minutes in the future
 UserSchema.pre('save', function(next) {
   if (this.isNew || this.isModified('verificationExpiry')) {
-    this.verificationExpiry = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+    this.verificationExpiry = new Date(Date.now() + 30 * 60 * 1000) // 30 minutes
   }
-  next();
-});
+  next()
+})
 // Define a list of predefined background image URLs
 // const predefinedBgImages = [
 //   'url1.jpg',
@@ -73,25 +73,25 @@ UserSchema.pre('save', function(next) {
 //   'url3.jpg',
 //   'url4.jpg',
 //   'url5.jpg'
-// ];
+// ]
 
 // // Middleware to set a random background image URL before saving the user document
 // UserSchema.pre('save', function (next) {
 //   // Check if the bgImg field is not already set
 //   if (!this.bg) {
 //     // Set a random URL from the predefined list
-//     const randomIndex = Math.floor(Math.random() * predefinedBgImages.length);
-//     this.bg = predefinedBgImages[randomIndex];
+//     const randomIndex = Math.floor(Math.random() * predefinedBgImages.length)
+//     this.bg = predefinedBgImages[randomIndex]
 //   }
 
 //   // Continue with the save operation
-//   next();
-// });
+//   next()
+// })
 
 // Indexing for searching
-UserSchema.index({ fullname: 'text', username: 'text', bio: 'text' });
+UserSchema.index({ fullname: 'text', username: 'text', bio: 'text' })
 
-const User = mongoose.model(DOCUMENT_NAME, UserSchema);
+const User = mongoose.model(DOCUMENT_NAME, UserSchema)
 // Define a discriminator for the "talent" role
 const TalentUser = User.discriminator(
   "talent",
@@ -106,13 +106,13 @@ const TalentUser = User.discriminator(
       enum: ['trusted', 'topContributor', 'emerging']
     },
   })
-);
+)
 
 // Define a discriminator for the "member" role (no specific fields needed)
-const MemberUser = User.discriminator("member", new Schema({}));
+const MemberUser = User.discriminator("member", new Schema({}))
 
 // Define a discriminator for the "admin" role (no specific fields needed)
-const AdminUser = User.discriminator("admin", new Schema({}));
+const AdminUser = User.discriminator("admin", new Schema({}))
 
-export { User, TalentUser, MemberUser, AdminUser };
-// export default User;
+export { User, TalentUser, MemberUser, AdminUser }
+// export default User

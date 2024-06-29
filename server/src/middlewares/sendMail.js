@@ -1,18 +1,18 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 dotenv.config()
-import nodemailer from 'nodemailer';
-import {google} from 'googleapis';
+import nodemailer from 'nodemailer'
+import {google} from 'googleapis'
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URL = process.env.REDIRECT_URL;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+const REDIRECT_URL = process.env.REDIRECT_URL
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 
-const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
+const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
 async function sendEmail(to, subject, subjectMessage, verificationCode) {
-    const toEmail = to.replace('@gmail.com', '');
+    const toEmail = to.replace('@gmail.com', '')
     try {
         const accessToken = await oAuth2Client.getAccessToken()
         // Create a transporter using
@@ -137,13 +137,13 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
             to,
             subject,
             html: htmlContent
-        };
+        }
         // Send the email
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ', info.messageId);
+        const info = await transporter.sendMail(mailOptions)
+        console.log('Email sent: ', info.messageId)
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error('Error sending email:', error)
     }
 }
 
-export default sendEmail;
+export default sendEmail

@@ -1,8 +1,8 @@
-import express from "express";
-import authController from "../../controllers/auth.controller.js";
-import { asyncHandler } from "../../auth/checkAuth.js";
-import { authenticationV2 } from "../../auth/authUtils.js";
-import { verifyToken } from "../../middlewares/jwt.js";
+import express from "express"
+import authController from "../../controllers/auth.controller.js"
+import { asyncHandler } from "../../auth/checkAuth.js"
+import { authenticationV2 } from "../../auth/authUtils.js"
+import { verifyToken } from "../../middlewares/jwt.js"
 const router = express.Router()
 //signUp
 router.post('/users/signUp', asyncHandler(authController.signUp))

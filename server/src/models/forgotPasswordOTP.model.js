@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose from "mongoose"
+import { Schema } from "mongoose"
 
-const DOCUMENT_NAME = 'ForgotPasswordOTP';
-const COLLECTION_NAME = 'ForgotPasswordOTPs';
+const DOCUMENT_NAME = 'ForgotPasswordOTP'
+const COLLECTION_NAME = 'ForgotPasswordOTPs'
 
 const forgotPasswordOTPSchema = new Schema({
     email: { 
@@ -26,14 +26,14 @@ const forgotPasswordOTPSchema = new Schema({
 }, {
     timestamps: true,
     collection: COLLECTION_NAME
-});
+})
 
 forgotPasswordOTPSchema.pre('save', function(next) {
     // Set expiredAt to 30 minutes (1800 seconds) in the future
-    this.expiredAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
-    next();
-});
+    this.expiredAt = new Date(Date.now() + 30 * 60 * 1000) // 30 minutes
+    next()
+})
 
-const ForgotPasswordOTP = mongoose.model(DOCUMENT_NAME, forgotPasswordOTPSchema);
+const ForgotPasswordOTP = mongoose.model(DOCUMENT_NAME, forgotPasswordOTPSchema)
 
-export default ForgotPasswordOTP;
+export default ForgotPasswordOTP
