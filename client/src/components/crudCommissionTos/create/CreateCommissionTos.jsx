@@ -257,7 +257,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                         </label>
                         {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                     </div>
-                    <div className="form-field">
+                    <div className="form__button">
                         <button type="submit" className={`form-field__input btn btn-2 btn-md ${isSubmitCreateCommissionTosLoading ? 'loading' : ''}`} onClick={handleSubmit}>
                             {isSubmitCreateCommissionTosLoading ? 'Đang xử lí...' : 'Xác nhận'}
                         </button>

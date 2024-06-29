@@ -2,11 +2,12 @@
     .profile-commission-service__category-container {
 
         .profile-commission-service__category-item {
-            border: 2px solid var(--gray-1-color);
             border-radius: 12px;
             padding: 18px 24px;
             margin-bottom: 20px;
             position: relative;
+            border: 1px solid var(--gray-1-color);
+            box-shadow: var(--box-shadow-1);
 
             .profile-commission-service__category-item__update-btn {
                 position: absolute;

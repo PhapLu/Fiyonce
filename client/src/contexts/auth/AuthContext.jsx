@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (isError) {
-        return <span>Have an errors: {error.message}</span>
+        return <span>Có lỗi xảy ra: {error.message}</span>
     }
 
     const login = async (email, password) => {

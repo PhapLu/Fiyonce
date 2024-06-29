@@ -6,6 +6,8 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import Modal from "../../components/modal/Modal.jsx";
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 import RenderCommissionTos from "../../components/crudCommissionTos/render/RenderCommissionTos.jsx";
+
+import RenderCommissionService from "../../components/crudCommissionService/render/RenderCommissionService.jsx";
 import CreateCommissionService from "../../components/crudCommissionService/create/CreateCommissionService.jsx";
 import UpdateCommissionService from "../../components/crudCommissionService/update/UpdateCommissionService.jsx";
 import DeleteCommissionService from "../../components/crudCommissionService/delete/DeleteCommissionService.jsx";
@@ -14,6 +16,7 @@ import RenderCommissionReviews from "../../components/crudCommissionReviews/rend
 
 import UpdateCommissionServiceCategory from "../../components/crudCommissionServiceCategory/update/UpdateCommissionServiceCategory.jsx";
 import DeleteCommissionServiceCategory from "../../components/crudCommissionServiceCategory/delete/DeleteCommissionServiceCategory.jsx";
+
 
 // Utils
 import { formatCurrency, limitString } from "../../utils/formatter.js";
@@ -42,7 +45,11 @@ export default function Profileservices() {
     const [updateCommissionServiceCategory, setUpdateCommissionServiceCategory] = useState()
     const [deleteCommissionServiceCategory, setDeleteCommissionServiceCategory] = useState();
 
+
     const [showCommissionTosView, setShowCommissionTosView] = useState(false);
+
+    const [showRenderCommissionService, setShowRenderCommissionService] = useState(false);
+    const [renderCommissionServiceId, setRenderCommissionServiceId] = useState();
 
     const categoryRefs = useRef([]);
     categoryRefs.current = [];
@@ -56,6 +63,7 @@ export default function Profileservices() {
     const fetchCommissionServiceCategories = async () => {
         try {
             const response = await newRequest.get(`/serviceCategory/readServiceCategoriesWithServices/${userId}`);
+            console.log(response.data.metadata.categorizedServices)
             return response.data.metadata.categorizedServices;
         } catch (error) {
             console.error(error);
@@ -153,7 +161,6 @@ export default function Profileservices() {
         }
     );
 
-
     const scrollToCategory = (index) => {
         const element = categoryRefs.current[index];
         const offset = -80;
@@ -205,7 +212,13 @@ export default function Profileservices() {
         };
     }, [commissionServiceCategories]);
 
+    if (isLoading) {
+        return <span>Đang tải...</span>
+    }
 
+    if (isError) {
+        return <span>Have an errors: {error.message}</span>
+    }
     return (
         <div className="profile-commission-services">
             <div className="profile-page__header">
@@ -305,7 +318,7 @@ export default function Profileservices() {
                                                 </>
                                             ) : (
                                                 <>
-                                                    <button className="btn btn-2 btn-md" onClick={() => {setShowCreateOrder(true); setOverlayVisible(true)}}>Đặt ngay</button>
+                                                    <button className="btn btn-2 btn-md" onClick={() => { setRenderCommissionServiceId(service._id); setShowRenderCommissionService(true); setOverlayVisible(true) }}>Đặt ngay</button>
                                                     <button className="btn btn-3 btn-md">Liên hệ</button>
                                                 </>
                                             )}
@@ -327,6 +340,16 @@ export default function Profileservices() {
             {overlayVisible && (
                 <div className={`overlay`}>
                     {/* CRUD commisssion service */}
+                    {
+                        showRenderCommissionService &&
+                        <RenderCommissionService
+                            commissionServiceId={renderCommissionServiceId}
+                            setShowRenderCommissionService={setShowRenderCommissionService}
+                            setOverlayVisible={setOverlayVisible}
+                        />
+
+                    }
+
                     {showCreateCommissionServiceForm &&
                         <CreateCommissionService
                             commissionServiceCategories={commissionServiceCategories}
@@ -385,12 +408,6 @@ export default function Profileservices() {
                     {showRenderCommissionReviews &&
                         <RenderCommissionReviews setShowRenderCommissionReviews={setShowRenderCommissionReviews}
                             setOverlayVisible={setOverlayVisible} />
-                    }
-
-                    {/* Make order */}
-                    {
-                        showCreateOrder && 
-                        <CreateOrder />
                     }
                 </div>
             )}

@@ -24,10 +24,13 @@
     --white-3-color: white;
     --white-4-color: white;
 
-    --box-shadow: 0 1px 6px rgb(114 114 114 / 10%);
+    --box-shadow-1: rgba(0, 0, 0, 0.1) 0px 1px 4px;
+    --box-shadow-2: 0 2px 5px rgb(114 114 114 / 20%);
     --form-border: unset;
     --form-bg-1-color: #F7F7F7;
     --form-bg-2-color: white;
+    --form-bg-3-color: #F7F7F7;
+
     --gradient-btn-bg-color: rgba(0, 0, 0, 0.6);
     --color-scheme: light;
 
@@ -63,6 +66,7 @@ body.dark {
     --white-4-color: white;
 
     --box-shadow: rgba(99, 99, 99, 0) 0px 2px 8px;
+    --box-shadow-2:  0 2px 5px rgb(40 40 40 / 20%)
     --form-border: unset;
     --gradient-btn-bg-color: rgba(255, 255, 255, 0.6);
 
@@ -70,6 +74,7 @@ body.dark {
     --color-scheme: dark;
     --form-bg-1-color: #0e0e0e;
     --form-bg-2-color: #161616;
+    --form-bg-3-color: #272727;
 
     --pending-status-bg-color: #ffe8d4;
     --pending-status-color: #f68038;
@@ -128,7 +133,9 @@ body {
     // transition: 0.2s linear;
     color: var(--black-3-color);
 
-
+    &:has(.overlay ) {
+        overflow: hidden;
+    }
 }
 
 #root {
@@ -182,18 +189,20 @@ h1 {
 h2 {
     font-size: 2.2rem;
     line-height: 3.2rem;
-    margin: 0 0 12px 0;
+    margin: 8px 0;
 }
 
 h3 {
     font-size: 1.8rem;
     line-height: 2.8rem;
+    margin: 12px 0;
 }
 
 h4 {
     font-size: 1.6rem;
     font-weight: 600;
     line-height: 2rem;
+    margin: 8px 0;
 }
 
 p {
@@ -209,6 +218,18 @@ p {
         opacity: 0.8;
         cursor: pointer;
     }
+}
+
+.normal-text {}
+
+.border-text {
+    padding: 12px 20px;
+    border-radius: 16px;
+    box-shadow: var(--box-shadow-1);
+}
+
+.mb-8 {
+    margin-bottom: 8px;
 }
 
 .text-align-center {
@@ -278,6 +299,7 @@ p {
     align-items: center;
     justify-content: center;
     background-color: unset;
+    box-shadow: var(--box-shadow);
 
     .btn-ic,
     svg {
@@ -340,6 +362,11 @@ p {
 
 .btn-5 {
     background-color: var(--red-2-color) !important;
+    color: white;
+}
+
+.btn-6 {
+    background-color: var(--orange-1-color) !important;
     color: white;
 }
 
@@ -425,8 +452,6 @@ hr {
     position: fixed;
     top: 50%;
     left: calc(50% - 1px);
-    width: 0;
-    height: 0;
     background: rgba(0, 0, 0, 0.7);
     // backdrop-filter: blur(2px);
     display: flex;
@@ -436,8 +461,13 @@ hr {
     transition: all 0.8s ease-in-out;
     transform: translate(-50%, -50%);
     opacity: 1;
-    width: 100%;
-    height: 100%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+}
+
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
 }
 
 .flex-align-center {
@@ -750,7 +780,7 @@ table {
     .user__avatar {
         object-fit: cover;
         border-radius: 50%;
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow-1);
 
         &:hover {
             cursor: pointer;
@@ -909,6 +939,8 @@ table {
     }
 
     .form__close-ic {
+        stroke-width: 2.0;
+
         &:hover {
             opacity: 0.7;
             cursor: pointer;
@@ -919,7 +951,7 @@ table {
         background-color: var(--form-bg-2-color);
         padding: 12px 14px 14px;
         border-radius: 12px;
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow-1);
 
         p {
             margin: 0;
@@ -1085,9 +1117,6 @@ table {
         width: 42%;
         padding: 12px 44px 12px 24px;
 
-        h3 {
-            margin: 12px 0 !important;
-        }
     }
 
     .modal-form--right {
@@ -1096,7 +1125,7 @@ table {
         padding: 24px 40px;
         border-radius: 16px;
         border: var(--form-border);
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow-1);
 
         overflow-y: scroll;
         scrollbar-width: thin;
@@ -1144,12 +1173,12 @@ table {
         right: 30px;
         top: 30px;
     }
+}
 
-    .modal-form__box {
-        background-color: var(--black-5-color);
-        padding: 12px !important;
-        border-radius: 8px;
-    }
+.modal-form__box {
+    background-color: var(--black-5-color);
+    padding: 12px !important;
+    border-radius: 8px;
 }
 
 // Scroll bar

@@ -3,11 +3,11 @@ export function isFilled(val) {
 }
 
 export function minLength(val, length) {
-    return val.length >= length;
+    return val.length > length;
 }
 
 export function maxLength(val, length) {
-    return val.length <= length;
+    return val.length < length;
 }
 
 export function isMatch(val1, val2) {
