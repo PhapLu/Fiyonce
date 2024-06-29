@@ -1,2 +1,21 @@
 2024-06-29 08:55:37::error::/v1/api/movement/readMovements::79b8fbb9-ac6a-4d68-b52d-461d752dc6bb::undefined - NaNms - Response: {}::{"message":"generateSignedUrl is not defined"}
 2024-06-29 09:01:57::error::/v1/api/movement/readMovements::ced3d7c5-63b0-4386-afef-6dd0c3f62da7::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'url')"}
+2024-06-29 15:00:26::error::/v1/api/order/createOrder::a1510a5b-3527-4385-bb5f-2f1a340dd4c1::403 - 0ms - Response: {"status":403,"now":1719648026092}::{"message":"Type must be direct or inDirect!"}
+2024-06-29 15:01:21::error::/v1/api/order/createOrder::815c5bab-062c-455d-ad30-cbc2673cd62d::403 - 0ms - Response: {"status":403,"now":1719648081993}::{"message":"Talent not found!"}
+2024-06-29 15:05:41::error::/v1/api/order/createOrder::769c599b-591c-4589-b41d-1f8b7404e062::403 - 0ms - Response: {"status":403,"now":1719648341157}::{"message":"commissionService not found!"}
+2024-06-29 15:05:46::error::/v1/api/order/createOrder::56b9efd0-f5ed-4e47-ab83-c8c8672dee65::403 - 0ms - Response: {"status":403,"now":1719648346663}::{"message":"commissionService not found!"}
+2024-06-29 15:06:45::error::/v1/api/order/createOrder::a202e5b9-da79-4793-b05b-43bab9347827::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-29 15:07:33::error::/v1/api/order/createOrder::7558269b-b4f3-4523-9f82-d74d9d4795e5::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-29 15:08:08::error::/v1/api/order/createOrder::ce21d82e-0259-4b2f-861c-cc241f45f1c1::403 - 0ms - Response: {"status":403,"now":1719648488669}::{"message":"Type must be direct or inDirect!"}
+2024-06-29 15:37:18::error::/v1/api/order/createOrder::c11ab667-00f6-4115-8411-5f184bfeeaa3::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-06-29 15:49:27::error::/v1/api/order/creataeOrder::bafca9a4-179c-4508-937a-f8e10e50e2b8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 15:49:46::error::/v1/api/order/creataeOrder::97a0d57b-b79f-4d0e-b580-353eee94accb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 15:49:55::error::/v1/api/order/creataeOrder::a2e356a0-306b-4eaa-9c6a-e34d1d1d21f9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 16:48:43::error::/v1/api/order/readOrders/6662c4f8a0fe5944a1ea33cc::2e798a55-a3f2-45e7-95b2-f13f1ed47320::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 16:48:43::error::/v1/api/order/readOrders/6662c4f8a0fe5944a1ea33cc::7838eabd-d6c4-475f-908c-6c5a952da4f5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 16:49:17::error::/v1/api/order/readOrders/6662c4f8a0fe5944a1ea33cc::50c364c0-4f73-431c-a36d-3975553108f5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 16:49:18::error::/v1/api/order/readOrderHistory/6662c4f8a0fe5944a1ea33cc::e4217fe7-cad9-4278-b053-a391bedfca5f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 16:49:19::error::/v1/api/order/readOrderHistory/6662c4f8a0fe5944a1ea33cc::4149b420-e6ef-4da4-9bb7-f440e27c5aba::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 16:49:36::error::/v1/api/order/readOrderHistory/6662c4f8a0fe5944a1ea33cc::66e7a31c-6e17-4315-b577-0be3c44e5562::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-29 17:14:31::error::/v1/api/order/readOrderHistory::73bb9fbd-8863-407c-8b42-b77e18c6c1ba::undefined - NaNms - Response: {}::{"message":"talentId is not defined"}
+2024-06-29 17:14:40::error::/v1/api/order/readOrderHistory::dd5ce288-6da6-47ff-af79-46aecfec6436::undefined - NaNms - Response: {}::{"message":"talentId is not defined"}

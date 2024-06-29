@@ -6,7 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 // Components
-import CreateOrder from "../../../components/crudOrder/create/CreateOrder";
+import CreateCommissionOrder from "../../crudCommissionOrder/create/CreateCommissionOrder";
 
 // Utils
 import { apiUtils } from "../../../utils/newRequest";
@@ -22,7 +22,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
 
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const [showCreateOrder, setShowCreateOrder] = useState(false);
+    const [showCreateCommissionOrder, setShowCreateCommissionOrder] = useState(false);
 
     const agreeTermsRef = useRef(null);
 
@@ -46,6 +46,8 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
     const fetchCommissionService = async () => {
         try {
             const response = await apiUtils.get(`/commissionService/readCommissionService/${commissionServiceId}`);
+            console.log(response.data.metadata.commissionService)
+            console.log(commissionService)
             return response.data.metadata.commissionService;
         } catch (error) {
             return null;
@@ -80,7 +82,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
         };
     }, [setShowRenderCommissionService, setOverlayVisible]);
 
-    const handleShowCreateOrderBtn = () => {
+    const handleShowCreateCommissionOrderBtn = () => {
         if (!inputs.isAgreeTerms) {
             setErrors(prevErrors => ({
                 ...prevErrors,
@@ -88,7 +90,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
             }));
             agreeTermsRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
-            setShowCreateOrder(true);
+            setShowCreateCommissionOrder(true);
             setOverlayVisible(true);
         }
     }
@@ -104,7 +106,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
     return (
         <>
             {
-                !showCreateOrder ?
+                !showCreateCommissionOrder ?
 
                     (
                         <div className="render-commission-service modal-form type-2" ref={renderCommissionServiceRef} onClick={(e) => { e.stopPropagation() }}>
@@ -189,14 +191,14 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
 
                             <button
                                 className="btn btn-6 btn-md form__submit-btn"
-                                onClick={handleShowCreateOrderBtn}
+                                onClick={handleShowCreateCommissionOrderBtn}
                             >
                                 Đặt ngay
                             </button>
                         </div>
                     )
                     : (
-                        <CreateOrder isDirect={true} commissionService={commissionService} />
+                        <CreateCommissionOrder setShowCreateCommissionOrderForm={setShowCreateCommissionOrder} isDirect={true} commissionService={commissionService} />
                     )
             }
         </>

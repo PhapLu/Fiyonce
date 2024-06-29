@@ -1,34 +1,38 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
-// Resources
+// Contexts
+import { useModal } from "../../../contexts/modal/ModalContext";
+import { useAuth } from "../../../contexts/auth/AuthContext";
 
 // Utils
 import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../../../utils/formatter"
 import { isFilled, minValue } from "../../../utils/validator"
 
 // Styling
-import "./CreateOrder.scss";
+import "./CreateCommissionOrder.scss";
+import { apiUtils, createFormData } from "../../../utils/newRequest";
 
-export default function CreateOrder({ isDirect, commissionService }) {
+export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrderForm }) {
     if (isDirect && !commissionService) {
         return;
     }
+
+    const { setModalInfo } = useModal();
+    const { userInfo } = useAuth();
+    
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
-        description: '',
-        references: [],
-        usage: 'personal',
-        isPrivate: "0",
         fileTypes: [],
-        minPrice: '',
-        maxPrice: '',
-        agreeTerms: false
+        inputs: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
     });
+    const { userId: talentChosenId } = useParams();
+
     const [errors, setErrors] = useState({});
     const [isSubmitOrderCommissionLoading, setIsSubmitOrderCommissionLoading] = useState(false);
-    const [isSuccessOrderCommission, setIsSuccessOrderCommission] = useState(false);
+    const [isSuccessOrderCommission, setIsSuccessCreateCommissionOrder] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
 
     const [references, setReferences] = useState([]);
@@ -51,7 +55,12 @@ export default function CreateOrder({ isDirect, commissionService }) {
     const validateInputs = () => {
         let errors = {};
 
-        // Validate email
+        // Validate title
+        if (!isFilled(inputs.title)) {
+            errors.title = 'Vui lòng nhập tên đơn hàng';
+        }
+
+        // Validate description
         if (!isFilled(inputs.description)) {
             errors.description = 'Vui lòng nhập mô tả';
         }
@@ -142,34 +151,50 @@ export default function CreateOrder({ isDirect, commissionService }) {
         document.getElementById('file-input').click();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        // setIsSubmitOrderCommissionLoading(true);
+        setIsSubmitOrderCommissionLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            // setIsSubmitOrderCommissionLoading(false);
+            setIsSubmitOrderCommissionLoading(false);
             return;
         }
 
+        if (isDirect) {
+            inputs.type = "direct";
+            inputs.talentChosenId = talentChosenId;
+            inputs.commissionServiceId = commissionService._id;
+        } else {
+            inputs.type = "direct";
+        }
         console.log(inputs)
-        console.log(references)
+        const fd = createFormData(inputs, "files", references);
 
-
-        // // Handle login request
-        // try {
-        //     setIsSuccessOrderCommission(true);
-        // } catch (error) {
-        //     console.error("Failed to login:", error);
-        //     errors.serverError = error.response.data.message;
-        // } finally {
-        //     // Clear the loading effect
-        //     setIsSubmitOrderCommissionLoading(false);
-        // }
+        // Handle login request
+        try {
+            const response = await apiUtils.post("/order/createOrder", fd);
+            if (response) {
+                setModalInfo({
+                    status: "success",
+                    message: "Đặt dịch vụ thành công"
+                })
+                setIsSuccessCreateCommissionOrder(true);
+            }
+        } catch (error) {
+            errors.serverError = error.response.data.message;
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
+        } finally {
+            // Clear the loading effect
+            setIsSubmitOrderCommissionLoading(false);
+        }
     };
 
     return (
@@ -181,8 +206,8 @@ export default function CreateOrder({ isDirect, commissionService }) {
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowOrderCommissionForm(false);
-                setIsSuccessOrderCommission(false);
+                setShowCreateCommissionOrderForm(false);
+                setIsSuccessCreateCommissionOrder(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -255,10 +280,24 @@ export default function CreateOrder({ isDirect, commissionService }) {
             <div className="modal-form--right">
                 <h2 className="form__title">Mô tả yêu cầu</h2>
 
+
                 {!isSuccessOrderCommission ?
 
                     (
                         <>
+
+                            <div className="form-field">
+                                <label htmlFor="title" className="form-field__label">Tên đơn hàng</label>
+                                <input
+                                    id="title"
+                                    name="title"
+                                    value={inputs.title || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Nhập tên đơn hàng để tiện ghi nhớ và theo dõi"
+                                />
+                                {errors.title && <span className="form-field__error">{errors.title}</span>}
+                            </div>
 
                             <div className="form-field">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
@@ -463,12 +502,23 @@ export default function CreateOrder({ isDirect, commissionService }) {
                             </div>
                         </>
                     ) : (
-                        <span>
-                            Pastal đã gửi đi yêu cầu của bạn thành công. Các họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
+                        <>
+                            <p className="text-align-center">
+                                Đặt hàng thành công! 
+                                <br />
+                                {isDirect ? "Họa sĩ" : "Các họa sĩ"} sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
+                                <br />
+                                Kiểm tra thông tin đơn hàng <Link to={`/users/${userInfo._id}/order-history`} className="highlight-text">tại đây</Link>.
+                            </p>
 
-
-                            Lưu ý: Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài phạm vi. Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng tôi tại đây.
-                        </span>
+                            <p>
+                                <strong>Lưu ý: </strong>
+                                <br />
+                                - Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài ngoài nền tảng. 
+                                <br />
+                                -Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng tôi <Link to="" className="highlight-text">tại đây</Link>.
+                            </p>
+                        </>
                     )}
             </div>
             <button type="submit"

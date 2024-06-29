@@ -37,8 +37,8 @@ class OrderController{
             metadata: await OrderService.deleteOrder(req.userId, req.params.orderId)
         }).send(res)
     }
-    //End Order CRUD
 
+    //End Order CRUD
     readOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders of a client',
