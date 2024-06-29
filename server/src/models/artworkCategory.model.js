@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 const DOCUMENT_NAME = 'ArtworkCategory'
 const COLLECTION_NAME = 'ArtworkCategories'
 

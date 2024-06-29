@@ -1,7 +1,7 @@
 import express from 'express'
 import { asyncHandler } from '../../helpers/asyncHandler.js'
-import { verifyToken } from "../../middlewares/jwt.js";
-import termOfServiceController from '../../controllers/termOfService.controller.js';
+import { verifyToken } from "../../middlewares/jwt.js"
+import termOfServiceController from '../../controllers/termOfService.controller.js'
 
 const router = express.Router()
 

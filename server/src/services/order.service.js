@@ -36,7 +36,7 @@ class OrderService{
         
         //3. Upload req.files.files to cloudinary
         try {
-            let references = [];
+            let references = []
             
             if (req.files && req.files.files && req.files.files.length > 0) {
                 const uploadPromises = req.files.files.map(file => compressAndUploadImage({
@@ -45,9 +45,9 @@ class OrderService{
                     folderName: `fiyonce/order/${userId}`,
                     width: 1920,
                     height: 1080
-                }));
-                const uploadResults = await Promise.all(uploadPromises);
-                references = uploadResults.map(result => result.secure_url);
+                }))
+                const uploadResults = await Promise.all(uploadPromises)
+                references = uploadResults.map(result => result.secure_url)
             }
         
             //4. Create order
@@ -55,15 +55,15 @@ class OrderService{
                 memberId: userId,
                 references,
                 ...body
-            });
-            await order.save();
+            })
+            await order.save()
         
             return {
                 order
-            };
+            }
         } catch (error) {
-            console.log('Error uploading images or saving order:', error);
-            throw new Error('File upload or database save failed');
+            console.log('Error uploading images or saving order:', error)
+            throw new Error('File upload or database save failed')
         }        
     }
 
@@ -84,7 +84,7 @@ class OrderService{
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {
             const talentsApprovedCount = await Proposal.find({ orderId: order._id, status: 'approved' }).countDocuments()
-            order._doc.talentsApprovedCount = talentsApprovedCount;  // Add the count to the order
+            order._doc.talentsApprovedCount = talentsApprovedCount  // Add the count to the order
             return order
         }))
     
@@ -114,18 +114,18 @@ class OrderService{
                     folderName: `fiyonce/order/${userId}`,
                     width: 1920,
                     height: 1080
-                }));
-                const uploadResults = await Promise.all(uploadPromises);
-                const references = uploadResults.map(result => result.secure_url);
-                req.body.references = references;
+                }))
+                const uploadResults = await Promise.all(uploadPromises)
+                const references = uploadResults.map(result => result.secure_url)
+                req.body.references = references
 
                 //Delete old images from cloudinary
-                const publicIds = oldOrder.references.map(reference => extractPublicIdFromUrl(reference));
-                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+                const publicIds = oldOrder.references.map(reference => extractPublicIdFromUrl(reference))
+                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
             }
 
             //4. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...oldOrder.toObject(), ...req.body };
+            const updatedFields = { ...oldOrder.toObject(), ...req.body }
 
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
@@ -138,8 +138,8 @@ class OrderService{
                 order: updatedOrder
             }
         } catch (error) {
-            console.log('Error in updating commission service:', error);
-            throw new Error('Service update failed');
+            console.log('Error in updating commission service:', error)
+            throw new Error('Service update failed')
         }
     }
 
@@ -156,8 +156,8 @@ class OrderService{
             throw new BadRequestError('You cannot delete order on this stage!')
 
         //3. Extract public IDs and delete files from Cloudinary
-        const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference));
-        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+        const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference))
+        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
 
         //4. Delete order
         await order.deleteOne()
@@ -231,9 +231,9 @@ class OrderService{
 
         //6. Send email to user
         // try {
-        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent');
+        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
         
         return {

@@ -1,5 +1,5 @@
-import ArtworkService from "../services/artwork.service.js";
-import { SuccessResponse } from "../core/success.response.js";
+import ArtworkService from "../services/artwork.service.js"
+import { SuccessResponse } from "../core/success.response.js"
 
 class ArtworkController{
     ///CRUD////////

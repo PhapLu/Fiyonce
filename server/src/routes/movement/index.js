@@ -1,9 +1,9 @@
 import express from 'express'
 import { asyncHandler } from '../../helpers/asyncHandler.js'
-import { verifyToken } from "../../middlewares/jwt.js";
+import { verifyToken } from "../../middlewares/jwt.js"
 import accessService from '../../services/auth.service.js'
-import movementController from '../../controllers/movement.controller.js';
-import { uploadFields } from '../../configs/multer.config.js';
+import movementController from '../../controllers/movement.controller.js'
+import { uploadFields } from '../../configs/multer.config.js'
 
 const router = express.Router()
 

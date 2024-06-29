@@ -1,8 +1,8 @@
-import express from "express";
-import userController from "../../controllers/user.controller.js";
-import accessService from "../../services/auth.service.js";
-import { asyncHandler } from "../../auth/checkAuth.js";
-import { verifyToken } from "../../middlewares/jwt.js";
+import express from "express"
+import userController from "../../controllers/user.controller.js"
+import accessService from "../../services/auth.service.js"
+import { asyncHandler } from "../../auth/checkAuth.js"
+import { verifyToken } from "../../middlewares/jwt.js"
 
 const router = express.Router()
 

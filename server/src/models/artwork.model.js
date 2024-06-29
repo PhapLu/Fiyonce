@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"
 
 const DOCUMENT_NAME = 'Artwork'
 const COLLECTION_NAME = 'Artworks'
@@ -53,10 +53,10 @@ const ArtworkSchema = new Schema({
   },{
     timestamps: true,
     collection: COLLECTION_NAME
-});
+})
 
 // Indexing for searching
-ArtworkSchema.index({ description: 'text' });
+ArtworkSchema.index({ description: 'text' })
 
 // const ForSellingSchema = new Schema({
 //     artwork_price: {
@@ -87,10 +87,10 @@ ArtworkSchema.index({ description: 'text' });
 //     collection: 'Showcasings'
 // })
 
-// const artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema);
+// const artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema)
 // //const forSelling = mongoose.model('ForSelling', ForSellingSchema)
 // const showcasing = mongoose.model('Showcasing', ShowcasingSchema)
-// export {artwork, showcasing};
+// export {artwork, showcasing}
 
 const Artwork = mongoose.model(DOCUMENT_NAME, ArtworkSchema)
 export default Artwork

@@ -27,7 +27,7 @@ const uploadFields = uploadMemory.fields([
     { name: 'serviceCategoryId', maxCount: 1 },
     { name: 'fromPrice', maxCount: 1 },
     { name: 'deliverables', maxCount: 1 },
-]);
+])
 
 export {
     uploadDisk,

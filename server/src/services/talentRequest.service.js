@@ -50,7 +50,7 @@ class TalentRequestService{
                 jobTitle,
                 portfolioLink,
                 artworks
-            });
+            })
             await newTalentRequest.save()
 
             return {
@@ -60,11 +60,11 @@ class TalentRequestService{
             console.log('Error uploading images:', error)
             throw new Error('File upload or database save failed')
         }
-    };
+    }
 
     static readTalentRequestStatus = async (userId) => {
         // 1. Check user exists
-        const currentUser = await User.findById(userId);
+        const currentUser = await User.findById(userId)
         if (!currentUser) throw new NotFoundError('User not found')
     
         // 2. Find talent request
@@ -75,35 +75,35 @@ class TalentRequestService{
     
         return {
             talentRequestStatus: talentRequest.status
-        };
+        }
     }
 //------------------Admin----------------------------------------------------------
     static upgradeRoleToTalent = async (adminId, requestId) => {
         // 1. Find and check request
-        const request = await TalentRequest.findById(requestId);
-        if (!request) throw new NotFoundError('Request not found');
+        const request = await TalentRequest.findById(requestId)
+        if (!request) throw new NotFoundError('Request not found')
         if (request.status === 'approved') throw new BadRequestError('Request already approved')
 
         // 2. Find and check admin user and user role
-        const adminUser = await User.findById(adminId);
+        const adminUser = await User.findById(adminId)
         if (!adminUser || adminUser.role !== 'admin') throw new AuthFailureError('You do not have enough permission')
 
         // 3. Find and check the user related to the request
-        const userId = request.userId;
+        const userId = request.userId
         const foundUser = await User.findById(userId)
         if (!foundUser) throw new NotFoundError('User not found')
         if (foundUser.role === 'talent') throw new BadRequestError('User already a talent')
 
         // 4. Mark request as approved
         request.status = 'approved'
-        await request.save();
+        await request.save()
 
         // 5. Update role to talent
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { $set: { role: 'talent' } },
             { new: true }
-        );
+        )
         
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser
@@ -122,8 +122,8 @@ class TalentRequestService{
 
         return {
             user: userWithoutPassword._doc
-        };
-    };
+        }
+    }
 
 
 
@@ -134,7 +134,7 @@ class TalentRequestService{
         if(request.status === 'rejected') throw new BadRequestError('Request already denied')
 
         //2. Find and check admin, user and user role
-        const userId = request.userId;
+        const userId = request.userId
         const adminUser = await User.findById(adminId)
         const foundUser = await User.findById(userId)
 
@@ -155,7 +155,7 @@ class TalentRequestService{
             sendEmail(foundUser.email, 'Request Denied', 'Your request has been rejected')
         } catch (error) {
             console.log('Failed:::', error)
-            throw new Error('Email service error or image deletion failed');
+            throw new Error('Email service error or image deletion failed')
         }
         
         return {

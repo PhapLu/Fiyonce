@@ -41,7 +41,7 @@ class UserService{
 
         //2. Delete profile
         await User.findByIdAndDelete(profileId)
-        return { success: true, message: 'User deleted successfully' };
+        return { success: true, message: 'User deleted successfully' }
     }
 //-------------------END CRUD----------------------------------------------------
     static addToBookmark = async(userId, artworkId) => {

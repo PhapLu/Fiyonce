@@ -10,7 +10,7 @@ import UserOTPVerification from "../models/userOTPVerification.model.js"
 import { User } from "../models/user.model.js"
 import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
 import { findByEmail} from '../utils/index.js'
-import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js";
+import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js"
 import { createUserQRCode } from "../utils/qrcode.util.js"
 
 class AuthService {
@@ -24,39 +24,39 @@ class AuthService {
     // static login = async({email, password, refreshToken = null}) => {
     //     // 1. Check email in the database
     //     const foundUser = await User.findOne({email}).lean()
-    //     if (!foundUser) throw new BadRequestError("User not registered");
+    //     if (!foundUser) throw new BadRequestError("User not registered")
 
     //     // 2. Match password
-    //     const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
-    //     if (!match) throw new AuthFailureError("Authentication error");
+    //     const match = await bcrypt.compare(password, foundUser.password) // Await the bcrypt comparison
+    //     if (!match) throw new AuthFailureError("Authentication error")
 
     //     // 3. Exclude password from foundUser
-    //     const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
+    //     const { password: hiddenPassword, ...userWithoutPassword } = foundUser
 
     //     // 4. Create AccessToken and RefreshToken and save
-    //     const privateKey = crypto.randomBytes(64).toString("hex");
-    //     const publicKey = crypto.randomBytes(64).toString("hex");
+    //     const privateKey = crypto.randomBytes(64).toString("hex")
+    //     const publicKey = crypto.randomBytes(64).toString("hex")
 
     //     // 5. Generate tokens
-    //     const { _id: userId } = foundUser;
+    //     const { _id: userId } = foundUser
     //     const tokens = await createTokenPair(
     //         userWithoutPassword,
     //         publicKey,
     //         privateKey
-    //     );
+    //     )
     //     await KeyTokenService.createKeyToken({
     //         refreshToken: tokens.refreshToken,
     //         privateKey,
     //         publicKey,
     //         userId
-    //     });
+    //     })
 
     //     // 6. Return user data and tokens
     //     return {
     //         user: userWithoutPassword,
     //         tokens
-    //     };
-    // };
+    //     }
+    // }
 
 
     // static signUp = async({fullname, email, password}) =>{
@@ -72,7 +72,7 @@ class AuthService {
     //         password: hashedPassword,
     //         role: RoleUser.MEMBER
     //     })
-    //     const { password: hiddenPassword, ...userWithoutPassword } = newUser;
+    //     const { password: hiddenPassword, ...userWithoutPassword } = newUser
     //     if(newUser){
     //         //This is for a giant system like  AMAZON,..., we gonna use 'Crypto' for this
     //         // created privateKey, publicKey
@@ -124,11 +124,11 @@ class AuthService {
     static login = async ({ email, password }) => {
         // 1. Check email in the database
         const foundUser = await User.findOne({ email }).lean()
-        if (!foundUser) throw new BadRequestError("User not registered");
+        if (!foundUser) throw new BadRequestError("User not registered")
 
         // 2. Match password
-        const match = await bcrypt.compare(password, foundUser.password); // Await the bcrypt comparison
-        if (!match) throw new AuthFailureError("Authentication error");
+        const match = await bcrypt.compare(password, foundUser.password) // Await the bcrypt comparison
+        if (!match) throw new AuthFailureError("Authentication error")
 
         // 3. Exclude password from foundUser
 
@@ -140,7 +140,7 @@ class AuthService {
             process.env.JWT_SECRET
         )
         foundUser.accessToken = token
-        const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
+        const { password: hiddenPassword, ...userWithoutPassword } = foundUser
         return {
             code: 200,
             metadata: {
@@ -151,20 +151,20 @@ class AuthService {
 
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
-        const holderUser = await User.findOne({ email }).lean();
+        const holderUser = await User.findOne({ email }).lean()
         if (holderUser) {
-            throw new BadRequestError("Error: User already registered");
+            throw new BadRequestError("Error: User already registered")
         }
 
         // 2. Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         // 3. Check if there is an existing OTP record for the email
-        const oldOtp = await UserOTPVerification.findOne({ email }).lean();
-        if (oldOtp) await UserOTPVerification.deleteOne({ email });
+        const oldOtp = await UserOTPVerification.findOne({ email }).lean()
+        if (oldOtp) await UserOTPVerification.deleteOne({ email })
         
         // 4. Generate 6-digit OTP
-        const otp = crypto.randomInt(100000, 999999).toString();
+        const otp = crypto.randomInt(100000, 999999).toString()
 
         // 5. Save OTP in UserOTPVerification collection
         const otpVerification = new UserOTPVerification({
@@ -173,14 +173,14 @@ class AuthService {
             fullName,
             otp,
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
-        });
-        await otpVerification.save();
+        })
+        await otpVerification.save()
 
         // 6. Send OTP email
-        const subject = 'Your OTP Code';
-        const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`;
-        const verificationCode = otp;
-        await sendEmail(email, subject, subjectMessage, verificationCode);
+        const subject = 'Your OTP Code'
+        const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`
+        const verificationCode = otp
+        await sendEmail(email, subject, subjectMessage, verificationCode)
 
         return {
             code: 201,
@@ -188,19 +188,19 @@ class AuthService {
                 userId: otpVerification._id,
                 email: otpVerification.email
             }
-        };
+        }
     }
 
     static verifyOtp = async ({ email, otp }) => {
         // 1. Find the OTP in the database
-        const otpRecord = await UserOTPVerification.findOne({ email }).lean();
+        const otpRecord = await UserOTPVerification.findOne({ email }).lean()
         if (!otpRecord) {
-            throw new BadRequestError('OTP not found');
+            throw new BadRequestError('OTP not found')
         }
 
         // 2. Check if the OTP is expired
         if (otpRecord.expiredAt < new Date()) {
-            throw new BadRequestError('OTP has expired');
+            throw new BadRequestError('OTP has expired')
         }
 
         // 3. Check if the OTP is correct
@@ -214,7 +214,7 @@ class AuthService {
             email: otpRecord.email,
             password: otpRecord.password,
             role: 'member', // Use the string directly
-        });
+        })
 
         //Create qrCode
         const qrCode = await createUserQRCode(newUser._id.toString())
@@ -231,7 +231,7 @@ class AuthService {
                 email: newUser.email
             },
             process.env.JWT_SECRET
-        );
+        )
 
         newUser.accessToken = token
         await newUser.save()
@@ -242,59 +242,59 @@ class AuthService {
             metadata: {
                 user: userWithoutPassword
             }
-        };
+        }
     }
 
     static forgotPassword = async ({ email }) => {
         // 1. Find the user by email
-        const user = await User.findOne({ email }).lean();
+        const user = await User.findOne({ email }).lean()
         if (!user) {
-            throw new BadRequestError('User not found');
+            throw new BadRequestError('User not found')
         }
 
-        const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean();
-        if (oldOtp) await ForgotPasswordOTP.deleteOne({ email });
+        const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean()
+        if (oldOtp) await ForgotPasswordOTP.deleteOne({ email })
 
         // 2. Generate 6-digit OTP
-        const otp = crypto.randomInt(100000, 999999).toString();
+        const otp = crypto.randomInt(100000, 999999).toString()
 
         // 3. Send OTP email
-        const subject = 'Your OTP Code';
+        const subject = 'Your OTP Code'
         const subjectMessage = 'Mã xác thực đổi mật khẩu của bạn là: '
         const verificationCode = otp
-        await sendEmail(email, subject, subjectMessage, verificationCode);
+        await sendEmail(email, subject, subjectMessage, verificationCode)
 
         // 4. Save OTP in ForgotPasswordOTP collection
         const forgotPasswordOTP = new ForgotPasswordOTP({
             email,
             otp,
             expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
-        });
-        await forgotPasswordOTP.save();
+        })
+        await forgotPasswordOTP.save()
 
         return {
             code: 200,
             metadata: {
                 email
             }
-        };
+        }
     }
 
     static verifyResetPasswordOtp = async ({ email, otp }) => {
         //1. Find, check the OTP and user in the database
-        const otpRecord = await ForgotPasswordOTP.findOne({ email });
-        const user = await User.findOne({ email });
+        const otpRecord = await ForgotPasswordOTP.findOne({ email })
+        const user = await User.findOne({ email })
 
-        if (!otpRecord) throw new BadRequestError('OTP not found');
-        if (!user) throw new BadRequestError('User not found');
-        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired');
+        if (!otpRecord) throw new BadRequestError('OTP not found')
+        if (!user) throw new BadRequestError('User not found')
+        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired')
 
         //2. Check if the OTP is correct
-        if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP');
+        if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP')
 
         //3. Mark the otp is verified
-        otpRecord.isVerified = true;
-        otpRecord.save();
+        otpRecord.isVerified = true
+        otpRecord.save()
 
         return {
             otpRecord
@@ -352,7 +352,7 @@ class AuthService {
     //         keyStore.privateKey
     //     )
     //     //update token
-    //     await KeyTokenService.updateTokens(tokens, keyStore, refreshToken);
+    //     await KeyTokenService.updateTokens(tokens, keyStore, refreshToken)
     //     return {
     //         user,
     //         tokens
@@ -361,19 +361,19 @@ class AuthService {
     static grantAccess(action, resource) {
         return async (req, res, next) => {
             try {
-                const userInfo = await User.findById(req.userId).lean();
-                const userRole = userInfo.role;
-                const permission = role.can(userRole)[action](resource);
+                const userInfo = await User.findById(req.userId).lean()
+                const userRole = userInfo.role
+                const permission = role.can(userRole)[action](resource)
                 if (!permission.granted) {
                     return res.status(401).json({
                         error: "You don't have enough permission to perform this action",
-                    });
+                    })
                 }
-                next();
+                next()
             } catch (error) {
-                next(error);
+                next(error)
             }
-        };
+        }
     }
 
 }

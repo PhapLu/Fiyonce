@@ -1,5 +1,5 @@
-import AccountDashboardService from "../services/accountDashboard.service.js";
-import { SuccessResponse } from "../core/success.response.js";
+import AccountDashboardService from "../services/accountDashboard.service.js"
+import { SuccessResponse } from "../core/success.response.js"
 
 class AccountDashboardController{
     readAccountOverview = async(req, res, next) => {

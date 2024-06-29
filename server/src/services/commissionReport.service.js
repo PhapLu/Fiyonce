@@ -44,8 +44,8 @@ class CommissionReportService{
                 commissionReport
             }
         } catch (error) {
-            console.log('Error uploading images or saving order:', error);
-            throw new Error('File upload or database save failed');
+            console.log('Error uploading images or saving order:', error)
+            throw new Error('File upload or database save failed')
         }
     }
 
@@ -101,12 +101,12 @@ class CommissionReportService{
                 req.body.evidences = evidences
 
                 // Delete old files from Cloudinary
-                const publicIds = commissionReport.evidences.map(evidence => extractPublicIdFromUrl(evidence));
-                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+                const publicIds = commissionReport.evidences.map(evidence => extractPublicIdFromUrl(evidence))
+                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
             }
 
             // 3. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...commissionReport.toObject(), ...req.body };
+            const updatedFields = { ...commissionReport.toObject(), ...req.body }
 
             //5. Update commissionReport
             const updatedCommissionReport = await CommissionReport.findByIdAndUpdate(
@@ -132,11 +132,11 @@ class CommissionReportService{
         if(commissionReport.clientId.toString() !== userId) throw new AuthFailureError('You can only delete your commission report')
 
         // 2. Extract public IDs and delete files from Cloudinary
-        const publicIds = commissionReport.evidences.map(evidence => extractPublicIdFromUrl(evidence));
-        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)));
+        const publicIds = commissionReport.evidences.map(evidence => extractPublicIdFromUrl(evidence))
+        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
 
         // 3. Delete the commissionReport from the database
-        await commissionReport.deleteOne();
+        await commissionReport.deleteOne()
 
         return {
             message: 'Commission Report deleted successfully'

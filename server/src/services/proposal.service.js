@@ -49,7 +49,7 @@ class ProposalService{
 
         const showedProposal = await proposal.populate('orderId')
 
-        //sendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully');
+        //sendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully')
         return {
             proposal: showedProposal
         }
@@ -107,9 +107,9 @@ class ProposalService{
 
         //5. Send email to user
         // try {
-        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent');
+        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
 
         return {
@@ -188,9 +188,9 @@ class ProposalService{
 
         //5. Send email to talent
         // try {
-        //     await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client');
+        //     await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
 
         return {
@@ -226,9 +226,9 @@ class ProposalService{
 
         //5. Send email to talent
         // try {
-        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client');
+        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client')
         // } catch (error) {
-        //     throw new Error('Email service error');
+        //     throw new Error('Email service error')
         // }
 
         return {

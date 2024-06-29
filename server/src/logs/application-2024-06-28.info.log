@@ -1,0 +1,12 @@
+2024-06-28 16:23:29::info::/v1/api/commissionReport/createCommissionReport::67fd746a-43c7-403e-baeb-ef51deea572c::input-params ::POST::::{}
+2024-06-28 16:23:29::error::/v1/api/commissionReport/createCommissionReport::67fd746a-43c7-403e-baeb-ef51deea572c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-28 16:25:00::info::/v1/api/commissionReport/createCommissionReport::0e8767da-b15c-4592-a309-ba0fe45be098::input-params ::POST::::{}
+2024-06-28 16:25:22::info::/v1/api/commissionReport/createCommissionReport::ea1552eb-2ec4-49b2-ab6c-f10849b85862::input-params ::POST::::{}
+2024-06-28 16:28:30::info::/v1/api/commissionReport/updateCommissionReport/667e818423d4889ea2ab6c5e::04982b22-921b-46dc-93d8-1e7e9933d0cc::input-params ::PATCH::::{}
+2024-06-28 16:28:48::info::/v1/api/commissionReport/updateCommissionReport/667e818423d4889ea2ab6c5e::d9728765-78a3-4a4e-be6b-d1a2d806e0c0::input-params ::PATCH::::{}
+2024-06-28 16:29:23::info::/v1/api/commissionReport/updateCommissionReport/667e818423d4889ea2ab6c5e::900468ea-deed-41d6-974f-a370ffbbe36a::input-params ::PATCH::::{}
+2024-06-28 16:30:13::info::/v1/api/commissionReport/updateCommissionReport/667e816c23d4889ea2ab6c5b::76cf9c58-d0a8-437c-8254-55f6c1a861c4::input-params ::PATCH::::{}
+2024-06-28 16:31:49::info::/v1/api/commissionReport/readCommissionReports::47167d97-597b-4117-a2a9-55a492ace4fa::input-params ::GET::::{}
+2024-06-28 16:31:49::error::/v1/api/commissionReport/readCommissionReports::47167d97-597b-4117-a2a9-55a492ace4fa::401 - 2ms - Response: {"status":401,"now":1719567109780}::{"message":"User not authorized"}
+2024-06-28 16:32:03::info::/v1/api/commissionReport/readCommissionReport/667e816c23d4889ea2ab6c5b::8fd9eb45-95e1-4432-9945-91b31e011d4b::input-params ::GET::::{}
+2024-06-28 16:32:20::info::/v1/api/commissionReport/deleteCommissionReport/667e816c23d4889ea2ab6c5b::c773e9cc-3ed5-4549-b715-207a36b1ad19::input-params ::DELETE::::{}

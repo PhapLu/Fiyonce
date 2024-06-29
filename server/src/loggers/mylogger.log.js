@@ -1,7 +1,7 @@
-import winston, { format, createLogger, transports } from 'winston';
-const { combine, timestamp, json, align, printf } = winston.format;
-import 'winston-daily-rotate-file';
-import { v4 as uuidv4 } from 'uuid';
+import winston, { format, createLogger, transports } from 'winston'
+const { combine, timestamp, json, align, printf } = winston.format
+import 'winston-daily-rotate-file'
+import { v4 as uuidv4 } from 'uuid'
 // error, warning, info, debug, requestId(traceId)
 //1. Step 1 --> Request
 //2. Step 2 --> If error, log the error
@@ -10,9 +10,9 @@ class MyLogger {
     constructor() {
         const formatPrint = format.printf(
             ({ level, message, context, requestId, timestamp, metadata }) => {
-                return `${timestamp}::${level}::${context}::${requestId}::${message}::${JSON.stringify(metadata)}`;
+                return `${timestamp}::${level}::${context}::${requestId}::${message}::${JSON.stringify(metadata)}`
             }
-        );
+        )
 
         this.logger = createLogger({
             format: format.combine(
@@ -52,42 +52,42 @@ class MyLogger {
                 new transports.File({ dirname: 'src/logs', filename: 'exceptions.log' })
             ],
             exitOnError: false
-        });
+        })
     }
 
     commonParams(params) {
-        let context, req, metadata;
+        let context, req, metadata
         if (!Array.isArray(params)) {
-            context = params;
+            context = params
         } else {
-            [context, req, metadata] = params;
+            [context, req, metadata] = params
         }
 
-        const requestId = req?.requestId || uuidv4();
+        const requestId = req?.requestId || uuidv4()
         return {
             requestId,
             context,
             metadata
-        };
+        }
     }
 
     log(message, params) {
-        const paramsLog = this.commonParams(params);
+        const paramsLog = this.commonParams(params)
         const logObject = Object.assign({
             message
-        }, paramsLog);
+        }, paramsLog)
 
-        this.logger.info(logObject);
+        this.logger.info(logObject)
     }
 
     error(message, params) {
-        const paramsLog = this.commonParams(params);
+        const paramsLog = this.commonParams(params)
         const logObject = Object.assign({
             message
-        }, paramsLog);
+        }, paramsLog)
 
-        this.logger.error(logObject);
+        this.logger.error(logObject)
     }
 }
 
-export default new MyLogger();
+export default new MyLogger()

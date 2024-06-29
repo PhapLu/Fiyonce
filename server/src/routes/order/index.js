@@ -1,9 +1,9 @@
-import express from "express";
-import { asyncHandler } from "../../auth/checkAuth.js";
-import { authenticationV2 } from "../../auth/authUtils.js";
-import orderController from "../../controllers/order.controller.js";
-import { verifyToken } from "../../middlewares/jwt.js";
-import { uploadFields } from "../../configs/multer.config.js";
+import express from "express"
+import { asyncHandler } from "../../auth/checkAuth.js"
+import { authenticationV2 } from "../../auth/authUtils.js"
+import orderController from "../../controllers/order.controller.js"
+import { verifyToken } from "../../middlewares/jwt.js"
+import { uploadFields } from "../../configs/multer.config.js"
 
 const router = express.Router()
 

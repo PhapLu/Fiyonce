@@ -1,14 +1,14 @@
-import sharp from 'sharp';
-import stream from 'stream';
-import { v2 as cloudinary } from 'cloudinary';
+import sharp from 'sharp'
+import stream from 'stream'
+import { v2 as cloudinary, v2 } from 'cloudinary'
 
 export const compressAndUploadImage = async ({ buffer, originalname, folderName, width, height }) => {
   try {
     // Compress the image using sharp with specified width and height
     const compressedBuffer = await sharp(buffer)
       .resize(width, height, { fit: 'inside' }) // Resize to fit within the specified dimensions
-      .jpeg({ quality: 80 }) // Compress to JPEG with 90% quality
-      .toBuffer();
+      .jpeg({ quality: 80 }) // Compress to JPEG with 80% quality
+      .toBuffer()
 
     // Function to upload image to Cloudinary
     const streamUpload = async (buffer) => {
@@ -19,65 +19,72 @@ export const compressAndUploadImage = async ({ buffer, originalname, folderName,
           folder: folderName,
         }, (error, result) => {
           if (error) {
-            reject(error);
+            reject(error)
           } else {
-            resolve(result);
+            resolve(result)
           }
-        });
+        })
 
-        const bufferStream = new stream.PassThrough();
-        bufferStream.end(buffer);
-        bufferStream.pipe(uploadStream);
-      });
-    };
+        const bufferStream = new stream.PassThrough()
+        bufferStream.end(buffer)
+        bufferStream.pipe(uploadStream)
+      })
+    }
 
-    return await streamUpload(compressedBuffer);
+    return await streamUpload(compressedBuffer)
   } catch (error) {
-    console.error('Error in compressAndUploadImage:', error);
-    throw error;
+    console.error('Error in compressAndUploadImage:', error)
+    throw error
   }
-};
+}
 
 export const extractPublicIdFromUrl = (url) => {
-  const urlObj = new URL(url);
-  const pathParts = urlObj.pathname.split('/');
-  const versionIndex = pathParts.findIndex(part => part.startsWith('v'));
-  const publicIdParts = pathParts.slice(versionIndex + 1).join('/').split('.');
-  publicIdParts.pop(); // Remove the file extension
-  return decodeURIComponent(publicIdParts.join('.'));
-};
+  const urlObj = new URL(url)
+  const pathParts = urlObj.pathname.split('/')
+  const versionIndex = pathParts.findIndex(part => part.startsWith('v'))
+  const publicIdParts = pathParts.slice(versionIndex + 1).join('/').split('.')
+  publicIdParts.pop() // Remove the file extension
+  return decodeURIComponent(publicIdParts.join('.'))
+}
 
 export const deleteFileByPublicId = async (publicId) => {
   try {
-    const result = await cloudinary.uploader.destroy(publicId);
-    return result;
+    const result = await cloudinary.uploader.destroy(publicId)
+    return result
   } catch (error) {
-    console.error('Error deleting from Cloudinary:', error);
-    throw error;
+    console.error('Error deleting from Cloudinary:', error)
+    throw error
   }
-};
+}
 
+export const generateSignedUrl = async (publicId, options) => {
+  return v2.url(publicId, {
+    sign_url: true,
+    secure: true,
+    ...options
+  })
+}
+//const signedUrl = generateSignedUrl(movement.thumbnail, { expires_at: Math.floor(Date.now() / 1000) + 3600 })
 
 export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
   const defaultTransformations = {
     quality: 'auto',
     fetch_format: 'auto',
     ...transformations
-  };
+  }
 
   // Format transformations correctly
   const transformationString = Object.entries(defaultTransformations)
     .map(([key, value]) => `${key}_${value}`)
-    .join(',');
+    .join(',')
 
   // Generate the URL
-  const optimizedUrl = cloudinary.url(publicId, { transformation: transformationString });
-
+  const optimizedUrl = cloudinary.url(publicId, { transformation: transformationString })
   // Debugging log
-  console.log('Generated Optimized URL:', optimizedUrl);
+  console.log('Generated Optimized URL:', optimizedUrl)
 
-  return optimizedUrl;
-};
+  return optimizedUrl
+}
 
 
 

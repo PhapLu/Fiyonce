@@ -355,4 +355,4 @@ const statusCodes = {
      */
     NETWORK_AUTHENTICATION_REQUIRED : 511
 }
-export default statusCodes;
+export default statusCodes
