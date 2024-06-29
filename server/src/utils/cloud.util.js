@@ -57,8 +57,6 @@ export const deleteFileByPublicId = async (publicId) => {
   }
 }
 
-
-
 export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
   const defaultTransformations = {
     quality: 'auto',
