@@ -33,6 +33,13 @@ class UserController {
             metadata: await UserService.addToBookmark(req.userId, req.params.artworkId)
         }).send(res)
     }
+
+    followUser = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Follow user success!',
+            metadata: await UserService.followUser(req.userId, req.params.profileId)
+        }).send(res)
+    }
     
     me = async(req, res, next) => {
         if(!req.cookies.accessToken) throw new BadRequestError('Access token missing', 403)

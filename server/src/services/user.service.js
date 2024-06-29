@@ -75,6 +75,25 @@ class UserService{
         }
     }
 
+    static followUser = async(userId, followId) => {
+        //1. Check user and follow
+        const currentUser = await User.findById(userId)
+        const followUser = await User.findById(followId)
+        if(!currentUser) throw new NotFoundError('User not found')
+        if(!followUser) throw new NotFoundError('User not found')
+        if(currentUser.following.includes(followId)) throw new BadRequestError('You already follow this user')
+
+        //2. Follow user
+        currentUser.following.push(followId)
+        followUser.followers.push(userId)
+        await currentUser.save()
+        await followUser.save()
+
+        return {
+            user: currentUser
+        }
+    }
+
     static me = async(accessToken) => {
         //1. Decode accessToken and check
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET)
