@@ -42,6 +42,14 @@ class SocketServices {
                 talentRequest,
             })
         })
+
+        socket.on("sendNotification", ({ senderId, receiverId, notification }) => {
+            const user = getUser(receiverId)
+            global._io.to(user?.socketId).emit("getNotification", {
+                senderId,
+                notification,
+            })
+        })
     }
 }
 

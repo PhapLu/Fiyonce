@@ -17,10 +17,10 @@ class OrderController{
         }).send(res)
     }
 
-    readIndirectApprovedOrders = async(req, res, next) =>{
+    readOrders = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders',
-            metadata: await OrderService.readIndirectApprovedOrders() 
+            metadata: await OrderService.readOrders(req) 
         }).send(res)
     }
 

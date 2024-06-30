@@ -46,9 +46,9 @@
             "hash": "033433642fbe43fe5a5aace0367de740a23860786ac4c55647300be9fa33810e"
         },
         {
-            "date": 1719731923736,
+            "date": 1719732487345,
             "name": "src\\logs\\application-2024-06-30.error.log",
-            "hash": "d0b502465b9b1521606937a025d505435a44ebb6d4bcb1a40754cfc7d5b0d6a2"
+            "hash": "8959c1ad09d7f027aba9076fd8109993924694a998e3896ebd707f761284ca7b"
         }
     ],
     "hashType": "sha256"
