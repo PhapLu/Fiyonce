@@ -17,7 +17,7 @@ class OrderController{
         }).send(res)
     }
 
-    readIOrders = async(req, res, next) =>{
+    readOrders = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders',
             metadata: await OrderService.readOrders(req) 

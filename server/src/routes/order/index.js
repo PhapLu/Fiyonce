@@ -8,7 +8,7 @@ import { uploadFields } from "../../configs/multer.config.js"
 const router = express.Router()
 
 router.get('/readOrder/:orderId', asyncHandler(orderController.readOrder))
-router.get('/readIndirectApprovedOrders', asyncHandler(orderController.readIndirectApprovedOrders))
+router.get('/readOrders', asyncHandler(orderController.readOrders))
 
 //authentication
 router.use(verifyToken)
