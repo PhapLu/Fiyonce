@@ -10,18 +10,21 @@ export default function CommissionMarket() {
     const [inputs, setInputs] = useState({});
     const [showCreateOrderForm, setShowCreateOrderForm] = useState(false);
 
-    const fetchIndirectOrders = async () => {
+    const fetchIndirectOrders = async (params) => {
         try {
-            const response = await apiUtils.get(`/order/readOrders`);
-            return response.data.metadata.commissionService;
+            const queryString = new URLSearchParams(params).toString();
+            const response = await apiUtils.get(`/order/readOrders?${queryString}`);
+            console.log(response);
+            return response.data.metadata.orders;
         } catch (error) {
             return null;
         }
     }
 
+    const queryParameters = { isDirect: true };
     const { data: indirectOrders, error, isError, isLoading } = useQuery(
         ['fetchIndirectOrders'],
-        fetchIndirectOrders,
+        () => fetchIndirectOrders(queryParameters),
         {
             onSuccess: (data) => {
                 console.log(data);

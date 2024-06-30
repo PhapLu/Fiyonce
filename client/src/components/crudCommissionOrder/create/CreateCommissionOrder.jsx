@@ -26,7 +26,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         fileTypes: [],
-        inputs: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
+        title: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
     });
     const { userId: talentChosenId } = useParams();
 
@@ -166,11 +166,11 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         }
 
         if (isDirect) {
-            inputs.type = "direct";
+            inputs.isDirect = true;
             inputs.talentChosenId = talentChosenId;
             inputs.commissionServiceId = commissionService._id;
         } else {
-            inputs.type = "direct";
+            inputs.isDirect = false;
         }
         console.log(inputs)
         const fd = createFormData(inputs, "files", references);
