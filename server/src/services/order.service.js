@@ -85,7 +85,7 @@ class OrderService{
 
         //1. Get all orders
         const orders = await Order.find(filters)
-            .populate('talentChosenId', 'stageName avatar')
+            .populate('talentChosenId', 'fullName avatar')
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {
             const talentsApprovedCount = await Proposal.find({ orderId: order._id, status: 'approved' }).countDocuments()

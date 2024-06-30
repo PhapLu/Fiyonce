@@ -1,3 +1,8 @@
 2024-06-30 14:31:37::info::/v1/api/order/createOrder::5e7176d3-9287-4e28-8157-286c91578feb::input-params ::POST::::{}
 2024-06-30 14:32:12::info::/v1/api/order/readIndirectApprovedOrders::38472e61-b6ec-4e38-9582-9a78714ca177::input-params ::GET::::{"isDirect":"'true'"}
 2024-06-30 14:32:12::error::/v1/api/order/readIndirectApprovedOrders::38472e61-b6ec-4e38-9582-9a78714ca177::undefined - NaNms - Response: {}::{"message":"fn is not a function"}
+2024-06-30 14:33:18::info::/v1/api/order/readIndirectApprovedOrders::d3362762-fef4-4a97-b22a-b6cb540ae8eb::input-params ::GET::::{"isDirect":"'true'"}
+2024-06-30 14:33:18::error::/v1/api/order/readIndirectApprovedOrders::d3362762-fef4-4a97-b22a-b6cb540ae8eb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-06-30 14:33:27::info::/v1/api/order/readOrders::4b8b0695-e3cd-4258-926e-d2adf35f7516::input-params ::GET::::{"isDirect":"'true'"}
+2024-06-30 14:33:27::error::/v1/api/order/readOrders::4b8b0695-e3cd-4258-926e-d2adf35f7516::undefined - NaNms - Response: {"stringValue":"\"'true'\"","valueType":"string","kind":"Boolean","value":"'true'","path":"isDirect","reason":{"stringValue":"\"'true'\"","valueType":"string","kind":"boolean","value":"'true'","name":"CastError","message":"Cast to boolean failed for value \"'true'\" (type string) at path \"undefined\""},"name":"CastError","message":"Cast to Boolean failed for value \"'true'\" (type string) at path \"isDirect\" for model \"Order\""}::{"message":"Cast to Boolean failed for value \"'true'\" (type string) at path \"isDirect\" for model \"Order\""}
+2024-06-30 14:33:59::info::/v1/api/order/readOrders::617d0dd5-b8c7-4c8a-8746-177162a35865::input-params ::GET::::{"isDirect":"true"}
