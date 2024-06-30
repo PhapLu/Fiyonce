@@ -57,25 +57,56 @@ export const deleteFileByPublicId = async (publicId) => {
   }
 }
 
+// export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
+//   const defaultTransformations = {
+//     quality: 'auto',
+//     fetch_format: 'auto',
+//     ...transformations
+//   }
+
+//   // Format transformations correctly
+//   const transformationString = Object.entries(defaultTransformations)
+//     .map(([key, value]) => `${key}_${value}`)
+//     .join(',')
+
+//   // Generate the URL
+//   const optimizedUrl = cloudinary.url(publicId, { transformation: transformationString })
+//   // Debugging log
+//   console.log('Generated Optimized URL:', optimizedUrl)
+
+//   return optimizedUrl
+// }
+
+export const generateSignedUrl = async (publicId, options = {}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const url = cloudinary.url(publicId, {
+        sign_url: true,
+        secure: true,
+        ...options
+      });
+      resolve(url);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
   const defaultTransformations = {
     quality: 'auto',
     fetch_format: 'auto',
     ...transformations
-  }
+  };
 
-  // Format transformations correctly
-  const transformationString = Object.entries(defaultTransformations)
-    .map(([key, value]) => `${key}_${value}`)
-    .join(',')
+  // Generate the URL with transformations
+  const optimizedUrl = cloudinary.url(publicId, { transformation: [defaultTransformations] });
 
-  // Generate the URL
-  const optimizedUrl = cloudinary.url(publicId, { transformation: transformationString })
   // Debugging log
-  console.log('Generated Optimized URL:', optimizedUrl)
+  console.log('Generated Optimized URL:', optimizedUrl);
 
-  return optimizedUrl
-}
+  return optimizedUrl;
+};
 
 
 

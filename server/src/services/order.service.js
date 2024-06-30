@@ -11,14 +11,14 @@ class OrderService{
     static createOrder = async(userId, req) => {
         //1. Get type and talentChosenId
         const body = req.body
-        const {type, talentChosenId, commissionServiceId} = body
+        const {isDirect, talentChosenId, commissionServiceId} = body
 
-        //2. Check type of order
-        if(type == 'inDirect'){
+        //2. Check isDirect of order
+        if(!isDirect){
             //inDirect order
             body.isDirect = false
             body.talentChosenId = null
-        }else if(type == 'direct'){
+        }else if(isDirect){
             //direct order
             const talent = await User.findById(talentChosenId)
             const service = await commissionService.findById(commissionServiceId)
@@ -77,9 +77,14 @@ class OrderService{
     }
     
     //Client read approved indirect orders in commission market
-    static readIndirectApprovedOrders = async() => {
+    static readOrders = async(req) => {
+        const q = req.query
+        const filters = {
+            ...(q.isDirect && { isDirect: q.isDirect}),
+        }
+
         //1. Get all orders
-        const orders = await Order.find({ isDirect: false })
+        const orders = await Order.find(filters)
             .populate('talentChosenId', 'stageName avatar')
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(orders.map(async (order) => {

@@ -14,3 +14,5 @@
 2024-06-29 09:08:38::info::/v1/api/movement/readMovements::8eb15ac5-6134-4c3a-86ca-20573f323dba::input-params ::GET::::{}
 2024-06-29 09:11:49::info::/v1/api/movement/readMovements::81dff0e1-05c7-4fb4-9cf5-dba3b4d403cc::input-params ::GET::::{}
 2024-06-29 09:14:40::info::/v1/api/movement/readMovements::8caff207-bb58-4494-8e74-e8293f4e7eab::input-params ::GET::::{}
+2024-06-29 20:44:40::info::/v1/api/auth/users/login::acb7ff9a-4e28-421f-9a02-90de8f132b92::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-06-29 20:45:33::info::/v1/api/user/followUser/6660179bd3737cbcac3bc903::b3c5fe8d-f834-4104-85f9-5d492187a0f7::input-params ::PATCH::::{}
