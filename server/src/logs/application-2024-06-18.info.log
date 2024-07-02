@@ -1,9 +1,0 @@
-2024-06-18 15:08:18::info::/v1/api/order/createOrder::b1e21f54-6be2-41fc-adf5-ff497d786f3d::input-params ::POST::::{"title":"Finding artist part 2","description":"Give brief request to market","type":"direct","maxPrice":100,"minPrice":5,"talentChosenId":"66601810d3737cbcac3bc91e"}
-2024-06-18 15:08:18::error::/v1/api/order/createOrder::b1e21f54-6be2-41fc-adf5-ff497d786f3d::403 - 0ms - Response: {"status":403,"now":1718698098559}::{"message":"Service not found!"}
-2024-06-18 15:10:26::info::/v1/api/auth/users/logout::fd87bd14-6f6f-4c76-a94d-937f37912091::input-params ::POST::::{}
-2024-06-18 15:10:39::info::/v1/api/order/createOrder::52ac705f-ead6-4954-a77b-d2f4eed4ec77::input-params ::POST::::{"title":"Finding artist part 2","description":"Give brief request to market","type":"direct","maxPrice":100,"minPrice":5,"talentChosenId":"66601810d3737cbcac3bc91e"}
-2024-06-18 15:10:39::error::/v1/api/order/createOrder::52ac705f-ead6-4954-a77b-d2f4eed4ec77::401 - 0ms - Response: {"status":401,"now":1718698239309}::{"message":"You are not authenticated!"}
-2024-06-18 15:10:46::info::/v1/api/auth/users/login::bd37e502-da01-4bad-880b-2464a43e448d::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
-2024-06-18 15:11:08::info::/v1/api/auth/users/login::26bc80d2-a760-4c1f-a3aa-d479fb5ce9a2::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
-2024-06-18 15:11:26::info::/v1/api/order/createOrder::81a46cd8-160e-43ee-9838-e7b0df1cceb2::input-params ::POST::::{"title":"Finding artist part 2","description":"Give brief request to market","type":"direct","maxPrice":100,"minPrice":5,"talentChosenId":"66601810d3737cbcac3bc91e"}
-2024-06-18 15:11:26::error::/v1/api/order/createOrder::81a46cd8-160e-43ee-9838-e7b0df1cceb2::403 - 0ms - Response: {"status":403,"now":1718698286038}::{"message":"Service not found!"}

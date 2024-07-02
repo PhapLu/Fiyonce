@@ -12,6 +12,7 @@ import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
 import { findByEmail} from '../utils/index.js'
 import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js"
 import { createUserQRCode } from "../utils/qrcode.util.js"
+import sendEmailSES from '../utils/email.util.js'
 
 class AuthService {
     /*

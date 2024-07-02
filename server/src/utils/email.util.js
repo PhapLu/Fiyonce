@@ -1,34 +1,23 @@
-import dotenv from 'dotenv'
-dotenv.config()
-import nodemailer from 'nodemailer'
-import {google} from 'googleapis'
+import dotenv from 'dotenv';
+dotenv.config();
+import nodemailer from 'nodemailer';
 
-const CLIENT_ID = process.env.CLIENT_ID
-const CLIENT_SECRET = process.env.CLIENT_SECRET
-const REDIRECT_URL = process.env.REDIRECT_URL
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN
-
-const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
-oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
-
-async function sendEmail(to, subject, subjectMessage, verificationCode) {
+async function sendEmailSES(to, subject, subjectMessage, verificationCode) {
     const toEmail = to.replace('@gmail.com', '')
     try {
-        const accessToken = await oAuth2Client.getAccessToken()
-        // Create a transporter using
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                type: 'OAuth2',
-                user: 'phapluudev2k5@gmail.com',
-                clientId: CLIENT_ID,
-                clientSecret: CLIENT_SECRET,
-                refreshToken: REFRESH_TOKEN,
-                accessToken: accessToken
-            }
-        })
-        //Define the html form of the email
-        const htmlContent = `
+    // Create a Nodemailer transporter using SMTP
+    const transporter = nodemailer.createTransport({
+      host: 'email-smtp.ap-southeast-1.amazonaws.com',
+      port: 587,
+      secure: false, // use SSL
+      auth: {
+        user: process.env.SMTP_USERNAME, // your Gmail username
+        pass: process.env.SMTP_PASSWORD  // your Gmail password
+      }
+    });
+
+    // Define the HTML content of the email
+    const htmlContent = `
         <!DOCTYPE html>
         <html>
         <head>
@@ -131,19 +120,20 @@ async function sendEmail(to, subject, subjectMessage, verificationCode) {
         </html>
         `;
 
-        // Define the email options
-        const mailOptions = {
-            from: '"Fiyonce" <phapluudev2k5@gmail.com>',
-            to,
-            subject,
-            html: htmlContent
-        }
-        // Send the email
-        const info = await transporter.sendMail(mailOptions)
-        console.log('Email sent: ', info.messageId)
-    } catch (error) {
-        console.error('Error sending email:', error)
-    }
+    // Define the email options
+    const mailOptions = {
+      from: '"Your Name" <phapluudev2k5@gmail.com>',
+      to,
+      subject,
+      html: htmlContent
+    };
+
+    // Send the email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent:', info.messageId);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
 }
 
-export default sendEmail
+export default sendEmailSES;
