@@ -18,13 +18,13 @@ router.get('/readHelpArticles', asyncHandler(helpController.readHelpArticles))
 router.use(verifyToken)
 
 //admin
-router.post('/createHelpTheme', uploadFields, accessService.grantAccess('createAny', 'profile'), asyncHandler(helpController.createHelpTheme))
-router.post('/createHelpTopic', uploadFields, accessService.grantAccess('createAny', 'profile'), asyncHandler(helpController.createHelpTopic))
-router.post('/createHelpArticle', uploadFields, accessService.grantAccess('createAny', 'profile'), asyncHandler(helpController.createHelpArticle))
+router.post('/createHelpTheme', accessService.grantAccess('createAny', 'profile'), asyncHandler(helpController.createHelpTheme))
+router.post('/createHelpTopic', accessService.grantAccess('createAny', 'profile'), asyncHandler(helpController.createHelpTopic))
+router.post('/createHelpArticle', accessService.grantAccess('createAny', 'profile'), asyncHandler(helpController.createHelpArticle))
 
-router.patch('/updateHelpTheme/:helpThemeId', uploadFields, accessService.grantAccess('updateAny', 'profile'), asyncHandler(helpController.updateHelpTheme))
-router.patch('/updateHelpTopic/:helpTopicId', uploadFields, accessService.grantAccess('updateAny', 'profile'), asyncHandler(helpController.updateHelpTopic))
-router.patch('/updateHelpArticle/:helpArticleId', uploadFields, accessService.grantAccess('updateAny', 'profile'), asyncHandler(helpController.updateHelpArticle))
+router.patch('/updateHelpTheme/:helpThemeId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(helpController.updateHelpTheme))
+router.patch('/updateHelpTopic/:helpTopicId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(helpController.updateHelpTopic))
+router.patch('/updateHelpArticle/:helpArticleId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(helpController.updateHelpArticle))
 
 router.delete('/deleteHelpTheme/:helpThemeId', accessService.grantAccess('deleteAny', 'profile'), asyncHandler(helpController.deleteHelpTheme))
 router.delete('/deleteHelpTopic/:helpTopicId', accessService.grantAccess('deleteAny', 'profile'), asyncHandler(helpController.deleteHelpTopic))

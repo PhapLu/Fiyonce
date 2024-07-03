@@ -1,0 +1,15 @@
+2024-07-03 20:54:11::info::/v1/api/auth/users/login::0913c23c-32c5-4e1f-b4cb-b0bde056d38d::input-params ::POST::::{"email":"phapluu2k5dev@gmail.com","password":"123456789"}
+2024-07-03 20:54:11::error::/v1/api/auth/users/login::0913c23c-32c5-4e1f-b4cb-b0bde056d38d::403 - 1ms - Response: {"status":403,"now":1720014851978}::{"message":"User not registered"}
+2024-07-03 20:54:21::info::/v1/api/auth/users/login::2be13379-fe1c-4626-b22f-568520f01d14::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-07-03 20:55:04::info::/v1/api/help/createHelpTheme::d1887354-69f1-48b6-bb6b-feebb786e452::input-params ::POST::::{"title":"For Artist"}
+2024-07-03 20:55:13::info::/v1/api/help/createHelpTheme::c0083058-b674-48b1-8de6-e8d69304ce5d::input-params ::POST::::{"title":"For Clients"}
+2024-07-03 20:55:19::info::/v1/api/help/createHelpTheme::1c823d32-558c-4bc2-aa81-0337bc4277f9::input-params ::POST::::{"title":"For Applicants"}
+2024-07-03 20:55:27::info::/v1/api/help/createHelpTheme::bf95e38c-e6b6-4383-828a-69509da8c852::input-params ::POST::::{"title":"General"}
+2024-07-03 20:57:47::info::/v1/api/help/createHelpTopic::335887f2-cd4e-496e-ae2d-9817396b945e::input-params ::POST::::{"title":"Getting Started","helpThemeId":"668558381fffae7543ee9740"}
+2024-07-03 20:58:06::info::/v1/api/help/createHelpTopic::4e155f50-ac7c-42ec-84e5-d141fc6b8cb3::input-params ::POST::::{"title":"Update Portfolio","helpThemeId":"668558381fffae7543ee9740"}
+2024-07-03 20:58:12::info::/v1/api/help/createHelpTopic::7fbac28f-7ef9-4164-af9a-6e65ec5f2825::input-params ::POST::::{"title":"Update Portfolio","helpThemeId":"668558381fffae7543ee9749"}
+2024-07-03 20:59:08::info::/v1/api/help/createHelpTopic::ff35ff12-d8a2-4e27-83ee-affffcb4a396::input-params ::POST::::{"title":"Update Portfolio","helpThemeId":"668558381fffae7543ee9749"}
+2024-07-03 20:59:08::error::/v1/api/help/createHelpTopic::ff35ff12-d8a2-4e27-83ee-affffcb4a396::403 - 1ms - Response: {"status":403,"now":1720015148336}::{"message":"Help theme not found"}
+2024-07-03 21:01:38::info::/v1/api/help/createHelpTopic::e31eaf1d-cef2-4a50-9251-6b59b484a02c::input-params ::POST::::{"title":"How to get client attraction","helpThemeId":"668558381fffae7543ee974"}
+2024-07-03 21:01:38::error::/v1/api/help/createHelpTopic::e31eaf1d-cef2-4a50-9251-6b59b484a02c::undefined - NaNms - Response: {"stringValue":"\"668558381fffae7543ee974\"","valueType":"string","kind":"ObjectId","value":"668558381fffae7543ee974","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"668558381fffae7543ee974\" (type string) at path \"_id\" for model \"HelpTheme\""}::{"message":"Cast to ObjectId failed for value \"668558381fffae7543ee974\" (type string) at path \"_id\" for model \"HelpTheme\""}
+2024-07-03 21:01:46::info::/v1/api/help/createHelpTopic::a47c23ae-3ec7-4d08-86c4-9e1c76072437::input-params ::POST::::{"title":"How to get client attraction","helpThemeId":"668558381fffae7543ee9740"}

@@ -11,7 +11,10 @@ class HelpService{
         if(!admin) throw new AuthFailureError('Admin not found')
         if(admin.role !== 'admin') throw new AuthFailureError('You are not an admin')
 
-        //2. Create help theme
+        //2. Validate the body
+        if(body.title === '') throw new BadRequestError('Title cannot be empty')
+
+        //3. Create help theme
         const helpTheme = await HelpTheme.create(body)
 
         return {
@@ -25,7 +28,13 @@ class HelpService{
         if(!admin) throw new AuthFailureError('Admin not found')
         if(admin.role !== 'admin') throw new AuthFailureError('You are not an admin')
 
-        //2. Create help topic
+        //2. Validate the body
+        const { helpThemeId } = body
+        const helpTheme = await HelpTheme.findById(helpThemeId)
+        if(body.title === '') throw new BadRequestError('Title cannot be empty')
+        if(!helpTheme) throw new BadRequestError('Help theme not found')
+
+        //3. Create help topic
         const helpTopic = await HelpTopic.create(body)
 
         return {
@@ -39,7 +48,13 @@ class HelpService{
         if(!admin) throw new AuthFailureError('Admin not found')
         if(admin.role !== 'admin') throw new AuthFailureError('You are not an admin')
 
-        //2. Create help article
+        //2. Validate the body
+        const { helpTopicId } = body
+        const helpTopic = await HelpTopic.findById(helpTopicId)
+        if(body.title === '') throw new BadRequestError('Title cannot be empty')
+        if(!helpTopic) throw new BadRequestError('Help topic not found')
+
+        //3. Create help article
         const helpArticle = await HelpArticle.create(body)
 
         return {
@@ -113,6 +128,9 @@ class HelpService{
         if(!helpTheme) throw new NotFoundError('Help theme not found')
         if(admin.role !== 'admin') throw new AuthFailureError('You are not an admin')
 
+        //2. Validate the body
+        if(body.title === '') throw new BadRequestError('Title cannot be empty')
+
         //3. Update help theme
         const updatedHelpTheme = await HelpTheme.findByIdAndUpdate
         (helpThemeId, body, {new: true, runValidators: true})
@@ -131,6 +149,12 @@ class HelpService{
         if(!helpTopic) throw new NotFoundError('Help topic not found')
         if(admin.role !== 'admin') throw new AuthFailureError('You are not an admin')
 
+        //2. Validate the body
+        if(body.title === '') throw new BadRequestError('Title cannot be empty')
+        const { helpThemeId } = body
+        const helpTheme = await HelpTheme.findById(helpThemeId)
+        if(!helpTheme) throw new BadRequestError('Help theme not found')
+
         //3. Update help topic
         const updatedHelpTopic = await HelpTopic.findByIdAndUpdate
         (helpTopicId, body, {new: true, runValidators: true})
@@ -148,6 +172,12 @@ class HelpService{
         if(!admin) throw new AuthFailureError('Admin not found')
         if(!helpArticle) throw new NotFoundError('Help article not found')
         if(admin.role !== 'admin') throw new AuthFailureError('You are not an admin')
+
+        //2. Validate the body
+        if(body.title === '') throw new BadRequestError('Title cannot be empty')
+        const { helpTopicId } = body
+        const helpTopic = await HelpTopic.findById(helpTopicId)
+        if(!helpTopic) throw new BadRequestError('Help topic not found')
 
         //3. Update help article
         const updatedHelpArticle = await HelpArticle.findByIdAndUpdate

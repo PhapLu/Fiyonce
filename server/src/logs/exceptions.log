@@ -268,3 +268,7 @@ ReferenceError: uploadFields is not defined
 ReferenceError: uploadFields is not defined
     at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 20:51:35::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
