@@ -6,9 +6,9 @@ import helpController from '../../controllers/help.controller.js'
 
 const router = express.Router()
 
-router.get('/readHelpTheme', asyncHandler(helpController.readHelpTheme))
-router.get('/readHelpTopic', asyncHandler(helpController.readHelpTopic))
-router.get('/readHelpArticle', asyncHandler(helpController.readHelpArticle))
+router.get('/readHelpTheme/:helpThemeId', asyncHandler(helpController.readHelpTheme))
+router.get('/readHelpTopic/:helpTopicId', asyncHandler(helpController.readHelpTopic))
+router.get('/readHelpArticle/:helpArticleId', asyncHandler(helpController.readHelpArticle))
 
 router.get('/readHelpThemes', asyncHandler(helpController.readHelpThemes))
 router.get('/readHelpTopics', asyncHandler(helpController.readHelpTopics))

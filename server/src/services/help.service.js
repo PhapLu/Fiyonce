@@ -151,9 +151,6 @@ class HelpService{
 
         //2. Validate the body
         if(body.title === '') throw new BadRequestError('Title cannot be empty')
-        const { helpThemeId } = body
-        const helpTheme = await HelpTheme.findById(helpThemeId)
-        if(!helpTheme) throw new BadRequestError('Help theme not found')
 
         //3. Update help topic
         const updatedHelpTopic = await HelpTopic.findByIdAndUpdate
@@ -175,9 +172,7 @@ class HelpService{
 
         //2. Validate the body
         if(body.title === '') throw new BadRequestError('Title cannot be empty')
-        const { helpTopicId } = body
-        const helpTopic = await HelpTopic.findById(helpTopicId)
-        if(!helpTopic) throw new BadRequestError('Help topic not found')
+        if(body.content === '') throw new BadRequestError('Content cannot be empty')
 
         //3. Update help article
         const updatedHelpArticle = await HelpArticle.findByIdAndUpdate
