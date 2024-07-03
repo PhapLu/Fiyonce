@@ -160,3 +160,111 @@ TypeError: Cannot read properties of undefined (reading 'url')
     at MovementService.readMovements (file:///D:/Adam/OnisonProject/server/src/services/movement.service.js:77:47)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async readMovements (file:///D:/Adam/OnisonProject/server/src/controllers/movement.controller.js:15:23)::undefined
+2024-07-03 11:27:36::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:29:50::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:30:44::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:31:39::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:32:52::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:36:29::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:38:00::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:39:07::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:39:57::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:40:09::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:43:41::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:44:17::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:44:32::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:45:27::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:45:55::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:46:56::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:47:50::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:48:27::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:48:39::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:48:47::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:48:51::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:49:06::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:50:11::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:54:16::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:55:57::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:56:50::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-03 11:57:13::error::undefined::undefined::uncaughtException: uploadFields is not defined
+ReferenceError: uploadFields is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

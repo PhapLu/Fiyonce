@@ -43,7 +43,7 @@ const OrderSchema = new mongoose.Schema({
     purpose: { type: String, enum: ['personal', 'commercial'] },
     isPrivate: { type: Boolean },
     deadline: { type: Date},
-    fileFormats: [{ type: String }],
+    fileFormats: { type: [String], default: [] },
     review: {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         rating: { type: Number},

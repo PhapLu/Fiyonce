@@ -1,7 +1,7 @@
 import Order from "../models/order.model.js"
 import Artwork from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
-import commissionService from "../models/commissionService.model.js"
+import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js"
@@ -12,13 +12,10 @@ class OrderService{
         //1. Get type and talentChosenId
         const body = req.body
         const {isDirect, talentChosenId, commissionServiceId} = body
+        const commissionService = await CommissionService.findById(commissionServiceId)
 
         //2. Check isDirect of order
-        if(!isDirect){
-            //inDirect order
-            body.isDirect = false
-            body.talentChosenId = null
-        }else if(isDirect){
+        if(isDirect = true){
             //direct order
             const talent = await User.findById(talentChosenId)
             const service = await commissionService.findById(commissionServiceId)
@@ -29,9 +26,12 @@ class OrderService{
             if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true
             body.talentChosenId = talentChosenId
+            body.minPrice = commissionService.minPrice
             body.commissionServiceId = commissionServiceId
         }else{
-            throw new BadRequestError('Type must be direct or inDirect!')
+            //inDirect order
+            body.isDirect = false
+            body.talentChosenId = null
         }
         
         //3. Upload req.files.files to cloudinary

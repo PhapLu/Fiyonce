@@ -1,6 +1,7 @@
 import express from 'express'
 import authRoute from './auth/index.js'
 import userRoute from './user/index.js'
+import helpRoute from './help/index.js'
 import orderRoute from './order/index.js'
 import reviewRoute from './review/index.js'
 import uploadRoute from './upload/index.js'
@@ -24,6 +25,7 @@ const router = express.Router()
 //Check Permission
 router.use('/v1/api/auth', authRoute)
 router.use('/v1/api/user', userRoute)
+router.use('/v1/api/help', helpRoute)
 router.use('/v1/api/order', orderRoute)
 router.use('/v1/api/review', reviewRoute)
 router.use('/v1/api/upload', uploadRoute)
