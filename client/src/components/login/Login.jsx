@@ -1,7 +1,7 @@
 // Imports
 import React, { useState } from "react";
 
-// Resources
+// Components
 import { useAuth } from "../../contexts/auth/AuthContext";
 
 // Utils
@@ -13,7 +13,7 @@ import GoogleLogo from "../../assets/img/google-logo.png";
 import "./Login.scss";
 
 export default function Login() {
-    // Resources from AuthContext
+    // Resources from AuthContext and ModalContext
     const { login, setShowLoginForm, setShowRegisterForm, setShowResetPasswordForm, setOverlayVisible } = useAuth();
 
     // Initialize variables for inputs, errors, loading effect
@@ -66,15 +66,8 @@ export default function Login() {
         }
 
         // Handle login request
-        try {
-            await login(inputs.email, inputs.password);
-        } catch (error) {
-            console.error("Failed to login:", error);
-            errors.serverError = error.response.data.message;
-        } finally {
-            // Clear the loading effect
-            setIsSubmitLoginLoading(false);
-        }
+        await login(inputs.email, inputs.password);
+        setIsSubmitLoginLoading(false);
     };
 
     return (
@@ -137,7 +130,7 @@ export default function Login() {
             <br />
 
             {/* Other login options: Google or Facebook */}
-            <ul className="login-option-container">
+            {/* <ul className="login-option-container">
                 <li className="login-option-item">
                     <img src={FacebookLogo} className="login-option-item__img" alt="Facebook logo" />
                     Login with Facebook
@@ -146,7 +139,7 @@ export default function Login() {
                     <img src={GoogleLogo} className="login-option-item__img" alt="Google logo" />
                     Login with Google
                 </li>
-            </ul>
+            </ul> */}
         </>
     );
 }

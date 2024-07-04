@@ -1,3 +1,6 @@
+import { formatDistanceToNow } from 'date-fns';
+import { vi } from 'date-fns/locale'; // Import Vietnamese locale if needed
+
 export const formatEmailToName = (email) => {
     if (!email || typeof email !== 'string') {
         throw new Error('Invalid email address');
@@ -48,3 +51,17 @@ export function formatDate(val) {
     return `${day}/${month}/${year}`;
 }
 
+export function formatTimeAgo (date) {
+    const distance = formatDistanceToNow(new Date(date), { addSuffix: true, locale: vi });
+    return distance.replace('khoảng ', ''); // Remove the "khoảng" prefix
+};
+
+
+export function maskString (str, n) {
+    if (str.length <= n) {
+        return str;
+    }
+    const visiblePart = str.slice(0, n);
+    const maskedPart = '*'.repeat(str.length - n);
+    return visiblePart + maskedPart;
+};
