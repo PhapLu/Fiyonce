@@ -12,11 +12,11 @@ import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../.
 import { isFilled, minValue } from "../../../utils/validator"
 
 // Styling
-import "./CreateCommissionOrder.scss";
+// import "./UpdateCommissionOrder.scss";
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 
-export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrderForm, setOverlayVisible }) {
-    if (isDirect && !commissionService) {
+export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCommissionOrder, setOverlayVisible }) {
+    if (!commissionOrder) {
         return;
     }
 
@@ -25,21 +25,22 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
     const { userId: talentChosenId } = useParams();
 
     const [inputs, setInputs] = useState({
+        ...commissionOrder,
         fileTypes: [],
-        title: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
+        title: commissionOrder ? `Đặt dịch vụ ${commissionOrder.title}` : "Đăng yêu cầu lên chợ commission"
     });
 
     const [errors, setErrors] = useState({});
-    const [isSubmitOrderCommissionLoading, setIsSubmitOrderCommissionLoading] = useState(false);
-    const [isSuccessOrderCommission, setIsSuccessCreateCommissionOrder] = useState(false);
+    const [isSubmitOrderCommissionLoading, setIsSubmitUpdateCommissionOrderLoading] = useState(false);
+    const [isSuccessOrderCommission, setIsSuccessUpdateCommissionOrder] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
-    const [references, setReferences] = useState([]);
+    const [references, setReferences] = useState(commissionOrder.references);
 
     const orderCommissionRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (orderCommissionRef && orderCommissionRef.current && !orderCommissionRef.current.contains(e.target)) {
-                setShowCreateCommissionOrderForm(false);
+                setShowUpdateCommissionOrder(false);
                 setOverlayVisible(false);
             }
         };
@@ -47,7 +48,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    }, [setShowCreateCommissionOrderForm, setOverlayVisible]);
+    }, [setShowUpdateCommissionOrder, setOverlayVisible]);
 
     const validateInputs = () => {
         let errors = {};
@@ -78,10 +79,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
         if (inputs.minPrice && inputs.maxPrice && inputs.minPrice > inputs.maxPrice) {
             errors.maxPrice = 'Giá tối đa phải lớn hơn giá tối thiểu';
-        }
-
-        if (!inputs.isAgreeTerms) {
-            errors.isAgreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
         }
 
         return errors;
@@ -140,17 +137,17 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         setReferences(newReferences);
     };
 
-    // Function to create an order
-    const createNewOrder = async (orderData) => {
-        const response = await apiUtils.post('/order/createOrder', orderData);
+    // Function to update an order
+    const updateNewOrder = async (orderData) => {
+        const response = await apiUtils.patch(`/order/updateOrder/${orderData.get("_id")}`, orderData);
         return response.data;
     };
 
-    // Custom hook to use the createOrder mutation
-    const useCreateOrder = () => {
+    // Custom hook to use the updateOrder mutation
+    const useUpdateOrder = () => {
         const queryClient = useQueryClient();
 
-        return useMutation(createNewOrder, {
+        return useMutation(updateNewOrder, {
             onSuccess: () => {
                 // Invalidate the fetchIndirectOrders query to refetch the data
                 queryClient.invalidateQueries(['fetchIndirectOrders']);
@@ -161,40 +158,40 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         });
     };
 
-    const { mutate: createOrder } = useCreateOrder();
+    const { mutate: updateOrder } = useUpdateOrder();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitOrderCommissionLoading(true);
+        setIsSubmitUpdateCommissionOrderLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitOrderCommissionLoading(false);
+            setIsSubmitUpdateCommissionOrderLoading(false);
             return;
         }
 
-        if (isDirect) {
-            inputs.isDirect = true;
-            inputs.talentChosenId = talentChosenId;
-            inputs.commissionServiceId = commissionService._id;
-        } else {
-            inputs.isDirect = false;
-        }
+        // if (isDirect) {
+        //     inputs.isDirect = true;
+        //     inputs.talentChosenId = talentChosenId;
+        //     inputs.commissionOrderId = commissionOrder._id;
+        // } else {
+        //     inputs.isDirect = false;
+        // }
 
         const fd = createFormData(inputs, "files", references);
 
         // Handle order creation
-        createOrder(fd, {
+        updateOrder(fd, {
             onSuccess: (data) => {
                 setModalInfo({
                     status: "success",
-                    message: "Đặt dịch vụ thành công"
+                    message: "Cập nhật đơn hàng thành công"
                 });
-                setIsSuccessCreateCommissionOrder(true);
+                setIsSuccessUpdateCommissionOrder(true);
             },
             onError: (error) => {
                 errors.serverError = error.response.data.message;
@@ -204,7 +201,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                 });
             },
             onSettled: () => {
-                setIsSubmitOrderCommissionLoading(false);
+                setIsSubmitUpdateCommissionOrderLoading(false);
             },
         });
     };
@@ -214,27 +211,26 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
     return (
         <div className="order-commission modal-form type-2" ref={orderCommissionRef} onClick={(e) => { e.stopPropagation() }}>
             <Link to="/help_center" className="form__help" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 form__help-ic">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg> Trợ giúp
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateCommissionOrderForm(false);
-                setIsSuccessCreateCommissionOrder(false);
+                setShowUpdateCommissionOrder(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="modal-form--left">
                 {
-                    commissionService && (
+                    commissionOrder && (
                         <>
                             <span>
-                                {commissionService.serviceCategoryId.title}
+                                {commissionOrder.serviceCategoryId?.title}
                             </span>
-                            <h3>{commissionService?.title || "Tên dịch vụ"}</h3>
-                            <span>Giá từ: <span className="highlight-text"> {(commissionService?.minPrice && formatCurrency(commissionService?.minPrice)) || "x"} VND</span></span>
+                            <h3>{commissionOrder?.title || "Tên dịch vụ"}</h3>
+                            <span>Giá từ: <span className="highlight-text"> {(commissionOrder?.minPrice && formatCurrency(commissionOrder?.minPrice)) || "x"} VND</span></span>
                             <br />
                             <br />
                         </>
@@ -242,7 +238,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                 }
 
                 {
-                    isDirect ? (
+                    commissionOrder.isDirect ? (
                         <>
                             <h4 onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center">
                                 Thủ tục đặt tranh
@@ -333,10 +329,11 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 {references.map((reference, index) => (
                                     <div key={index} className="form-field__input img-preview">
                                         <div className="img-preview--left">
-                                            <img src={URL.createObjectURL(reference)} alt={`reference ${index + 1}`} className="img-preview__img" />
+                                            <img src={reference instanceof File
+                                                ? URL.createObjectURL(reference)
+                                                : reference} alt={`reference ${index + 1}`} className="img-preview__img" />
                                             <div className="img-preview__info">
-                                                <span className="img-preview__name">{limitString(reference.name, 15)}</span>
-                                                <span className="img-preview__size">{formatFloat(bytesToKilobytes(reference.size), 1)} KB</span>
+                                                <span className="img-preview__name">Tranh tham khảo</span>
                                             </div>
                                         </div>
                                         <div className="img-preview--right">
@@ -346,6 +343,17 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                         </div>
                                     </div>
                                 ))}
+                                {/* {displayPortfolios.slice(0, 3).map((portfolio, index) => (
+                        <img
+                            key={index}
+                            src={
+                                portfolio instanceof File
+                                    ? URL.createObjectURL(portfolio)
+                                    : portfolio
+                            }
+                            alt={`portfolio ${index + 1}`}
+                        />
+                    ))} */}
 
                                 <div className="form-field with-ic add-link-btn" onClick={triggerFileInput}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
@@ -500,18 +508,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 {errors.maxPrice && <span className="form-field__error">{errors.maxPrice}</span>}
                             </div>
                             <div className="form-field">
-                                <label className="form-field__label">
-                                    <input
-                                        type="checkbox"
-                                        id="isAgreeTerms"
-                                        name="isAgreeTerms"
-                                        checked={inputs.isAgreeTerms || ""}
-                                        onChange={handleChange}
-                                    /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
-                                </label>
-                                {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
-                            </div>
-                            <div className="form-field">
                                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                             </div>
                         </>
@@ -520,7 +516,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             <p className="text-align-center">
                                 Đặt hàng thành công!
                                 <br />
-                                {isDirect ? "Họa sĩ" : "Các họa sĩ"} sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
+                                {commissionOrder.isDirect ? "Họa sĩ" : "Các họa sĩ"} sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
                                 <br />
                                 Kiểm tra thông tin đơn hàng <Link to={`/users/${userInfo._id}/order-history`} className="highlight-text">tại đây</Link>.
                             </p>

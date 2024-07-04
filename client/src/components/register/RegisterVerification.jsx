@@ -4,27 +4,31 @@ import React, { useState } from "react";
 // Resources
 import { useAuth } from "../../contexts/auth/AuthContext";
 
+// Contexts
+import { useModal } from "../../contexts/modal/ModalContext"
+
 // Utils
 import { apiUtils } from "../../utils/newRequest";
 import { isFilled } from "../../utils/validator.js";
 
 // Styling
 import "./Register.scss";
+import { maskString } from "../../utils/formatter.js";
 
 export default function RegisterVerification({ handleRegisterSubmit, registerInputs }) {
-    // Resources from AuthContext
     const { setShowMenu, login, setShowRegisterForm, setOverlayVisible, setShowRegisterVerificationForm } = useAuth();
+    const { setModalInfo } = useModal();
 
-    // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [isSubmitRegisterVerificationLoading, setIsSubmitRegisterVerificationLoading] = useState(false);
+    const [countdown, setCountdown] = useState(0);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
 
-        // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
         setErrors((values) => ({ ...values, [name]: '' }));
     };
@@ -32,7 +36,6 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
     const validateInputs = () => {
         let errors = {};
 
-        // Validate email
         if (!isFilled(inputs.otp)) {
             errors.otp = 'Vui lòng nhập mã xác thực';
         }
@@ -40,37 +43,53 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
         return errors;
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Initialize loading effect for the submit button
         setIsSubmitRegisterVerificationLoading(true);
 
-        // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            // Clear the loading effect if validation failed
             setIsSubmitRegisterVerificationLoading(false);
             return;
         }
 
-        // Handle verify otp request
         try {
-            const response = await apiUtils.post("/auth/users/verifyOtp", { ...inputs, email: registerInputs.email })
+            const response = await apiUtils.post("/auth/users/verifyOtp", { ...inputs, email: registerInputs.email });
             if (response) {
-                alert("Successfully register for an account");
+                setModalInfo({
+                    status: "success",
+                    message: "Đăng kí tài khoản thành công"
+                });
                 login(registerInputs.email, registerInputs.password);
                 setShowMenu();
             }
         } catch (error) {
-            console.error("Failed to verify otp:", error);
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            });
             errors.serverError = error.response.data.message;
         } finally {
-            // Clear the loading effect
             setIsSubmitRegisterVerificationLoading(false);
         }
+    };
+
+    const handleResend = () => {
+        setIsButtonDisabled(true);
+        setCountdown(60);
+        handleRegisterSubmit();
+
+        const timer = setInterval(() => {
+            setCountdown((prevCountdown) => {
+                if (prevCountdown <= 1) {
+                    clearInterval(timer);
+                    setIsButtonDisabled(false);
+                    return 0;
+                }
+                return prevCountdown - 1;
+            });
+        }, 1000);
     };
 
     return (
@@ -80,15 +99,14 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
                 setShowRegisterVerificationForm(false);
                 setOverlayVisible(false);
             }}>
-                {registerInputs.email}
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
             <h2 className="form__title">Đăng kí</h2>
 
-            <p>Fiyonce vừa gửi mã xác nhận đến <strong>{registerInputs.email}</strong>.
-                Để đăng kí tài khoản, vui lòng điền mã xác thực.
-            </p>
+            <p>Vui lòng điền mã xác thực Pastal vừa gửi đến email <span className="highlight-text">
+                {registerInputs.email}
+            </span></p>
 
             <div className="form-field">
                 <label htmlFor="otp" className="form-field__label">Mã xác thực</label>
@@ -98,7 +116,12 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
             <div className="form-field">
                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
             </div>
-            <p>Không nhận được mã? <span className="highlight-text" onClick={handleRegisterSubmit}>Gửi lại</span></p>
+            <p>
+                Không nhận được mã?{" "}
+                <span className={`highlight-text ${isButtonDisabled ? "disabled" : ""}`} onClick={!isButtonDisabled ? handleResend : null}>
+                    {isButtonDisabled ? `Gửi lại sau ${countdown}s` : "Gửi lại"}
+                </span>
+            </p>
 
             <div className="form-field">
                 <button

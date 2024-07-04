@@ -1,30 +1,55 @@
+// Imports
 import { useState } from "react";
 import { useQuery } from "react-query";
-import "./CommissionMarket.scss";
-import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
-import { limitString } from "../../utils/formatter.js";
-import openOrderCommisison from "../../components/orderCommission/OrderCommission.jsx"
+import Masonry from 'react-masonry-css';
+
+// Components
 import CreateOrder from "../../components/crudCommissionOrder/create/CreateCommissionOrder.jsx";
+import RenderCommissionOrder from "../../components/crudCommissionOrder/render/RenderCommissionOrder.jsx";
+
+// Contexts
+import { useAuth } from "../../contexts/auth/AuthContext.jsx";
+import { useModal } from "../../contexts/modal/ModalContext.jsx";
+
+// Utils
+import { limitString, formatTimeAgo, formatCurrency } from "../../utils/formatter.js";
+import { resizeImageUrl } from "../../utils/imageDisplayer.js";
+import { newRequest } from "../../utils/newRequest.js";
+
+// Styling
+import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
+import "./CommissionMarket.scss";
 
 export default function CommissionMarket() {
+    // Initialize Masonry layout
+    const breakpointColumnsObj = {
+        default: 3,
+        1200: 3,
+        800: 2,
+        600: 1
+    };
+
     const [inputs, setInputs] = useState({});
-    const [showCreateOrderForm, setShowCreateOrderForm] = useState(false);
+    const [commissionOrder, setCommissionOrder] = useState();
+    const [showRenderComissionOrderForm, setShowRenderCommissionOrderForm] = useState(false);
+    const [showCreateComissionOrderForm, setShowCreateCommissionOrderForm] = useState(false);
+    const { userInfo } = useAuth();
+    const { setModalInfo } = useModal();
 
     const fetchIndirectOrders = async (params) => {
         try {
             const queryString = new URLSearchParams(params).toString();
-            const response = await apiUtils.get(`/order/readOrders?${queryString}`);
-            console.log(response);
+            const response = await newRequest.get(`/order/readOrders?${queryString}`);
             return response.data.metadata.orders;
         } catch (error) {
             return null;
         }
     }
 
-    const queryParameters = { isDirect: true };
+    const queryParameters = { isDirect: false, sortBy: 'createdAt', sortOrder: 'desc' };
     const { data: indirectOrders, error, isError, isLoading } = useQuery(
-        ['fetchIndirectOrders'],
-        () => fetchIndirectOrders(queryParameters),
+        ['fetchIndirectOrders', queryParameters],
+        () => fetchIndirectOrders(queryParameters), // Pass a function that calls fetchIndirectOrders
         {
             onSuccess: (data) => {
                 console.log(data);
@@ -35,100 +60,18 @@ export default function CommissionMarket() {
         }
     );
 
-    // const [indirectOrders, setIndirectOrders] = useState([
-    //     {
-    //         _id: "1",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    //     {
-    //         _id: "2",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    //     {
-    //         _id: "3",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    //     {
-    //         _id: "4",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    //     {
-    //         _id: "5",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    //     {
-    //         _id: "6",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    //     {
-    //         _id: "7",
-    //         title: "Tim tranh ve abc",
-    //         priceFrom: 200000,
-    //         priceTo: 400000,
-    //         memberName: "Luu Quoc Nhat",
-    //         memberAvatar: "https://i.pinimg.com/236x/4e/df/6d/4edf6d0f03c6bcf860b5943226e3d4b3.jpg",
-    //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-    //         referencePhoto: "https://i.pinimg.com/564x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-    //         talentAppliedCount: 16,
-    //         status: "pending",
-    //         createdAt: "4h",
-    //     },
-    // ]);
     const [overlayVisible, setOverlayVisible] = useState(false);
+
+    const handleOpenCreateCommissionOrder = () => {
+        if (userInfo) {
+            setShowCreateCommissionOrderForm(true); setOverlayVisible(true)
+        } else {
+            setModalInfo({
+                status: "warning",
+                message: "Vui lòng đăng nhập trước khi đăng yêu cầu"
+            })
+        }
+    }
 
     const handleChange = (event) => {
         const { id, value } = event.target;
@@ -136,21 +79,6 @@ export default function CommissionMarket() {
             ...prevInputs,
             [id]: value,
         }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const userId = profileInfo._id;
-            const submittedSocialLinks = socialLinks.map(link => ({ url: link.url }));
-            const updatedData = inputs;
-            updatedData.socialLinks = submittedSocialLinks;
-            const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
-            setUserInfo(response.data.metadata.updatedUser);
-            alert("Successfully updated user information");
-        } catch (error) {
-            console.log(error);
-        }
     };
 
     return (
@@ -169,7 +97,7 @@ export default function CommissionMarket() {
                             <span>#digital art</span>
                         </p>
                         <br />
-                        <button className="btn btn-2 btn-lg" onClick={() => { setShowCreateOrderForm(true); setOverlayVisible(true) }}>
+                        <button className="btn btn-2 btn-lg" onClick={handleOpenCreateCommissionOrder}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
                                 <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
                             </svg>
@@ -246,41 +174,75 @@ export default function CommissionMarket() {
                     </div>
                 </section>
 
-                <section className="commission-market-container">
-                    {indirectOrders && indirectOrders.length > 0 && indirectOrders.map((indirectOrder) => {
-                        return (
-                            <div className="commission-market-item" key={indirectOrder._id}>
-                                <div className="commission-market-item__header">
-                                    <div className="commission-market-item__header--left user md">
-                                        <img src={indirectOrder.memberAvatar} alt="" className="user__avatar" />
-                                        <div className="user__name">
-                                            <div className="user__name__title">{indirectOrder.memberName}</div>
-                                            <div className="user__name__subtitle">{indirectOrder.createdAt}</div>
+                <section>
+                    <Masonry
+                        breakpointCols={breakpointColumnsObj}
+                        className="my-masonry-grid commission-market-container"
+                        columnClassName="my-masonry-grid_column"
+                    >
+                        {indirectOrders && indirectOrders.length > 0 && indirectOrders.map((indirectOrder) => {
+                            return (
+                                <div className="commission-market-item" key={indirectOrder._id} onClick={() => {
+                                    setCommissionOrder(indirectOrder); setShowRenderCommissionOrderForm(true); setOverlayVisible(true)
+                                }}>
+                                    <div className="commission-market-item__header">
+                                        <div className="commission-market-item__header--left user md">
+                                            <img src={indirectOrder.memberId.avatar} alt="" className="user__avatar" />
+                                            <div className="user__name">
+                                                <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
+                                                <div className="user__name__subtitle">
+                                                    {formatTimeAgo(indirectOrder.createdAt)}
+                                                </div>
+                                            </div>
                                         </div>
+
+                                        <div className="commission-market-item__header--right">
+                                            {indirectOrder.talentsApprovedCount > 0
+                                                && (
+                                                    <div className="status pending">
+                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount}  họa sĩ đã ứng</span>
+                                                    </div>)
+                                            }
+                                        </div>
+
+
                                     </div>
 
-                                    <div className="commission-market-item__header--right">
-                                        <div className="status pending">{indirectOrder.status}</div>
+                                    <div className="commission-market-item__content">
+                                        <h2><span className="highlight-text">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span></h2>
+                                        <p>{limitString(indirectOrder.description, 330)}</p>
+                                    </div>
+                                    <div className="reference-container">
+                                        {indirectOrder.references.slice(0, 3).map((reference, index) => {
+                                            if (index === 2 && indirectOrder.references.length > 3) {
+                                                return (
+                                                    <div key={index} className="reference-item">
+                                                        <img src={resizeImageUrl(reference, 250)} alt="" /> {/* Use resizeImageUrl here */}
+                                                        <div className="reference-item__overlay">
+                                                            +{indirectOrder.references.length - 3}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+                                            return (
+                                                <div className="reference-item" key={index}>
+                                                    <img src={resizeImageUrl(reference, 250)} alt="" />
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
-
-                                <div className="commission-market-item__content">
-                                    <h3>{indirectOrder.title}</h3>
-                                    <h4><span className="highlight-text">đ{indirectOrder.priceFrom}</span> - <span className="highlight-text">đ{indirectOrder.priceTo}</span></h4>
-                                    <p>{limitString(indirectOrder.description, 200)}</p>
-                                    <button className="btn btn-1 explore-more-btn">Xem thêm </button>
-                                    {/* <img src={indirectOrder.referencePhoto} alt="" /> */}
-                                </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </Masonry>
                 </section>
             </div>
             {/* Modal forms */}
             {overlayVisible &&
                 (
                     <div className="overlay">
-                        {showCreateOrderForm && <CreateOrder isDirect={false} />}
+                        {showRenderComissionOrderForm && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrderForm={setShowRenderCommissionOrderForm} setOverlayVisible={setOverlayVisible} />}
+                        {showCreateComissionOrderForm && <CreateOrder isDirect={false} setShowCreateCommissionOrderForm={setShowCreateCommissionOrderForm} setOverlayVisible={setOverlayVisible} />}
                     </div>
                 )
             }
