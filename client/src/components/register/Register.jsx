@@ -7,7 +7,7 @@ import RegisterVerification from "./RegisterVerification";
 
 // Utils
 import { apiUtils } from "../../utils/newRequest";
-import { isFilled, minLength, isMatch, hasSymbol, isValidEmail, isValidPassword } from "../../utils/validator.js";
+import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../utils/validator.js";
 
 // Styling
 import "./Register.scss";
@@ -43,8 +43,8 @@ export default function Register() {
         // Validate passwords
         if (!isFilled(inputs.password)) {
             errors.password = 'Vui lòng nhập mật khẩu';
-        } else if (!isValidPassword(inputs.password)) {
-            errors.password = 'Mật khẩu phải chứa ít nhất 6 kí tự, 1 số và 1 kí tự đặc biệt';
+        } else if (!minLength(inputs.password, 6)) {
+            errors.password = 'Mật khẩu nên chứa ít nhất 6 kí tự';
         }
 
         if (!isFilled(inputs.confirmPassword)) {
@@ -53,7 +53,7 @@ export default function Register() {
             errors.confirmPassword = 'Mật khẩu xác nhận không khớp';
         }
 
-        if (isFilled(inputs.password) && isFilled(inputs.confirmPassword) && !isMatch(inputs.confirmPassword, inputs.password)) {
+        if (!isMatch(inputs.confirmPassword, inputs.password)) {
             errors.password = 'Mật khẩu không khớp';
             errors.confirmPassword = 'Mật khẩu xác nhận không khớp';
         }
@@ -61,8 +61,6 @@ export default function Register() {
         // Validate fullname
         if (!isFilled(inputs.fullName)) {
             errors.fullName = 'Vui lòng nhập họ và tên';
-        } else if (!minLength(inputs.fullName, 6)) {
-            errors.fullName = 'Họ và tên phải trên 6 kí tự';
         } else if (hasSymbol(inputs.fullName)) {
             errors.fullName = 'Tên không được chứa kí tự đặc biệt';
         }
@@ -89,6 +87,7 @@ export default function Register() {
             const { confirmPassword, ...others } = inputs;
             const response = await apiUtils.post("/auth/users/signUp", others);
             if (response) {
+                alert("Successfully registered for an account");
                 setShowRegisterVerificationForm(true);
             }
         } catch (error) {
@@ -119,7 +118,6 @@ export default function Register() {
 
                         <div className="form-field">
                             <label htmlFor="email" className="form-field__label">Email</label>
-
                             <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
                             {errors.email && <span className="form-field__error">{errors.email}</span>}
                         </div>

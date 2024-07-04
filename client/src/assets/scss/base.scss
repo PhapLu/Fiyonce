@@ -17,7 +17,7 @@
     --red-2-color: #e45454;
 
     --orange-1-color: #ff9c65;
-    --orange-2-color: #fb9257;
+    --orange-2-color: #FF6E1C;
 
     --white-1-color: white;
     --white-2-color: white;
@@ -507,14 +507,8 @@ table {
     border-radius: 8px;
 
     tr {
-        border-bottom: 1px solid var(--gray-2-color);
+        border-bottom: 2px solid var(--gray-2-color);
         width: 100%;
-
-        &:hover {
-            background-color: #f1f1f1;
-            opacity: 0.8;
-            cursor: pointer;
-        }
     }
 
 
@@ -602,8 +596,6 @@ table {
     .form-field__annotation {
         display: block;
         font-size: 1.3rem;
-        text-align: unset !important;
-        margin: 0;
         // font-style: italic;
         color: var(--gray-3-color);
         margin-bottom: 12px;
@@ -1061,9 +1053,10 @@ table {
 
     .modal-form--right {
         align-self: center;
+        padding: 28px 52px;
         height: 100%;
         width: 52%;
-        padding: 28px 44px;
+        padding: 28px 52px;
         max-height: 80vh;
 
         .form__close-ic {
@@ -1219,43 +1212,4 @@ table {
 .modal-form.type-2 .modal-form--right {
     scrollbar-color: inherit !important;
     scrollbar-width: inherit !important;
-}
-
-// References
-.reference-container {
-    display: flex;
-
-    .reference-item {
-        position: relative;
-
-        img {
-            display: block;
-            width: 120px;
-            height: 120px;
-            border-radius: 8px;
-            margin-right: 8px;
-            object-fit: cover;
-        }
-
-        &:nth-of-type(3n) {
-            img {
-                margin-right: 0;
-            }
-        }
-
-        .reference-item__overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            top: 0;
-            left: 0;
-            display: block;
-            text-align: center;
-            line-height: 120px;
-            font-size: 2rem;
-            border-radius: 8px;
-            color: white;
-        }
-    }
 }

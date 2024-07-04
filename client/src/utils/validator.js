@@ -3,7 +3,7 @@ export function isFilled(val) {
 }
 
 export function minLength(val, length) {
-    return val.length >= length;
+    return val.length > length;
 }
 
 export function maxLength(val, length) {
@@ -38,12 +38,4 @@ export function isValidPhone(val) {
     } else {
         return false;
     }
-}
-
-export function hasDigit(val) {
-    return /[0-9]/.test(val);
-}
-
-export function isValidPassword(password) {
-    return minLength(password, 6) && hasDigit(password) && hasSymbol(password);
 }

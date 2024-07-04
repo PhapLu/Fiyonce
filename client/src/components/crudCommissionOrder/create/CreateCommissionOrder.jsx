@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
+
 // Contexts
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { useAuth } from "../../../contexts/auth/AuthContext";
@@ -15,31 +15,34 @@ import { isFilled, minValue } from "../../../utils/validator"
 import "./CreateCommissionOrder.scss";
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 
-export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrderForm, setOverlayVisible }) {
+export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrderForm }) {
     if (isDirect && !commissionService) {
         return;
     }
 
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
-    const { userId: talentChosenId } = useParams();
-
+    
+    // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         fileTypes: [],
         title: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
     });
+    const { userId: talentChosenId } = useParams();
 
     const [errors, setErrors] = useState({});
     const [isSubmitOrderCommissionLoading, setIsSubmitOrderCommissionLoading] = useState(false);
     const [isSuccessOrderCommission, setIsSuccessCreateCommissionOrder] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
+
     const [references, setReferences] = useState([]);
 
+    // Toggle display overlay box
     const orderCommissionRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (orderCommissionRef && orderCommissionRef.current && !orderCommissionRef.current.contains(e.target)) {
-                setShowCreateCommissionOrderForm(false);
+                setShowOrderCommissionForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -47,39 +50,42 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    }, [setShowCreateCommissionOrderForm, setOverlayVisible]);
+    });
 
     const validateInputs = () => {
         let errors = {};
 
-        if (!inputs.title) {
+        // Validate title
+        if (!isFilled(inputs.title)) {
             errors.title = 'Vui lòng nhập tên đơn hàng';
         }
 
-        if (!inputs.description) {
+        // Validate description
+        if (!isFilled(inputs.description)) {
             errors.description = 'Vui lòng nhập mô tả';
         }
 
+        // Validate references uploading
         if (references.length < 1) {
             errors.references = "Vui lòng cung cấp ít nhất 1 ảnh tham khảo.";
         } else if (references.length > 5) {
             errors.references = "Vui lòng cung cấp tối đa 5 ảnh tham khảo.";
         }
 
-        if (!inputs.minPrice) {
+        // Validate minimum price
+        if (!isFilled(inputs.minPrice)) {
             errors.minPrice = 'Vui lòng nhập giá tối thiểu';
-        } else if (inputs.minPrice < 100000) {
+        } else if (!minValue(inputs.minPrice, 100000)) {
+            alert(inputs.minPrice);
             errors.minPrice = 'Giá trị đơn hàng tối thiểu là 100.000 VND';
         }
 
-        if (!inputs.maxPrice) {
+        // Validate maximum price
+        if (!isFilled(inputs.maxPrice)) {
             errors.maxPrice = 'Vui lòng nhập giá tối đa';
         }
 
-        if (inputs.minPrice && inputs.maxPrice && inputs.minPrice > inputs.maxPrice) {
-            errors.maxPrice = 'Giá tối đa phải lớn hơn giá tối thiểu';
-        }
-
+        // Validate minimum price
         if (!inputs.isAgreeTerms) {
             errors.isAgreeTerms = 'Vui lòng xác nhận đồng ý với điều khoản';
         }
@@ -89,6 +95,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
+        console.log(inputs)
 
         if (type === 'checkbox') {
             if (name === 'fileTypes') {
@@ -122,8 +129,8 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         const newReferences = [...references];
 
         files.forEach((file) => {
-            if (file.size > 2 * 1024 * 1024) {
-                setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 2MB." }));
+            if (file.size > 500 * 1024) {
+                setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 500KB." }));
             } else if (newReferences.length < 7) {
                 newReferences.push(file);
                 setErrors((values) => ({ ...values, references: "" }));
@@ -140,28 +147,9 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         setReferences(newReferences);
     };
 
-    // Function to create an order
-    const createNewOrder = async (orderData) => {
-        const response = await apiUtils.post('/order/createOrder', orderData);
-        return response.data;
+    const triggerFileInput = () => {
+        document.getElementById('file-input').click();
     };
-
-    // Custom hook to use the createOrder mutation
-    const useCreateOrder = () => {
-        const queryClient = useQueryClient();
-
-        return useMutation(createNewOrder, {
-            onSuccess: () => {
-                // Invalidate the fetchIndirectOrders query to refetch the data
-                queryClient.invalidateQueries(['fetchIndirectOrders']);
-            },
-            onError: (error) => {
-                console.error('Error creating order:', error);
-            },
-        });
-    };
-
-    const { mutate: createOrder } = useCreateOrder();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -184,32 +172,30 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         } else {
             inputs.isDirect = false;
         }
-
+        console.log(inputs)
         const fd = createFormData(inputs, "files", references);
 
-        // Handle order creation
-        createOrder(fd, {
-            onSuccess: (data) => {
+        // Handle login request
+        try {
+            const response = await apiUtils.post("/order/createOrder", fd);
+            if (response) {
                 setModalInfo({
                     status: "success",
                     message: "Đặt dịch vụ thành công"
-                });
+                })
                 setIsSuccessCreateCommissionOrder(true);
-            },
-            onError: (error) => {
-                errors.serverError = error.response.data.message;
-                setModalInfo({
-                    status: "error",
-                    message: error.response.data.message
-                });
-            },
-            onSettled: () => {
-                setIsSubmitOrderCommissionLoading(false);
-            },
-        });
+            }
+        } catch (error) {
+            errors.serverError = error.response.data.message;
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
+        } finally {
+            // Clear the loading effect
+            setIsSubmitOrderCommissionLoading(false);
+        }
     };
-
-    const triggerFileInput = () => { document.getElementById('file-input').click(); };
 
     return (
         <div className="order-commission modal-form type-2" ref={orderCommissionRef} onClick={(e) => { e.stopPropagation() }}>
@@ -518,7 +504,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                     ) : (
                         <>
                             <p className="text-align-center">
-                                Đặt hàng thành công!
+                                Đặt hàng thành công! 
                                 <br />
                                 {isDirect ? "Họa sĩ" : "Các họa sĩ"} sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
                                 <br />
@@ -528,7 +514,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             <p>
                                 <strong>Lưu ý: </strong>
                                 <br />
-                                - Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài ngoài nền tảng.
+                                - Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài ngoài nền tảng. 
                                 <br />
                                 -Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng tôi <Link to="" className="highlight-text">tại đây</Link>.
                             </p>
