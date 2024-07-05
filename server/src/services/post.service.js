@@ -1,10 +1,11 @@
+import Post from "../models/post.model.js"
 import Artwork from "../models/artwork.model.js"
 import { User } from "../models/user.model.js"
 import { BadRequestError, NotFoundError } from "../core/error.response.js"
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from "../utils/cloud.util.js"
 
-class ArtworkService{
-    static createArtwork = async(userId, req) => {
+class PostService{
+    static createPost = async(userId, req) => {
         //1. Check user
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError('User not found')
@@ -30,15 +31,28 @@ class ArtworkService{
             const artworks = uploadResults.map(result => result.secure_url)
 
             //4. Create and save artwork
-            const newArtwork = new Artwork({
+            let artworksId = []
+            await Promise.all(
+                artworks.map(async (artwork) => {
+                    const newArtwork = new Artwork({
+                        talentId: userId,
+                        url: artwork
+                    })
+                    await newArtwork.save()
+                    artworksId.push(newArtwork._id)
+                })
+            )
+
+            //5. Create and save post
+            const newPost = new Post({
                 ...req.body,
                 talentId: userId,
-                artworks
+                artworks: artworksId
             })
-            await newArtwork.save()
+            await newPost.save()
 
             return {
-                artwork: newArtwork
+                artwork: newPost
             }
         } catch (error) {
             console.error('Error uploading images:', error)
@@ -46,39 +60,39 @@ class ArtworkService{
         }
     }
 
-    static readArtwork = async(artworkId) => {
+    static readPost = async(artworkId) => {
         //1. Find artwork
-        const artwork = await Artwork.findById(artworkId).populate('talentId', 'stageName avatar')
-        if(!artwork) throw new NotFoundError('Artwork not found')
+        const artwork = await Post.findById(artworkId).populate('talentId', 'stageName avatar')
+        if(!artwork) throw new NotFoundError('Post not found')
 
         return {
             artwork
         }
     }
 
-    static readArtworksOfTalent = async(talentId) => {
+    static readPostsOfTalent = async(talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
         if(!talent) throw new NotFoundError('User not found')
         if(talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
 
         //2. Find artworks
-        const artworks = await Artwork.find({talentId})
+        const artworks = await Post.find({talentId})
 
         return {
             artworks
         }
     }
 
-    static updateArtwork = async (userId, artworkId, req) => {
+    static updatePost = async (userId, artworkId, req) => {
         // 1. Check user and artwork
         const user = await User.findById(userId)
-        const artworkToUpdate = await Artwork.findById(artworkId)
+        const postToUpdate = await Post.findById(artworkId)
       
         if (!user) throw new NotFoundError('User not found')
-        if (!artworkToUpdate) throw new NotFoundError('Artwork not found')
+        if (!postToUpdate) throw new NotFoundError('Post not found')
         if (user.role !== 'talent') throw new BadRequestError('You are not a talent')
-        if (artworkToUpdate.talentId.toString() !== userId) throw new BadRequestError('You can only update your artwork')
+        if (postToUpdate.talentId.toString() !== userId) throw new BadRequestError('You can only update your artwork')
       
         // 2. Handle file uploads if new files were uploaded
         try {
@@ -94,18 +108,36 @@ class ArtworkService{
       
             const uploadResults = await Promise.all(uploadPromises)
             const artworks = uploadResults.map(result => result.secure_url)
-            req.body.artworks = artworks
+
+            // Save new artworks to database
+            let artworksId = []
+            await Promise.all(
+              artworks.map(async (artwork) => {
+                const newArtwork = new Artwork({
+                  talentId: userId,
+                  url: artwork
+                })
+                await newArtwork.save()
+                artworksId.push(newArtwork._id)
+              })
+            )
+            req.body.artworks = artworksId
       
             // Delete old files from Cloudinary
-            const publicIds = artworkToUpdate.artworks.map(url => extractPublicIdFromUrl(url))
+            const artworksToDelete = await Artwork.find({ _id: { $in: postToUpdate.artworks } })
+            console.log('artworksToDelete:', artworksToDelete)
+            const publicIds = artworksToDelete.map(artwork => extractPublicIdFromUrl(artwork.url))
             await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+
+            //Delete old artworks from database
+            await Artwork.deleteMany({ _id: { $in: postToUpdate.artworks } })
           }
       
           // 3. Merge existing artwork fields with req.body to ensure fields not provided in req.body are retained
-          const updatedFields = { ...artworkToUpdate.toObject(), ...req.body }
+          const updatedFields = { ...postToUpdate.toObject(), ...req.body }
       
           // 4. Update artwork
-          const updatedArtwork = await Artwork.findByIdAndUpdate(
+          const updatedPost = await Post.findByIdAndUpdate(
             artworkId,
             updatedFields,
             { new: true }
@@ -115,22 +147,22 @@ class ArtworkService{
             message: "Update artwork success!",
             status: 200,
             metadata: {
-              artwork: updatedArtwork
+              artwork: updatedPost
             }
           }
         } catch (error) {
           console.error('Error in updating artwork:', error)
-          throw new Error('Artwork update failed')
+          throw new Error('Post update failed')
         }
       }      
 
-    static deleteArtwork = async(userId, artworkId) => {
+    static deletePost = async(userId, artworkId) => {
         //1. Check user and artwork
         const user = await User.findById(userId)
-        const artworkToDelete = await Artwork.findById(artworkId)
+        const artworkToDelete = await Post.findById(artworkId)
 
         if(!user) throw new NotFoundError('User not found')
-        if(!artworkToDelete) throw new NotFoundError('Artwork not found')
+        if(!artworkToDelete) throw new NotFoundError('Post not found')
         if(user.role !== 'talent') throw new BadRequestError('You are not a talent')
         if(artworkToDelete.talentId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
 
@@ -143,7 +175,7 @@ class ArtworkService{
         }
 
         //3. Delete artwork
-        await Artwork.findByIdAndDelete(artworkId)
+        await Post.findByIdAndDelete(artworkId)
 
         return {
             message: 'Delete artwork success'
@@ -151,4 +183,4 @@ class ArtworkService{
     }
 }
 
-export default ArtworkService
+export default PostService

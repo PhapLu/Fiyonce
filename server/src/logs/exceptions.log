@@ -272,3 +272,99 @@ ReferenceError: uploadFields is not defined
 ReferenceError: uploadFields is not defined
     at file:///D:/Adam/OnisonProject/server/src/routes/help/index.js:21:33
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-05 11:16:24::error::undefined::undefined::uncaughtException: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:16:24::error::undefined::undefined::uncaughtException: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:18:10::error::undefined::undefined::uncaughtException: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:18:10::error::undefined::undefined::uncaughtException: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:19:18::error::undefined::undefined::uncaughtException: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:19:18::error::undefined::undefined::uncaughtException: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: url: Path `url` is required., talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:20:01::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:20:01::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:22:05::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:22:05::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:24:54::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:24:54::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:29:51::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:29:51::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:30:35::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-05 11:30:35::error::undefined::undefined::uncaughtException: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is required.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined

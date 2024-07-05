@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import Order from "../models/order.model.js"
-import Artwork from "../models/artwork.model.js"
+import Artwork from "../models/post.model.js"
 import sendEmail from '../middlewares/sendMail.js'
 import Proposal from "../models/proposal.model.js"
 import MomoService from './momo.service.js'
@@ -72,7 +72,7 @@ class ProposalService{
         if(!order) throw new NotFoundError('Order not found')
 
         //2. Read all proposals of a order
-        const proposals = await Proposal.find({orderId: orderId})
+        const proposals = await Proposal.find({orderId: orderId}).populate('talentChosenId', 'fullName avatar')
 
         return {
             proposals
