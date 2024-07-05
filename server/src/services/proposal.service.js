@@ -57,7 +57,7 @@ class ProposalService{
 
     static readProposal = async(userId, proposalId) => {
         //1. Check if proposal, user exists
-        const proposal = await Proposal.findById(proposalId).populate('orderId') 
+        const proposal = await Proposal.findById(proposalId).populate('termOfServiceId')
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError('User not found')
         if(!proposal) throw new NotFoundError('Proposal not found')
