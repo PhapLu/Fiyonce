@@ -75,6 +75,7 @@ class TalentRequestService{
             talentRequestStatus: talentRequest.status
         }
     }
+    
 //------------------Admin----------------------------------------------------------
     static upgradeRoleToTalent = async (adminId, requestId) => {
         // 1. Find and check request
