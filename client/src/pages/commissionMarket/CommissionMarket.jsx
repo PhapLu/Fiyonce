@@ -6,6 +6,9 @@ import Masonry from 'react-masonry-css';
 // Components
 import CreateOrder from "../../components/crudCommissionOrder/create/CreateCommissionOrder.jsx";
 import RenderCommissionOrder from "../../components/crudCommissionOrder/render/RenderCommissionOrder.jsx";
+import UpdateCommissionOrder from "../../components/crudCommissionOrder/update/UpdateCommissionOrder.jsx";
+
+import RenderProposals from "../../components/crudProposal/render/RenderProposals.jsx";
 
 // Contexts
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
@@ -31,8 +34,15 @@ export default function CommissionMarket() {
 
     const [inputs, setInputs] = useState({});
     const [commissionOrder, setCommissionOrder] = useState();
-    const [showRenderComissionOrderForm, setShowRenderCommissionOrderForm] = useState(false);
-    const [showCreateComissionOrderForm, setShowCreateCommissionOrderForm] = useState(false);
+
+    // CRUD commission order
+    const [showCreateComissionOrder, setShowCreateCommissionOrder] = useState(false);
+    const [showRenderComissionOrder, setShowRenderCommissionOrder] = useState(false);
+    const [showUpdateComissionOrder, setShowUpdateCommissionOrder] = useState(false);
+    const [showDeleteComissionOrder, setShowDeleteCommissionOrder] = useState(false);
+
+    const [showRenderProposals, setShowRenderProposals] = useState(false);
+
     const { userInfo } = useAuth();
     const { setModalInfo } = useModal();
 
@@ -64,7 +74,7 @@ export default function CommissionMarket() {
 
     const handleOpenCreateCommissionOrder = () => {
         if (userInfo) {
-            setShowCreateCommissionOrderForm(true); setOverlayVisible(true)
+            setShowCreateCommissionOrder(true); setOverlayVisible(true)
         } else {
             setModalInfo({
                 status: "warning",
@@ -183,7 +193,7 @@ export default function CommissionMarket() {
                         {indirectOrders && indirectOrders.length > 0 && indirectOrders.map((indirectOrder) => {
                             return (
                                 <div className="commission-market-item" key={indirectOrder._id} onClick={() => {
-                                    setCommissionOrder(indirectOrder); setShowRenderCommissionOrderForm(true); setOverlayVisible(true)
+                                    setCommissionOrder(indirectOrder); setShowRenderCommissionOrder(true); setOverlayVisible(true)
                                 }}>
                                     <div className="commission-market-item__header">
                                         <div className="commission-market-item__header--left user md">
@@ -241,9 +251,13 @@ export default function CommissionMarket() {
             {overlayVisible &&
                 (
                     <div className="overlay">
-                        {showRenderComissionOrderForm && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrderForm={setShowRenderCommissionOrderForm} setOverlayVisible={setOverlayVisible} />}
-                        {showCreateComissionOrderForm && <CreateOrder isDirect={false} setShowCreateCommissionOrderForm={setShowCreateCommissionOrderForm} setOverlayVisible={setOverlayVisible} />}
-                    </div>
+                        {/* CRUD commission order */}
+                        {showCreateComissionOrder && <CreateOrder isDirect={false} setShowCreateCommissionOrder={setShowCreateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
+                        {showRenderComissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
+                        {showUpdateComissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
+                        
+                        {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible ={setOverlayVisible}/>}
+                    </div> 
                 )
             }
         </>

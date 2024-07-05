@@ -288,7 +288,7 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
                 </div>
             </div>
             <div className="modal-form--right">
-                <h2 className="form__title">Mô tả yêu cầu</h2>
+                <h2 className="form__title">Chỉnh sửa yêu cầu</h2>
 
 
                 {!isSuccessOrderCommission ?
@@ -538,7 +538,7 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
                 {isSubmitOrderCommissionLoading ? (
                     <span className="btn-spinner"></span>
                 ) : (
-                    "Gửi yêu cầu"
+                    "Xác nhận"
                 )}
             </button>
         </div >

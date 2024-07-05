@@ -46,9 +46,9 @@ export default function Navbar() {
                     <li className={`navbar-link-item ` + (location.pathname.includes('/explore/artworks') ? "active" : "")}>
                         <Link to="/explore">Khám phá</Link>
                     </li>
-                    <li className={`navbar-link-item ` + (location.pathname.includes('/marketplace') ? "active" : "")}>
+                    {/* <li className={`navbar-link-item ` + (location.pathname.includes('/marketplace') ? "active" : "")}>
                         <Link to="/marketplace">Mua bán</Link>
-                    </li>
+                    </li> */}
                     <li className={`navbar-link-item ` + (location.pathname.includes('/commission_market') ? "active" : "")}>
                         <Link to="/commission_market">Chợ Commission</Link>
                     </li>

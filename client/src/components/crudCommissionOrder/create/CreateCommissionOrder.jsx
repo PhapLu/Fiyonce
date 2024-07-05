@@ -15,7 +15,7 @@ import { isFilled, minValue } from "../../../utils/validator"
 import "./CreateCommissionOrder.scss";
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 
-export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrderForm, setOverlayVisible }) {
+export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrder, setOverlayVisible }) {
     if (isDirect && !commissionService) {
         return;
     }
@@ -39,7 +39,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
     useEffect(() => {
         let handler = (e) => {
             if (orderCommissionRef && orderCommissionRef.current && !orderCommissionRef.current.contains(e.target)) {
-                setShowCreateCommissionOrderForm(false);
+                setShowCreateCommissionOrder(false);
                 setOverlayVisible(false);
             }
         };
@@ -47,7 +47,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    }, [setShowCreateCommissionOrderForm, setOverlayVisible]);
+    }, [setShowCreateCommissionOrder, setOverlayVisible]);
 
     const validateInputs = () => {
         let errors = {};
@@ -220,7 +220,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateCommissionOrderForm(false);
+                setShowCreateCommissionOrder(false);
                 setIsSuccessCreateCommissionOrder(false);
                 setOverlayVisible(false);
             }}>

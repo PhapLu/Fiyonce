@@ -56,19 +56,18 @@ export const AuthProvider = ({ children }) => {
             const response = await newRequest.get('user/me');
             return response.data.metadata.user;
         } catch (error) {
-            // console.log(error.response)
             return null;
         }
     };
 
     useEffect(() => {
         if (!userInfo) {
-            setLoading(false); // Stop loading if there's no user info
+            setLoading(true); // Stop loading if there's no user info
         }
     }, [userInfo]);
 
     const { data, error, isError, isLoading } = useQuery('fetchUserProfile', fetchUserProfile, {
-        enabled: !!userInfo, // Only fetch user profile if userInfo is not null
+        enabled: !userInfo, // Only fetch user profile if userInfo is not null
         onError: (error) => {
             console.error('Error fetching user profile:', error);
         },

@@ -1,32 +1,65 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useQuery } from "react-query";
 
 // Contexts
-import { useAuth } from "../../../contexts/auth/AuthContext";
 
 // Components
-import RenderProposals from "../../crudProposal/render/RenderProposals";
+
+// Utils
+import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/formatter";
+import { apiUtils } from "../../../utils/newRequest";
 
 // Styling
-import "./RenderCommissionOrder.scss";
-import { resizeImageUrl } from "../../../utils/imageDisplayer";
+// import "./RenderProposal.scss"
 
-export default function RenderCommissionOrder({ commissionOrder, setShowRenderCommissionOrder, setShowRenderProposals, setShowUpdateCommissionOrder, setOverlayVisible }) {
-    if (!commissionOrder) {
+
+export default function RenderProposal({ commissionOrder, proposal, setShowRenderProposal, setOverlayVisible }) {
+    console.log(proposal)
+
+    if (!proposal || !commissionOrder) {
         return;
     }
-    const { userInfo } = useAuth();
 
-    const isOrderOwner = commissionOrder.memberId._id === userInfo._id;
-    const isTalentChosen = commissionOrder.talentChosenId?._id === userInfo._id;
 
-    const renderCommissionServiceRef = useRef();
+    const fetchProposal = async () => {
+        try {
+            // const response = await newRequest.get(`/proposals/readProposal/:${proposal._id}`);
+            // return response.data.metadata.proposal;
+            return {
+                scope: "Ban se nhan duoc ....",
+                startAt: "2024-07-12",
+                deadline: "2024-07-29",
+                price: 500000,
+                termOfServiceId: {
+                    _id: 1,
+                    content: "Dieu khoan dich vu content"
+                }
+            }
+        } catch (error) {
+            return null;
+        }
+    }
+
+    const { data: proposals, error, isError, isLoading } = useQuery(
+        ['fetchProposal'],
+        () => fetchProposal(),
+        {
+            onSuccess: (data) => {
+                console.log(data);
+            },
+            onError: (error) => {
+                console.error('Error fetching proposals by Order ID:', error);
+            },
+        }
+    );
+
+    const renderProposalRef = useRef();
     useEffect(() => {
         let handler = (e) => {
-            if (renderCommissionServiceRef && renderCommissionServiceRef.current && !renderCommissionServiceRef.current.contains(e.target)) {
-                setShowRenderCommissionOrder(false);
+            if (renderProposalRef && renderProposalRef.current && !renderProposalRef.current.contains(e.target)) {
+                setShowRenderProposal(false);
                 setOverlayVisible(false);
             }
         };
@@ -34,10 +67,27 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    }, [setShowRenderCommissionOrder, setOverlayVisible]);
+    }, [setShowRenderProposal, setOverlayVisible]);
+
+
+    const [paymentUrl, setPaymentUrl] = useState();
+
+    const handlePayment = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await apiUtils.post(`/proposal/confirmProposal/${proposal._id}`);
+            console.log(response.data.metadata.paymentData.paymentUrl);
+            setPaymentUrlsetPaymentUrl(response.data.metadata.paymentData.paymentUrl)
+            // Navigate(response.data.metadata.paymentData.paymentUrl);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
-        <div className="render-commission-order modal-form type-2" ref={renderCommissionServiceRef} onClick={(e) => { e.stopPropagation() }}>
+        <div className="render-proposals modal-form type-2" ref={renderProposalRef} onClick={(e) => { e.stopPropagation() }}>
             <Link to="/help_center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -45,7 +95,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
             </Link>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowRenderCommissionOrder(false);
+                setShowRenderProposal(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -106,76 +156,46 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
                     </p>
                 </div>
             </div>
+
             <div className="modal-form--right">
-                <h2 className="form__title">Thông tin đơn hàng</h2>
+                <h2 className="form__title">Chi tiết hồ sơ</h2>
                 <div className="form-field">
-                    <label htmlFor="title" className="form-field__label">Tên đơn hàng</label>
-                    <span>{commissionOrder.title}</span>
+                    <label htmlFor="scope" className="form-field__label">Phạm vi hợp đồng</label>
+                    <p>{proposal.scope}</p>
                 </div>
 
                 <div className="form-field">
-                    <label htmlFor="description" className="form-field__label">Mô tả</label>
-                    <span>{commissionOrder.description}</span>
-                </div>
-
-                <div className="form-field">
-                    <label htmlFor="references" className="form-field__label">Nguồn tham khảo</label>
+                    <label htmlFor="scope" className="form-field__label">Tranh tham khảo</label>
                     <div className="reference-container">
-                        {commissionOrder.references.map((reference, index) => {
+                        {proposal.artworks.map((artwork, index) => {
                             return (
                                 <div className="reference-item" key={index}>
-                                    <img src={resizeImageUrl(reference, 350)} alt="" />
+                                    <img src={artwork.url} alt="Tranh tham khảo" />
                                 </div>
-                            );
+                            )
                         })}
                     </div>
                 </div>
 
                 <div className="form-field">
-                    <label htmlFor="usage" className="form-field__label">Nhu cầu sử dụng</label>
-                    <span>{commissionOrder.usage === "personal" ? "Mục đích cá nhân" : "Mục đích thương mại"}</span>
+                    <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
+                    <p>{proposal.termOfServiceId.content}</p>
                 </div>
+
+                <hr />
 
                 <div className="form-field">
-                    <label htmlFor="isPrivate" className="form-field__label">Riêng tư?</label>
-                    <span>{commissionOrder.isPrivate ? "Không cho phép họa sĩ sử dụng tranh vẽ cho bạn để quảng bá hình ảnh của họ" : "Cho phép họa sĩ sử dụng tranh vẽ cho bạn để quảng bá hình ảnh của họ"}</span>
+                    <label htmlFor="scope" className="form-field__label">Thanh toán</label>
+                    <p>{proposal.price}</p>
                 </div>
 
-                <div className="form-field">
-                    <label htmlFor="fileFormats" className="form-field__label">Định dạng file</label>
-                    <span>{commissionOrder.fileFormats?.length > 0 ? (
-                        commissionOrder.fileFormats.map((fileFormat, index) => { return (<span key={index}>{fileFormat}</span>) })
-                    ) : (
-                        "Không yêu cầu"
-                    )}</span>
-                </div>
+                <button className="btn btn-2 btn-md" onClick={handlePayment}>
+                        Pay with Momo
+                </button>
 
-                <div className="form-field">
-                    <label htmlFor="fileFormats" className="form-field__label">Mức giá dự kiến</label>
-                    <div>
-                        {commissionOrder.minPrice && <span>đ{commissionOrder.minPrice}</span>}
-                        {commissionOrder.maxPrice && <span> - đ{commissionOrder.maxPrice}</span>}
-                    </div>
-                </div>
-
-                <div className="form__submit-btn-container">
-                    {
-
-                        isOrderOwner && (
-                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowUpdateCommissionOrder(true) }}>Cập nhật</button>
-                        )
-                    }
-                    {
-                        (isOrderOwner || commissionOrder.isDirect === false) && (
-                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowRenderProposals(true) }}>Hợp đồng ({commissionOrder.talentsApprovedCount})</button>
-                        )
-                    }
-                    {
-                        isTalentChosen && (<button className="form__submit-btn-item btn btn-2 btn-md">Tạo hợp đồng</button>)
-                    }
-                </div>
-
+                
             </div>
         </div >
     )
 }
+

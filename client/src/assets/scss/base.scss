@@ -1143,11 +1143,17 @@ table {
         }
     }
 
-    .form__submit-btn {
+    .form__submit-btn-container {
+        display: flex;
         position: absolute;
         bottom: 12px;
         right: 20px;
+
+        .form__submit-btn-item {
+            margin-left: 12px;
+        }
     }
+    
 
     .checkbox-container {
         display: flex;
@@ -1224,16 +1230,18 @@ table {
 // References
 .reference-container {
     display: flex;
+    flex-wrap: wrap;
 
     .reference-item {
         position: relative;
+        margin-bottom: 12px;
+        margin-right: 12px;
 
         img {
             display: block;
             width: 120px;
             height: 120px;
             border-radius: 8px;
-            margin-right: 8px;
             object-fit: cover;
         }
 
