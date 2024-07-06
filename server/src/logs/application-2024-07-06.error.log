@@ -1,7 +1,8 @@
-2024-07-06 11:19:45::error::/v1/api/proposal/confirmProposal/undefined::aeec28a4-9743-419c-99b3-664e206e413e::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Proposal\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Proposal\""}
-2024-07-06 11:20:27::error::/v1/api/user/me::852fc989-e337-45ac-9794-ef9a3ace6514::403 - 1ms - Response: {"status":403,"now":1720239627142}::{"message":"Access token missing"}
-2024-07-06 11:20:42::error::/v1/api/user/me::74dd9bcd-0c7a-40d6-8b8f-da96eee5461b::403 - 0ms - Response: {"status":403,"now":1720239642666}::{"message":"Access token missing"}
-2024-07-06 11:20:42::error::/v1/api/order/readOrderHistory::1db29b79-5d82-4c52-9544-79bd06cb7daf::401 - 1ms - Response: {"status":401,"now":1720239642736}::{"message":"You are not authenticated!"}
-2024-07-06 11:20:42::error::/v1/api/user/me::1b801b09-f80d-471e-925a-3bd63503f2e8::403 - 0ms - Response: {"status":403,"now":1720239642812}::{"message":"Access token missing"}
-2024-07-06 11:20:42::error::/v1/api/order/readOrderHistory::8fe383b1-3240-43cf-87b6-fa0dd8b46782::401 - 1ms - Response: {"status":401,"now":1720239642817}::{"message":"You are not authenticated!"}
-2024-07-06 11:21:20::error::/v1/api/user/me::50b91244-bf68-4ddb-a6a3-103e32a144a7::403 - 1ms - Response: {"status":403,"now":1720239680240}::{"message":"Access token missing"}
+2024-07-06 11:51:59::error::/v1/api/post/createPost::da6c13d8-8452-44ad-8891-797ce7f49313::403 - 1ms - Response: {"status":403,"now":1720241519201}::{"message":"You are not a talent"}
+2024-07-06 11:53:06::error::/v1/api/artwork/readArtwork/6688cd89229fc4022ea79044::5350a2c3-fc33-4fc9-a317-86b4238c9f76::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 11:53:14::error::/v1/api/artwork/readPost/6688cd89229fc4022ea79044::b8dff5ef-bac0-472d-b556-96984e0e8f22::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:09:24::error::/v1/api/order/viewTalentOrderHistory::46eeef0c-f720-4819-b7b9-7284682e86aa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:10:19::error::/v1/api/order/viewTalentOrderHistory/66601810d3737cbcac3bc91e::0b9cc8c8-bb95-4547-9763-58a54457cfcd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:10:29::error::/v1/api/order/readTalentOrderHistory/66601810d3737cbcac3bc91e::350620e2-a0c6-4e5d-ae79-a51727639a61::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:11:04::error::/v1/api/order/readTalentOrderHistory::8bc5facf-4549-4666-9d9f-377ab36a06de::undefined - NaNms - Response: {}::{"message":"mongoose is not defined"}
+2024-07-06 20:11:30::error::/v1/api/order/readTalentOrderHistory::e6f9c918-fb76-44d6-9113-4c9fe1059e5b::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}

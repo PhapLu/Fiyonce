@@ -20,6 +20,7 @@ router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder)
 //END CRUD
 
 router.get('/readOrderHistory', asyncHandler(orderController.readOrderHistory))
+router.get('/readTalentOrderHistory', asyncHandler(orderController.readTalentOrderHistory))
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 router.patch('/denyOrder/:orderId', asyncHandler(orderController.denyOrder))
 

@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import Order from "../models/order.model.js"
-import Artwork from "../models/artwork.model.js"
+import Artwork from "../models/post.model.js"
 import sendEmail from '../middlewares/sendMail.js'
 import Proposal from "../models/proposal.model.js"
 import MomoService from './momo.service.js'
@@ -57,7 +57,7 @@ class ProposalService{
 
     static readProposal = async(userId, proposalId) => {
         //1. Check if proposal, user exists
-        const proposal = await Proposal.findById(proposalId).populate('orderId') 
+        const proposal = await Proposal.findById(proposalId).populate('termOfServiceId')
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError('User not found')
         if(!proposal) throw new NotFoundError('Proposal not found')
@@ -72,7 +72,7 @@ class ProposalService{
         if(!order) throw new NotFoundError('Order not found')
 
         //2. Read all proposals of a order
-        const proposals = await Proposal.find({orderId: orderId})
+        const proposals = await Proposal.find({orderId: orderId}).populate('talentChosenId', 'fullName avatar')
 
         return {
             proposals
@@ -168,8 +168,8 @@ class ProposalService{
 
         //3. Check if order status is approved
         const order = await Order.findById(proposal.orderId)
-        if(order.status !== 'approved')
-            throw new BadRequestError('Order is not approved')
+        // if(order.status !== 'approved')
+        //     throw new BadRequestError('Order is not approved')
 
         //4. Create payment with Momo
         const amount = '50000'

@@ -8,9 +8,9 @@ import helmet from 'helmet'
 import {v4 as uuidv4} from 'uuid'
 import bodyParser from 'body-parser'
 import compression from 'compression'
-import router from "./routes/index.js"
 import cookieParser from 'cookie-parser'
 import './db/init.mongodb.js'
+import router from "./routes/index.js"
 import myLogger from './loggers/mylogger.log.js'
 import configureSocket from './configs/socket.config.js'
 import SocketServices from './services/socket.service.js'
