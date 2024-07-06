@@ -5,6 +5,7 @@ import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js"
+import mongoose from "mongoose"
 
 class OrderService{
     //Order CRUD
@@ -184,6 +185,60 @@ class OrderService{
 
         return {
             orders
+        }
+    }
+
+    static readTalentOrderHistory = async(talentId) => {
+        //1. Check talent
+        const foundTalent = await User.findById(talentId)
+        if(!foundTalent) throw new NotFoundError('Talent not found!')
+        if(foundTalent.role != 'talent') throw new BadRequestError('You are not a talent!')
+
+        //2. JOIN Proposal and order to get all orders that talent involved
+        try {
+            const orders = await Proposal.aggregate([
+                {
+                    $match: { talentId: new mongoose.Types.ObjectId(talentId) }
+                },
+                {
+                    $lookup: {
+                        from: 'Orders',
+                        localField: 'orderId',
+                        foreignField: '_id',
+                        as: 'orderDetails'
+                    }
+                },
+                {
+                    $unwind: '$orderDetails'
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        orderId: '$orderDetails._id',
+                        commissionServiceId: '$orderDetails.commissionServiceId',
+                        memberId: '$orderDetails.memberId',
+                        talentChosenId: '$orderDetails.talentChosenId',
+                        status: '$orderDetails.status',
+                        title: '$orderDetails.title',
+                        description: '$orderDetails.description',
+                        isDirect: '$orderDetails.isDirect',
+                        references: '$orderDetails.references',
+                        rejectMessage: '$orderDetails.rejectMessage',
+                        minPrice: '$orderDetails.minPrice',
+                        maxPrice: '$orderDetails.maxPrice',
+                        purpose: '$orderDetails.purpose',
+                        isPrivate: '$orderDetails.isPrivate',
+                        deadline: '$orderDetails.deadline',
+                        fileFormats: '$orderDetails.fileFormats',
+                        review: '$orderDetails.review',
+                    }
+                }
+            ]);
+    
+            return orders;
+        } catch (error) {
+            console.error('Error fetching orders by talent:', error);
+            throw error;
         }
     }
 

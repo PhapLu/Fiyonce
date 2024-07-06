@@ -45,7 +45,12 @@ class OrderController{
             metadata: await OrderService.readOrderHistory(req.userId)
         }).send(res)
     }
-
+    readTalentOrderHistory = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Read all orders of a client',
+            metadata: await OrderService.readTalentOrderHistory(req.userId)
+        }).send(res)
+    }
     chooseProposal = async (req, res, next) => {
         new SuccessResponse({
             message: 'Choose talent success!',

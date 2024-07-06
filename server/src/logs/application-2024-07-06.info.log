@@ -10,3 +10,14 @@
 2024-07-06 11:54:21::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::15ce6a27-d59e-48c7-a40a-6ed8d3d2abcb::input-params ::GET::::{}
 2024-07-06 11:55:28::info::/v1/api/post/updatePost/6688cd89229fc4022ea79044::c3c04529-7e19-4c86-99c1-98d15d0ddc29::input-params ::PATCH::::{}
 2024-07-06 11:56:27::info::/v1/api/post/deletePost/6688cd89229fc4022ea79044::9630b703-a5dc-469e-a55d-aaad894f12e1::input-params ::DELETE::::{}
+2024-07-06 20:09:24::info::/v1/api/order/viewTalentOrderHistory::46eeef0c-f720-4819-b7b9-7284682e86aa::input-params ::GET::::{}
+2024-07-06 20:09:24::error::/v1/api/order/viewTalentOrderHistory::46eeef0c-f720-4819-b7b9-7284682e86aa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:10:00::info::/v1/api/auth/users/login::04dcdd81-3469-4097-a62e-c4495acf6991::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-06 20:10:19::info::/v1/api/order/viewTalentOrderHistory/66601810d3737cbcac3bc91e::0b9cc8c8-bb95-4547-9763-58a54457cfcd::input-params ::GET::::{}
+2024-07-06 20:10:19::error::/v1/api/order/viewTalentOrderHistory/66601810d3737cbcac3bc91e::0b9cc8c8-bb95-4547-9763-58a54457cfcd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:10:29::info::/v1/api/order/readTalentOrderHistory/66601810d3737cbcac3bc91e::350620e2-a0c6-4e5d-ae79-a51727639a61::input-params ::GET::::{}
+2024-07-06 20:10:29::error::/v1/api/order/readTalentOrderHistory/66601810d3737cbcac3bc91e::350620e2-a0c6-4e5d-ae79-a51727639a61::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:11:04::info::/v1/api/order/readTalentOrderHistory::8bc5facf-4549-4666-9d9f-377ab36a06de::input-params ::GET::::{}
+2024-07-06 20:11:04::error::/v1/api/order/readTalentOrderHistory::8bc5facf-4549-4666-9d9f-377ab36a06de::undefined - NaNms - Response: {}::{"message":"mongoose is not defined"}
+2024-07-06 20:11:30::info::/v1/api/order/readTalentOrderHistory::e6f9c918-fb76-44d6-9113-4c9fe1059e5b::input-params ::GET::::{}
+2024-07-06 20:11:30::error::/v1/api/order/readTalentOrderHistory::e6f9c918-fb76-44d6-9113-4c9fe1059e5b::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
