@@ -65,3 +65,13 @@
 2024-07-05 15:37:52::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::f77dbc7e-77a4-4ec8-be77-243914330ed8::input-params ::GET::::{}
 2024-07-05 15:38:00::info::/v1/api/user/me::c1bec7ec-1b5e-42f8-b7b7-6df040b82d39::input-params ::GET::::{}
 2024-07-05 15:38:00::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::34e2b724-d142-4030-b873-8533fde540bd::input-params ::GET::::{}
+2024-07-05 21:12:58::info::/v1/api/proposal/readProposal/666aaf4544d8bb20faa9d649::2275c215-6ed2-4dfa-bd20-e9aabce2f3a2::input-params ::GET::::{}
+2024-07-05 21:13:57::info::/v1/api/termOfService/readTermOfServices::c9490f3f-20d6-4202-899b-8f1bcbcf539a::input-params ::GET::::{}
+2024-07-05 21:14:17::info::/v1/api/proposal/sendProposal/667cd4dc1aaddd427cb431c8::2df0ce83-af74-4a8c-90fa-db93b2a4df93::input-params ::POST::::{"title":"France's order","scope":"You will get a jpg file","startAt":"","deadline":"","price":"80","termOfServiceId":"667c17e0cfcd41899e9b2601"}
+2024-07-05 21:14:17::error::/v1/api/proposal/sendProposal/667cd4dc1aaddd427cb431c8::2df0ce83-af74-4a8c-90fa-db93b2a4df93::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-05 21:44:59::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::346caef4-b334-4758-a511-944d4cce833d::input-params ::POST::::{}
+2024-07-05 21:44:59::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::346caef4-b334-4758-a511-944d4cce833d::401 - 1ms - Response: {"status":401,"now":1720190699814}::{"message":"You are not authorized to confirm this proposal"}
+2024-07-05 21:46:03::info::/v1/api/auth/users/login::f9510704-d042-4af2-b082-57b411c3ebe8::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-05 21:46:06::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::d76cee78-3332-46d2-b92c-0d01a2c39b86::input-params ::POST::::{}
+2024-07-05 21:46:06::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::d76cee78-3332-46d2-b92c-0d01a2c39b86::403 - 0ms - Response: {"status":403,"now":1720190766830}::{"message":"Order is not approved"}
+2024-07-05 21:46:22::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::f34796d7-3a64-4df2-a393-699afc1eadac::input-params ::POST::::{}

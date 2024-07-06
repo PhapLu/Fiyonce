@@ -1,0 +1,12 @@
+2024-07-06 11:51:59::info::/v1/api/post/createPost::da6c13d8-8452-44ad-8891-797ce7f49313::input-params ::POST::::{}
+2024-07-06 11:51:59::error::/v1/api/post/createPost::da6c13d8-8452-44ad-8891-797ce7f49313::403 - 1ms - Response: {"status":403,"now":1720241519201}::{"message":"You are not a talent"}
+2024-07-06 11:52:10::info::/v1/api/auth/users/login::bee60f7d-1417-4fdb-bae8-989187073aae::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-06 11:52:22::info::/v1/api/post/createPost::98986cfb-9de9-4ae6-8193-3d134eb838de::input-params ::POST::::{}
+2024-07-06 11:53:06::info::/v1/api/artwork/readArtwork/6688cd89229fc4022ea79044::5350a2c3-fc33-4fc9-a317-86b4238c9f76::input-params ::GET::::{}
+2024-07-06 11:53:06::error::/v1/api/artwork/readArtwork/6688cd89229fc4022ea79044::5350a2c3-fc33-4fc9-a317-86b4238c9f76::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 11:53:14::info::/v1/api/artwork/readPost/6688cd89229fc4022ea79044::b8dff5ef-bac0-472d-b556-96984e0e8f22::input-params ::GET::::{}
+2024-07-06 11:53:14::error::/v1/api/artwork/readPost/6688cd89229fc4022ea79044::b8dff5ef-bac0-472d-b556-96984e0e8f22::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 11:53:19::info::/v1/api/post/readPost/6688cd89229fc4022ea79044::ae534867-f421-4566-8d18-7e3be6591d28::input-params ::GET::::{}
+2024-07-06 11:54:21::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::15ce6a27-d59e-48c7-a40a-6ed8d3d2abcb::input-params ::GET::::{}
+2024-07-06 11:55:28::info::/v1/api/post/updatePost/6688cd89229fc4022ea79044::c3c04529-7e19-4c86-99c1-98d15d0ddc29::input-params ::PATCH::::{}
+2024-07-06 11:56:27::info::/v1/api/post/deletePost/6688cd89229fc4022ea79044::9630b703-a5dc-469e-a55d-aaad894f12e1::input-params ::DELETE::::{}

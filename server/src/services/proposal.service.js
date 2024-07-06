@@ -168,8 +168,8 @@ class ProposalService{
 
         //3. Check if order status is approved
         const order = await Order.findById(proposal.orderId)
-        if(order.status !== 'approved')
-            throw new BadRequestError('Order is not approved')
+        // if(order.status !== 'approved')
+        //     throw new BadRequestError('Order is not approved')
 
         //4. Create payment with Momo
         const amount = '50000'

@@ -8,3 +8,6 @@
 2024-07-05 11:47:00::error::/v1/api/post/updatePost/668779522c6eaf5a3bc8d655::3d94d8ff-db91-4bd3-bdfa-5a82b43125cf::undefined - NaNms - Response: {}::{"message":"Post update failed"}
 2024-07-05 11:50:45::error::/v1/api/post/updatePost/668779522c6eaf5a3bc8d655::e8fd345a-542e-454c-8879-34e752bce1a5::undefined - NaNms - Response: {}::{"message":"Post update failed"}
 2024-07-05 11:51:12::error::/v1/api/post/updatePost/668779522c6eaf5a3bc8d655::acf8ed91-cb37-4d64-89e9-ee88a4cf088c::undefined - NaNms - Response: {}::{"message":"Post update failed"}
+2024-07-05 21:14:17::error::/v1/api/proposal/sendProposal/667cd4dc1aaddd427cb431c8::2df0ce83-af74-4a8c-90fa-db93b2a4df93::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-05 21:44:59::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::346caef4-b334-4758-a511-944d4cce833d::401 - 1ms - Response: {"status":401,"now":1720190699814}::{"message":"You are not authorized to confirm this proposal"}
+2024-07-05 21:46:06::error::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::d76cee78-3332-46d2-b92c-0d01a2c39b86::403 - 0ms - Response: {"status":403,"now":1720190766830}::{"message":"Order is not approved"}

@@ -125,7 +125,6 @@ class PostService{
       
             // Delete old files from Cloudinary
             const artworksToDelete = await Artwork.find({ _id: { $in: postToUpdate.artworks } })
-            console.log('artworksToDelete:', artworksToDelete)
             const publicIds = artworksToDelete.map(artwork => extractPublicIdFromUrl(artwork.url))
             await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
 
@@ -159,22 +158,24 @@ class PostService{
     static deletePost = async(userId, artworkId) => {
         //1. Check user and artwork
         const user = await User.findById(userId)
-        const artworkToDelete = await Post.findById(artworkId)
+        const postToDelete = await Post.findById(artworkId)
 
         if(!user) throw new NotFoundError('User not found')
-        if(!artworkToDelete) throw new NotFoundError('Post not found')
+        if(!postToDelete) throw new NotFoundError('Post not found')
         if(user.role !== 'talent') throw new BadRequestError('You are not a talent')
-        if(artworkToDelete.talentId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
+        if(postToDelete.talentId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
 
-        //2. Delete artwork on cloudinary
+        //2. Delete old files from Cloudinary
         try {
-            const publicIds = artworkToDelete.artworks.map(artwork => extractPublicIdFromUrl(artwork))
+            const artworksToDelete = await Artwork.find({ _id: { $in: postToDelete.artworks } })
+            const publicIds = artworksToDelete.map(artwork => extractPublicIdFromUrl(artwork.url))
             await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
         } catch (error) {
             console.log('Error deleting artwork images:', error)
         }
 
-        //3. Delete artwork
+        //3. Delete artwork and post in database
+        await Artwork.deleteMany({ _id: { $in: postToDelete.artworks } })
         await Post.findByIdAndDelete(artworkId)
 
         return {
