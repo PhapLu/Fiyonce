@@ -184,63 +184,81 @@ class OrderService{
             .populate('talentChosenId', 'stageName avatar')
 
         return {
-            orders
+            memberOrderHistory: orders
         }
     }
 
-    static readTalentOrderHistory = async(talentId) => {
-        //1. Check talent
-        const foundTalent = await User.findById(talentId)
-        if(!foundTalent) throw new NotFoundError('Talent not found!')
-        if(foundTalent.role != 'talent') throw new BadRequestError('You are not a talent!')
-
-        //2. JOIN Proposal and order to get all orders that talent involved
+    static readTalentOrderHistory = async (talentId) => {
+        // 1. Check if the talent exists and is of role 'talent'
+        const foundTalent = await User.findById(talentId);
+        if (!foundTalent) throw new NotFoundError('Talent not found!');
+        if (foundTalent.role !== 'talent') throw new BadRequestError('You are not a talent!');
+    
         try {
-            const orders = await Proposal.aggregate([
+            // 2. Aggregate to get all orders involving the talent
+            const orders = await Order.aggregate([
+                // Match orders where the talent is chosen
                 {
-                    $match: { talentId: new mongoose.Types.ObjectId(talentId) }
-                },
-                {
-                    $lookup: {
-                        from: 'Orders',
-                        localField: 'orderId',
-                        foreignField: '_id',
-                        as: 'orderDetails'
+                    $match: {
+                        $or: [
+                            { talentChosenId: new mongoose.Types.ObjectId(talentId) },
+                            { 'proposals.talentId': new mongoose.Types.ObjectId(talentId) } // This ensures orders with proposals by talentId
+                        ]
                     }
                 },
+                // Lookup to get details from Proposal if exists
                 {
-                    $unwind: '$orderDetails'
+                    $lookup: {
+                        from: 'proposals',
+                        localField: '_id',
+                        foreignField: 'orderId',
+                        as: 'proposals'
+                    }
                 },
+                // Unwind proposals array to work with individual proposals
+                { $unwind: { path: '$proposals', preserveNullAndEmptyArrays: true } },
+                // Match orders with talentChosenId and no proposals
+                {
+                    $match: {
+                        $and: [
+                            { talentChosenId: new mongoose.Types.ObjectId(talentId) },
+                            { proposals: { $exists: false } }
+                        ]
+                    }
+                },
+                // Project to shape the output
                 {
                     $project: {
                         _id: 0,
-                        orderId: '$orderDetails._id',
-                        commissionServiceId: '$orderDetails.commissionServiceId',
-                        memberId: '$orderDetails.memberId',
-                        talentChosenId: '$orderDetails.talentChosenId',
-                        status: '$orderDetails.status',
-                        title: '$orderDetails.title',
-                        description: '$orderDetails.description',
-                        isDirect: '$orderDetails.isDirect',
-                        references: '$orderDetails.references',
-                        rejectMessage: '$orderDetails.rejectMessage',
-                        minPrice: '$orderDetails.minPrice',
-                        maxPrice: '$orderDetails.maxPrice',
-                        purpose: '$orderDetails.purpose',
-                        isPrivate: '$orderDetails.isPrivate',
-                        deadline: '$orderDetails.deadline',
-                        fileFormats: '$orderDetails.fileFormats',
-                        review: '$orderDetails.review',
+                        orderId: '$_id',
+                        commissionServiceId: 1,
+                        memberId: 1,
+                        talentChosenId: 1,
+                        status: 1,
+                        title: 1,
+                        description: 1,
+                        isDirect: 1,
+                        references: 1,
+                        rejectMessage: 1,
+                        minPrice: 1,
+                        maxPrice: 1,
+                        purpose: 1,
+                        isPrivate: 1,
+                        deadline: 1,
+                        fileFormats: 1,
+                        review: 1,
+                        proposalId: '$proposals._id', // Include proposal ID if exists
+                        proposalTitle: '$proposals.title' // Include proposal title if exists
                     }
                 }
             ]);
     
-            return orders;
+            return { talentOrderHistory: orders };
         } catch (error) {
             console.error('Error fetching orders by talent:', error);
             throw error;
         }
-    }
+    };
 
     // static chooseProposal = async(userId, orderId, proposalId) => {
     //     //1. Check user, order and proposal

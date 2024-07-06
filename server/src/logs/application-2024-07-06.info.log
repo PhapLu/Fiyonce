@@ -21,3 +21,10 @@
 2024-07-06 20:11:04::error::/v1/api/order/readTalentOrderHistory::8bc5facf-4549-4666-9d9f-377ab36a06de::undefined - NaNms - Response: {}::{"message":"mongoose is not defined"}
 2024-07-06 20:11:30::info::/v1/api/order/readTalentOrderHistory::e6f9c918-fb76-44d6-9113-4c9fe1059e5b::input-params ::GET::::{}
 2024-07-06 20:11:30::error::/v1/api/order/readTalentOrderHistory::e6f9c918-fb76-44d6-9113-4c9fe1059e5b::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-07-06 20:12:12::info::/v1/api/order/readTalentOrderHistory::92ea3be7-fb81-4226-be0c-af43088faf84::input-params ::GET::::{}
+2024-07-06 20:33:37::info::/v1/api/order/readTalentOrderHistory::58b7fa8f-8d7a-4da5-97bb-466a54efaf91::input-params ::GET::::{}
+2024-07-06 20:33:37::error::/v1/api/order/readTalentOrderHistory::58b7fa8f-8d7a-4da5-97bb-466a54efaf91::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-07-06 20:33:57::info::/v1/api/order/readTalentOrderHistory::70829cad-b095-4c7c-9442-2deff5fb7d9e::input-params ::GET::::{}
+2024-07-06 20:33:57::error::/v1/api/order/readTalentOrderHistory::70829cad-b095-4c7c-9442-2deff5fb7d9e::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-07-06 20:34:21::info::/v1/api/order/readTalentOrderHistory::101f0d8c-1e6a-4293-9996-42a925fb1f23::input-params ::GET::::{}
+2024-07-06 20:34:21::error::/v1/api/order/readTalentOrderHistory::101f0d8c-1e6a-4293-9996-42a925fb1f23::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
