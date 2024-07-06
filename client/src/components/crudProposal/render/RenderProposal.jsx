@@ -15,10 +15,8 @@ import { apiUtils } from "../../../utils/newRequest";
 // import "./RenderProposal.scss"
 
 
-export default function RenderProposal({ commissionOrder, proposal, setShowRenderProposal, setOverlayVisible }) {
-    console.log(proposal)
-
-    if (!proposal || !commissionOrder) {
+export default function RenderProposal({ proposalId, commissionOrder, setShowRenderProposal, setOverlayVisible }) {
+    if (!proposalId || !commissionOrder) {
         return;
     }
 
@@ -27,11 +25,23 @@ export default function RenderProposal({ commissionOrder, proposal, setShowRende
         try {
             // const response = await newRequest.get(`/proposals/readProposal/:${proposal._id}`);
             // return response.data.metadata.proposal;
+            console.log({
+                scope: "Ban se nhan duoc ....",
+                startAt: "2024-07-12",
+                deadline: "2024-07-29",
+                price: 500000,
+                termOfServiceId: {
+                    _id: 1,
+                    content: "Dieu khoan dich vu content"
+                }
+            })
             return {
                 scope: "Ban se nhan duoc ....",
                 startAt: "2024-07-12",
                 deadline: "2024-07-29",
                 price: 500000,
+                artworks: [
+                ],
                 termOfServiceId: {
                     _id: 1,
                     content: "Dieu khoan dich vu content"
@@ -42,7 +52,7 @@ export default function RenderProposal({ commissionOrder, proposal, setShowRende
         }
     }
 
-    const { data: proposals, error, isError, isLoading } = useQuery(
+    const { data: proposal, error, isError, isLoading } = useQuery(
         ['fetchProposal'],
         () => fetchProposal(),
         {
@@ -83,6 +93,10 @@ export default function RenderProposal({ commissionOrder, proposal, setShowRende
         } catch (error) {
             console.log(error)
         }
+    }
+
+    if (isLoading) {
+        return <div className="loading-spinner" />;
     }
 
 
@@ -167,13 +181,15 @@ export default function RenderProposal({ commissionOrder, proposal, setShowRende
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Tranh tham khảo</label>
                     <div className="reference-container">
-                        {proposal.artworks.map((artwork, index) => {
+                        {proposal.artworks ? proposal.artworks.map((artwork, index) => {
                             return (
                                 <div className="reference-item" key={index}>
                                     <img src={artwork.url} alt="Tranh tham khảo" />
                                 </div>
                             )
-                        })}
+                        }) : (
+                            <p>Không đính kèm được file trong outlook.</p>
+                        )}
                     </div>
                 </div>
 

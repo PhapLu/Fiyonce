@@ -30,6 +30,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
             // return response.data.metadata.proposals;
             return [
                 {
+                    _id: 1,
                     talentChosenId: {
                         _id: 1,
                         fullName: "John Doe",
@@ -50,6 +51,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                     createdAt: "2024-05-18",
                 },
                 {
+                    _id: 2,
                     talentChosenId: {
                         _id: 1,
                         fullName: "John Doe",
@@ -103,7 +105,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
     }, [setShowRenderProposals, setOverlayVisible]);
 
     return (
-        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposal={proposal} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal}/> : (
+        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposal={proposal} proposalId={proposal._id} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal}/> : (
             <div className="render-proposals modal-form type-2" ref={renderProposalsRef} onClick={(e) => { e.stopPropagation() }}>
                 <Link to="/help_center" className="form__help" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">

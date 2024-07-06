@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { isFilled } from "../../../utils/validator.js";
 import { useModal } from "../../../contexts/modal/ModalContext";
 
+// Styling
+import "./UpdateCommissionServiceCategory.scss";
+
 export default function UpdateCommissionServiceCategory({
     updateCommissionServiceCategory,
     setShowUpdateCommissionServiceCategoryForm,

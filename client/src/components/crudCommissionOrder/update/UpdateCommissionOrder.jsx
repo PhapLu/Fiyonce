@@ -140,6 +140,7 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
     // Function to update an order
     const updateNewOrder = async (orderData) => {
         const response = await apiUtils.patch(`/order/updateOrder/${orderData.get("_id")}`, orderData);
+        console.log(response);
         return response.data;
     };
 
@@ -531,16 +532,19 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
                         </>
                     )}
             </div>
-            <button type="submit"
-                className="form__submit-btn btn btn-2 btn-md"
-                onClick={handleSubmit}
-                disabled={isSubmitOrderCommissionLoading}>
-                {isSubmitOrderCommissionLoading ? (
-                    <span className="btn-spinner"></span>
-                ) : (
-                    "Xác nhận"
-                )}
-            </button>
+
+            <div className="form__submit-btn-container">
+                <button type="submit"
+                    className="form__submit-btn btn btn-2 btn-md"
+                    onClick={handleSubmit}
+                    disabled={isSubmitOrderCommissionLoading}>
+                    {isSubmitOrderCommissionLoading ? (
+                        <span className="btn-spinner"></span>
+                    ) : (
+                        "Xác nhận"
+                    )}
+                </button>
+            </div>
         </div >
     )
 }

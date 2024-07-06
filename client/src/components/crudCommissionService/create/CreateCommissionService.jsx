@@ -475,18 +475,22 @@ export default function CreateCommissionService({
                     </div>
                 </>
             </div>
-            <button
-                type="submit"
-                className="form__submit-btn btn btn-2 btn-md"
-                onClick={handleSubmit}
-                disabled={isSubmitCreateCommissionServiceLoading}
-            >
-                {isSubmitCreateCommissionServiceLoading ? (
-                    <span className="btn-spinner"></span>
-                ) : (
-                    "Xác nhận"
-                )}
-            </button>
+
+            <div className="form__submit-btn-container">
+                <button
+                    type="submit"
+                    className="form__submit-btn-item btn btn-2 btn-md"
+                    onClick={handleSubmit}
+                    disabled={isSubmitCreateCommissionServiceLoading}
+                >
+                    {isSubmitCreateCommissionServiceLoading ? (
+                        <span className="btn-spinner"></span>
+                    ) : (
+                        "Xác nhận"
+                    )}
+
+                </button>
+            </div>
         </div>
     );
 }

@@ -160,7 +160,7 @@ export default function Profile() {
                                                 to={`/users/${userId}/order-history`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
                                             >
-                                                <span>Đơn hàng của tôi</span>
+                                                <span>Đơn hàng</span>
                                             </Link>
 
                                             <Link

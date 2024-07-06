@@ -7,8 +7,8 @@ import {useState} from "react";
 // Styling
 import "./AddCommissionCategory.scss";
 
-export default function AddCommissionServiceCategory() {
+export default function CreateommissionServiceCategory() {
     return (
-        .
+        <div></div>
     )
-}
+}f

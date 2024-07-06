@@ -105,8 +105,6 @@ export const AuthProvider = ({ children }) => {
     };
 
 const logout = async () => {
-    alert("Log out")
-    console.log("Log out")
     try {
         await apiUtils.post("auth/users/logout");
         setUserInfo(null);
