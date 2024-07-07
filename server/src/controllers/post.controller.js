@@ -24,6 +24,13 @@ class PostController{
         }).send(res)
     }
     
+    readArtworks = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Get list artworks success!',
+            metadata: await PostService.readArtworks(req.params.talentId)
+        }).send(res)
+    }
+
     updatePost = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Update post success!',

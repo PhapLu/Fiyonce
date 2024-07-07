@@ -95,6 +95,30 @@ class PostService{
         }
     }
 
+    static readArtworks = async(talentId) => {
+        try {
+            // Find posts where talentId matches
+            const posts = await Post.find({ talentId })
+                .populate({
+                    path: 'artworks',  // Populate the artworks field
+                    model: 'Artwork',  // Model to populate from
+                    select: 'url'  // Optionally specify fields to select
+                })
+                .exec();
+    
+            // Extract artworks from posts
+            const artworks = posts.reduce((allArtworks, post) => {
+                allArtworks.push(...post.artworks);  // Add artworks from each post to the array
+                return allArtworks;
+            }, []);
+    
+            return artworks;
+        } catch (error) {
+            console.error('Error fetching artworks:', error);
+            throw error;
+        }
+    }
+
     static updatePost = async (userId, artworkId, req) => {
         // 1. Check user and artwork
         const user = await User.findById(userId)
