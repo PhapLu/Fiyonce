@@ -8,6 +8,7 @@ const router = express.Router()
 
 router.get('/readPost/:postId', asyncHandler(postController.readPost))
 router.get('/readPostsOfTalent/:talentId', asyncHandler(postController.readPostsOfTalent))
+router.get('/readPostCategoriesWithPosts/:talentId', asyncHandler(postController.readPostCategoriesWithPosts))
 router.get('/readArtworks/:talentId', asyncHandler(postController.readArtworks))
 
 //authentication

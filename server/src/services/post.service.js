@@ -3,6 +3,7 @@ import Artwork from "../models/artwork.model.js"
 import { User } from "../models/user.model.js"
 import { BadRequestError, NotFoundError } from "../core/error.response.js"
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from "../utils/cloud.util.js"
+import PostCategory from "../models/postCategory.model.js"
 
 class PostService{
     static createPost = async(userId, req) => {
@@ -92,6 +93,28 @@ class PostService{
 
         return {
             artworks
+        }
+    }
+
+    static readPostCategoriesWithPosts = async (talentId) => {
+        try {
+            // Fetch all post categories
+            const postCategories = await PostCategory.find({ talentId }).lean()
+
+            // For each category, find associated posts
+            const categorizedPosts = await Promise.all(postCategories.map(async (category) => {
+                const posts = await Post.find({ postCategoryId: category._id }).lean()
+
+                return {
+                    _id: category._id,
+                    title: category.title,
+                    posts
+                }
+            }))
+            return { categorizedPosts }
+        } catch (error) {
+            console.error('Error fetching posts by category:', error)
+            throw new Error('Failed to fetch posts by category')
         }
     }
 

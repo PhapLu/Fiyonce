@@ -10,3 +10,5 @@
 2024-07-07 09:42:50::error::/v1/api/post/createPost::f4772bd6-6cce-4e54-8dba-98a938e4b10d::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
 2024-07-07 09:43:17::info::/v1/api/post/createPost::92cbb9aa-56b8-438d-90ad-ea74e465203d::input-params ::POST::::{}
 2024-07-07 09:57:46::info::/v1/api/post/readArtworks/66601810d3737cbcac3bc91e::6e1d756b-efae-4688-9605-7ae2d555f07e::input-params ::GET::::{}
+2024-07-07 09:59:40::info::/v1/api/post/createPost::f170b95b-e60b-474e-8e7f-d9c2642900ca::input-params ::POST::::{}
+2024-07-07 09:59:56::info::/v1/api/post/readArtworks/66601810d3737cbcac3bc91e::31dde628-f5c0-460f-a9c7-9bd58272076d::input-params ::GET::::{}
