@@ -4,7 +4,7 @@ const DOCUMENT_NAME = 'Artwork'
 const COLLECTION_NAME = 'Artworks'
 
 const ArtworkSchema = new Schema({
-    talentId:{ type: Schema.Types.ObjectId, ref: 'User', required: true },
+    postId:{ type: Schema.Types.ObjectId, ref: 'User'},
     url:{ type: String, required: true },
 },{
     timestamps: true,

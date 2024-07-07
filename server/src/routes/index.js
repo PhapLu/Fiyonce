@@ -12,7 +12,7 @@ import talentRequestRoute from './talentRequest/index.js'
 import termOfServiceRoute from './termOfService/index.js'
 import reportDashboardRoute from './reportDashboard/index.js'
 import serviceCategoryRoute from './serviceCategory/index.js'
-import artworkCategoryRoute from './artworkCategory/index.js'
+import postCategoryRoute from './postCategory/index.js'
 import accountDashboardRoute from './accountDashboard/index.js'
 import commissionReportRoute from './commissionReport/index.js'
 import commissionServiceRoute from './commissionService/index.js'
@@ -35,7 +35,7 @@ router.use('/v1/api/movement', movementRoute)
 router.use('/v1/api/termOfService', termOfServiceRoute)
 router.use('/v1/api/talentRequest', talentRequestRoute)
 router.use('/v1/api/serviceCategory', serviceCategoryRoute)
-router.use('/v1/api/artworkCategory', artworkCategoryRoute)
+router.use('/v1/api/postCategory', postCategoryRoute)
 router.use('/v1/api/reportDashboard', reportDashboardRoute)
 router.use('/v1/api/commissionReport', commissionReportRoute)
 router.use('/v1/api/accountDashboard', accountDashboardRoute)

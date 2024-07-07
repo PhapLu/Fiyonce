@@ -32,14 +32,15 @@ class PostService{
 
             //4. Create and save artwork
             let artworksId = []
+            let newArtworks = []
             await Promise.all(
                 artworks.map(async (artwork) => {
                     const newArtwork = new Artwork({
-                        talentId: userId,
                         url: artwork
                     })
                     await newArtwork.save()
                     artworksId.push(newArtwork._id)
+                    newArtworks.push(newArtwork.toObject())
                 })
             )
 
@@ -50,6 +51,16 @@ class PostService{
                 artworks: artworksId
             })
             await newPost.save()
+
+            //6. Add postId to artworks
+            await Promise.all(
+                newArtworks.map(async (artwork) => {
+                    await Artwork.findByIdAndUpdate(
+                        artwork._id,
+                        { postId: newPost._id }
+                    )
+                }
+            ))
 
             return {
                 artwork: newPost

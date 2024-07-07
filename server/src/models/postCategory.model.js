@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-const DOCUMENT_NAME = 'ArtworkCategory'
-const COLLECTION_NAME = 'ArtworkCategories'
+const DOCUMENT_NAME = 'PostCategory'
+const COLLECTION_NAME = 'PostCategories'
 
-const ArtworkCategorySchema = new mongoose.Schema({
+const PostCategorySchema = new mongoose.Schema({
     talentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -17,5 +17,5 @@ const ArtworkCategorySchema = new mongoose.Schema({
     timestamps: true,
     collection: COLLECTION_NAME
 })
-const ArtworkCategory = mongoose.model(DOCUMENT_NAME, ArtworkCategorySchema)
-export default ArtworkCategory
+const PostCategory = mongoose.model(DOCUMENT_NAME, PostCategorySchema)
+export default PostCategory
