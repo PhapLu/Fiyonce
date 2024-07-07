@@ -3,11 +3,15 @@ import sanitize from 'mongo-sanitize';
 
 // Define allowed HTML tags and attributes for sanitization
 const sanitizeHtmlOptions = {
-  allowedTags: ['b', 'i', 'em', 'strong', 'a', 'div', 'span'],
+  allowedTags: [
+    'b', 'i', 'em', 'strong', 'a', 'div', 'span', 'p', 'img', 'section', 'font',
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'li', 'ol', 'br', 'hr', 'blockquote'
+  ],
   allowedAttributes: {
-    'a': ['href'],
-    'div': [],
-    'span': []
+    '*': ['class', 'id', 'style'], // Allow common attributes for all tags
+    'a': ['href', 'target'],
+    'img': ['src', 'alt'],
+    'font': ['size']
   },
   allowedSchemes: ['http', 'https']
 };
@@ -17,7 +21,7 @@ const sanitizeObject = (obj) => {
   if (Array.isArray(obj)) {
     // If obj is an array, recursively sanitize each item
     return obj.map(item => sanitizeObject(item));
-  } else if (obj && typeof obj === 'object') {
+  } else if (obj && typeof obj === 'object' && !Buffer.isBuffer(obj)) {
     // If obj is an object, iterate through its keys
     const sanitizedObject = {};
     for (const key in obj) {
@@ -34,8 +38,8 @@ const sanitizeObject = (obj) => {
     // If obj is a string, sanitize HTML and remove potential MongoDB injection
     return sanitizeHtml(sanitize(obj), sanitizeHtmlOptions);
   } else {
-    // Convert other types to string to ensure uniform handling
-    return String(obj);
+    // Return other types as is to ensure uniform handling
+    return obj;
   }
 };
 
