@@ -1,1 +1,3 @@
-2024-07-07 07:05:43::error::/v1/api/order/readMemberOrderHistory::4761cf97-ebc7-4adc-99c7-c984fccfc146::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-07 09:42:11::error::/v1/api/post/createPost::1303e967-35b1-4ded-b981-ddff75e0d550::403 - 2ms - Response: {"status":403,"now":1720320131884}::{"message":"You are not a talent"}
+2024-07-07 09:42:30::error::/v1/api/post/createPost::3ff3a5be-4b1c-4a87-bc40-fe618387cfb0::403 - 3ms - Response: {"status":403,"now":1720320150395}::{"message":"Please provide artwork files"}
+2024-07-07 09:42:50::error::/v1/api/post/createPost::f4772bd6-6cce-4e54-8dba-98a938e4b10d::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}

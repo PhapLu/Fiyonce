@@ -5,7 +5,7 @@ const COLLECTION_NAME = 'Posts'
 
 const PostSchema = new Schema({
     talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    artworkCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'PostCategory' },
+    postCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'PostCategory' },
     movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
     title:{ type: String },
     description: { type: String },

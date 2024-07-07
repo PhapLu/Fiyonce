@@ -3,6 +3,7 @@ import Artwork from "../models/artwork.model.js"
 import { User } from "../models/user.model.js"
 import { BadRequestError, NotFoundError } from "../core/error.response.js"
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from "../utils/cloud.util.js"
+import PostCategory from "../models/postCategory.model.js"
 
 class PostService{
     static createPost = async(userId, req) => {
@@ -32,14 +33,15 @@ class PostService{
 
             //4. Create and save artwork
             let artworksId = []
+            let newArtworks = []
             await Promise.all(
                 artworks.map(async (artwork) => {
                     const newArtwork = new Artwork({
-                        talentId: userId,
                         url: artwork
                     })
                     await newArtwork.save()
                     artworksId.push(newArtwork._id)
+                    newArtworks.push(newArtwork.toObject())
                 })
             )
 
@@ -50,6 +52,16 @@ class PostService{
                 artworks: artworksId
             })
             await newPost.save()
+
+            //6. Add postId to artworks
+            await Promise.all(
+                newArtworks.map(async (artwork) => {
+                    await Artwork.findByIdAndUpdate(
+                        artwork._id,
+                        { postId: newPost._id }
+                    )
+                }
+            ))
 
             return {
                 artwork: newPost
@@ -81,6 +93,52 @@ class PostService{
 
         return {
             artworks
+        }
+    }
+
+    static readPostCategoriesWithPosts = async (talentId) => {
+        try {
+            // Fetch all post categories
+            const postCategories = await PostCategory.find({ talentId }).lean()
+
+            // For each category, find associated posts
+            const categorizedPosts = await Promise.all(postCategories.map(async (category) => {
+                const posts = await Post.find({ postCategoryId: category._id }).lean()
+
+                return {
+                    _id: category._id,
+                    title: category.title,
+                    posts
+                }
+            }))
+            return { categorizedPosts }
+        } catch (error) {
+            console.error('Error fetching posts by category:', error)
+            throw new Error('Failed to fetch posts by category')
+        }
+    }
+
+    static readArtworks = async(talentId) => {
+        try {
+            // Find posts where talentId matches
+            const posts = await Post.find({ talentId })
+                .populate({
+                    path: 'artworks',  // Populate the artworks field
+                    model: 'Artwork',  // Model to populate from
+                    select: 'url'  // Optionally specify fields to select
+                })
+                .exec();
+    
+            // Extract artworks from posts
+            const artworks = posts.reduce((allArtworks, post) => {
+                allArtworks.push(...post.artworks);  // Add artworks from each post to the array
+                return allArtworks;
+            }, []);
+    
+            return artworks;
+        } catch (error) {
+            console.error('Error fetching artworks:', error);
+            throw error;
         }
     }
 
