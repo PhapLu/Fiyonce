@@ -1,15 +1,24 @@
+// Imports
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 
+// Contexts
 import { useAuth } from "../../contexts/auth/AuthContext";
-import { useOutletContext } from "react-router-dom";
-import { apiUtils } from "../../utils/newRequest"
-import "./OrderHistory.scss";
+
+// Components
 import RenderCommissionOrder from "../crudCommissionOrder/render/RenderCommissionOrder";
 import UpdateCommissionOrder from "../crudCommissionOrder/update/UpdateCommissionOrder";
-import { formatCurrency } from "../../utils/formatter";
 import RenderProposals from "../crudProposal/render/RenderProposals";
+import CreateProposal from "../crudProposal/create/CreateProposal";
+
+
+// Utils
+import { apiUtils } from "../../utils/newRequest"
+import { formatCurrency } from "../../utils/formatter";
+
+// Styling
+import "./OrderHistory.scss";
 
 export default function OrderHistory() {
     const { userInfo } = useAuth();
@@ -17,22 +26,23 @@ export default function OrderHistory() {
     const [showRenderCommissionOrder, setShowRenderCommissionOrder] = useState();
     const [showUpdateCommissionOrder, setShowUpdateCommissionOrder] = useState();
     const [showRenderProposals, setShowRenderProposals] = useState(false);
+
+    const [showCreateProposal, setShowCreateProposal] = useState(false);
     const [overlayVisible, setOverlayVisible] = useState();
 
-    const [orderType, setOrderType] = useState(userInfo.role === "talent" ? "proposals" : "briefs");
+
+    const [orderHistoryType, setOrderHistoryType] = useState(userInfo.role);
 
     const fetchMemberOrderHistory = async () => {
         try {
-            const response = await apiUtils.get(`/order/readOrderHistory`);
-            console.log("abc")
-            console.log(response)
-            return response.data.metadata.orders;
+            const response = await apiUtils.get(`/order/readMemberOrderHistory`);
+            return response.data.metadata.memberOrderHistory;
         } catch (error) {
             return null;
         }
     }
 
-    const { data: orders, error, isError, isLoading } = useQuery(
+    const { data: memberOrderHistory, error: fetchingMemberOrderHistoryError, isError: isFetchingMemberOrderHistoryError, isLoading: isFetchingMemberOrderHistoryLoading } = useQuery(
         ['fetchMemberOrderHistory'],
         fetchMemberOrderHistory,
         {
@@ -45,32 +55,54 @@ export default function OrderHistory() {
         }
     );
 
-    if (isLoading) {
+    const fetchTalentOrderHistory = async () => {
+        try {
+            const response = await apiUtils.get(`/order/readTalentOrderHistory`);
+            console.log("abc")
+            console.log(response.data.metadata.talentOrderHistory)
+            return response.data.metadata.talentOrderHistory;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    const { data: talentOrderHistory, error: fetchingTalentOrderHistory, isError: isFetchingTalentOrderHistoryError, isLoading: isFetchingTalentOrderHistoryLoading } = useQuery(
+        ['fetchTalentOrderHistory'],
+        fetchTalentOrderHistory,
+        {
+            onSuccess: (data) => {
+                console.log(data);
+            },
+            onError: (error) => {
+                console.error('Error fetching service by ID:', error);
+            },
+        }
+    );
+
+    if (orderHistoryType === "member" && isFetchingMemberOrderHistoryLoading) {
         return <span>Đang tải...</span>
     }
 
-    if (isError) {
+    if (orderHistoryType === "member" && isFetchingMemberOrderHistoryError) {
         return <span>Có lỗi xảy ra: {error.message}</span>
     }
 
     return (
         <>
-
             <div className="order-history">
                 <section className="section">
-                    <h3 className="section__title">Đơn hàng của bạn</h3>
                     {userInfo.role === "talent" && (
                         <div className="profile-page__header">
                             <div className="profile-page__header--left">
                                 <button
-                                    className={`btn btn-3 btn-md ${orderType === "proposals" ? "active" : ""}`}
-                                    onClick={() => setOrderType("proposals")}
+                                    className={`btn btn-3 btn-md ${orderHistoryType === "member" ? "active" : ""}`}
+                                    onClick={() => setOrderHistoryType("member")}
                                 >
                                     Đơn khách đặt
                                 </button>
                                 <button
-                                    className={`btn btn-3 btn-md ${orderType === "briefs" ? "active" : ""}`}
-                                    onClick={() => setOrderType("briefs")}
+                                    className={`btn btn-3 btn-md ${orderHistoryType === "talent" ? "active" : ""}`}
+                                    onClick={() => setOrderHistoryType("talent")}
                                 >
                                     Đơn hàng của tôi
                                 </button>
@@ -80,7 +112,7 @@ export default function OrderHistory() {
 
 
                     {
-                        orderType === "briefs" ? (
+                        orderHistoryType === "talent" ? (
                             <table>
                                 <thead>
                                     <tr>
@@ -96,7 +128,7 @@ export default function OrderHistory() {
                                 </thead>
                                 <tbody>
                                     {
-                                        orders?.length > 0 ? orders.map((order, index) => {
+                                        talentOrderHistory?.length > 0 ? talentOrderHistory.map((order, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <div className="" onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
@@ -123,7 +155,7 @@ export default function OrderHistory() {
                                                             <button onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowUpdateCommissionOrder(true), setOverlayVisible(true) }} className="btn btn-3">Chỉnh sửa</button>
                                                         </>
                                                         <>
-                                                            <button onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRenderProposals(true), setOverlayVisible(true) }} className="btn btn-3">Xem hợp đồng</button>
+                                                            <button onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowCreateProposal(true), setOverlayVisible(true) }} className="btn btn-3">Soạn hợp đồng</button>
                                                         </>
                                                     </td>
                                                 </tr>
@@ -155,7 +187,7 @@ export default function OrderHistory() {
                                 </thead>
                                 <tbody>
                                     {
-                                        orders?.length > 0 ? orders.map((order, index) => {
+                                        memberOrderHistory?.length > 0 ? memberOrderHistory.map((order, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <div className="" onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
@@ -182,7 +214,7 @@ export default function OrderHistory() {
                                                             <button onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowUpdateCommissionOrder(true), setOverlayVisible(true) }} className="btn btn-3">Chỉnh sửa</button>
                                                         </>
                                                         <>
-                                                            <button onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRenderProposals(true), setOverlayVisible(true) }} className="btn btn-3">Xem hợp đồng</button>
+                                                            <button onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowCreateProposal(true), setOverlayVisible(true) }} className="btn btn-3">Xem hợp đồng</button>
                                                         </>
                                                     </td>
                                                 </tr>
@@ -210,7 +242,10 @@ export default function OrderHistory() {
                     <div className="overlay">
                         {showRenderCommissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setOverlayVisible={setOverlayVisible} />}
                         {showUpdateCommissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
+                        
+                        {showCreateProposal && <CreateProposal setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} />}
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
+                   
                     </div>
                 )
             }

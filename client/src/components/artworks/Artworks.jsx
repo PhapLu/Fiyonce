@@ -17,6 +17,17 @@ export default function Artworks({ isDisplayOwner, artworks, layout }) {
         600: 1
     };
 
+    // Copy to Clipboard Function
+const copyToClipboard = (artworkId) => {
+    const pageURL = window.location.href;
+    const copiedUrl = `${pageURL}/${artworkId}`;
+    navigator.clipboard.writeText(copiedUrl).then(() => {
+        alert("Copied to clipboard!");
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+};
+
     return (
         <div className="artworks">
             <Masonry
@@ -41,7 +52,7 @@ export default function Artworks({ isDisplayOwner, artworks, layout }) {
                                         </svg>
                                     </div>
                                     <div className="artwork-item__img__operation-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6" onClick={() => copyToClipboard(artwork._id)}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                         </svg>
                                     </div>

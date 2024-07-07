@@ -1,5 +1,6 @@
 import {useQuery} from 'react-query';
 import { createContext, useState, useContext, useEffect } from 'react';
+import { newRequest } from '../../utils/newRequest';
 
 const MovementContext = createContext();
 
@@ -10,8 +11,7 @@ export const useMovement = () => {
 export const MovementProvider = ({ children }) => {
     const fetchMovements = async () => {
         try {
-            const response = await newRequest.get('movements/readMovements');
-            console.log(response)
+            const response = await newRequest.get('/movement/readMovements');
             return response.data.metadata.movements;
         } catch (error) {
             // console.log(error.response)
