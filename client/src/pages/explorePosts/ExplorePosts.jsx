@@ -2,12 +2,12 @@
 import {useState} from "react";
 
 // Resources
-import Artworks from "../../components/artworks/Artworks";
+import Posts from "../../components/crudPost/render/RenderPosts";
 
 // Styling
 
-export default function ExploreArtworks() {
-    const [artworks, setArtworks] = useState([
+export default function ExplorePosts() {
+    const [posts, setPosts] = useState([
         {
             _id: "1",
             media: [
@@ -121,6 +121,6 @@ export default function ExploreArtworks() {
     ]);
 
     return (
-        <Artworks layout={5} artworks={artworks}/>
+        <Posts layout={5} posts={posts}/>
     )
 }

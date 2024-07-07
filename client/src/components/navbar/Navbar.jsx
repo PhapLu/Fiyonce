@@ -43,7 +43,7 @@ export default function Navbar() {
 
             <div className="navbar--right">
                 <ul className="navbar-link-container">
-                    <li className={`navbar-link-item ` + (location.pathname.includes('/explore/artworks') ? "active" : "")}>
+                    <li className={`navbar-link-item ` + (location.pathname.includes('/explore') ? "active" : "")}>
                         <Link to="/explore">Khám phá</Link>
                     </li>
                     {/* <li className={`navbar-link-item ` + (location.pathname.includes('/marketplace') ? "active" : "")}>

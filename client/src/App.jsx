@@ -9,7 +9,7 @@ import Layout from "./Layout";
 import Talents from "./components/talents/Talents";
 import CommissionServices from "./components/commissionServices/CommissionServices";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices";
-import ProfileArtworks from "./profile/profileArtworks/ProfileArtworks";
+import ProfilePosts from "./profile/profilePosts/ProfilePosts";
 // import Navbar from "./components/navbar/Navbar";
 // import Sidebar from "./components/sidebar/Sidebar";
 // import Register from "./components/register/Register";
@@ -20,7 +20,7 @@ import ProfileLayout from "./profile/profileLayout/ProfileLayout";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
-import ExploreArtworks from "./pages/exploreArtworks/ExploreArtworks";
+import ExplorePosts from "./pages/explorePosts/ExplorePosts";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 
 
@@ -45,8 +45,8 @@ const router = createBrowserRouter([
         element: <ProfileCommissionServices />,
       },
       {
-        path: "/users/:userId/profile_artworks",
-        element: <ProfileArtworks />,
+        path: "/users/:userId/profile_posts",
+        element: <ProfilePosts />,
       },
       {
         path: "/users/:userId/order-history",
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/explore",
-            element: <ExploreArtworks showArtworks={true} />,
+            element: <ExplorePosts showPosts={true} />,
           },
           {
             path: "/explore/talents",

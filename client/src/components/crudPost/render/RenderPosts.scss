@@ -1,4 +1,4 @@
-.artworks {
+.posts {
     .my-masonry-grid {
         display: flex;
         margin-left: -16px; /* gutter size offset */
@@ -9,25 +9,25 @@
         background-clip: padding-box;
     }
 
-    .artwork-item {
+    .post-item {
         display: block;
         margin-bottom: 16px;
         text-decoration: none;
         color: inherit;
 
-        .artwork-item__img {
+        .post-item__img {
             position: relative;
             border-radius: 18px;
             margin-bottom: 8px;
 
-            .artwork-item__img__operation-container {
+            .post-item__img__operation-container {
                 position: absolute;
                 display: flex;
                 justify-content: end;
                 bottom: 12px;
                 right: 12px;
 
-                .artwork-item__img__operation-item {
+                .post-item__img__operation-item {
                     display: none;
                     margin-left: 8px;
                     background-color: var(--white-4-color);
@@ -45,7 +45,7 @@
             }
         }
 
-        .artwork-item__img__thumbnail {
+        .post-item__img__thumbnail {
             display: block;
             height: 100%;
             width: 100%;
@@ -59,16 +59,16 @@
         }
 
         &:hover {
-            .artwork-item__img__operation-item {
+            .post-item__img__operation-item {
                 display: block !important;
             }
 
-            .artwork-item__img {
+            .post-item__img {
                 background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)) !important;
             }
         }
 
-        .artwork-item__view {
+        .post-item__view {
             display: flex;
             align-items: center;
             color: var(--gray-3-color);
@@ -92,7 +92,7 @@
         column-count: 2 !important;
     }
 
-    .artwork-item__img__thumbnail {
+    .post-item__img__thumbnail {
         max-height: 250px;
     }
 }
@@ -102,7 +102,7 @@
         column-count: 1 !important;
     }
 
-    .artwork-item__img__thumbnail {
+    .post-item__img__thumbnail {
         max-height: 200px;
     }
 }

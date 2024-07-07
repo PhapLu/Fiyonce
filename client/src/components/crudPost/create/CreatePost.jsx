@@ -3,8 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // Contexts
-import { useMovement } from "../../../contexts/movement/MovementContext"
-import {useModal} from "../../../contexts/modal/ModalContext";
+import { useMovement } from "../../../contexts/movement/MovementContext.jsx"
+import {useModal} from "../../../contexts/modal/ModalContext.jsx";
 
 // Utils
 import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
@@ -12,9 +12,9 @@ import { isFilled, minValue } from "../../../utils/validator.js";
 import { createFormData, apiUtils } from "../../../utils/newRequest.js";
 
 // Styling
-import "./CreateShowcasingArtwork.scss";
+import "./CreatePost.scss";
 
-export default function CreateShowcasingArtwork({ showcasingArtworkCollections, setShowCreateShowcasingArtworkForm, setOverlayVisible, createMutation }) {
+export default function CreatePost({ showcasingPostCollections, setShowCreatePostForm, setOverlayVisible, createMutation }) {
     const { movements } = useMovement();
     const { setModalInfo } = useModal();
 
@@ -22,16 +22,16 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
         hashtags: [],
     });
     const [errors, setErrors] = useState({});
-    const [isSubmitCreateShowcasingArtworkLoading, setIsSubmitCreateShowcasingArtworkLoading] = useState(false);
-    const [isCreateNewShowcasingArtworkCategory, setIsCreateNewShowcasingArtworkCategory] = useState(false);
-    const [isSuccessCreateShowcasingArtwork, setIsSuccessCreateShowcasingArtwork] = useState(false);
-    const [showcasingArtworks, setShowcasingArtworks] = useState(Array(5).fill(null));
+    const [isSubmitCreatePostLoading, setIsSubmitCreatePostLoading] = useState(false);
+    const [isCreateNewShowcasingPostCategory, setIsCreateNewShowcasingPostCategory] = useState(false);
+    const [isSuccessCreatePost, setIsSuccessCreatePost] = useState(false);
+    const [showcasingPosts, setShowcasingPosts] = useState(Array(5).fill(null));
 
     const createCommissionRef = useRef();
     useEffect(() => {
         const handler = (e) => {
             if (createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
-                setShowCreateShowcasingArtworkForm(false);
+                setShowCreatePostForm(false);
                 setOverlayVisible(false);
             }
         };
@@ -48,8 +48,8 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
             errors.movement = "Vui lòng chọn trường phái nghệ thuật";
         }
 
-        if (isFilled(inputs.showcasingArtworkCategory)) {
-            errors.showcasingArtworkCategory = "Vui lòng chọn thể loại";
+        if (isFilled(inputs.showcasingPostCategory)) {
+            errors.showcasingPostCategory = "Vui lòng chọn thể loại";
         }
 
         return errors;
@@ -73,26 +73,26 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const newShowcasingArtworks = [...showcasingArtworks];
+        const newShowcasingPosts = [...showcasingPosts];
         files.forEach((file) => {
             if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, showcasingArtworks: "Dung lượng ảnh không được vượt quá 500KB." }));
+                setErrors((values) => ({ ...values, showcasingPosts: "Dung lượng ảnh không được vượt quá 500KB." }));
             } else {
-                const showcasingArtworkIndex = newShowcasingArtworks.findIndex((showcasingArtwork) => showcasingArtwork === null);
-                if (showcasingArtworkIndex !== -1) {
-                    newShowcasingArtworks[showcasingArtworkIndex] = file;
+                const showcasingPostIndex = newShowcasingPosts.findIndex((showcasingPost) => showcasingPost === null);
+                if (showcasingPostIndex !== -1) {
+                    newShowcasingPosts[showcasingPostIndex] = file;
                 }
             }
         });
-        setShowcasingArtworks(newShowcasingArtworks);
+        setShowcasingPosts(newShowcasingPosts);
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
 
     const removeImage = (index) => {
-        const newShowcasingArtworks = [...showcasingArtworks];
-        newShowcasingArtworks[index] = null;
-        setShowcasingArtworks(newShowcasingArtworks);
+        const newShowcasingPosts = [...showcasingPosts];
+        newShowcasingPosts[index] = null;
+        setShowcasingPosts(newShowcasingPosts);
     };
 
     const triggerFileInput = () => {
@@ -101,43 +101,43 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitCreateShowcasingArtworkLoading(true);
+        setIsSubmitCreatePostLoading(true);
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitCreateShowcasingArtworkLoading(false);
+            setIsSubmitCreatePostLoading(false);
             return;
         }
 
 
-        // Create showcasing artwork category
-        if (isCreateNewShowcasingArtworkCategory) {
-            console.log({ title: inputs.newShowcasingArtworkCategoryTitle })
+        // Create showcasing post category
+        if (isCreateNewShowcasingPostCategory) {
+            console.log({ title: inputs.newShowcasingPostCategoryTitle })
             try {
-                const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs.newShowcasingArtworkCategoryTitle });
+                const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs.newShowcasingPostCategoryTitle });
                 console.log(response)
                 if (response) {
                     const serviceCategoryId = response.data.metadata.serviceCategory._id;
                     inputs.serviceCategoryId = serviceCategoryId;
                     console.log(serviceCategoryId)
                     console.log(inputs.serviceCategoryId)
-                    setIsSuccessCreateShowcasingArtwork(true);
+                    setIsSuccessCreatePost(true);
                 }
             } catch (error) {
-                console.error("Failed to create new showcasing artwork category:", error);
+                console.error("Failed to create new showcasing post category:", error);
                 setErrors((prevErrors) => ({
                     ...prevErrors,
                     serverError: error.response.data.message
                 }));
             } finally {
-                setIsSubmitCreateShowcasingArtworkLoading(false);
+                setIsSubmitCreatePostLoading(false);
             }
         }
         console.log(inputs)
-        const fd = createFormData(inputs, showcasingArtworks, 'files');
+        const fd = createFormData(inputs, showcasingPosts, 'files');
 
         try {
-            // const response = await apiUtils.post("/showcasingArtwork/createShowcasingArtwork", fd);
+            // const response = await apiUtils.post("/showcasingPost/createShowcasingPost", fd);
             const response = await createMutation.mutateAsync(fd);
             if (response) {
                 setModalInfo({
@@ -155,21 +155,21 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
                 serverError: error.response.data.message
             }));
         } finally {
-            setIsSubmitCreateShowcasingArtworkLoading(false);
+            setIsSubmitCreatePostLoading(false);
         }
     };
 
-    const filteredShowcasingArtworks = showcasingArtworks.filter((showcasingArtwork) => showcasingArtwork !== null);
-    const displayShowcasingArtworks = [...filteredShowcasingArtworks];
+    const filteredShowcasingPosts = showcasingPosts.filter((showcasingPost) => showcasingPost !== null);
+    const displayShowcasingPosts = [...filteredShowcasingPosts];
 
-    while (displayShowcasingArtworks.length < 3) {
-        displayShowcasingArtworks.push(placeholderImage);
+    while (displayShowcasingPosts.length < 3) {
+        displayShowcasingPosts.push(placeholderImage);
     }
 
     return (
         <div className="create-commission-service modal-form type-3" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateShowcasingArtworkForm(false);
+                setShowCreatePostForm(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -192,32 +192,32 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
                 {errors.movement && <span className="form-field__error">{errors.movement}</span>}
             </div>
             <div className="form-field with-create-btn">
-                <label htmlFor="showcasingArtworkCategory" className="form-field__label">Album</label>
-                {!isCreateNewShowcasingArtworkCategory ? (
+                <label htmlFor="showcasingPostCategory" className="form-field__label">Album</label>
+                {!isCreateNewShowcasingPostCategory ? (
                     <>
                         <select
-                            name="showcasingArtworkCategory"
-                            value={inputs?.showcasingArtworkCategory || ""}
+                            name="showcasingPostCategory"
+                            value={inputs?.showcasingPostCategory || ""}
                             onChange={handleChange}
                             className="form-field__input"
                         >
                             <option value="">-- Chọn album --</option>
-                            {showcasingArtworkCollections.map((serviceCategory) => (
+                            {showcasingPostCollections.map((serviceCategory) => (
                                 <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
                             ))}
                         </select>
-                        <button className="btn btn-2" onClick={() => setIsCreateNewShowcasingArtworkCategory(true)}>Thêm Album</button>
+                        <button className="btn btn-2" onClick={() => setIsCreateNewShowcasingPostCategory(true)}>Thêm Album</button>
                     </>
                 ) : (
                     <>
                         <input
-                            name="newShowcasingArtworkCategoryTitle"
-                            value={inputs?.newShowcasingArtworkCategoryTitle}
+                            name="newShowcasingPostCategoryTitle"
+                            value={inputs?.newShowcasingPostCategoryTitle}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập tên album"
                         />
-                        <button className="btn btn-4" onClick={() => setIsCreateNewShowcasingArtworkCategory(false)}>Hủy</button>
+                        <button className="btn btn-4" onClick={() => setIsCreateNewShowcasingPostCategory(false)}>Hủy</button>
                     </>
                 )}
                 {errors._id && <span className="form-field__error">{errors._id}</span>}
@@ -237,29 +237,29 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
             </div>
 
             <div className="form-field">
-                {showcasingArtworks.map((showcasingArtwork, index) => {
+                {showcasingPosts.map((showcasingPost, index) => {
                     return (
-                        showcasingArtwork && (
+                        showcasingPost && (
                             <div key={index} className="form-field__input img-preview">
                                 <div className="img-preview--left">
                                     <img
                                         src={
-                                            showcasingArtwork instanceof File
-                                                ? URL.createObjectURL(showcasingArtwork)
-                                                : showcasingArtwork || placeholderImage
+                                            showcasingPost instanceof File
+                                                ? URL.createObjectURL(showcasingPost)
+                                                : showcasingPost || placeholderImage
                                         }
-                                        alt={`showcasingArtwork ${index + 1}`}
+                                        alt={`showcasingPost ${index + 1}`}
                                         className="img-preview__img"
                                     />
                                     <div className="img-preview__info">
                                         <span className="img-preview__name">
-                                            {showcasingArtwork instanceof File
-                                                ? limitString(showcasingArtwork.name, 15)
+                                            {showcasingPost instanceof File
+                                                ? limitString(showcasingPost.name, 15)
                                                 : "Tranh mẫu"}
                                         </span>
                                         <span className="img-preview__size">
-                                            {showcasingArtwork instanceof File
-                                                ? formatFloat(bytesToKilobytes(showcasingArtwork.size), 1) + " KB"
+                                            {showcasingPost instanceof File
+                                                ? formatFloat(bytesToKilobytes(showcasingPost.size), 1) + " KB"
                                                 : ""}
                                         </span>
                                     </div>
@@ -290,7 +290,7 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
                     <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
                 </div>
 
-                {errors.showcasingArtworks && <span className="form-field__error">{errors.showcasingArtworks}</span>}
+                {errors.showcasingPosts && <span className="form-field__error">{errors.showcasingPosts}</span>}
             </div>
 
             <div className="form-field">
@@ -302,9 +302,9 @@ export default function CreateShowcasingArtwork({ showcasingArtworkCollections, 
                     type="submit"
                     className="form-field__input btn btn-2 btn-md"
                     onClick={handleSubmit}
-                    disabled={isSubmitCreateShowcasingArtworkLoading}
+                    disabled={isSubmitCreatePostLoading}
                 >
-                    {isSubmitCreateShowcasingArtworkLoading ? (
+                    {isSubmitCreatePostLoading ? (
                         <span className="btn-spinner"></span>
                     ) : (
                         "Đăng tải"
