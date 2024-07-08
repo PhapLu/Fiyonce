@@ -1,0 +1,8 @@
+2024-07-08 20:11:20::info::/v1/api/post/createPost::6889a9c3-f44a-41fc-b7eb-474f310214b7::input-params ::POST::::{}
+2024-07-08 20:11:20::error::/v1/api/post/createPost::6889a9c3-f44a-41fc-b7eb-474f310214b7::404 - 2ms - Response: {"status":404,"now":1720444280311}::{"message":"Movement not found"}
+2024-07-08 20:11:55::info::/v1/api/auth/users/login::e86e6f9a-c7d6-451c-9465-1859958b122b::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-07-08 20:12:18::info::/v1/api/movement/createMovement::525339a2-1e27-4841-bde3-388ff45902c1::input-params ::POST::::{}
+2024-07-08 20:12:41::info::/v1/api/auth/users/login::828bb05e-c16a-4577-b6ae-3f8d2c94b03f::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-08 20:12:46::info::/v1/api/post/createPost::cce82b98-8ca3-415c-854b-afddfa3a35f4::input-params ::POST::::{}
+2024-07-08 20:15:11::info::/v1/api/post/updatePost/668be5d4433ba4478a627cba::d2719db8-2e2b-41a7-9604-22682574a7cb::input-params ::PATCH::::{}
+2024-07-08 20:16:06::info::/v1/api/post/updatePost/668be5d4433ba4478a627cba::47551b32-d6c5-442b-9f19-7a4ff9339913::input-params ::PATCH::::{}

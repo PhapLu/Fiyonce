@@ -12,3 +12,8 @@
 2024-07-07 09:57:46::info::/v1/api/post/readArtworks/66601810d3737cbcac3bc91e::6e1d756b-efae-4688-9605-7ae2d555f07e::input-params ::GET::::{}
 2024-07-07 09:59:40::info::/v1/api/post/createPost::f170b95b-e60b-474e-8e7f-d9c2642900ca::input-params ::POST::::{}
 2024-07-07 09:59:56::info::/v1/api/post/readArtworks/66601810d3737cbcac3bc91e::31dde628-f5c0-460f-a9c7-9bd58272076d::input-params ::GET::::{}
+2024-07-07 10:13:51::info::/v1/api/post/readPostCategoriesWithPosts/66601810d3737cbcac3bc91e::74258887-da99-46b5-841c-e49f1b480af1::input-params ::GET::::{}
+2024-07-07 10:14:38::info::/v1/api/postCategory/createPostCategory::1f705afd-7b2c-4815-9f2a-07158dfc119e::input-params ::POST::::{"title":"YCH"}
+2024-07-07 10:14:50::info::/v1/api/post/readPostCategoriesWithPosts/66601810d3737cbcac3bc91e::17c7c160-590e-48bb-9c4c-f8ee5868eb80::input-params ::GET::::{}
+2024-07-07 10:15:22::info::/v1/api/post/createPost::dc14c48a-d250-45ff-90fe-efb50837554e::input-params ::POST::::{}
+2024-07-07 10:15:30::info::/v1/api/post/readPostCategoriesWithPosts/66601810d3737cbcac3bc91e::6986a727-e6bd-4c58-becc-634c588e73f3::input-params ::GET::::{}

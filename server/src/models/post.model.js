@@ -7,7 +7,6 @@ const PostSchema = new Schema({
     talentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     postCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'PostCategory' },
     movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
-    title:{ type: String },
     description: { type: String },
     artworks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artwork', required: true }],
     views: { type: Number, default: 0 },
