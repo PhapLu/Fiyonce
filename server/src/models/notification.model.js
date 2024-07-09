@@ -8,6 +8,10 @@ const NotificationSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    type: {
+        type: String,
+        required: true,
+        enum: ['message', 'request', 'accept', 'reject', 'cancel', 'complete']},
     content: { type: String, required: true},
     senderAvatar: { type: String, required: true},
 },{

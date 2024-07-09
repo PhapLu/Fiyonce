@@ -384,3 +384,8 @@ Error: listen EADDRINUSE: address already in use :::3000
     at Function.listen (D:\Adam\OnisonProject\server\node_modules\express\lib\application.js:635:24)
     at file:///D:/Adam/OnisonProject/server/server.js:4:20
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-09 16:56:46::error::undefined::undefined::uncaughtException: async is not defined
+ReferenceError: async is not defined
+    at <static_initializer> (file:///D:/Adam/OnisonProject/server/src/services/conversation.service.js:7:33)
+    at file:///D:/Adam/OnisonProject/server/src/services/conversation.service.js:1:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
