@@ -11,7 +11,8 @@ const NotificationSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['message', 'request', 'accept', 'reject', 'cancel', 'complete']},
+        enum: ['interaction', 'order', 'update']
+    },
     content: { type: String, required: true},
     senderAvatar: { type: String, required: true},
 },{

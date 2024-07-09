@@ -13,6 +13,38 @@ class NotificationService{
         if (!receiverId || !content) {
             throw new BadRequestError('Please provide all required fields')
         }
+        if(type !== 'like' && type !== 'share' && type !== 'bookmark'&& type !== 'follow' && type !== 'orderCommission' && type !== 'updateOrderStatus'){
+            throw new BadRequestError('Invalid type')
+        }
+        
+        //3. Assign content based on type of notification
+        let notificationType
+        switch(type){
+            case 'like':
+                content = `${user.name} liked your post`
+                notificationType = 'interaction'
+                break
+            case 'share':
+                content = `${user.name} shared your post`
+                notificationType = 'interaction'
+                break
+            case 'bookmark':
+                content = `${user.name} bookmarked your post`
+                notificationType = 'interaction'
+                break
+            case 'follow':
+                content = `${user.name} followed you`
+                notificationType = 'interaction'
+                break
+            case 'orderCommission':
+                content = `${user.name} ordered your commission`
+                notificationType = 'order'
+                break
+            case 'updateOrderStatus':
+                content = `${user.name} updated the status of your order`
+                notificationType = 'order'
+                break
+        }
 
         //3. Create and save notification
         let notification = new Notification({
@@ -36,7 +68,6 @@ class NotificationService{
             notification
         }
     }
-    
 
     static readNotifications = async(userId) => {
         //1. Check user
