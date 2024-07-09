@@ -4,46 +4,38 @@ import ConversationService from "../services/conversation.service.js"
 class ControllerController{
     createConversation = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Create service success!',
+            message: 'Create conversation success!',
             metadata: await ConversationService.createConversation(req.userId, req)
         }).send(res)
     }
 
     readConversation = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read service success!',
+            message: 'Read conversation success!',
             metadata: await ConversationService.readConversation(req.params.conversationId)
         }).send(res)
     }
 
     readConversationWithOtherMember = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read service success!',
+            message: 'Read conversation success!',
             metadata: await ConversationService.readConversationWithOtherMember(req.userId, req.params.otherMemberId)
         }).send(res)
     }
 
     readConversations = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read services success!',
-            metadata: await ConversationService.readConversations(req.params.talentId)
+            message: 'Read conversations success!',
+            metadata: await ConversationService.readConversations(req.userId)
         }).send(res)
     }
-
-    updateConversation = async(req, res, next) => {
+    
+    sendMessage = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Update service success!',
-            metadata: await ConversationService.updateConversation(req.userId, req.params.conversationId, req)
+            message: 'Send message success!',
+            metadata: await ConversationService.sendMessage(req.userId, req.params.conversationId, req)
         }).send(res)
     }
-
-    deleteConversation = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Delete service success!',
-            metadata: await ConversationService.deleteConversation(req.userId, req.params.conversationId)
-        }).send(res)
-    }
-
 }
 
 export default new ControllerController()

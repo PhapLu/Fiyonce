@@ -7,14 +7,13 @@ import { uploadFields } from '../../configs/multer.config.js'
 
 const router = express.Router()
 
-router.get('/readConversation/:conversationId', asyncHandler(conversationController.readConversation))
-router.get('/readConversations', asyncHandler(conversationController.readConversations))
-
 //authentication
 router.use(verifyToken)
 
 router.post('/createConversation', uploadFields, asyncHandler(conversationController.createConversation))
-router.patch('/updateConversation/:conversationId', uploadFields, asyncHandler(conversationController.updateConversation))
-router.delete('/deleteConversation/:conversationId', asyncHandler(conversationController.deleteConversation))
+router.get('/readConversation/:conversationId', asyncHandler(conversationController.readConversation))
+router.get('/readConversationWithOtherMember/:otherMemberId', asyncHandler(conversationController.readConversationWithOtherMember))
+router.get('/readConversations', asyncHandler(conversationController.readConversations))
+router.patch('/sendMessage/:conversationId', uploadFields, asyncHandler(conversationController.sendMessage))
 
 export default router
