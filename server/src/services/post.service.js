@@ -154,6 +154,7 @@ class PostService {
         if (!postToUpdate) throw new NotFoundError('Post not found')
         if (user.role !== 'talent') throw new BadRequestError('You are not a talent')
         if (postToUpdate.talentId.toString() !== userId) throw new BadRequestError('You can only update your artwork')
+        const oldPostCategoryId = postToUpdate.postCategoryId
 
         // 2. Handle file uploads if new files were uploaded
         try {
@@ -205,15 +206,20 @@ class PostService {
                 { new: true }
             )
 
-            return {
-                message: "Update artwork success!",
-                status: 200,
-                metadata: {
-                    artwork: updatedPost
+            //5. Check if the postCategory has changed and if the old postCategory is now empty
+            if (oldPostCategoryId.toString() !== updatedPost.postCategoryId.toString()){
+                const postsInOldPostCategory = await Post.find({oldPostCategoryId})
+                if(postsInOldPostCategory.length == 0){
+                    await PostCategory.findByIdAndDelete(oldPostCategoryId)
+                    console.log(`Deleted PostCategory ID: ${oldPostCategoryId}`)
                 }
             }
+
+            return {
+                post: updatedPost
+            }
         } catch (error) {
-            console.error('Error in updating artwork:', error)
+            console.error('Error in updating post:', error)
             throw new Error('Post update failed')
         }
     }
@@ -238,11 +244,18 @@ class PostService {
         }
 
         //3. Delete artwork and post in database
+        const postCategoryId = postToDelete.postCategoryId
         await Artwork.deleteMany({ _id: { $in: postToDelete.artworks } })
         await Post.findByIdAndDelete(artworkId)
 
+        //4. Delete postCategory if postCategory references is null
+        const remainingPostCategories = await Post.find({postCategoryId})
+        if(remainingPostCategories.length == 0){
+            await PostCategory.findByIdAndDelete(postCategoryId)
+        }
+
         return {
-            message: 'Delete artwork success'
+            message: 'Delete post and artwork success'
         }
     }
 }
