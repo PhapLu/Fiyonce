@@ -20,10 +20,6 @@ const ProposalSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    title: {
-        type: String,
-        required: true
-    },
     scope: {
         type: String,
         required: true

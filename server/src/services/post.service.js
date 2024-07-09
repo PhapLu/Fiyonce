@@ -14,7 +14,7 @@ class PostService {
         if (user.role !== 'talent') throw new BadRequestError('You are not a talent')
 
         //2. Validate request body
-        const { title, description, postCategoryId } = req.body
+        const { description, postCategoryId } = req.body
         if (!req.files || !req.files.artworks)
             throw new BadRequestError('Please provide artwork files')
         if (!userId || !description || !postCategoryId)

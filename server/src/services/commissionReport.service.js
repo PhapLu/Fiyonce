@@ -10,8 +10,8 @@ class CommissionReportService{
         if(!user) throw new NotFoundError('User not found')
 
         //2. Validate request body
-        const { orderId, proposalId, title, content } = req.body
-        if(!orderId || !proposalId || !title || !content) throw new BadRequestError('Please provide all required fields')
+        const { orderId, proposalId, content } = req.body
+        if(!orderId || !proposalId || !content) throw new BadRequestError('Please provide all required fields')
 
         //3. Upload files to Cloudinary if exists
         try {
@@ -34,7 +34,6 @@ class CommissionReportService{
                 clientId: userId,
                 orderId,
                 proposalId,
-                title,
                 content,
                 evidences
             })

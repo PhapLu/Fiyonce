@@ -7,7 +7,6 @@ const CommissionReportSchema = new mongoose.Schema({
     clientId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     orderId: {type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true},
     proposalId: {type: mongoose.Schema.Types.ObjectId, ref: 'Proposal', required: true},
-    title: {type: String, required: true},
     content: {type: String, required: true},
     evidences: [{type: String, required: true}],
 },{

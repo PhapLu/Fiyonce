@@ -35,7 +35,6 @@ class ProposalService{
         //6. Send proposal
         const proposal = new Proposal({
             orderId,
-            memberId: order.memberId,
             talentId: userId,
             termOfServiceId: body.termOfServiceId,
             artworks: body.artworks,
@@ -82,7 +81,6 @@ class ProposalService{
         //1. Check if proposal, user exists
         const user = await User.findById(userId)
         const proposal = await Proposal.findById(proposalId)
-        const member = await User.findById(proposal.memberId)
         if(!proposal) throw new NotFoundError('Proposal not found')
         if(!user) throw new NotFoundError('User not found')
 
@@ -162,17 +160,17 @@ class ProposalService{
         if(!proposal) throw new NotFoundError('Proposal not found')
         if(!talent) throw new NotFoundError('Talent not found')
 
-        //2. Check if user is authorized to confirm proposal
-        if(userId !== proposal.memberId.toString())
-            throw new AuthFailureError('You are not authorized to confirm this proposal')
-
-        //3. Check if order status is approved
+        //2. Check if order status is approved
         const order = await Order.findById(proposal.orderId)
-        // if(order.status !== 'approved')
-        //     throw new BadRequestError('Order is not approved')
+        if(order.status !== 'approved')
+        throw new BadRequestError('Order is not approved')
 
+        //3. Check if user is authorized to confirm proposal
+        if(userId !== order.memberId.toString())
+            throw new AuthFailureError('You are not authorized to confirm this proposal')
+    
         //4. Create payment with Momo
-        const amount = '50000'
+        const amount = proposal.price
         const paymentData = await MomoService.generatePaymentData(amount)
         
         //5. Confirm proposal
@@ -196,43 +194,6 @@ class ProposalService{
         return {
             proposal: showedProposal,
             paymentData
-        }
-    }
-
-    static denyProposal = async(userId, proposalId) => {
-        //1. Check if user exists
-        const user = await User.findById(userId)
-        const proposal = await Proposal.findById(proposalId)
-        const talent = await User.findById(proposal.talentId)
-
-        if(!user) throw new NotFoundError('User not found')
-        if(!proposal) throw new NotFoundError('Proposal not found')
-        if(!talent) throw new NotFoundError('Talent not found')
-
-        //2. Check if user is authorized to deny proposal
-        if(userId !== proposal.memberId.toString())
-            throw new AuthFailureError('You are not authorized to deny this proposal')
-
-        //3. Check if order status is approved
-        const order = await Order.findById
-        (proposal.orderId)
-        if(order.status !== 'approved')
-            throw new BadRequestError('Order is not approved')
-
-        //4. Deny proposal
-        order.status = 'rejected'
-        order.save()
-        const showedProposal = await proposal.populate('orderId')
-
-        //5. Send email to talent
-        // try {
-        //     await sendEmail(talent.email, 'Proposal denied', 'Your proposal has been denied by client')
-        // } catch (error) {
-        //     throw new Error('Email service error')
-        // }
-
-        return {
-            proposal: showedProposal
         }
     }
 }
