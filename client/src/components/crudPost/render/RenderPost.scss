@@ -1,0 +1,102 @@
+.render-post.modal-form.type-1 {
+    width: 60%;
+    height: 80vh;
+    margin-left: unset;
+    transform: unset;
+
+    .modal-form--left {
+        background: var(--black-5-color);
+        width: 70%;
+        padding: 0;
+
+        .carousel-root {
+            height: 100% !important;
+            border-radius: 8px 0 0 8px !important;
+            overflow: hidden;
+            background: var(--black-5-color);
+            position: relative;
+
+            .carousel.carousel-slider {
+                width: 100%;
+                height: 100%;
+                display: flex;
+
+                button.control-arrow {
+                    opacity: 0.4;
+                    height: 80px;
+                    border-radius: 8px;
+                    padding: 8px;
+                    top: 50%;
+                    transform: translateY(-50%);
+
+                    &.control-next {
+                        right: 8px;
+                    }
+
+                    &.control-prev {
+                        left: 8px;
+                    }
+
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.8);
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .control-dots {
+                .dot {
+                    margin: 0 4px;
+                }
+            }
+
+            .carousel {
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+                text-align: center;
+
+                .slide {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    background: red;
+
+                    img {
+                        width: 100%;
+                        object-fit: cover;
+                        // width: 100px;
+                        // height: 100px;
+                    }
+                }
+
+                .thumb {
+                    border-radius: 8px;
+                    width: 60px;
+                    overflow: hidden;
+                    // border: 2px solid var(--white-3-color);
+
+                    img {
+                        width: 60px;
+                        height: 30px;
+                        object-fit: cover;
+                    }
+
+                    &:hover {
+                        opacity: 0.9;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    .modal-form--right {
+        align-self: unset;
+        padding: 28px;
+
+        p {
+            text-align: justify;
+        }
+    }
+}

@@ -18,6 +18,7 @@
 
     --orange-1-color: #ff9c65;
     --orange-2-color: #fb9257;
+    --orange-3-color: #f8cb97;
 
     --white-1-color: white;
     --white-2-color: white;
@@ -37,8 +38,8 @@
     --pending-status-bg-color: #ffe8d4;
     --pending-status-color: #f68038;
 
-    --rejected-status-bg-color: #ffe8d4;
-    --rejected-status-color: #f68038;
+    --rejected-status-bg-color: #fad6d6;
+    --rejected-status-color: #e20c0c;
 
     --approved-status-bg-color: #e4f7db;
     --approved-status-color: #82c011;
@@ -75,11 +76,11 @@ body.dark {
     --form-bg-2-color: #161616;
     --form-bg-3-color: #272727;
 
-    --pending-status-bg-color: #ffe8d4;
+    --pending-status-bg-color: #30241d;
     --pending-status-color: #f68038;
 
-    --rejected-status-bg-color: #ffe8d4;
-    --rejected-status-color: #f68038;
+    --rejected-status-bg-color: #2d2020;
+    --rejected-status-color: #e20c0c;
 
     --approved-status-bg-color: #e4f7db;
     --approved-status-color: #82c011;
@@ -113,10 +114,6 @@ svg {
     height: 22px;
     margin-right: 8px;
     object-fit: cover;
-
-    &.icon-only {
-        margin-right: 0;
-    }
 }
 
 body {
@@ -210,6 +207,26 @@ p {
     width: 100%;
 }
 
+.fs-12 {
+    font-size: 1.2rem;
+}
+
+.fs-13 {
+    font-size: 1.3rem;
+}
+
+.fs-14 {
+    font-size: 1.4rem;
+}
+
+.fs-15 {
+    font-size: 1.5rem;
+}
+
+.fs-16 {
+    font-size: 1.6rem;
+}
+
 .highlight-text {
     color: var(--orange-2-color);
 
@@ -219,7 +236,21 @@ p {
     }
 }
 
+.highlight-bg-text {
+    background-color: var(--orange-3-color);
+    padding: 8px;
+    border-radius: 8px;
+}
+
 .normal-text {}
+
+.downlight-bg-text {
+    background-color: var(--gray-3-color);
+}
+
+.downlight-text {
+    color: var(--gray-3-color);
+}
 
 .border-text {
     padding: 12px 20px;
@@ -236,8 +267,9 @@ p {
 }
 
 .status {
-    padding: 8px 12px;
+    padding: 6px 8px;
     border-radius: 8px;
+    font-size: 1.1rem;
 
     &.pending {
         background-color: var(--pending-status-bg-color);
@@ -270,6 +302,7 @@ p {
         &.active {
             position: relative;
             font-weight: bold;
+            color: var(--black-3-color) !important;
 
             svg {
                 stroke-width: 2;
@@ -288,6 +321,13 @@ p {
     }
 }
 
+.gray-bg-hover {
+    &:hover {
+        cursor: pointer;
+        background-color: var(--gray-1-color);
+    }
+}
+
 // Buttons
 .btn {
     padding: 6px 12px;
@@ -295,6 +335,7 @@ p {
     border: none;
     outline: none;
     display: inline-flex;
+    flex-wrap: wrapf;
     align-items: center;
     justify-content: center;
     background-color: unset;
@@ -309,7 +350,7 @@ p {
     }
 
     &.icon-only {
-        svg {
+       > svg {
             margin-right: 0;
         }
     }
@@ -346,7 +387,7 @@ p {
 
 .btn-3 {
     border: 2px solid var(--gray-2-color) !important;
-    color: var(--black-2-color) !important;
+    color: var(--black-2-color);
 
     &.active {
         font-weight: bold;
@@ -471,7 +512,7 @@ hr {
 
 .flex-align-center {
     display: flex;
-    width: 100%;
+    // width: 100%;
     align-items: center;
 
     .bold-text {
@@ -504,14 +545,14 @@ table {
     border-collapse: collapse;
     width: 100%;
     border-radius: 8px;
+    background-color: var(--form-bg-2-color);
 
     tr {
         border-bottom: 1px solid var(--gray-2-color);
         width: 100%;
 
         &:hover {
-            background-color: #f1f1f1;
-            opacity: 0.8;
+            background-color: var(--form-bg-1-color);
             cursor: pointer;
         }
 
@@ -527,12 +568,18 @@ table {
     td {
         text-align: start;
         min-width: 100px;
+        max-width: 200px;
         padding: 6px 12px 6px 6px;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+    }
+
+    th:last-child, td:last-child {
+        max-width: unset;
     }
 
     button {
         margin-right: 8px;
+        font-size: 1.2rem;
 
         &:last-of-type {
             margin-right: 0;
@@ -577,6 +624,10 @@ table {
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
+
+        .form-field__label {
+
+        }
 
         .form-field__input {
             width: 45%;
@@ -1272,3 +1323,179 @@ table {
         }
     }
 }
+
+// Paddings
+.p-4 {
+    padding: 4px;
+}
+
+.p-8 {
+    padding: 8px;
+}
+
+.pt-8 {
+    padding-top: 8px;
+}
+
+.pr-8 {
+    padding-right: 8px;
+}
+
+.pb-8 {
+    padding-bottom: 8px;
+}
+
+.pl-8 {
+    padding-left: 8px;
+}
+
+.pt-12 {
+    padding-top: 12px;
+}
+
+.pr-12 {
+    padding-right: 12px;
+}
+
+.pb-12 {
+    padding-bottom: 12px;
+}
+
+.pl-12 {
+    padding-left: 12px;
+}
+
+.pt-16 {
+    padding-top: 16px;
+}
+
+.pr-16 {
+    padding-right: 16px;
+}
+
+.pb-16 {
+    padding-bottom: 16px;
+}
+
+.pl-16 {
+    padding-left: 16px;
+}
+
+.pt-20 {
+    padding-top: 20px;
+}
+
+.pr-20 {
+    padding-right: 20px;
+}
+
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+.pl-20 {
+    padding-left: 20px;
+}
+
+
+
+
+// Margins
+.mr-4 {
+    margin-right: 4px;
+}
+
+.ml-4 {
+    margin-left: 4px;
+}
+
+.mt-4 {
+    margin-top: 4px;
+}
+
+.mb-4 {
+    margin-bottom: 4px;
+}
+
+.mr-8 {
+    margin-right: 8px;
+}
+
+.ml-8 {
+    margin-left: 8px;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
+.mb-8 {
+    margin-bottom: 8px;
+}
+
+.mr-16 {
+    margin-right: 16px;
+}
+
+.ml-16 {
+    margin-left: 16px;
+}
+
+.mt-16 {
+    margin-top: 16px;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+}
+
+.mr-32 {
+    margin-right: 32px;
+}
+
+.ml-32 {
+    margin-left: 32px;
+}
+
+.mt-32 {
+    margin-top: 32px;
+}
+
+.mb-32 {
+    margin-bottom: 32px;
+}
+
+// Borders
+.br-4 {
+    border-radius: 4px;
+}
+
+.br-8 {
+    border-radius: 8px;
+}
+
+.br-12 {
+    border-radius: 12px;
+}
+
+.br-16 {
+    border-radius: 16px;
+}
+
+.br-20 {
+    border-radius: 20px;
+}
+
+.br-24 {
+    border-radius: 24px;
+}
+
+.br-28 {
+    border-radius: 28px;
+}
+
+.br-32 {
+    border-radius: 32px;
+}
+
+

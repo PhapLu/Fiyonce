@@ -16,6 +16,16 @@
         box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
     }
 
+    .btn-3 {
+        padding: 6px;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+
     .navbar--left {
         display: flex;
         align-items: center;
@@ -119,6 +129,23 @@
         .open-register-form-btn {
             display: flex;
             align-items: center;
+        }
+
+        .toggle-display-conversations-btn {
+            position: relative;
+
+            .render-conversations {
+                position: absolute;
+                left: -150px;
+                top: calc(100% + 8px);
+                background-color: var(--form-bg-2-color);
+                padding: 8px 16px;
+                border-radius: 8px;
+                min-width: 300px;
+                height: 350px;
+                box-shadow: var(--box-shadow-1);
+                overflow: scroll;
+            }
         }
     }
 }

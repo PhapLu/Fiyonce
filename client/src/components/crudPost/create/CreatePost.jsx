@@ -1,6 +1,6 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 // Contexts
 import { useMovement } from "../../../contexts/movement/MovementContext.jsx"
@@ -14,7 +14,7 @@ import { createFormData, apiUtils } from "../../../utils/newRequest.js";
 // Styling
 import "./CreatePost.scss";
 
-export default function CreatePost({ showcasingPostCollections, setShowCreatePostForm, setOverlayVisible, createMutation }) {
+export default function CreatePost({ postCategories, setShowCreatePostForm, setOverlayVisible, createPostMutation }) {
     const { movements } = useMovement();
     const { setModalInfo } = useModal();
 
@@ -24,8 +24,7 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
     const [errors, setErrors] = useState({});
     const [isSubmitCreatePostLoading, setIsSubmitCreatePostLoading] = useState(false);
     const [isCreateNewShowcasingPostCategory, setIsCreateNewShowcasingPostCategory] = useState(false);
-    const [isSuccessCreatePost, setIsSuccessCreatePost] = useState(false);
-    const [showcasingPosts, setShowcasingPosts] = useState(Array(5).fill(null));
+    const [artworks, setArtworks] = useState(Array(5).fill(null));
 
     const createCommissionRef = useRef();
     useEffect(() => {
@@ -44,13 +43,15 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
     const validateInputs = () => {
         let errors = {};
 
-        if (isFilled(inputs.movement)) {
-            errors.movement = "Vui lòng chọn trường phái nghệ thuật";
+        if (!isFilled(inputs.movementId)) {
+            errors.movementId = "Vui lòng chọn trường phái nghệ thuật";
         }
 
-        if (isFilled(inputs.showcasingPostCategory)) {
-            errors.showcasingPostCategory = "Vui lòng chọn thể loại";
+        if (!isFilled(inputs.newPostCategoryTitle) && !isFilled(inputs.postCategoryId)) {
+            errors.postCategoryId = "Vui lòng chọn thể loại dịch vụ của bạn";
         }
+
+        console.log(errors)
 
         return errors;
     };
@@ -73,26 +74,26 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const newShowcasingPosts = [...showcasingPosts];
+        const newArtworks = [...artworks];
         files.forEach((file) => {
-            if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, showcasingPosts: "Dung lượng ảnh không được vượt quá 500KB." }));
+            if (file.size > 2000 * 1024) {
+                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
             } else {
-                const showcasingPostIndex = newShowcasingPosts.findIndex((showcasingPost) => showcasingPost === null);
+                const showcasingPostIndex = newArtworks.findIndex((showcasingPost) => showcasingPost === null);
                 if (showcasingPostIndex !== -1) {
-                    newShowcasingPosts[showcasingPostIndex] = file;
+                    newArtworks[showcasingPostIndex] = file;
                 }
             }
         });
-        setShowcasingPosts(newShowcasingPosts);
+        setArtworks(newArtworks);
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
 
     const removeImage = (index) => {
-        const newShowcasingPosts = [...showcasingPosts];
+        const newShowcasingPosts = [...artworks];
         newShowcasingPosts[index] = null;
-        setShowcasingPosts(newShowcasingPosts);
+        setArtworks(newShowcasingPosts);
     };
 
     const triggerFileInput = () => {
@@ -109,22 +110,15 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
             return;
         }
 
-
         // Create showcasing post category
         if (isCreateNewShowcasingPostCategory) {
-            console.log({ title: inputs.newShowcasingPostCategoryTitle })
             try {
-                const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs.newShowcasingPostCategoryTitle });
-                console.log(response)
+                const response = await apiUtils.post("/postCategory/createPostCategory", { title: inputs.newPostCategoryTitle });
                 if (response) {
-                    const serviceCategoryId = response.data.metadata.serviceCategory._id;
-                    inputs.serviceCategoryId = serviceCategoryId;
-                    console.log(serviceCategoryId)
-                    console.log(inputs.serviceCategoryId)
-                    setIsSuccessCreatePost(true);
+                    const postCategoryId = response.data.metadata.postCategory._id;
+                    inputs.postCategoryId = postCategoryId;
                 }
             } catch (error) {
-                console.error("Failed to create new showcasing post category:", error);
                 setErrors((prevErrors) => ({
                     ...prevErrors,
                     serverError: error.response.data.message
@@ -133,17 +127,18 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
                 setIsSubmitCreatePostLoading(false);
             }
         }
-        console.log(inputs)
-        const fd = createFormData(inputs, showcasingPosts, 'files');
+        const fd = createFormData(inputs, 'artworks', artworks);
 
         try {
             // const response = await apiUtils.post("/showcasingPost/createShowcasingPost", fd);
-            const response = await createMutation.mutateAsync(fd);
+            const response = await createPostMutation.mutateAsync(fd);
             if (response) {
                 setModalInfo({
                     status: "success",
-                    message: "Đăng tác phẩm thành công"
+                    message: "Cập nhật bài đăng thành công"
                 })
+                setShowCreatePostForm(false);
+                setOverlayVisible(false);
             }
         } catch (error) {
             setModalInfo({
@@ -159,7 +154,7 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
         }
     };
 
-    const filteredShowcasingPosts = showcasingPosts.filter((showcasingPost) => showcasingPost !== null);
+    const filteredShowcasingPosts = artworks.filter((showcasingPost) => showcasingPost !== null);
     const displayShowcasingPosts = [...filteredShowcasingPosts];
 
     while (displayShowcasingPosts.length < 3) {
@@ -177,10 +172,10 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
 
             <h2 className="form__title">Thêm tác phẩm</h2>
             <div className="form-field">
-                <label htmlFor="movement" className="form-field__label">Trường phái</label>
+                <label htmlFor="movementId" className="form-field__label">Trường phái</label>
                 <select
-                    name="movement"
-                    value={inputs?.movement || ""}
+                    name="movementId"
+                    value={inputs?.movementId || ""}
                     onChange={handleChange}
                     className="form-field__input"
                 >
@@ -192,18 +187,18 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
                 {errors.movement && <span className="form-field__error">{errors.movement}</span>}
             </div>
             <div className="form-field with-create-btn">
-                <label htmlFor="showcasingPostCategory" className="form-field__label">Album</label>
+                <label htmlFor="postCategoryId" className="form-field__label">Album</label>
                 {!isCreateNewShowcasingPostCategory ? (
                     <>
                         <select
-                            name="showcasingPostCategory"
-                            value={inputs?.showcasingPostCategory || ""}
+                            name="postCategoryId"
+                            value={inputs?.postCategoryId || ""}
                             onChange={handleChange}
                             className="form-field__input"
                         >
                             <option value="">-- Chọn album --</option>
-                            {showcasingPostCollections.map((serviceCategory) => (
-                                <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
+                            {postCategories.map((postCategory) => (
+                                <option key={postCategory._id} value={postCategory._id}>{postCategory.title}</option>
                             ))}
                         </select>
                         <button className="btn btn-2" onClick={() => setIsCreateNewShowcasingPostCategory(true)}>Thêm Album</button>
@@ -211,8 +206,8 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
                 ) : (
                     <>
                         <input
-                            name="newShowcasingPostCategoryTitle"
-                            value={inputs?.newShowcasingPostCategoryTitle}
+                            name="newPostCategoryTitle"
+                            value={inputs?.newPostCategoryTitle}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập tên album"
@@ -220,7 +215,7 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
                         <button className="btn btn-4" onClick={() => setIsCreateNewShowcasingPostCategory(false)}>Hủy</button>
                     </>
                 )}
-                {errors._id && <span className="form-field__error">{errors._id}</span>}
+                {errors.postCategory && <span className="form-field__error">{errors.postCategory}</span>}
             </div>
 
             <div className="form-field">
@@ -237,7 +232,7 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
             </div>
 
             <div className="form-field">
-                {showcasingPosts.map((showcasingPost, index) => {
+                {artworks.map((showcasingPost, index) => {
                     return (
                         showcasingPost && (
                             <div key={index} className="form-field__input img-preview">
@@ -290,7 +285,7 @@ export default function CreatePost({ showcasingPostCollections, setShowCreatePos
                     <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
                 </div>
 
-                {errors.showcasingPosts && <span className="form-field__error">{errors.showcasingPosts}</span>}
+                {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
             </div>
 
             <div className="form-field">

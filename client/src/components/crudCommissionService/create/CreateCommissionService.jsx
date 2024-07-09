@@ -181,7 +181,6 @@ export default function CreateCommissionService({
             setIsSubmitCreateCommissionServiceLoading(false);
             return;
         }
-        setIsSubmitCreateCommissionServiceLoading(true);
 
         // Create commission service category
         if (isCreateNewCommissionServiceCategory) {

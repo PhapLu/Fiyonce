@@ -172,9 +172,6 @@ export default function Profile() {
                                         </>
                                     )
                                 }
-
-
-
                             </div>
 
                             <div className="sub-nav-container--right">

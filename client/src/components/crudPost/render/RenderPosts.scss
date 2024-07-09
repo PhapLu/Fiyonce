@@ -19,27 +19,59 @@
             position: relative;
             border-radius: 18px;
             margin-bottom: 8px;
+        }
 
-            .post-item__img__operation-container {
-                position: absolute;
-                display: flex;
-                justify-content: end;
-                bottom: 12px;
-                right: 12px;
+        .post-item__img__crud-operation-container {
+            position: absolute;
+            display: flex;
+            justify-content: end;
+            top: 12px;
+            right: 12px;
 
-                .post-item__img__operation-item {
-                    display: none;
-                    margin-left: 8px;
-                    background-color: var(--white-4-color);
-                    border-radius: 50%;
-                    width: 32px;
-                    height: 32px;
+            .post-item__img__crud-operation-item {
+                display: none;
+                margin-left: 8px;
+                background-color: var(--white-4-color);
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
 
+                svg {
+                    cursor: pointer;
+                    stroke: var(--black-5-color);
+                    margin-top: 50%;
+                    margin-left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+
+        .post-item__img__react-operation-container {
+            position: absolute;
+            display: flex;
+            justify-content: end;
+            bottom: 12px;
+            right: 12px;
+
+            .post-item__img__react-operation-item {
+                display: none;
+                margin-left: 8px;
+                background-color: var(--white-4-color);
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+
+                svg {
+                    cursor: pointer;
+                    stroke: var(--black-5-color);
+                    margin-top: 50%;
+                    margin-left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                &:hover {
                     svg {
-                        stroke: var(--black-5-color);
-                        margin-top: 50%;
-                        margin-left: 50%;
-                        transform: translate(-50%, -50%);
+                        opacity: 0.7;
                     }
                 }
             }
@@ -55,11 +87,16 @@
             top: 0;
             left: 0;
             z-index: -1;
+            min-height: 150px;
             max-height: 360px;
         }
 
         &:hover {
-            .post-item__img__operation-item {
+            .post-item__img__crud-operation-item {
+                display: block !important;
+            }
+
+            .post-item__img__react-operation-item {
                 display: block !important;
             }
 

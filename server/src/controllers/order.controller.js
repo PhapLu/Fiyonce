@@ -39,10 +39,10 @@ class OrderController{
     }
 
     //End Order CRUD
-    readOrderHistory = async(req, res, next) =>{
+    readMemberOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders of a client',
-            metadata: await OrderService.readOrderHistory(req.userId)
+            metadata: await OrderService.readMemberOrderHistory(req.userId)
         }).send(res)
     }
     readTalentOrderHistory = async(req, res, next) =>{
@@ -58,10 +58,11 @@ class OrderController{
         }).send(res)
     }
 
-    denyOrder = async (req, res, next) => {
+    rejectOrder = async (req, res, next) => {
+        console.log(req.body)
         new SuccessResponse({
             message: 'Deny the order success!',
-            metadata: await OrderService.denyOrder(req.userId, req.params.orderId)
+            metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
 }
