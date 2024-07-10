@@ -9,9 +9,14 @@ class ConversationService{
         const user = await User.findById(userId)
         if(!user) throw new AuthFailureError('User not found')
 
+        //2. Validate request body
+        const { otherMemberId, content } = req.body
+        if(!otherMemberId || !content) throw new BadRequestError('Please provide all required fields')
+        if(content == '') throw new BadRequestError('Please provide content')
+
         //2. Create conversation
         const conversation = new Conversation({
-            members: [{ user: userId }],
+            members: [{ user: userId }, { user: req.body.otherMemberId }],
             messages: [
                 {
                     senderId: userId,
@@ -34,16 +39,18 @@ class ConversationService{
         if(!user) throw new AuthFailureError('User not found')
 
         //2. Read conversations
-        const conversations = await Conversation.find({ "members.user": userId }).populate('members.user')
+        const conversations = await Conversation.find({ "members.user": userId }).populate('members.user', "fullName, avatar")
         const formattedConversations = conversations.map((conversation) => {
             let lastMessage = conversation.messages[conversation.messages.length - 1]
             let otherMember = conversation.members.find((member) => member.user._id.toString() !== userId)
-            console.log(lastMessage)
-            console.log(otherMember)
-            conversation.otherMember = otherMember.user
-            conversation.lastMessage = lastMessage
+
+            return {
+                ...conversation._doc, // Include all other conversation properties
+                otherMember: otherMember.user,
+                lastMessage: lastMessage
+            };
         })
-        console.log(formattedConversations)
+        
         return {
             conversations : formattedConversations
         }
@@ -70,7 +77,7 @@ class ConversationService{
     static readConversation = async(userId, conversationId) => {
         //1. Check conversation, user
         const user = await User.findById(userId)
-        const conversation = await Conversation.findById(conversationId).populate('members.user', 'fullName avatar').populate('messages.senderId')
+        const conversation = await Conversation.findById(conversationId).populate('members.user', 'fullName avatar').populate('messages.senderId', "fullName avatar")
         if(!user) throw new AuthFailureError('User not found')  
         if(!conversation) throw new NotFoundError('Conversation not found')
 
@@ -96,9 +103,10 @@ class ConversationService{
 
         //2. Send message
         let formattedConversation
-        const otherMember = conversation.members.find(
+        const otherMemberId = conversation.members.find(
             (member) => member.user._id.toString() !== userId
         )
+        const otherMember = await User.findById(otherMemberId.user)
         conversation.messages.push({
             senderId: userId,
             content: req.body.content,
@@ -110,7 +118,10 @@ class ConversationService{
         formattedConversation = {
             _id: conversation._id,
             messages: conversation.messages,
-            otherMember: otherMember.user,
+            otherMember: {
+                fullName: otherMember.fullName,
+                avatar: otherMember.avatar
+            },
         }
 
         return {

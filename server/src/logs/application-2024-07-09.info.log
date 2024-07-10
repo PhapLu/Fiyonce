@@ -1,0 +1,6 @@
+2024-07-09 21:24:31::info::/v1/api/auth/users/login::54d3fc1a-577e-41f7-8ab5-86fc335b4ccc::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-09 21:24:42::info::/v1/api/auth/users/login::1296bc11-af4e-4b96-a3dc-233f8e20cf54::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-09 21:24:48::info::/v1/api/conversation/createConversation::7ea89cb0-c571-45ab-bc3a-bb13ef30b625::input-params ::POST::::{"otherMemberId":"66601810d3737cbcac3bc91e","content":"Message content"}
+2024-07-09 21:25:19::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::38dde0a4-1cba-4eec-ad00-36ae5af6d6a2::input-params ::GET::::{}
+2024-07-09 21:25:19::error::/v1/api/conversation/readConversation/668d4830d5507f1038513105::38dde0a4-1cba-4eec-ad00-36ae5af6d6a2::401 - 1ms - Response: {"status":401,"now":1720535119886}::{"message":"User not found"}
+2024-07-09 21:26:00::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::642d4385-9061-4e1b-80f7-81a0c0c3cf3c::input-params ::GET::::{}
