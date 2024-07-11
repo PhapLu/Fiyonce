@@ -21,6 +21,7 @@ const ConversationSchema = new mongoose.Schema({
           required: true,
         },
         content: { type: String },
+        media: { type: [String] },
         createdAt: { type: Date, default: Date.now },
       },
     ],
