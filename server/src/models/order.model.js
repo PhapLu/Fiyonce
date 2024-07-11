@@ -20,10 +20,6 @@ const OrderSchema = new mongoose.Schema({
         enum: ['pending', 'approved', 'rejected', 'confirmed', 'canceled', 'in_progress', 'finished', 'under_processing'],
         default: 'pending'
     },
-    title: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         default: '',
@@ -37,7 +33,9 @@ const OrderSchema = new mongoose.Schema({
     references: [{
         type: String
     }],
-    rejectMessage: { type: String, default: ''},
+    isTalentArchived: { type: Boolean, default: false },
+    isMemberArchived: { type: Boolean, default: false },
+    rejectMessage: { type: String },
     minPrice: { type: Number },
     maxPrice: { type: Number },
     purpose: { type: String, enum: ['personal', 'commercial'] },

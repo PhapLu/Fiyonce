@@ -157,17 +157,13 @@ class CommissionServiceService{
         // 2. Extract public IDs and delete files from Cloudinary
         const publicIds = service.artworks.map(artwork => extractPublicIdFromUrl(artwork))
         await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
-    
-        // 3. Find the category of the service
-        const serviceCategoryId = service.serviceCategoryId
         
         // 4. Delete the service from the database
+        const serviceCategoryId = service.serviceCategoryId
         await service.deleteOne()
         
         // 5. Check if the category has other services
         const remainingServices = await CommissionService.find({ serviceCategoryId })
-        
-        // 6. Delete the category if it's empty
         if (remainingServices.length === 0) {
             await ServiceCategory.findByIdAndDelete(serviceCategoryId)
         }

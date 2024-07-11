@@ -7,38 +7,38 @@ import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js"
 import mongoose from "mongoose"
 
-class OrderService {
+class OrderService{
     //Order CRUD
-    static createOrder = async (userId, req) => {
+    static createOrder = async(userId, req) => {
         //1. Get type and talentChosenId
         const body = req.body
-        const { isDirect, talentChosenId, commissionServiceId } = body
+        const {isDirect, talentChosenId, commissionServiceId} = body
         const commissionService = await CommissionService.findById(commissionServiceId)
 
         //2. Check isDirect of order
-        if (isDirect = true) {
+        if(isDirect == true){
             //direct order
             const talent = await User.findById(talentChosenId)
             const service = await commissionService.findById(commissionServiceId)
 
-            if (!talent) throw new BadRequestError('Talent not found!')
-            if (!service) throw new BadRequestError('commissionService not found!')
-            if (talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
-            if (talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
+            if(!talent) throw new BadRequestError('Talent not found!')
+            if(!service) throw new BadRequestError('commissionService not found!')
+            if(talent.role != 'talent') throw new AuthFailureError('He/She is not a talent!')
+            if(talent._id == userId) throw new BadRequestError('You cannot choose yourself!')
             body.isDirect = true
             body.talentChosenId = talentChosenId
             body.minPrice = commissionService.minPrice
             body.commissionServiceId = commissionServiceId
-        } else {
+        }else{
             //inDirect order
             body.isDirect = false
             body.talentChosenId = null
         }
-
+        
         //3. Upload req.files.files to cloudinary
         try {
             let references = []
-
+            
             if (req.files && req.files.files && req.files.files.length > 0) {
                 const uploadPromises = req.files.files.map(file => compressAndUploadImage({
                     buffer: file.buffer,
@@ -50,7 +50,7 @@ class OrderService {
                 const uploadResults = await Promise.all(uploadPromises)
                 references = uploadResults.map(result => result.secure_url)
             }
-
+            
             //4. Create order
             const order = new Order({
                 memberId: userId,
@@ -58,17 +58,17 @@ class OrderService {
                 ...body
             })
             await order.save()
-
+        
             return {
                 order
             }
         } catch (error) {
             console.log('Error uploading images or saving order:', error)
             throw new Error('File upload or database save failed')
-        }
+        }        
     }
 
-    static readOrder = async (orderId) => {
+    static readOrder = async(orderId) => {
         const order = await Order.findById(orderId).populate('talentChosenId', 'stageName avatar')
         if (!order) throw new NotFoundError('Order not found!')
 
@@ -76,12 +76,14 @@ class OrderService {
             order
         }
     }
-
+    
     //Client read approved indirect orders in commission market
-    static readOrders = async (req) => {
+    static readOrders = async(req) => {
         const q = req.query
         const filters = {
-            ...(q.isDirect && { isDirect: q.isDirect }),
+            isTalentArchived: false,
+            isMemberArchived: false,
+            ...(q.isDirect && { isDirect: q.isDirect}),
         }
 
         //1. Get all orders
@@ -93,22 +95,22 @@ class OrderService {
             order._doc.talentsApprovedCount = talentsApprovedCount  // Add the count to the order
             return order
         }))
-
+    
         return {
             orders: ordersWithCounts
         }
     }
 
-    static updateOrder = async (userId, orderId, req) => {
+    static updateOrder = async(userId, orderId, req) => {
         //1. check order and user
         const oldOrder = await Order.findById(orderId)
         const foundUser = await User.findById(userId)
-        if (!foundUser) throw new NotFoundError('User not found!')
-        if (!oldOrder) throw new NotFoundError('Order not found!')
-        if (oldOrder.memberId.toString() !== userId) throw new AuthFailureError("You can update only your order")
+        if(!foundUser) throw new NotFoundError('User not found!')
+        if(!oldOrder) throw new NotFoundError('Order not found!')
+        if(oldOrder.memberId.toString() !== userId) throw new AuthFailureError("You can update only your order")
 
         //2. Check order status
-        if (oldOrder.status != 'pending')
+        if(oldOrder.status != 'pending')
             throw new BadRequestError('You cannot update order on this stage!')
         try {
             //3. Handle file uploads if new files were uploaded
@@ -139,7 +141,7 @@ class OrderService {
                 updatedFields,
                 { new: true }
             )
-
+    
             return {
                 order: updatedOrder
             }
@@ -149,36 +151,13 @@ class OrderService {
         }
     }
 
-    static deleteOrder = async (userId, orderId) => {
-        //1. Check user and order
-        const foundUser = await User.findById(userId)
-        const order = await Order.findById(orderId)
-        if (!foundUser) throw new NotFoundError('User not found!')
-        if (!order) throw new NotFoundError('Order not found!')
-        if (foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
-
-        //2. Check order status
-        if (oldOrder.status != 'pending' && oldOrder.status != 'approved')
-            throw new BadRequestError('You cannot delete order on this stage!')
-
-        //3. Extract public IDs and delete files from Cloudinary
-        const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference))
-        await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
-
-        //4. Delete order
-        await order.deleteOne()
-
-        return {
-            message: 'Order deleted successfully!'
-        }
-    }
     //End Order CRUD
-
-    static readMemberOrderHistory = async (clientId) => {
+    
+    static readOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId)
-        if (!foundUser) throw new NotFoundError('User not found!')
-
+        if(!foundUser) throw new NotFoundError('User not found!')
+        
         //2. Get orders
         const orders = await Order.find({ memberId: clientId })
             .populate('talentChosenId', 'stageName avatar')
@@ -193,7 +172,7 @@ class OrderService {
         const foundTalent = await User.findById(talentId);
         if (!foundTalent) throw new NotFoundError('Talent not found!');
         if (foundTalent.role !== 'talent') throw new BadRequestError('You are not a talent!');
-
+        
         try {
             // 2. Aggregate to get all orders involving the talent
             const orders = await Order.aggregate([
@@ -213,15 +192,6 @@ class OrderService {
                         localField: '_id',
                         foreignField: 'orderId',
                         as: 'proposals'
-                    }
-                },
-                // Lookup to get member information
-                {
-                    $lookup: {
-                        from: 'users', // Assuming the users collection is named 'users'
-                        localField: 'memberId',
-                        foreignField: '_id',
-                        as: 'memberInfo'
                     }
                 },
                 // Unwind proposals array to work with individual proposals
@@ -261,7 +231,7 @@ class OrderService {
                     }
                 }
             ]);
-
+            
             return { talentOrderHistory: orders };
         } catch (error) {
             console.error('Error fetching orders by talent:', error);
@@ -269,69 +239,105 @@ class OrderService {
         }
     };
 
-    // static chooseProposal = async(userId, orderId, proposalId) => {
-    //     //1. Check user, order and proposal
-    //     const user = await User.findById(userId)
-    //     const updatedOrder = await Order.findById(orderId)
-    //     const proposal = await Proposal.findById(proposalId)
+    static readArchivedOrders = async(userId) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError('User not found')
+        
+        //2. Get archived orders
+        const memberArchivedOrders = await Order.find({ memberId: userId, isMemberArchived: true })
+        const talentArchivedOrders = await Order.find({isTalentArchived: true })
+        
+        return {
+            orders: {
+                memberArchivedOrders,
+                talentArchivedOrders
+            }
+        }
+    }
 
-    //     if(!user) throw new NotFoundError('User not found!')
-    //     if(!updatedOrder) throw new NotFoundError('Order not found!')
-    //     if(!proposal) throw new BadRequestError('Proposal not found!')
-
-    //     //2. Further checking
-    //     if(user._id != updatedOrder.memberId.toString()) throw new AuthFailureError('You can choose talent only for your Order!')
-    //     if(proposal.orderId.toString() != updatedOrder._id.toString()) throw new BadRequestError('Proposal does not belong to this order!')
-    //     if(updatedOrder.talentChosenId) throw new BadRequestError('You have already chosen a talent!')
-
-    //     //3. Choose proposal
-    //     updatedOrder.status = 'confirmed'
-    //     updatedOrder.talentChosenId = proposal.talentId
-    //     updatedOrder.save()
-
-    //     return {
-    //         order: updatedOrder
-    //     }
-    // }
-
-    static rejectOrder = async (userId, orderId, body) => {
+    static archiveOrder = async(userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError('User not found')
-        if (!order) throw new NotFoundError('Order not found')
+        if(!user) throw new NotFoundError('User not found')
+        if(!order) throw new NotFoundError('Order not found')
+        
+        //2. Archive order
+        if(user.role === 'client'){
+            //Check if user is authorized to archive order
+            if(userId != order.memberId.toString())
+                throw new AuthFailureError('You are not authorized to archive this order')
+            order.isMemberArchived = true
+        }else{
+            //Check if user is authorized to archive order
+            if(user.role !== 'talent')
+                throw new AuthFailureError('You are not authorized to archive this order')
+            order.isTalentArchived = true
+        }
+        order.save()
 
+        return {
+            order
+        }
+    }
+    
+    static denyOrder = async(userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if(!user) throw new NotFoundError('User not found')
+        if(!order) throw new NotFoundError('Order not found')
+        
         //2. Check if user is authorized to deny order
-        if (user.role !== 'talent')
-            throw new AuthFailureError('You are not authorized to deny this order')
-
+        if(user.role !== 'talent')
+        throw new AuthFailureError('You are not authorized to deny this order')
+    
         //3. Check if order status is pending
-        if (order.status !== 'pending')
-            throw new BadRequestError('You cannot deny this order')
-
-        console.log(body)
-        if (!body.rejectMessage)
-            throw new BadRequestError('Reject message is required')
+        if(order.status !== 'pending')
+        throw new BadRequestError('You cannot deny this order')
 
         //4. Deny order
         order.status = 'rejected'
-        order.rejectMessage = body.rejectMessage;
         order.save()
 
         //5. Show order
-        const showOrder = order.populate('talentChosenId', 'stageName avatar')
-
+        const deniedOrder = order.populate('talentChosenId', 'stageName avatar')
+        
         //6. Send email to user
         // try {
-        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
-        // } catch (error) {
-        //     throw new Error('Email service error')
+            //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
+            // } catch (error) {
+                //     throw new Error('Email service error')
         // }
-
+        
         return {
-            order: showOrder
+            order: deniedOrder
         }
     }
+    // static deleteOrder = async(userId, orderId) => {
+    //     //1. Check user and order
+    //     const foundUser = await User.findById(userId)
+    //     const order = await Order.findById(orderId)
+    //     if(!foundUser) throw new NotFoundError('User not found!')
+    //     if(!order) throw new NotFoundError('Order not found!')
+    //     if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
+        
+    //     //2. Check order status
+    //     if(oldOrder.status != 'pending' && oldOrder.status != 'approved')
+    //         throw new BadRequestError('You cannot delete order on this stage!')
+    
+    //     //3. Extract public IDs and delete files from Cloudinary
+    //     const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference))
+    //     await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+    
+    //     //4. Delete order
+    //     await order.deleteOne()
+    
+    //     return{
+    //         message: 'Order deleted successfully!'
+    //     }
+    // }
 }
 
 export default OrderService

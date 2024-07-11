@@ -2,6 +2,7 @@ import PostCategory from '../models/postCategory.model.js'
 import CommissionService from '../models/commissionService.model.js'
 import { User } from '../models/user.model.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
+import Post from '../models/post.model.js'
 
 class PostCategoryService{
     static createPostCategory = async(talentId, body) => {
@@ -71,7 +72,13 @@ class PostCategoryService{
         if(!postCategory) throw new NotFoundError('Service not found')
         if(postCategory.talentId.toString() !== talentId) throw new AuthFailureError('You can only delete your postCategory')
 
-        //2. Delete service
+        //2. Check posts using postCategory before deleting it
+        const posts = await Post.find({postCategoryId: postCategoryId})
+        if(posts.length > 0){
+            await Post.deleteMany({postCategoryId: postCategoryId})
+        }
+
+        //3. Delete service
         return await postCategory.deleteOne()
     }
 }

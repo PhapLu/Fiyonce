@@ -368,3 +368,24 @@ ValidationError: Artwork validation failed: talentIdL: Path `talentIdL` is requi
     at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
     at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
     at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-09 10:02:18::error::undefined::undefined::uncaughtException: listen EADDRINUSE: address already in use :::8900
+Error: listen EADDRINUSE: address already in use :::8900
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at configureSocket (file:///D:/Adam/OnisonProject/server/src/configs/socket.config.js:13:12)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:90:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-09 10:02:18::error::undefined::undefined::uncaughtException: listen EADDRINUSE: address already in use :::3000
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at Function.listen (D:\Adam\OnisonProject\server\node_modules\express\lib\application.js:635:24)
+    at file:///D:/Adam/OnisonProject/server/server.js:4:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-09 16:56:46::error::undefined::undefined::uncaughtException: async is not defined
+ReferenceError: async is not defined
+    at <static_initializer> (file:///D:/Adam/OnisonProject/server/src/services/conversation.service.js:7:33)
+    at file:///D:/Adam/OnisonProject/server/src/services/conversation.service.js:1:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

@@ -8,6 +8,11 @@ const NotificationSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    type: {
+        type: String,
+        required: true,
+        enum: ['interaction', 'order', 'update']
+    },
     content: { type: String, required: true},
     senderAvatar: { type: String, required: true},
 },{
