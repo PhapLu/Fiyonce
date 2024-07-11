@@ -30,6 +30,8 @@ class SocketServices {
 
         socket.on("sendMessage", ({ senderId, receiverId, text }) => {
             const user = getUser(receiverId)
+            console.log("UUUUUUUUUUUUU")
+            console.log(text)
             global._io.to(user?.socketId).emit("getMessage", {
                 senderId,
                 text,

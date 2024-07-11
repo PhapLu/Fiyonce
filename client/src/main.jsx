@@ -4,6 +4,7 @@ import App from './App.jsx'
 import { ThemeProvider } from './contexts/theme/ThemeContext';
 import { ModalProvider } from './contexts/modal/ModalContext';
 import { AuthProvider } from './contexts/auth/AuthContext';
+import { ConversationProvider } from './contexts/conversation/ConversationContext';
 import { MovementProvider } from './contexts/movement/MovementContext';
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -15,9 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <ModalProvider>
           <AuthProvider>
-            <MovementProvider>
-              <App />
-            </MovementProvider>
+            <ConversationProvider>
+              <MovementProvider>
+                <App />
+              </MovementProvider>
+            </ConversationProvider>
           </AuthProvider>
         </ModalProvider>
       </ThemeProvider>

@@ -33,7 +33,7 @@ class ControllerController{
     sendMessage = async(req, res, next) => {
         new SuccessResponse({
             message: 'Send message success!',
-            metadata: await ConversationService.sendMessage(req.userId, req.params.conversationId, req)
+            metadata: await ConversationService.sendMessage(req.userId, req.body.conversationId, req)
         }).send(res)
     }
 }

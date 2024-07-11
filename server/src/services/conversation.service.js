@@ -3,21 +3,21 @@ import { User } from '../models/user.model.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
-class ConversationService{ 
-    static createConversation = async(userId, req) => {
+class ConversationService {
+    static createConversation = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId)
-        if(!user) throw new AuthFailureError('User not found')
+        if (!user) throw new AuthFailureError('User not found')
 
         //2. Validate request body
         const { otherMemberId, content } = req.body
-        if(!otherMemberId || !content) throw new BadRequestError('Please provide all required fields')
-        if(content == '') throw new BadRequestError('Please provide content')
+        if (!otherMemberId) throw new BadRequestError('Please provide all required fields')
+        if (!content && (!req.files.media || req.file.media.length == 0)) throw new BadRequestError('Please provide content or media')
 
         //3. Upload media
         try {
             let media = [];
-        
+
             if (req.files && req.files.media) {
                 const uploadPromises = req.files.media.map(file => compressAndUploadImage({
                     buffer: file.buffer,
@@ -29,21 +29,21 @@ class ConversationService{
                 const uploadResults = await Promise.all(uploadPromises);
                 media = uploadResults.map(result => result.secure_url);
             }
-        
+
             //4. Create conversation
             const conversation = new Conversation({
                 members: [{ user: userId }, { user: req.body.otherMemberId }],
                 messages: [
                     {
                         senderId: userId,
-                        content: req.body.content,
+                        content,
                         createdAt: new Date(),
                         media
                     },
                 ],
             });
             await conversation.save();
-        
+
             return {
                 conversation
             };
@@ -53,13 +53,13 @@ class ConversationService{
         }
     }
 
-    static readConversations = async(userId) => {
+    static readConversations = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if(!user) throw new AuthFailureError('User not found')
+        if (!user) throw new AuthFailureError('User not found')
 
         //2. Read conversations
-        const conversations = await Conversation.find({ "members.user": userId }).populate('members.user', "fullName, avatar")
+        const conversations = await Conversation.find({ "members.user": userId }).populate('members.user', "fullName avatar")
         const formattedConversations = conversations.map((conversation) => {
             let lastMessage = conversation.messages[conversation.messages.length - 1]
             let otherMember = conversation.members.find((member) => member.user._id.toString() !== userId)
@@ -70,9 +70,9 @@ class ConversationService{
                 lastMessage: lastMessage
             };
         })
-        
+
         return {
-            conversations : formattedConversations
+            conversations: formattedConversations
         }
     }
 
@@ -82,21 +82,40 @@ class ConversationService{
         const otherMember = await User.findById(otherMemberId);
         if (!user) throw new AuthFailureError('User not found');
         if (!otherMember) throw new BadRequestError('Other member not found');
-    
+
         //2. Read conversation
         const conversation = await Conversation.findOne({
-            'members.user': { 
+            'members.user': {
                 $all: [
-                    userId, 
+                    userId,
                     otherMemberId
                 ]
             }
-        })
-    
+        }).populate('members.user', 'fullName avatar')
+
         if (!conversation) throw new NotFoundError('Conversation not found');
-    
+
+        //2. Format conversation
+
+        // Sort and limit the messages to the latest 12
+        const sortedMessages = conversation.messages
+            .sort((a, b) => b.createdAt - a.createdAt)
+            .slice(0, 12)
+            .reverse();  // Reverse to maintain ascending order
+
+        let formattedConversation
+
+        formattedConversation = {
+            _id: conversation._id,
+            messages: sortedMessages,
+            otherMember: {
+                fullName: otherMember.fullName,
+                avatar: otherMember.avatar
+            },
+        };
+
         return {
-            conversation
+            conversation: formattedConversation
         };
     };
 
@@ -104,92 +123,113 @@ class ConversationService{
         //1. Check conversation, user
         const user = await User.findById(userId);
         if (!user) throw new AuthFailureError('User not found');
-    
+
         const conversation = await Conversation.findById(conversationId)
             .populate('members.user', 'fullName avatar')
             .populate('messages.senderId', 'fullName avatar');
-    
+
         if (!conversation) throw new NotFoundError('Conversation not found');
-    
+
         // Sort and limit the messages to the latest 12
         const sortedMessages = conversation.messages
             .sort((a, b) => b.createdAt - a.createdAt)
             .slice(0, 12)
             .reverse();  // Reverse to maintain ascending order
-    
+
         let formattedConversation;
         const otherMember = conversation.members.find(
             (member) => member.user._id.toString() !== userId
         );
-    
+
         formattedConversation = {
             _id: conversation._id,
             messages: sortedMessages,
             otherMember: otherMember.user,
         };
-    
+
         return {
             conversation: formattedConversation
         };
-    };    
+    };
 
-    static sendMessage = async(userId, conversationId, req) => {
-        //1. Check user, conversation
-        const user = await User.findById(userId)
-        const conversation = await Conversation.findById(conversationId)
-        if(!user) throw new AuthFailureError('User not found')
-        if(!conversation) throw new NotFoundError('Conversation not found')
-
-        //2.Validate body
-        if(req.body.content == '') throw new BadRequestError('Please provide content')
-
-        //3. Upload media if exists
+    static sendMessage = async (userId, conversationId, req) => {
         try {
-            let media = []
-            if(req.files && req.files.media){
+            // 1. Check if conversationId is provided
+            let conversation;
+            if (conversationId) {
+                // If conversationId is provided, find the existing conversation
+                conversation = await Conversation.findById(conversationId);
+                if (!conversation) throw new NotFoundError('Conversation not found');
+            } else {
+                // If conversationId is not provided, create a new conversation
+                const otherUserId = req.body.otherMemberId;
+                const otherUser = await User.findById(otherUserId);
+                if (!otherUser) {
+                    throw new NotFoundError('Other user not found');
+                }
+
+                // Create a new conversation
+                conversation = new Conversation({
+                    members: [
+                        { user: userId },
+                        { user: otherUserId }
+                    ],
+                    messages: []
+                });
+                await conversation.save();
+            }
+
+            // 2. Validate body (content or media)
+            const { content } = req.body;
+            if (!content && (!req.files.media || req.files.media.length === 0)) {
+                throw new BadRequestError('Please provide content or media');
+            }
+
+            // 3. Upload media if exists
+            let media = [];
+            if (req.files && req.files.media) {
                 const uploadPromises = req.files.media.map(file => compressAndUploadImage({
                     buffer: file.buffer,
                     originalname: file.originalname,
                     folderName: `fiyonce/conversations/${userId}`,
                     width: 1920,
                     height: 1080
-                }))
-                const uploadResults = await Promise.all(uploadPromises)
-                media = uploadResults.map(result => result.secure_url)
+                }));
+                const uploadResults = await Promise.all(uploadPromises);
+                media = uploadResults.map(result => result.secure_url);
             }
 
-            //4. Send message
-            let formattedConversation
-            const otherMemberId = conversation.members.find(
-                (member) => member.user._id.toString() !== userId
-            )
-            const otherMember = await User.findById(otherMemberId.user)
+            // 4. Send message
+            const otherMemberId = conversation.members.find(member => member.user.toString() !== userId);
+            const otherMember = await User.findById(otherMemberId.user);
+
             conversation.messages.push({
                 senderId: userId,
                 content: req.body.content,
                 createdAt: new Date(),
                 media
-            })
-            await conversation.save()
+            });
+            await conversation.save();
 
-            //5. Format conversation
-            formattedConversation = {
+            // 5. Format conversation
+            const formattedConversation = {
                 _id: conversation._id,
                 messages: conversation.messages,
                 otherMember: {
                     fullName: otherMember.fullName,
                     avatar: otherMember.avatar
-                },
-            }
-    
+                }
+            };
+
             return {
                 conversation: formattedConversation
-            }
+            };
         } catch (error) {
-            console.log('Error uploading images:', error);
-            throw new Error('File upload or database save failed');
+            console.log('Error sending message:', error);
+            throw new Error('Failed to send message');
         }
-    }
+    };
+
 }
 
 export default ConversationService

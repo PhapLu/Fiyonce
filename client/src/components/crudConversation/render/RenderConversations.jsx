@@ -3,114 +3,17 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import "./RenderConversations.scss";
+import { apiUtils } from "../../../utils/newRequest";
+import { formatTimeAgo } from "../../../utils/formatter";
 
 export default function RenderConversations({ setConversation, setShowRenderConversation, setShowRenderConversations }) {
     const { userInfo } = useAuth();
 
     const fetchConversations = async () => {
         try {
-            // const response = await apiUtils.get(/conversation/readConversations);
-            // console.log(response.data.metadata.conversations)
-            // return response.data.metadata.conversations;
-            return [
-                {
-                    _id: 1,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/236x/ce/a4/5d/cea45d24881883cc2d41cce36ce78dbb.jpg",
-                        fullName: "John Doe",
-                    }
-
-                },
-                {
-                    _id: 2,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/736x/c1/77/36/c17736c8b3411879f843809f687658fc.jpg",
-                        fullName: "John Doe",
-                    }
-
-                },
-                {
-                    _id: 3,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/736x/c1/77/36/c17736c8b3411879f843809f687658fc.jpg",
-                        fullName: "John Doe",
-                    }
-
-                },
-                {
-                    _id: 4,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/736x/c1/77/36/c17736c8b3411879f843809f687658fc.jpg",
-                        fullName: "John Doe",
-                    }
-
-                },
-                {
-                    _id: 5,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/736x/c1/77/36/c17736c8b3411879f843809f687658fc.jpg",
-                        fullName: "John Doe",
-                    }
-
-                },
-                {
-                    _id: 6,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/736x/c1/77/36/c17736c8b3411879f843809f687658fc.jpg",
-                        fullName: "John Doe",
-                    }
-                },
-                {
-                    _id: 7,
-                    lastMessage: {
-                        senderId: "2344543t43t34t",
-                        content: "Hello bro",
-                        createdAt: "2024-08-07",
-                    },
-                    otherMember: {
-                        _id: "2344543t43t34t",
-                        avatar: "https://i.pinimg.com/736x/c1/77/36/c17736c8b3411879f843809f687658fc.jpg",
-                        fullName: "John Doe",
-                    }
-
-                },
-            ]
+            const response = await apiUtils.get(`/conversation/readConversations`);
+            console.log(response.data.metadata.conversations)
+            return response.data.metadata.conversations;
         } catch (error) {
             return null;
         }
@@ -200,7 +103,7 @@ export default function RenderConversations({ setConversation, setShowRenderConv
                                 </div>
 
                                 <div className="user--right">
-                                    <span className="fs-12 downlight-text">2h truoc</span>
+                                    <span className="fs-12 downlight-text">{formatTimeAgo(conversation.createdAt)}</span>
                                 </div>
                             </div>
                         ))
