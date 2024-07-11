@@ -19,7 +19,7 @@ class NotificationController{
     readNotifications = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read notifications success!',
-            metadata: await NotificationService.readNotifications(req.params.userId)
+            metadata: await NotificationService.readNotifications(req.userId)
         }).send(res)
     }
 }

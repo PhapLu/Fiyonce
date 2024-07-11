@@ -56,23 +56,29 @@ class ConversationService{
         }
     }
 
-    static readConversationWithOtherMember = async(userId, otherMemberId) => {
+    static readConversationWithOtherMember = async (userId, otherMemberId) => {
         //1. Check user and other member
-        const user = await User.findById(userId)
-        const otherMember = await User.findById(otherMemberId)
-        if(!user) throw new AuthFailureError('User not found')
-        if(!otherMember) throw new BadRequestError('Other member not found')
-
+        const user = await User.findById(userId);
+        const otherMember = await User.findById(otherMemberId);
+        if (!user) throw new AuthFailureError('User not found');
+        if (!otherMember) throw new BadRequestError('Other member not found');
+    
         //2. Read conversation
         const conversation = await Conversation.findOne({
-            members: { $all: [{ user: userId }, { user: otherMemberId }] },
-        }).populate('members.user')
-        if(!conversation) throw new NotFoundError('Conversation not found')
-
+            'members.user': { 
+                $all: [
+                    userId, 
+                    otherMemberId
+                ]
+            }
+        })
+    
+        if (!conversation) throw new NotFoundError('Conversation not found');
+    
         return {
             conversation
-        }
-    }
+        };
+    };
 
     static readConversation = async(userId, conversationId) => {
         //1. Check conversation, user

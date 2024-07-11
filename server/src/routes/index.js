@@ -10,6 +10,7 @@ import movementRoute from './movement/index.js'
 import proposalRoute from './proposal/index.js'
 import conversationRoute from './conversation/index.js'
 import postCategoryRoute from './postCategory/index.js'
+import notificationRoute from './notification/index.js'
 import talentRequestRoute from './talentRequest/index.js'
 import termOfServiceRoute from './termOfService/index.js'
 import reportDashboardRoute from './reportDashboard/index.js'
@@ -20,6 +21,7 @@ import commissionServiceRoute from './commissionService/index.js'
 import overviewDashboardRoute from './overviewDashboard/index.js'
 import challengeDashboardRoute from './challengeDashboard/index.js'
 import transactionDashboardRoute from './transactionDashboard/index.js'
+
 const router = express.Router()
 
 //Check Permission
@@ -32,6 +34,7 @@ router.use('/v1/api/review', reviewRoute)
 router.use('/v1/api/upload', uploadRoute)
 router.use('/v1/api/proposal', proposalRoute)
 router.use('/v1/api/movement', movementRoute)
+router.use('/v1/api/notification', notificationRoute)
 router.use('/v1/api/postCategory', postCategoryRoute)
 router.use('/v1/api/conversation', conversationRoute)
 router.use('/v1/api/termOfService', termOfServiceRoute)

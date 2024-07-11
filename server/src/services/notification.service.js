@@ -9,39 +9,42 @@ class NotificationService{
         if (!user) throw new NotFoundError('User not found!')
 
         //2. Validate request body
-        const {receiverId, content, type} = body
-        if (!receiverId || !content) {
+        const {receiverId, type} = body
+        const receiver = await User.findById(receiverId)
+        if (!receiverId) {
             throw new BadRequestError('Please provide all required fields')
         }
-        if(type !== 'like' && type !== 'share' && type !== 'bookmark'&& type !== 'follow' && type !== 'orderCommission' && type !== 'updateOrderStatus'){
+        if(!receiver) throw new NotFoundError('Receiver not found!')
+        if(type !== 'like' && type !== 'share' && type !== 'bookmark' && type !== 'follow' && type !== 'orderCommission' && type !== 'updateOrderStatus'){
             throw new BadRequestError('Invalid type')
         }
         
         //3. Assign content based on type of notification
+        let content
         let notificationType
         switch(type){
             case 'like':
-                content = `${user.name} liked your post`
+                content = `${user.fullName} liked your post`
                 notificationType = 'interaction'
                 break
             case 'share':
-                content = `${user.name} shared your post`
+                content = `${user.fullName} shared your post`
                 notificationType = 'interaction'
                 break
             case 'bookmark':
-                content = `${user.name} bookmarked your post`
+                content = `${user.fullName} bookmarked your post`
                 notificationType = 'interaction'
                 break
             case 'follow':
-                content = `${user.name} followed you`
+                content = `${user.fullName} followed you`
                 notificationType = 'interaction'
                 break
             case 'orderCommission':
-                content = `${user.name} ordered your commission`
+                content = `${user.fullName} ordered your commission`
                 notificationType = 'order'
                 break
             case 'updateOrderStatus':
-                content = `${user.name} updated the status of your order`
+                content = `${user.fullName} updated the status of your order`
                 notificationType = 'order'
                 break
         }
@@ -50,6 +53,7 @@ class NotificationService{
         let notification = new Notification({
             receiverId,
             content,
+            type: notificationType,
             senderAvatar: user.avatar
         })
         await notification.save()
