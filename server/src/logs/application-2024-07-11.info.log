@@ -1,0 +1,15 @@
+2024-07-11 16:07:57::info::/v1/api/conversation/createConversation::0c12b9f3-63d0-4470-8d5f-b154e6e69faf::input-params ::POST::::{}
+2024-07-11 16:09:52::info::/v1/api/conversation/createConversation::5aeee3c3-7ce2-44d5-8856-58b692efedec::input-params ::POST::::{}
+2024-07-11 16:09:52::error::/v1/api/conversation/createConversation::5aeee3c3-7ce2-44d5-8856-58b692efedec::403 - 1ms - Response: {"status":403,"now":1720688992354}::{"message":"Please provide all required fields"}
+2024-07-11 16:10:23::info::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::b6512c36-db25-40aa-b7fe-829e74728e21::input-params ::PATCH::::{}
+2024-07-11 16:10:23::error::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::b6512c36-db25-40aa-b7fe-829e74728e21::403 - 1ms - Response: {"status":403,"now":1720689023026}::{"message":"Please provide content"}
+2024-07-11 16:10:31::info::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::b2dc88df-7d63-43c5-a8a0-23db6407cdb3::input-params ::PATCH::::{}
+2024-07-11 16:10:59::info::/v1/api/conversation/readConversations::8ab6088d-e192-4f08-83da-858a866f475a::input-params ::GET::::{}
+2024-07-11 16:12:05::info::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::36fdd42f-b40e-48b8-bdbb-ecfff2944525::input-params ::PATCH::::{}
+2024-07-11 16:12:34::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::25c670ed-002b-4681-9a62-c8d051e6a311::input-params ::GET::::{}
+2024-07-11 16:12:34::error::/v1/api/conversation/readConversation/668d4830d5507f1038513105::25c670ed-002b-4681-9a62-c8d051e6a311::undefined - NaNms - Response: {}::{"message":"Cannot populate with `sort` on path messages.senderId because it is a subproperty of a document array"}
+2024-07-11 16:14:54::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::c9ff8cb1-2a29-48db-bbdf-793f2e0a0f87::input-params ::GET::::{}
+2024-07-11 16:15:17::info::/v1/api/conversation/createConversation::96356d37-2fdf-4398-afd0-d7e6c61b2168::input-params ::POST::::{}
+2024-07-11 16:15:32::info::/v1/api/conversation/readConversation/668fa2a75390575572c77e1a::a61a1e53-2ac8-4f87-896d-7c9e29a0c2b3::input-params ::GET::::{}
+2024-07-11 16:16:48::info::/v1/api/conversation/sendMessage/668fa2a75390575572c77e1a::f5626a38-0b87-466f-9c06-b5888e66cd01::input-params ::PATCH::::{}
+2024-07-11 16:17:47::info::/v1/api/conversation/sendMessage/668fa2a75390575572c77e1a::616e767d-d471-42f7-9487-4e64fb008852::input-params ::PATCH::::{}

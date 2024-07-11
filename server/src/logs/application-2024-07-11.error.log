@@ -1,0 +1,3 @@
+2024-07-11 16:09:52::error::/v1/api/conversation/createConversation::5aeee3c3-7ce2-44d5-8856-58b692efedec::403 - 1ms - Response: {"status":403,"now":1720688992354}::{"message":"Please provide all required fields"}
+2024-07-11 16:10:23::error::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::b6512c36-db25-40aa-b7fe-829e74728e21::403 - 1ms - Response: {"status":403,"now":1720689023026}::{"message":"Please provide content"}
+2024-07-11 16:12:34::error::/v1/api/conversation/readConversation/668d4830d5507f1038513105::25c670ed-002b-4681-9a62-c8d051e6a311::undefined - NaNms - Response: {}::{"message":"Cannot populate with `sort` on path messages.senderId because it is a subproperty of a document array"}
