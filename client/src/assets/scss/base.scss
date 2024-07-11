@@ -26,7 +26,8 @@
     --white-4-color: white;
 
     --box-shadow-1: rgba(0, 0, 0, 0.1) 0px 1px 4px;
-    --box-shadow-2: 0 2px 5px rgb(114 114 114 / 20%);
+    --box-shadow-2: rgba(0, 0, 0, 0.2) 0px 2px 8px;
+    --box-shadow-4: rgb(79 127 249 / 20%) 0px 3px 5px;
     --form-border: unset;
     --form-bg-1-color: #F7F7F7;
     --form-bg-2-color: white;
@@ -112,7 +113,6 @@ svg {
     // fill: var(--black-2-color);
     width: 22px;
     height: 22px;
-    margin-right: 8px;
     object-fit: cover;
 }
 
@@ -225,6 +225,13 @@ p {
 
 .fs-16 {
     font-size: 1.6rem;
+}
+
+.hover-cursor-opacity {
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
 }
 
 .highlight-text {
@@ -350,7 +357,7 @@ p {
     }
 
     &.icon-only {
-       > svg {
+        >svg {
             margin-right: 0;
         }
     }
@@ -488,6 +495,32 @@ hr {
     }
 }
 
+.hover-display-label {
+    position: relative;
+    z-index: 100;
+
+    .label {
+        position: absolute;
+        top: -32px;
+        left: 0;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 6px 8px;
+        border-radius: 16px;
+        min-width: 20px;
+        color: var(--white-1-color);
+        font-size: 1.1rem;
+        min-width: 100px;
+    }
+
+    &:hover {
+        .label {
+            display: block;
+        }
+    }
+
+}
+
 .overlay {
     position: fixed;
     top: 50%;
@@ -573,7 +606,8 @@ table {
         font-size: 1.2rem;
     }
 
-    th:last-child, td:last-child {
+    th:last-child,
+    td:last-child {
         max-width: unset;
     }
 
@@ -625,9 +659,7 @@ table {
         align-items: center;
         width: 100%;
 
-        .form-field__label {
-
-        }
+        .form-field__label {}
 
         .form-field__input {
             width: 45%;
@@ -1497,5 +1529,3 @@ table {
 .br-32 {
     border-radius: 32px;
 }
-
-
