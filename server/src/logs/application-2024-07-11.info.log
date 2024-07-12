@@ -13,3 +13,21 @@
 2024-07-11 16:15:32::info::/v1/api/conversation/readConversation/668fa2a75390575572c77e1a::a61a1e53-2ac8-4f87-896d-7c9e29a0c2b3::input-params ::GET::::{}
 2024-07-11 16:16:48::info::/v1/api/conversation/sendMessage/668fa2a75390575572c77e1a::f5626a38-0b87-466f-9c06-b5888e66cd01::input-params ::PATCH::::{}
 2024-07-11 16:17:47::info::/v1/api/conversation/sendMessage/668fa2a75390575572c77e1a::616e767d-d471-42f7-9487-4e64fb008852::input-params ::PATCH::::{}
+2024-07-11 16:18:14::info::/v1/api/conversation/sendMessage/668fa2a75390575572c77e1a::f21c9b2f-f0c2-4cc2-84cc-d81a1ead4f16::input-params ::PATCH::::{}
+2024-07-11 16:30:07::info::/v1/api/conversation/readConversations::2fdead05-9e0d-4eb4-8e2a-09d902fb2853::input-params ::GET::::{}
+2024-07-11 16:34:50::info::/v1/api/auth/users/login::928ab946-8fed-417e-9182-d55eb468fffb::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-07-11 16:34:55::info::/v1/api/conversation/readConversation/668fa2a75390575572c77e1a::fa483b2a-375a-45a1-9db1-13a0ce2c7621::input-params ::GET::::{}
+2024-07-11 16:34:58::info::/v1/api/conversation/readConversations::d9018d62-47e7-494a-82f5-95e14e82fecc::input-params ::GET::::{}
+2024-07-11 18:02:40::info::/v1/api/conversation/readConversations::d7eae614-221b-4359-af9f-d01c80bcf15a::input-params ::GET::::{}
+2024-07-11 18:03:39::info::/v1/api/auth/users/login::18d76679-78b3-4e65-961f-76cb06764abd::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-07-11 18:03:49::info::/v1/api/auth/users/login::5b0f378e-7ce1-4b8a-8308-1b2137aab43c::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-11 18:04:01::info::/v1/api/conversation/sendMessage/668fa2a75390575572c77e1a::ba53bf8a-ed7e-4822-8e11-3787164011b9::input-params ::PATCH::::{}
+2024-07-11 18:04:30::info::/v1/api/conversation/sendMessage::aa792419-5aaa-4c58-82f6-d62fb0930a31::input-params ::PATCH::::{}
+2024-07-11 18:04:30::error::/v1/api/conversation/sendMessage::aa792419-5aaa-4c58-82f6-d62fb0930a31::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-11 18:05:33::info::/v1/api/conversation/sendMessage::a6f790b8-bce1-4c22-9c88-f0f8e2da2dbf::input-params ::PATCH::::{}
+2024-07-11 18:05:52::info::/v1/api/conversation/readConversation/668fbc7de4762abf2093a9f0::602b62df-8bc6-401e-b6b1-9081c016ec36::input-params ::GET::::{}
+2024-07-11 18:06:37::info::/v1/api/conversation/sendMessage::f5dd8ccf-d4bd-43ba-8983-e80da6ea4baf::input-params ::PATCH::::{}
+2024-07-11 18:07:35::info::/v1/api/conversation/sendMessage::74871a15-90a2-404e-b3f0-0dba3370f182::input-params ::PATCH::::{}
+2024-07-11 18:22:42::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::87f33a50-fc53-480a-b26c-4fc6b9d8b2a1::input-params ::GET::::{}
+2024-07-11 18:23:35::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::d275d197-60a3-42fd-8931-a311abf58a28::input-params ::GET::::{}
+2024-07-11 18:24:21::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::fa98811a-897e-4dbc-9a4a-09c1603a5708::input-params ::GET::::{}

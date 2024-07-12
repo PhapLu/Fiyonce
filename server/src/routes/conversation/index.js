@@ -14,6 +14,6 @@ router.post('/createConversation', uploadFields, asyncHandler(conversationContro
 router.get('/readConversation/:conversationId', asyncHandler(conversationController.readConversation))
 router.get('/readConversationWithOtherMember/:otherMemberId', asyncHandler(conversationController.readConversationWithOtherMember))
 router.get('/readConversations', asyncHandler(conversationController.readConversations))
-router.patch('/sendMessage/:conversationId', uploadFields, asyncHandler(conversationController.sendMessage))
+router.patch('/sendMessage', uploadFields, asyncHandler(conversationController.sendMessage))
 
 export default router
