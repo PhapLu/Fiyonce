@@ -22,6 +22,7 @@ class NotificationService{
         //3. Assign content based on type of notification
         let content
         let notificationType
+        let url
         switch(type){
             case 'like':
                 content = `${user.fullName} liked your post`
@@ -67,6 +68,10 @@ class NotificationService{
         //1. Check notification
         const notification = await Notification.findById(notificationId)
         if (!notification) throw new NotFoundError('Notification not found!')
+
+        //2. Mark notification as seen
+        notification.isSeen = true
+        await notification.save()
 
         return {
             notification

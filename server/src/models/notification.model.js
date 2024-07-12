@@ -13,8 +13,10 @@ const NotificationSchema = new mongoose.Schema({
         required: true,
         enum: ['interaction', 'order', 'update']
     },
+    isSeen: { type: Boolean, default: false},
     content: { type: String, required: true},
     senderAvatar: { type: String, required: true},
+    url: { type: String, required: true},
 },{
     timestamps: true,
     collection: COLLECTION_NAME
