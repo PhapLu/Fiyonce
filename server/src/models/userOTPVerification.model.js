@@ -19,7 +19,6 @@ const UserOTPVerificationSchema = new Schema({
         type: String, 
         required: true 
     },
-    
     otp: {
         type: String,
         required: true
@@ -28,6 +27,14 @@ const UserOTPVerificationSchema = new Schema({
         type: Date,
         required: true,
         index: { expires: 1800 } // Expire after 1800 seconds (30 minutes)
+    },
+    requestCount: {
+        type: Number,
+        default: 0
+    },
+    lastRequestDate: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamps: true,

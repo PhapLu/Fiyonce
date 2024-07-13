@@ -156,37 +156,63 @@ class AuthService {
         if (holderUser) {
             throw new BadRequestError("Error: User already registered")
         }
-
+    
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10)
-
+    
         // 3. Check if there is an existing OTP record for the email
         const oldOtp = await UserOTPVerification.findOne({ email }).lean()
-        if (oldOtp) await UserOTPVerification.deleteOne({ email })
-        
-        // 4. Generate 6-digit OTP
-        const otp = crypto.randomInt(100000, 999999).toString()
-
-        // 5. Save OTP in UserOTPVerification collection
-        const otpVerification = new UserOTPVerification({
-            email,
-            password: hashedPassword,
-            fullName,
-            otp,
-            expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
-        })
-        await otpVerification.save()
-
-        // 6. Send OTP email
+        const today = new Date()
+        today.setHours(0, 0, 0, 0) // Set to the start of the day
+    
+        let otp
+        let otpVerification
+        if (oldOtp) {
+            const lastRequestDate = new Date(oldOtp.lastRequestDate)
+            lastRequestDate.setHours(0, 0, 0, 0) // Set to the start of the day
+    
+            if (lastRequestDate.getTime() === today.getTime()) {
+                // Same day request
+                if (oldOtp.requestCount >= 10) {
+                    throw new BadRequestError("Error: OTP request limit reached for today")
+                } else {
+                    // Increment request count and generate new OTP
+                    otp = crypto.randomInt(100000, 999999).toString()
+                    otpVerification = await UserOTPVerification.updateOne({ email }, { 
+                        $inc: { requestCount: 1 },
+                        $set: { otp, expiredAt: new Date(Date.now() + 30 * 60 * 1000), lastRequestDate: new Date() }
+                    })
+                }
+            } else {
+                // Different day request, reset count and generate new OTP
+                otp = crypto.randomInt(100000, 999999).toString()
+                otpVerification = await UserOTPVerification.updateOne({ email }, { 
+                    $set: { requestCount: 1, lastRequestDate: new Date(), otp, expiredAt: new Date(Date.now() + 30 * 60 * 1000) }
+                })
+            }
+        } else {
+            // New OTP request
+            otp = crypto.randomInt(100000, 999999).toString()
+            otpVerification = new UserOTPVerification({
+                email,
+                password: hashedPassword,
+                fullName,
+                otp,
+                expiredAt: new Date(Date.now() + 30 * 60 * 1000), // OTP expires in 30 minutes
+                requestCount: 1,
+                lastRequestDate: new Date()
+            })
+            await otpVerification.save()
+        }
+    
+        // 4. Send OTP email
         const subject = 'Your OTP Code'
         const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`
         const verificationCode = otp
         await sendEmail(email, subject, subjectMessage, verificationCode)
-
         return {
             code: 201,
             metadata: {
-                userId: otpVerification._id,
                 email: otpVerification.email
             }
         }
