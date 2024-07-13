@@ -28,11 +28,11 @@ class SocketServices {
             global._io.emit('getUsers', users)
         })
 
-        socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+        socket.on("sendMessage", ({ senderId, receiverId, content }) => {
             const user = getUser(receiverId)
             global._io.to(user?.socketId).emit("getMessage", {
                 senderId,
-                text,
+                content,
             })
         })
 

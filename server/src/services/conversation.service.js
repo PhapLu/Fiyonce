@@ -85,16 +85,15 @@ class ConversationService{
     
         //2. Read conversation
         const conversation = await Conversation.findOne({
-            'members.user': { 
+            'members.user': {
                 $all: [
-                    userId, 
+                    userId,
                     otherMemberId
                 ]
             }
         }).populate('members.user', 'fullName avatar')
     
         if (conversation) throw new NotFoundError('Conversation not found')
-        
         //2. Format conversation
 
         // Sort and limit the messages to the latest 12
