@@ -278,27 +278,54 @@ class AuthService {
         if (!user) {
             throw new BadRequestError('User not found')
         }
-
+    
         const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean()
-        if (oldOtp) await ForgotPasswordOTP.deleteOne({ email })
-
-        // 2. Generate 6-digit OTP
-        const otp = crypto.randomInt(100000, 999999).toString()
-
+        const today = new Date()
+        today.setHours(0, 0, 0, 0) // Set to the start of the day
+    
+        let otp
+        if (oldOtp) {
+            const lastRequestDate = new Date(oldOtp.lastRequestDate)
+            lastRequestDate.setHours(0, 0, 0, 0) // Set to the start of the day
+    
+            if (lastRequestDate.getTime() === today.getTime()) {
+                // Same day request
+                if (oldOtp.requestCount >= 10) {
+                    throw new BadRequestError("Error: OTP request limit reached for today")
+                } else {
+                    // Increment request count and generate new OTP
+                    otp = crypto.randomInt(100000, 999999).toString()
+                    await ForgotPasswordOTP.updateOne({ email }, { 
+                        $inc: { requestCount: 1 },
+                        $set: { otp, expiredAt: new Date(Date.now() + 30 * 60 * 1000), lastRequestDate: new Date() }
+                    })
+                }
+            } else {
+                // Different day request, reset count and generate new OTP
+                otp = crypto.randomInt(100000, 999999).toString()
+                await ForgotPasswordOTP.updateOne({ email }, { 
+                    $set: { requestCount: 1, lastRequestDate: new Date(), otp, expiredAt: new Date(Date.now() + 30 * 60 * 1000) }
+                })
+            }
+        } else {
+            // New OTP request
+            otp = crypto.randomInt(100000, 999999).toString()
+            const forgotPasswordOTP = new ForgotPasswordOTP({
+                email,
+                otp,
+                expiredAt: new Date(Date.now() + 30 * 60 * 1000), // OTP expires in 30 minutes
+                requestCount: 1,
+                lastRequestDate: new Date()
+            })
+            await forgotPasswordOTP.save()
+        }
+    
         // 3. Send OTP email
         const subject = 'Your OTP Code'
         const subjectMessage = 'Mã xác thực đổi mật khẩu của bạn là: '
         const verificationCode = otp
         await sendEmail(email, subject, subjectMessage, verificationCode)
-
-        // 4. Save OTP in ForgotPasswordOTP collection
-        const forgotPasswordOTP = new ForgotPasswordOTP({
-            email,
-            otp,
-            expiredAt: new Date(Date.now() + 30 * 60 * 1000) // OTP expires in 30 minutes
-        })
-        await forgotPasswordOTP.save()
-
+    
         return {
             code: 200,
             metadata: {

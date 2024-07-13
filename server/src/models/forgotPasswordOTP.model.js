@@ -7,8 +7,9 @@ const COLLECTION_NAME = 'ForgotPasswordOTPs'
 const forgotPasswordOTPSchema = new Schema({
     email: { 
         type: String, 
-        required: true, trim: 
-        true, unique: true
+        required: true, 
+        trim: true, 
+        unique: true
     },
     otp: {
         type: String,
@@ -22,6 +23,14 @@ const forgotPasswordOTPSchema = new Schema({
         type: Date,
         required: true,
         index: { expires: 1800 } // Expire after 1800 seconds (30 minutes)
+    },
+    requestCount: {
+        type: Number,
+        default: 0
+    },
+    lastRequestDate: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamps: true,
