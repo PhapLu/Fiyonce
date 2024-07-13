@@ -9,7 +9,7 @@ class NotificationService{
         if (!user) throw new NotFoundError('User not found!')
 
         //2. Validate request body
-        const {receiverId, type} = body
+        const {receiverId, type, url} = body
         const receiver = await User.findById(receiverId)
         if (!receiverId) {
             throw new BadRequestError('Please provide all required fields')
@@ -22,7 +22,6 @@ class NotificationService{
         //3. Assign content based on type of notification
         let content
         let notificationType
-        let url
         switch(type){
             case 'like':
                 content = `${user.fullName} liked your post`
@@ -55,7 +54,8 @@ class NotificationService{
             receiverId,
             content,
             type: notificationType,
-            senderAvatar: user.avatar
+            senderAvatar: user.avatar,
+            url
         })
         await notification.save()
 
