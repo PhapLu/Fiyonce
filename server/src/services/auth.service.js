@@ -303,7 +303,6 @@ class AuthService {
     }
 
     static resetPassword = async ({ email, password }) => {
-        console.log(email, password)
         //1. Find and check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({ email })
         const user = await User.findOne({ email })

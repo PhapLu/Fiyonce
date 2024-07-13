@@ -18,7 +18,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const {setModalInfo} = useModal();
+    const { setModalInfo } = useModal();
     const [showResetPasswordVerificationForm, setShowResetPasswordVerificationForm] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         if (userInfo) {
             const newSocket = socketIOClient('http://localhost:8900'); // Adjust URL to your backend
             setSocket(newSocket);
+            newSocket.emit('addUser', userInfo._id);
 
             // newSocket.on('connect', () => {
             //     console.log('Connected to socket server with ID:', newSocket.id);
@@ -44,9 +45,9 @@ export const AuthProvider = ({ children }) => {
             //     console.log('Disconnected from socket server');
             // });
 
-            return () => {
-                newSocket.disconnect();
-            };
+            // return () => {
+            //     newSocket.disconnect();
+            // };
         }
     }, [userInfo]);
 
@@ -104,46 +105,46 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-const logout = async () => {
-    try {
-        await apiUtils.post("auth/users/logout");
-        setUserInfo(null);
-        Cookies.remove('token'); // Remove token cookie
-        localStorage.removeItem('token'); // Remove token from localStorage if used
-    } catch (error) {
-        console.error('Logout error:', error);
-    }
-};
+    const logout = async () => {
+        try {
+            await apiUtils.post("auth/users/logout");
+            setUserInfo(null);
+            Cookies.remove('token'); // Remove token cookie
+            localStorage.removeItem('token'); // Remove token from localStorage if used
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
 
 
-const value = {
-    socket,
-    showLoginForm,
-    setShowLoginForm,
-    showResetPasswordForm,
-    setShowResetPasswordForm,
-    showMenu,
-    setShowMenu,
-    showSetNewPasswordForm,
-    showResetPasswordVerificationForm,
-    setShowResetPasswordVerificationForm,
-    setShowSetNewPasswordForm,
-    showRegisterForm,
-    setShowRegisterForm,
-    overlayVisible,
-    setOverlayVisible,
-    userInfo,
-    setUserInfo,
-    login,
-    logout,
-    loading,
-    showRegisterVerificationForm,
-    setShowRegisterVerificationForm
-};
+    const value = {
+        socket,
+        showLoginForm,
+        setShowLoginForm,
+        showResetPasswordForm,
+        setShowResetPasswordForm,
+        showMenu,
+        setShowMenu,
+        showSetNewPasswordForm,
+        showResetPasswordVerificationForm,
+        setShowResetPasswordVerificationForm,
+        setShowSetNewPasswordForm,
+        showRegisterForm,
+        setShowRegisterForm,
+        overlayVisible,
+        setOverlayVisible,
+        userInfo,
+        setUserInfo,
+        login,
+        logout,
+        loading,
+        showRegisterVerificationForm,
+        setShowRegisterVerificationForm
+    };
 
-return (
-    <AuthContext.Provider value={value}>
-        {children}
-    </AuthContext.Provider>
-);
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    );
 };

@@ -389,3 +389,31 @@ ReferenceError: async is not defined
     at <static_initializer> (file:///D:/Adam/OnisonProject/server/src/services/conversation.service.js:7:33)
     at file:///D:/Adam/OnisonProject/server/src/services/conversation.service.js:1:1
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-12 07:52:03::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'socketId')
+TypeError: Cannot read properties of undefined (reading 'socketId')
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:35:30)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-12 07:52:15::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'socketId')
+TypeError: Cannot read properties of undefined (reading 'socketId')
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:35:38)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-12 07:52:43::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'socketId')
+TypeError: Cannot read properties of undefined (reading 'socketId')
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:35:38)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-12 07:52:50::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'socketId')
+TypeError: Cannot read properties of undefined (reading 'socketId')
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:34:38)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined

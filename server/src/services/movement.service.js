@@ -72,9 +72,6 @@ class MovementService{
         }
       }
     ])
-    console.log("DEF")
-    console.log(movements)
-
     return {
       movements
     }

@@ -5,6 +5,7 @@ import RenderConversation from "../crudConversation/render/RenderConversation";
 import Auth from "../auth/Auth";
 import Logo from "../../assets/img/logo.png";
 import './Navbar.scss';
+import { useConversation } from "../../contexts/conversation/ConversationContext";
 
 export default function Navbar() {
     const location = useLocation();
@@ -13,8 +14,7 @@ export default function Navbar() {
     const messageButtonRef = useRef(null);
     const conversationsRef = useRef(null);
 
-    const [conversation, setConversation] = useState();
-    const [showRenderConversation, setShowRenderConversation] = useState();
+    const {conversation, setConversation, showRenderConversation , setShowRenderConversation} = useConversation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -99,7 +99,7 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {showRenderConversation && <RenderConversation conversationId={conversation._id} setShowRenderConversation={setShowRenderConversation} />}
+            {/* {showRenderConversation && <RenderConversation conversation={conversation} setShowRenderConversation={setShowRenderConversation} />} */}
         </>
     );
 }

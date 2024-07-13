@@ -2,7 +2,7 @@ let users = []
 
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId })
+        users.push({ userId, socketId })
 }
 
 const removeUser = (socketId) => {
@@ -16,10 +16,12 @@ const getUser = (userId) => {
 class SocketServices {
     connection(socket) {
         console.log('User connected with id:', socket.id)
-        
+
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id)
             global._io.emit("getUsers", users)
+            console.log("ADD USER")
+            console.log(users)
         })
 
         socket.on('disconnect', () => {
@@ -28,13 +30,25 @@ class SocketServices {
             global._io.emit('getUsers', users)
         })
 
-        socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-            const user = getUser(receiverId)
-            console.log("UUUUUUUUUUUUU")
-            console.log(text)
-            global._io.to(user?.socketId).emit("getMessage", {
+        socket.on("sendMessage", ({ senderId, receiverId, content }) => {
+            // console.log("SENDER ID")
+            // console.log(senderId)
+            // console.log("RECEIVER ID")
+            // console.log(receiverId)
+            const receiver = getUser(receiverId)
+           
+            // console.log(content)
+            console.log("SEND MESSAGE")
+            console.log(users)
+
+             console.log("RECEIVER INFO")
+            console.log(receiver)
+
+            console.log(content)
+
+            global._io.to(receiver?.socketId).emit("getMessage", {
                 senderId,
-                text,
+                content,
             })
         })
 

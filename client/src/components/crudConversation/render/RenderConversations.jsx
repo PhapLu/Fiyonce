@@ -103,7 +103,7 @@ export default function RenderConversations({ setConversation, setShowRenderConv
                                 </div>
 
                                 <div className="user--right">
-                                    <span className="fs-12 downlight-text">{formatTimeAgo(conversation.createdAt)}</span>
+                                    <span className="fs-12 downlight-text">{formatTimeAgo(conversation.updatedAt)}</span>
                                 </div>
                             </div>
                         ))

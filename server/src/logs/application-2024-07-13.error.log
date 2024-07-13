@@ -1,0 +1,60 @@
+2024-07-13 09:00:54::error::/v1/api/user/me::423f9ff9-a7c3-4c26-ac53-1647d88e5592::403 - 1ms - Response: {"status":403,"now":1720836054274}::{"message":"Access token missing"}
+2024-07-13 09:00:57::error::/v1/api/user/me::fb03b834-47b2-4f2b-b5a4-44019a129f5a::403 - 1ms - Response: {"status":403,"now":1720836057164}::{"message":"Access token missing"}
+2024-07-13 09:00:57::error::/v1/api/user/me::2a39ac2d-3cb4-4c2c-85f9-f63b58346bcf::403 - 0ms - Response: {"status":403,"now":1720836057329}::{"message":"Access token missing"}
+2024-07-13 09:01:06::error::/v1/api/user/me::b9cf13f8-108d-4e51-a0b9-787aa470afa4::403 - 0ms - Response: {"status":403,"now":1720836066536}::{"message":"Access token missing"}
+2024-07-13 09:01:09::error::/v1/api/user/me::ea356a31-200a-4dfa-9d71-5435af440e3b::403 - 0ms - Response: {"status":403,"now":1720836069096}::{"message":"Access token missing"}
+2024-07-13 09:01:09::error::/v1/api/user/me::2c3bf857-d3a4-449d-adf8-557ce308aa4e::403 - 0ms - Response: {"status":403,"now":1720836069304}::{"message":"Access token missing"}
+2024-07-13 09:01:14::error::/v1/api/user/me::cadf5025-4ab2-43ed-8e44-0c38451e584d::403 - 1ms - Response: {"status":403,"now":1720836074536}::{"message":"Access token missing"}
+2024-07-13 09:01:21::error::/v1/api/user/me::c3742af1-34cf-4ceb-93a0-5786af0670ef::403 - 0ms - Response: {"status":403,"now":1720836081196}::{"message":"Access token missing"}
+2024-07-13 09:01:21::error::/v1/api/user/me::df42fba4-fcf2-40d4-a852-e374f32b2af1::403 - 0ms - Response: {"status":403,"now":1720836081365}::{"message":"Access token missing"}
+2024-07-13 09:01:51::error::/v1/api/user/me::110268b0-1fc2-4b31-8d20-fd93b3d4003e::403 - 0ms - Response: {"status":403,"now":1720836111806}::{"message":"Access token missing"}
+2024-07-13 09:01:52::error::/v1/api/user/me::ef95a3c7-1b36-4d94-a4c3-36b9964d6b20::403 - 0ms - Response: {"status":403,"now":1720836112196}::{"message":"Access token missing"}
+2024-07-13 09:02:06::error::/v1/api/user/me::7a522cc3-8026-4f7b-8fc8-6807e6ffcdfa::403 - 0ms - Response: {"status":403,"now":1720836126844}::{"message":"Access token missing"}
+2024-07-13 09:02:27::error::/v1/api/user/me::de5bca7e-0ccd-4c1b-a653-a42d4e679171::403 - 0ms - Response: {"status":403,"now":1720836147756}::{"message":"Access token missing"}
+2024-07-13 09:02:28::error::/v1/api/user/me::8693f081-e6a3-4e99-a810-018c025eacf1::403 - 0ms - Response: {"status":403,"now":1720836148184}::{"message":"Access token missing"}
+2024-07-13 09:03:10::error::/v1/api/user/me::cfc98e22-0523-4ed7-a5bf-1a41b7caed2d::403 - 0ms - Response: {"status":403,"now":1720836190457}::{"message":"Access token missing"}
+2024-07-13 09:04:55::error::/v1/api/user/me::d83eddd2-367a-434e-b504-ac85f14f565e::403 - 0ms - Response: {"status":403,"now":1720836295496}::{"message":"Access token missing"}
+2024-07-13 09:05:16::error::/v1/api/user/me::9beb64c1-4aa5-4eb4-8f87-8f4df03077fd::403 - 0ms - Response: {"status":403,"now":1720836316688}::{"message":"Access token missing"}
+2024-07-13 09:05:17::error::/v1/api/user/me::ae7fb385-4e9f-4072-85be-8a0097611b76::403 - 1ms - Response: {"status":403,"now":1720836317530}::{"message":"Access token missing"}
+2024-07-13 09:06:29::error::/v1/api/user/me::855a372d-0c58-4566-8eac-7c356316a051::403 - 0ms - Response: {"status":403,"now":1720836389094}::{"message":"Access token missing"}
+2024-07-13 09:06:32::error::/v1/api/user/me::925cbf6f-a71e-476a-8c87-46d2b9643ee2::403 - 0ms - Response: {"status":403,"now":1720836392500}::{"message":"Access token missing"}
+2024-07-13 09:06:32::error::/v1/api/user/me::fcb35f62-3849-4ed8-9a82-4de732629d8a::403 - 1ms - Response: {"status":403,"now":1720836392598}::{"message":"Access token missing"}
+2024-07-13 09:06:40::error::/v1/api/user/me::d1e00c97-511f-4e6a-a45d-9b6ed9130fca::403 - 0ms - Response: {"status":403,"now":1720836400625}::{"message":"Access token missing"}
+2024-07-13 09:06:40::error::/v1/api/user/me::5670b323-48d1-44cd-af1e-f4089f3a470d::403 - 0ms - Response: {"status":403,"now":1720836400727}::{"message":"Access token missing"}
+2024-07-13 09:06:45::error::/v1/api/user/me::d315464b-6e0d-4e9d-b532-b1ebce1b050c::403 - 0ms - Response: {"status":403,"now":1720836405577}::{"message":"Access token missing"}
+2024-07-13 09:18:59::error::/v1/api/order/readMemberOrderHistory::8de0aa3f-6e47-496e-b6eb-2335b2b20694::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 09:18:59::error::/v1/api/order/readArchivedOrderHistory::b7388696-28ba-4572-894e-a7a6e0799157::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 09:19:02::error::/v1/api/order/readMemberOrderHistory::fb12d61e-7fe7-4b45-a2db-80dd74f231bf::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 09:19:02::error::/v1/api/order/readArchivedOrderHistory::d33075a6-a6f2-4ae2-8d5f-27a0280d8a7a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 09:40:48::error::/v1/api/conversation/sendMessage::7ee61c56-63e9-4e17-b806-c50e44ac49b0::undefined - NaNms - Response: {}::{"message":"Failed to send message"}
+2024-07-13 09:42:38::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::69db17ca-2e32-4fa3-be3a-fc4053f31d36::404 - 0ms - Response: {"status":404,"now":1720838558082}::{"message":"Conversation not found"}
+2024-07-13 09:45:33::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::aaffaa31-f08a-4976-9ff7-f9e50a026e56::404 - 0ms - Response: {"status":404,"now":1720838733456}::{"message":"Conversation not found"}
+2024-07-13 09:46:09::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::313f6cdb-8235-4cd5-a4a0-baed77cd0603::404 - 0ms - Response: {"status":404,"now":1720838769773}::{"message":"Conversation not found"}
+2024-07-13 09:46:20::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::ad93c042-716c-491d-855b-6718a9f47487::404 - 0ms - Response: {"status":404,"now":1720838780897}::{"message":"Conversation not found"}
+2024-07-13 09:46:37::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::f672268e-fa2b-4b50-9556-6af256b24908::404 - 0ms - Response: {"status":404,"now":1720838797473}::{"message":"Conversation not found"}
+2024-07-13 09:46:52::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::47b085d1-e596-4e2a-8b08-5bdaeb09a80e::404 - 0ms - Response: {"status":404,"now":1720838812309}::{"message":"Conversation not found"}
+2024-07-13 09:46:53::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::2a3d826c-f450-4558-a116-d52b9d38f9bf::404 - 0ms - Response: {"status":404,"now":1720838813637}::{"message":"Conversation not found"}
+2024-07-13 09:46:54::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::46e44545-e5ee-4af3-bee0-fe03b0c9d51b::404 - 0ms - Response: {"status":404,"now":1720838814859}::{"message":"Conversation not found"}
+2024-07-13 09:47:11::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::e365848e-1123-45ba-b489-037b895e54a7::404 - 0ms - Response: {"status":404,"now":1720838831134}::{"message":"Conversation not found"}
+2024-07-13 09:48:06::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::e61367ed-6f11-4c38-b233-ff5009a3a0b5::404 - 0ms - Response: {"status":404,"now":1720838886095}::{"message":"Conversation not found"}
+2024-07-13 09:52:02::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::d477bf6e-6434-41e3-9021-f2cff902240d::404 - 0ms - Response: {"status":404,"now":1720839122516}::{"message":"Conversation not found"}
+2024-07-13 09:52:03::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::90643946-0b1a-47be-8bf2-c0d6587d6c37::404 - 0ms - Response: {"status":404,"now":1720839123736}::{"message":"Conversation not found"}
+2024-07-13 09:52:05::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::61213403-84a7-42b5-912a-fa98e0040e77::404 - 0ms - Response: {"status":404,"now":1720839125958}::{"message":"Conversation not found"}
+2024-07-13 09:52:44::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::153b6408-cd5e-4577-aded-1df2c56307ea::404 - 0ms - Response: {"status":404,"now":1720839164755}::{"message":"Conversation not found"}
+2024-07-13 09:53:08::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::9545c96d-fa53-45db-a0a1-5916e03e8b4f::404 - 0ms - Response: {"status":404,"now":1720839188218}::{"message":"Conversation not found"}
+2024-07-13 09:53:09::error::/v1/api/conversation/readConversationWithOtherMember/665929dd1937df564df71660::a9290097-dede-46ac-b931-91049a41f88a::404 - 0ms - Response: {"status":404,"now":1720839189194}::{"message":"Conversation not found"}
+2024-07-13 09:57:12::error::/v1/api/conversation/sendMessage::91e8dd1d-2fc7-426e-89a2-530e80347309::undefined - NaNms - Response: {}::{"message":"Failed to send message"}
+2024-07-13 09:57:58::error::/v1/api/conversation/sendMessage::33203f47-0032-48b6-803c-21e5f64fa153::undefined - NaNms - Response: {}::{"message":"Failed to send message"}
+2024-07-13 09:58:22::error::/v1/api/conversation/sendMessage::b8695cea-5ad9-42e1-9eb7-32540ac4d4b4::undefined - NaNms - Response: {}::{"message":"Failed to send message"}
+2024-07-13 10:02:22::error::/v1/api/order/readMemberOrderHistory::187ac586-1339-4fcb-b0f4-b1e1fa802d93::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 10:02:22::error::/v1/api/order/readArchivedOrderHistory::631bfbd0-0606-4870-9c40-e96be5f0f1a4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 10:02:26::error::/v1/api/order/readMemberOrderHistory::f5e3abce-ee9f-40c2-8650-7e9a512f10bb::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 10:02:26::error::/v1/api/order/readArchivedOrderHistory::0ccd5f0f-c002-4fa2-a920-3eeb1274562c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 10:21:03::error::/v1/api/order/readMemberOrderHistory::7b7052c9-71a0-49d2-9116-f7572a8d837e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 10:21:03::error::/v1/api/order/readArchivedOrderHistory::44925026-08e7-4e76-9e68-fc6e96e55d85::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 10:21:04::error::/v1/api/order/readMemberOrderHistory::608c95f1-7e72-49ef-bfa4-b634a7f16243::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 10:21:04::error::/v1/api/order/readArchivedOrderHistory::7263b168-2b02-4f45-82c4-077e91db36ce::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 10:21:12::error::/v1/api/order/readMemberOrderHistory::3c82ea1c-7401-4ee2-add1-9b26eb9456f5::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 10:21:12::error::/v1/api/order/readArchivedOrderHistory::a1fc6cf1-c95e-404a-840d-c9d51c490aa1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-13 10:21:19::error::/v1/api/order/readMemberOrderHistory::3cda9c7b-ad8a-4980-b24b-9b60656dcada::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-13 10:21:19::error::/v1/api/order/readArchivedOrderHistory::7ed28e99-6fcb-40a2-b623-0e2a2cd0e77c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}

@@ -109,6 +109,7 @@ class ConversationService {
             _id: conversation._id,
             messages: sortedMessages,
             otherMember: {
+                _id: otherMember._id,
                 fullName: otherMember.fullName,
                 avatar: otherMember.avatar
             },
@@ -216,6 +217,7 @@ class ConversationService {
                 _id: conversation._id,
                 messages: conversation.messages,
                 otherMember: {
+                    _id: otherMember._id,
                     fullName: otherMember.fullName,
                     avatar: otherMember.avatar
                 }
