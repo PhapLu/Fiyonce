@@ -1,12 +1,89 @@
 // Imports
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Styling
 import "./CreateProposal.scss"
+import { apiUtils, createFormData } from "../../../utils/newRequest";
+import { useModal } from "../../../contexts/modal/ModalContext";
+import { bytesToKilobytes, formatFloat, limitString } from "../../../utils/formatter";
+import { useAuth } from "../../../contexts/auth/AuthContext";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 
 export default function CreateProposal({ termOfServices, setShowCreateProposal, setOverlayVisible, createProposalMutation }) {
+    const [inputs, setInputs] = useState({});
+    const [errors, setErrors] = useState({});
+    const [selectedTermOfService, setSelectedTermOfService] = useState();
+    const [isSubmitCreateProposalLoading, setIsSubmitCreateProposalLoading] = useState(false);
+    const { setModalInfo } = useModal();
+    const [selectedArtworks, setSelectedArtworks] = useState([]);
+    const { userInfo } = useAuth();
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        const newArtworks = selectedArtworks.filter(selectedArtwork => selectedArtwork !== null); // Remove null values
+        files.forEach((file) => {
+            if (file.size > 10 * 1024 * 1024) {
+                setErrors((values) => ({ ...values, selectedArtworks: "Dung lượng ảnh không được vượt quá 10 MB." }));
+            } else {
+                newArtworks.push(file);
+            }
+        });
+        setSelectedArtworks(newArtworks);
+    };
+
+    const placeholderImage = "/uploads/default_image_placeholder.png";
+
+    const removeImage = (index) => {
+        const newArtworks = [...selectedArtworks];
+        newArtworks[index] = null;
+        setSelectedArtworks(newArtworks);
+    };
+
+    const triggerFileInput = () => {
+        document.getElementById('file-input').click();
+    };
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            setInputs((prevState) => ({
+                ...prevState,
+                [name]: checked
+            }));
+        } else {
+            setInputs((prevState) => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+        setErrors((values) => ({ ...values, [name]: '' }));
+    };
+
+    const fetchProfileArtworks = async () => {
+        try {
+            const response = await apiUtils.get(`/post/readArtworks/${userInfo._id}`);
+            return response.data.metadata.artworks;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }
+    }
+
+    const { data: artworks, error: fetchingTalentOrderHistoryError, isError: isFetchingTalentOrderHistoryError, isLoading: isFetchingTalentOrderHistoryLoading } = useQuery(
+        'fetchProfileArtworks',
+        fetchProfileArtworks,
+        {
+            onSuccess: (data) => {
+                console.log(data)
+            },
+            onError: (error) => {
+                console.error('Error fetching service by ID:', error);
+            },
+        }
+    );
 
     const createProposalRef = useRef();
     useEffect(() => {
@@ -21,6 +98,74 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
             document.removeEventListener("mousedown", handler);
         };
     }, []);
+
+
+    const validateInputs = () => {
+        let errors = {};
+
+        if (!isFilled(inputs.scope)) {
+            errors.movementId = "Vui lòng nhập mô tả";
+        }
+
+        if (!isFilled(inputs.startAt)) {
+            errors.serviceCategoryId = "Vui lòng chọn ngày dự kiến bắt đầu";
+        }
+        if (!isFilled(inputs.deadline)) {
+            errors.serviceCategoryId = "Vui lòng chọn hạn chót";
+        }
+
+        if (!isFilled(inputs.price)) {
+            errors.title = "Vui lòng nhập giá trị đơn hàng";
+        }
+
+        if (!isFilled(inputs.termOfServiceId)) {
+            errors.deliverables = "Vui lòng chọn 1 điều khoản dịch vụ";
+        }
+
+        return errors;
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitCreateProposalLoading(true);
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            setIsSubmitCreateProposalLoading(false);
+            return;
+        }
+
+        const fd = createFormData(inputs, "files", selectedArtworks);
+
+        try {
+            const response = await createProposalMutation.mutateAsync(fd);
+            if (response) {
+                setModalInfo({
+                    status: "success",
+                    message: "Thêm dịch vụ thành công"
+                })
+                setShowDeleteCommissionTosForm(false);
+                setOverlayVisible(false);
+            }
+        } catch (error) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                serverError: error.response.data.message
+            }));
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
+        } finally {
+            setIsSubmitCreateProposalLoading(false);
+        }
+    };
+
+    const displayedSelectedArtworks = selectedArtworks.filter((selectedArtwork) => selectedArtwork !== null).slice(0, 5);
+
+    while (displayedSelectedArtworks.length < 3) {
+        displayedSelectedArtworks.push(placeholderImage);
+    }
 
     return (
         <div className="create-proposal modal-form type-2" ref={createProposalRef} onClick={(e) => { e.stopPropagation(); }}>
@@ -38,15 +183,52 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
             </svg>
 
             <div className="modal-form--left">
-
+                {/* <span>
+                    {inputs?.serviceCategoryId
+                        ? commissionServiceCategories.find((category) => category._id == inputs?.serviceCategoryId)?.title || "Thể loại"
+                        : "Thể loại"}
+                </span>
+                <h3>{inputs?.title || "Tên dịch vụ"}</h3> */}
+                <span>Giá: <span className="highlight-text"> {(inputs?.price && formatCurrency(inputs?.price)) || "x"} VND</span></span>
+                <hr />
+                <div className="images-layout-3">
+                    {displayedSelectedArtworks.slice(0, 3).map((selectedArtwork, index) => (
+                        <img
+                            key={index}
+                            src={
+                                selectedArtwork.url instanceof File
+                                    ? URL.createObjectURL(selectedArtwork.url)
+                                    : selectedArtwork.url || placeholderImage
+                            }
+                            alt={`Tranh mẫu ${index + 1}`}
+                        />
+                    ))}
+                </div>
+                <p>*Lưu ý: <i>{inputs?.notes || "Lưu ý cho khách hàng"}</i></p>
             </div>
+
             <div className="modal-form--right">
                 <h2 className="form__title">Soạn hợp đồng</h2>
 
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
                     <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
-                    <input type="text" name="scope" placeholder="Nhập mô tả" className="form-field__input" />
+                    <textarea type="text" name="scope" value={inputs?.scope} onChange={handleChange} className="form-field__input">Nhập mô tả</textarea>
+                </div>
+
+                <div className="form-field">
+                    <label className="form-field__label">Tranh mẫu</label>
+                    <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
+                    <div className="img-preview-container border-text">
+                        {artworks?.length > 0 && artworks?.map((artwork, index) => {
+                            return (
+                                <div className="img-preview-item">
+                                    <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
+                                </div>
+                            )
+                        })}
+                    </div>
+                    {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
                 </div>
 
                 <div className="form-field">
@@ -70,7 +252,40 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
                     <span className="form-field__annotation">Vui lòng chọn một trong những điều khoản dịch vụ của bạn</span>
+
+                    <div className="w-100 display-inline-block">
+                        {
+                            termOfServices.map((termOfService, index) => {
+                                return (
+                                    <div className="mb-8 " onClick={() => setSelectedTermOfService(termOfService)}>
+                                        <label className="flex-align-center w-100">
+                                            <input type="radio" name="termOfServiceId" value={termOfService._id} />
+                                            {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
+                                        </label>
+                                    </div>)
+                            }
+                            )
+                        }
+                        {selectedTermOfService?.content &&
+                            <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
+                        }
+                    </div>
                 </div>
+            </div>
+
+            <div className="form__submit-btn-container">
+                <button
+                    type="submit"
+                    className="form__submit-btn-item btn btn-2 btn-md"
+                    onClick={handleSubmit}
+                    disabled={isSubmitCreateProposalLoading}
+                >
+                    {isSubmitCreateProposalLoading ? (
+                        <span className="btn-spinner"></span>
+                    ) : (
+                        "Xác nhận"
+                    )}
+                </button>
             </div>
         </div>
     )

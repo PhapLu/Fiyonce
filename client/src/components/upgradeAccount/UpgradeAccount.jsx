@@ -170,14 +170,14 @@ const UpgradeAccount = ({ closeModal }) => {
                         <div className="form-field">
                             <label htmlFor="portfolioLink" className="form-field__label">Portfolio URL</label>
                             <span className="form-field__annotation">Nhập đường dẫn đến hồ sơ họa sĩ của bạn (có thể là Facebook, Instagram, ...)</span>
-                            <input type="text" id="portfolioLink" name="portfolioLink" value={inputs.portfolioLink || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập URL đến hồ sơ họa sĩ của bạn (vd Facebook)" autoComplete="on" />
+                            <input type="text" id="portfolioLink" name="portfolioLink" value={inputs.portfolioLink || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập URL đến hồ sơ họa sĩ của bạn" autoComplete="on" />
                             {errors.portfolioLink && <span className="form-field__error">{errors.portfolioLink}</span>}
                         </div>
 
                         <div className="form-field">
                             <label htmlFor="jobTitle" className="form-field__label">Vị trí công việc</label>
                             <span className="form-field__annotation">Bạn muốn được gọi với vai trò gì?</span>
-                            <input type="text" id="jobTitle" name="jobTitle" value={inputs.jobTitle || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập URL đến hồ sơ họa sĩ của bạn (vd Facebook)" autoComplete="on" />
+                            <input type="text" id="jobTitle" name="jobTitle" value={inputs.jobTitle || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
                             {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
                         </div>
 

@@ -5,9 +5,11 @@ import { useAuth } from "../../../contexts/auth/AuthContext";
 import "./RenderConversations.scss";
 import { apiUtils } from "../../../utils/newRequest";
 import { formatTimeAgo } from "../../../utils/formatter";
+import { useConversation } from "../../../contexts/conversation/ConversationContext";
 
-export default function RenderConversations({ setConversation, setShowRenderConversation, setShowRenderConversations }) {
+export default function RenderConversations({ setShowRenderConversation, setShowRenderConversations }) {
     const { userInfo } = useAuth();
+    const { setOtherMember } = useConversation();
 
     const fetchConversations = async () => {
         try {
@@ -65,7 +67,7 @@ export default function RenderConversations({ setConversation, setShowRenderConv
     // }]);
 
     const handleConversationClick = (conversation) => {
-        setConversation(conversation);
+        setOtherMember(conversation.otherMember)
         setShowRenderConversations(false);
         setShowRenderConversation(true);
 
@@ -79,7 +81,7 @@ export default function RenderConversations({ setConversation, setShowRenderConv
         return <span>Loading</span>
     }
 
-  
+
 
     return (
         <>
@@ -98,13 +100,21 @@ export default function RenderConversations({ setConversation, setShowRenderConv
                                     <img src={conversation?.otherMember?.avatar} alt="" className="user__avatar" />
                                     <div className="user__name">
                                         <div className="user__name__title">{conversation?.otherMember?.fullName}</div>
-                                        <div className="user__name__sub-title">{`${conversation?.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {conversation?.lastMessage?.content}</div>
+                                        <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenConversations?.some(unSeenConversation => unSeenConversation._id === conversation._id) && "fw-bold"}`}>
+                                            {`${conversation?.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {conversation?.lastMessage?.content || (conversation?.lastMessage?.media && (conversation?.lastMessage?.senderId === userInfo._id ? "Bạn đã gửi một ảnh" : "Đã gửi một ảnh"))}
+                                            <span className="dot-delimiter sm"></span>
+                                            <span className="fs-12 downlight-text fw-500">{formatTimeAgo(conversation.updatedAt)}</span>
+                                        </div>
                                     </div>
                                 </div>
+                                {
+                                    userInfo?.unSeenConversations?.some(unSeenConversation => unSeenConversation._id === conversation._id) &&
+                                    <div className="user--right unseen-dot">
+                                        
+                                    </div>
+                                }
 
-                                <div className="user--right">
-                                    <span className="fs-12 downlight-text">{formatTimeAgo(conversation.updatedAt)}</span>
-                                </div>
+
                             </div>
                         ))
                     ) : (

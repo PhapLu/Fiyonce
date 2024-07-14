@@ -53,7 +53,7 @@ export function formatDate(val) {
 
 export function formatTimeAgo (date) {
     const distance = formatDistanceToNow(new Date(date), { addSuffix: true, locale: vi });
-    return distance.replace('khoảng ', ''); // Remove the "khoảng" prefix
+    return distance.replace('khoảng ', '').replace('dưới ', '').replace('trước', '').trim(); // Remove the "khoảng" prefix
 };
 
 

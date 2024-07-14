@@ -77,13 +77,13 @@ class ConversationService {
     }
 
     static readConversationWithOtherMember = async (userId, otherMemberId) => {
-        //1. Check user and other member
+        // 1. Check user and other member
         const user = await User.findById(userId);
         const otherMember = await User.findById(otherMemberId);
         if (!user) throw new AuthFailureError('User not found');
         if (!otherMember) throw new BadRequestError('Other member not found');
 
-        //2. Read conversation
+        // 2. Read conversation
         const conversation = await Conversation.findOne({
             'members.user': {
                 $all: [
@@ -91,11 +91,20 @@ class ConversationService {
                     otherMemberId
                 ]
             }
-        }).populate('members.user', 'fullName avatar')
+        }).populate('members.user', 'fullName avatar');
 
         if (!conversation) throw new NotFoundError('Conversation not found');
 
-        //2. Format conversation
+        // 3. Check if userId is already in the seenBy array
+        const userSeen = conversation.seenBy.some(seen => seen.userId.toString() === userId);
+
+        if (!userSeen) {
+            // Add userId to the seenBy array
+            conversation.seenBy.push({ userId });
+            await conversation.save();
+        }
+
+        // 4. Format conversation
 
         // Sort and limit the messages to the latest 12
         const sortedMessages = conversation.messages
@@ -103,9 +112,7 @@ class ConversationService {
             .slice(0, 12)
             .reverse();  // Reverse to maintain ascending order
 
-        let formattedConversation
-
-        formattedConversation = {
+        const formattedConversation = {
             _id: conversation._id,
             messages: sortedMessages,
             otherMember: {
@@ -119,6 +126,7 @@ class ConversationService {
             conversation: formattedConversation
         };
     };
+
 
     static readConversation = async (userId, conversationId) => {
         //1. Check conversation, user

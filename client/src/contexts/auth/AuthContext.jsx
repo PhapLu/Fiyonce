@@ -54,7 +54,8 @@ export const AuthProvider = ({ children }) => {
     // Fetch user profile data
     const fetchUserProfile = async () => {
         try {
-            const response = await newRequest.get('user/me');
+            const response = await newRequest.get('/user/me');
+            console.log(response.data.metadata.user)
             return response.data.metadata.user;
         } catch (error) {
             return null;

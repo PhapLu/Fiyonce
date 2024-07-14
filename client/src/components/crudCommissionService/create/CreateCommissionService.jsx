@@ -236,7 +236,6 @@ export default function CreateCommissionService({
         displayPortfolios.push(placeholderImage);
     }
 
-
     return (
         <div className="create-commission-service modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <Link to="/help_center" className="form__help" target="_blank">

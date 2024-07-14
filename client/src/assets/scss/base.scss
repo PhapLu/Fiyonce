@@ -61,6 +61,7 @@ body.dark {
     --gray-4-color: #868181;
 
     --orange-2-color: #ffa471;
+    --orange-3-color: #6e4517;
 
     --white-1-color: rgb(224, 220, 220);
     --white-2-color: #292929;
@@ -227,6 +228,31 @@ p {
     font-size: 1.6rem;
 }
 
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-800 {
+    font-weight: 800;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
 .hover-cursor-opacity {
     &:hover {
         cursor: pointer;
@@ -244,7 +270,8 @@ p {
 }
 
 .highlight-bg-text {
-    background-color: var(--orange-3-color);
+    background-color: var(--pending-status-bg-color);
+    color: var(--pending-status-color);
     padding: 8px;
     border-radius: 8px;
 }
@@ -262,7 +289,16 @@ p {
 .border-text {
     padding: 12px 20px;
     border-radius: 16px;
+    border: 1px solid var(--gray-3-color);
     box-shadow: var(--box-shadow-1);
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+.w-100 {
+    width: 100%;
 }
 
 .mb-8 {
@@ -485,6 +521,19 @@ hr {
 }
 
 .dot-delimiter {
+    &.sm {
+        width: 4px;
+        height: 4px;
+    }
+
+    &.md {
+        width: 6px;
+        height: 6px;
+    }
+
+    display: flex;
+    border-radius: 50%;
+    background-color: var(--gray-4-color);
     margin: 0 5px;
 }
 
@@ -546,6 +595,12 @@ hr {
 .flex-justify-center {
     display: flex;
     justify-content: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flex-align-center {
@@ -862,14 +917,13 @@ table {
             border: 3px solid var(--white-2-color);
         }
 
-
-
         .user__name__title {
             font-size: 1.6rem;
             font-weight: 600;
         }
 
         .user__name__sub-title {
+            margin-top: 2px;
             font-size: 1.2rem;
         }
     }
@@ -1174,6 +1228,13 @@ table {
     }
 }
 
+.border-1px-solid-gray {
+    border: 1px solid var(--gray-3-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 100%;
+}
+
 .modal-form.type-2 {
     width: 70% !important;
     margin-left: 0 !important;
@@ -1433,7 +1494,6 @@ table {
 .pl-20 {
     padding-left: 20px;
 }
-
 
 
 

@@ -7,7 +7,7 @@ import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
 import Talents from "./components/talents/Talents";
-import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices";
+import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
 
 // Pages
@@ -44,7 +44,6 @@ const routes = [
         path: "/users/:userId/profile_commission_services",
         element: <ProfileCommissionServices />,
       },
-
       {
         path: "/users/:userId/profile_posts",
         element: <ProfilePosts />,

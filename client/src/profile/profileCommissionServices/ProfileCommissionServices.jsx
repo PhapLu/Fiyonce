@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Resources
@@ -21,15 +21,18 @@ import DeleteCommissionServiceCategory from "../../components/crudCommissionServ
 // Utils
 import { formatCurrency, limitString } from "../../utils/formatter.js";
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
+
 // Styling
 import "./ProfileCommissionServices.scss";
 
-export default function Profileservices() {
-    const { userInfo } = useAuth();
+export default function ProfileCommissionServices() {
     const { userId } = useParams();
+    const {userInfo} = useAuth();
+    const profileInfo = useOutletContext();
+    // alert(profileInfo);
     const queryClient = useQueryClient();
 
-    const isProfileOwner = userInfo && userInfo._id === userId;
+    const isProfileOwner = userInfo?._id === userId;
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showCreateCommissionServiceForm, setShowCreateCommissionServiceForm] = useState(false);
@@ -264,7 +267,7 @@ export default function Profileservices() {
 
             {commissionServiceCategories?.length <= 0 ?
                 (
-                    <p>{isProfileOwner ? "Bạn" : `${userInfo.username}`} hiện chưa có dịch vụ nào.</p>
+                    <p>{isProfileOwner ? "Bạn" : `${profileInfo?.stageName || profileInfo?.fullName}`} hiện chưa có dịch vụ nào.</p>
                 ) : (commissionServiceCategories?.map((category, index) => (
                     <div
                         key={index}

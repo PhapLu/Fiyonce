@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useOutlet, useOutletContext, useParams } from "react-router-dom";
 import Masonry from 'react-masonry-css';
 import { formatNumber } from "../../../utils/formatter.js";
 import "./RenderPosts.scss";
@@ -24,6 +24,7 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
     const [postId, setPostId] = useState();
     const { userId } = useParams();
     const { userInfo } = useAuth();
+    const { profileInfo } = useOutletContext();
     const isPostOwner = userId === userInfo._id;
 
     const copyToClipboard = (postId) => {

@@ -1,7 +1,7 @@
 // Imports
 import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useParams, Outlet } from "react-router-dom";
+import { useParams, Outlet, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
 
 // Components
@@ -21,6 +21,8 @@ export default function ProfilePosts() {
     const {movements} = useMovement
 
     const { postId } = useParams();
+    const profileInfo = useOutletContext();
+    // alert(profileInfo)
 
     const fetchPosts = async () => {
         try {

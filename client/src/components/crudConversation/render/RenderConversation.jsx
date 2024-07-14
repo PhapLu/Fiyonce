@@ -94,12 +94,15 @@ export default function RenderConversation() {
             console.log(conversationId)
             console.log(conversation.otherMember._id)
 
-
             const response = await apiUtils.patch(`/conversation/sendMessage`, fd);
             console.log(response)
             console.log(response.data.metadata.conversation._id)
             const newMessage = response.data.metadata.conversation.messages.slice(-1)[0];
             setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+            setInputs({ content: '' });
+            setMedia([]);
+
             setConversationId(response.data.metadata.conversation._id)
             // Add the new message immediately
 
@@ -141,6 +144,13 @@ export default function RenderConversation() {
         };
     }, [showMediaOptions]);
 
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage();
+        }
+    }
+
     if (!conversation) {
         return
     }
@@ -157,9 +167,9 @@ export default function RenderConversation() {
                     </div>
                 </div>
                 <div className="user--right">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8" onClick={() => { setMinimizeConversation(false) }}>
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8" onClick={() => { setMinimizeConversation(false) }}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                    </svg>
+                    </svg> */}
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6" onClick={() => { setShowRenderConversation(false) }}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
@@ -174,10 +184,9 @@ export default function RenderConversation() {
                                     <img key={index} src={media} alt="Media" />
                                 )
                             })}
-                            <span>{message.content}</span>
                             {message.content && (
                                 <div className="message-item__content">
-                                    {message.content}
+                                    <span>{message.content}</span>
                                 </div>
                             )}
                         </div>
@@ -220,15 +229,16 @@ export default function RenderConversation() {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8 hover-cursor-opacity">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
                                 </svg>
-                                {/* <label htmlFor="image-upload flex-align-center"> */}
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                </svg>
-                                {/* </label> */}
+                                <label htmlFor="image-upload" className="flex-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                    </svg>
+                                </label>
                             </>
                         )
                     }
                 </div>
+
                 <div className={`send-message--middle ${inputs?.content || media ? "typing" : ""}`}>
                     {media && media.length > 0 && (
                         <div className="preview-img-container flex-align-center mb-8">
@@ -253,10 +263,10 @@ export default function RenderConversation() {
                             }
                         </div>
                     )}
-                    <input type="text" name="content" onChange={handleChange} placeholder="Nhấn Enter để gửi" />
+                    <input type="text" name="content" value={inputs.content || ''} onChange={handleChange} placeholder="Nhấn Enter để gửi" onKeyPress={handleKeyPress} />
                 </div>
                 <div className="send-message--right">
-                    <svg onClick={handleSendMessage} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
+                    <svg onClick={handleSendMessage} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-8 hover-cursor-opacity">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
                 </div>

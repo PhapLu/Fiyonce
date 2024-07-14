@@ -53,6 +53,8 @@ const UserSchema = new Schema(
     // },
     accessToken: { type: String },
     qrCode: { type: String }, //Base 64
+    lastViewConversations: {type: Date, default: Date.now},
+    lastViewNotifications: {type: Date, default: Date.now},
   },
   {
     timestamps: true,
