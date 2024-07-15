@@ -28,6 +28,7 @@ app.use(cors({
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     credentials: true,
 }))
+console.log(process.env.ALLOWED_ORIGIN)
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(helmet()) // Using Helmet
