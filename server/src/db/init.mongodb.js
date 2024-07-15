@@ -2,8 +2,11 @@ import dotenv from 'dotenv'
 dotenv.config()
 import mongoose, { mongo } from 'mongoose'
 import { countConnect } from '../helpers/check.connect.js'
-import configMongodb from '../configs/config.mongodb.js'
-const {host, name, port} = configMongodb.db
+import config from '../configs/config.mongodb.js'
+const {host, name, port} = config.db
+console.log(config)
+console.log(config.db)
+console.log(host, name, port)
 const connectString = `mongodb://${host}:${port}/${name}`
 
 class Database{

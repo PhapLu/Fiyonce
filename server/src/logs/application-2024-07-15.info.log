@@ -1063,3 +1063,9 @@
 2024-07-15 10:23:46::error::/v1/api/order/readArchivedOrderHistory::8168fd2c-c09b-487e-ab70-d2ed9d76b7b5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-07-15 10:23:46::info::/v1/api/termOfService/readTermOfServices::44ab712d-84c3-4910-af07-98b453d1ea63::input-params ::GET::::{}
 2024-07-15 10:23:46::error::/v1/api/order/readTalentOrderHistory::45851a06-2fd5-4c3c-929e-9042418f05df::403 - 0ms - Response: {"status":403,"now":1721013826992}::{"message":"You are not a talent!"}
+2024-07-15 12:22:50::info::/v1/api/user/me::4cd5ed73-6659-4081-b220-ac3e95ec272d::input-params ::GET::::{}
+2024-07-15 12:22:50::error::/v1/api/user/me::4cd5ed73-6659-4081-b220-ac3e95ec272d::403 - 1ms - Response: {"status":403,"now":1721020970766}::{"message":"Access token missing"}
+2024-07-15 12:22:50::info::/v1/api/movement/readMovements::c0bc84b5-7e33-4473-80af-199e2337a7f4::input-params ::GET::::{}
+2024-07-15 12:22:50::info::/v1/api/order/readOrders::55a79e71-f4ba-402e-a286-a11061e4c916::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 12:22:50::info::/v1/api/conversation/readConversations::576604c6-8b9b-4c86-8d46-10e0958538aa::input-params ::GET::::{}
+2024-07-15 12:22:50::error::/v1/api/conversation/readConversations::576604c6-8b9b-4c86-8d46-10e0958538aa::401 - 1ms - Response: {"status":401,"now":1721020970842}::{"message":"You are not authenticated!"}
