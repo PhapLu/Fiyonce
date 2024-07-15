@@ -35,6 +35,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
             document.removeEventListener("mousedown", handler);
         };
     }, [setShowRenderCommissionOrder, setOverlayVisible]);
+    const [isProcedureVisible, setIsProcedureVisible] = useState(true);
 
     return (
         <div className="render-commission-order modal-form type-2" ref={renderCommissionServiceRef} onClick={(e) => { e.stopPropagation() }}>

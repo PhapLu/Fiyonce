@@ -7,12 +7,13 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import "./CreateProposal.scss"
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 import { useModal } from "../../../contexts/modal/ModalContext";
-import { bytesToKilobytes, formatFloat, limitString } from "../../../utils/formatter";
+import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../../../utils/formatter";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 
-export default function CreateProposal({ termOfServices, setShowCreateProposal, setOverlayVisible, createProposalMutation }) {
+export default function CreateProposal({ commissionOrder, termOfServices, setShowCreateProposal, setOverlayVisible, createProposalMutation }) {
+    console.log(commissionOrder)
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [selectedTermOfService, setSelectedTermOfService] = useState();
@@ -183,16 +184,19 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
             </svg>
 
             <div className="modal-form--left">
-                {/* <span>
-                    {inputs?.serviceCategoryId
-                        ? commissionServiceCategories.find((category) => category._id == inputs?.serviceCategoryId)?.title || "Thể loại"
-                        : "Thể loại"}
-                </span>
-                <h3>{inputs?.title || "Tên dịch vụ"}</h3> */}
-                <span>Giá: <span className="highlight-text"> {(inputs?.price && formatCurrency(inputs?.price)) || "x"} VND</span></span>
+                <span>{!commissionOrder?.isDirect && commissionOrder?.commissionServiceId?.title}</span>
+                <div className="user sm mb-8">
+                    <div className="user--left">
+                        <img src={commissionOrder?.memberId.avatar} alt="" className="user__avatar" />
+                        <div className="user__name">
+                            <div className="user__name__title">{commissionOrder?.memberId.fullName}</div>
+                        </div>
+                    </div>
+                </div>
+                <span>Giá: <span className="highlight-text"> {inputs?.price ? formatCurrency(inputs?.price) : "x"} VND</span></span>
                 <hr />
                 <div className="images-layout-3">
-                    {displayedSelectedArtworks.slice(0, 3).map((selectedArtwork, index) => (
+                    {displayedSelectedArtworks?.slice(0, 3)?.map((selectedArtwork, index) => (
                         <img
                             key={index}
                             src={
@@ -204,7 +208,9 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
                         />
                     ))}
                 </div>
-                <p>*Lưu ý: <i>{inputs?.notes || "Lưu ý cho khách hàng"}</i></p>
+                <h4>Phạm vi công việc: </h4>
+                <p>{inputs?.scope}</p>
+                <hr />
             </div>
 
             <div className="modal-form--right">
@@ -213,7 +219,7 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
                     <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
-                    <textarea type="text" name="scope" value={inputs?.scope} onChange={handleChange} className="form-field__input">Nhập mô tả</textarea>
+                    <textarea type="text" name="scope" value={inputs?.scope || "Nhập mô tả"} onChange={handleChange} className="form-field__input"></textarea>
                 </div>
 
                 <div className="form-field">
@@ -244,9 +250,9 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
                 </div>
 
                 <div className="form-field">
-                    <label htmlFor="scrope" className="form-field__label">Giá trị đơn hàng (VND)</label>
+                    <label htmlFor="price" className="form-field__label">Giá trị đơn hàng (VND)</label>
                     <span className="form-field__annotation">Đưa ra mức giá chính xác mà bạn cần để thực hiện dịch vụ.</span>
-                    <input type="number" name="scrope" placeholder="Nhập mức giá (VND)" className="form-field__input" />
+                    <input type="number" name="price" placeholder="Nhập mức giá (VND)" className="form-field__input" onChange={handleChange} />
                 </div>
 
                 <div className="form-field">
@@ -255,9 +261,9 @@ export default function CreateProposal({ termOfServices, setShowCreateProposal, 
 
                     <div className="w-100 display-inline-block">
                         {
-                            termOfServices.map((termOfService, index) => {
+                            termOfServices?.map((termOfService, index) => {
                                 return (
-                                    <div className="mb-8 " onClick={() => setSelectedTermOfService(termOfService)}>
+                                    <div className="mb-8 " onClick={() => setSelectedTermOfService(termOfService)} key={index}>
                                         <label className="flex-align-center w-100">
                                             <input type="radio" name="termOfServiceId" value={termOfService._id} />
                                             {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
