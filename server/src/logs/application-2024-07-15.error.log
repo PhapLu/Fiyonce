@@ -1,0 +1,14 @@
+2024-07-15 10:09:21::error::/v1/api/order/readMemberOrderHistory::3e7912e7-4711-46af-80c2-05a0f7ed41f1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:09:21::error::/v1/api/order/readArchivedOrderHistory::540cd4ea-fbb6-43a9-b128-4903bf8c83e8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:09:21::error::/v1/api/order/readTalentOrderHistory::0531a5cc-1e98-488d-8ee2-8ec3899fae5b::403 - 0ms - Response: {"status":403,"now":1721012961308}::{"message":"You are not a talent!"}
+2024-07-15 10:09:24::error::/v1/api/order/readMemberOrderHistory::ba65f923-d445-4343-b058-409463e72812::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:09:24::error::/v1/api/order/readArchivedOrderHistory::c15e178c-775a-4476-8312-170b77335bc4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:09:24::error::/v1/api/order/readTalentOrderHistory::b7ef158e-617a-4346-b3e6-c83433d69d15::403 - 0ms - Response: {"status":403,"now":1721012964218}::{"message":"You are not a talent!"}
+2024-07-15 10:09:39::error::/v1/api/user/me::7ec1a292-2179-4718-bcfd-38882860af67::403 - 0ms - Response: {"status":403,"now":1721012979703}::{"message":"Access token missing"}
+2024-07-15 10:09:50::error::/v1/api/user/me::5cce4618-0285-493d-a301-edb7fc7d8e20::403 - 0ms - Response: {"status":403,"now":1721012990537}::{"message":"Access token missing"}
+2024-07-15 10:09:52::error::/v1/api/user/me::109a7bc4-006e-407d-afcf-e1a083751522::403 - 0ms - Response: {"status":403,"now":1721012992152}::{"message":"Access token missing"}
+2024-07-15 10:09:57::error::/v1/api/user/me::a6f702aa-03a3-4131-9775-a0d70c34d33e::403 - 0ms - Response: {"status":403,"now":1721012997595}::{"message":"Access token missing"}
+2024-07-15 10:10:00::error::/v1/api/user/me::b4b3f0f2-4c2e-4ab9-96df-3fdc851ac034::403 - 1ms - Response: {"status":403,"now":1721013000505}::{"message":"Access token missing"}
+2024-07-15 10:10:00::error::/v1/api/user/me::be300ed9-02a7-4349-8165-6e171be84164::403 - 1ms - Response: {"status":403,"now":1721013000724}::{"message":"Access token missing"}
+2024-07-15 10:10:03::error::/v1/api/user/me::15bd0f9e-e6b7-4b80-8a23-51b51a8cb723::403 - 0ms - Response: {"status":403,"now":1721013003482}::{"message":"Access token missing"}
+2024-07-15 10:10:03::error::/v1/api/user/me::b9e93c90-38ec-403e-827d-fa4bdc34fb18::403 - 0ms - Response: {"status":403,"now":1721013003708}::{"message":"Access token missing"}

@@ -1,0 +1,56 @@
+2024-07-15 10:08:04::info::/v1/api/user/me::9a73d7f5-5f7c-4989-9d35-befeee0823ab::input-params ::GET::::{}
+2024-07-15 10:08:04::info::/v1/api/movement/readMovements::7cb2f2a4-a308-4266-a5db-f03b5c838213::input-params ::GET::::{}
+2024-07-15 10:08:04::info::/v1/api/order/readOrders::138b7740-0abc-4bd7-9322-2cf53412dd75::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:08:07::info::/v1/api/order/readOrders::ecf27620-14fb-4dc8-a661-38b8a2e75197::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:08:10::info::/v1/api/order/readOrders::cd4b7e08-b87e-4faf-ba8d-30a137310712::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:09:01::info::/v1/api/conversation/readConversations::ac99e7f5-ec86-43c9-bd57-94dc1175e663::input-params ::GET::::{}
+2024-07-15 10:09:01::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::ff9fbf74-8759-4454-a740-cef7cc247560::input-params ::PATCH::::{"lastViewConversations":1721012941408}
+2024-07-15 10:09:06::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::93e65e75-8c04-48ae-b119-3d9d07e920b1::input-params ::PATCH::::{"lastViewConversations":1721012946029}
+2024-07-15 10:09:06::info::/v1/api/conversation/readConversations::565fb21b-6556-4225-8f47-f693ca519bc7::input-params ::GET::::{}
+2024-07-15 10:09:07::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::a8745a94-6051-4680-80d4-4edd309ee24a::input-params ::GET::::{}
+2024-07-15 10:09:09::info::/v1/api/conversation/readConversations::b19629ec-ebde-4e55-ac4c-fd99480f5313::input-params ::GET::::{}
+2024-07-15 10:09:09::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::a102f7f7-4f5c-462c-bf9d-f53961df0790::input-params ::PATCH::::{"lastViewConversations":1721012949665}
+2024-07-15 10:09:12::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::ba5cf551-9f68-45ee-8d8b-64bc78ddabfb::input-params ::PATCH::::{"lastViewConversations":1721012952485}
+2024-07-15 10:09:12::info::/v1/api/conversation/readConversations::05ee29a6-7bb0-4af5-bb19-37e76bb52ba7::input-params ::GET::::{}
+2024-07-15 10:09:21::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::5c723db1-991b-4e9b-97a2-6056a2d67488::input-params ::GET::::{}
+2024-07-15 10:09:21::info::/v1/api/order/readTalentOrderHistory::0531a5cc-1e98-488d-8ee2-8ec3899fae5b::input-params ::GET::::{}
+2024-07-15 10:09:21::info::/v1/api/order/readMemberOrderHistory::3e7912e7-4711-46af-80c2-05a0f7ed41f1::input-params ::GET::::{}
+2024-07-15 10:09:21::error::/v1/api/order/readMemberOrderHistory::3e7912e7-4711-46af-80c2-05a0f7ed41f1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:09:21::info::/v1/api/order/readArchivedOrderHistory::540cd4ea-fbb6-43a9-b128-4903bf8c83e8::input-params ::GET::::{}
+2024-07-15 10:09:21::error::/v1/api/order/readArchivedOrderHistory::540cd4ea-fbb6-43a9-b128-4903bf8c83e8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:09:21::info::/v1/api/termOfService/readTermOfServices::ff88e73f-2e5e-4e05-81b4-dd227c667c65::input-params ::GET::::{}
+2024-07-15 10:09:21::error::/v1/api/order/readTalentOrderHistory::0531a5cc-1e98-488d-8ee2-8ec3899fae5b::403 - 0ms - Response: {"status":403,"now":1721012961308}::{"message":"You are not a talent!"}
+2024-07-15 10:09:22::info::/v1/api/post/readPostCategoriesWithPosts/666aa5e8f2cecdc820c83994::21934fe5-c99d-42a0-9f8e-a786eeec422b::input-params ::GET::::{}
+2024-07-15 10:09:23::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/666aa5e8f2cecdc820c83994::0b97c165-f607-4429-9457-a2d2732d6168::input-params ::GET::::{}
+2024-07-15 10:09:24::info::/v1/api/order/readTalentOrderHistory::b7ef158e-617a-4346-b3e6-c83433d69d15::input-params ::GET::::{}
+2024-07-15 10:09:24::info::/v1/api/order/readMemberOrderHistory::ba65f923-d445-4343-b058-409463e72812::input-params ::GET::::{}
+2024-07-15 10:09:24::error::/v1/api/order/readMemberOrderHistory::ba65f923-d445-4343-b058-409463e72812::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:09:24::info::/v1/api/order/readArchivedOrderHistory::c15e178c-775a-4476-8312-170b77335bc4::input-params ::GET::::{}
+2024-07-15 10:09:24::error::/v1/api/order/readArchivedOrderHistory::c15e178c-775a-4476-8312-170b77335bc4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:09:24::info::/v1/api/termOfService/readTermOfServices::d044573d-ddf3-4137-8e6b-aac2a88170eb::input-params ::GET::::{}
+2024-07-15 10:09:24::error::/v1/api/order/readTalentOrderHistory::b7ef158e-617a-4346-b3e6-c83433d69d15::403 - 0ms - Response: {"status":403,"now":1721012964218}::{"message":"You are not a talent!"}
+2024-07-15 10:09:39::info::/v1/api/auth/users/logout::36b50d48-3a47-4587-9f84-7160b9d1d908::input-params ::POST::::{}
+2024-07-15 10:09:39::info::/v1/api/user/me::7ec1a292-2179-4718-bcfd-38882860af67::input-params ::GET::::{}
+2024-07-15 10:09:39::error::/v1/api/user/me::7ec1a292-2179-4718-bcfd-38882860af67::403 - 0ms - Response: {"status":403,"now":1721012979703}::{"message":"Access token missing"}
+2024-07-15 10:09:50::info::/v1/api/user/me::5cce4618-0285-493d-a301-edb7fc7d8e20::input-params ::GET::::{}
+2024-07-15 10:09:50::error::/v1/api/user/me::5cce4618-0285-493d-a301-edb7fc7d8e20::403 - 0ms - Response: {"status":403,"now":1721012990537}::{"message":"Access token missing"}
+2024-07-15 10:09:50::info::/v1/api/movement/readMovements::6eac44a2-c896-49f8-95b9-56e38c050249::input-params ::GET::::{}
+2024-07-15 10:09:52::info::/v1/api/user/me::109a7bc4-006e-407d-afcf-e1a083751522::input-params ::GET::::{}
+2024-07-15 10:09:52::error::/v1/api/user/me::109a7bc4-006e-407d-afcf-e1a083751522::403 - 0ms - Response: {"status":403,"now":1721012992152}::{"message":"Access token missing"}
+2024-07-15 10:09:52::info::/v1/api/movement/readMovements::f4e157a3-7b56-4407-b9bf-7ee9dfe2d659::input-params ::GET::::{}
+2024-07-15 10:09:53::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::8908328a-3f72-4c35-9739-42f2cb49a7e9::input-params ::GET::::{}
+2024-07-15 10:09:57::info::/v1/api/user/me::a6f702aa-03a3-4131-9775-a0d70c34d33e::input-params ::GET::::{}
+2024-07-15 10:09:57::error::/v1/api/user/me::a6f702aa-03a3-4131-9775-a0d70c34d33e::403 - 0ms - Response: {"status":403,"now":1721012997595}::{"message":"Access token missing"}
+2024-07-15 10:09:57::info::/v1/api/movement/readMovements::fe691b1d-8ad1-4ee1-bdf3-82ba063df795::input-params ::GET::::{}
+2024-07-15 10:10:00::info::/v1/api/user/me::b4b3f0f2-4c2e-4ab9-96df-3fdc851ac034::input-params ::GET::::{}
+2024-07-15 10:10:00::error::/v1/api/user/me::b4b3f0f2-4c2e-4ab9-96df-3fdc851ac034::403 - 1ms - Response: {"status":403,"now":1721013000505}::{"message":"Access token missing"}
+2024-07-15 10:10:00::info::/v1/api/movement/readMovements::28142835-18d7-4f16-b322-6dad7b214b2e::input-params ::GET::::{}
+2024-07-15 10:10:00::info::/v1/api/user/me::be300ed9-02a7-4349-8165-6e171be84164::input-params ::GET::::{}
+2024-07-15 10:10:00::error::/v1/api/user/me::be300ed9-02a7-4349-8165-6e171be84164::403 - 1ms - Response: {"status":403,"now":1721013000724}::{"message":"Access token missing"}
+2024-07-15 10:10:00::info::/v1/api/movement/readMovements::563eb0d0-ad9e-4fc9-af04-d4b48f476dd4::input-params ::GET::::{}
+2024-07-15 10:10:03::info::/v1/api/user/me::15bd0f9e-e6b7-4b80-8a23-51b51a8cb723::input-params ::GET::::{}
+2024-07-15 10:10:03::error::/v1/api/user/me::15bd0f9e-e6b7-4b80-8a23-51b51a8cb723::403 - 0ms - Response: {"status":403,"now":1721013003482}::{"message":"Access token missing"}
+2024-07-15 10:10:03::info::/v1/api/movement/readMovements::c9c66488-3f21-4164-b302-37bd9f288d33::input-params ::GET::::{}
+2024-07-15 10:10:03::info::/v1/api/user/me::b9e93c90-38ec-403e-827d-fa4bdc34fb18::input-params ::GET::::{}
+2024-07-15 10:10:03::error::/v1/api/user/me::b9e93c90-38ec-403e-827d-fa4bdc34fb18::403 - 0ms - Response: {"status":403,"now":1721013003708}::{"message":"Access token missing"}
+2024-07-15 10:10:03::info::/v1/api/movement/readMovements::2931930b-e8b3-4909-a258-0f7e804f22dc::input-params ::GET::::{}
