@@ -20,12 +20,12 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
       default:
-        "./public/uploads/pastal_system_default_avatar.png",
+        "/uploads/pastal_system_default_avatar.png",
     },
     bg: {
       type: String,
       default: 
-        "./public/uploads/pastal_system_default_background.png",
+        "/uploads/pastal_system_default_background.png",
     },
     address: { type: String, default: '' },
     country: { type: String, default: "Vietnam" },

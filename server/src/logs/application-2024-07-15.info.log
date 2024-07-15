@@ -1007,3 +1007,59 @@
 2024-07-15 07:30:42::info::/v1/api/order/readArchivedOrderHistory::dd727836-dfab-49c7-b190-2fa5d11fb250::input-params ::GET::::{}
 2024-07-15 07:30:42::error::/v1/api/order/readArchivedOrderHistory::dd727836-dfab-49c7-b190-2fa5d11fb250::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-07-15 07:30:42::info::/v1/api/termOfService/readTermOfServices::73a7c4ce-2843-488f-bf76-323124c2a2a4::input-params ::GET::::{}
+2024-07-15 10:19:13::info::/v1/api/user/me::150bb0c8-15e7-4788-8009-774dd7631ad2::input-params ::GET::::{}
+2024-07-15 10:19:13::error::/v1/api/user/me::150bb0c8-15e7-4788-8009-774dd7631ad2::403 - 1ms - Response: {"status":403,"now":1721013553674}::{"message":"Access token missing"}
+2024-07-15 10:19:13::info::/v1/api/movement/readMovements::3f4ecff0-6620-4cab-9cca-06e4b9242395::input-params ::GET::::{}
+2024-07-15 10:19:13::info::/v1/api/order/readOrders::b2de2f23-22d8-4cfa-a19c-61dc6831174a::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:19:15::info::/v1/api/user/me::167746e5-5da8-4916-a7e0-a91d2b65a416::input-params ::GET::::{}
+2024-07-15 10:19:15::error::/v1/api/user/me::167746e5-5da8-4916-a7e0-a91d2b65a416::403 - 2ms - Response: {"status":403,"now":1721013555431}::{"message":"Access token missing"}
+2024-07-15 10:19:15::info::/v1/api/movement/readMovements::5024f24a-559a-4884-ad45-3c07849efb8f::input-params ::GET::::{}
+2024-07-15 10:19:15::info::/v1/api/order/readOrders::df60e75b-2ddb-46c8-9e7e-0c34044079e0::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:19:15::info::/v1/api/user/me::42f94672-5147-44b5-a30f-e003ecfe8aac::input-params ::GET::::{}
+2024-07-15 10:19:15::error::/v1/api/user/me::42f94672-5147-44b5-a30f-e003ecfe8aac::403 - 0ms - Response: {"status":403,"now":1721013555664}::{"message":"Access token missing"}
+2024-07-15 10:19:15::info::/v1/api/movement/readMovements::e0a45c78-08ec-47bd-a57b-2c063dbc66a9::input-params ::GET::::{}
+2024-07-15 10:19:17::info::/v1/api/order/readOrders::01c253e5-17e7-4b10-9c5e-a94190dada8c::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:19:31::info::/v1/api/auth/users/login::8c031e1c-1204-41bf-afce-c812c1c26f37::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-15 10:19:35::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::46421e97-bd24-4f5d-823d-b43e323e4685::input-params ::GET::::{}
+2024-07-15 10:19:35::info::/v1/api/order/readTalentOrderHistory::437f831e-a42a-457a-92a0-43b9ba264663::input-params ::GET::::{}
+2024-07-15 10:19:35::info::/v1/api/order/readMemberOrderHistory::a3b745ee-1ce4-4849-9afa-e92732985c0f::input-params ::GET::::{}
+2024-07-15 10:19:35::error::/v1/api/order/readMemberOrderHistory::a3b745ee-1ce4-4849-9afa-e92732985c0f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:19:35::info::/v1/api/order/readArchivedOrderHistory::0928f663-6d9d-4ab4-888d-94e1abe15a86::input-params ::GET::::{}
+2024-07-15 10:19:35::error::/v1/api/order/readArchivedOrderHistory::0928f663-6d9d-4ab4-888d-94e1abe15a86::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:19:35::info::/v1/api/termOfService/readTermOfServices::0880db0d-a879-4da1-b4b3-b495a1aa41d3::input-params ::GET::::{}
+2024-07-15 10:19:35::error::/v1/api/order/readTalentOrderHistory::437f831e-a42a-457a-92a0-43b9ba264663::403 - 0ms - Response: {"status":403,"now":1721013575800}::{"message":"You are not a talent!"}
+2024-07-15 10:19:37::info::/v1/api/auth/users/logout::21674399-1026-4a71-8b8f-92e5fec43b2b::input-params ::POST::::{}
+2024-07-15 10:19:37::info::/v1/api/user/me::aac0449a-978e-48b3-91cb-64a0db99cb56::input-params ::GET::::{}
+2024-07-15 10:19:37::error::/v1/api/user/me::aac0449a-978e-48b3-91cb-64a0db99cb56::403 - 0ms - Response: {"status":403,"now":1721013577940}::{"message":"Access token missing"}
+2024-07-15 10:19:42::info::/v1/api/order/readOrders::597cd448-19d4-4ea6-a4bd-b3b357857c56::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:21:25::info::/v1/api/user/me::68bc5eb1-9f68-4fa1-a190-ba602bee6f06::input-params ::GET::::{}
+2024-07-15 10:21:25::error::/v1/api/user/me::68bc5eb1-9f68-4fa1-a190-ba602bee6f06::403 - 0ms - Response: {"status":403,"now":1721013685931}::{"message":"Access token missing"}
+2024-07-15 10:21:25::info::/v1/api/movement/readMovements::0387ea75-2869-4b82-8b52-7e9e0f683f55::input-params ::GET::::{}
+2024-07-15 10:21:25::info::/v1/api/order/readOrders::08319029-b403-4898-b61b-e1725bc6efc7::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 10:21:33::info::/v1/api/auth/users/login::73f8a497-3e3a-418f-bb82-f315baa1fcf5::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-15 10:21:35::info::/v1/api/order/readTalentOrderHistory::390a54b5-9f2f-48c5-975d-484a390cb6b6::input-params ::GET::::{}
+2024-07-15 10:21:35::info::/v1/api/order/readMemberOrderHistory::836525f3-dde7-41e2-8dd1-7ca2d78ffb36::input-params ::GET::::{}
+2024-07-15 10:21:35::error::/v1/api/order/readMemberOrderHistory::836525f3-dde7-41e2-8dd1-7ca2d78ffb36::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:21:35::info::/v1/api/order/readArchivedOrderHistory::6fee1a92-a3b9-4dfe-836a-9f43670022b7::input-params ::GET::::{}
+2024-07-15 10:21:35::error::/v1/api/order/readArchivedOrderHistory::6fee1a92-a3b9-4dfe-836a-9f43670022b7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:21:35::info::/v1/api/termOfService/readTermOfServices::4b715cd4-7545-43aa-9663-60b835d34344::input-params ::GET::::{}
+2024-07-15 10:21:35::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::919ad86f-aeaa-4edb-b2a7-5f815be9176e::input-params ::GET::::{}
+2024-07-15 10:21:35::error::/v1/api/order/readTalentOrderHistory::390a54b5-9f2f-48c5-975d-484a390cb6b6::403 - 0ms - Response: {"status":403,"now":1721013695135}::{"message":"You are not a talent!"}
+2024-07-15 10:21:37::info::/v1/api/movement/readMovements::273c08b1-c889-4e66-bd61-e20dd0db2f78::input-params ::GET::::{}
+2024-07-15 10:21:37::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::e474ef76-da3e-47fe-9170-c5689ac2e165::input-params ::GET::::{}
+2024-07-15 10:21:37::info::/v1/api/order/readTalentOrderHistory::2595ea69-e470-4e24-b90f-33e3426d9dd1::input-params ::GET::::{}
+2024-07-15 10:21:37::info::/v1/api/order/readMemberOrderHistory::2484bdf4-1c56-405d-abdc-7ba7aabde0df::input-params ::GET::::{}
+2024-07-15 10:21:37::error::/v1/api/order/readMemberOrderHistory::2484bdf4-1c56-405d-abdc-7ba7aabde0df::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:21:37::info::/v1/api/order/readArchivedOrderHistory::2bbdeb8d-6149-42b7-9034-57262f328bfc::input-params ::GET::::{}
+2024-07-15 10:21:37::error::/v1/api/order/readArchivedOrderHistory::2bbdeb8d-6149-42b7-9034-57262f328bfc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:21:37::info::/v1/api/termOfService/readTermOfServices::3975d8dd-e712-4b76-8fe9-69cf93544533::input-params ::GET::::{}
+2024-07-15 10:21:37::error::/v1/api/order/readTalentOrderHistory::2595ea69-e470-4e24-b90f-33e3426d9dd1::403 - 0ms - Response: {"status":403,"now":1721013697868}::{"message":"You are not a talent!"}
+2024-07-15 10:23:46::info::/v1/api/movement/readMovements::7e74a833-343b-4120-958b-c62b2482e599::input-params ::GET::::{}
+2024-07-15 10:23:46::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::a1d31082-baf8-4666-863c-ef46bd058fcf::input-params ::GET::::{}
+2024-07-15 10:23:46::info::/v1/api/order/readTalentOrderHistory::45851a06-2fd5-4c3c-929e-9042418f05df::input-params ::GET::::{}
+2024-07-15 10:23:46::info::/v1/api/order/readMemberOrderHistory::42d90b86-1818-480a-8618-124b6887205c::input-params ::GET::::{}
+2024-07-15 10:23:46::error::/v1/api/order/readMemberOrderHistory::42d90b86-1818-480a-8618-124b6887205c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 10:23:46::info::/v1/api/order/readArchivedOrderHistory::8168fd2c-c09b-487e-ab70-d2ed9d76b7b5::input-params ::GET::::{}
+2024-07-15 10:23:46::error::/v1/api/order/readArchivedOrderHistory::8168fd2c-c09b-487e-ab70-d2ed9d76b7b5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 10:23:46::info::/v1/api/termOfService/readTermOfServices::44ab712d-84c3-4910-af07-98b453d1ea63::input-params ::GET::::{}
+2024-07-15 10:23:46::error::/v1/api/order/readTalentOrderHistory::45851a06-2fd5-4c3c-929e-9042418f05df::403 - 0ms - Response: {"status":403,"now":1721013826992}::{"message":"You are not a talent!"}
