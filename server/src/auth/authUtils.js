@@ -33,13 +33,13 @@ const createTokenPair = async (payload, publicKey, privateKey) =>{
 }
 
 const allowIfLoggedIn = asyncHandler(async(req, res, next) => {
-    const token = req.cookies.accessToken;
+    const token = req.cookies.accessToken
     if (!token) throw new NotFoundError('Not Found Token')
     JWT.verify(token, process.env.JWT_SECRET, async (error, payload) => {
     if (error) throw new BadRequestError('Token is not valid')
-    req.user.userId = payload.userId;
-    req.user = await User.findById(payload.userId);
-    next();
+    req.user.userId = payload.userId
+    req.user = await User.findById(payload.userId)
+    next()
     })
 })
 const authenticationV2 = asyncHandler(async(req, res, next) => {
@@ -74,7 +74,8 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
     if(!accessToken) throw new AuthFailureError('Invalid Request')
     try {
         const decodeUser = JWT.verify(accessToken, keyStore.publicKey)
-        if(userId !== decodeUser.userId) throw new AuthFailureError('Invalid UserId')
+        console.log(decodeUser)
+        if(userId !== decodeUser._id) throw new AuthFailureError('Invalid UserId')
         req.keyStore = keyStore
         req.user = decodeUser
         req.accessToken = accessToken
@@ -88,6 +89,5 @@ const authenticationV2 = asyncHandler(async(req, res, next) => {
 const verifyJWT = async (token, keySecret) => {
     return await JWT.verify(token, keySecret)
 }
-
 
 export{createTokenPair, verifyJWT, authenticationV2, allowIfLoggedIn}

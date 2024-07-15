@@ -1,0 +1,59 @@
+2024-07-10 08:48:17::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::44c2715e-7441-4d91-9b5b-7a4149b6bff8::input-params ::GET::::{}
+2024-07-10 08:49:04::info::/v1/api/conversation/readConversations::5e1e38cc-7dfd-4068-b41f-8d2e8e60a427::input-params ::GET::::{}
+2024-07-10 10:14:52::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::a47aa08b-4ea2-4619-8de0-d5f851cc0efb::input-params ::GET::::{}
+2024-07-10 10:16:26::info::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::da418c49-5529-480d-83d0-bd2d62a69138::input-params ::PATCH::::{"content":"Hello"}
+2024-07-10 10:17:56::info::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::e0ebd8ad-bb18-4ef8-814d-13cac143d948::input-params ::PATCH::::{"content":"Hello"}
+2024-07-10 10:19:12::info::/v1/api/conversation/sendMessage/668d4830d5507f1038513105::a7e97507-4a25-400c-898f-cd4c58cf3e0d::input-params ::PATCH::::{"content":"Hello"}
+2024-07-10 14:27:23::info::/v1/api/conversation/readConversations::80b23824-d561-4367-80bc-93584e48d054::input-params ::GET::::{}
+2024-07-10 14:30:30::info::/v1/api/conversation/readConversations::9eb16f3f-d64d-46b8-ac54-cc633998b677::input-params ::GET::::{}
+2024-07-10 14:32:34::info::/v1/api/conversation/readConversations::10bc57d8-c93c-4151-bed5-327b8349f29e::input-params ::GET::::{}
+2024-07-10 14:34:42::info::/v1/api/conversation/readConversations::735b3efb-b118-4ca8-9b39-b3f28d91a298::input-params ::GET::::{}
+2024-07-10 14:36:41::info::/v1/api/conversation/readConversations::69e5de5e-5537-47c0-a673-967830b750d9::input-params ::GET::::{}
+2024-07-10 14:37:53::info::/v1/api/conversation/readConversations::0a9fec31-db03-4bb9-a8d2-39ab6041c5f7::input-params ::GET::::{}
+2024-07-10 14:41:20::info::/v1/api/conversation/readConversations::8ba8a6fd-d0a2-4724-884d-b0efc7ceab25::input-params ::GET::::{}
+2024-07-10 18:16:32::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::2f05b8ef-aa10-4271-b2a9-a20388b97e77::input-params ::GET::::{}
+2024-07-10 18:16:59::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::6d9d4175-0f40-401e-b892-89029a632598::input-params ::GET::::{}
+2024-07-10 18:16:59::error::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::6d9d4175-0f40-401e-b892-89029a632598::404 - 1ms - Response: {"status":404,"now":1720610219187}::{"message":"Conversation not found"}
+2024-07-10 18:17:33::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::8aac715a-05e7-4256-9b11-ed5a507d1d5d::input-params ::GET::::{}
+2024-07-10 18:20:26::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::19212206-a3e2-4cbf-b758-1d0af593db95::input-params ::GET::::{}
+2024-07-10 18:20:26::error::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::19212206-a3e2-4cbf-b758-1d0af593db95::404 - 0ms - Response: {"status":404,"now":1720610426426}::{"message":"Conversation not found"}
+2024-07-10 18:20:39::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::49994946-7a73-48de-a2c6-bf3e5814b89d::input-params ::GET::::{}
+2024-07-10 18:21:47::info::/v1/api/auth/users/login::42e75d8b-171e-4e35-b845-ce42bf785147::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-10 18:22:05::info::/v1/api/auth/users/login::52f536a3-6334-429e-b3dd-a2eb9f12bf5c::input-params ::POST::::{"email":"phapluu2k5@gmail.com","password":"123456789"}
+2024-07-10 18:22:05::error::/v1/api/auth/users/login::52f536a3-6334-429e-b3dd-a2eb9f12bf5c::403 - 1ms - Response: {"status":403,"now":1720610525760}::{"message":"User not registered"}
+2024-07-10 18:22:11::info::/v1/api/auth/users/login::e93c3055-3908-446b-80c6-4d0eeea5f9f6::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-10 18:22:16::info::/v1/api/conversation/readConversation/668d4830d5507f1038513105::6ddab0d1-aecc-4527-a49c-50deb325ff2c::input-params ::GET::::{}
+2024-07-10 18:22:27::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::63634889-82b8-4404-9d8e-5b4848c1ebb8::input-params ::GET::::{}
+2024-07-10 18:23:16::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::e86f831d-a7dd-44a0-a848-51f62094f336::input-params ::GET::::{}
+2024-07-10 18:23:16::error::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::e86f831d-a7dd-44a0-a848-51f62094f336::undefined - NaNms - Response: {}::{"message":"mongoose is not defined"}
+2024-07-10 18:23:31::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::f35c113b-dafc-44ad-8947-d638f2083e49::input-params ::GET::::{}
+2024-07-10 18:25:14::info::/v1/api/conversation/readConversationWithOtherMember/666aa5e8f2cecdc820c83994::420fb8c0-b476-4ac1-b0c1-1804395ee9ca::input-params ::GET::::{}
+2024-07-10 20:40:53::info::/v1/api/notification/readNotifications::d4899894-ca96-41f3-9769-854787f1f32c::input-params ::GET::::{}
+2024-07-10 20:40:53::error::/v1/api/notification/readNotifications::d4899894-ca96-41f3-9769-854787f1f32c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-10 20:44:25::info::/v1/api/notification/readNotifications::acd0ccc0-e7f2-48f6-93b7-cffe306de050::input-params ::GET::::{}
+2024-07-10 20:44:25::error::/v1/api/notification/readNotifications::acd0ccc0-e7f2-48f6-93b7-cffe306de050::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-10 20:44:46::info::/v1/api/notification/readNotifications::dec79175-54b3-448c-9c3a-075776a04aa5::input-params ::GET::::{}
+2024-07-10 20:44:46::error::/v1/api/notification/readNotifications::dec79175-54b3-448c-9c3a-075776a04aa5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-10 20:47:54::info::/v1/api/notification/readNotifications::37262ac3-a35d-4846-9782-7b015236809a::input-params ::GET::::{}
+2024-07-10 20:51:24::info::/v1/api/auth/users/login::6a64f05a-66c5-4392-95ca-24449210e07c::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-10 20:51:29::info::/v1/api/notification/createNotification::fe1c1a83-b40f-43c1-b280-2240a7c7f003::input-params ::POST::::{"receiverId":"66601810d3737cbcac3bc91e","type":"like"}
+2024-07-10 20:51:29::error::/v1/api/notification/createNotification::fe1c1a83-b40f-43c1-b280-2240a7c7f003::undefined - NaNms - Response: {"errors":{"type":{"name":"ValidatorError","message":"Path `type` is required.","properties":{"message":"Path `type` is required.","type":"required","path":"type"},"kind":"required","path":"type"}},"_message":"Notification validation failed","name":"ValidationError","message":"Notification validation failed: type: Path `type` is required."}::{"message":"Notification validation failed: type: Path `type` is required."}
+2024-07-10 20:52:00::info::/v1/api/notification/createNotification::b4c74a97-a227-4aec-a7b3-43ec4162dd9a::input-params ::POST::::{"receiverId":"66601810d3737cbcac3bc91e","type":"like"}
+2024-07-10 20:52:27::info::/v1/api/notification/readNotifications::74e3cbf7-179f-4256-8b75-8f495338b951::input-params ::GET::::{}
+2024-07-10 20:52:34::info::/v1/api/notification/readNotification/668e920083c79869ef1c9a07::a85f3714-78bf-4916-9514-0bdc9d6b3a15::input-params ::GET::::{}
+2024-07-10 20:52:39::info::/v1/api/notification/readNotification/668e920083c79869ef1c9a07::1ea4ec29-3394-47aa-b286-128fdc9ddceb::input-params ::GET::::{}
+2024-07-10 20:53:11::info::/v1/api/auth/users/login::8dc32ea7-6e7d-4083-b55a-1e889a557e1e::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-10 20:53:31::info::/v1/api/notification/readNotifications::c2a03abe-7b54-4e96-9a64-725ec2145177::input-params ::GET::::{}
+2024-07-10 20:54:33::info::/v1/api/notification/createNotification::ae84fa66-804c-45bf-93fc-727b20515446::input-params ::POST::::{"receiverId":"668e920083c79869ef1c9a07","type":"follow"}
+2024-07-10 20:55:11::info::/v1/api/notification/readNotification/668e9299626385d53f95aca1::5ac5ae81-e607-4c6d-8c2c-47a0dd12039b::input-params ::GET::::{}
+2024-07-10 20:55:20::info::/v1/api/notification/readNotification/668e920083c79869ef1c9a07::d38a6481-148e-4a5f-8907-bdda669c11c5::input-params ::GET::::{}
+2024-07-10 20:55:25::info::/v1/api/notification/readNotification/668e9299626385d53f95aca1::5c887f67-ce63-476f-a65a-63f8586773c5::input-params ::GET::::{}
+2024-07-10 20:56:49::info::/v1/api/auth/users/login::382b17bb-df6e-42c8-8d1a-660e6db1469f::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-10 20:56:56::info::/v1/api/notification/readNotifications::fced444a-80df-4b3c-8fe8-99101f3e0817::input-params ::GET::::{}
+2024-07-10 20:57:09::info::/v1/api/notification/readNotification/668e9299626385d53f95aca1::922e1def-1e1e-4003-837e-f1bf4ff4a461::input-params ::GET::::{}
+2024-07-10 20:57:42::info::/v1/api/auth/users/login::8e0f66aa-ff6b-4cc8-8f08-b1ad69ea387d::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-10 20:57:52::info::/v1/api/auth/users/login::bd51adcc-a3bf-4122-9e2b-595596fe26ba::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-10 20:58:00::info::/v1/api/auth/users/login::b49babe4-94f6-4a71-8a4b-84624073c31e::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-10 20:58:06::info::/v1/api/notification/createNotification::b49a7185-92cb-4b23-b1fd-dd102abd1dbf::input-params ::POST::::{"receiverId":"666aa5e8f2cecdc820c83994","type":"follow"}
+2024-07-10 20:58:25::info::/v1/api/auth/users/login::ab659550-d691-471f-9464-0fb5ea081507::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-10 20:58:29::info::/v1/api/notification/readNotifications::db829c65-429c-438c-bada-5b9f07c89a68::input-params ::GET::::{}

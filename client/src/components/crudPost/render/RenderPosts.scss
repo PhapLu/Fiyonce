@@ -1,0 +1,145 @@
+.posts {
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -16px; /* gutter size offset */
+        width: auto;
+    }
+    .my-masonry-grid_column {
+        padding-left: 16px; /* gutter size */
+        background-clip: padding-box;
+    }
+
+    .post-item {
+        display: block;
+        margin-bottom: 16px;
+        text-decoration: none;
+        color: inherit;
+
+        .post-item__img {
+            position: relative;
+            border-radius: 18px;
+            margin-bottom: 8px;
+        }
+
+        .post-item__img__crud-operation-container {
+            position: absolute;
+            display: flex;
+            justify-content: end;
+            top: 12px;
+            right: 12px;
+
+            .post-item__img__crud-operation-item {
+                display: none;
+                margin-left: 8px;
+                background-color: var(--white-4-color);
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+
+                svg {
+                    cursor: pointer;
+                    stroke: var(--black-5-color);
+                    margin-top: 50%;
+                    margin-left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+
+        .post-item__img__react-operation-container {
+            position: absolute;
+            display: flex;
+            justify-content: end;
+            bottom: 12px;
+            right: 12px;
+
+            .post-item__img__react-operation-item {
+                display: none;
+                margin-left: 8px;
+                background-color: var(--white-4-color);
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+
+                svg {
+                    cursor: pointer;
+                    stroke: var(--black-5-color);
+                    margin-top: 50%;
+                    margin-left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                &:hover {
+                    svg {
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+
+        .post-item__img__thumbnail {
+            display: block;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+            position: relative;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            min-height: 150px;
+            max-height: 360px;
+        }
+
+        &:hover {
+            .post-item__img__crud-operation-item {
+                display: block !important;
+            }
+
+            .post-item__img__react-operation-item {
+                display: block !important;
+            }
+
+            .post-item__img {
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)) !important;
+            }
+        }
+
+        .post-item__view {
+            display: flex;
+            align-items: center;
+            color: var(--gray-3-color);
+
+            svg {
+                margin-left: 4px;
+                width: 16px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .my-masonry-grid {
+        column-count: 4 !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .my-masonry-grid {
+        column-count: 2 !important;
+    }
+
+    .post-item__img__thumbnail {
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+    .my-masonry-grid {
+        column-count: 1 !important;
+    }
+
+    .post-item__img__thumbnail {
+        max-height: 200px;
+    }
+}

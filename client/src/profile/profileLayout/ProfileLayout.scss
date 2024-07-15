@@ -1,0 +1,112 @@
+.app.with-sidebar {
+    .sidebar {
+        width: 28%;
+    }
+
+    .outlet-content {
+        width: 69%;
+
+        .profile {
+            .profile__bg {
+                position: relative;
+
+                .profile__bg__img {
+                    width: 100%;
+                    height: 220px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
+
+                .profile__bg__edit-btn {
+                    position: absolute;
+                    right: 12px;
+                    bottom: 12px;
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    padding: 8px 16px;
+                    background-color: rgba(0, 0, 0, 0.7);
+                    transition: 0.2s linear;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        // background-color: rgba(0, 0, 0, 0.9);
+                        opacity: 0.7;
+                        cursor: pointer;
+                    }
+
+                    .profile__bg__ic {}
+                }
+
+            }
+        }
+
+
+    }
+}
+
+
+.form-field.with-ic {
+    position: relative;
+
+    .form-field__ic.delete-ic {
+        position: absolute;
+        right: 0;
+        opacity: 0;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    &:hover {
+        .form-field__ic.delete-ic {
+            right: 0;
+            opacity: 1;
+        }
+    }
+
+    &.add-link-btn {
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+    }
+}
+
+
+.profile-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+
+    .profile-page__header--left {
+        display: flex;
+        align-items: center;
+        width: 65%;
+       
+        &.full {
+            width: 100%;
+        }
+
+        .btn {
+            margin-right: 10px;
+            border-radius: 20px;
+            min-width: 80px;
+            padding: 6px 20px !important;
+            font-size: 1.3rem;
+        }
+
+        .view-review-btn {
+            min-width: 150px;
+        }
+    }
+
+    .profile-page__header--right {
+
+        .btn {
+            min-width: 120px;
+            margin-left: 12px;
+        }
+    }
+}

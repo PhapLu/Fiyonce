@@ -1,0 +1,181 @@
+.navbar {
+    padding: 10px 4%;
+
+    /* padding: 10px 0; */
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--white-3-color);
+    transition: 0.2s linear;
+
+    &.with-shadow {
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-3 {
+        padding: 6px;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+
+    .navbar--left {
+        display: flex;
+        align-items: center;
+
+        .navbar__brand-logo {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        .navbar__brand-name {
+            display: inline-block;
+            margin: 0 12px;
+        }
+
+        .navbar__search-field {
+            margin-left: 16px;
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--gray-1-color);
+            border-radius: 16px;
+            transition: border 0.1s;
+            min-width: 300px;
+            background-color: var(--gray-1-color);
+            color: var(--black-2-color);
+
+            .navbar__search-field__ic {
+                width: 20px;
+                height: 20px;
+                margin-left: 12px;
+                color: var(--black-2-color);
+            }
+
+            .navbar__search-field__input {
+                padding: 10px 10px;
+                border: none;
+                padding-left: 8px;
+                outline: none;
+                font-size: 1.4rem;
+                font-weight: 600;
+                border-radius: 16px;
+                background-color: var(--gray-1-color);
+                color: var(--black-2-color);
+
+                &::placeholder {
+                    color: var(--black-2-color);
+                    font-weight: 500;
+                }
+            }
+
+            &:focus-within {
+                border: 2px solid #ff9e2f;
+            }
+        }
+    }
+
+    .navbar--right {
+        .navbar-link-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .navbar-link-item {
+                padding: 16px 20px;
+                font-size: 1.5rem;
+                font-weight: 600;
+
+                &.active {
+                    position: relative;
+
+                    &::after {
+                        position: absolute;
+                        width: 12px;
+                        height: 4px;
+                        border-radius: 4px;
+                        content: "";
+                        background-color: var(--black-2-color);
+                        bottom: 8px;
+                        left: 50%;
+                        transform: translate(-50%);
+                    }
+                }
+
+                &:last-of-type {
+                    padding-right: 0;
+                }
+            }
+        }
+
+        .navbar__veritcal-hr {
+            width: 30px;
+            height: 1px;
+            margin: 0 14px;
+            transform: rotate(90deg);
+            background-color: var(--black-2-color);
+            opacity: 0.4;
+        }
+
+        .open-register-form-btn {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-display-conversations-btn {
+            position: relative;
+
+            .render-conversations {
+                border: 2px solid var(--gray-1-color);
+                position: absolute;
+                left: -150px;
+                top: calc(100% + 8px);
+                background-color: var(--form-bg-2-color);
+                padding: 8px 12px 8px 16px;
+                border-radius: 8px;
+                min-width: 300px;
+                height: 350px;
+                box-shadow: var(--box-shadow-1);
+                overflow-y: scroll;
+
+                .unseen-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background-color: var(--orange-2-color);
+                }
+            }
+        }
+
+        .noti-dot {
+            position: absolute;
+            top: 2px;
+            right: 0px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: red;
+            font-size: 1rem;
+            color: white;
+            /* text-align: center; */
+            /* vertical-align: 10px; */
+            /* display: flex; */
+            /* align-items: center; */
+            /* align-self: center; */
+            /* border: 1px solid transparent; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgb(255 67 67 / 45%) 0px 4px 8px
+        }
+    }
+}

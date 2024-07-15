@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 const DOCUMENT_NAME = 'Key'
 const COLLECTION_NAME = 'Keys'
 

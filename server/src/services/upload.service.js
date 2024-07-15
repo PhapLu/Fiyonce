@@ -1,7 +1,7 @@
 //1. upload file using S3Client 
-import {s3, PutObjectCommand, GetObjectCommand, DeleteBucketCommand} from '../configs/s3.config.js'
-import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 import crypto from 'crypto'
+import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
+import {s3, PutObjectCommand, GetObjectCommand, DeleteBucketCommand} from '../configs/s3.config.js'
 
 const urlImagePublic = 'https://d17lvyd50e77qu.cloudfront.net'
 const randomImageName = () => crypto.randomBytes(16).toString('hex')
@@ -18,14 +18,12 @@ const uploadImageFromLocalS3 = async({
             ContentType: 'image/jpeg'
         })
         const result = await s3.send(command)
-        console.log(result)
         //export URL
         const signedUrl = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: imageName,
         })
         const url = await getSignedUrl(s3, signedUrl, { expiresIn: 3600})
-        console.log(`url::${urlImagePublic}/${imageName}`)
         return {
             url: `${urlImagePublic}/${imageName}`,
             result

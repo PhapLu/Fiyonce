@@ -1,0 +1,161 @@
+.commission-market {
+    .commission-market__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .page__title {
+            margin: 0;
+        }
+
+        hr {
+            width: 60px;
+            height: 6px;
+            border-radius: 6px;
+            background-color: var(--black-2-color);
+            margin: 20px 0;
+        }
+
+        .commission-market__header--left {
+            width: 40%;
+        }
+
+        .commission-market__header--right {
+            width: 40%;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .commission-market__collation {
+        margin-top: 60px;
+
+        .collation-form {
+            display: flex;
+            align-items: center;
+
+            .collation-form__section {
+                &.search {
+                    width: 30%;
+                }
+
+                &.filter {
+                    // width: 50%;
+                }
+
+                &.sort {
+                    width: 20%;
+                }
+
+                display: flex;
+                align-items: center;
+                margin-right: 28px;
+
+                .form-field {
+                    // display: inline-block;
+                    margin: 0 8px 0;
+                }
+
+            }
+        }
+    }
+
+    .commission-market-container {
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        // row-gap: 32px;
+        // column-gap: 20px;
+
+
+
+        .my-masonry-grid_column {
+            width: 32.5% !important;
+            margin-right: 1.25%;
+
+            &:nth-of-type(3n) {
+                margin-right: 0 !important;
+            }
+
+            .commission-market-item {
+                // width: 32.5%;
+                margin-top: 24px;
+                background-color: var(--white-2-color);
+                border: 2px solid var(--gray-1-color);
+                border-radius: 8px;
+                padding: 18px;
+
+                &:hover {
+                    opacity: 0.9;
+                    cursor: pointer;
+                }
+
+
+
+                .commission-market-item__header {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+
+                    .commission-market-item__header--left {}
+
+                    .commission-market-item__header--right {}
+
+                }
+
+                .commission-market-item__content {
+                    position: relative;
+
+                    h2 {
+                        font-weight: 500;
+                    }
+
+                    h3 {
+                        margin: 12px 0;
+                    }
+
+                    h4 {
+                        margin: 0;
+                    }
+
+                    p {
+                        text-align: justify;
+                    }
+                }
+            }
+
+
+        }
+
+    }
+}
+
+@media (max-width: 1200px) {
+    .my-masonry-grid {
+        column-count: 3 !important;
+    }
+}
+
+// @media (max-width: 800px) {
+//     .my-masonry-grid {
+//         column-count: 2 !important;
+//     }
+
+//     .commission-market-item__reference-item__img__thumbnail {
+//         max-height: 250px;
+//     }
+// }
+
+// @media (max-width: 600px) {
+//     .my-masonry-grid {
+//         column-count: 1 !important;
+//     }
+
+//     .commission-market-item__reference-item__img__thumbnail {
+//         max-height: 200px;
+//     }
+// }

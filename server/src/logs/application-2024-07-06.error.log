@@ -1,0 +1,11 @@
+2024-07-06 11:51:59::error::/v1/api/post/createPost::da6c13d8-8452-44ad-8891-797ce7f49313::403 - 1ms - Response: {"status":403,"now":1720241519201}::{"message":"You are not a talent"}
+2024-07-06 11:53:06::error::/v1/api/artwork/readArtwork/6688cd89229fc4022ea79044::5350a2c3-fc33-4fc9-a317-86b4238c9f76::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 11:53:14::error::/v1/api/artwork/readPost/6688cd89229fc4022ea79044::b8dff5ef-bac0-472d-b556-96984e0e8f22::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:09:24::error::/v1/api/order/viewTalentOrderHistory::46eeef0c-f720-4819-b7b9-7284682e86aa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:10:19::error::/v1/api/order/viewTalentOrderHistory/66601810d3737cbcac3bc91e::0b9cc8c8-bb95-4547-9763-58a54457cfcd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:10:29::error::/v1/api/order/readTalentOrderHistory/66601810d3737cbcac3bc91e::350620e2-a0c6-4e5d-ae79-a51727639a61::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-06 20:11:04::error::/v1/api/order/readTalentOrderHistory::8bc5facf-4549-4666-9d9f-377ab36a06de::undefined - NaNms - Response: {}::{"message":"mongoose is not defined"}
+2024-07-06 20:11:30::error::/v1/api/order/readTalentOrderHistory::e6f9c918-fb76-44d6-9113-4c9fe1059e5b::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-07-06 20:33:37::error::/v1/api/order/readTalentOrderHistory::58b7fa8f-8d7a-4da5-97bb-466a54efaf91::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-07-06 20:33:57::error::/v1/api/order/readTalentOrderHistory::70829cad-b095-4c7c-9442-2deff5fb7d9e::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-07-06 20:34:21::error::/v1/api/order/readTalentOrderHistory::101f0d8c-1e6a-4293-9996-42a925fb1f23::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}

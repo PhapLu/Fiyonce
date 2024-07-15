@@ -1,0 +1,30 @@
+.commission-tos {
+    .commission-tos-container {
+        margin-bottom: 32px;
+        .commission-tos-item {
+            border-bottom: 1px solid var(--gray-2-color);
+            position: relative;
+
+            svg {
+                position: absolute;
+
+                &:hover {
+                    opacity: 0.8;
+                    cursor: pointer;
+                }
+
+                &.delete-tos-ic {
+                    right: 0;
+                }
+
+                &.update-tos-ic {
+                    right: 32px;
+                }
+            }
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+        }
+    }
+}

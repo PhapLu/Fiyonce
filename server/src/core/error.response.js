@@ -7,14 +7,18 @@ const ReasonStatusCode = {
     FORBIDDEN: 'Bad request error',
     CONFLICT: 'Conflict error'
 }
-
+import myLogger from '../loggers/mylogger.log.js'
+import logger from '../loggers/winston.log.js'
 import {statusCodes, reasonPhrases} from '../utils//httpStatusCode.js'
 
-class ErrorResponse extends Error{
+class ErrorResponse extends Error {
     constructor(message, status){
         super(message)
         this.status = status
         this.now = Date.now()
+        
+        //Log the error use winston
+        //logger.error(`${this.status} - ${this.message}`)
     }
 }
 
@@ -46,5 +50,5 @@ class ForbiddenError extends ErrorResponse{
     }
 } 
 
-export {ConflictRequestError, BadRequestError, AuthFailureError, NotFoundError, ForbiddenError}
+export {ErrorResponse, ConflictRequestError, BadRequestError, AuthFailureError, NotFoundError, ForbiddenError}
 
