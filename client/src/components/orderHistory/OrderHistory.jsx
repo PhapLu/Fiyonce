@@ -480,7 +480,7 @@ export default function OrderHistory() {
                         {showTalentArchiveCommissionOrder && <TalentArchiveCommissionOrder commissionOrder={commissionOrder} setShowTalentArchiveCommissionOrder={setShowTalentArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} talentArchiveCommissionOrderMutation={talentArchiveCommissionOrderMutation} />}
                         {showTalentReportCommissionOrder && <TalentReportCommissionOrder commissionOrder={commissionOrder} setShowTalentReportCommissionOrder={setShowTalentReportCommissionOrder} setOverlayVisible={setOverlayVisible} talentReportCommissionOrderMutation={talentReportCommissionOrderMutation} />}
 
-                        {showCreateProposal && <CreateProposal termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createOrderMutation={createProposalMutation}/>}
+                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createOrderMutation={createProposalMutation}/>}
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
 
