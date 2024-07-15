@@ -1069,3 +1069,15 @@
 2024-07-15 12:22:50::info::/v1/api/order/readOrders::55a79e71-f4ba-402e-a286-a11061e4c916::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
 2024-07-15 12:22:50::info::/v1/api/conversation/readConversations::576604c6-8b9b-4c86-8d46-10e0958538aa::input-params ::GET::::{}
 2024-07-15 12:22:50::error::/v1/api/conversation/readConversations::576604c6-8b9b-4c86-8d46-10e0958538aa::401 - 1ms - Response: {"status":401,"now":1721020970842}::{"message":"You are not authenticated!"}
+2024-07-15 12:31:13::info::/v1/api/user/me::64f88a50-b2bf-4e15-b306-1c6ebf1542e2::input-params ::GET::::{}
+2024-07-15 12:31:13::error::/v1/api/user/me::64f88a50-b2bf-4e15-b306-1c6ebf1542e2::403 - 1ms - Response: {"status":403,"now":1721021473714}::{"message":"Access token missing"}
+2024-07-15 12:31:13::info::/v1/api/movement/readMovements::120efc1c-ad61-49a0-84ad-c3987d82b9d4::input-params ::GET::::{}
+2024-07-15 12:31:13::info::/v1/api/order/readOrders::b9b85202-33a9-4889-bd90-e74db98eae7f::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 12:31:13::info::/v1/api/conversation/readConversations::fce2c710-39f0-4a87-858c-196b736ff98d::input-params ::GET::::{}
+2024-07-15 12:31:13::error::/v1/api/conversation/readConversations::fce2c710-39f0-4a87-858c-196b736ff98d::401 - 1ms - Response: {"status":401,"now":1721021473759}::{"message":"You are not authenticated!"}
+2024-07-15 12:31:48::info::/v1/api/user/me::a6557766-8cb6-431a-ba6b-d4a9dbe5836e::input-params ::GET::::{}
+2024-07-15 12:31:48::error::/v1/api/user/me::a6557766-8cb6-431a-ba6b-d4a9dbe5836e::403 - 2ms - Response: {"status":403,"now":1721021508740}::{"message":"Access token missing"}
+2024-07-15 12:31:48::info::/v1/api/movement/readMovements::6db156ee-1be1-47ea-b255-63e88183f4f8::input-params ::GET::::{}
+2024-07-15 12:31:48::info::/v1/api/order/readOrders::224f8439-8e20-40a9-ada7-b01f16bc16ff::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-15 12:31:48::info::/v1/api/conversation/readConversations::30ff0c9a-4e13-4582-9c5a-f5d7932bc662::input-params ::GET::::{}
+2024-07-15 12:31:48::error::/v1/api/conversation/readConversations::30ff0c9a-4e13-4582-9c5a-f5d7932bc662::401 - 1ms - Response: {"status":401,"now":1721021508765}::{"message":"You are not authenticated!"}

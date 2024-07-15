@@ -4,9 +4,6 @@ import mongoose, { mongo } from 'mongoose'
 import { countConnect } from '../helpers/check.connect.js'
 import config from '../configs/config.mongodb.js'
 const {host, name, port} = config.db
-console.log(config)
-console.log(config.db)
-console.log(host, name, port)
 const connectString = `mongodb://${host}:${port}/${name}`
 
 class Database{
