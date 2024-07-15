@@ -34,8 +34,4 @@ const product = {
 }
 const config = {dev, product}
 const env = process.env.NODE_ENV || 'dev'
-console.log(config)
-console.log(env)
-console.log(product)
-console.log(dev)
 export default config[env]
