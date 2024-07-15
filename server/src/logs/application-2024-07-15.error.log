@@ -237,3 +237,23 @@
 2024-07-15 12:31:13::error::/v1/api/conversation/readConversations::fce2c710-39f0-4a87-858c-196b736ff98d::401 - 1ms - Response: {"status":401,"now":1721021473759}::{"message":"You are not authenticated!"}
 2024-07-15 12:31:48::error::/v1/api/user/me::a6557766-8cb6-431a-ba6b-d4a9dbe5836e::403 - 2ms - Response: {"status":403,"now":1721021508740}::{"message":"Access token missing"}
 2024-07-15 12:31:48::error::/v1/api/conversation/readConversations::30ff0c9a-4e13-4582-9c5a-f5d7932bc662::401 - 1ms - Response: {"status":401,"now":1721021508765}::{"message":"You are not authenticated!"}
+2024-07-15 13:39:03::error::/v1/api/auth/users/login::62900873-b125-458c-9d2f-14ae38bb5e49::403 - 0ms - Response: {"status":403,"now":1721025543560}::{"message":"User not registered"}
+2024-07-15 13:40:45::error::/v1/api/auth/users/forgotPassword::90e399b7-0501-464b-b5ef-0d58456a9a1b::403 - 1ms - Response: {"status":403,"now":1721025645048}::{"message":"User not found"}
+2024-07-15 13:41:07::error::/v1/api/upload/profile/avatarOrCover/6660179bd3737cbcac3bc903::45adea38-97b2-4503-b962-7967d20d69a8::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'role')"}
+2024-07-15 13:41:12::error::/v1/api/auth/users/login::c13cc686-76bd-4a87-b3d1-cc3a13926295::403 - 0ms - Response: {"status":403,"now":1721025672432}::{"message":"User not registered"}
+2024-07-15 13:43:40::error::/v1/api/auth/users/login::c79c9ea1-e8dd-48e7-ad14-ecd9bfa586c5::403 - 1ms - Response: {"status":403,"now":1721025820641}::{"message":"User not registered"}
+2024-07-15 13:53:16::error::/v1/api/auth/users/login::332a333b-fa2a-45b1-9fa5-41ef89cac69b::403 - 1ms - Response: {"status":403,"now":1721026396327}::{"message":"User not registered"}
+2024-07-15 14:01:08::error::/v1/api/auth/users/login::34896bb8-8737-4e0a-bcd1-d5b82a4c508f::403 - 1ms - Response: {"status":403,"now":1721026868581}::{"message":"User not registered"}
+2024-07-15 14:08:36::error::/v1/api/auth/users/login::b6613e92-c2bf-4181-b9cc-e6d08d15d654::403 - 0ms - Response: {"status":403,"now":1721027316761}::{"message":"User not registered"}
+2024-07-15 14:10:40::error::/v1/api/auth/users/login::af72aa4f-28c5-4f36-8fda-94051d2f9a57::403 - 1ms - Response: {"status":403,"now":1721027440050}::{"message":"User not registered"}
+2024-07-15 14:19:36::error::/v1/api/auth/users/login::f9bc2c64-55e4-47af-9315-1775823b959d::403 - 1ms - Response: {"status":403,"now":1721027976059}::{"message":"User not registered"}
+2024-07-15 14:21:20::error::/v1/api/auth/users/login::78953dee-ddfa-437d-b84d-3dda9e031695::403 - 1ms - Response: {"status":403,"now":1721028080523}::{"message":"User not registered"}
+2024-07-15 14:22:06::error::/v1/api/auth/users/login::238d6895-6b99-434c-8fa5-4b4d7a1febf4::403 - 2ms - Response: {"status":403,"now":1721028126135}::{"message":"User not registered"}
+2024-07-15 14:23:25::error::/v1/api/auth/users/login::df03da5c-6684-4e8a-b985-2fbc5cbdf98c::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-15 14:24:49::error::/v1/api/auth/users/login::ca5ef340-a1b4-4986-a30d-c9b0685bbb40::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-15 14:26:51::error::/v1/api/auth/users/login::c35574e0-f662-4b15-96e5-83d6470f0dc6::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-15 14:27:19::error::/v1/api/auth/users/login::4dc0e233-60b1-45b6-a43c-b291831806f9::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-15 14:27:54::error::/v1/api/auth/users/login::c015950c-84ab-4c23-b1cf-02785d2d6572::403 - 1ms - Response: {"status":403,"now":1721028474916}::{"message":"User not registered"}
+2024-07-15 14:32:15::error::/v1/api/auth/users/login::60a8ce5d-e106-4d09-a942-b2b0515d80ed::403 - 1ms - Response: {"status":403,"now":1721028735012}::{"message":"User not registered"}
+2024-07-15 15:12:37::error::/v1/api/auth/users/login::ecbd77bc-669b-480c-b07f-c208c4f71822::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-15 15:13:06::error::/v1/api/auth/users/login::82b431af-68b0-4860-8887-59d44bf63e98::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}

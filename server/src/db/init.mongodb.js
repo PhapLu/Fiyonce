@@ -4,27 +4,41 @@ import mongoose, { mongo } from 'mongoose'
 import { countConnect } from '../helpers/check.connect.js'
 import config from '../configs/config.mongodb.js'
 const {host, name, port} = config.db
-const connectString = `mongodb://${host}:${port}/${name}`
+const connectString = process.env.MONGODB_CONNECTION_STRING 
 
-class Database{
-    constructor(){
-        this.connect()
+class Database {
+    constructor() {
+        this.connect();
     }
-    //connect
-    connect(type = 'mongodb'){
-        if(1 === 1){
-            mongoose.set('debug', true)
-            mongoose.set('debug', { color: true})
-        }
-        mongoose.connect(connectString).then( _ => console.log(`Connected to MongoDB Success`, countConnect()))
-        .catch( err => console.log(`Error Connect!`))
+
+    connect() {
+        mongoose.set('debug', true); // Enable debugging if needed
+
+        mongoose.connect(connectString, {
+        })
+        .then(() => {
+            console.log('Connected to MongoDB Atlas');
+            countConnect(); // Assuming countConnect() checks connection status
+        })
+        .catch((err) => {
+            console.error('Error connecting to MongoDB Atlas:', err);
+        });
     }
+    
+    // connect = async () =>{
+    //     try {
+    //         await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
+    //         console.log('Successful connection')
+    //     } catch (error) {
+    //         console.log('Failed to connect to MongoDB')
+    //     }
+    // }
+
     static getInstance() {
-        if(!Database.instance){
-            Database.instance = new Database()
+        if (!Database.instance) {
+            Database.instance = new Database();
         }
-
-        return Database.instance
+        return Database.instance;
     }
 }
 
