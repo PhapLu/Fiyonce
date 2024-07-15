@@ -14,7 +14,6 @@ import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 
 export default function CreateProposal({ commissionOrder, termOfServices, setShowCreateProposal, setOverlayVisible, createProposalMutation }) {
-    console.log(commissionOrder)
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [selectedTermOfService, setSelectedTermOfService] = useState();
@@ -117,7 +116,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
             errors.deadline = "Vui lòng chọn hạn chót";
         }
 
-        if (!(inputs?.artworks?.length > 1)) {
+        if (!(selectedArtworks?.length > 1)) {
             errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
         }
 
@@ -141,32 +140,43 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
             setIsSubmitCreateProposalLoading(false);
             return;
         }
-        console.log(validationErrors)
 
-        const fd = createFormData(inputs, "files", selectedArtworks);
+        inputs.artworks = selectedArtworks.map((artwork) => artwork._id);
 
         try {
-            const response = await createProposalMutation.mutateAsync(fd);
+            const response = await createProposalMutation.mutateAsync({orderId: commissionOrder._id, inputs});
             if (response) {
                 setModalInfo({
                     status: "success",
-                    message: "Thêm dịch vụ thành công"
+                    message: "Tạo hợp đồng thành công"
                 })
-                setShowDeleteCommissionTosForm(false);
+                setShowCreateProposal(false);
                 setOverlayVisible(false);
             }
         } catch (error) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                serverError: error.response.data.message
-            }));
-            setModalInfo({
-                status: "error",
-                message: error.response.data.message
-            })
+            console.log(error)
+            // setErrors((prevErrors) => ({
+            //     ...prevErrors,
+            //     serverError: error.response.data.message
+            // }));
+            // setModalInfo({
+            //     status: "error",
+            //     message: error.response.data.message
+            // })
         } finally {
             setIsSubmitCreateProposalLoading(false);
         }
+    };
+
+    const toggleArtworkSelection = (artwork) => {
+        setSelectedArtworks((prevSelectedArtworks) => {
+            if (prevSelectedArtworks.includes(artwork)) {
+                return prevSelectedArtworks.filter((selectedArtwork) => selectedArtwork !== artwork);
+            } else if (prevSelectedArtworks.length < 5) {
+                return [...prevSelectedArtworks, artwork];
+            }
+            return prevSelectedArtworks;
+        });
     };
 
     const displayedSelectedArtworks = selectedArtworks.filter((selectedArtwork) => selectedArtwork !== null).slice(0, 5);
@@ -215,9 +225,11 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                         />
                     ))}
                 </div>
+                <br />
                 <h4>Phạm vi công việc: </h4>
-                <p>{inputs?.scope}</p>
-                <hr />
+                <div>
+                    <span className="w-100">{inputs?.scope}</span>
+                </div>
             </div>
 
             <div className="modal-form--right">
@@ -236,12 +248,15 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     <div className="img-preview-container border-text">
                         {artworks?.length > 0 && artworks?.map((artwork, index) => {
                             return (
-                                <div className="img-preview-item">
+                                <div key={artwork._id}
+                                    className={`img-preview-item ${selectedArtworks.includes(artwork) ? "active" : ""}`}
+                                    onClick={() => toggleArtworkSelection(artwork)}>
                                     <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
                                 </div>
                             )
                         })}
                     </div>
+
                     {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
                 </div>
 
@@ -250,10 +265,10 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
                     <div className="half-split">
                         <label htmlFor="startAt">Bắt đầu</label>
-                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" />
+                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange}/>
                         -
                         <label htmlFor="deadline">Hạn chót</label>
-                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" />
+                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange}/>
                     </div>
                     {errors.startAt && <span className="form-field__error">{errors.startAt}</span>}
                     {errors.deadline && <span className="form-field__error">{errors.deadline}</span>}
@@ -274,9 +289,9 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                         {
                             termOfServices?.map((termOfService, index) => {
                                 return (
-                                    <div className="mb-8 " onClick={() => setSelectedTermOfService(termOfService)} key={index}>
+                                    <div className="mb-8 " key={index}>
                                         <label className="flex-align-center w-100">
-                                            <input type="radio" name="termOfServiceId" value={termOfService._id} />
+                                            <input type="radio" name="termOfServiceId" value={termOfService._id} onChange={handleChange} />
                                             {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
                                         </label>
                                     </div>)

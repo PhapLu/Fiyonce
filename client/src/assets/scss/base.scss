@@ -84,8 +84,8 @@ body.dark {
     --rejected-status-bg-color: #2d2020;
     --rejected-status-color: #e20c0c;
 
-    --approved-status-bg-color: #e4f7db;
-    --approved-status-color: #82c011;
+    --approved-status-bg-color: #20271d;
+    --approved-status-color: #7ab114;
     // svg {
     //     stroke: var(--gray-3-color);
     //     stroke-width: 2px;
@@ -313,6 +313,19 @@ p {
     padding: 6px 8px;
     border-radius: 8px;
     font-size: 1.1rem;
+    position: relative;
+
+    .status__bg {
+        filter: blur(2px);
+        background-color: red;
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        // right: 0;
+        // bottom: 0;
+    }
+
+    .status__title {}
 
     &.pending {
         background-color: var(--pending-status-bg-color);

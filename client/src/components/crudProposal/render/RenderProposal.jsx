@@ -9,44 +9,46 @@ import { useQuery } from "react-query";
 
 // Utils
 import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/formatter";
-import { apiUtils } from "../../../utils/newRequest";
+import { apiUtils, newRequest } from "../../../utils/newRequest";
 
 // Styling
 // import "./RenderProposal.scss"
 
 
-export default function RenderProposal({ proposalId, commissionOrder, setShowRenderProposal, setOverlayVisible }) {
-    if (!proposalId || !commissionOrder) {
+export default function RenderProposal({ commissionOrder, setShowRenderProposal, setOverlayVisible }) {
+    if (!commissionOrder) {
         return;
     }
-
+    console.log(commissionOrder)
+    const [isProcedureVisible, setIsProcedureVisible] = useState(false);
 
     const fetchProposal = async () => {
         try {
-            // const response = await newRequest.get(`/proposals/readProposal/:${proposal._id}`);
-            // return response.data.metadata.proposal;
-            console.log({
-                scope: "Ban se nhan duoc ....",
-                startAt: "2024-07-12",
-                deadline: "2024-07-29",
-                price: 500000,
-                termOfServiceId: {
-                    _id: 1,
-                    content: "Dieu khoan dich vu content"
-                }
-            })
-            return {
-                scope: "Ban se nhan duoc ....",
-                startAt: "2024-07-12",
-                deadline: "2024-07-29",
-                price: 500000,
-                artworks: [
-                ],
-                termOfServiceId: {
-                    _id: 1,
-                    content: "Dieu khoan dich vu content"
-                }
-            }
+            const response = await apiUtils.get(`/proposal/readProposal/${commissionOrder.proposalId}`);
+            console.log(response)
+            return response.data.metadata.proposal;
+            // console.log({
+            //     scope: "Ban se nhan duoc ....",
+            //     startAt: "2024-07-12",
+            //     deadline: "2024-07-29",
+            //     price: 500000,
+            //     termOfServiceId: {
+            //         _id: 1,
+            //         content: "Dieu khoan dich vu content"
+            //     }
+            // })
+            // return {
+            //     scope: "Ban se nhan duoc ....",
+            //     startAt: "2024-07-12",
+            //     deadline: "2024-07-29",
+            //     price: 500000,
+            //     artworks: [
+            //     ],
+            //     termOfServiceId: {
+            //         _id: 1,
+            //         content: "Dieu khoan dich vu content"
+            //     }
+            // }
         } catch (error) {
             return null;
         }
@@ -86,9 +88,15 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
         e.preventDefault();
 
         try {
-            const response = await apiUtils.post(`/proposal/confirmProposal/${proposal._id}`);
-            console.log(response.data.metadata.paymentData.paymentUrl);
-            setPaymentUrlsetPaymentUrl(response.data.metadata.paymentData.paymentUrl)
+            const response1 = await apiUtils.post(`/proposal/confirmProposal/${proposal?._id}`);
+            const paymentResponse = response1.data.metadata.paymentResponse;
+            console.log(response1.data.metadata.paymentResponse);
+            // setPaymentUrlsetPaymentUrl(response1.data.metadata.paymentData)
+            console.log(paymentResponse)
+            window.open(paymentResponse.payUrl)
+
+            // const response2 = await newRequest.post('https://test-payment.momo.vn/v2/gateway/api/create', paymentData);
+            // console.log(response2)
             // Navigate(response.data.metadata.paymentData.paymentUrl);
         } catch (error) {
             console.log(error)
@@ -99,6 +107,7 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
         return <div className="loading-spinner" />;
     }
 
+    // return;
 
     return (
         <div className="render-proposals modal-form type-2" ref={renderProposalRef} onClick={(e) => { e.stopPropagation() }}>
@@ -175,41 +184,43 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
                 <h2 className="form__title">Chi tiết hồ sơ</h2>
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Phạm vi hợp đồng</label>
-                    <p>{proposal.scope}</p>
+                    <span>{proposal?.scope}</span>
                 </div>
 
-                <div className="form-field">
-                    <label htmlFor="scope" className="form-field__label">Tranh tham khảo</label>
-                    <div className="reference-container">
-                        {proposal.artworks ? proposal.artworks.map((artwork, index) => {
-                            return (
-                                <div className="reference-item" key={index}>
-                                    <img src={artwork.url} alt="Tranh tham khảo" />
-                                </div>
-                            )
-                        }) : (
-                            <p>Không đính kèm được file trong outlook.</p>
-                        )}
+                {commissionOrder?.isDirect && proposal?.artworks?.length > 0 && (
+                    <div className="form-field">
+                        <label htmlFor="scope" className="form-field__label">Tranh tham khảo</label>
+                        <div className="reference-container">
+                            {proposal?.artworks.map((artwork, index) => {
+                                return (
+                                    <div className="reference-item" key={index}>
+                                        {/* {artwork} */}
+                                        <img src={artwork.url} alt="Tranh tham khảo" />
+                                    </div>
+                                )
+                            })
+                            }
+                        </div>
                     </div>
-                </div>
+                )}
+
+
 
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
-                    <p>{proposal.termOfServiceId.content}</p>
+                    <div className="border-text w-100" dangerouslySetInnerHTML={{ __html: proposal?.termOfServiceId.content }}></div>
                 </div>
-
-                <hr />
 
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Thanh toán</label>
-                    <p>{proposal.price}</p>
+                    <span>{proposal?.price}</span>
                 </div>
 
                 <button className="btn btn-2 btn-md" onClick={handlePayment}>
-                        Pay with Momo
+                    Pay with Momo
                 </button>
 
-                
+
             </div>
         </div >
     )

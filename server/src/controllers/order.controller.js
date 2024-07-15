@@ -33,8 +33,36 @@ class OrderController{
 
     deleteOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Delete a order successfully!',
+            message: 'Delete order successfully!',
             metadata: await OrderService.deleteOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    talentArchiveOrder = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Talent archive order successfully!',
+            metadata: await OrderService.talentArchiveOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    clientArchiveOrder = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Talent archive order successfully!',
+            metadata: await OrderService.clientArchiveOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    talentReportOrder = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Talent report client successfully!',
+            metadata: await OrderService.talentReportOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    clientReportOrder = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Client report talent successfully!',
+            metadata: await OrderService.clientReportOrder(req.userId, req.params.orderId)
         }).send(res)
     }
 
@@ -45,12 +73,14 @@ class OrderController{
             metadata: await OrderService.readMemberOrderHistory(req.userId)
         }).send(res)
     }
+
     readTalentOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders of a client',
             metadata: await OrderService.readTalentOrderHistory(req.userId)
         }).send(res)
     }
+
     chooseProposal = async (req, res, next) => {
         new SuccessResponse({
             message: 'Choose talent success!',

@@ -24,7 +24,7 @@ app.use(globalLimiter)
 
 // Init middlewares
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://test-payment.momo.vn"],
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     credentials: true,
 }))
@@ -37,6 +37,7 @@ app.use(helmet.contentSecurityPolicy({
     scriptSrc: ["'self'"]
   }
 }))
+
 app.use(compression())
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))

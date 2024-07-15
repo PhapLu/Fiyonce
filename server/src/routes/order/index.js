@@ -16,7 +16,9 @@ router.use(verifyToken)
 //CRUD
 router.post('/createOrder', uploadFields, asyncHandler(orderController.createOrder))
 router.patch('/updateOrder/:orderId', uploadFields, asyncHandler(orderController.updateOrder))
-router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder))
+router.patch('/talentArchiveOrder/:orderId', asyncHandler(orderController.talentArchiveOrder))
+router.patch('/clientArchiveOrder/:orderId', asyncHandler(orderController.clientArchiveOrder))
+
 //END CRUD
 
 router.get('/readMemberOrderHistory', asyncHandler(orderController.readMemberOrderHistory))

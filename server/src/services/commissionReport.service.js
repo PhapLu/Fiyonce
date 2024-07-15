@@ -50,7 +50,7 @@ class CommissionReportService{
 
     static readCommissionReport = async(commissionReportId) => {
         //1. Check commissionReport 
-        const commissionReport = await CommissionReport.findById(commissionReportId)
+        const commissionReport = await CommissionReport.findById(commissionReportId).populate('orderId', 'memberId talentChosenId')
         if(!commissionReport) throw new NotFoundError('Commission Report not found')
 
         //2. Return commissionReport

@@ -155,7 +155,7 @@ class OrderService {
 
     //End Order CRUD
 
-    static readOrderHistory = async (clientId) => {
+    static readMemberOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId)
         if (!foundUser) throw new NotFoundError('User not found!')
@@ -178,7 +178,7 @@ class OrderService {
         try {
             // 2. Aggregate to get all orders involving the talent
             const orders = await Order.aggregate([
-                // Match orders where the talent is chosen
+                // Match orders where the talent is chosen or has a proposal
                 {
                     $match: {
                         $or: [
@@ -190,27 +190,16 @@ class OrderService {
                 // Lookup to get details from Proposal if exists
                 {
                     $lookup: {
-                        from: 'proposals',
+                        from: 'Proposals',
                         localField: '_id',
                         foreignField: 'orderId',
                         as: 'proposals'
                     }
                 },
-                // Unwind proposals array to work with individual proposals
-                { $unwind: { path: '$proposals', preserveNullAndEmptyArrays: true } },
-                // Match orders with talentChosenId and no proposals
-                {
-                    $match: {
-                        $and: [
-                            { talentChosenId: new mongoose.Types.ObjectId(talentId) },
-                            { proposals: { $exists: false } }
-                        ]
-                    }
-                },
                 // Lookup to get member details
                 {
                     $lookup: {
-                        from: 'Users', 
+                        from: 'Users',
                         localField: 'memberId',
                         foreignField: '_id',
                         as: 'memberDetails'
@@ -224,21 +213,17 @@ class OrderService {
                         as: 'commissionServiceDetails'
                     }
                 },
-                // Unwind memberDetails array to work with individual member details
-                { $unwind: { path: '$memberDetails', preserveNullAndEmptyArrays: true } },
                 // Project to shape the output
                 {
                     $project: {
-                        _id: 0,
-                        orderId: '$_id',
                         commissionServiceId: {
-                            _id: '$commissionServiceDetails._id',
-                            title: '$commissionServiceDetails.title'
+                            _id: { $arrayElemAt: ['$commissionServiceDetails._id', 0] },
+                            title: { $arrayElemAt: ['$commissionServiceDetails.title', 0] }
                         },
                         memberId: {
-                            _id: '$memberDetails._id',
-                            avatar: '$memberDetails.avatar', 
-                            fullName: '$memberDetails.fullName'
+                            _id: { $arrayElemAt: ['$memberDetails._id', 0] },
+                            avatar: { $arrayElemAt: ['$memberDetails.avatar', 0] },
+                            fullName: { $arrayElemAt: ['$memberDetails.fullName', 0] }
                         },
                         talentChosenId: 1,
                         status: 1,
@@ -254,13 +239,42 @@ class OrderService {
                         deadline: 1,
                         fileFormats: 1,
                         review: 1,
-                        proposalId: '$proposals._id',
-                        proposalTitle: '$proposals.title',
+                        proposalId: {
+                            $arrayElemAt: [
+                                {
+                                    $filter: {
+                                        input: '$proposals',
+                                        as: 'proposal',
+                                        cond: { $eq: ['$$proposal.talentId', new mongoose.Types.ObjectId(talentId)] }
+                                    }
+                                },
+                                0
+                            ]
+                        }
+                    }
+                },
+                {
+                    $project: {
+                        proposalId: '$proposalId._id',
+                        commissionServiceId: 1,
+                        memberId: 1,
+                        talentChosenId: 1,
+                        status: 1,
+                        title: 1,
+                        description: 1,
+                        isDirect: 1,
+                        references: 1,
+                        rejectMessage: 1,
+                        minPrice: 1,
+                        maxPrice: 1,
+                        purpose: 1,
+                        isPrivate: 1,
+                        deadline: 1,
+                        fileFormats: 1,
+                        review: 1
                     }
                 }
             ]);
-
-            console.log(orders)
 
             return { talentOrderHistory: orders };
         } catch (error) {
@@ -268,7 +282,6 @@ class OrderService {
             throw error;
         }
     };
-
 
 
     static readArchivedOrders = async (userId) => {
@@ -288,25 +301,31 @@ class OrderService {
         }
     }
 
-    static archiveOrder = async (userId, orderId) => {
+    static talentArchiveOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError('User not found')
         if (!order) throw new NotFoundError('Order not found')
 
-        //2. Archive order
-        if (user.role === 'client') {
-            //Check if user is authorized to archive order
-            if (userId != order.memberId.toString())
-                throw new AuthFailureError('You are not authorized to archive this order')
-            order.isMemberArchived = true
-        } else {
-            //Check if user is authorized to archive order
-            if (user.role !== 'talent')
-                throw new AuthFailureError('You are not authorized to archive this order')
-            order.isTalentArchived = true
+        if (user.role != "talent") throw new AuthFailureError('You are not authorized to archive this order')
+        order.isTalentArchived = true
+        order.save()
+
+        return {
+            order
         }
+    }
+
+    static clientArchiveOrder = async (userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError('User not found')
+        if (!order) throw new NotFoundError('Order not found')
+
+        if (user.role != "client" || userId != order.memberId.toString()) throw new AuthFailureError('You are not authorized to archive this order')
+        order.isClientArchived = true
         order.save()
 
         return {

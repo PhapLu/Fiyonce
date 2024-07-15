@@ -3,6 +3,7 @@ import { asyncHandler } from "../../auth/checkAuth.js"
 import { authenticationV2 } from "../../auth/authUtils.js"
 import proposalController from "../../controllers/proposal.controller.js"
 import { verifyToken } from "../../middlewares/jwt.js"
+import { uploadFields } from "../../configs/multer.config.js"
 
 const router = express.Router()
 //Member
