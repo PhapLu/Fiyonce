@@ -429,3 +429,7 @@ ReferenceError: userId is not defined
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-07-15 15:36:59::error::undefined::undefined::uncaughtException: port is not defined
+ReferenceError: port is not defined
+    at file:///D:/Adam/OnisonProject/server/src/app.js:91:15
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
