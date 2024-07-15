@@ -257,3 +257,10 @@
 2024-07-15 14:32:15::error::/v1/api/auth/users/login::60a8ce5d-e106-4d09-a942-b2b0515d80ed::403 - 1ms - Response: {"status":403,"now":1721028735012}::{"message":"User not registered"}
 2024-07-15 15:12:37::error::/v1/api/auth/users/login::ecbd77bc-669b-480c-b07f-c208c4f71822::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
 2024-07-15 15:13:06::error::/v1/api/auth/users/login::82b431af-68b0-4860-8887-59d44bf63e98::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-15 15:28:54::error::/v1/api/user/me::908215c6-fc26-4664-90a5-50d1df5dea66::403 - 1ms - Response: {"status":403,"now":1721032134439}::{"message":"Access token missing"}
+2024-07-15 15:29:20::error::/v1/api/conversation/readConversations::0ca163c7-c987-406f-9be7-de47ebb64d3a::401 - 1ms - Response: {"status":401,"now":1721032160420}::{"message":"You are not authenticated!"}
+2024-07-15 15:29:49::error::/v1/api/user/me::8278eb2b-ff25-4f09-adf8-e427615f5093::403 - 0ms - Response: {"status":403,"now":1721032189886}::{"message":"Access token missing"}
+2024-07-15 15:30:03::error::/v1/api/user/me::72073de6-3dac-433e-b324-f35018935850::403 - 0ms - Response: {"status":403,"now":1721032203812}::{"message":"Access token missing"}
+2024-07-15 15:31:03::error::/v1/api/user/me::5bebb7de-7f70-4e3c-ad80-d559f271ec11::403 - 0ms - Response: {"status":403,"now":1721032263066}::{"message":"Access token missing"}
+2024-07-15 15:31:21::error::/v1/api/user/me::e438e4bc-a884-4f69-b5c0-5101181d39f2::403 - 0ms - Response: {"status":403,"now":1721032281787}::{"message":"Access token missing"}
+2024-07-15 15:32:38::error::/v1/api/user/me::23d8b3af-d516-4c56-b46f-26240c5db8b4::403 - 0ms - Response: {"status":403,"now":1721032358473}::{"message":"Access token missing"}
