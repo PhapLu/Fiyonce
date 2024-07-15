@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import {jwtDecode} from 'jwt-decode';
 
 const newRequest = axios.create({
-    baseURL: "http://localhost:3000/v1/api/",
+    baseURL: "https://fiyoncee.onrender.com/",
     withCredentials: true,
 });
 

@@ -24,7 +24,7 @@ app.use(globalLimiter)
 
 // Init middlewares
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: [process.env.ALLOWED_ORIGIN],
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     credentials: true,
 }))
