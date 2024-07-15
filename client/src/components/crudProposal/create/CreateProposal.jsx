@@ -8,6 +8,7 @@ import "./CreateProposal.scss"
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../../../utils/formatter";
+import { isFilled } from "../../../utils/validator";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
@@ -105,22 +106,27 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
         let errors = {};
 
         if (!isFilled(inputs.scope)) {
-            errors.movementId = "Vui lòng nhập mô tả";
+            errors.scope = "Vui lòng nhập mô tả";
         }
 
         if (!isFilled(inputs.startAt)) {
-            errors.serviceCategoryId = "Vui lòng chọn ngày dự kiến bắt đầu";
+            errors.startAt = "Vui lòng chọn ngày dự kiến bắt đầu";
         }
+
         if (!isFilled(inputs.deadline)) {
-            errors.serviceCategoryId = "Vui lòng chọn hạn chót";
+            errors.deadline = "Vui lòng chọn hạn chót";
+        }
+
+        if (!(inputs?.artworks?.length > 1)) {
+            errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
         }
 
         if (!isFilled(inputs.price)) {
-            errors.title = "Vui lòng nhập giá trị đơn hàng";
+            errors.price = "Vui lòng nhập giá trị đơn hàng";
         }
 
         if (!isFilled(inputs.termOfServiceId)) {
-            errors.deliverables = "Vui lòng chọn 1 điều khoản dịch vụ";
+            errors.termOfServiceId = "Vui lòng chọn 1 điều khoản dịch vụ";
         }
 
         return errors;
@@ -135,6 +141,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
             setIsSubmitCreateProposalLoading(false);
             return;
         }
+        console.log(validationErrors)
 
         const fd = createFormData(inputs, "files", selectedArtworks);
 
@@ -220,6 +227,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
                     <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
                     <textarea type="text" name="scope" value={inputs?.scope || "Nhập mô tả"} onChange={handleChange} className="form-field__input"></textarea>
+                    {errors.scope && <span className="form-field__error">{errors.scope}</span>}
                 </div>
 
                 <div className="form-field">
@@ -238,7 +246,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                 </div>
 
                 <div className="form-field">
-                    <label htmlFor="title" className="form-field__label">Thời gian dự kiến</label>
+                    <label htmlFor="startAt" className="form-field__label">Thời gian dự kiến</label>
                     <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
                     <div className="half-split">
                         <label htmlFor="startAt">Bắt đầu</label>
@@ -247,12 +255,15 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                         <label htmlFor="deadline">Hạn chót</label>
                         <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" />
                     </div>
+                    {errors.startAt && <span className="form-field__error">{errors.startAt}</span>}
+                    {errors.deadline && <span className="form-field__error">{errors.deadline}</span>}
                 </div>
 
                 <div className="form-field">
                     <label htmlFor="price" className="form-field__label">Giá trị đơn hàng (VND)</label>
                     <span className="form-field__annotation">Đưa ra mức giá chính xác mà bạn cần để thực hiện dịch vụ.</span>
                     <input type="number" name="price" placeholder="Nhập mức giá (VND)" className="form-field__input" onChange={handleChange} />
+                    {errors.price && <span className="form-field__error">{errors.price}</span>}
                 </div>
 
                 <div className="form-field">
@@ -276,6 +287,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                             <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
                         }
                     </div>
+                    {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
                 </div>
             </div>
 
