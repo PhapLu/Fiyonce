@@ -135,8 +135,7 @@ class PostService {
                 allArtworks.push(...post.artworks);  // Add artworks from each post to the array
                 return allArtworks;
             }, []);
-
-            return artworks;
+            return {artworks};
         } catch (error) {
             console.error('Error fetching artworks:', error);
             throw error;
@@ -144,8 +143,6 @@ class PostService {
     }
 
     static updatePost = async (userId, artworkId, req) => {
-        console.log("AAAAAAAAAAAAAAA")
-        console.log(req.body)
         // 1. Check user and artwork
         const user = await User.findById(userId)
         const postToUpdate = await Post.findById(artworkId)

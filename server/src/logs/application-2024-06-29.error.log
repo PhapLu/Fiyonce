@@ -1,2 +1,0 @@
-2024-06-29 08:55:37::error::/v1/api/movement/readMovements::79b8fbb9-ac6a-4d68-b52d-461d752dc6bb::undefined - NaNms - Response: {}::{"message":"generateSignedUrl is not defined"}
-2024-06-29 09:01:57::error::/v1/api/movement/readMovements::ced3d7c5-63b0-4386-afef-6dd0c3f62da7::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'url')"}

@@ -1,0 +1,25 @@
+.render-proposals {
+    
+
+    .proposal-container {
+        .proposal-item {
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background-color: var(--form-bg-1-color);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow-1);
+
+            .user {
+                justify-content: unset;
+            }
+
+            .btn {
+                margin-right: 8px;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

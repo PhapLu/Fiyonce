@@ -1,4 +1,5 @@
 import "./assets/scss/base.scss";
+import "./assets/scss/quil.scss";
 import React, { useState } from "react";
 import { useQuery } from 'react-query';
 import { useParams, useLocation, Link } from "react-router-dom";

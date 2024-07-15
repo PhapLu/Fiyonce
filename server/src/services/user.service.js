@@ -2,53 +2,54 @@ import jwt from 'jsonwebtoken'
 import Artwork from '../models/artwork.model.js'
 import { User } from '../models/user.model.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
+import Conversation from '../models/conversation.model.js'
 
-class UserService{
-//-------------------CRUD----------------------------------------------------
-    static updateProfile = async(userId, profileId, body) => {
+class UserService {
+    //-------------------CRUD----------------------------------------------------
+    static updateProfile = async (userId, profileId, body) => {
         //1. Check user
         const profile = await User.findById(profileId)
-        if(!profile) throw new NotFoundError('User not found')
-        if(profileId != userId) throw new AuthFailureError('You can only update your account')
+        if (!profile) throw new NotFoundError('User not found')
+        if (profileId != userId) throw new AuthFailureError('You can only update your account')
 
         //2. Update user
         const updatedUser = await User.findByIdAndUpdate(
             profileId,
-            { $set: body},
-            { new: true }   
+            { $set: body },
+            { new: true }
         )
         return {
             user: updatedUser
         }
     }
 
-    static readUserProfile = async(profileId) => {
+    static readUserProfile = async (profileId) => {
         //1. Check user
         const userProfile = await User.findById(profileId)
-        if(!userProfile) throw new NotFoundError('User not found')
+        if (!userProfile) throw new NotFoundError('User not found').select('-password');
 
         //2. Return user profile
-        return{
+        return {
             user: userProfile
         }
     }
 
-    static deleteProfile = async(userId, profileId) => {
+    static deleteProfile = async (userId, profileId) => {
         //1. Check user and profile
         const userProfile = await User.findById(profileId)
-        if(!userProfile) throw new NotFoundError('User not found')
-        if(userId.toString() != profileId) throw new AuthFailureError('You can only delete your account')
+        if (!userProfile) throw new NotFoundError('User not found')
+        if (userId.toString() != profileId) throw new AuthFailureError('You can only delete your account')
 
         //2. Delete profile
         await User.findByIdAndDelete(profileId)
         return { success: true, message: 'User deleted successfully' }
     }
-//-------------------END CRUD----------------------------------------------------
-    static addToBookmark = async(userId, artworkId) => {
+    //-------------------END CRUD----------------------------------------------------
+    static addToBookmark = async (userId, artworkId) => {
         //1. Check user and artwork
         const currentUser = await User.findById(userId)
-        if(!currentUser) throw new NotFoundError('User not found')
-        if(currentUser.bookmark.includes(artworkId)) throw new BadRequestError('Artwork already bookmarked')
+        if (!currentUser) throw new NotFoundError('User not found')
+        if (currentUser.bookmark.includes(artworkId)) throw new BadRequestError('Artwork already bookmarked')
 
         //2. Add to bookmark
         currentUser.bookmark.push(artworkId)
@@ -58,14 +59,14 @@ class UserService{
         }
     }
 
-    static likeArtwork = async(userId, artworkId) => {
+    static likeArtwork = async (userId, artworkId) => {
         //1. Check user and artwork
         const currentUser = await User.findById(userId)
         const foundArtwork = await Artwork.findById(artworkId)
-        if(!currentUser) throw new NotFoundError('User not found')
-        if(!foundArtwork) throw new NotFoundError('Artwork not found')
-        if(foundArtwork.artwork_likes.includes(currentUser._id.toString()))
-            throw new BadRequestError('You did like this artwork') 
+        if (!currentUser) throw new NotFoundError('User not found')
+        if (!foundArtwork) throw new NotFoundError('Artwork not found')
+        if (foundArtwork.artwork_likes.includes(currentUser._id.toString()))
+            throw new BadRequestError('You did like this artwork')
 
         //2. Like artwork
         foundArtwork.artwork_likes.push(userId)
@@ -75,42 +76,73 @@ class UserService{
         }
     }
 
-    static followUser = async(userId, followId) => {
+    static followUser = async (userId, profileId) => {
         //1. Check user and follow
         const currentUser = await User.findById(userId)
-        const followUser = await User.findById(followId)
-        if(!currentUser) throw new NotFoundError('User not found')
-        if(!followUser) throw new NotFoundError('User not found')
-        if(currentUser.following.includes(followId)) throw new BadRequestError('You already follow this user')
+        const followedUser = await User.findById(profileId)
+        if (!currentUser) throw new NotFoundError('User not found')
+        if (!followedUser) throw new NotFoundError('User not found')
+        if (currentUser.following.includes(profileId)) throw new BadRequestError('You already follow this user')
 
         //2. Follow user
-        currentUser.following.push(followId)
-        followUser.followers.push(userId)
-        await currentUser.save()
-        await followUser.save()
+        currentUser.following.push(profileId)
+        followedUser.followers.push(userId)
+        // await currentUser.save()
+        // await followedUser.save()
 
         return {
             user: currentUser
         }
     }
 
-    static me = async(accessToken) => {
-        //1. Decode accessToken and check
-        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET)
-        if(!decoded) throw new AuthFailureError('Invalid token')
+    static unFollowUser = async (userId, profileId) => {
+        // 1. Check user and unfollow
+        const currentUser = await User.findById(userId);
+        const followedUser = await User.findById(profileId);
+        if (!currentUser) throw new NotFoundError('User not found');
+        if (!followedUser) throw new NotFoundError('User not found');
+        if (!currentUser.following.includes(profileId)) throw new BadRequestError('You do not follow this user');
 
-        //2. Find user
-        const userId = decoded.id
-        if(!userId) throw new AuthFailureError('Invalid validation')
+        // 2. Unfollow user
+        currentUser.following = currentUser.following.filter(id => id.toString() !== profileId.toString());
+        followedUser.followers = followedUser.followers.filter(id => id.toString() !== userId.toString());
+        // await currentUser.save();
+        // await followedUser.save();
+        console.log(currentUser)
+        return {
+            user: currentUser
+        };
+    }
 
-        //3. Return user without password
-        const user = await User.findById(userId).select('-password')
-        if(!user) throw new NotFoundError('User not found')
+    static me = async (accessToken) => {
+        // 1. Decode accessToken and check
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+        if (!decoded) throw new AuthFailureError('Invalid token');
+
+        // 2. Find user
+        const userId = decoded.id;
+        if (!userId) throw new AuthFailureError('Invalid validation');
+
+        // 3. Return user without password
+        const user = await User.findById(userId).select('-password');
+        if (!user) throw new NotFoundError('User not found');
+
+        // Fetch unseen conversations
+        const unSeenConversations = await Conversation.find({
+            members: { $elemMatch: { user: userId } },
+            "messages.createdAt": { $gt: user.lastViewConversations }
+        }).populate('members.user messages.senderId seenBy.userId');
+
+        // Create a plain JavaScript object with user data and add unSeenConversations
+        const userData = {
+            ...user.toObject(),
+            unSeenConversations: unSeenConversations
+        };
 
         return {
-            user
-        }
-    }
+            user: userData
+        };
+    };
 }
 
 export default UserService

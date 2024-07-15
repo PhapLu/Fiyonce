@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, useRoutes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
 
@@ -7,34 +7,35 @@ import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
 import Layout from "./Layout";
 import Talents from "./components/talents/Talents";
-import CommissionServices from "./components/commissionServices/CommissionServices";
-import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices";
-import ProfileArtworks from "./profile/profileArtworks/ProfileArtworks";
-// import Navbar from "./components/navbar/Navbar";
-// import Sidebar from "./components/sidebar/Sidebar";
-// import Register from "./components/register/Register";
-// import Login from "./components/login/Login";
+import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
+import RenderPost from "./components/crudPost/render/RenderPost";
 
 // Pages
 import ProfileLayout from "./profile/profileLayout/ProfileLayout";
 import Forbidden from "./pages/forbidden/Forbidden";
 import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
-import ExploreArtworks from "./pages/exploreArtworks/ExploreArtworks";
+import ExplorePosts from "./pages/explorePosts/ExplorePosts";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 
+// Profiles
+import ProfilePosts from "./profile/profilePosts/ProfilePosts";
 
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
+import ArtDashboard from "./dashboard/artDashboard/ArtDashboard";
 import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDashboard";
 import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
 import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
 import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
+import CreatePost from "./components/crudPost/create/CreatePost";
+import UpdatePost from "./components/crudPost/update/UpdatePost";
+import DeletePost from "./components/crudPost/delete/DeletePost";
 
 const queryClient = new QueryClient();
 
-const router = createBrowserRouter([
+const routes = [
   {
     path: "/users/:userId",
     element: <ProfileLayout />,
@@ -44,8 +45,34 @@ const router = createBrowserRouter([
         element: <ProfileCommissionServices />,
       },
       {
-        path: "/users/:userId/profile_artworks",
-        element: <ProfileArtworks />,
+        path: "/users/:userId/profile_posts",
+        element: <ProfilePosts />,
+        children: [
+          {
+            path: "/users/:userId/profile_posts/create",
+            element: (
+              <CreatePost />
+            ),
+          },
+          {
+            path: "/users/:userId/profile_posts/:postId",
+            element: (
+              <RenderPost />
+            ),
+          },
+          {
+            path: "/users/:userId/profile_posts/:postId/update",
+            element: (
+              <UpdatePost />
+            ),
+          },
+          {
+            path: "/users/:userId/profile_posts/:postId/delete",
+            element: (
+              <DeletePost />
+            ),
+          },
+        ]
       },
       {
         path: "/users/:userId/order-history",
@@ -54,8 +81,8 @@ const router = createBrowserRouter([
       {
         path: "/users/:userId/basic-info",
         element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/",
@@ -66,8 +93,8 @@ const router = createBrowserRouter([
         element: <Explore></Explore>,
         children: [
           {
-            path: "/explore/artworks",
-            element: <ExploreArtworks showArtworks={true} />,
+            path: "/explore",
+            element: <ExplorePosts showPosts={true} />,
           },
           {
             path: "/explore/talents",
@@ -75,15 +102,15 @@ const router = createBrowserRouter([
           },
           {
             path: "/explore/commissionServices",
-            element: <CommissionServices showCommissionServices={true} />,
+            // element: <CommissionServices showCommissionServices={true} />,
           },
-        ]
+        ],
       },
       {
         path: "/commission_market",
-        element: <CommissionMarket />
+        element: <CommissionMarket />,
       },
-    ]
+    ],
   },
   {
     path: "/dashboard/",
@@ -92,6 +119,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/overview",
         element: <OverviewDashboard />,
+      },
+      {
+        path: "/dashboard/art",
+        element: <ArtDashboard />,
       },
       {
         path: "/dashboard/transactions",
@@ -109,20 +140,20 @@ const router = createBrowserRouter([
         path: "/dashboard/help",
         element: <HelpDashboard />,
       },
-    ]
+    ],
   },
   {
     path: "/forbidden",
     element: <Forbidden />,
   },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <SharedDataProvider> */}
       <RouterProvider router={router} />
-      {/* </SharedDataProvider> */}
     </QueryClientProvider>
   );
 }

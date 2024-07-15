@@ -10,11 +10,6 @@ const ProposalSchema = new mongoose.Schema({
         required: true
     },
     termOfServiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'TermOfService', required: true },
-    memberId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
     talentId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -27,7 +22,7 @@ const ProposalSchema = new mongoose.Schema({
     startAt: {
         type: Date,
     },
-    deadLine: {
+    deadline: {
         type: Date,
     },
     artworks:[{

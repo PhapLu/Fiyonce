@@ -1,0 +1,92 @@
+.render-commission-service {
+    // overflow: scroll;
+
+    .modal-form--left {
+        width: 50% !important;
+    }
+
+    .modal-form--right {
+        position: relative;
+        width: 50% !important;
+    }
+
+    .render-commission-service__artwork-container {
+        text-align: center;
+
+        .render-commission-service__artwork-item {
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .carousel-root {
+        border-radius: 16px;
+        height: 500px;
+        overflow: hidden;
+        background: var(--form-bg-2-color);
+        position: relative;
+
+        .carousel.carousel-slider {
+            width: 100%;
+            margin-bottom: 100px;
+            height: calc(100% - 100px);
+            display: flex;
+        }
+
+        .carousel {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+
+            .slide {
+                width: 100%;
+                height: 100%;
+                display: block;
+                background: red;
+
+                img {
+                    width: 100%;
+                    max-height: 500px;
+                    object-fit: cover;
+                    // width: 100px;
+                    // height: 100px;
+                }
+            }
+
+            .thumb {
+                width: 60px !important;
+                overflow: hidden;
+                border-radius: 8px;
+                // border: 2px solid var(--white-3-color);
+
+                img {
+                    border-radius: 8px;
+                    width: 60px;
+                    height: 30px;
+                    object-fit: cover;
+                }
+
+                &:hover {
+                    opacity: 0.9;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .render-commission-service__owner-msg {
+        background-color: var(--form-bg-3-color);
+        padding: 12px 16px;
+        border-radius: 0 16px 16px 16px;
+        box-shadow: var(--box-shadow-1);
+    }
+
+    .order-btn {
+        position: fixed;
+        bottom: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

@@ -1,0 +1,20 @@
+.half-split {
+    .form-field__input {
+        width: 30% !important;
+    }
+}
+
+.img-preview-container {
+    display: flex ;
+    flex-wrap: wrap;
+    justify-content: start;
+    .img-preview-item {
+        margin-right: 8px;
+        .img-preview-item__img {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+    }
+}

@@ -79,8 +79,6 @@ class ServiceCategoryService{
     }   
 
     static deleteServiceCategory = async(talentId, serviceCategoryId) => {
-        console.log("abc")
-        console.log(serviceCategoryId)
         //1. Check talent and service
         const talent = await User.findById(talentId)
         const serviceCategory = await ServiceCategory.findById(serviceCategoryId)

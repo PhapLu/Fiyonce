@@ -19,9 +19,9 @@ router.patch('/updateOrder/:orderId', uploadFields, asyncHandler(orderController
 router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder))
 //END CRUD
 
-router.get('/readOrderHistory', asyncHandler(orderController.readOrderHistory))
+router.get('/readMemberOrderHistory', asyncHandler(orderController.readMemberOrderHistory))
 router.get('/readTalentOrderHistory', asyncHandler(orderController.readTalentOrderHistory))
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
-router.patch('/denyOrder/:orderId', asyncHandler(orderController.denyOrder))
+router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
 
 export default router

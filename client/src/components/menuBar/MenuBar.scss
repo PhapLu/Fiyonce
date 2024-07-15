@@ -8,7 +8,7 @@
     padding: 18px 24px;
     border-radius: 8px;
     background-color: var(--white-3-color);
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow-2);
     
     .submenu {
         width: 100%;
@@ -50,7 +50,7 @@
     .dropdown-menu-item:last-child {
         &:hover {
             opacity: 1;
-            background-color: var(--black-btn-color);
+            background-color: var(--black-4-color);
             color: white;
         }
     }

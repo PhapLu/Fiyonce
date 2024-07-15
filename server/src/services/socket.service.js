@@ -2,7 +2,7 @@ let users = []
 
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId })
+        users.push({ userId, socketId })
 }
 
 const removeUser = (socketId) => {
@@ -16,10 +16,12 @@ const getUser = (userId) => {
 class SocketServices {
     connection(socket) {
         console.log('User connected with id:', socket.id)
-        
+
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id)
             global._io.emit("getUsers", users)
+            console.log("ADD USER")
+            console.log(users)
         })
 
         socket.on('disconnect', () => {

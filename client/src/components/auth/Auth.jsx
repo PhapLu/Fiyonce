@@ -17,12 +17,6 @@ export default function Auth() {
     // Toggle display menu
     const menuRef = useRef();
 
-    // useEffect(() => {
-    //     setShowRegisterForm(false);
-    //     setShowRegisterVerificationForm(false);
-    //     setOverlayVisible(false);
-    // }, [])
-
     useEffect(() => {
         let handler = (e) => {
             if (menuRef && menuRef.current && !menuRef.current.contains(e.target)) {

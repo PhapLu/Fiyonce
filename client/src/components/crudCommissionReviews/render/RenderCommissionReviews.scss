@@ -1,0 +1,77 @@
+.commission-reviews {
+    width: 45%;
+    background-color: var(--form-bg-1-color);
+
+    svg {
+        fill: var(--orange-1-color);
+        width: 16px;
+        height: 16px;
+    }
+
+    .rating-container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        background-color: var(--form-bg-2-color);
+        border-radius: 16px;
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+            width: 100%;
+            padding: 6px 40px;
+
+            .rating-item__star {
+                display: flex;
+                align-items: center;
+                margin-right: 16px;
+            }
+
+            .rating-item__progress-bar {
+                height: 8px;
+                width: 80%;
+                background-color: var(--gray-1-color);
+                border-radius: 8px;
+                z-index: 1;
+
+                .rating-item__progress-bar__filled {
+                    background-color: var(--orange-1-color);
+                    z-index: 1000;
+                    width: 100%;
+                    height: 8px;
+                    border-radius: 8px;
+                }
+            }
+
+            svg {
+                width: 16px;
+                height: 16px;
+                object-fit: cover;
+                margin: 0 6px 2px 4px;
+            }
+
+            .rating-item__percentage {
+                margin-left: 16px;
+            }
+        }
+    }
+
+    .commission-review-container {
+        .commission-review-item {
+            border: 2px solid var(--gray-1-color);
+            border-radius: 16px;
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+
+            .commission-review-item__rating {
+                margin-top: 12px;
+                .not-filled {
+                    fill: var(--gray-2-color);
+                }
+            }
+        }
+    }
+}

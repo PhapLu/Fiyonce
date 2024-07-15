@@ -18,14 +18,12 @@ const uploadImageFromLocalS3 = async({
             ContentType: 'image/jpeg'
         })
         const result = await s3.send(command)
-        console.log(result)
         //export URL
         const signedUrl = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: imageName,
         })
         const url = await getSignedUrl(s3, signedUrl, { expiresIn: 3600})
-        console.log(`url::${urlImagePublic}/${imageName}`)
         return {
             url: `${urlImagePublic}/${imageName}`,
             result

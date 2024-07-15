@@ -16,23 +16,31 @@
     --red-1-color: #ff3e3e;
     --red-2-color: #e45454;
 
-    --orange-2-color: #FF6E1C;
+    --orange-1-color: #ff9c65;
+    --orange-2-color: #fb9257;
+    --orange-3-color: #f8cb97;
 
     --white-1-color: white;
     --white-2-color: white;
     --white-3-color: white;
-    --box-shadow: 0 1px 6px rgb(114 114 114 / 10%);
+    --white-4-color: white;
+
+    --box-shadow-1: rgba(0, 0, 0, 0.1) 0px 1px 4px;
+    --box-shadow-2: rgba(0, 0, 0, 0.2) 0px 2px 8px;
+    --box-shadow-4: rgb(79 127 249 / 20%) 0px 3px 5px;
     --form-border: unset;
     --form-bg-1-color: #F7F7F7;
     --form-bg-2-color: white;
+    --form-bg-3-color: #F7F7F7;
+
     --gradient-btn-bg-color: rgba(0, 0, 0, 0.6);
     --color-scheme: light;
 
     --pending-status-bg-color: #ffe8d4;
     --pending-status-color: #f68038;
 
-    --rejected-status-bg-color: #ffe8d4;
-    --rejected-status-color: #f68038;
+    --rejected-status-bg-color: #fad6d6;
+    --rejected-status-color: #e20c0c;
 
     --approved-status-bg-color: #e4f7db;
     --approved-status-color: #82c011;
@@ -53,24 +61,28 @@ body.dark {
     --gray-4-color: #868181;
 
     --orange-2-color: #ffa471;
+    --orange-3-color: #6e4517;
 
     --white-1-color: rgb(224, 220, 220);
     --white-2-color: #292929;
     --white-3-color: #0b0b0b;
+    --white-4-color: white;
+
     --box-shadow: rgba(99, 99, 99, 0) 0px 2px 8px;
-    --form-border: unset;
+    --box-shadow-2: 0 2px 5px rgb(40 40 40 / 20%) --form-border: unset;
     --gradient-btn-bg-color: rgba(255, 255, 255, 0.6);
 
     --red-1-color: #ff6a6a;
     --color-scheme: dark;
     --form-bg-1-color: #0e0e0e;
     --form-bg-2-color: #161616;
+    --form-bg-3-color: #272727;
 
-    --pending-status-bg-color: #ffe8d4;
+    --pending-status-bg-color: #30241d;
     --pending-status-color: #f68038;
 
-    --rejected-status-bg-color: #ffe8d4;
-    --rejected-status-color: #f68038;
+    --rejected-status-bg-color: #2d2020;
+    --rejected-status-color: #e20c0c;
 
     --approved-status-bg-color: #e4f7db;
     --approved-status-color: #82c011;
@@ -102,12 +114,7 @@ svg {
     // fill: var(--black-2-color);
     width: 22px;
     height: 22px;
-    margin-right: 8px;
     object-fit: cover;
-
-    &.icon-only {
-        margin-right: 0;
-    }
 }
 
 body {
@@ -123,7 +130,9 @@ body {
     // transition: 0.2s linear;
     color: var(--black-3-color);
 
-
+    &:has(.overlay) {
+        overflow: hidden;
+    }
 }
 
 #root {
@@ -177,24 +186,78 @@ h1 {
 h2 {
     font-size: 2.2rem;
     line-height: 3.2rem;
-    margin: 0 0 12px 0;
+    margin: 8px 0;
 }
 
 h3 {
     font-size: 1.8rem;
     line-height: 2.8rem;
+    margin: 12px 0;
 }
 
 h4 {
     font-size: 1.6rem;
     font-weight: 600;
     line-height: 2rem;
+    margin: 8px 0;
 }
 
 p {
     font-size: 1.4rem;
     line-height: 2rem;
     width: 100%;
+}
+
+.fs-12 {
+    font-size: 1.2rem;
+}
+
+.fs-13 {
+    font-size: 1.3rem;
+}
+
+.fs-14 {
+    font-size: 1.4rem;
+}
+
+.fs-15 {
+    font-size: 1.5rem;
+}
+
+.fs-16 {
+    font-size: 1.6rem;
+}
+
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-800 {
+    font-weight: 800;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.hover-cursor-opacity {
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
 }
 
 .highlight-text {
@@ -206,13 +269,50 @@ p {
     }
 }
 
+.highlight-bg-text {
+    background-color: var(--pending-status-bg-color);
+    color: var(--pending-status-color);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.normal-text {}
+
+.downlight-bg-text {
+    background-color: var(--gray-3-color);
+}
+
+.downlight-text {
+    color: var(--gray-3-color);
+}
+
+.border-text {
+    padding: 12px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--gray-3-color);
+    box-shadow: var(--box-shadow-1);
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.mb-8 {
+    margin-bottom: 8px;
+}
+
 .text-align-center {
     text-align: center;
 }
 
 .status {
-    padding: 8px 12px;
+    padding: 6px 8px;
     border-radius: 8px;
+    font-size: 1.1rem;
 
     &.pending {
         background-color: var(--pending-status-bg-color);
@@ -245,6 +345,7 @@ p {
         &.active {
             position: relative;
             font-weight: bold;
+            color: var(--black-3-color) !important;
 
             svg {
                 stroke-width: 2;
@@ -263,6 +364,13 @@ p {
     }
 }
 
+.gray-bg-hover {
+    &:hover {
+        cursor: pointer;
+        background-color: var(--gray-1-color);
+    }
+}
+
 // Buttons
 .btn {
     padding: 6px 12px;
@@ -270,9 +378,11 @@ p {
     border: none;
     outline: none;
     display: inline-flex;
+    flex-wrap: wrapf;
     align-items: center;
     justify-content: center;
     background-color: unset;
+    box-shadow: var(--box-shadow);
 
     .btn-ic,
     svg {
@@ -283,7 +393,7 @@ p {
     }
 
     &.icon-only {
-        svg {
+        >svg {
             margin-right: 0;
         }
     }
@@ -320,7 +430,7 @@ p {
 
 .btn-3 {
     border: 2px solid var(--gray-2-color) !important;
-    color: var(--black-2-color) !important;
+    color: var(--black-2-color);
 
     &.active {
         font-weight: bold;
@@ -335,6 +445,11 @@ p {
 
 .btn-5 {
     background-color: var(--red-2-color) !important;
+    color: white;
+}
+
+.btn-6 {
+    background-color: var(--orange-1-color) !important;
     color: white;
 }
 
@@ -406,6 +521,19 @@ hr {
 }
 
 .dot-delimiter {
+    &.sm {
+        width: 4px;
+        height: 4px;
+    }
+
+    &.md {
+        width: 6px;
+        height: 6px;
+    }
+
+    display: flex;
+    border-radius: 50%;
+    background-color: var(--gray-4-color);
     margin: 0 5px;
 }
 
@@ -416,12 +544,36 @@ hr {
     }
 }
 
+.hover-display-label {
+    position: relative;
+    z-index: 100;
+
+    .label {
+        position: absolute;
+        top: -32px;
+        left: 0;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 6px 8px;
+        border-radius: 16px;
+        min-width: 20px;
+        color: var(--white-1-color);
+        font-size: 1.1rem;
+        min-width: 100px;
+    }
+
+    &:hover {
+        .label {
+            display: block;
+        }
+    }
+
+}
+
 .overlay {
     position: fixed;
     top: 50%;
     left: calc(50% - 1px);
-    width: 0;
-    height: 0;
     background: rgba(0, 0, 0, 0.7);
     // backdrop-filter: blur(2px);
     display: flex;
@@ -431,13 +583,29 @@ hr {
     transition: all 0.8s ease-in-out;
     transform: translate(-50%, -50%);
     opacity: 1;
-    width: 100%;
-    height: 100%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+}
+
+.flex-justify-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flex-align-center {
     display: flex;
-    width: 100%;
+    // width: 100%;
     align-items: center;
 
     .bold-text {
@@ -470,10 +638,22 @@ table {
     border-collapse: collapse;
     width: 100%;
     border-radius: 8px;
+    background-color: var(--form-bg-2-color);
 
     tr {
-        border-bottom: 2px solid var(--gray-2-color);
+        border-bottom: 1px solid var(--gray-2-color);
         width: 100%;
+
+        &:hover {
+            background-color: var(--form-bg-1-color);
+            cursor: pointer;
+        }
+
+        &.non-hover:hover {
+            background-color: unset;
+            opacity: 1;
+            cursor: unset;
+        }
     }
 
 
@@ -481,12 +661,19 @@ table {
     td {
         text-align: start;
         min-width: 100px;
+        max-width: 200px;
         padding: 6px 12px 6px 6px;
+        font-size: 1.2rem;
+    }
 
+    th:last-child,
+    td:last-child {
+        max-width: unset;
     }
 
     button {
         margin-right: 8px;
+        font-size: 1.2rem;
 
         &:last-of-type {
             margin-right: 0;
@@ -511,6 +698,10 @@ table {
     justify-content: space-between;
     flex-wrap: wrap;
 
+    &.server-error-field {
+        margin-bottom: 0;
+    }
+
     &.with-create-btn {
         .form-field__input {
             width: 67%;
@@ -527,6 +718,8 @@ table {
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
+
+        .form-field__label {}
 
         .form-field__input {
             width: 45%;
@@ -557,6 +750,8 @@ table {
     .form-field__annotation {
         display: block;
         font-size: 1.3rem;
+        text-align: unset !important;
+        margin: 0;
         // font-style: italic;
         color: var(--gray-3-color);
         margin-bottom: 12px;
@@ -722,14 +917,13 @@ table {
             border: 3px solid var(--white-2-color);
         }
 
-
-
         .user__name__title {
             font-size: 1.6rem;
             font-weight: 600;
         }
 
         .user__name__sub-title {
+            margin-top: 2px;
             font-size: 1.2rem;
         }
     }
@@ -741,7 +935,7 @@ table {
     .user__avatar {
         object-fit: cover;
         border-radius: 50%;
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow-1);
 
         &:hover {
             cursor: pointer;
@@ -900,6 +1094,8 @@ table {
     }
 
     .form__close-ic {
+        stroke-width: 2.0;
+
         &:hover {
             opacity: 0.7;
             cursor: pointer;
@@ -910,7 +1106,7 @@ table {
         background-color: var(--form-bg-2-color);
         padding: 12px 14px 14px;
         border-radius: 12px;
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow-1);
 
         p {
             margin: 0;
@@ -972,7 +1168,7 @@ table {
 
     border-radius: 8px;
     border: var(--form-border);
-    background-color: white;
+    background-color: var(--white-3-color);
     position: relative;
 
     .modal-form--left {
@@ -1012,10 +1208,9 @@ table {
 
     .modal-form--right {
         align-self: center;
-        padding: 28px 52px;
         height: 100%;
         width: 52%;
-        padding: 28px 52px;
+        padding: 28px 44px;
         max-height: 80vh;
 
         .form__close-ic {
@@ -1031,6 +1226,13 @@ table {
     p {
         text-align: center;
     }
+}
+
+.border-1px-solid-gray {
+    border: 1px solid var(--gray-3-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 100%;
 }
 
 .modal-form.type-2 {
@@ -1076,9 +1278,6 @@ table {
         width: 42%;
         padding: 12px 44px 12px 24px;
 
-        h3 {
-            margin: 12px 0 !important;
-        }
     }
 
     .modal-form--right {
@@ -1087,7 +1286,7 @@ table {
         padding: 24px 40px;
         border-radius: 16px;
         border: var(--form-border);
-        box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow-1);
 
         overflow-y: scroll;
         scrollbar-width: thin;
@@ -1098,11 +1297,17 @@ table {
         }
     }
 
-    .form__submit-btn {
+    .form__submit-btn-container {
+        display: flex;
         position: absolute;
         bottom: 12px;
         right: 20px;
+
+        .form__submit-btn-item {
+            margin-left: 12px;
+        }
     }
+
 
     .checkbox-container {
         display: flex;
@@ -1122,6 +1327,10 @@ table {
     max-height: 80vh;
     overflow: auto;
 
+    &.sm {
+        width: 35% !important;
+    }
+
     table {
         margin-top: 28px;
     }
@@ -1131,12 +1340,12 @@ table {
         right: 30px;
         top: 30px;
     }
+}
 
-    .modal-form__box {
-        background-color: var(--black-5-color);
-        padding: 12px !important;
-        border-radius: 8px;
-    }
+.modal-form__box {
+    background-color: var(--black-5-color);
+    padding: 12px !important;
+    border-radius: 8px;
 }
 
 // Scroll bar
@@ -1170,4 +1379,218 @@ table {
 .modal-form.type-2 .modal-form--right {
     scrollbar-color: inherit !important;
     scrollbar-width: inherit !important;
+}
+
+// References
+.reference-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .reference-item {
+        position: relative;
+        margin-bottom: 12px;
+        margin-right: 12px;
+
+        img {
+            display: block;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        &:nth-of-type(3n) {
+            img {
+                margin-right: 0;
+            }
+        }
+
+        .reference-item__overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            top: 0;
+            left: 0;
+            display: block;
+            text-align: center;
+            line-height: 120px;
+            font-size: 2rem;
+            border-radius: 8px;
+            color: white;
+        }
+    }
+}
+
+// Paddings
+.p-4 {
+    padding: 4px;
+}
+
+.p-8 {
+    padding: 8px;
+}
+
+.pt-8 {
+    padding-top: 8px;
+}
+
+.pr-8 {
+    padding-right: 8px;
+}
+
+.pb-8 {
+    padding-bottom: 8px;
+}
+
+.pl-8 {
+    padding-left: 8px;
+}
+
+.pt-12 {
+    padding-top: 12px;
+}
+
+.pr-12 {
+    padding-right: 12px;
+}
+
+.pb-12 {
+    padding-bottom: 12px;
+}
+
+.pl-12 {
+    padding-left: 12px;
+}
+
+.pt-16 {
+    padding-top: 16px;
+}
+
+.pr-16 {
+    padding-right: 16px;
+}
+
+.pb-16 {
+    padding-bottom: 16px;
+}
+
+.pl-16 {
+    padding-left: 16px;
+}
+
+.pt-20 {
+    padding-top: 20px;
+}
+
+.pr-20 {
+    padding-right: 20px;
+}
+
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+.pl-20 {
+    padding-left: 20px;
+}
+
+
+
+// Margins
+.mr-4 {
+    margin-right: 4px;
+}
+
+.ml-4 {
+    margin-left: 4px;
+}
+
+.mt-4 {
+    margin-top: 4px;
+}
+
+.mb-4 {
+    margin-bottom: 4px;
+}
+
+.mr-8 {
+    margin-right: 8px;
+}
+
+.ml-8 {
+    margin-left: 8px;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
+.mb-8 {
+    margin-bottom: 8px;
+}
+
+.mr-16 {
+    margin-right: 16px;
+}
+
+.ml-16 {
+    margin-left: 16px;
+}
+
+.mt-16 {
+    margin-top: 16px;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+}
+
+.mr-32 {
+    margin-right: 32px;
+}
+
+.ml-32 {
+    margin-left: 32px;
+}
+
+.mt-32 {
+    margin-top: 32px;
+}
+
+.mb-32 {
+    margin-bottom: 32px;
+}
+
+// Borders
+.br-4 {
+    border-radius: 4px;
+}
+
+.br-8 {
+    border-radius: 8px;
+}
+
+.br-12 {
+    border-radius: 12px;
+}
+
+.br-16 {
+    border-radius: 16px;
+}
+
+.br-20 {
+    border-radius: 20px;
+}
+
+.br-24 {
+    border-radius: 24px;
+}
+
+.br-28 {
+    border-radius: 28px;
+}
+
+.br-32 {
+    border-radius: 32px;
 }

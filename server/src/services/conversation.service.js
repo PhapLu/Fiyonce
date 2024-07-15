@@ -3,21 +3,21 @@ import { User } from '../models/user.model.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
 
-class ConversationService{ 
-    static createConversation = async(userId, req) => {
+class ConversationService {
+    static createConversation = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId)
-        if(!user) throw new AuthFailureError('User not found')
+        if (!user) throw new AuthFailureError('User not found')
 
         //2. Validate request body
         const { otherMemberId, content } = req.body
-        if(!otherMemberId) throw new BadRequestError('Please provide all required fields')
-        if(!content && (!req.files.media || req.file.media.length == 0)) throw new BadRequestError('Please provide content or media')
+        if (!otherMemberId) throw new BadRequestError('Please provide all required fields')
+        if (!content && (!req.files.media || req.file.media.length == 0)) throw new BadRequestError('Please provide content or media')
 
         //3. Upload media
         try {
-            let media = []
-        
+            let media = [];
+
             if (req.files && req.files.media) {
                 const uploadPromises = req.files.media.map(file => compressAndUploadImage({
                     buffer: file.buffer,
@@ -29,7 +29,7 @@ class ConversationService{
                 const uploadResults = await Promise.all(uploadPromises)
                 media = uploadResults.map(result => result.secure_url)
             }
-        
+
             //4. Create conversation
             const conversation = new Conversation({
                 members: [{ user: userId }, { user: req.body.otherMemberId }],
@@ -41,9 +41,9 @@ class ConversationService{
                         media
                     },
                 ],
-            })
-            await conversation.save()
-        
+            });
+            await conversation.save();
+
             return {
                 conversation
             }
@@ -53,10 +53,10 @@ class ConversationService{
         }
     }
 
-    static readConversations = async(userId) => {
+    static readConversations = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if(!user) throw new AuthFailureError('User not found')
+        if (!user) throw new AuthFailureError('User not found')
 
         //2. Read conversations
         const conversations = await Conversation.find({ "members.user": userId }).populate('members.user', "fullName avatar")
@@ -70,20 +70,20 @@ class ConversationService{
                 lastMessage: lastMessage
             }
         })
-        
+
         return {
-            conversations : formattedConversations
+            conversations: formattedConversations
         }
     }
 
     static readConversationWithOtherMember = async (userId, otherMemberId) => {
-        //1. Check user and other member
-        const user = await User.findById(userId)
-        const otherMember = await User.findById(otherMemberId)
-        if (!user) throw new AuthFailureError('User not found')
-        if (!otherMember) throw new BadRequestError('Other member not found')
-    
-        //2. Read conversation
+        // 1. Check user and other member
+        const user = await User.findById(userId);
+        const otherMember = await User.findById(otherMemberId);
+        if (!user) throw new AuthFailureError('User not found');
+        if (!otherMember) throw new BadRequestError('Other member not found');
+
+        // 2. Read conversation
         const conversation = await Conversation.findOne({
             'members.user': {
                 $all: [
@@ -91,20 +91,28 @@ class ConversationService{
                     otherMemberId
                 ]
             }
-        }).populate('members.user', 'fullName avatar')
-    
-        if (conversation) throw new NotFoundError('Conversation not found')
-        //2. Format conversation
+        }).populate('members.user', 'fullName avatar');
+
+        if (!conversation) throw new NotFoundError('Conversation not found');
+
+        // 3. Check if userId is already in the seenBy array
+        const userSeen = conversation.seenBy.some(seen => seen.userId.toString() === userId);
+
+        if (!userSeen) {
+            // Add userId to the seenBy array
+            conversation.seenBy.push({ userId });
+            await conversation.save();
+        }
+
+        // 4. Format conversation
 
         // Sort and limit the messages to the latest 12
         const sortedMessages = conversation.messages
             .sort((a, b) => b.createdAt - a.createdAt)
             .slice(0, 12)
-            .reverse()  // Reverse to maintain ascending order
-    
-        let formattedConversation
-    
-        formattedConversation = {
+            .reverse();  // Reverse to maintain ascending order
+
+        const formattedConversation = {
             _id: conversation._id,
             messages: sortedMessages,
             otherMember: {
@@ -112,45 +120,46 @@ class ConversationService{
                 fullName: otherMember.fullName,
                 avatar: otherMember.avatar
             },
-        }
-        
+        };
+
         return {
             conversation: formattedConversation
-        }
-    }
+        };
+    };
+
 
     static readConversation = async (userId, conversationId) => {
         //1. Check conversation, user
-        const user = await User.findById(userId)
-        if (!user) throw new AuthFailureError('User not found')
-    
+        const user = await User.findById(userId);
+        if (!user) throw new AuthFailureError('User not found');
+
         const conversation = await Conversation.findById(conversationId)
             .populate('members.user', 'fullName avatar')
-            .populate('messages.senderId', 'fullName avatar')
-    
-        if (!conversation) throw new NotFoundError('Conversation not found')
-    
+            .populate('messages.senderId', 'fullName avatar');
+
+        if (!conversation) throw new NotFoundError('Conversation not found');
+
         // Sort and limit the messages to the latest 12
         const sortedMessages = conversation.messages
             .sort((a, b) => b.createdAt - a.createdAt)
             .slice(0, 12)
-            .reverse()  // Reverse to maintain ascending order
-    
-        let formattedConversation
+            .reverse();  // Reverse to maintain ascending order
+
+        let formattedConversation;
         const otherMember = conversation.members.find(
             (member) => member.user._id.toString() !== userId
-        )
-    
+        );
+
         formattedConversation = {
             _id: conversation._id,
             messages: sortedMessages,
             otherMember: otherMember.user,
-        }
-    
+        };
+
         return {
             conversation: formattedConversation
-        }
-    }    
+        };
+    };
 
     static sendMessage = async (userId, conversationId, req) => {
         try {
@@ -194,23 +203,23 @@ class ConversationService{
                     folderName: `fiyonce/conversations/${userId}`,
                     width: 1920,
                     height: 1080
-                }))
-                const uploadResults = await Promise.all(uploadPromises)
-                media = uploadResults.map(result => result.secure_url)
+                }));
+                const uploadResults = await Promise.all(uploadPromises);
+                media = uploadResults.map(result => result.secure_url);
             }
-    
+
             // 4. Send message
-            const otherMemberId = conversation.members.find(member => member.user.toString() !== userId)
-            const otherMember = await User.findById(otherMemberId.user)
-    
+            const otherMemberId = conversation.members.find(member => member.user.toString() !== userId);
+            const otherMember = await User.findById(otherMemberId.user);
+
             conversation.messages.push({
                 senderId: userId,
                 content: req.body.content,
                 createdAt: new Date(),
                 media
-            })
-            await conversation.save()
-    
+            });
+            await conversation.save();
+
             // 5. Format conversation
             const formattedConversation = {
                 _id: conversation._id,
@@ -220,16 +229,17 @@ class ConversationService{
                     fullName: otherMember.fullName,
                     avatar: otherMember.avatar
                 }
-            }
-    
+            };
+
             return {
                 conversation: formattedConversation
-            }
+            };
         } catch (error) {
-            console.log('Error sending message:', error)
-            throw new Error('Failed to send message')
+            console.log('Error sending message:', error);
+            throw new Error('Failed to send message');
         }
-    }
+    };
+
 }
 
 export default ConversationService

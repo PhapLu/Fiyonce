@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import { AuthProvider } from './contexts/auth/AuthContext';
 import { ThemeProvider } from './contexts/theme/ThemeContext';
+import { ModalProvider } from './contexts/modal/ModalContext';
+import { AuthProvider } from './contexts/auth/AuthContext';
+import { ConversationProvider } from './contexts/conversation/ConversationContext';
+import { MovementProvider } from './contexts/movement/MovementContext';
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 const queryClient = new QueryClient()
@@ -10,10 +13,16 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <ThemeProvider>
+        <ModalProvider>
+          <AuthProvider>
+            <ConversationProvider>
+              <MovementProvider>
+                <App />
+              </MovementProvider>
+            </ConversationProvider>
+          </AuthProvider>
+        </ModalProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode >
