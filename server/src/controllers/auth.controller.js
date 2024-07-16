@@ -21,7 +21,7 @@ class AuthController {
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
                     secure: true,
-                    sameSite: 'strict',
+                    sameSite: 'none',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
                 })
