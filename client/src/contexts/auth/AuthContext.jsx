@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         if (userInfo) {
-            const newSocket = socketIOClient('http://localhost:8900'); // Adjust URL to your backend
+            const newSocket = socketIOClient('https://fiyoncee.onrender.com'); // Adjust URL to your backend
             setSocket(newSocket);
             newSocket.emit('addUser', userInfo._id);
 
