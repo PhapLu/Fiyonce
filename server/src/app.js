@@ -2,10 +2,11 @@ import dotenv from 'dotenv'
 dotenv.config()
 import express from "express"
 import http from 'http'
+import path from 'path'
 import cors from 'cors'
 import morgan from 'morgan'
 import helmet from 'helmet'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
@@ -18,7 +19,7 @@ import sanitizeInputs from './middlewares/sanitize.middleware.js'
 import { globalLimiter, authLimiter, uploadLimiter, blockChecker } from './configs/rateLimit.config.js'
 const app = express()
 
-//Rate Limit
+// Rate Limit
 app.use(blockChecker)
 app.use(globalLimiter)
 
@@ -43,7 +44,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(sanitizeInputs)
 
-//Advanced Logger
+// Advanced Logger
 app.use((req, res, next) => {
     const requestId = req.headers['x-request-id']
     req.requestId = requestId ? requestId : uuidv4()
@@ -57,8 +58,23 @@ app.use((req, res, next) => {
     next()
 })
 
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Serve static files from your build directory if you have a front-end
+app.use(express.static(path.join(__dirname, 'client/build')))
+
 // Init routes
 app.use('', router)
+
+// Error handling for static files
+app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api/')) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+    } else {
+        next()
+    }
+})
 
 // Error handling
 app.use((req, res, next) => {

@@ -433,3 +433,9 @@ ReferenceError: userId is not defined
 ReferenceError: port is not defined
     at file:///D:/Adam/OnisonProject/server/src/app.js:91:15
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-07-16 08:31:05::error::undefined::undefined::uncaughtException: __dirname is not defined in ES module scope
+This file is being treated as an ES module because it has a '.js' file extension and 'D:\Adam\OnisonProject\server\package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+ReferenceError: __dirname is not defined in ES module scope
+This file is being treated as an ES module because it has a '.js' file extension and 'D:\Adam\OnisonProject\server\package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+    at file:///D:/Adam/OnisonProject/server/src/app.js:62:34
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
