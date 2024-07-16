@@ -181,9 +181,19 @@ class OrderService {
                 // Match orders where the talent is chosen or has a proposal
                 {
                     $match: {
-                        $or: [
-                            { talentChosenId: new mongoose.Types.ObjectId(talentId) },
-                            { 'proposals.talentId': new mongoose.Types.ObjectId(talentId) } // This ensures orders with proposals by talentId
+                        $and: [
+                            {
+                                $or: [
+                                    { talentChosenId: new mongoose.Types.ObjectId(talentId) },
+                                    { 'proposals.talentId': new mongoose.Types.ObjectId(talentId) }
+                                ]
+                            },
+                            {
+                                $or: [
+                                    { isTalentArchived: { $exists: false } },
+                                    { isTalentArchived: false }
+                                ]
+                            }
                         ]
                     }
                 },
@@ -284,48 +294,127 @@ class OrderService {
     };
 
 
-    static readArchivedOrders = async (userId) => {
-        //1. Check if user exists
-        const user = await User.findById(userId)
-        if (!user) throw new NotFoundError('User not found')
+    static readArchivedOrderHistory = async (userId) => {
+        try {
+            // Aggregate to get all archived orders involving the user
+            const orders = await Order.aggregate([
+                // Match orders where the user is a member or talent and the order is archived
+                {
+                    $match: {
+                        $or: [
+                            {
+                                memberId: new mongoose.Types.ObjectId(userId),
+                                isMemberArchived: true
+                            },
+                            {
+                                $or: [
+                                    { talentChosenId: new mongoose.Types.ObjectId(userId) },
+                                    { 'proposals.talentId': new mongoose.Types.ObjectId(userId) } // Ensures orders with proposals by talentId
+                                ],
+                                isTalentArchived: true
+                            }
+                        ]
+                    }
+                },
+                // Lookup to get details from Proposal if exists
+                {
+                    $lookup: {
+                        from: 'Proposals',
+                        localField: '_id',
+                        foreignField: 'orderId',
+                        as: 'proposals'
+                    }
+                },
+                // Lookup to get member details
+                {
+                    $lookup: {
+                        from: 'Users',
+                        localField: 'memberId',
+                        foreignField: '_id',
+                        as: 'memberDetails'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'CommissionServices',
+                        localField: 'commissionServiceId',
+                        foreignField: '_id',
+                        as: 'commissionServiceDetails'
+                    }
+                },
+                // Project to shape the output
+                {
+                    $project: {
+                        commissionServiceId: {
+                            _id: { $arrayElemAt: ['$commissionServiceDetails._id', 0] },
+                            title: { $arrayElemAt: ['$commissionServiceDetails.title', 0] }
+                        },
+                        memberId: {
+                            _id: { $arrayElemAt: ['$memberDetails._id', 0] },
+                            avatar: { $arrayElemAt: ['$memberDetails.avatar', 0] },
+                            fullName: { $arrayElemAt: ['$memberDetails.fullName', 0] }
+                        },
+                        talentChosenId: 1,
+                        status: 1,
+                        title: 1,
+                        description: 1,
+                        isDirect: 1,
+                        references: 1,
+                        rejectMessage: 1,
+                        minPrice: 1,
+                        maxPrice: 1,
+                        purpose: 1,
+                        isPrivate: 1,
+                        deadline: 1,
+                        fileFormats: 1,
+                        review: 1
+                    }
+                }
+            ]);
 
-        //2. Get archived orders
-        const memberArchivedOrders = await Order.find({ memberId: userId, isMemberArchived: true })
-        const talentArchivedOrders = await Order.find({ isTalentArchived: true })
+            console.log("ARCHIVED ORDER HISTORY");
+            console.log(orders.length);
 
-        return {
-            orders: {
-                memberArchivedOrders,
-                talentArchivedOrders
-            }
+            return { archivedOrderHistory: orders };
+        } catch (error) {
+            console.error('Error fetching archived orders:', error);
+            throw error;
         }
-    }
+    };
 
-    static talentArchiveOrder = async (userId, orderId) => {
+
+    static archiveOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError('User not found')
         if (!order) throw new NotFoundError('Order not found')
 
-        if (user.role != "talent") throw new AuthFailureError('You are not authorized to archive this order')
-        order.isTalentArchived = true
+        if (userId == order.memberId.toString()) {
+            order.isMemberArchived = true
+        } else {
+            order.isTalentArchived = true
+        }
+
         order.save()
 
         return {
             order
         }
     }
-
-    static clientArchiveOrder = async (userId, orderId) => {
+    static unarchiveOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError('User not found')
         if (!order) throw new NotFoundError('Order not found')
 
-        if (user.role != "client" || userId != order.memberId.toString()) throw new AuthFailureError('You are not authorized to archive this order')
-        order.isClientArchived = true
+        if (userId == order.memberId.toString()) {
+            order.isMemberArchived = false
+        } else {
+            order.isTalentArchived = false
+        }
+
         order.save()
 
         return {

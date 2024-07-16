@@ -38,34 +38,21 @@ class OrderController{
         }).send(res)
     }
 
-    talentArchiveOrder = async(req, res, next) => {
+    archiveOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Talent archive order successfully!',
-            metadata: await OrderService.talentArchiveOrder(req.userId, req.params.orderId)
+            message: 'Archive order successfully!',
+            metadata: await OrderService.archiveOrder(req.userId, req.params.orderId)
         }).send(res)
     }
 
-    clientArchiveOrder = async(req, res, next) => {
+    
+    unarchiveOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Talent archive order successfully!',
-            metadata: await OrderService.clientArchiveOrder(req.userId, req.params.orderId)
+            message: 'Archive order successfully!',
+            metadata: await OrderService.unarchiveOrder(req.userId, req.params.orderId)
         }).send(res)
     }
-
-    talentReportOrder = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Talent report client successfully!',
-            metadata: await OrderService.talentReportOrder(req.userId, req.params.orderId)
-        }).send(res)
-    }
-
-    clientReportOrder = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Client report talent successfully!',
-            metadata: await OrderService.clientReportOrder(req.userId, req.params.orderId)
-        }).send(res)
-    }
-
+   
     //End Order CRUD
     readMemberOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
@@ -78,6 +65,13 @@ class OrderController{
         new SuccessResponse({
             message: 'Read all orders of a client',
             metadata: await OrderService.readTalentOrderHistory(req.userId)
+        }).send(res)
+    }
+
+    readArchivedOrderHistory = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Read all orders of a client',
+            metadata: await OrderService.readArchivedOrderHistory(req.userId)
         }).send(res)
     }
 
