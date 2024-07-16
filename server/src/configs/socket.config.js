@@ -11,11 +11,7 @@ export default function configureSocket(server) {
         }
     })
 
-    const PORT = 8900
-    server.listen(PORT, () => {
-        console.log("Socket.IO server is running on port ", PORT)
-    })
-    // global variable
+    // Global variable
     global._io = io
 
     return io

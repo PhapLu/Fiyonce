@@ -20,6 +20,8 @@ class AuthController {
                 const { accessToken } = metadata.user
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
+                    secure: true,
+                    sameSite: 'Lax',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
                 })
@@ -85,6 +87,8 @@ class AuthController {
                 const { accessToken } = metadata.user
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
+                    secure: true,
+                    sameSite: 'Lax',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
                 })

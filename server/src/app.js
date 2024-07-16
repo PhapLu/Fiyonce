@@ -1,41 +1,45 @@
 import dotenv from 'dotenv'
 dotenv.config()
-import express from "express"
+import express from 'express'
 import http from 'http'
 import cors from 'cors'
 import morgan from 'morgan'
 import helmet from 'helmet'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import './db/init.mongodb.js'
-import router from "./routes/index.js"
+import router from './routes/index.js'
 import myLogger from './loggers/mylogger.log.js'
 import configureSocket from './configs/socket.config.js'
 import SocketServices from './services/socket.service.js'
 import sanitizeInputs from './middlewares/sanitize.middleware.js'
 import { globalLimiter, authLimiter, uploadLimiter, blockChecker } from './configs/rateLimit.config.js'
+
 const app = express()
 
-//Rate Limit
+// Trust proxy
+app.set('trust proxy', 1) // This is crucial for cookie handling behind a proxy
+
+// Rate Limit
 app.use(blockChecker)
 app.use(globalLimiter)
 
 // Init middlewares
 app.use(cors({
     origin: [process.env.ALLOWED_ORIGIN],
-    methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
     credentials: true,
 }))
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(helmet()) // Using Helmet
 app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'"]
-  }
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"]
+    }
 }))
 app.use(compression())
 app.use(bodyParser.json())
@@ -43,7 +47,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(sanitizeInputs)
 
-//Advanced Logger
+// Advanced Logger
 app.use((req, res, next) => {
     const requestId = req.headers['x-request-id']
     req.requestId = requestId ? requestId : uuidv4()
@@ -72,8 +76,8 @@ app.use((error, req, res, next) => {
     const resMessage = `${error.status} - ${Date.now() - error.now}ms - Response: ${JSON.stringify(error)}`
     myLogger.error(resMessage, [
         req.path,
-        { requestId: req.requestId},
-        { message: error.message}
+        { requestId: req.requestId },
+        { message: error.message }
     ])
     return res.status(statusCode).json({
         status: 'error',
@@ -87,12 +91,12 @@ app.use((error, req, res, next) => {
 const server = http.createServer(app)
 
 // Configure Socket.IO
-configureSocket(server)
+const io = configureSocket(server)
 
 global._io.on('connection', SocketServices.connection)
 
 process.on('SIGINT', () => {
-    server.close(() => console.log(`Exit Server Express`))
+    server.close(() => console.log('Exit Server Express'))
 })
 
-export default app
+export default server // Export the server instance
