@@ -123,12 +123,8 @@ class AuthService {
     //     }
     // }
     static login = async ({ email, password }) => {
-        console.log(email, password)
         // 1. Check email in the database
         const foundUser = await User.findOne({ email }).lean()
-        const allUsers = await User.find();
-        console.log(allUsers)
-        console.log(foundUser)
         if (!foundUser) throw new BadRequestError("User not registered")
 
         // 2. Match password
