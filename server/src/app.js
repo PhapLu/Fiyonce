@@ -28,13 +28,13 @@ app.use(globalLimiter)
 
 // Init middlewares
 app.use(cors({
-    origin: [process.env.ALLOWED_ORIGIN],
+    origin: [process.env.NODE_ENV == 'production' ? process.env.ALLOWED_ORIGIN : 'http://localhost:3000'],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
     credentials: true,
 }))
 app.use(express.json())
 app.use(morgan('dev'))
-app.use(helmet()) // Using Helmet
+app.use(helmet())
 app.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self'"],
@@ -99,4 +99,4 @@ process.on('SIGINT', () => {
     server.close(() => console.log('Exit Server Express'))
 })
 
-export default server // Export the server instance
+export default server

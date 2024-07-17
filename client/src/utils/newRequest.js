@@ -1,9 +1,12 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {jwtDecode} from 'jwt-decode';
 
 const newRequest = axios.create({
-    baseURL: "https://fiyoncee.onrender.com/v1/api/",
+    baseURL: process.env.NODE_ENV === 'production' ? process.env.ALLOWED_ORIGIN : "http://localhost:3000/v1/api/",
     withCredentials: true,
 });
 

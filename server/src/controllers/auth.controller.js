@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import AuthService from "../services/auth.service.js"
 import { CREATED, SuccessResponse } from "../core/success.response.js"
 class AuthController {
@@ -20,7 +23,7 @@ class AuthController {
                 const { accessToken } = metadata.user
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
-                    secure: true,
+                    secure: process.env.NODE_ENV === 'product',
                     sameSite: 'none',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
@@ -60,7 +63,7 @@ class AuthController {
     logout = async(req, res, next) =>{
         res.clearCookie("accessToken", {
             sameSite: "none",
-            secure: true,
+            secure: process.env.NODE_ENV === 'product',
         }).status(200).send("User has been logged out.")
     }
     
@@ -87,8 +90,8 @@ class AuthController {
                 const { accessToken } = metadata.user
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
-                    secure: true,
-                    sameSite: 'Lax',
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'none',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
                 })
