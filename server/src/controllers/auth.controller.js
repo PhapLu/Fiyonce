@@ -63,7 +63,7 @@ class AuthController {
     logout = async(req, res, next) =>{
         res.clearCookie("accessToken", {
             sameSite: "none",
-            secure: process.env.NODE_ENV === 'product',
+            secure: process.env.NODE_ENV === 'production',
         }).status(200).send("User has been logged out.")
     }
     
