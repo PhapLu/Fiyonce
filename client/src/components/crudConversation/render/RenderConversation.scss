@@ -48,19 +48,29 @@
             }
 
             .message-item__content {
-                display: inline-block;
-                max-width: 70%;
-                border-radius: 12px;
-                padding: 8px 12px;
+                display: flex;
+                /* max-width: 70%; */
+                /* border-radius: 12px; */
+                /* padding: 8px 12px; */
                 font-size: 1.3rem;
                 margin-bottom: 8px;
+
+                span {
+                    text-align: start;
+                    max-width: 70%;
+                    border-radius: 12px;
+                    padding: 8px 12px;
+                }
             }
 
             &.right {
-                // justify-content: end;
                 text-align: end;
 
                 .message-item__content {
+                    justify-content: end;
+                }
+
+                .message-item__content span {
                     background-color: #0084ff;
                     box-shadow: var(--box-shadow-4);
                     color: white;
@@ -69,10 +79,11 @@
             }
 
             &.left {
-                // justify-content: start;
-                text-align: start;
-
                 .message-item__content {
+                    justify-content: start;
+                }
+
+                .message-item__content span {
                     font-weight: 500;
                     color: var(--black-1-color);
                     background-color: var(--gray-1-color);

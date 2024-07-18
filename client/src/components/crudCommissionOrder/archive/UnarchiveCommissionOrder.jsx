@@ -8,25 +8,24 @@ import { apiUtils } from "../../../utils/newRequest";
 
 // Styling
 
-export default function TalentArchiveCommissionOrder({ commissionOrder, setShowTalentArchiveCommissionOrder, setOverlayVisible, talentCommissionOrderMutation }) {
+export default function UnarchiveCommissionOrder({ commissionOrder, setShowUnarchiveCommissionOrder, setOverlayVisible, unarchiveCommissionOrderMutation }) {
     // Return null if the commission order to be rejected is not specified
     if (!commissionOrder) {
         return null;
     }
+    console.log(commissionOrder)
 
     const { setModalInfo } = useModal();
 
     const [errors, setErrors] = useState({});
-    const [isSubmitTalentArchiveCommissionOrderLoading, setIsSubmitTalentArchiveCommissionOrderLoading] = useState(false);
-    const [selectedReason, setSelectedReason] = useState("");
-    const [otherReason, setOtherReason] = useState("");
+    const [isSubmitUnarchiveCommissionOrderLoading, setIsSubmitUnarchiveCommissionOrderLoading] = useState(false);
 
     // Toggle display modal form
     const commissionOrderRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (commissionOrderRef && commissionOrderRef.current && !commissionOrderRef.current.contains(e.target)) {
-                setShowTalentArchiveCommissionOrder(false);
+                setShowUnarchiveCommissionOrder(false);
                 setOverlayVisible(false);
             }
         };
@@ -38,17 +37,18 @@ export default function TalentArchiveCommissionOrder({ commissionOrder, setShowT
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitTalentArchiveCommissionOrderLoading(true);
+        setIsSubmitUnarchiveCommissionOrderLoading(true);
+        console.log(commissionOrder._id)
 
         try {
-            // const response = await talentTalentArchiveCommissionOrderMutation.mutateAsync(orderId);
-            const response = "a";
+            const response = await unarchiveCommissionOrderMutation.mutateAsync(commissionOrder._id);
+            console.log(response);
             if (response) {
                 setModalInfo({
                     status: "success",
-                    message: "Đã đưa đơn hàng vào mục lưu trữ",
+                    message: "Xóa khỏi mục lưu trữ thành công",
                 });
-                setShowTalentArchiveCommissionOrder(false);
+                setShowUnarchiveCommissionOrder(false);
                 setOverlayVisible(false);
             }
         } catch (error) {
@@ -57,22 +57,22 @@ export default function TalentArchiveCommissionOrder({ commissionOrder, setShowT
                 serverError: error.response?.data?.message,
             }));
         } finally {
-            setIsSubmitTalentArchiveCommissionOrderLoading(false);
+            setIsSubmitUnarchiveCommissionOrderLoading(false);
         }
     };
 
     return (
         <div className="reject-commission-order modal-form type-3 sm" ref={commissionOrderRef} onClick={(e) => { e.stopPropagation() }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowTalentArchiveCommissionOrder(false);
+                setShowUnarchiveCommissionOrder(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-            <h2 className="form__title">Đưa vào mục lưu trữ</h2>
+            <h2 className="form__title">Xóa khỏi mục lưu trữ</h2>
             <div className="form-field">
                 <p className="text-align-center">
-                Bạn có chắc muốn đưa đơn hàng vào mục lưu trữ?
+                Bạn có chắc muốn xóa đơn hàng khỏi mục lưu trữ?
                 </p>
             </div>
             <div className="form-field">
@@ -83,9 +83,9 @@ export default function TalentArchiveCommissionOrder({ commissionOrder, setShowT
                     type="submit"
                     className="form-field__input btn btn-2 btn-md"
                     onClick={handleSubmit}
-                    disabled={isSubmitTalentArchiveCommissionOrderLoading}
+                    disabled={isSubmitUnarchiveCommissionOrderLoading}
                 >
-                    {isSubmitTalentArchiveCommissionOrderLoading ? (
+                    {isSubmitUnarchiveCommissionOrderLoading ? (
                         <span className="btn-spinner"></span>
                     ) : (
                         "Xác nhận"

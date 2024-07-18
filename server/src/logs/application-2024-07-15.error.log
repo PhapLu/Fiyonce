@@ -231,3 +231,771 @@
 2024-07-15 10:23:46::error::/v1/api/order/readMemberOrderHistory::42d90b86-1818-480a-8618-124b6887205c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
 2024-07-15 10:23:46::error::/v1/api/order/readArchivedOrderHistory::8168fd2c-c09b-487e-ab70-d2ed9d76b7b5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-07-15 10:23:46::error::/v1/api/order/readTalentOrderHistory::45851a06-2fd5-4c3c-929e-9042418f05df::403 - 0ms - Response: {"status":403,"now":1721013826992}::{"message":"You are not a talent!"}
+2024-07-15 12:05:36::error::/v1/api/user/me::32a5239f-088c-4c66-9121-2dcae80556c8::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:05:37::error::/v1/api/user/me::4c0cbc1a-cbf5-4ebb-b80f-15332f5b14bc::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:06:03::error::/v1/api/user/me::b1a0a4a5-dff7-43d5-b622-83a6db3c88e6::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:06:04::error::/v1/api/user/me::15aed042-c249-4abc-948a-a6375e92aa2a::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:06:07::error::/v1/api/auth/users/login::cbf55102-7e65-4261-b8b3-f5a4e52ec536::undefined - NaNms - Response: {}::{"message":"secretOrPrivateKey must have a value"}
+2024-07-15 12:06:18::error::/v1/api/user/me::c280857a-66e0-49d1-948c-81c47f4786a3::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:07:07::error::/v1/api/user/me::00dac960-dbb3-4ecb-89fc-5d4aca41c387::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:07:09::error::/v1/api/auth/users/login::a65c8572-7fa9-44a5-b9c5-6c2de50b421d::undefined - NaNms - Response: {}::{"message":"secretOrPrivateKey must have a value"}
+2024-07-15 12:08:10::error::/v1/api/user/me::98c4bef6-a4ae-4174-94d0-0cc90baf2c67::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:08:30::error::/v1/api/user/me::b6fe8b3b-a7d5-412d-bab4-e04dc93b2ca5::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:08:31::error::/v1/api/user/me::a8a3761d-f9e8-42b0-8d4f-e9c474c6a77f::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:08:32::error::/v1/api/user/me::be57b58a-60c6-4b6a-9a3c-05688de184ac::undefined - NaNms - Response: {"name":"JsonWebTokenError","message":"secret or public key must be provided"}::{"message":"secret or public key must be provided"}
+2024-07-15 12:08:45::error::/v1/api/order/readMemberOrderHistory::cb43b8a3-1ef4-4971-be0c-9e40af709801::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:08:45::error::/v1/api/order/readArchivedOrderHistory::56ac1d4c-b69e-4b8f-8e84-eb2fb4503ccc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:09:28::error::/v1/api/order/readMemberOrderHistory::fb041207-14b7-4e33-a014-b46fe3b40c1a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:09:28::error::/v1/api/order/readArchivedOrderHistory::ac5d4e00-c5b7-4816-b907-45d4b47157dd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:09:53::error::/v1/api/order/readMemberOrderHistory::099cfbc1-b8f8-4259-9164-19b999ba8c9e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:09:53::error::/v1/api/order/readArchivedOrderHistory::f9989555-8dc9-4695-809e-1abeeb86013c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:11:01::error::/v1/api/order/readMemberOrderHistory::631bbed5-d70c-488e-b838-24b84ab6c66a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:11:01::error::/v1/api/order/readArchivedOrderHistory::ca632af1-b90a-43f6-bc64-bb90a40db86a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:11:16::error::/v1/api/order/readMemberOrderHistory::c7e9481a-6d2c-4cfb-a709-6b23f21f6b41::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:11:16::error::/v1/api/order/readArchivedOrderHistory::a9d1b67f-bf71-423e-b7d4-8f769e453118::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:12:09::error::/v1/api/order/readMemberOrderHistory::4a9ff5b6-dcdd-44e6-927d-d686184899d0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:12:09::error::/v1/api/order/readArchivedOrderHistory::8d88ee84-feee-446c-b776-c8463e330b48::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:13:17::error::/v1/api/order/readMemberOrderHistory::f538c5a0-5333-464a-8f4c-8835633e0f12::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:13:17::error::/v1/api/order/readArchivedOrderHistory::80f56d33-e797-4188-b616-97e6808b0fd1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:13:24::error::/v1/api/order/readMemberOrderHistory::086e4de1-33a1-4552-97ee-3c4dc72f6b28::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:13:24::error::/v1/api/order/readArchivedOrderHistory::4e824320-84f8-4fda-9745-50fd46f3ba1c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:13:30::error::/v1/api/order/readMemberOrderHistory::f72a7f53-284e-4bd9-82b1-0a79201f6c7b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:13:30::error::/v1/api/order/readArchivedOrderHistory::1937c8b5-0fed-4f66-8d1d-010c91a3c3df::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:13:39::error::/v1/api/order/readMemberOrderHistory::339364d7-7aaf-4b3a-85fb-d24cd3287c12::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:13:39::error::/v1/api/order/readArchivedOrderHistory::f9abac1f-1826-4fc7-8b35-7b3c0f803224::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:13:41::error::/v1/api/order/readMemberOrderHistory::f5c0d236-1a93-4391-a43a-3724056eb512::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:13:41::error::/v1/api/order/readArchivedOrderHistory::383f8ef6-0ba1-44bd-8135-e6804b5e347d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:16:53::error::/v1/api/order/readMemberOrderHistory::8e94e97c-b295-4c27-9493-d28f2fc2d271::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:16:53::error::/v1/api/order/readArchivedOrderHistory::524471da-a469-4c3a-9162-9d3c2a26bbea::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:17:12::error::/v1/api/order/readMemberOrderHistory::c13dc8c6-cb0e-4579-a0e0-9b9d6099187f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:17:12::error::/v1/api/order/readArchivedOrderHistory::69f2803b-e202-424a-a610-34bd8b54836e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:18:05::error::/v1/api/order/readMemberOrderHistory::9f29353b-e27a-48dd-b497-50aa50c28225::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:18:05::error::/v1/api/order/readArchivedOrderHistory::e32a14c8-1c8b-4aa5-9b5e-0e3d64018df8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:25:44::error::/v1/api/order/readMemberOrderHistory::a950de56-a52a-4c84-875e-6fa76f2e1ffe::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:25:44::error::/v1/api/order/readArchivedOrderHistory::a5435d62-a84a-49cc-b413-c2dff360cec8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:27:31::error::/v1/api/order/readMemberOrderHistory::7adc39f0-6a03-4f54-b58e-2197743e6585::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:27:31::error::/v1/api/order/readArchivedOrderHistory::18e467fb-da61-4132-8f7e-eb90be2a9738::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:27:50::error::/v1/api/order/readMemberOrderHistory::2810fbeb-11fd-4e39-adbc-4cb2fa72367d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:27:50::error::/v1/api/order/readArchivedOrderHistory::b5edfb05-92cd-4858-9554-46363176419f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:28:04::error::/v1/api/order/readMemberOrderHistory::562c17b0-80b7-43f1-b042-e29d95016320::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:28:04::error::/v1/api/order/readArchivedOrderHistory::f45aaca6-0a9c-4771-9d94-5d34a0c6fdb1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:33:19::error::/v1/api/order/readMemberOrderHistory::c0cde53a-6bfe-4bd7-967d-9d03b777625b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:33:19::error::/v1/api/order/readArchivedOrderHistory::fe92626f-1dd3-4c35-85d7-42e5c6d29318::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:06::error::/v1/api/order/readMemberOrderHistory::feda0a60-b9ef-43b7-a6fd-f6d604f27489::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:06::error::/v1/api/order/readArchivedOrderHistory::748cef7a-aace-4471-8b96-47ec0782247a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:06::error::/v1/api/order/readMemberOrderHistory::fa6700e1-0980-45d8-bd55-dab520187527::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:06::error::/v1/api/order/readArchivedOrderHistory::1ed2c595-c2af-4a19-99ab-d196f9cb51f7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:22::error::/v1/api/order/readMemberOrderHistory::d7ce0e0c-8433-481c-9b53-71dd8257f770::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:22::error::/v1/api/order/readArchivedOrderHistory::c59bb6e8-0dc7-4457-8be5-b3e31e9b8592::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:42::error::/v1/api/order/readMemberOrderHistory::437322fb-0b43-4020-8547-46cbfd705623::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:42::error::/v1/api/order/readArchivedOrderHistory::8a2d00d2-73aa-4d61-9051-7e0c788e5d41::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:45::error::/v1/api/order/readMemberOrderHistory::bf301989-f009-4956-92c9-5a49b9a151ac::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:45::error::/v1/api/order/readArchivedOrderHistory::e4a7a67d-251c-4e19-99c3-af7af924b910::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:46::error::/v1/api/order/readMemberOrderHistory::345e14e4-1a86-4705-b2cd-1d9988bc41fe::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:46::error::/v1/api/order/readArchivedOrderHistory::158de646-d158-4fdc-8cdc-762133627958::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:44:55::error::/v1/api/order/readMemberOrderHistory::c172343a-3640-44ac-8ab3-c895c7f1ed75::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:44:55::error::/v1/api/order/readArchivedOrderHistory::4a33754b-2516-445d-adbd-2f7a543918c4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:48:22::error::/v1/api/order/readMemberOrderHistory::1d46c8c4-ec3e-4e6a-9de3-0f1c5568614d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:48:22::error::/v1/api/order/readArchivedOrderHistory::900e932a-b9b2-4763-953c-3e26acb8ff30::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:48:39::error::/v1/api/order/readMemberOrderHistory::aed8efc7-45b1-464f-a689-5a0d713ca2c1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:48:39::error::/v1/api/order/readArchivedOrderHistory::2c1c50b2-c649-4273-a828-71c6074385c0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:49:00::error::/v1/api/order/readMemberOrderHistory::e4bc8662-34ac-4306-a3cc-6825632d7e1a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:49:00::error::/v1/api/order/readArchivedOrderHistory::5d680e39-c7ad-4f5a-b2a5-e6b736b617db::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:49:15::error::/v1/api/order/readMemberOrderHistory::36666569-03f5-4655-9142-bb50faa3e29d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:49:15::error::/v1/api/order/readArchivedOrderHistory::45178a68-649b-4ea6-ae25-72296de7b364::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:49:38::error::/v1/api/order/readMemberOrderHistory::e0bb175d-a5c8-4462-bee3-3beae7191a1a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:49:38::error::/v1/api/order/readArchivedOrderHistory::9086df6b-8e27-4987-980f-412b758f3f16::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:49:46::error::/v1/api/order/readArchivedOrderHistory::11ef39df-de75-4799-9889-eff147f42fbd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:49:46::error::/v1/api/order/readMemberOrderHistory::36895fb1-872d-4e30-af6c-71c514ec6967::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:53:59::error::/v1/api/order/readMemberOrderHistory::2af10cac-9b3f-4fd8-90ff-94d6fd61b80e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:53:59::error::/v1/api/order/readArchivedOrderHistory::cdda98d3-aff7-4b13-a1ba-a92b3ef9347d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:54:32::error::/v1/api/order/readMemberOrderHistory::77cbedb9-d0b3-4e57-95c5-e03259490a05::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:54:32::error::/v1/api/order/readArchivedOrderHistory::0d71d3be-55b4-427b-9fd2-da16e46954b7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:54:37::error::/v1/api/order/readMemberOrderHistory::276fedff-3ecf-4fe3-b00b-78f3a612ce1b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:54:37::error::/v1/api/order/readArchivedOrderHistory::b089fc90-d2cf-47f7-b8c9-452f5b2bb4f0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:55:01::error::/v1/api/order/readMemberOrderHistory::32d33a65-e384-48b8-9256-5414c1759dc1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:55:01::error::/v1/api/order/readArchivedOrderHistory::91e4407c-1e74-4e22-bfcb-ba7df36b6b00::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:55:17::error::/v1/api/order/readMemberOrderHistory::c21e3413-1949-4916-baf0-ccbd4915f4ca::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:55:17::error::/v1/api/order/readArchivedOrderHistory::836145d4-69a7-4419-8326-196bf5142eae::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:55:23::error::/v1/api/order/readMemberOrderHistory::407d2bfd-80d3-408a-8d47-fbc2143ea6fc::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:55:23::error::/v1/api/order/readArchivedOrderHistory::4cba1f92-8f64-4a58-94d2-b09fe2be1b2a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:56:06::error::/v1/api/order/readMemberOrderHistory::30d5e656-48b4-48cf-b021-acfe51aff243::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:56:06::error::/v1/api/order/readArchivedOrderHistory::f9b86c21-f190-4467-8fc9-cdb30c84d2a5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:56:18::error::/v1/api/order/readMemberOrderHistory::a4177273-a527-4ea7-926c-5b564ac0f935::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:56:19::error::/v1/api/order/readArchivedOrderHistory::94f24d67-47f0-4342-91a1-b1a887f21fac::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:56:27::error::/v1/api/order/readMemberOrderHistory::35e1bc07-ae4b-4d2c-b821-6a822b25c134::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:56:27::error::/v1/api/order/readArchivedOrderHistory::15cadc3c-0d3d-4ecb-889f-653912b15be6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:56:33::error::/v1/api/order/readMemberOrderHistory::6d6a9f3e-cec3-4640-85e3-b86f355bf1e0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:56:33::error::/v1/api/order/readArchivedOrderHistory::ae9fcf00-b8ab-4cc8-b01b-c0e53701622a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:56:51::error::/v1/api/order/readArchivedOrderHistory::a3ee79b3-5985-47e8-9800-b7bbbfeade43::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:56:51::error::/v1/api/order/readMemberOrderHistory::9df9b4ef-2a3b-48d7-8aba-52b9253f1a49::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:57:01::error::/v1/api/order/readMemberOrderHistory::7d7671c8-203d-4d13-98d5-ccf92de0a8af::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:57:01::error::/v1/api/order/readArchivedOrderHistory::ecc7ec33-0375-4c86-9eb0-c66895eb30ff::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:57:21::error::/v1/api/order/readMemberOrderHistory::336b480d-8e0f-4ad7-bcce-82582b03e7ea::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:57:21::error::/v1/api/order/readArchivedOrderHistory::d4d5e7bd-ea17-483e-a38c-3bef5c6ad855::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:57:32::error::/v1/api/order/readMemberOrderHistory::d0e5baba-52e7-4e04-88d6-32b096fafbe9::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:57:32::error::/v1/api/order/readArchivedOrderHistory::8e57f537-b600-4ae0-9ce8-a9058a80120b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:57:39::error::/v1/api/order/readMemberOrderHistory::833049ef-dcf4-46a7-b917-01e2e9b8abaa::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:57:39::error::/v1/api/order/readArchivedOrderHistory::3259d460-7f41-475c-ab13-1406ca8724d8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:58:25::error::/v1/api/order/readMemberOrderHistory::097f8f9e-799b-4e4a-a365-ea35a9508aac::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:58:25::error::/v1/api/order/readArchivedOrderHistory::d1017020-eb1e-48a0-a7e3-344f82e907a7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:58:47::error::/v1/api/order/readMemberOrderHistory::f218b75e-ba22-4621-ac64-d1a93938ea4c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:58:47::error::/v1/api/order/readArchivedOrderHistory::65d308b3-95d0-43ca-a85e-f3a303e4857b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:59:23::error::/v1/api/order/readMemberOrderHistory::89d66c09-3608-482f-93aa-367165b6987e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:59:23::error::/v1/api/order/readArchivedOrderHistory::78be1d31-66ae-4137-895c-584b9ad3bc38::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 12:59:48::error::/v1/api/order/readMemberOrderHistory::bf971dcc-e75b-4eb2-8ee9-3c05f363703f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 12:59:48::error::/v1/api/order/readArchivedOrderHistory::0634c345-aeab-4d8c-bef0-6efacbe5b85b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:00:14::error::/v1/api/order/readMemberOrderHistory::6ceba8fd-3fc1-4673-a9e0-7ae2c7368204::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:00:14::error::/v1/api/order/readArchivedOrderHistory::1daac744-8f8b-4396-8f34-44c5c132d925::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:00:52::error::/v1/api/order/readMemberOrderHistory::0451c29c-0c04-4b20-9c04-e603b6a2049b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:00:52::error::/v1/api/order/readArchivedOrderHistory::9a1da42d-c082-4b3e-aac2-6f2cc0e09f2b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:01:12::error::/v1/api/order/readMemberOrderHistory::53095236-50fe-46b8-bd89-a68b17f18bfd::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:01:12::error::/v1/api/order/readArchivedOrderHistory::2ea83f32-f0b6-4379-ae9b-bac64779c3f6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:01:23::error::/v1/api/order/readMemberOrderHistory::c6e0592b-3a35-43fe-923d-bcb1f2c38ce4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:01:23::error::/v1/api/order/readArchivedOrderHistory::3b1aa81e-109e-4095-ac26-62cda807de94::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:01:39::error::/v1/api/order/readMemberOrderHistory::dde480ec-496a-4b2a-b848-373fd5dbfa14::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:01:39::error::/v1/api/order/readArchivedOrderHistory::2b758eef-6a00-43a9-9720-8881010354a1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:01:49::error::/v1/api/order/readMemberOrderHistory::2643dcd9-715e-479a-9888-bf01fb8cfb70::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:01:49::error::/v1/api/order/readArchivedOrderHistory::59e0f0cd-4b10-4959-8588-2a054d3a1ac4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:01:54::error::/v1/api/order/readMemberOrderHistory::096cedc6-7077-45f7-9ac4-f44d0b1a9838::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:01:54::error::/v1/api/order/readArchivedOrderHistory::c5cc8466-81ba-4343-857c-9af45952734b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:02:12::error::/v1/api/order/readMemberOrderHistory::e1aaf0ff-d3b5-4e41-874a-54e5ae0473c7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:02:12::error::/v1/api/order/readArchivedOrderHistory::42db61fb-202b-4155-8c7d-2b3949fd5cbe::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:03:00::error::/v1/api/order/readMemberOrderHistory::de2cce1c-3a53-44e7-b4f2-de1616a4d0d2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:03:00::error::/v1/api/order/readArchivedOrderHistory::c822c886-e179-4d72-9fdf-c2818d9af0c6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:03:56::error::/v1/api/order/readMemberOrderHistory::ad74880e-1d82-4f52-8a07-dc9c82f086a2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:03:56::error::/v1/api/order/readArchivedOrderHistory::9324027c-390c-455d-a9dd-599cb08780f8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:04:29::error::/v1/api/order/readMemberOrderHistory::48f2558d-64ee-4a93-b648-3f2029dcb683::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:04:29::error::/v1/api/order/readArchivedOrderHistory::3eacc6a4-d514-4f7e-b896-51f60af74957::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:04:34::error::/v1/api/order/readMemberOrderHistory::18d168dc-4caf-4baa-be31-fd220c9dfacc::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:04:34::error::/v1/api/order/readArchivedOrderHistory::c64e1a91-d95e-4e63-8086-975d3af0832f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:05:04::error::/v1/api/order/readMemberOrderHistory::81fcc0f9-d4fc-4648-bfc9-3178c2125a44::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:05:04::error::/v1/api/order/readArchivedOrderHistory::a15ea882-2270-4f3a-9e2b-fc2b574e505c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:05:40::error::/v1/api/order/readMemberOrderHistory::837f2f87-55a7-4552-a72b-d0be0edac2ad::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:05:40::error::/v1/api/order/readArchivedOrderHistory::e788b411-c176-4654-a8dc-ebb92e32ac40::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:05:42::error::/v1/api/order/readMemberOrderHistory::a2fb8443-cbc6-461b-ac35-4fcba81908e4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:05:42::error::/v1/api/order/readArchivedOrderHistory::48dc4daf-65eb-48f6-a0a2-5a7d0dfe9f17::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:05:46::error::/v1/api/order/readMemberOrderHistory::a0868c9e-6183-4a0d-92cd-d55252916bc1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:05:46::error::/v1/api/order/readArchivedOrderHistory::cf35169e-d761-41d2-93c8-1cc84d108021::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:05:57::error::/v1/api/order/readMemberOrderHistory::34f4cbcb-b55a-43ba-b147-e9069f1650be::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:05:57::error::/v1/api/order/readArchivedOrderHistory::d219ea15-0509-4169-88d1-8a627a52ebab::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:06:15::error::/v1/api/order/readMemberOrderHistory::0e4f5b8c-c872-4afe-b4f6-474c3115cac3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:06:15::error::/v1/api/order/readArchivedOrderHistory::7a3fbde4-185b-4cd6-929a-ef5bb09e8d93::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:06:16::error::/v1/api/order/readMemberOrderHistory::ba360921-2195-479b-87fb-623fe7ac6474::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:06:16::error::/v1/api/order/readArchivedOrderHistory::0495cc0c-f9d8-4e65-9c2e-6b346cd3a5ef::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:06:25::error::/v1/api/order/readMemberOrderHistory::aa2473ef-1435-4085-a438-73593a808e01::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:06:25::error::/v1/api/order/readArchivedOrderHistory::e7eb42c5-d54a-453e-b312-e258f7c42971::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:07:03::error::/v1/api/order/readMemberOrderHistory::353ccae4-18d8-4ba4-bcc0-240eab235113::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:07:03::error::/v1/api/order/readArchivedOrderHistory::f3c3eaa6-60a6-4a5f-bf17-c848534c4c39::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:07:22::error::/v1/api/order/readArchivedOrderHistory::8a0f389a-b5d5-4fda-864e-39cd59b50344::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:07:22::error::/v1/api/order/readMemberOrderHistory::d7ef85df-46dc-4e6f-a588-312cba9069dc::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:07:47::error::/v1/api/order/readMemberOrderHistory::aed11494-69f5-4547-a354-6dfdacdb9535::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:07:47::error::/v1/api/order/readArchivedOrderHistory::fa9015a2-c67e-4672-bc9d-2cf1a459321c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:08:45::error::/v1/api/order/readMemberOrderHistory::ede70109-a3f3-4dfc-bffc-0dda82f820c2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:08:45::error::/v1/api/order/readArchivedOrderHistory::4140fb40-2133-4ed4-a208-d6251bb1ffde::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:08:52::error::/v1/api/order/readMemberOrderHistory::b73c8306-fd60-4208-8681-a6b6a373f139::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:08:52::error::/v1/api/order/readArchivedOrderHistory::9df7ce65-adae-4dc1-8be4-b2574566191b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:08:58::error::/v1/api/proposal/createProposal::fb08bf81-3feb-40d9-b03d-fd02f9280924::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:09:32::error::/v1/api/order/readMemberOrderHistory::0084838c-75c4-4f94-a5c1-c9ee1f460e00::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:09:32::error::/v1/api/order/readArchivedOrderHistory::a6e5fd3d-bd43-4489-ae8c-27653e6fb595::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:09:32::error::/v1/api/order/readMemberOrderHistory::8d18cf33-d969-4dfc-ac74-1833e8220f55::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:09:32::error::/v1/api/order/readArchivedOrderHistory::3d977315-3d8d-4956-9dd4-b429087fdddf::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:09:33::error::/v1/api/order/readMemberOrderHistory::11953941-eaca-4e62-97a5-89950818183f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:09:33::error::/v1/api/order/readArchivedOrderHistory::6b0420b9-71b9-4fad-8dc3-68ad3d0394ad::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:09:33::error::/v1/api/proposal/sendProposal::41eaba3c-20b1-47f9-bfa7-6e286d7d2d1d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:10:13::error::/v1/api/order/readMemberOrderHistory::45e5f2fd-d90e-4c57-8ba0-3c73a040ad74::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:10:13::error::/v1/api/order/readArchivedOrderHistory::198d6123-af91-4a32-8c1e-f77a4adfb0dd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:10:22::error::/v1/api/order/readMemberOrderHistory::d4376688-d30c-4f0a-9d6b-5b9775b6fbc0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:10:22::error::/v1/api/order/readArchivedOrderHistory::727f3a98-a67e-4554-8b6a-d05f380a51ee::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:10:47::error::/v1/api/order/readMemberOrderHistory::b17ea8be-5c57-40a4-9f3f-153edf20d278::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:10:47::error::/v1/api/order/readArchivedOrderHistory::03e396c8-5f4a-4757-9a17-855ded9582ff::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:10:57::error::/v1/api/order/readMemberOrderHistory::e425099e-25a4-484a-81d0-7440eaccb173::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:10:57::error::/v1/api/order/readArchivedOrderHistory::9529050f-6653-407d-8d7a-f1094cb113da::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:10:58::error::/v1/api/order/readMemberOrderHistory::d738c3b2-6ed4-4952-b052-8a77cf73dc49::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:10:58::error::/v1/api/order/readArchivedOrderHistory::cde63c74-9005-469c-80ba-10f9b7fffab7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:10:58::error::/v1/api/proposal/sendProposal/undefined::fff1234c-36d0-43c3-8bc0-e157435585ac::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}
+2024-07-15 13:11:15::error::/v1/api/order/readMemberOrderHistory::11e21245-9556-44b9-8942-5095aa26ae84::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:11:15::error::/v1/api/order/readArchivedOrderHistory::37e4dc0d-7730-4fb6-a3c6-05ee930105f9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:11:16::error::/v1/api/proposal/sendProposal/undefined::d26a240b-0844-49aa-8feb-07d40f8ed32b::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}
+2024-07-15 13:13:21::error::/v1/api/order/readMemberOrderHistory::bf5a78d1-7a3b-44e7-b4e4-48fbd26170ba::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:13:21::error::/v1/api/order/readArchivedOrderHistory::1b6c69ce-5144-448d-a1d4-7645412be030::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:13:52::error::/v1/api/order/readMemberOrderHistory::328daba3-7689-4329-abc5-3a1f037c4a49::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:13:52::error::/v1/api/order/readArchivedOrderHistory::575f2218-796e-4df7-8d66-1aa5d0ef713d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:14:09::error::/v1/api/order/readMemberOrderHistory::9106713d-2874-4349-b653-caf10b2d27df::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:14:09::error::/v1/api/order/readArchivedOrderHistory::c0807beb-9c24-4adb-aae9-b23e1d39353a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:14:12::error::/v1/api/order/readMemberOrderHistory::dab3ad89-2efe-4b5c-83af-b1b063b75219::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:14:12::error::/v1/api/order/readArchivedOrderHistory::035ae24e-db64-4069-868b-77dd4c7fbe31::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:49:16::error::/v1/api/order/readMemberOrderHistory::c3e8e141-3e6a-4ff5-8e92-5525fef8f17e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:49:16::error::/v1/api/order/readArchivedOrderHistory::f2954e5c-b11f-4f0f-89ba-30428752ada5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:50:00::error::/v1/api/order/readArchivedOrderHistory::edd5a6b0-c66f-4462-a95e-57cef5908240::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:50:00::error::/v1/api/order/readMemberOrderHistory::494512d6-4e8a-4c38-b723-46889aa5ecff::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:50:51::error::/v1/api/order/readMemberOrderHistory::5e1a3552-2612-45e9-a139-585a737e13c4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:50:51::error::/v1/api/order/readArchivedOrderHistory::690bc04b-b021-4a05-93e7-be9b71592470::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:55:05::error::/v1/api/order/readMemberOrderHistory::83e208c7-3c66-46e0-a58f-97709c2fcb47::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:55:05::error::/v1/api/order/readArchivedOrderHistory::17a0e0eb-1b45-42a2-b455-03353746589a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:57:15::error::/v1/api/order/readMemberOrderHistory::dab9d4bc-9800-46d7-9216-4026b360d77b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:57:15::error::/v1/api/order/readArchivedOrderHistory::0ffb5788-0caf-4789-aae3-54f6584cd7e0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:57:30::error::/v1/api/order/readMemberOrderHistory::50e17e74-84e4-48f8-a9e4-4c7832678a64::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:57:30::error::/v1/api/order/readArchivedOrderHistory::32ae7256-72ee-4582-a13d-40886e7a597f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:57:31::error::/v1/api/order/readMemberOrderHistory::a053aa44-eed3-47e3-a117-399dc2cc8e52::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:57:31::error::/v1/api/order/readArchivedOrderHistory::3574c9dc-5b43-4daf-a4b0-36baefcf1bea::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 13:59:19::error::/v1/api/order/readMemberOrderHistory::0c4385be-7b18-4992-821b-a7d05c3b9db2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 13:59:19::error::/v1/api/order/readArchivedOrderHistory::4902827a-3252-487a-9126-6a3e8e429b82::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:40:18::error::/v1/api/order/readMemberOrderHistory::0107c38c-d503-4f4d-86c8-931d68e29af1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:40:18::error::/v1/api/order/readArchivedOrderHistory::76bbd2a7-cfe0-4542-a6da-f116f5935278::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:55:27::error::/v1/api/order/readMemberOrderHistory::6b9ef7d8-3b22-4001-b061-91d3133de894::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:55:27::error::/v1/api/order/readArchivedOrderHistory::aa036e7a-3696-4b8c-8b3a-43ed211d85c0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:55:28::error::/v1/api/order/readMemberOrderHistory::6ca866d9-4823-487b-80c3-800b07148151::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:55:28::error::/v1/api/order/readArchivedOrderHistory::3c31009a-4113-4f3f-b9c1-488be12581ee::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:55:40::error::/v1/api/order/readMemberOrderHistory::88b39e1d-047c-473a-b478-c585a7718360::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:55:40::error::/v1/api/order/readArchivedOrderHistory::fb1db799-890b-467c-aa3a-bafda81ef0fd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:56:04::error::/v1/api/order/readArchivedOrderHistory::4004893c-312c-47bf-90e4-bd16727989f4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:56:04::error::/v1/api/order/readMemberOrderHistory::3a020e5f-0741-42eb-acba-9f641cd8d4b8::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:56:46::error::/v1/api/order/readArchivedOrderHistory::35c4db43-6f6b-4e83-963e-fc979bf29a63::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:56:46::error::/v1/api/order/readMemberOrderHistory::c4def750-7be6-4557-83e1-255cd4becde1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:56:47::error::/v1/api/order/readMemberOrderHistory::2a9f8e0e-a437-454c-910f-a2ecbbd3c825::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:56:47::error::/v1/api/order/readArchivedOrderHistory::d1ad4e74-eb96-4cf9-9302-bc4105583bd9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:56:50::error::/v1/api/order/readMemberOrderHistory::5c0a482e-c229-4041-a65c-c839fed0e59c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:56:50::error::/v1/api/order/readArchivedOrderHistory::3f0c7d3d-b25b-445b-ace6-4db97b590dcb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:56:55::error::/v1/api/proposal/sendProposal/undefined::e5d991e0-b6b1-44a3-b867-519feb24aa9a::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}
+2024-07-15 14:57:04::error::/v1/api/order/readArchivedOrderHistory::24c368ff-4050-493a-91ca-1931be046025::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:57:04::error::/v1/api/order/readMemberOrderHistory::03f06267-e014-4fe1-9836-58262d97afa4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:57:06::error::/v1/api/proposal/sendProposal/undefined::39222b43-31b5-449a-9e91-969de22d18e2::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Order\""}
+2024-07-15 14:57:14::error::/v1/api/order/readMemberOrderHistory::bfc27924-b5cd-43e3-9ac8-caf8c4cde8fb::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:57:14::error::/v1/api/order/readArchivedOrderHistory::0c91890d-ffe1-4799-adb7-1803507d38e4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:58:12::error::/v1/api/order/readMemberOrderHistory::ac47b30e-e737-49f4-af4d-8bbb7849bbaf::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:58:12::error::/v1/api/order/readArchivedOrderHistory::0b6f473f-c985-4410-a565-718de2b0cffc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:58:16::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::f91a4673-b78e-4ae9-be89-8cb6b92ff36c::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 14:59:12::error::/v1/api/order/readMemberOrderHistory::e5734294-95a3-4cbb-bf13-1b31b4f5a9da::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:59:12::error::/v1/api/order/readArchivedOrderHistory::3714332f-eb58-4393-b855-3e958e72e24e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:59:13::error::/v1/api/order/readMemberOrderHistory::a7188740-79bd-4f87-a7d9-c4e3279f9958::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:59:13::error::/v1/api/order/readArchivedOrderHistory::0d8d2ca2-7b1a-47f7-a8e6-70d871d17e23::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:59:29::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::8e35b88e-81da-4d2c-bc3f-32f9f4edcf37::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 14:59:52::error::/v1/api/order/readMemberOrderHistory::be50fb0d-8012-4ec2-94a6-212ead3fcd0e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:59:52::error::/v1/api/order/readArchivedOrderHistory::2b57e8e1-d502-4769-bc9b-4757e16c6da9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:59:53::error::/v1/api/order/readMemberOrderHistory::80393cff-3f38-48eb-8fca-a708b880c421::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 14:59:53::error::/v1/api/order/readArchivedOrderHistory::55d6cb4a-b840-4346-95de-7ca8f06e66ce::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 14:59:53::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::6d03df29-979e-4ee1-99f0-09c4ef9d45d1::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:00:10::error::/v1/api/order/readMemberOrderHistory::512c964f-c701-4739-99f7-0e1586e8ffe3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:00:10::error::/v1/api/order/readArchivedOrderHistory::49466d51-8661-4dd6-8d8f-25c83c85b574::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:00:12::error::/v1/api/order/readMemberOrderHistory::40cd6f26-bfaa-4572-bdb7-8b3a59b0b7f8::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:00:12::error::/v1/api/order/readArchivedOrderHistory::848ea0fd-5104-4371-bbbf-a8658db04f13::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:00:12::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::40d35a3a-20d5-4c96-8705-e202b5563c2a::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:00:23::error::/v1/api/order/readMemberOrderHistory::ca56563c-31ff-4ed0-95f7-140d0d2f2e81::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:00:23::error::/v1/api/order/readArchivedOrderHistory::24de34a9-6074-4770-9571-a2da3d5bba5b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:00:25::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::4598c562-be69-4ebe-ac53-691837c285b4::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:01:14::error::/v1/api/order/readMemberOrderHistory::c3100cf6-74fe-4d12-a547-d1cedc448533::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:01:14::error::/v1/api/order/readArchivedOrderHistory::26338783-da87-4305-9b7a-4b54558e3c20::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:01:15::error::/v1/api/order/readMemberOrderHistory::c311b44d-5241-4b36-a52e-bfae1e1bdcca::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:01:15::error::/v1/api/order/readArchivedOrderHistory::8f7eb1ff-f7e7-4e5b-8dd2-27a0598698ff::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:01:15::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::c1d5ece8-9636-44cf-a340-f4e4e669c38b::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:01:57::error::/v1/api/order/readMemberOrderHistory::aa28d17b-e8d3-4e75-9fb0-a7cdcf2061e7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:01:57::error::/v1/api/order/readArchivedOrderHistory::f48d3d15-ab2f-4246-9057-f90431b9927f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:01:57::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::aa8dca16-8875-413e-912e-771e5cb8d86b::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:02:38::error::/v1/api/order/readMemberOrderHistory::f4924bdc-6926-460b-ab1b-e9fb51acc7a0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:02:38::error::/v1/api/order/readArchivedOrderHistory::748c87ae-012c-41c3-9017-1c989893e06b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:02:45::error::/v1/api/order/readMemberOrderHistory::d43fa367-9833-472e-b72f-d879ec778a5a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:02:45::error::/v1/api/order/readArchivedOrderHistory::8578de80-8128-41b2-93ce-33d358fdefef::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:02:45::error::/v1/api/order/readMemberOrderHistory::c212f33d-ad0a-4201-b667-a88a1ac3af6b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:02:45::error::/v1/api/order/readArchivedOrderHistory::9f17f226-49f1-491d-bcaf-f5cb2f3d5513::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:03:07::error::/v1/api/order/readMemberOrderHistory::6a819faf-b673-49a7-9502-642da634dbd3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:03:07::error::/v1/api/order/readArchivedOrderHistory::bb7c99eb-bced-49fa-8f30-0dcb4256200b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:03:07::error::/v1/api/order/readMemberOrderHistory::1cc68963-cc1d-4985-a659-79609f225fe3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:03:08::error::/v1/api/order/readArchivedOrderHistory::f28792d7-8faf-4821-9563-d13444e8500b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:03:08::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::02f8f40c-8460-4aef-825e-bf84fea7b5d9::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:03:36::error::/v1/api/order/readMemberOrderHistory::e4d20ee4-6fc5-4ee1-aa22-028e820c171f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:03:36::error::/v1/api/order/readArchivedOrderHistory::0269cf60-e287-4e14-a7c9-6aba57b1bc57::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:03:37::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::ae092661-3ccf-4688-9253-f77011ee8d94::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:04:47::error::/v1/api/order/readMemberOrderHistory::cb4dd502-e69c-405b-8336-201039c18e7f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:04:47::error::/v1/api/order/readArchivedOrderHistory::57f15cad-7f9d-4fd1-bf10-3ecc5e4325d5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:04:47::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::2ea92fff-61c9-4dc1-a87d-f43cc646bbfa::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:04:58::error::/v1/api/order/readMemberOrderHistory::ed0ebf01-3755-4664-9f30-4187c950f862::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:04:58::error::/v1/api/order/readArchivedOrderHistory::bb44df89-75bf-4c0b-b1e3-19eb2fb85be8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:04:58::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::2d821931-e874-4bf1-8146-313a803d5e96::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:05:39::error::/v1/api/order/readMemberOrderHistory::1ddace21-1043-4584-8aad-f771e3e1b8d7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:05:39::error::/v1/api/order/readArchivedOrderHistory::3c30dd2f-5bdf-430b-af84-fd8cfacd33d2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:05:58::error::/v1/api/order/readMemberOrderHistory::1a6b8c31-d4ff-4f79-b1f4-f040c45527d9::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:05:58::error::/v1/api/order/readArchivedOrderHistory::26f4c881-7fe4-4b36-ad4b-e5ac1c26f406::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:05:58::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::0fcc17f4-3562-405e-96fe-fcd951702b60::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:06:40::error::/v1/api/order/readMemberOrderHistory::fd881e3f-180a-46f0-ad34-8acaa292c29b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:06:40::error::/v1/api/order/readArchivedOrderHistory::daf04ba8-203a-4286-97ae-c7fecac7d430::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:08:19::error::/v1/api/order/readMemberOrderHistory::8ccc79cb-3d06-49af-a1c1-85a0804e8799::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:08:19::error::/v1/api/order/readArchivedOrderHistory::991ae150-17ef-4249-83fc-ca5d01c8b683::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:08:27::error::/v1/api/order/readMemberOrderHistory::adf85078-5ad5-4bcd-bf7c-3a9535178740::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:08:27::error::/v1/api/order/readArchivedOrderHistory::fcf9c724-b120-4fbd-bc83-8182c50d4b82::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:08:27::error::/v1/api/order/readMemberOrderHistory::0178d909-855d-41c4-a308-6bc93d6ce901::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:08:27::error::/v1/api/order/readArchivedOrderHistory::089f5c48-f94a-4899-9491-9cd7796e4733::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:08:28::error::/v1/api/order/readMemberOrderHistory::b0d6add7-695b-4d15-8a76-ae230880cc34::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:08:28::error::/v1/api/order/readArchivedOrderHistory::50b940d6-160e-42c0-aa3f-d8df0597e0f3::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:08:29::error::/v1/api/order/readMemberOrderHistory::c9b66bbd-864f-4e92-b989-a163eca82929::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:08:29::error::/v1/api/order/readArchivedOrderHistory::3cbd4f4e-dbc4-4554-9223-e77cd6b6c62f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:08:29::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::31c31979-cf0b-4a64-94a5-81dc77df34c3::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:08:39::error::/v1/api/order/readMemberOrderHistory::561f1aba-8d35-43f0-82a8-52a248a57426::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:08:39::error::/v1/api/order/readArchivedOrderHistory::c1f7add6-7fbc-463a-995a-971b1156b276::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:09:31::error::/v1/api/order/readMemberOrderHistory::8f90a660-44be-4ba6-bb03-d4e7145ccf26::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:09:31::error::/v1/api/order/readArchivedOrderHistory::54ea2544-3f03-4ec9-9603-59b5bc17f758::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:09:48::error::/v1/api/order/readMemberOrderHistory::307e8475-bc25-4099-a6db-ee600b718bfd::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:09:48::error::/v1/api/order/readArchivedOrderHistory::7fdddf11-4462-40aa-b116-1d862421d83e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:10:11::error::/v1/api/order/readMemberOrderHistory::da813d97-85e1-4704-8c70-d73ebaea44ab::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:10:11::error::/v1/api/order/readArchivedOrderHistory::c09f4fd1-6835-4109-9e88-e22c38407069::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:10:12::error::/v1/api/order/readMemberOrderHistory::5f54e2c8-8388-49b6-bca0-b375eb114e9f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:10:12::error::/v1/api/order/readArchivedOrderHistory::4655aba8-1d41-4aab-8c68-9995409cf97a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:10:12::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::939e574b-b6fa-428d-b42d-d17efa1a445a::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:10:23::error::/v1/api/order/readMemberOrderHistory::652ea514-4978-4cd2-9c68-d97a2ceace17::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:10:23::error::/v1/api/order/readArchivedOrderHistory::409efb4d-85f2-44ef-ab77-d20c91720a9a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:11:24::error::/v1/api/order/readMemberOrderHistory::37ef02c1-396c-4108-b0f8-72ca29d3f9bf::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:11:24::error::/v1/api/order/readArchivedOrderHistory::e693f889-8636-4767-a51c-893d6aed8928::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:11:25::error::/v1/api/order/readMemberOrderHistory::3b7b030a-e2ff-4ba5-9e64-b8149f0a4200::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:11:25::error::/v1/api/order/readArchivedOrderHistory::193773a1-3689-41d2-9554-24ee68aae4c0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:11:25::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::c2805ad4-dd5c-4f1a-8b11-0c14ea2b5f6f::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:12:19::error::/v1/api/order/readMemberOrderHistory::ed71ef5d-e51d-4ee5-9643-f6db3040c8cb::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:12:19::error::/v1/api/order/readArchivedOrderHistory::c7512b85-a783-433f-803c-f6ffe9f7f55d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:12:19::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::d19f393f-aba5-4999-b69f-8cdb46b0353f::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'length')"}
+2024-07-15 15:13:14::error::/v1/api/order/readArchivedOrderHistory::d5e5f633-99da-4243-a84c-8780c2182bc8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:13:14::error::/v1/api/order/readMemberOrderHistory::f75c18f2-2c02-4ad1-aa89-0ca06f683813::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:13:14::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::c036ac00-52d2-4f87-b64d-aca48c0c466f::undefined - NaNms - Response: {"errors":{"artworks.0":{"stringValue":"\"[ '[object Object]', '[object Object]', '[object Object]' ]\"","valueType":"string","kind":"[ObjectId]","value":"[ '[object Object]', '[object Object]', '[object Object]' ]","path":"artworks.0","reason":{"stringValue":"\"[object Object]\"","valueType":"string","kind":"ObjectId","value":"[object Object]","path":"artworks","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"artworks\" because of \"BSONError\""},"name":"CastError","message":"Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}},"_message":"Proposal validation failed","name":"ValidationError","message":"Proposal validation failed: artworks.0: Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}::{"message":"Proposal validation failed: artworks.0: Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}
+2024-07-15 15:14:26::error::/v1/api/order/readMemberOrderHistory::b8e997a7-9207-475d-ac18-f7604523a51f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:14:26::error::/v1/api/order/readArchivedOrderHistory::a95ec70a-c5ed-4b67-b5fa-e516a3da4f83::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:14:28::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::1eb51f67-36c1-450e-a97a-470056b607a4::undefined - NaNms - Response: {"errors":{"artworks.0":{"stringValue":"\"[ '[object Object]', '[object Object]', '[object Object]' ]\"","valueType":"string","kind":"[ObjectId]","value":"[ '[object Object]', '[object Object]', '[object Object]' ]","path":"artworks.0","reason":{"stringValue":"\"[object Object]\"","valueType":"string","kind":"ObjectId","value":"[object Object]","path":"artworks","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"artworks\" because of \"BSONError\""},"name":"CastError","message":"Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}},"_message":"Proposal validation failed","name":"ValidationError","message":"Proposal validation failed: artworks.0: Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}::{"message":"Proposal validation failed: artworks.0: Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}
+2024-07-15 15:16:03::error::/v1/api/order/readMemberOrderHistory::7c694ae7-474c-4554-9e96-fcf24a15bf40::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:16:04::error::/v1/api/order/readArchivedOrderHistory::a33a61cf-57d2-4042-839b-4e1238ac969d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:16:37::error::/v1/api/order/readMemberOrderHistory::05eb9a68-c0fa-40d1-82d6-c83a09dc4fff::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:16:37::error::/v1/api/order/readArchivedOrderHistory::117a2e5b-503c-4fc3-896f-bb13d372c9d8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:16:38::error::/v1/api/order/readMemberOrderHistory::a5e6ff64-c057-428b-b859-a131298d12c6::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:16:38::error::/v1/api/order/readArchivedOrderHistory::a67316dc-3375-46b0-aad5-b11d0c863044::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:16:38::error::/v1/api/proposal/sendProposal/667fc0f53a96814dff38b57a::32029081-8c38-406e-ace4-f1c66c06f15c::undefined - NaNms - Response: {"errors":{"artworks.0":{"stringValue":"\"[ '[object Object]', '[object Object]', '[object Object]' ]\"","valueType":"string","kind":"[ObjectId]","value":"[ '[object Object]', '[object Object]', '[object Object]' ]","path":"artworks.0","reason":{"stringValue":"\"[object Object]\"","valueType":"string","kind":"ObjectId","value":"[object Object]","path":"artworks","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"artworks\" because of \"BSONError\""},"name":"CastError","message":"Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}},"_message":"Proposal validation failed","name":"ValidationError","message":"Proposal validation failed: artworks.0: Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}::{"message":"Proposal validation failed: artworks.0: Cast to [ObjectId] failed for value \"[ '[object Object]', '[object Object]', '[object Object]' ]\" (type string) at path \"artworks.0\" because of \"CastError\""}
+2024-07-15 15:16:43::error::/v1/api/order/readMemberOrderHistory::9f7656f8-35e2-485c-ae33-0d91e4301a21::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:16:43::error::/v1/api/order/readArchivedOrderHistory::1d3e10e0-89af-412c-b704-3cb746cb5b11::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:16:47::error::/v1/api/order/readMemberOrderHistory::d2e30d4a-9536-486c-9134-a3e1662dc55f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:16:47::error::/v1/api/order/readArchivedOrderHistory::ccce6293-1662-4bff-8a5c-aea89b1038da::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:16:48::error::/v1/api/order/readMemberOrderHistory::babba77f-9cc4-43c2-9ed6-6787485a7f81::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:16:48::error::/v1/api/order/readArchivedOrderHistory::e7b7251d-c716-4a08-b28d-699aca982747::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:17:07::error::/v1/api/order/readMemberOrderHistory::c5bc6c4f-d465-4fe9-b16a-bdf0a6fba26e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:17:07::error::/v1/api/order/readArchivedOrderHistory::c9c61a7c-6b10-4e58-8345-1ba7ecd2a762::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:18:20::error::/v1/api/order/readMemberOrderHistory::87516173-1cd6-44ad-9b43-a7d9ec913837::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:18:20::error::/v1/api/order/readArchivedOrderHistory::6a9bd806-d3da-4b28-8044-7bdf1f0b4670::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:18:44::error::/v1/api/order/readMemberOrderHistory::67cf4cd0-8d91-46cf-bc13-9489e3bb11ac::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:18:44::error::/v1/api/order/readArchivedOrderHistory::ea9275bc-3a07-422a-a550-f8de7c70fa7f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:18:44::error::/v1/api/order/readMemberOrderHistory::6f8ae166-ed73-4d1d-a05d-7251f842aea3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:18:44::error::/v1/api/order/readArchivedOrderHistory::ecc7db48-d204-4593-9210-aefda2d30395::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:18:52::error::/v1/api/order/readMemberOrderHistory::82eeafd1-ce9f-4fbf-bcd4-acbc491fa135::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:18:52::error::/v1/api/order/readArchivedOrderHistory::4729a503-bd8e-4ee1-8f7e-31cf4b64bc8d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:19:28::error::/v1/api/order/readMemberOrderHistory::fd2b159a-3ff0-40dc-aaef-45bbb07f2d13::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:19:28::error::/v1/api/order/readArchivedOrderHistory::43afbd0a-6b08-4e52-b7e1-2cff91cd2f5a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:19:32::error::/v1/api/order/readMemberOrderHistory::70cb2be9-836c-45a7-9cae-754344fb6695::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:19:32::error::/v1/api/order/readArchivedOrderHistory::5dcbef11-250e-4503-ac71-e01302c3098f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:19:33::error::/v1/api/order/readMemberOrderHistory::27250ea0-18dd-4ee5-8888-1e226f007c34::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:19:33::error::/v1/api/order/readArchivedOrderHistory::6e4514d0-7296-47b4-9b40-f963d87d1327::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:19:38::error::/v1/api/order/readMemberOrderHistory::229f7066-4879-4932-bd2f-c70d1c908610::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:19:38::error::/v1/api/order/readArchivedOrderHistory::c20fc04d-ee62-487e-88da-135d8a19be91::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:19:38::error::/v1/api/order/readMemberOrderHistory::2165a2da-7644-4881-a78d-366744c71476::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:19:38::error::/v1/api/order/readArchivedOrderHistory::e0fd6485-795a-4fa7-8f84-fbaa7c650c4b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:20:28::error::/v1/api/order/readMemberOrderHistory::7a4b1e95-42d9-462e-a394-7a7fa7608d64::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:20:28::error::/v1/api/order/readArchivedOrderHistory::1142d78b-3d0c-4ef6-91f7-5f71840ed5ad::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:20:32::error::/v1/api/order/readMemberOrderHistory::8d31e1f6-c386-4c6e-8acb-57a985f48439::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:20:32::error::/v1/api/order/readArchivedOrderHistory::52cf7201-8098-449a-91e9-597cf96a2b29::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:20:36::error::/v1/api/order/readArchivedOrderHistory::192ab748-bc2f-4cfe-a176-3b85e3468807::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:20:36::error::/v1/api/order/readMemberOrderHistory::5605e62b-05c8-47dd-8887-55eef7d7cb7b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:20:55::error::/v1/api/order/readMemberOrderHistory::901ee23a-490b-4d09-bad8-ddd3e67df1fa::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:20:55::error::/v1/api/order/readArchivedOrderHistory::59541ffa-e38b-480a-86a0-9741a945ab84::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:23:12::error::/v1/api/order/readMemberOrderHistory::6013adc3-0338-496c-952c-f8b79faf9e7c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:23:12::error::/v1/api/order/readArchivedOrderHistory::dda4e58e-17f4-4565-bff2-0c8b2951fe01::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:23:14::error::/v1/api/order/readMemberOrderHistory::08be5d1b-25d7-49f3-9410-6b1d9baf66f5::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:23:14::error::/v1/api/order/readArchivedOrderHistory::d6953c90-4223-498f-9c47-bdd07632d425::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:24:12::error::/v1/api/order/readArchivedOrderHistory::df98e851-d533-4a08-8edd-1a8c55030868::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:24:12::error::/v1/api/order/readMemberOrderHistory::61f7026c-3e0f-4acd-857d-e04af9f7892c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:24:22::error::/v1/api/order/readMemberOrderHistory::cd895a6e-c660-4268-a6b3-c5003f3d4527::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:24:22::error::/v1/api/order/readArchivedOrderHistory::473ee820-3d71-4442-8461-03a52414150a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:25:25::error::/v1/api/order/readMemberOrderHistory::8e39eaa6-9df5-4c39-a0a2-7a2ac03e258a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:25:25::error::/v1/api/order/readArchivedOrderHistory::d3df71fe-9395-40d2-8abc-598e838813d2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:25:27::error::/v1/api/order/readMemberOrderHistory::abe6647e-860c-4a6b-a9a3-1dfa1198e8e3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:25:27::error::/v1/api/order/readArchivedOrderHistory::6c61292c-4803-4c6a-bda7-1d30c3f6b7ee::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:25:38::error::/v1/api/order/readMemberOrderHistory::8bcfc51d-2f24-478a-a4ad-e963f9d71223::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:25:38::error::/v1/api/order/readArchivedOrderHistory::edec294d-8da6-4083-806b-ae8e4a16e337::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:25:40::error::/v1/api/order/readMemberOrderHistory::47c5be71-b1e4-44c0-91de-5d5c842fd5cc::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:25:40::error::/v1/api/order/readArchivedOrderHistory::b88ba04c-316a-4e19-b0bc-8cff571b7dc8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:26:04::error::/v1/api/order/readMemberOrderHistory::54e19449-f0ca-4fe6-86d3-4316cee323ce::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:26:04::error::/v1/api/order/readArchivedOrderHistory::d0c9665b-098c-4a69-ac88-12357f80c4be::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:26:12::error::/v1/api/order/readMemberOrderHistory::6ffb198e-f082-46ff-abba-fceae527cae8::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:26:12::error::/v1/api/order/readArchivedOrderHistory::eba84e32-615d-4114-9fc1-e9fc87d1da24::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:26:26::error::/v1/api/order/readMemberOrderHistory::97e078a4-d776-44c9-967e-665d9ff73a14::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:26:26::error::/v1/api/order/readArchivedOrderHistory::371d7316-1bcc-483e-9fa1-c526f4a1f170::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:26:27::error::/v1/api/order/readMemberOrderHistory::c57eef8d-9a9f-402b-9073-ea1ab3bdc004::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:26:27::error::/v1/api/order/readArchivedOrderHistory::8b4ab477-581a-4043-abe1-c0a638b249b7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:27:39::error::/v1/api/order/readMemberOrderHistory::725d6744-7f75-4be1-8dba-5340ead221f2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:27:39::error::/v1/api/order/readArchivedOrderHistory::844d098f-856c-4835-a8b7-624b64e14d85::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:28:06::error::/v1/api/order/readMemberOrderHistory::c2e40d3e-60c1-4bd8-b177-443cf9eafc1d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:28:06::error::/v1/api/order/readArchivedOrderHistory::c065310c-4b4f-4eed-93ea-6838ff37fc75::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:28:32::error::/v1/api/order/readMemberOrderHistory::ff1c59e8-760c-44ef-b424-1905adc352d2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:28:32::error::/v1/api/order/readArchivedOrderHistory::d2c3e03a-6261-40f0-bcd5-ae9c9f50cfc1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:28:33::error::/v1/api/order/readMemberOrderHistory::e8bc0b20-41a7-404c-9442-d67964166f98::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:28:33::error::/v1/api/order/readArchivedOrderHistory::f4f24e0b-c148-4612-8aa1-79461f33c76e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:28:38::error::/v1/api/order/readMemberOrderHistory::4b543db2-8e2e-4167-ab11-61865296bb75::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:28:38::error::/v1/api/order/readArchivedOrderHistory::b3586f7d-c826-45db-8be2-58395dc385fe::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:28:50::error::/v1/api/order/readMemberOrderHistory::ce926e1f-b465-4f51-8bef-4f2e8a6ff87a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:28:50::error::/v1/api/order/readArchivedOrderHistory::fe450b72-6fc6-47ef-a1bb-0f343dd6f4ef::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:28:52::error::/v1/api/order/readMemberOrderHistory::28c14353-16ae-498c-b51e-577681bb6b06::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:28:52::error::/v1/api/order/readArchivedOrderHistory::bebf51e1-ac2d-4e75-85fb-1a172cd29010::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:29:37::error::/v1/api/order/readMemberOrderHistory::a3a35144-06d2-48db-9538-8eef1d6b70c2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:29:37::error::/v1/api/order/readArchivedOrderHistory::9c7c6529-c146-4bac-91f9-e3d34a0c488c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:34:02::error::/v1/api/order/readMemberOrderHistory::6db36647-8e10-4672-8a72-61dcd3e9d6bc::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:34:02::error::/v1/api/order/readArchivedOrderHistory::a11fbf9e-478d-494f-9c39-5dafc7c7f578::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:34:31::error::/v1/api/order/readMemberOrderHistory::c8e93eea-40c9-45d5-9d67-efb9870e332d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:34:31::error::/v1/api/order/readArchivedOrderHistory::409bcaa2-cbfb-43f7-b525-dc11e7f1ec0f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:34:39::error::/v1/api/order/readMemberOrderHistory::6b8ee80c-a458-41a0-9cea-882e5bc8a283::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:34:39::error::/v1/api/order/readArchivedOrderHistory::2ecffe2f-7bce-4b22-a539-c944581b22da::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:34:47::error::/v1/api/order/readMemberOrderHistory::6710fbc1-3f61-45fb-9d8f-7737be0cfe67::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:34:47::error::/v1/api/order/readArchivedOrderHistory::9b06bf6a-9134-40d2-ab6b-072e628cf44d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:34:47::error::/v1/api/order/readArchivedOrderHistory::4982d01d-1bce-422d-87b3-51c8a1562bc8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:34:47::error::/v1/api/order/readMemberOrderHistory::54f7a383-e8d7-4a37-a1ed-dc8b495c010e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:34:51::error::/v1/api/order/readMemberOrderHistory::f0b1b4b9-1828-4e25-b37a-0b45966e38d1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:34:51::error::/v1/api/order/readArchivedOrderHistory::47c60392-3311-4428-9250-234e658aebb5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:04::error::/v1/api/order/readMemberOrderHistory::35d5c8bb-492b-4a66-9610-7b1ac330ea9b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:04::error::/v1/api/order/readArchivedOrderHistory::e27f6460-7bf0-4db9-95fc-48c3dea3117d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:20::error::/v1/api/order/readMemberOrderHistory::2a5c4a22-a5ed-46ab-b451-32eb3833f1f0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:20::error::/v1/api/order/readArchivedOrderHistory::8133713f-07a4-4e85-9b80-e860ddc1ef29::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:29::error::/v1/api/order/readMemberOrderHistory::6532aac3-87dd-4d7b-b2ea-b59fda029597::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:29::error::/v1/api/order/readArchivedOrderHistory::9fea25fe-2dbe-4605-9ead-8f09241b0b32::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:34::error::/v1/api/order/readMemberOrderHistory::d08a161e-bc72-4ccf-8628-d12e1accf3c9::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:34::error::/v1/api/order/readArchivedOrderHistory::b8958940-c684-4613-a98b-1886348a843b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:39::error::/v1/api/order/readMemberOrderHistory::fa2033f2-c3b0-489e-ae49-c6faac2c5392::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:39::error::/v1/api/order/readArchivedOrderHistory::98099c06-7fd6-4238-af44-4fb2ee4cf8f4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:44::error::/v1/api/order/readMemberOrderHistory::0f19508c-807d-4e95-b403-7da6f99332f4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:44::error::/v1/api/order/readArchivedOrderHistory::32327112-b5a1-47c8-9f9b-948f1ea2798e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:55::error::/v1/api/order/readMemberOrderHistory::42834557-918e-46de-84b3-4d0ae1b48ec1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:35:55::error::/v1/api/order/readArchivedOrderHistory::89b64af8-3699-4551-8c96-03a308394384::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:58::error::/v1/api/order/readArchivedOrderHistory::4c3f2b66-6183-4c41-9a5a-b85942f29313::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:35:58::error::/v1/api/order/readMemberOrderHistory::a31e4acf-056b-47ba-9916-110e49b27833::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:36:01::error::/v1/api/order/readMemberOrderHistory::2799f567-e3d2-49cd-b7b1-59e7493b8fd3::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:36:01::error::/v1/api/order/readArchivedOrderHistory::0553a530-9a60-4927-b5c8-015c6746031f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:37:20::error::/v1/api/order/readMemberOrderHistory::022f642f-fb43-4bea-bf83-8b87a87ae10a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:37:20::error::/v1/api/order/readArchivedOrderHistory::ec3411b8-f023-48b2-90fe-b3c35019827e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:37:34::error::/v1/api/order/readMemberOrderHistory::47d70c46-435f-4f44-a045-446103e73bed::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:37:34::error::/v1/api/order/readArchivedOrderHistory::f1910deb-f92b-4786-96bf-0cde5e1e790f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:37:43::error::/v1/api/order/readMemberOrderHistory::553930c9-9ca7-487e-90eb-9c994d3e9327::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 15:37:43::error::/v1/api/order/readArchivedOrderHistory::8448b981-f7a9-4ac8-adf8-88b26616abc8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 15:37:47::error::/v1/api/proposal/confirmProposal/undefined::ce21db5d-075f-496a-825a-f4921c7574f0::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Proposal\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Proposal\""}
+2024-07-15 16:42:37::error::/v1/api/order/readMemberOrderHistory::bc765679-4d78-4428-abed-d36cfa6e6e75::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:42:37::error::/v1/api/order/readArchivedOrderHistory::ed14a691-4b1a-4b3a-b28f-b0de2c8128cd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:42:42::error::/v1/api/order/readMemberOrderHistory::76365e55-c9ec-4ad6-91eb-b7e13d284006::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:42:42::error::/v1/api/order/readArchivedOrderHistory::e5c343a9-8135-467a-a23a-1deba9b7569c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:42:45::error::/v1/api/proposal/confirmProposal/undefined::f3233810-d6cc-460a-8cfd-84190a2dd493::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Proposal\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Proposal\""}
+2024-07-15 16:46:02::error::/v1/api/order/readMemberOrderHistory::70e7c27f-0513-4aec-9cea-3c6a05e0d817::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:46:02::error::/v1/api/order/readArchivedOrderHistory::eb2fb17f-2c68-4def-839a-f8eb5641a8e5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:46:26::error::/v1/api/order/readMemberOrderHistory::28d8e4ea-8a46-4b29-a93e-f1ad586791b7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:46:26::error::/v1/api/order/readArchivedOrderHistory::3187176b-c23d-4d82-a194-1848ca94fc69::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:46:53::error::/v1/api/order/readMemberOrderHistory::68620708-0c62-4c8c-b05f-9bd2de0e2086::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:46:53::error::/v1/api/order/readArchivedOrderHistory::faa3fb7a-d50d-4254-a166-0e73d256e859::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:47:24::error::/v1/api/order/readMemberOrderHistory::50d090db-f8ba-40e7-b48c-116206b3ca03::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:47:24::error::/v1/api/order/readArchivedOrderHistory::de77026e-2ec9-445f-a9fd-d2a0dc055dfe::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:47:38::error::/v1/api/order/readMemberOrderHistory::dca7e379-4fe0-4df2-aa2a-5d3e597dca5e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:47:38::error::/v1/api/order/readArchivedOrderHistory::ae2f7922-1b03-4921-8ae0-45ddf4245838::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:47:40::error::/v1/api/order/readMemberOrderHistory::28a861db-61bb-4c72-9705-5fed28fc4177::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:47:40::error::/v1/api/order/readArchivedOrderHistory::3f470f4b-5fee-4a61-a45d-4346728f42d8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:47:41::error::/v1/api/order/readMemberOrderHistory::3d62360b-f3fe-4ffa-919d-2c51f5b93d0a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:47:41::error::/v1/api/order/readArchivedOrderHistory::be5ecc9d-e87a-44ee-9a0f-fa8f77f67e0d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:48:24::error::/v1/api/order/readMemberOrderHistory::c15bb337-cccc-46a4-b9e4-60614508878b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:48:24::error::/v1/api/order/readArchivedOrderHistory::cd55d9f7-c708-48bb-b3cc-59687269d2b4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:48:45::error::/v1/api/order/readMemberOrderHistory::c8d6d29d-9476-48d5-be4b-f4e585397dd6::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:48:45::error::/v1/api/order/readArchivedOrderHistory::b7db8c32-a6d6-4cff-a8bd-fa4bb94a964e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:49:18::error::/v1/api/order/readMemberOrderHistory::8076fe58-c0d2-4911-911f-9a9339fbd28c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:49:18::error::/v1/api/order/readArchivedOrderHistory::50ad4d74-1f4d-428f-8afe-ab81fe8d9b9e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:49:40::error::/v1/api/order/readMemberOrderHistory::1415ce7f-be15-4549-b422-72ffeff35860::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:49:40::error::/v1/api/order/readArchivedOrderHistory::e2d5e1e7-44f9-42eb-ad97-38cb1c327b77::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:50:11::error::/v1/api/order/readMemberOrderHistory::4829dbd6-b3d2-4355-94c9-818593e164c1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:50:11::error::/v1/api/order/readArchivedOrderHistory::306e5de7-311a-4c0a-aa59-4c1fd07cff0a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:51:06::error::/v1/api/order/readMemberOrderHistory::caf45c7b-463d-4598-b60e-a39e639129af::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:51:06::error::/v1/api/order/readArchivedOrderHistory::951a0d2a-1ea6-4f1b-91d9-74e8cb8a3fa3::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:54:09::error::/v1/api/order/readMemberOrderHistory::47b36f25-0b0d-4e6f-a15f-d4eb6fa4cdab::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:54:09::error::/v1/api/order/readArchivedOrderHistory::b7dabe3d-1a64-4a64-8dd0-2c9515d10869::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:54:25::error::/v1/api/order/readMemberOrderHistory::3bb0708f-2b15-4ba5-9ace-57954bfd7072::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:54:25::error::/v1/api/order/readArchivedOrderHistory::f0330687-964e-4d1d-a08e-ff2838dc26f2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:54:40::error::/v1/api/order/readMemberOrderHistory::6ab02d94-e7e9-47e4-8d8a-9a150d637a30::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:54:40::error::/v1/api/order/readArchivedOrderHistory::78f55806-608a-4658-9bb5-dca7dd4c4373::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:59:11::error::/v1/api/order/readMemberOrderHistory::c04d62e1-ddb2-4b6f-87dd-89ef48066545::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:59:11::error::/v1/api/order/readArchivedOrderHistory::4e095d28-cbb8-44a8-9848-06ecee59abbd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:59:11::error::/v1/api/order/readMemberOrderHistory::bb57b7d4-4ee0-4292-a891-559d16e5cfb7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:59:11::error::/v1/api/order/readArchivedOrderHistory::d66a2332-bc25-45fd-8138-a86fb66b1e32::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 16:59:13::error::/v1/api/order/readMemberOrderHistory::cd63fc03-6f3d-4fbe-a9ce-9eef1ffaedeb::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 16:59:13::error::/v1/api/order/readArchivedOrderHistory::ff9e8513-f864-4fdf-8764-0ac39c9cfbb5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:00:13::error::/v1/api/order/readArchivedOrderHistory::0b547bba-da83-4b5e-a526-73fa738563bc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:00:13::error::/v1/api/order/readMemberOrderHistory::899cd5d1-34c1-4cf5-a83c-f0c36b5a4d6c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:00:14::error::/v1/api/order/readMemberOrderHistory::c694791b-498d-4dae-aca1-bae1b6c633e9::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:00:14::error::/v1/api/order/readArchivedOrderHistory::36a3248e-5991-4154-bba7-c0141c529e6b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:00:30::error::/v1/api/order/readMemberOrderHistory::71f27e1a-5959-420a-a9cc-a5ef34a28154::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:00:30::error::/v1/api/order/readArchivedOrderHistory::77355127-a3f3-4fa6-adae-c4f41bac2da9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:00:39::error::/v1/api/order/readMemberOrderHistory::510149ae-0213-4e57-bc09-e077055b7a7f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:00:39::error::/v1/api/order/readArchivedOrderHistory::1377380e-f011-4a24-9f96-6c805680c651::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:01:54::error::/v1/api/order/readMemberOrderHistory::76c4b363-af55-45e6-b3e1-14ba47086358::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:01:54::error::/v1/api/order/readArchivedOrderHistory::1c8bc991-3fcb-40de-b1dd-86ea25bc09c0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:03:34::error::/v1/api/order/readMemberOrderHistory::17261669-fbac-4638-b9b4-4797b4b9500d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:03:34::error::/v1/api/order/readArchivedOrderHistory::3d15f8c3-e4ff-4ad0-977b-d1450ee8a67b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:03:35::error::/v1/api/order/readMemberOrderHistory::38713080-f912-46e2-86e4-09a6feb0c699::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:03:35::error::/v1/api/order/readArchivedOrderHistory::38593e7f-02ba-4c45-8e3d-5a0e977287d9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:03:35::error::/v1/api/order/readMemberOrderHistory::93fcf432-e83d-44f3-9560-320faa16ef0d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:03:35::error::/v1/api/order/readArchivedOrderHistory::520c0615-56ee-4029-b65a-91085f1e73cc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:04:51::error::/v1/api/order/readMemberOrderHistory::2115ffcb-bfc1-4829-8135-9f97366357bf::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:04:51::error::/v1/api/order/readArchivedOrderHistory::b7c7958e-bf15-4f5e-8c3d-78b2b2f484c5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:05:04::error::/v1/api/order/readMemberOrderHistory::5b97a25b-3a20-4f49-b402-7e07729c5c71::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:05:04::error::/v1/api/order/readArchivedOrderHistory::3c3834ba-e0e7-4201-ac5a-77b881c29eaa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:05:27::error::/v1/api/order/readMemberOrderHistory::931bc087-9b65-4514-81c1-71871a62edba::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:05:27::error::/v1/api/order/readArchivedOrderHistory::4f79158b-8754-4060-8c02-271059bd54ef::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:05:34::error::/v1/api/order/readMemberOrderHistory::6f3acdbc-b529-41e7-9b62-aa2b62970648::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:05:34::error::/v1/api/order/readArchivedOrderHistory::fb6dab76-2063-4b64-b1f9-8cc21c4ae04d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:05:36::error::/v1/api/order/readMemberOrderHistory::3bb236d4-c1b5-4eee-85eb-d8755c2f80fd::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:05:36::error::/v1/api/order/readArchivedOrderHistory::9ae59700-d122-4f35-b595-3b856141865f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:05:59::error::/v1/api/order/readMemberOrderHistory::977385ea-f751-45b2-be2b-5d0dac6b9cb0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:05:59::error::/v1/api/order/readArchivedOrderHistory::dc089991-81ad-46bc-82a8-1b6b46ee78be::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:06:31::error::/v1/api/order/readMemberOrderHistory::00c4d6b8-88fb-48f3-a9c0-36f673ddbaf0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:06:31::error::/v1/api/order/readArchivedOrderHistory::6a4786f6-9a2e-4e33-a068-f22850f72c72::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:06:44::error::/v1/api/order/readArchivedOrderHistory::9cf6d2ba-e025-476c-84b0-e49cf11de31f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:06:44::error::/v1/api/order/readMemberOrderHistory::c1f1b810-8510-4bfa-8b59-a05e78788f7c::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:06:51::error::/v1/api/order/readMemberOrderHistory::031d2d7f-0c6a-4d4f-8a42-bb9dc641c756::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:06:51::error::/v1/api/order/readArchivedOrderHistory::f6b931d8-f2f9-486c-8341-f73afcdbc085::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:06:53::error::/v1/api/order/readMemberOrderHistory::c51cd374-e223-4162-aeba-add62852b5b2::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:06:53::error::/v1/api/order/readArchivedOrderHistory::b2ec3438-747b-4ae6-8434-95d907d5beaa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:07:06::error::/v1/api/order/readMemberOrderHistory::d2abcbe4-eb17-4329-a38e-53c089c71391::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:07:06::error::/v1/api/order/readArchivedOrderHistory::b280cdcf-ecad-4f1b-a897-a6953c015de8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:07:28::error::/v1/api/order/readMemberOrderHistory::5bef73ef-f070-4309-b934-6e3a838c1f18::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:07:28::error::/v1/api/order/readArchivedOrderHistory::c51ecac3-e60d-41bc-aa8d-9cd39e7918d1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:08:15::error::/v1/api/order/readMemberOrderHistory::fbecde6a-536c-4940-be3b-6d79087f22f1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:08:15::error::/v1/api/order/readArchivedOrderHistory::dc679308-cdac-4455-8647-a5794e047d4f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:08:16::error::/v1/api/order/readMemberOrderHistory::b1439869-918f-41f5-aeb9-dd215a1cc4c1::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:08:16::error::/v1/api/order/readArchivedOrderHistory::042ef658-9245-4626-815e-c63f72ef6512::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:08:17::error::/v1/api/order/readMemberOrderHistory::af01d55f-ce29-407d-bace-032849fb5db6::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:08:17::error::/v1/api/order/readArchivedOrderHistory::b0d67c6c-4e9d-4af9-bfda-896960846fd2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:08:34::error::/v1/api/order/readMemberOrderHistory::9716292a-c346-493d-a18e-2db6e0969b40::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:08:34::error::/v1/api/order/readArchivedOrderHistory::cd160c23-0acd-4240-80b9-54c7db21b141::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:09:24::error::/v1/api/order/readMemberOrderHistory::cc433242-1673-4511-9e50-88a08be6eaa6::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:09:24::error::/v1/api/order/readArchivedOrderHistory::3c27c115-adac-4f69-b674-43193e79dfb9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:09:33::error::/v1/api/order/readMemberOrderHistory::29ce96ce-550c-46d9-9c5b-6a03cdd903ca::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:09:33::error::/v1/api/order/readArchivedOrderHistory::4017fcd8-f5ac-45a8-a15c-b1b33b418970::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:09:46::error::/v1/api/order/readMemberOrderHistory::f9ead1ff-8fc8-4938-bb40-7395a2b11759::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:09:46::error::/v1/api/order/readArchivedOrderHistory::8b3afe2e-2f00-400e-8357-38ce21606945::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:10:12::error::/v1/api/order/readMemberOrderHistory::1d8b9726-8b38-4cd0-8a6d-25121662ac5a::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:10:12::error::/v1/api/order/readArchivedOrderHistory::5aa0e478-d1fe-4b3d-bdd0-7aaec1e7977d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:10:17::error::/v1/api/order/readMemberOrderHistory::4b1384d5-8d45-4e91-b324-1270aa1356fb::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:10:17::error::/v1/api/order/readArchivedOrderHistory::b31af7d7-8c7d-47f9-9e41-74e85f51b3fe::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:10:53::error::/v1/api/order/readMemberOrderHistory::b6012734-37a4-4adc-bd17-a0c66c186b75::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:10:53::error::/v1/api/order/readArchivedOrderHistory::e0cc4f66-e712-4d81-a5a9-bfeb3a9daf1c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:11:25::error::/v1/api/order/readMemberOrderHistory::bb62d433-61b3-45b0-aa83-615610e26034::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:11:25::error::/v1/api/order/readArchivedOrderHistory::33f8d8f5-03ed-457e-9b5c-d53a63e74b8b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:11:41::error::/v1/api/order/readMemberOrderHistory::5abe4abb-53c5-4b23-91ed-e339da0fec12::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:11:41::error::/v1/api/order/readArchivedOrderHistory::fbfe858f-fa79-43a0-87fc-02e046681af4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:11:45::error::/v1/api/order/readMemberOrderHistory::0c33c127-c246-4218-a0ad-bae75112f945::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:11:45::error::/v1/api/order/readArchivedOrderHistory::bad5c211-efff-413c-9039-0a3b239fd30a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:14:06::error::/v1/api/order/readMemberOrderHistory::dea1a4fd-13c8-4d09-a0d5-a0355d7150b7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:14:06::error::/v1/api/order/readArchivedOrderHistory::e31e29ae-ea7c-49a6-b493-4afb41228143::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:15:57::error::/v1/api/order/readArchivedOrderHistory::a89ac562-ed2f-4008-bd4f-ac5d02491281::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:15:57::error::/v1/api/order/readMemberOrderHistory::8363b7a1-de13-4f3d-88b9-89bbeb26eb8f::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:20:06::error::/v1/api/order/readMemberOrderHistory::0cd427d2-20b7-4e7e-b0bd-c6a96fe653c6::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:20:06::error::/v1/api/order/readArchivedOrderHistory::5a25119f-668c-44e3-9851-4ba2eb4d4337::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:20:07::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::978058f2-4d12-4542-adb5-f9e17f8bca0a::401 - 1ms - Response: {"status":401,"now":1721038807566}::{"message":"You are not authorized to confirm this proposal"}
+2024-07-15 17:21:27::error::/v1/api/order/readMemberOrderHistory::a2d9379c-a929-4588-9cac-600498536962::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:21:27::error::/v1/api/order/readArchivedOrderHistory::94ce86d3-fdbc-418b-aa72-26606b5d0eab::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:21:56::error::/v1/api/order/readMemberOrderHistory::d81c78a0-5abd-484e-87b9-f309eb3b9acd::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:21:56::error::/v1/api/order/readArchivedOrderHistory::df26b5bb-673e-4710-9e1a-dfbbbc594613::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:22:12::error::/v1/api/order/readMemberOrderHistory::048d0f31-60c4-4b6e-9a32-39ebbf79182b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:22:12::error::/v1/api/order/readArchivedOrderHistory::decaec0d-6fa8-4ead-9350-ccf7bad6cf4a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:22:13::error::/v1/api/order/readMemberOrderHistory::21159656-36be-41d9-948e-134fab7314a5::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:22:13::error::/v1/api/order/readArchivedOrderHistory::689bae50-6939-4ea4-94f4-260bf80dd3f7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:22:22::error::/v1/api/order/readMemberOrderHistory::b7ecbf83-8974-498a-8b57-0da0f366e0c7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:22:22::error::/v1/api/order/readArchivedOrderHistory::a94292b4-4429-480d-9d54-7fe1842a700c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:24:38::error::/v1/api/order/readMemberOrderHistory::2faaa7e5-cb3c-45c4-acec-59aa361d616e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:24:38::error::/v1/api/order/readArchivedOrderHistory::2ebdf211-398c-48d2-adfd-7a595889f539::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:25:14::error::/v1/api/order/readArchivedOrderHistory::41dd0f1a-564c-4979-bcb2-91f5015eef7e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:25:14::error::/v1/api/order/readMemberOrderHistory::60c3456b-6a4a-4ee9-8826-9e70a284f0d4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:26:33::error::/v1/api/order/readMemberOrderHistory::9c5af4e3-08db-4a67-87a4-b3a6ea7bb2a7::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:26:33::error::/v1/api/order/readArchivedOrderHistory::ebe0e364-c10a-441f-b314-f565b32c10f8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:27:24::error::/v1/api/order/readMemberOrderHistory::318341a3-ce02-422d-a69a-f37b9a492862::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:27:24::error::/v1/api/order/readArchivedOrderHistory::44ed46b4-cb02-4d3c-a0ca-c6531cfd56b8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:27:27::error::/v1/api/order/readMemberOrderHistory::262891ba-0a50-4285-9d54-5eca9d6e3b9d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:27:27::error::/v1/api/order/readArchivedOrderHistory::bfcae7b5-db75-4559-a281-7a8d467e3cfd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:27:35::error::/v1/api/order/readMemberOrderHistory::dd6ffad1-42f8-4359-ab99-8985d90a1ac0::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:27:35::error::/v1/api/order/readArchivedOrderHistory::6d58304e-f1e9-42a2-bfe6-1608c322c41d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:28:02::error::/v1/api/order/readMemberOrderHistory::81eb2850-d58b-4114-a5ff-5d6e94f1620b::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:28:02::error::/v1/api/order/readArchivedOrderHistory::55ecdbb4-b548-4e08-a6c0-78a2baa4a91a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:30:42::error::/v1/api/order/readMemberOrderHistory::306ead77-b316-40c2-8133-56f7be0e0c10::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:30:42::error::/v1/api/order/readArchivedOrderHistory::55457355-b52f-48cd-9cc1-4a6e7d78cd98::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:33:06::error::/v1/api/order/readMemberOrderHistory::f05cd301-a319-4f8e-947f-f9c74e4ee648::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:33:06::error::/v1/api/order/readArchivedOrderHistory::f28e49c8-5425-41cd-baf2-821fd380e1ae::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:33:06::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::9fe04716-e408-4cea-9f82-aceed95c55a6::undefined - NaNms - Response: {"code":"ERR_INVALID_ARG_TYPE"}::{"message":"The \"string\" argument must be of type string or an instance of Buffer or ArrayBuffer. Received an instance of Object"}
+2024-07-15 17:33:28::error::/v1/api/order/readArchivedOrderHistory::5ed4c60a-2297-4059-bf8a-3fccdc25f441::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:33:28::error::/v1/api/order/readMemberOrderHistory::36e110af-d630-4d0c-8d49-78fad2b356eb::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:35:50::error::/v1/api/order/readMemberOrderHistory::be436704-9a8d-4fd3-a936-5c35f4d07c52::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:35:50::error::/v1/api/order/readArchivedOrderHistory::f6d3ee52-86fc-41b3-acc6-d5e1a41d71d7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:36:02::error::/v1/api/order/readMemberOrderHistory::96f7f7d4-3cbc-42a5-952b-3b421c7f1b0e::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:36:02::error::/v1/api/order/readArchivedOrderHistory::7fd93eac-25ad-46a1-989b-16688a0d72af::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:36:05::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::677f1314-5df1-454b-8bb3-8fe9c7989937::401 - 0ms - Response: {"status":401,"now":1721039765790}::{"message":"You are not authorized to confirm this proposal"}
+2024-07-15 17:36:23::error::/v1/api/order/readMemberOrderHistory::85bdf6c3-e5e7-494e-8d41-27e0b8152c4d::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:36:24::error::/v1/api/order/readArchivedOrderHistory::7eb51bf4-46ba-4fcb-80ae-71a814cce248::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:36:26::error::/v1/api/order/readMemberOrderHistory::378a25dd-9fc0-43ca-80ee-fc91fccc2bfd::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:36:26::error::/v1/api/order/readArchivedOrderHistory::af249b39-0962-4a21-a3ea-e5d7cb7ff641::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:36:30::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::4b890247-6183-4d7c-b024-12bb7e919d4d::undefined - NaNms - Response: {"code":"ERR_INVALID_ARG_TYPE"}::{"message":"The \"string\" argument must be of type string or an instance of Buffer or ArrayBuffer. Received an instance of Promise"}
+2024-07-15 17:36:31::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::ed53c218-8d1c-4d52-91a7-e4900049ef11::undefined - NaNms - Response: {"code":"ERR_INVALID_ARG_TYPE"}::{"message":"The \"string\" argument must be of type string or an instance of Buffer or ArrayBuffer. Received an instance of Promise"}
+2024-07-15 17:36:58::error::/v1/api/order/readArchivedOrderHistory::9c994f6a-37c8-44e9-b5b8-fd5320347bc6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:36:58::error::/v1/api/order/readMemberOrderHistory::e08e052e-f8ff-48ac-8049-0e1511d68c33::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:40:33::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::45b9c1cf-fe2d-42bd-9568-36b5316344e1::undefined - NaNms - Response: {}::{"message":"https is not defined"}
+2024-07-15 17:40:46::error::/v1/api/order/readMemberOrderHistory::e9ae5063-f88b-4462-ba34-c7382877dbd4::undefined - NaNms - Response: {}::{"message":"OrderService.readMemberOrderHistory is not a function"}
+2024-07-15 17:40:46::error::/v1/api/order/readArchivedOrderHistory::5d9d175e-1411-436e-ba39-bd87540a2a23::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:46:00::error::/v1/api/order/readArchivedOrderHistory::09dc4f30-dd0e-4692-80a0-fd4e01ad8c0c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:46:04::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::9859f9db-04f8-444c-8266-8d49dda561e8::undefined - NaNms - Response: {}::{"message":"proposal.populate(...).execPopulate is not a function"}
+2024-07-15 17:46:26::error::/v1/api/order/readArchivedOrderHistory::25b95ec6-c8af-4548-809f-9d18708a0dff::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:47:14::error::/v1/api/order/readArchivedOrderHistory::6ebf5d92-14ad-40f2-aa1c-5d2d6b469a60::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:47:39::error::/v1/api/order/readArchivedOrderHistory::c9584118-7b86-483b-b0b3-7cdec85d8f95::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:47:52::error::/v1/api/order/readArchivedOrderHistory::340471e8-0319-4d10-85fb-e3ee367e3e9e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:47:53::error::/v1/api/order/readArchivedOrderHistory::dc4bb282-79ec-45db-a326-7615ad0cc1cd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:48:56::error::/v1/api/order/readArchivedOrderHistory::9411c29b-4f1a-4f2f-98e9-01ecf2fd6fcb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:49:33::error::/v1/api/order/readArchivedOrderHistory::5c8342c4-426f-406f-849c-5de471324efd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:49:50::error::/v1/api/order/readArchivedOrderHistory::42f92e86-4942-4d43-a5fe-47c630b73e61::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:50:20::error::/v1/api/order/readArchivedOrderHistory::3faeef41-35c7-4360-854f-01ebd6e4c5fa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:50:23::error::/v1/api/order/readArchivedOrderHistory::d345f6b6-19ce-4973-b778-114a3d737391::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:50:29::error::/v1/api/order/readArchivedOrderHistory::aba58893-eb11-479c-acd6-edbbeb91549e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:52:09::error::/v1/api/order/readArchivedOrderHistory::1bffcbd5-10e4-4b45-8226-b5bc2ea71492::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:52:10::error::/v1/api/proposal/confirmProposal/6694dbe14db0f8c27268d9e6::f3603b63-797e-4a28-a3d1-cfce2ad16a9a::undefined - NaNms - Response: {"code":"ERR_INVALID_ARG_TYPE"}::{"message":"The \"string\" argument must be of type string or an instance of Buffer or ArrayBuffer. Received an instance of Object"}
+2024-07-15 17:52:34::error::/v1/api/order/readArchivedOrderHistory::97419671-53d4-42a6-b63f-54b4ee13cdcd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:53:19::error::/v1/api/order/readArchivedOrderHistory::94f8f0c5-d962-4f6f-bd71-1b34b3fb061b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:53:24::error::/v1/api/order/readArchivedOrderHistory::f3b2f7bf-0b35-45e9-82be-512e6d966d86::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:53:49::error::/v1/api/order/readArchivedOrderHistory::567922c6-2614-4cdf-a62f-8ebff21ea058::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:53:51::error::/v1/api/order/readArchivedOrderHistory::ba1c3d21-2223-489a-95c2-f2c8a13003fb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:53:54::error::/v1/api/order/readArchivedOrderHistory::e3834337-cac1-42fd-b51e-6ef4b6b6a3a1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:54:33::error::/v1/api/order/readArchivedOrderHistory::47bb6de3-8008-4d34-a1bd-65fb07b36980::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:55:40::error::/v1/api/order/readArchivedOrderHistory::a9c055c7-73ae-4a65-bc65-9be6ebf2dbd6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:57:01::error::/v1/api/order/readArchivedOrderHistory::97202e3d-ca63-4646-b60e-d698f3963f7e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:57:07::error::/v1/api/order/readArchivedOrderHistory::39e96b1d-d533-41a4-8c9a-98e3fe356fe5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:57:10::error::/v1/api/order/readArchivedOrderHistory::0f8bf17d-2021-4e64-aff9-58ccd7588e96::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:57:19::error::/v1/api/order/readArchivedOrderHistory::dec02566-f1b7-4248-b328-d0cec7c77f09::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 17:57:53::error::/v1/api/order/readArchivedOrderHistory::b7010565-ee69-4a7a-beb4-c19e098463ac::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:13:44::error::/v1/api/order/readArchivedOrderHistory::b96b1891-555c-4e96-8247-9c689e0b5192::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:13:56::error::/v1/api/order/readArchivedOrderHistory::3c9fe6bb-8cc1-4dfa-a236-34279fc50e66::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:15:25::error::/v1/api/order/readArchivedOrderHistory::8122704f-0123-4168-97d4-34ffc440e1f7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:15:37::error::/v1/api/order/readArchivedOrderHistory::942a7017-eb8e-4e63-898d-6b64e2f4b7a3::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:16:53::error::/v1/api/order/readArchivedOrderHistory::9ef27bec-3b83-4ad0-91a7-5e2a42e26a12::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:16:55::error::/v1/api/order/readArchivedOrderHistory::a2d2fad1-ec74-43af-bc9b-5ada5034a09a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:17:25::error::/v1/api/order/readArchivedOrderHistory::3446dd24-2fe5-4c5a-a0ef-0deda46c887a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:17:34::error::/v1/api/order/readArchivedOrderHistory::f60e8e37-ed1e-4dd5-b716-574128393c8a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:17:47::error::/v1/api/order/readArchivedOrderHistory::e5dc577f-1b2d-47e6-b416-99984c166067::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:17:59::error::/v1/api/order/readArchivedOrderHistory::d0d49912-3e4a-41d2-8a0a-cdc81019c4fa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:18:07::error::/v1/api/order/readArchivedOrderHistory::0e5583b4-e971-4e2a-856e-98660da0f88b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:18:23::error::/v1/api/order/readArchivedOrderHistory::3676603d-b3c4-4d68-9e2c-2006d7baa13c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:18:51::error::/v1/api/order/readArchivedOrderHistory::1144738d-5704-4722-9831-d21d9b13323c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:18:56::error::/v1/api/order/readArchivedOrderHistory::2b020293-f5e3-40c8-8f37-44b7132333ff::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:19:02::error::/v1/api/order/readArchivedOrderHistory::80f0e687-ecf4-4c8c-8812-a542f4dc474d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:19:04::error::/v1/api/order/readArchivedOrderHistory::78c5c146-38b2-42d0-83fa-d3636ac86041::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:19:21::error::/v1/api/order/readArchivedOrderHistory::746d8640-796d-4c03-9585-fdcf84e4f6f9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:19:24::error::/v1/api/order/readArchivedOrderHistory::b8dcae63-7dc8-4542-bf9f-c625c16bf369::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:19:28::error::/v1/api/order/readArchivedOrderHistory::85493531-e71a-47e2-9ae7-f832cd817ec0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:20:16::error::/v1/api/order/readArchivedOrderHistory::2b12d7ad-37b9-448a-b6d5-cc58fe4cac14::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:21:49::error::/v1/api/order/readArchivedOrderHistory::45186704-98dc-4fea-9362-f858ccffc9d2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:21:57::error::/v1/api/order/readArchivedOrderHistory::d3064cb5-6149-4daf-b09e-220f5d387b8b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:22:36::error::/v1/api/order/readArchivedOrderHistory::6c9a074f-4c6d-4dc3-b468-d3a3e0575521::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:22:38::error::/v1/api/order/readArchivedOrderHistory::0e8bedfc-5356-4e9f-8c8e-e712fc017e75::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:23:35::error::/v1/api/order/readArchivedOrderHistory::36fc983e-68ea-4de2-8cae-3ee1444941b9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:23:40::error::/v1/api/order/readArchivedOrderHistory::cce71a37-cca3-455a-827b-3d41a894bc13::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:23:43::error::/v1/api/order/readArchivedOrderHistory::f509a0bf-490e-4c14-b6de-6a369d7bb629::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:24:30::error::/v1/api/order/readArchivedOrderHistory::721e3e89-c493-4b9c-8e79-5e62eb198768::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:24:39::error::/v1/api/order/readArchivedOrderHistory::e8bdc7ae-6b26-44c6-82c5-5edb6abb86ee::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:24:46::error::/v1/api/order/readArchivedOrderHistory::13d866df-af84-49f1-8b72-8749eefb5245::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:24:50::error::/v1/api/order/readArchivedOrderHistory::cbeed85b-f2fa-40c9-b207-0e8c10521398::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:24:53::error::/v1/api/order/readArchivedOrderHistory::c4b897f3-a41a-4526-9bf2-79ed90e58c46::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:24:57::error::/v1/api/order/readArchivedOrderHistory::289a1f1e-af24-428d-98f9-11821ff83fc2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:13::error::/v1/api/order/readArchivedOrderHistory::1fa5c44b-42a0-4c8f-9d57-89468a305a27::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:15::error::/v1/api/order/readArchivedOrderHistory::7d6fd83d-60be-4e9c-8e1f-45177bed8396::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:20::error::/v1/api/order/readArchivedOrderHistory::29e509ea-0412-4286-b4ad-e8edeb4a360d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:22::error::/v1/api/order/readArchivedOrderHistory::741118ed-04ae-44f3-b3ab-b573abf285b3::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:35::error::/v1/api/order/readArchivedOrderHistory::f39baede-03cf-4909-8363-069e7686e6a5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:39::error::/v1/api/order/readArchivedOrderHistory::77665aeb-9dd5-4207-9a65-2c8d9a470500::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:43::error::/v1/api/order/readArchivedOrderHistory::790f65a7-a05c-44e2-a0b4-2b79edad6a24::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:25:48::error::/v1/api/order/readArchivedOrderHistory::e9176130-f45d-44c7-b587-c04351743fcc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:26:28::error::/v1/api/order/readArchivedOrderHistory::0dc0326e-fc28-49b9-8e60-5220425fbb0c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:26:33::error::/v1/api/order/readArchivedOrderHistory::77c37309-9306-405a-b96b-c93b0e71b346::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:27:02::error::/v1/api/order/readArchivedOrderHistory::5e621668-1c85-4403-b142-30a6fa63e9c7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:27:16::error::/v1/api/order/readArchivedOrderHistory::4ae5b0e6-0c35-4678-b5ca-8e99c5b2b216::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:27:59::error::/v1/api/order/readArchivedOrderHistory::e45d6b4a-4dbf-4321-9ca9-a6c0407f3e73::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:28:24::error::/v1/api/order/readArchivedOrderHistory::cf421e7f-8e86-4926-b0c5-ab72e0d8921f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:28:58::error::/v1/api/order/readArchivedOrderHistory::d41d8367-976d-4e3e-9270-8cf983040afa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:29:02::error::/v1/api/order/readArchivedOrderHistory::46f05284-bf80-4049-a8eb-d3fb21615c38::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:29:07::error::/v1/api/order/readArchivedOrderHistory::87703dd0-ed82-4b3c-bcb0-afee79a75c47::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:29:07::error::/v1/api/order/readArchivedOrderHistory::44cc53c4-7150-4886-a67c-bc74fb93c0af::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:29:08::error::/v1/api/order/readArchivedOrderHistory::93a1be3a-7219-4b09-be8b-a41f620d1ab1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:33:31::error::/v1/api/order/readArchivedOrderHistory::35014fa7-5d17-40f6-ba2a-b8c2ee09ec75::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:33:32::error::/v1/api/order/readArchivedOrderHistory::9cd8816d-65d8-4ac2-83d7-dd99217f3b3e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:33:35::error::/v1/api/order/readArchivedOrderHistory::a9d6a3fd-f409-4da4-9f0f-3d2dd06dfdf6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:33:47::error::/v1/api/order/readArchivedOrderHistory::0af47ade-5c09-491a-96bd-64ae16a7a35f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:33:51::error::/v1/api/order/readArchivedOrderHistory::7f9d73fe-7e1b-4014-8a23-90388523dd44::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:33:52::error::/v1/api/order/readArchivedOrderHistory::f690da64-d758-4230-9ca5-7e7daf57ea2a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:34:01::error::/v1/api/order/readArchivedOrderHistory::6351a5b4-e9ff-49b7-a2e8-1bd0eec24170::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:34:07::error::/v1/api/order/readArchivedOrderHistory::e34c33c2-5fcb-455d-9a54-484ff7a5f152::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:34:17::error::/v1/api/order/readArchivedOrderHistory::604a41b8-d7ad-4de0-a598-8e4de7e3f574::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:34:24::error::/v1/api/order/readArchivedOrderHistory::9ea595ef-caa3-468f-bb79-2f8e63cd6cc9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:34:27::error::/v1/api/order/readArchivedOrderHistory::d22cbf9a-f873-4307-a371-9112a2e55b5d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:34:34::error::/v1/api/order/readArchivedOrderHistory::984f5936-e09b-4755-ac04-263fb0c69b1f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:35:02::error::/v1/api/order/readArchivedOrderHistory::9dd56f6d-66ea-4e67-b03b-ea0250776fc8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:39:10::error::/v1/api/order/readArchivedOrderHistory::54722937-da52-4bcc-af20-60dcf6e9c3fe::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:39:29::error::/v1/api/order/readArchivedOrderHistory::45f99396-6d9c-4dbe-92cb-6e6a91f0d7eb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:40:23::error::/v1/api/order/readArchivedOrderHistory::35bb90ce-abb6-4f7e-83f8-80b9ef9b3427::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:40:43::error::/v1/api/order/readArchivedOrderHistory::e58ca4d0-5528-423a-ad42-50d8c7939f42::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:40:44::error::/v1/api/order/readArchivedOrderHistory::04a0e560-e31f-43e4-abd6-ae187d494f37::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:40:49::error::/v1/api/order/readArchivedOrderHistory::ec0c01e7-8f96-4d41-bd8a-924cc3b10c1c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:42:20::error::/v1/api/order/readArchivedOrderHistory::daee00c0-fa95-41a8-af0c-f3b753fc5fda::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:42:32::error::/v1/api/order/readArchivedOrderHistory::40b56961-683c-4165-8b16-364a62e8c629::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:44:57::error::/v1/api/order/readArchivedOrderHistory::6c4972af-bfc7-414b-bd17-3ee9b94b2ea8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:45:33::error::/v1/api/order/readArchivedOrderHistory::0ff93f48-5d08-464f-b3c3-b22f19eaa261::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 18:45:54::error::/v1/api/order/readArchivedOrderHistory::ad43d3e1-ebe9-4fd8-ab67-fb2e5d52b5f1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:03:31::error::/v1/api/order/readArchivedOrderHistory::ffa95bca-febe-4d56-8780-1ffd03f7e359::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:03:44::error::/v1/api/order/readArchivedOrderHistory::7a0125ca-38c8-4367-9ffb-701639692c60::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:16:33::error::/v1/api/order/readArchivedOrderHistory::5514d93c-d004-4185-9bf2-d9ecdc6ca4c6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:16:43::error::/v1/api/order/readArchivedOrderHistory::ac63d6a9-26a6-4dea-b456-2a64216eb662::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:20:04::error::/v1/api/order/readArchivedOrderHistory::a508c45b-1976-442b-b64b-b97c0f990f64::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:21:38::error::/v1/api/order/readArchivedOrderHistory::0b7ecae9-263d-4142-8175-494987dc520b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:21:48::error::/v1/api/order/readArchivedOrderHistory::aff218f2-12e4-40ab-95b9-5de438e67d7b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:21:59::error::/v1/api/order/readArchivedOrderHistory::6cc34f44-6b48-42ca-b961-8bfc80076f89::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:22:54::error::/v1/api/order/readArchivedOrderHistory::90883815-da9c-4c9f-87d7-13ff88efef06::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:22:54::error::/v1/api/order/readArchivedOrderHistory::4f4fa051-5751-4fee-a5c3-0bf755708e74::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:23:01::error::/v1/api/order/readArchivedOrderHistory::6cf81cf5-92c9-4800-b366-fc32d32dee13::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:23:17::error::/v1/api/order/readArchivedOrderHistory::067fcece-400a-4ee7-a923-77e41f32e50e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:26:20::error::/v1/api/order/readArchivedOrderHistory::a9ccb5c3-e316-4980-b2fa-0c30056ce92b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:26:32::error::/v1/api/order/readArchivedOrderHistory::9c21e3b2-2541-4176-8c13-2bdd2119e397::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:28:17::error::/v1/api/order/readArchivedOrderHistory::d3a175c3-3883-4d9f-93ec-70d16d4a8d10::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:11::error::/v1/api/order/readArchivedOrderHistory::855781d3-a2d5-412d-afe3-34d8df4e0ffb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:12::error::/v1/api/order/readArchivedOrderHistory::8caef883-6e34-48ae-a985-48ae975206a9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:23::error::/v1/api/order/readArchivedOrderHistory::6df08948-fe3c-45ca-b46d-33fe1a3ae362::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:42::error::/v1/api/order/readArchivedOrderHistory::e5cebcfd-807c-4515-9f82-b8d7347743fa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:42::error::/v1/api/order/readArchivedOrderHistory::ff957501-7cae-4faf-b544-16dce5409803::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:51::error::/v1/api/order/readArchivedOrderHistory::4bddcefd-0cae-4665-9d10-d5f360d62091::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:29:52::error::/v1/api/order/readArchivedOrderHistory::65a04215-3fb6-4c49-946f-9d2c56fc243a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:30:24::error::/v1/api/order/readArchivedOrderHistory::80dba314-0dd4-467d-9ff8-d568c39fd9aa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:30:24::error::/v1/api/order/readArchivedOrderHistory::f986ade4-7d04-495e-a2a9-02215c717654::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:30:30::error::/v1/api/order/readArchivedOrderHistory::a555c90d-ae32-4475-9aca-7d21af5b1ce6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:30:30::error::/v1/api/order/readArchivedOrderHistory::53a77381-e1e1-42a2-a8bd-fb84cb24abaa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:31:56::error::/v1/api/order/readArchivedOrderHistory::097cfd43-a0f1-4fe4-8fdb-c5be12832f05::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:32:23::error::/v1/api/order/readArchivedOrderHistory::d864d311-b86a-4e6c-ae8f-0408ec0a8cf4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:32:34::error::/v1/api/order/readArchivedOrderHistory::7f74f96d-30e7-40b1-b412-3d40378cb3a9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:32:42::error::/v1/api/order/readArchivedOrderHistory::57313278-e7a7-4a05-86fe-4b2883945713::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:32:43::error::/v1/api/order/readArchivedOrderHistory::10681f8f-62db-4251-949c-4be59d35cdec::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:32:52::error::/v1/api/order/readArchivedOrderHistory::3e21f6d4-d674-48c0-9d0a-f69e72e98b05::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:33:20::error::/v1/api/order/readArchivedOrderHistory::0f6358d6-0c4f-4841-9ea0-80646de1e88c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:33:43::error::/v1/api/order/readArchivedOrderHistory::4ced51bd-cc7b-41db-a2d8-97db66dc099b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:33:53::error::/v1/api/order/readArchivedOrderHistory::d2da5bf6-82ad-4db2-b5b7-bd95850e21f7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:33:53::error::/v1/api/order/readArchivedOrderHistory::843505f9-09c2-4adf-b5c4-4e11ff609abf::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:34:21::error::/v1/api/order/readArchivedOrderHistory::8ab558c4-3a1d-4ad5-9218-9c455fb1852c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:34:33::error::/v1/api/order/readArchivedOrderHistory::abbc6653-fad7-498b-ab62-dc9c44e889ee::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:34:37::error::/v1/api/order/readArchivedOrderHistory::47651959-94bd-48ab-a34e-bc31b717c6a5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:34:48::error::/v1/api/order/readArchivedOrderHistory::87bd363f-b7f5-4fee-a193-49066e1ea614::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:35:00::error::/v1/api/order/readArchivedOrderHistory::4193a6d0-d0fc-4222-a1a1-bd6a8fde94b5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:35:21::error::/v1/api/order/readArchivedOrderHistory::6bbf5002-71f3-4c65-8102-179b9983b2cb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:35:48::error::/v1/api/order/readArchivedOrderHistory::03425de2-0923-4b9f-afe1-040488bb2012::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:35:55::error::/v1/api/order/readArchivedOrderHistory::5901a889-39fa-43c8-8676-26f430db3007::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:36:00::error::/v1/api/order/readArchivedOrderHistory::42d98237-a76b-4e8b-aef7-149c6418654b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:36:22::error::/v1/api/order/readArchivedOrderHistory::04db4f04-6989-407b-bcdd-ef30dba6e182::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:36:25::error::/v1/api/order/readArchivedOrderHistory::734e8755-9ffd-4905-9cad-0deeb85cd995::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:36:25::error::/v1/api/order/readArchivedOrderHistory::16a0cc0f-0abe-4bfd-ac44-107402752da8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:36:26::error::/v1/api/order/readArchivedOrderHistory::832967bd-549b-4fa3-8caa-bc5b46ba45f3::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:44:16::error::/v1/api/order/readArchivedOrderHistory::decfd2be-d147-41b7-a323-2b03c1dd8142::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:44:27::error::/v1/api/order/readArchivedOrderHistory::ccefb972-91c2-45cc-88ac-a64b8c187862::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:44:56::error::/v1/api/order/readArchivedOrderHistory::25a9a978-49a1-431c-9d42-a834edf6782a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:44:57::error::/v1/api/order/readArchivedOrderHistory::7e79195c-720e-468a-83fa-cb55239aeccc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:44:58::error::/v1/api/order/readArchivedOrderHistory::e77bfa83-7abf-485f-a99a-1cdd4e8204c7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:45:36::error::/v1/api/order/readArchivedOrderHistory::e9831bb5-4e5d-4b58-bd5b-e9c3a4912b34::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:45:40::error::/v1/api/order/readArchivedOrderHistory::4d017765-33a5-4ef3-a3c9-f380c8f5ba57::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-15 20:46:11::error::/v1/api/order/readArchivedOrderHistory::c72b3bb4-cfe9-4606-8964-28a56c9c88ca::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}

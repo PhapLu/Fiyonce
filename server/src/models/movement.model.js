@@ -9,5 +9,6 @@ const MovementSchema = new mongoose.Schema({
     timestamps: true,
     collection: COLLECTION_NAME
 })
+
 const Movement = mongoose.model(DOCUMENT_NAME, MovementSchema)
 export default Movement

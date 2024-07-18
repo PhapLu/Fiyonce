@@ -5,17 +5,46 @@
 }
 
 .img-preview-container {
-    display: flex ;
+    display: flex;
     flex-wrap: wrap;
     justify-content: start;
-    
+
     .img-preview-item {
         margin-right: 8px;
+        position: relative;
+
+
         .img-preview-item__img {
             width: 50px;
             height: 50px;
             border-radius: 4px;
             object-fit: cover;
+        }
+
+
+
+        &::after {
+            position: absolute;
+            background-color: white;
+            content: "";
+            width: 12px;
+            height: 12px;
+            top: 2px;
+            right: 2px;
+            border-radius: 2px;
+        }
+
+        &.active {
+            filter: brightness(0.5);
+            &::after {
+                content: "✓";
+                color: #008dd6;
+                font-size: 1.3rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: bold;
+            }
         }
     }
 }

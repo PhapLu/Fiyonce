@@ -84,8 +84,8 @@ body.dark {
     --rejected-status-bg-color: #2d2020;
     --rejected-status-color: #e20c0c;
 
-    --approved-status-bg-color: #e4f7db;
-    --approved-status-color: #82c011;
+    --approved-status-bg-color: #20271d;
+    --approved-status-color: #7ab114;
     // svg {
     //     stroke: var(--gray-3-color);
     //     stroke-width: 2px;
@@ -123,7 +123,6 @@ body {
     text-overflow: ellipsis;
     width: 100%;
     // overflow-y: hidden;
-    height: 50000px;
     font-size: 1.4rem;
     font-weight: 500;
     background-color: var(--white-3-color);
@@ -206,6 +205,14 @@ p {
     font-size: 1.4rem;
     line-height: 2rem;
     width: 100%;
+    word-break: break-all;
+}
+
+span {
+    font-size: 1.3rem;
+    line-height: 2rem;
+    word-break: break-all;
+    // width: 100%;
 }
 
 .fs-12 {
@@ -313,6 +320,19 @@ p {
     padding: 6px 8px;
     border-radius: 8px;
     font-size: 1.1rem;
+    position: relative;
+
+    .status__bg {
+        filter: blur(2px);
+        background-color: red;
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        // right: 0;
+        // bottom: 0;
+    }
+
+    .status__title {}
 
     &.pending {
         background-color: var(--pending-status-bg-color);
@@ -513,6 +533,10 @@ p {
     display: none;
 }
 
+.opacity-0 {
+    opacity: 0;
+}
+
 hr {
     border: none;
     height: 1px;
@@ -588,19 +612,19 @@ hr {
 }
 
 .flex-justify-space-between {
-    display: flex;
-    justify-content: space-between;
+    display: flex !important;
+    justify-content: space-between !important;
 }
 
 .flex-justify-center {
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    justify-content: center !important;
 }
 
 .flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .flex-align-center {
@@ -1176,7 +1200,7 @@ table {
         position: relative;
         text-align: center;
 
-        border-radius: 12px 0 0 12px;
+        border-radius: 8px 0 0 8px;
         padding: 28px 40px;
 
         line-height: 2rem;
@@ -1191,7 +1215,7 @@ table {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 12px 0 0 12px;
+            border-radius: 8px 0 0 8px;
             background: linear-gradient(to top, rgba(12, 12, 12, 0.7), rgba(0, 0, 0, 0));
         }
 
