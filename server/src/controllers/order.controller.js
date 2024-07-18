@@ -33,11 +33,26 @@ class OrderController{
 
     deleteOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Delete a order successfully!',
+            message: 'Delete order successfully!',
             metadata: await OrderService.deleteOrder(req.userId, req.params.orderId)
         }).send(res)
     }
 
+    archiveOrder = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Archive order successfully!',
+            metadata: await OrderService.archiveOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    
+    unarchiveOrder = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Archive order successfully!',
+            metadata: await OrderService.unarchiveOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+   
     //End Order CRUD
     readMemberOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
@@ -45,12 +60,21 @@ class OrderController{
             metadata: await OrderService.readMemberOrderHistory(req.userId)
         }).send(res)
     }
+
     readTalentOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read all orders of a client',
             metadata: await OrderService.readTalentOrderHistory(req.userId)
         }).send(res)
     }
+
+    readArchivedOrderHistory = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Read all orders of a client',
+            metadata: await OrderService.readArchivedOrderHistory(req.userId)
+        }).send(res)
+    }
+
     chooseProposal = async (req, res, next) => {
         new SuccessResponse({
             message: 'Choose talent success!',

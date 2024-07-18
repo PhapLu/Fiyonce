@@ -8,12 +8,12 @@ import "./CreateProposal.scss"
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../../../utils/formatter";
+import { isFilled } from "../../../utils/validator";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 
 export default function CreateProposal({ commissionOrder, termOfServices, setShowCreateProposal, setOverlayVisible, createProposalMutation }) {
-    console.log(commissionOrder)
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [selectedTermOfService, setSelectedTermOfService] = useState();
@@ -105,22 +105,27 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
         let errors = {};
 
         if (!isFilled(inputs.scope)) {
-            errors.movementId = "Vui lòng nhập mô tả";
+            errors.scope = "Vui lòng nhập mô tả";
         }
 
         if (!isFilled(inputs.startAt)) {
-            errors.serviceCategoryId = "Vui lòng chọn ngày dự kiến bắt đầu";
+            errors.startAt = "Vui lòng chọn ngày dự kiến bắt đầu";
         }
+
         if (!isFilled(inputs.deadline)) {
-            errors.serviceCategoryId = "Vui lòng chọn hạn chót";
+            errors.deadline = "Vui lòng chọn hạn chót";
+        }
+
+        if (!(selectedArtworks?.length > 1)) {
+            errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
         }
 
         if (!isFilled(inputs.price)) {
-            errors.title = "Vui lòng nhập giá trị đơn hàng";
+            errors.price = "Vui lòng nhập giá trị đơn hàng";
         }
 
         if (!isFilled(inputs.termOfServiceId)) {
-            errors.deliverables = "Vui lòng chọn 1 điều khoản dịch vụ";
+            errors.termOfServiceId = "Vui lòng chọn 1 điều khoản dịch vụ";
         }
 
         return errors;
@@ -136,30 +141,42 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
             return;
         }
 
-        const fd = createFormData(inputs, "files", selectedArtworks);
+        inputs.artworks = selectedArtworks.map((artwork) => artwork._id);
 
         try {
-            const response = await createProposalMutation.mutateAsync(fd);
+            const response = await createProposalMutation.mutateAsync({orderId: commissionOrder._id, inputs});
             if (response) {
                 setModalInfo({
                     status: "success",
-                    message: "Thêm dịch vụ thành công"
+                    message: "Tạo hợp đồng thành công"
                 })
-                setShowDeleteCommissionTosForm(false);
+                setShowCreateProposal(false);
                 setOverlayVisible(false);
             }
         } catch (error) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                serverError: error.response.data.message
-            }));
-            setModalInfo({
-                status: "error",
-                message: error.response.data.message
-            })
+            console.log(error)
+            // setErrors((prevErrors) => ({
+            //     ...prevErrors,
+            //     serverError: error.response.data.message
+            // }));
+            // setModalInfo({
+            //     status: "error",
+            //     message: error.response.data.message
+            // })
         } finally {
             setIsSubmitCreateProposalLoading(false);
         }
+    };
+
+    const toggleArtworkSelection = (artwork) => {
+        setSelectedArtworks((prevSelectedArtworks) => {
+            if (prevSelectedArtworks.includes(artwork)) {
+                return prevSelectedArtworks.filter((selectedArtwork) => selectedArtwork !== artwork);
+            } else if (prevSelectedArtworks.length < 5) {
+                return [...prevSelectedArtworks, artwork];
+            }
+            return prevSelectedArtworks;
+        });
     };
 
     const displayedSelectedArtworks = selectedArtworks.filter((selectedArtwork) => selectedArtwork !== null).slice(0, 5);
@@ -208,9 +225,11 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                         />
                     ))}
                 </div>
+                <br />
                 <h4>Phạm vi công việc: </h4>
-                <p>{inputs?.scope}</p>
-                <hr />
+                <div>
+                    <span className="w-100">{inputs?.scope}</span>
+                </div>
             </div>
 
             <div className="modal-form--right">
@@ -220,6 +239,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
                     <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
                     <textarea type="text" name="scope" value={inputs?.scope || "Nhập mô tả"} onChange={handleChange} className="form-field__input"></textarea>
+                    {errors.scope && <span className="form-field__error">{errors.scope}</span>}
                 </div>
 
                 <div className="form-field">
@@ -228,31 +248,37 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     <div className="img-preview-container border-text">
                         {artworks?.length > 0 && artworks?.map((artwork, index) => {
                             return (
-                                <div className="img-preview-item">
+                                <div key={artwork._id}
+                                    className={`img-preview-item ${selectedArtworks.includes(artwork) ? "active" : ""}`}
+                                    onClick={() => toggleArtworkSelection(artwork)}>
                                     <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
                                 </div>
                             )
                         })}
                     </div>
+
                     {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
                 </div>
 
                 <div className="form-field">
-                    <label htmlFor="title" className="form-field__label">Thời gian dự kiến</label>
+                    <label htmlFor="startAt" className="form-field__label">Thời gian dự kiến</label>
                     <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
                     <div className="half-split">
                         <label htmlFor="startAt">Bắt đầu</label>
-                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" />
+                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange}/>
                         -
                         <label htmlFor="deadline">Hạn chót</label>
-                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" />
+                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange}/>
                     </div>
+                    {errors.startAt && <span className="form-field__error">{errors.startAt}</span>}
+                    {errors.deadline && <span className="form-field__error">{errors.deadline}</span>}
                 </div>
 
                 <div className="form-field">
                     <label htmlFor="price" className="form-field__label">Giá trị đơn hàng (VND)</label>
                     <span className="form-field__annotation">Đưa ra mức giá chính xác mà bạn cần để thực hiện dịch vụ.</span>
                     <input type="number" name="price" placeholder="Nhập mức giá (VND)" className="form-field__input" onChange={handleChange} />
+                    {errors.price && <span className="form-field__error">{errors.price}</span>}
                 </div>
 
                 <div className="form-field">
@@ -263,9 +289,9 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                         {
                             termOfServices?.map((termOfService, index) => {
                                 return (
-                                    <div className="mb-8 " onClick={() => setSelectedTermOfService(termOfService)} key={index}>
+                                    <div className="mb-8 " key={index}>
                                         <label className="flex-align-center w-100">
-                                            <input type="radio" name="termOfServiceId" value={termOfService._id} />
+                                            <input type="radio" name="termOfServiceId" value={termOfService._id} onChange={handleChange} />
                                             {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
                                         </label>
                                     </div>)
@@ -276,6 +302,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                             <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
                         }
                     </div>
+                    {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
                 </div>
             </div>
 

@@ -16,11 +16,14 @@ router.use(verifyToken)
 //CRUD
 router.post('/createOrder', uploadFields, asyncHandler(orderController.createOrder))
 router.patch('/updateOrder/:orderId', uploadFields, asyncHandler(orderController.updateOrder))
-router.delete('/deleteOrder/:orderId', asyncHandler(orderController.deleteOrder))
+router.patch('/archiveOrder/:orderId', asyncHandler(orderController.archiveOrder))
+router.patch('/unarchiveOrder/:orderId', asyncHandler(orderController.unarchiveOrder))
+
 //END CRUD
 
 router.get('/readMemberOrderHistory', asyncHandler(orderController.readMemberOrderHistory))
 router.get('/readTalentOrderHistory', asyncHandler(orderController.readTalentOrderHistory))
+router.get('/readArchivedOrderHistory', asyncHandler(orderController.readArchivedOrderHistory))
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
 

@@ -17,6 +17,7 @@ import BasicInfo from "./pages/basicInfo/BasicInfo";
 import Explore from "./pages/explore/Explore";
 import ExplorePosts from "./pages/explorePosts/ExplorePosts";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
+import NotFound from "./pages/notFound/NotFound";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
@@ -76,7 +77,7 @@ const routes = [
       },
       {
         path: "/users/:userId/order-history",
-        element: <OrderHistory />,
+        element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
       },
       {
         path: "/users/:userId/basic-info",
@@ -93,9 +94,22 @@ const routes = [
         element: <Explore></Explore>,
         children: [
           {
-            path: "/explore",
+            path: "/explore/posts",
             element: <ExplorePosts showPosts={true} />,
+            children: [
+              // path: "/users/:userId/profile_posts/create",
+              // element: (
+              //   <CreatePost />
+              // ),
+              {
+                path: "/explore/posts/:postId",
+                element: (<RenderPost />),
+              },
+            ]
           },
+
+
+
           {
             path: "/explore/talents",
             element: <Talents showTalents={true} />,
@@ -145,6 +159,10 @@ const routes = [
   {
     path: "/forbidden",
     element: <Forbidden />,
+  },
+  {
+    path: "*",
+    element: <NotFound />, // Catch-all route for 404 Not Found
   },
 ];
 

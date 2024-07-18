@@ -1,22 +1,24 @@
+// Imports
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "react-query";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 // Utils
 import { apiUtils } from "../../../utils/newRequest";
+import { formatDate } from "../../../utils/formatter";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 // Styling
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import "./RenderPost.scss";
-import { formatDate } from "../../../utils/formatter";
+
 
 export default function RenderPost() {
     const { userId } = useParams();
     const { postId } = useParams();
     const navigate = useNavigate(); // Use the useNavigate hook
     const renderPostRef = useRef();
-    const { postCategories, movements } = useOutletContext();
 
     useEffect(() => {
         const handler = (e) => {
@@ -24,7 +26,7 @@ export default function RenderPost() {
                 if (userId) {
                     navigate(`/users/${userId}/profile_posts`); // Navigate to the previous page
                 } else {
-                    navigate(`/explore`); // Navigate to the previous page
+                    navigate(`/explore/posts`); // Navigate to the previous page
                 }
             }
         };
@@ -40,7 +42,6 @@ export default function RenderPost() {
             // Fetch posts data
             const response = await apiUtils.get(`/post/readPost/${postId}`);
             console.log(response.data.metadata.post)
-            console.log(postCategories)
             return response.data.metadata.post;
         } catch (error) {
             return null;
@@ -88,15 +89,15 @@ export default function RenderPost() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
 
-                    <div className="user md">
+                    <Link to={`/users/${post?.talentId._id}/profile_commission_services`} className="user md">
                         <div className="user--left">
-                            <img src={post?.talentId?.avatar} alt="" className="user__avatar" />
+                            <img src={resizeImageUrl(post?.talentId?.avatar, 100)} alt="" className="user__avatar" />
                             <div className="user__name">
                                 <div className="user__name__title">{post?.talentId?.fullName}</div>
                                 <div className="user__name__sub-title">{post?.talentId?.stageName}</div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                     <hr className="mb-16"/>
                     {post.movementId?.title && <button className="btn btn-4 br-16 mr-8">{post.movementId?.title}</button>}
                     {post.postCategoryId?.title && <button className="btn btn-4 br-16 mr-8">{post.postCategoryId?.title}</button>}

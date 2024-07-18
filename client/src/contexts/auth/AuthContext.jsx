@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
 
     // Fetch user profile data
     const fetchUserProfile = async () => {
+        // if (Cookies.get('accessToken')) {
         try {
             const response = await newRequest.get('/user/me');
             console.log(response.data.metadata.user)
@@ -60,6 +61,8 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             return null;
         }
+        // }
+        // return null;
     };
 
     useEffect(() => {
