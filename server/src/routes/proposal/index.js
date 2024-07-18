@@ -20,8 +20,9 @@ router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.upda
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 //END CRUD
 router.get('/readProposalsHistory', asyncHandler(proposalController.readProposalsHistory))
-router.post('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
 router.post('/generatePaymentUrl/:proposalId', asyncHandler(proposalController.generatePaymentUrl))
+router.post('/momoCallback', asyncHandler(proposalController.momoCallback))
+router.post('/readMomoOrderStatus', asyncHandler(proposalController.readMomoOrderStatus))
 router.patch('/denyProposal/:proposalId', asyncHandler(proposalController.denyProposal))
 
 export default router

@@ -51,10 +51,17 @@ class ProposalController{
         }).send(res)
     }
 
-    confirmProposal = async(req, res, next) =>{
+    momoCallback = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'MoMo callback success!',
+            metadata: await ProposalService.momoCallback(req.body)
+        }).send(res)
+    }
+
+    readMomoOrderStatus = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Confirm proposal for inDirect order success!',
-            metadata: await ProposalService.confirmProposal(req.userId, req.params.proposalId)
+            metadata: await ProposalService.readMomoOrderStatus(req.body)
         }).send(res)
     }
     

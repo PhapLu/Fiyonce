@@ -217,20 +217,20 @@ class ProposalService {
         }
     }
 
-    static confirmProposal = async (userId, proposalId, body) => {
-        const {orderId} = body
+    static readMomoOrderStatus = async (body) => {
+        const {momoOrderId} = body
 
-        const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`
+        const rawSignature = `accessKey=${accessKey}&orderId=${momoOrderId}&partnerCode=MOMO&requestId=${momoOrderId}`
 
         const signature = crypto
-        .createHmac('sha256', secretKey)
+            .createHmac('sha256', secretKey)
             .update(rawSignature)
             .digest('hex')
 
         const requestBody = {
             partnerCode: 'MOMO',
-            requestId: orderId,
-            orderId,
+            requestId: momoOrderId,
+            orderId: momoOrderId,
             signature,
             lang: 'vi'
         }
@@ -248,7 +248,7 @@ class ProposalService {
         }
 
         let result = await axios(options)
-
+        
         return {
             result: result.data
         }
