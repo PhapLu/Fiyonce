@@ -1,0 +1,43 @@
+2024-07-18 10:38:36::info::/v1/api/auth/users/login::665e9524-d5f8-4d5b-8ce2-f107eeb3a611::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-18 10:39:07::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::124b275c-73ff-4ac8-942d-7cf0753c3c79::input-params ::POST::::{}
+2024-07-18 10:41:56::info::/v1/api/proposal/confirmProposal/666aaf4544d8bb20faa9d649::400d79ca-ac5d-4b79-b79d-3c72650f61ba::input-params ::POST::::{}
+2024-07-18 16:35:43::info::/v1/api/user/me::89c125c1-03a8-42b2-87ff-32c5291decfa::input-params ::GET::::{}
+2024-07-18 16:35:44::info::/v1/api/movement/readMovements::d2c03560-24c0-401c-b9b6-14bccd410b5d::input-params ::GET::::{}
+2024-07-18 16:35:44::info::/v1/api/order/readOrders::b9323ec1-8dcf-40d7-a1f0-3b28af89d12e::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-18 16:35:56::info::/v1/api/movement/readMovements::0401573f-88a2-41d5-8482-00b481fd6e4e::input-params ::GET::::{}
+2024-07-18 16:35:56::info::/v1/api/order/readOrders::1eef9c6a-7a98-4ac9-af2e-46c2bc9b7bd1::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-18 16:35:57::info::/v1/api/movement/readMovements::72dd7b71-cbb6-4480-8401-0bc5426f75a5::input-params ::GET::::{}
+2024-07-18 16:35:57::info::/v1/api/user/me::ecb475a2-43f8-4d14-baf9-34243f5e5869::input-params ::GET::::{}
+2024-07-18 16:35:58::info::/v1/api/movement/readMovements::ea62e86f-03d2-4652-9972-e6b48f533f37::input-params ::GET::::{}
+2024-07-18 16:35:59::info::/v1/api/order/readOrders::376bba68-6cd0-449d-85b0-72b946a99584::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-18 16:36:03::info::/v1/api/auth/users/logout::5547b2ba-5982-4b10-b7ea-9cd2956d4474::input-params ::POST::::{}
+2024-07-18 16:36:03::info::/v1/api/user/me::24bb1ed6-e58d-4bed-aa16-a6ee46479937::input-params ::GET::::{}
+2024-07-18 16:36:03::error::/v1/api/user/me::24bb1ed6-e58d-4bed-aa16-a6ee46479937::403 - 2ms - Response: {"status":403,"now":1721295363302}::{"message":"Access token missing"}
+2024-07-18 16:36:06::info::/v1/api/user/me::31ad9e94-3493-4f0f-925d-fbb79d515448::input-params ::GET::::{}
+2024-07-18 16:36:06::error::/v1/api/user/me::31ad9e94-3493-4f0f-925d-fbb79d515448::403 - 7ms - Response: {"status":403,"now":1721295366785}::{"message":"Access token missing"}
+2024-07-18 16:36:06::info::/v1/api/movement/readMovements::f6bc8a59-a881-4470-b79f-457c2306759a::input-params ::GET::::{}
+2024-07-18 16:36:07::info::/v1/api/order/readOrders::66586751-b010-411a-989d-7e57f9e251ef::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-18 16:36:23::info::/v1/api/user/me::b1d81a45-bfb6-41e4-b2cc-cc0a6f5e57d3::input-params ::GET::::{}
+2024-07-18 16:36:23::error::/v1/api/user/me::b1d81a45-bfb6-41e4-b2cc-cc0a6f5e57d3::403 - 1ms - Response: {"status":403,"now":1721295383284}::{"message":"Access token missing"}
+2024-07-18 16:36:23::info::/v1/api/movement/readMovements::ad882f13-e0d7-4060-9cb5-86fe2e8ef4ad::input-params ::GET::::{}
+2024-07-18 16:36:33::info::/v1/api/movement/readMovements::5cb443f7-be57-4b24-8a7b-f9a7a2491824::input-params ::GET::::{}
+2024-07-18 16:36:33::info::/v1/api/user/me::69baa74e-ad29-4990-9971-5e4adf40f1ab::input-params ::GET::::{}
+2024-07-18 16:36:33::error::/v1/api/user/me::69baa74e-ad29-4990-9971-5e4adf40f1ab::403 - 0ms - Response: {"status":403,"now":1721295393955}::{"message":"Access token missing"}
+2024-07-18 16:36:38::info::/v1/api/user/me::2eb48c52-7bcf-421b-a47e-3a37c9c18669::input-params ::GET::::{}
+2024-07-18 16:36:38::error::/v1/api/user/me::2eb48c52-7bcf-421b-a47e-3a37c9c18669::403 - 0ms - Response: {"status":403,"now":1721295398076}::{"message":"Access token missing"}
+2024-07-18 16:36:38::info::/v1/api/movement/readMovements::d3105ec5-d265-460d-bbe4-7ccb1205975e::input-params ::GET::::{}
+2024-07-18 16:36:38::info::/v1/api/order/readOrders::44ae3f09-1c35-412d-b296-86c92287baba::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-18 16:36:43::info::/v1/api/user/me::69c4096d-3539-43fc-92d5-a565e297dbad::input-params ::GET::::{}
+2024-07-18 16:36:43::error::/v1/api/user/me::69c4096d-3539-43fc-92d5-a565e297dbad::403 - 1ms - Response: {"status":403,"now":1721295403484}::{"message":"Access token missing"}
+2024-07-18 16:36:43::info::/v1/api/movement/readMovements::ef337eab-f800-4b5f-aea1-b9ac17426b7f::input-params ::GET::::{}
+2024-07-18 16:36:45::info::/v1/api/user/me::40603a0b-2673-4072-88e1-69b60fd98554::input-params ::GET::::{}
+2024-07-18 16:36:45::error::/v1/api/user/me::40603a0b-2673-4072-88e1-69b60fd98554::403 - 0ms - Response: {"status":403,"now":1721295405433}::{"message":"Access token missing"}
+2024-07-18 16:36:45::info::/v1/api/movement/readMovements::eff649fb-253b-41b9-bbba-b3acbc54909d::input-params ::GET::::{}
+2024-07-18 16:36:45::info::/v1/api/order/readOrders::c884eb8b-d1e2-48e0-923a-bbad58cbb5a1::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-18 19:16:41::info::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::c17e089b-97df-462a-90f3-3029c877dd6d::input-params ::POST::::{}
+2024-07-18 19:16:41::error::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::c17e089b-97df-462a-90f3-3029c877dd6d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-18 19:17:50::info::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::0fde2e0f-5e34-4ab0-b8f6-409e873c37d1::input-params ::POST::::{}
+2024-07-18 19:17:50::error::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::0fde2e0f-5e34-4ab0-b8f6-409e873c37d1::403 - 2ms - Response: {"status":403,"now":1721305070835}::{"message":"Order is not approved"}
+2024-07-18 19:18:46::info::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::422bd49e-6583-47cb-b29e-91eb3ecb9dcc::input-params ::POST::::{}
+2024-07-18 19:43:07::info::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::6c3af28c-5ec4-4eea-b553-2dbb691169e9::input-params ::POST::::{}
+2024-07-18 19:44:13::info::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::200d92bf-b0d0-45bd-8dc7-516d8e423dc0::input-params ::POST::::{}

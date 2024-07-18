@@ -21,7 +21,7 @@ class MomoService{
     static generatePaymentData = async(amount) => {
         const orderId = partnerCode + new Date().getTime()
         const requestId = orderId
-        const requestType = 'payWithMethod'
+        const requestType = 'captureWallet'
         const orderInfo = 'pay with MoMo'
         const extraData = ''
         const autoCapture = true

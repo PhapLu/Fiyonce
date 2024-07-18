@@ -46,7 +46,8 @@ const OrderSchema = new mongoose.Schema({
         userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         rating: { type: Number},
         comment: { type: String},
-    }
+    },
+    momoOrderId: { type: String },
 },{
     timestamps: true,
     collection: COLLECTION_NAME

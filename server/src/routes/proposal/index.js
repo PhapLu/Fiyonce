@@ -21,6 +21,7 @@ router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.del
 //END CRUD
 router.get('/readProposalsHistory', asyncHandler(proposalController.readProposalsHistory))
 router.post('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
+router.post('/generatePaymentUrl/:proposalId', asyncHandler(proposalController.generatePaymentUrl))
 router.patch('/denyProposal/:proposalId', asyncHandler(proposalController.denyProposal))
 
 export default router

@@ -97,7 +97,6 @@ class OrderService {
             return order
         }))
 
-
         return {
             orders: ordersWithCounts
         }
