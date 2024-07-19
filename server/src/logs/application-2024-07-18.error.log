@@ -7,3 +7,36 @@
 2024-07-18 16:36:45::error::/v1/api/user/me::40603a0b-2673-4072-88e1-69b60fd98554::403 - 0ms - Response: {"status":403,"now":1721295405433}::{"message":"Access token missing"}
 2024-07-18 19:16:41::error::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::c17e089b-97df-462a-90f3-3029c877dd6d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
 2024-07-18 19:17:50::error::/v1/api/proposal/generatePaymentUrl/666aaf4544d8bb20faa9d649::0fde2e0f-5e34-4ab0-b8f6-409e873c37d1::403 - 2ms - Response: {"status":403,"now":1721305070835}::{"message":"Order is not approved"}
+2024-07-18 20:26:59::error::/v1/api/order/readOrders::6465d848-0063-4432-a653-c6750aaea990::undefined - NaNms - Response: {}::{"message":"Operation `Orders.find()` buffering timed out after 10000ms"}
+2024-07-18 20:27:02::error::/v1/api/auth/users/login::6a2a9888-12e5-4133-8715-54dbd37d09a1::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:32:20::error::/v1/api/movement/readMovements::36085f74-4665-4cb1-9d87-2a3da62dddc5::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-18 20:32:20::error::/v1/api/user/me::dcb12ef3-effa-49f5-a98d-05edef76679b::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:32:20::error::/v1/api/order/readOrders::a56d0963-b543-44f2-83a8-3bec43f0bd4d::undefined - NaNms - Response: {}::{"message":"Operation `Orders.find()` buffering timed out after 10000ms"}
+2024-07-18 20:34:38::error::/v1/api/user/me::2ee90055-b631-4a0b-a051-ccb6802df9cf::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:34:38::error::/v1/api/movement/readMovements::b06ff12a-0ac9-4ec2-a3b7-71b3d5935123::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-18 20:34:38::error::/v1/api/order/readOrders::1f609864-ce51-4a22-b4f6-569cf0cf68f5::undefined - NaNms - Response: {}::{"message":"Operation `Orders.find()` buffering timed out after 10000ms"}
+2024-07-18 20:34:48::error::/v1/api/auth/users/login::917d6718-479f-4b37-8303-2b0c5e3a4686::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:35:07::error::/v1/api/order/readOrders::247663ce-430b-4922-a81b-9d1ea2c20423::undefined - NaNms - Response: {}::{"message":"Operation `Orders.find()` buffering timed out after 10000ms"}
+2024-07-18 20:35:07::error::/v1/api/user/me::2d8650d8-2ed7-497c-afae-3c55d9b6be43::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:35:07::error::/v1/api/movement/readMovements::9e5ade03-9810-4585-913b-c37bdc0637a5::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-18 20:35:29::error::/v1/api/user/me::5c80b118-cb38-4b35-9da1-1211f38d6d56::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:35:29::error::/v1/api/movement/readMovements::b04bcd0f-c18c-4ad3-a0c2-9d23aa0754cc::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-18 20:35:29::error::/v1/api/order/readOrders::da3f04e6-4a10-45d7-b4f8-8efb3510964a::undefined - NaNms - Response: {}::{"message":"Operation `Orders.find()` buffering timed out after 10000ms"}
+2024-07-18 20:35:44::error::/v1/api/user/me::048d1ddb-4704-47b8-bf3a-26cfa682e3fd::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-18 20:35:44::error::/v1/api/movement/readMovements::9443e52a-ef1d-4e17-b679-de94f81f7748::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-18 20:35:44::error::/v1/api/order/readOrders::f8f17a4f-2856-444d-a30c-ee6b14102c95::undefined - NaNms - Response: {}::{"message":"Operation `Orders.find()` buffering timed out after 10000ms"}
+2024-07-18 20:36:09::error::/v1/api/user/me::586f39bf-d162-41c2-a7bf-8776581a43f8::403 - 0ms - Response: {"status":403,"now":1721309769923}::{"message":"Access token missing"}
+2024-07-18 20:37:48::error::/v1/api/user/me::7be25ba8-0d59-4e67-ab47-23fb90487479::403 - 1ms - Response: {"status":403,"now":1721309868857}::{"message":"Access token missing"}
+2024-07-18 20:38:31::error::/v1/api/user/me::879b6da3-305b-454a-a6cd-8d3a4c9024e6::403 - 0ms - Response: {"status":403,"now":1721309911380}::{"message":"Access token missing"}
+2024-07-18 20:38:31::error::/v1/api/user/me::38f10688-1edf-40eb-9e3f-42e9455762ef::403 - 0ms - Response: {"status":403,"now":1721309911517}::{"message":"Access token missing"}
+2024-07-18 21:43:25::error::/v1/api/user/me::122c147d-1909-4017-8329-ed000e0ca842::403 - 0ms - Response: {"status":403,"now":1721313805667}::{"message":"Access token missing"}
+2024-07-18 21:44:01::error::/v1/api/user/me::15c36cba-1054-44ba-a991-591389738fd3::403 - 0ms - Response: {"status":403,"now":1721313841614}::{"message":"Access token missing"}
+2024-07-18 21:44:11::error::/v1/api/user/me::6ad10ce0-4610-405c-9e48-34638075303d::403 - 0ms - Response: {"status":403,"now":1721313851549}::{"message":"Access token missing"}
+2024-07-18 21:44:15::error::/v1/api/user/me::9dfb8d48-3089-4f8a-ba80-9c82faced6e0::403 - 0ms - Response: {"status":403,"now":1721313855316}::{"message":"Access token missing"}
+2024-07-18 21:45:01::error::/v1/api/user/me::8853fde1-79a6-4c9b-a071-66d5f0bad232::403 - 0ms - Response: {"status":403,"now":1721313901691}::{"message":"Access token missing"}
+2024-07-18 21:45:22::error::/v1/api/user/me::84ed0815-f451-46de-b52b-5673990caf3d::403 - 0ms - Response: {"status":403,"now":1721313922646}::{"message":"Access token missing"}
+2024-07-18 21:45:38::error::/v1/api/user/me::76d67c74-9e68-499d-87fe-d43531a11803::403 - 0ms - Response: {"status":403,"now":1721313938628}::{"message":"Access token missing"}
+2024-07-18 21:45:46::error::/v1/api/user/me::4e56987d-cca1-41f8-9720-06cad9877f78::403 - 0ms - Response: {"status":403,"now":1721313946178}::{"message":"Access token missing"}
+2024-07-18 21:46:52::error::/v1/api/user/me::a50f2354-3266-4da3-b304-17be3448a8f9::403 - 0ms - Response: {"status":403,"now":1721314012354}::{"message":"Access token missing"}
+2024-07-18 21:46:52::error::/v1/api/user/me::3ac9fa3b-6269-432a-9d2b-1ba98468fd7b::403 - 0ms - Response: {"status":403,"now":1721314012617}::{"message":"Access token missing"}
+2024-07-18 21:46:57::error::/v1/api/user/me::b713c10c-b102-40ec-99ae-2a11a21bb2ae::403 - 0ms - Response: {"status":403,"now":1721314017318}::{"message":"Access token missing"}
