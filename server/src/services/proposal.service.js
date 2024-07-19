@@ -208,8 +208,10 @@ class ProposalService {
         console.log(body)
         //Confirm order
         const order = await Order.findOne({momoOrderId: body.orderId})
-        order.status = 'confirmed'
-        await order.save()
+        if(body.resultCode == 0){
+            order.status = 'confirmed'
+            await order.save()
+        }
 
         return {
             order,
