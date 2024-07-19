@@ -195,7 +195,6 @@ class ProposalService {
         //5. Update order with MoMo order id
         order.momoOrderId = paymentResponse.data.orderId
         await order.save()
-        console.log(order)
         
         return {
             paymentData,
