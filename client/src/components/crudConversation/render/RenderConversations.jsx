@@ -62,7 +62,9 @@ export default function RenderConversations({ setShowRenderConversation, setShow
                                     <div className="user__name">
                                         <div className="user__name__title">{conversation?.otherMember?.fullName}</div>
                                         <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenConversations?.some(unSeenConversation => unSeenConversation._id === conversation._id) && "fw-bold"}`}>
-                                            {`${conversation?.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {limitString(conversation?.lastMessage?.content, 10) || (conversation?.lastMessage?.media && (conversation?.lastMessage?.senderId === userInfo._id ? "Bạn đã gửi một ảnh" : "Đã gửi một ảnh"))}
+                                            <span>
+                                                {`${conversation?.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {limitString(conversation?.lastMessage?.content, 10) || (conversation?.lastMessage?.media && (conversation?.lastMessage?.senderId === userInfo._id ? "Bạn đã gửi một ảnh" : "Đã gửi một ảnh"))}
+                                            </span>
                                             <span className="dot-delimiter sm"></span>
                                             <span className="fs-12 downlight-text fw-500">{formatTimeAgo(conversation.updatedAt)}</span>
                                         </div>

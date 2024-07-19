@@ -128,3 +128,13 @@
 2024-07-19 11:05:46::error::/v1/api/order/readTalentOrderHistory::168e75e4-632c-44f2-b6c2-fe8e2d6981a3::403 - 0ms - Response: {"status":403,"now":1721361946188}::{"message":"You are not a talent!"}
 2024-07-19 11:19:27::error::/v1/api/order/readTalentOrderHistory::ebbb685b-e6de-47d0-a256-2c7abc0d98d1::403 - 1ms - Response: {"status":403,"now":1721362767188}::{"message":"You are not a talent!"}
 2024-07-19 11:22:11::error::/v1/api/user/me::4da79bda-fc2f-469a-9c8c-7a355adaf9cf::403 - 1ms - Response: {"status":403,"now":1721362931199}::{"message":"Access token missing"}
+2024-07-19 16:52:53::error::/v1/api/user/me::255fefe0-3315-495a-911b-5838419b0d53::403 - 1ms - Response: {"status":403,"now":1721382773592}::{"message":"Access token missing"}
+2024-07-19 16:52:58::error::/v1/api/user/followUser/665edd23fa87b27398b73d10::8e2e7a68-59cd-4222-9774-b83a7128f209::401 - 1ms - Response: {"status":401,"now":1721382778808}::{"message":"You are not authenticated!"}
+2024-07-19 16:53:03::error::/v1/api/user/me::a39f1e5d-a929-4688-8ece-aec8ccdba1d4::403 - 0ms - Response: {"status":403,"now":1721382783206}::{"message":"Access token missing"}
+2024-07-19 16:53:04::error::/v1/api/conversation/readConversationWithOtherMember/665edd23fa87b27398b73d10::d3e3af59-7bab-4fac-82ce-6f73cc67add8::401 - 0ms - Response: {"status":401,"now":1721382784184}::{"message":"You are not authenticated!"}
+2024-07-19 16:54:40::error::/v1/api/user/me::b2bf0de4-717e-41cd-86c0-d081bab353e4::403 - 0ms - Response: {"status":403,"now":1721382880761}::{"message":"Access token missing"}
+2024-07-19 16:54:40::error::/v1/api/conversation/readConversationWithOtherMember/665edd23fa87b27398b73d10::b4626bcf-24b8-4b51-ad06-fabf79e9d0b3::401 - 0ms - Response: {"status":401,"now":1721382880767}::{"message":"You are not authenticated!"}
+2024-07-19 16:54:58::error::/v1/api/conversation/readConversationWithOtherMember/665edd23fa87b27398b73d10::c0c44d6a-a889-48eb-9b6f-4753efe9dbfc::401 - 0ms - Response: {"status":401,"now":1721382898039}::{"message":"You are not authenticated!"}
+2024-07-19 16:54:58::error::/v1/api/user/me::7457f9ad-9c51-41ea-9a6d-fbb871a1b2ca::403 - 0ms - Response: {"status":403,"now":1721382898045}::{"message":"Access token missing"}
+2024-07-19 16:55:02::error::/v1/api/conversation/readConversationWithOtherMember/665edd23fa87b27398b73d10::0ce2960d-7443-4085-9c34-498199ccf754::401 - 0ms - Response: {"status":401,"now":1721382902096}::{"message":"You are not authenticated!"}
+2024-07-19 16:55:02::error::/v1/api/user/me::8808cab4-0899-4c03-8d3f-6d4d196422a1::403 - 0ms - Response: {"status":403,"now":1721382902102}::{"message":"Access token missing"}

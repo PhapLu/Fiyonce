@@ -6,7 +6,7 @@ import "./RenderPosts.scss";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
 
-export default function RenderPosts({ isDisplayOwner, posts, layout }) {
+export default function RenderPosts({ isSorting, isDisplayOwner, posts, layout }) {
     const breakpointColumnsObj = {
         default: layout,
         1200: 6,
@@ -29,7 +29,7 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
     }
 
     // Sort posts by createdAt in descending order
-    const sortedPosts = posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const sortedPosts = isSorting ? posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : posts;
 
     const handlePrevNext = (direction) => {
         const currentIndex = sortedPosts.findIndex(post => post._id === postId);
