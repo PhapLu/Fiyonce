@@ -79,8 +79,6 @@ export default function RenderPost() {
                 loading ? (
                     <Loading />
                 ) : (
-
-
                     <div className="render-post modal-form type-1" ref={renderPostRef} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-form--left">
                             {post?.artworks?.length > 0 && (
@@ -116,7 +114,7 @@ export default function RenderPost() {
                             </Link>
                             <hr className="mb-16" />
                             {post.movementId?.title && <button className="btn btn-4 br-16 mr-8">{post.movementId?.title}</button>}
-                            {post.postCategoryId?.title && <button className="btn btn-4 br-16 mr-8">{post.postCategoryId?.title}</button>}
+                            {post.postCategoryId?.title && <Link to={`/users/${post?.talentId._id}/profile_commission_services`} className="btn btn-4 br-16 mr-8">{post.postCategoryId?.title}</Link>}
                             <p>{post.description}</p>
                             <br />
                             <span>Đăng tải lúc {formatDate(post.createdAt)}</span>

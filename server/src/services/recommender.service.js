@@ -35,7 +35,7 @@ class RecommenderService {
 
       scoredPosts.sort((a, b) => b.score - a.score);
       console.log(scoredPosts)
-      return {posts: scoredPosts.slice(0, 50)};
+      return { posts: scoredPosts.slice(0, 3) };
     } catch (error) {
       console.error('Error in readPopularPosts:', error);
       throw new Error('Failed to read popular posts');
