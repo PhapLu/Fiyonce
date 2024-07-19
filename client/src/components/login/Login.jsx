@@ -128,7 +128,7 @@ export default function Login() {
 
             {/* Extra section of the form */}
             <p className="form__extra-text">
-                Chưa có tài khoản?{" "}
+                <span>Chưa có tài khoản?{" "}</span>
                 <span className="form__extra-text__link" onClick={() => {
                     setShowLoginForm(false);
                     setShowRegisterForm(true);

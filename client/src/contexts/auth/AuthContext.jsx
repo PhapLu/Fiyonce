@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }) => {
             const response = await newRequest.post("auth/users/login", { email, password });
             // alert("Successfully logged in as: " + response.data.metadata.user.email);
             setUserInfo(response.data.metadata.user);
+            setShowMenu(false);
             setShowLoginForm(false);
             setOverlayVisible(false);
         } catch (error) {
