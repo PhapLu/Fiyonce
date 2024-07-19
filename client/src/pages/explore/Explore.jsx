@@ -17,7 +17,7 @@ import { useMovement } from '../../contexts/movement/MovementContext.jsx';
 
 export default function Explore() {
     const location = useLocation();
-    const {movements} = useMovement();
+    const { movements } = useMovement();
     console.log(movements)
 
     const [showRecommenders, setShowRecommenders] = useState(false);
@@ -106,7 +106,7 @@ export default function Explore() {
     return (
         <div className="explore">
             {/* Display informative news */}
-            <News />
+            {/* <News /> */}
 
             {/* Sub navigation bar of the page */}
             <div className="sub-nav-container">
@@ -190,7 +190,7 @@ export default function Explore() {
             </div>
 
             <Outlet />
-            
+
             <BackToTop />
         </div>
     )

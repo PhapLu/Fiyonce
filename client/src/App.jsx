@@ -108,8 +108,6 @@ const routes = [
             ]
           },
 
-
-
           {
             path: "/explore/talents",
             element: <Talents showTalents={true} />,
