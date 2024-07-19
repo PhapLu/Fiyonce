@@ -205,14 +205,18 @@ p {
     font-size: 1.4rem;
     line-height: 2rem;
     width: 100%;
-    word-break: break-all;
+    // word-break: break-all;
 }
 
 span {
     font-size: 1.4rem;
     line-height: 2rem;
-    word-break: break-all;
+    // word-break: break-all;
     // width: 100%;
+}
+
+img {
+    display: block;
 }
 
 .fs-12 {
@@ -688,6 +692,10 @@ table {
         max-width: 200px;
         padding: 6px 12px 6px 6px;
         font-size: 1.2rem;
+
+        span {
+            font-size: 1.2rem;
+        }
     }
 
     th:last-child,
@@ -801,6 +809,12 @@ table {
 
         &:focus {
             border: 2px solid var(--black-2-color);
+        }
+
+        &.outline-border-none {
+            &:focus {
+                border: 2px solid var(--gray-2-color);
+            }
         }
 
         &[type="submit"] {

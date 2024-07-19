@@ -69,9 +69,7 @@ export default function Register() {
         return errors;
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async () => {
         // Initialize loading effect for the submit button
         setIsSubmitRegisterLoading(true);
 
@@ -107,7 +105,7 @@ export default function Register() {
             )
                 :
                 <>
-                    <form className="form register-form" onSubmit={handleSubmit}>
+                    <form className="form register-form">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                             setShowRegisterForm(false);
                             setOverlayVisible(false);
@@ -148,9 +146,9 @@ export default function Register() {
 
                         <div className="form-field">
                             <button
-                                type="submit"
                                 className="form-field__input btn btn-2 btn-md"
                                 disabled={isSubmitRegisterLoading}
+                                onClick={handleSubmit}
                             >
                                 {isSubmitRegisterLoading ? (
                                     <span className="btn-spinner"></span>

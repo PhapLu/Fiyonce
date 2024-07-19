@@ -72,7 +72,7 @@ export default function Navbar() {
             <div className={`navbar ${shadow ? 'with-shadow' : ''}`}>
                 <div className="navbar--left">
                     <Link to="/explore/posts" className="flex-align-center">
-                        <img src={Logo} alt="Logo" className="navbar__brand-logo" />
+                        {/* <img src={Logo} alt="Logo" className="navbar__brand-logo" /> */}
                         <h3 className="navbar__brand-name">Pastal<span className="highlight-text">&#x2022;</span></h3>
                     </Link>
 

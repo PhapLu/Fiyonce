@@ -1,3 +1,4 @@
+import e from 'express'
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
@@ -5,25 +6,26 @@ const DOCUMENT_NAME = 'CommissionService'
 const COLLECTION_NAME = 'CommissionServices'
 
 const ServiceSchema = new mongoose.Schema({
-    talentId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    talentId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     title: { type: String, required: true },
     serviceCategoryId: {
         type: mongoose.Types.ObjectId,
-        ref:'ServiceCategory',
+        ref: 'ServiceCategory',
         required: true
     },
     termOfServiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'TermOfService', required: true },
     movementId: { type: Schema.Types.ObjectId, ref: 'Movement', required: true },
     minPrice: { type: Number, required: true },
-    deliverables: [{type: String, required: true}],
-    addOns:[{
-        title: { type: String, required: true }, 
-        value: { type: Number, required: true},
-        isPercentage: { type: Boolean, default: false}
+    deliverables: [{ type: String, required: true }],
+    addOns: [{
+        title: { type: String, required: true },
+        value: { type: Number, required: true },
+        isPercentage: { type: Boolean, default: false }
     }],
-    notes: {type: String},
+    notes: { type: String },
     isMedia: { type: Boolean, default: false },
-    artworks:[{ type: String}],
+    status: { type: String, enum: ["open", "closed"], default: "open"},
+    artworks: [{ type: String }],
 }, {
     timestamps: true,
     collection: COLLECTION_NAME

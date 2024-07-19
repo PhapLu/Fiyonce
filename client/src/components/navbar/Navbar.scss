@@ -40,7 +40,7 @@
 
         .navbar__brand-name {
             display: inline-block;
-            margin: 0 12px;
+            // margin: 0 12px;
         }
 
         .navbar__search-field {
@@ -137,12 +137,12 @@
             .render-conversations {
                 border: 2px solid var(--gray-1-color);
                 position: absolute;
-                left: -150px;
+                left: -155px;
                 top: calc(100% + 8px);
                 background-color: var(--form-bg-2-color);
                 padding: 8px 12px 8px 16px;
                 border-radius: 8px;
-                min-width: 300px;
+                min-width: 310px;
                 height: 350px;
                 box-shadow: var(--box-shadow-1);
                 overflow-y: scroll;

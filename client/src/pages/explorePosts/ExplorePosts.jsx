@@ -12,7 +12,7 @@ import { apiUtils } from "../../utils/newRequest"
 // Styling
 
 export default function ExplorePosts() {
-    const fetchRecommendedPosts = async () => {
+    const fetchRecommendedPopularPosts = async () => {
         try {
             const response = await apiUtils.get(`/recommender/readPopularPosts`);
             console.log(response.data.metadata.posts)
@@ -24,8 +24,8 @@ export default function ExplorePosts() {
     }
 
     const { data: posts, error: fetchingPostss, isError: isFetchingPostssError, isLoading: isFetchingPostssLoading } = useQuery(
-        'fetchRecommendedPosts',
-        fetchRecommendedPosts,
+        'fetchRecommendedPopularPosts',
+        fetchRecommendedPopularPosts,
         {
             onSuccess: (data) => {
                 console.log(data);

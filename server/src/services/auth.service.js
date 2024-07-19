@@ -15,121 +15,14 @@ import { createUserQRCode } from "../utils/qrcode.util.js"
 import sendEmailSES from '../utils/email.util.js'
 
 class AuthService {
-    /*
-        1. check email in dbs,
-        2. match password
-        3. create AccessToken and RefreshToken and save
-        4. generate tokens
-        5. get data and  return login 
-     */
-    // static login = async({email, password, refreshToken = null}) => {
-    //     // 1. Check email in the database
-    //     const foundUser = await User.findOne({email}).lean()
-    //     if (!foundUser) throw new BadRequestError("User not registered")
-
-    //     // 2. Match password
-    //     const match = await bcrypt.compare(password, foundUser.password) // Await the bcrypt comparison
-    //     if (!match) throw new AuthFailureError("Authentication error")
-
-    //     // 3. Exclude password from foundUser
-    //     const { password: hiddenPassword, ...userWithoutPassword } = foundUser
-
-    //     // 4. Create AccessToken and RefreshToken and save
-    //     const privateKey = crypto.randomBytes(64).toString("hex")
-    //     const publicKey = crypto.randomBytes(64).toString("hex")
-
-    //     // 5. Generate tokens
-    //     const { _id: userId } = foundUser
-    //     const tokens = await createTokenPair(
-    //         userWithoutPassword,
-    //         publicKey,
-    //         privateKey
-    //     )
-    //     await KeyTokenService.createKeyToken({
-    //         refreshToken: tokens.refreshToken,
-    //         privateKey,
-    //         publicKey,
-    //         userId
-    //     })
-
-    //     // 6. Return user data and tokens
-    //     return {
-    //         user: userWithoutPassword,
-    //         tokens
-    //     }
-    // }
-
-
-    // static signUp = async({fullname, email, password}) =>{
-    //     //1. check if email exists?
-    //     const holderUser = await User.findOne({ email }).lean()
-    //     if(holderUser) {
-    //         throw new BadRequestError("Error: User already registered")
-    //     }
-    //     const hashedPassword = await bcrypt.hash(password, 10)
-    //     const newUser = await User.create({
-    //         fullname,
-    //         email,
-    //         password: hashedPassword,
-    //         role: RoleUser.MEMBER
-    //     })
-    //     const { password: hiddenPassword, ...userWithoutPassword } = newUser
-    //     if(newUser){
-    //         //This is for a giant system like  AMAZON,..., we gonna use 'Crypto' for this
-    //         // created privateKey, publicKey
-    //         // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-    //         //     modulusLength: 4096,
-    //         //     publicKeyEncoding:{
-    //         //         type: 'pkcs1',
-    //         //         format: 'pem'
-    //         //     },
-    //         //     privatekeyEncoding:{
-    //         //         type: 'pkcs1',
-    //         //         format: 'pem'
-    //         //     }
-    //         // })
-    //         //This is for our web app, it's still good and it is suitable for medium system
-    //         const privateKey = crypto.randomBytes(64).toString("hex")
-    //         const publicKey = crypto.randomBytes(64).toString("hex")
-    //         //Public key cryptoGraphy Standards
-    //         console.log("publicKey: ", publicKey)
-    //         const keyStore = await KeyTokenService.createKeyToken({
-    //             userId: newUser._id,
-    //             publicKey,
-    //             privateKey
-    //         })
-
-    //         if(!keyStore) {
-    //             throw new BadRequestError("Error: publicKeyString error!")
-    //         }
-    //         //created token pair
-    //         const tokens = await createTokenPair(
-    //             {userId: newUser._id, email, role: newUser.role},
-    //             publicKey,
-    //             privateKey
-    //         )
-    //         return {
-    //             code: 201,
-    //             metadata: {
-    //                 user: userWithoutPassword,
-    //                 tokens
-    //             }
-    //         }
-    //     }
-
-    //     return {
-    //         code: 200,
-    //         metadata: null
-    //     }
-    // }
     static login = async ({ email, password }) => {
         // 1. Check email in the database
         const foundUser = await User.findOne({ email }).lean()
-        if (!foundUser) throw new BadRequestError("User not registered")
+        if (!foundUser) throw new BadRequestError("Tài khoản chưa được đăng kí")
 
         // 2. Match password
         const match = await bcrypt.compare(password, foundUser.password) // Await the bcrypt comparison
-        if (!match) throw new AuthFailureError("Authentication error")
+        if (!match) throw new AuthFailureError("Tài khoản hoặc mật khẩu không chính xác")
 
         // 3. Exclude password from foundUser
 
@@ -153,9 +46,9 @@ class AuthService {
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean()
-        if (holderUser) {
-            throw new BadRequestError("Error: User already registered")
-        }
+        // if (holderUser) {
+        //     throw new BadRequestError("Error: User already registered")
+        // }
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -178,7 +71,7 @@ class AuthService {
         await otpVerification.save()
 
         // 6. Send OTP email
-        const subject = 'Your OTP Code'
+        const subject = '[Pastal] OTP xác thực tài khoản'
         const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`
         const verificationCode = otp
         await sendEmail(email, subject, subjectMessage, verificationCode)
@@ -195,19 +88,17 @@ class AuthService {
     static verifyOtp = async ({ email, otp }) => {
         // 1. Find the OTP in the database
         const otpRecord = await UserOTPVerification.findOne({ email }).lean()
-        if (!otpRecord) {
-            throw new BadRequestError('OTP not found')
+        
+        // 2. Check if the OTP is correct
+        if (!otpRecord || otpRecord.otp !== otp) {
+            throw new BadRequestError('Mã OTP không chính xác')
         }
 
-        // 2. Check if the OTP is expired
+        // 3. Check if the OTP is expired
         if (otpRecord.expiredAt < new Date()) {
-            throw new BadRequestError('OTP has expired')
+            throw new BadRequestError('Mã OTP đã hết hạn')
         }
 
-        // 3. Check if the OTP is correct
-        if (otpRecord.otp !== otp) {
-            throw new BadRequestError('Incorrect OTP')
-        }
 
         //4. Create user by otpVerification
         const newUser = await User.create({
@@ -250,7 +141,7 @@ class AuthService {
         // 1. Find the user by email
         const user = await User.findOne({ email }).lean()
         if (!user) {
-            throw new BadRequestError('User not found')
+            throw new BadRequestError('Tài khoản chưa được đăng kí')
         }
 
         const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean()
@@ -260,8 +151,8 @@ class AuthService {
         const otp = crypto.randomInt(100000, 999999).toString()
 
         // 3. Send OTP email
-        const subject = 'Your OTP Code'
-        const subjectMessage = 'Mã xác thực đổi mật khẩu của bạn là: '
+        const subject = '[Pastal] OTP thay đổi mật khẩu'
+        const subjectMessage = 'Mã xác thực thay đổi mật khẩu của bạn là: '
         const verificationCode = otp
         await sendEmail(email, subject, subjectMessage, verificationCode)
 
@@ -286,12 +177,17 @@ class AuthService {
         const otpRecord = await ForgotPasswordOTP.findOne({ email })
         const user = await User.findOne({ email })
 
-        if (!otpRecord) throw new BadRequestError('OTP not found')
-        if (!user) throw new BadRequestError('User not found')
-        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired')
+        
+        // 2. Check if the OTP is correct
+        if (!otpRecord || otpRecord.otp !== otp) {
+            throw new BadRequestError('Mã OTP không chính xác')
+        }
+        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('Mã OTP đã hết hạn')
+
+        if (!user) throw new BadRequestError('')
 
         //2. Check if the OTP is correct
-        if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP')
+        if (otpRecord.otp !== otp) throw new BadRequestError('Mã OTP không chính xác')
 
         //3. Mark the otp is verified
         otpRecord.isVerified = true
@@ -306,12 +202,20 @@ class AuthService {
         //1. Find and check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({ email })
         const user = await User.findOne({ email })
+        
+        // 2. Check if the OTP is correct
+         if (!otpRecord || otpRecord.otp !== otp) {
+            throw new BadRequestError('Mã OTP không chính xác')
+        }
 
-        if (!otpRecord) throw new BadRequestError('OTP not found')
-        if (!user) throw new BadRequestError('User not found')
+        if (otpRecord.expiredAt < new Date()) {
+            throw new BadRequestError('Mã OTP đã hết hạn')
+        }
+
+        if (!user) throw new BadRequestError('Tài khoản chưa được đăng kí')
 
         //2. Check if the OTP is verified
-        if (!otpRecord.isVerified) throw new BadRequestError('OTP not verified')
+        if (!otpRecord.isVerified) throw new BadRequestError('OTP không hợp lệ')
 
         //3. Hash the new password
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -330,34 +234,6 @@ class AuthService {
         }
     }
 
-    // static logout = async(keyStore) =>{
-    //     const delKey = await KeyTokenService.removeTokenById(keyStore._id)
-    //     console.log("delKey: ", delKey)
-    //     return delKey
-    // }
-
-    // static handlerRefreshToken = async ({keyStore, user, refreshToken}) =>{
-    //     const {userId, email} = user
-    //     if(keyStore.refreshTokensUsed.includes(refreshToken)){
-    //         await KeyTokenService.deleteKeyById(userId)
-    //         throw new ForbiddenError('Something wrong happened, Please login again')
-    //     }
-    //     if(keyStore.refreshToken !== refreshToken) throw new AuthFailureError('User not registered')
-    //     const foundUser = await findByEmail({email})
-    //     if(!foundUser) throw new AuthFailureError('User not registered 2')
-    //     //create token pair
-    //     const tokens = await createTokenPair(
-    //         {userId, email},
-    //         keyStore.publicKey,
-    //         keyStore.privateKey
-    //     )
-    //     //update token
-    //     await KeyTokenService.updateTokens(tokens, keyStore, refreshToken)
-    //     return {
-    //         user,
-    //         tokens
-    //     }
-    // }
     static grantAccess(action, resource) {
         return async (req, res, next) => {
             try {
@@ -366,7 +242,7 @@ class AuthService {
                 const permission = role.can(userRole)[action](resource)
                 if (!permission.granted) {
                     return res.status(401).json({
-                        error: "You don't have enough permission to perform this action",
+                        error: "Bạn không có quyền thực hiện thao tác này",
                     })
                 }
                 next()

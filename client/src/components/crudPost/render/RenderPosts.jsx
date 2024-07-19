@@ -6,7 +6,7 @@ import "./RenderPosts.scss";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
 
-export default function RenderPosts({ isDisplayOwner, posts, layout }) {
+export default function RenderPosts({ isSorting, isDisplayOwner, posts, layout }) {
     const breakpointColumnsObj = {
         default: layout,
         1200: 6,
@@ -29,7 +29,7 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
     }
 
     // Sort posts by createdAt in descending order
-    const sortedPosts = posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const sortedPosts = isSorting ? posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : posts;
 
     const handlePrevNext = (direction) => {
         const currentIndex = sortedPosts.findIndex(post => post._id === postId);
@@ -44,27 +44,37 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
         }
     };
 
-    // const { postId: selectedPostId } = useParams();
+    const copyToClipboard = (postId) => {
+        const url = `${window.location.origin}${location.pathname}/${postId}`;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
+            })
+            .catch(err => {
+                setModalInfo({ status: "success", message: "Có lỗi xảy ra" });
+            });
+    };
+
+    const { postId: selectedPostId } = useParams();
 
     return (
         <div className="posts">
-            {/* {
+            {
                 selectedPostId && (
-                    <> */}
-            <div className="prev-btn hover-cursor-opacity" onClick={() => handlePrevNext("prev")}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 prev-btn__ic">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
-            </div>
-            <div className="next-btn hover-cursor-opacity" onClick={() => handlePrevNext("next")}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 next-btn__ic">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                </svg>
-            </div>
-            {/* </>
+                    <>
+                        <div className="prev-btn hover-cursor-opacity" onClick={() => handlePrevNext("prev")}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 prev-btn__ic">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div className="next-btn hover-cursor-opacity" onClick={() => handlePrevNext("next")}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 next-btn__ic">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </div>
+                    </>
                 )
-            } */}
-
+            }
 
             <Masonry
                 breakpointCols={breakpointColumnsObj}
@@ -105,9 +115,9 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                         </svg>
                                     </div>
-                                    <div className="post-item__img__react-operation-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6" onClick={() => copyToClipboard(post?._id)}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.146a4.983 4.983 0 0 1 2.248 3.087m-.008 4.462a4.988 4.988 0 0 1-7.38 1.966m-.932-1.007a4.986 4.986 0 0 1-.457-6.047m2.072-2.652a4.984 4.984 0 0 1 4.748-.244M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9Zm-4.5 0h.008v.008H16.5V12Zm-4.5 0h.008v.008H12V12Zm-4.5 0h.008v.008H7.5V12Z" />
+                                    <div className="post-item__img__react-operation-item" onClick={() => copyToClipboard(post?._id)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                         </svg>
                                     </div>
                                 </div>
@@ -123,7 +133,7 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
                                         {/* {formatDistanceToNow(new Date(post?.createdAt), { addSuffix: true })} */}
                                     </div>
                                 </div>
-                                <div className="post-item__info__item post-item__info__item--right">
+                                {/* <div className="post-item__info__item post-item__info__item--right">
                                     <div className="post-item__info__likes">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -136,7 +146,7 @@ export default function RenderPosts({ isDisplayOwner, posts, layout }) {
                                         </svg>
                                         {post?.commentsCount}
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     );

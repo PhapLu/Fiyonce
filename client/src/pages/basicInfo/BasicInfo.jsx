@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
 
-// Resources
+// Contexts
 import { useAuth } from "../../contexts/auth/AuthContext";
+import { useModal } from '../../contexts/modal/ModalContext.jsx';
+
+// Resources
 
 // Utils
 import { apiUtils } from '../../utils/newRequest';
@@ -18,6 +21,7 @@ export default function BasicInfo() {
 
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
+    const { setModalInfo } = useModal();
 
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState(profileInfo);
@@ -67,11 +71,6 @@ export default function BasicInfo() {
     const validateInputs = () => {
         let errors = {};
 
-        // Validate stageName field if filled
-        if (!isFilled(inputs.stageName)) {
-            errors.stageName = 'Vui lòng điền nghệ danh';
-        }
-
         // Validate email field if filled
         if (isFilled(inputs.phone)) {
             if (!isValidPhone(inputs.phone)) {
@@ -109,9 +108,13 @@ export default function BasicInfo() {
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
             const updatedData = { ...inputs, socialLinks: submittedSocialLinks };
             const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
+            console.log(response)
             if (response) {
-                alert("Successfully updated user information");
-                setUserInfo(response.data.metadata.updatedUser);
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật thông tin thành công"
+                })
+                setUserInfo(response.data.metadata.user);
             }
         } catch (error) {
             console.error("Failed to update basic info:", error);
@@ -150,18 +153,25 @@ export default function BasicInfo() {
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                     </div>
 
-                    <div className="form-field">
-                        <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
-                        <input
-                            type="text"
-                            name="stageName"
-                            value={inputs.stageName || ""}
-                            onChange={handleChange}
-                            className="form-field__input"
-                            placeholder="Nhập nghệ danh"
-                        />
-                        {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
-                    </div>
+
+                    {
+                        userInfo?.role == "talent" &&
+                        (
+                            <div className="form-field">
+                                <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
+                                <input
+                                    type="text"
+                                    name="stageName"
+                                    value={inputs.stageName || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Nhập nghệ danh"
+                                />
+                                {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
+                            </div>
+                        )
+                    }
+
 
                     <div className="form-field">
                         <label htmlFor="gender" className="form-field__label">Giới tính</label>
@@ -232,7 +242,8 @@ export default function BasicInfo() {
                             name="email"
                             value={inputs.email || ""}
                             onChange={handleChange}
-                            className="form-field__input"
+                            readOnly={true}
+                            className="form-field__input outline-border-none"
                             placeholder="Nhập email đăng nhập"
                         />
                         {errors.email && <span className="form-field__error">{errors.email}</span>}

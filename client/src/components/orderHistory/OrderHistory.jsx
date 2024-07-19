@@ -300,39 +300,40 @@ export default function OrderHistory() {
         <>
             <div className="order-history">
                 <section className="section">
-                    {userInfo.role === "talent" && (
-                        <div className="profile-page__header">
-                            <div className="profile-page__header--left">
+                    <div className="profile-page__header">
+                        <div className="profile-page__header--left">
+                            {userInfo.role === "talent" && (
                                 <button
                                     className={`btn btn-3 btn-md ${orderHistoryType === "talent" ? "active" : ""}`}
                                     onClick={() => setOrderHistoryType("talent")}
                                 >
                                     Đơn khách đặt
                                 </button>
-                                <button
-                                    className={`btn btn-3 btn-md ${orderHistoryType === "member" ? "active" : ""}`}
-                                    onClick={() => setOrderHistoryType("member")}
-                                >
-                                    Đơn hàng của tôi
-                                </button>
-                                <button
-                                    className={`btn btn-3 btn-md ${orderHistoryType === "archived" ? "active" : ""}`}
-                                    onClick={() => setOrderHistoryType("archived")}
-                                >
-                                    Mục lưu trữ
-                                </button>
-                            </div>
+                            )}
 
-                            <div className="profile-page__header--right">
-                                <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-                                    </svg>
-                                    Điều khoản
-                                </button>
-                            </div>
+                            <button
+                                className={`btn btn-3 btn-md ${orderHistoryType === "member" ? "active" : ""}`}
+                                onClick={() => setOrderHistoryType("member")}
+                            >
+                                Đơn hàng của tôi
+                            </button>
+                            <button
+                                className={`btn btn-3 btn-md ${orderHistoryType === "archived" ? "active" : ""}`}
+                                onClick={() => setOrderHistoryType("archived")}
+                            >
+                                Mục lưu trữ
+                            </button>
                         </div>
-                    )}
+
+                        <div className="profile-page__header--right">
+                            <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+                                </svg>
+                                Điều khoản
+                            </button>
+                        </div>
+                    </div>
 
                     {
                         orderHistoryType === "talent" && (
@@ -429,7 +430,7 @@ export default function OrderHistory() {
                                 <thead>
                                     <tr>
                                         <th>Trạng thái</th>
-                                        <th>Khách hàng</th>
+                                        <th>Tên đơn hàng</th>
                                         <th>Giá dự kiến</th>
                                         <th>Deadline dự kiến</th>
                                         <th>Thao tác</th>
@@ -501,8 +502,7 @@ export default function OrderHistory() {
                                             )
                                         }) : (
                                             <tr className="non-hover">
-                                                <td colSpan={6}>Hiện chưa nhận được đơn hàng nào. Tham khảo
-                                                    <Link><span className="highlight-text"> cẩm nang họa sĩ </span></Link> để xây dựng hồ sơ tốt hơn.
+                                                <td colSpan={6}>Hiện chưa có đơn hàng nào. Để Pastal <Link><span className="highlight-text">tìm kiếm họa sĩ</span></Link> giúp bạn nhé
                                                 </td>
                                             </tr>
                                         )
@@ -613,7 +613,7 @@ export default function OrderHistory() {
                         {showArchiveCommissionOrder && <ArchiveCommissionOrder commissionOrder={commissionOrder} setShowArchiveCommissionOrder={setShowArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} archiveCommissionOrderMutation={archiveCommissionOrderMutation} />}
                         {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
                         {showReportCommissionOrder && <ReportCommissionOrder commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
-                        
+
 
                         {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createProposalMutation={createProposalMutation} />}
                         {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />}
