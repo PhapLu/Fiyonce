@@ -17,11 +17,11 @@ class RecommenderService {
 
         const weights = {
           likes: 0.3,
-          views: 0.2,
-          followers: 0.15,
-          bookmarks: 0.1,
-          engagementRate: 0.15,
-          postAgeWeight: 0.05
+          views: 0.15,
+          bookmarks: 0.15,
+          postAgeWeight: 0.2,
+          followers: 0.1,
+          engagementRate: 0.1,
         };
 
         const score = (post.likes.length * weights.likes)
@@ -35,7 +35,7 @@ class RecommenderService {
 
       scoredPosts.sort((a, b) => b.score - a.score);
       console.log(scoredPosts)
-      return {posts: scoredPosts.slice(0, 50)};
+      return { posts: scoredPosts.slice(0, 50) };
     } catch (error) {
       console.error('Error in readPopularPosts:', error);
       throw new Error('Failed to read popular posts');

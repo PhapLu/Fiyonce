@@ -18,11 +18,11 @@ class AuthService {
     static login = async ({ email, password }) => {
         // 1. Check email in the database
         const foundUser = await User.findOne({ email }).lean()
-        if (!foundUser) throw new BadRequestError("User not registered")
+        if (!foundUser) throw new BadRequestError("Tài khoản chưa được đăng kí")
 
         // 2. Match password
         const match = await bcrypt.compare(password, foundUser.password) // Await the bcrypt comparison
-        if (!match) throw new AuthFailureError("Authentication error")
+        if (!match) throw new AuthFailureError("Tài khoản hoặc mật khẩu không chính xác")
 
         // 3. Exclude password from foundUser
 
@@ -46,7 +46,10 @@ class AuthService {
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean()
-    
+        // if (holderUser) {
+        //     throw new BadRequestError("Error: User already registered")
+        // }
+
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10)
     
@@ -112,19 +115,17 @@ class AuthService {
     static verifyOtp = async ({ email, otp }) => {
         // 1. Find the OTP in the database
         const otpRecord = await UserOTPVerification.findOne({ email }).lean()
-        if (!otpRecord) {
-            throw new BadRequestError('OTP not found')
+        
+        // 2. Check if the OTP is correct
+        if (!otpRecord || otpRecord.otp !== otp) {
+            throw new BadRequestError('Mã OTP không chính xác')
         }
 
-        // 2. Check if the OTP is expired
+        // 3. Check if the OTP is expired
         if (otpRecord.expiredAt < new Date()) {
-            throw new BadRequestError('OTP has expired')
+            throw new BadRequestError('Mã OTP đã hết hạn')
         }
 
-        // 3. Check if the OTP is correct
-        if (otpRecord.otp !== otp) {
-            throw new BadRequestError('Incorrect OTP')
-        }
 
         //4. Create user by otpVerification
         const newUser = await User.create({
@@ -167,7 +168,7 @@ class AuthService {
         // 1. Find the user by email
         const user = await User.findOne({ email }).lean()
         if (!user) {
-            throw new BadRequestError('User not found')
+            throw new BadRequestError('Tài khoản chưa được đăng kí')
         }
     
         const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean()
@@ -212,8 +213,8 @@ class AuthService {
         }
     
         // 3. Send OTP email
-        const subject = 'Your OTP Code'
-        const subjectMessage = 'Mã xác thực đổi mật khẩu của bạn là: '
+        const subject = '[Pastal] OTP thay đổi mật khẩu'
+        const subjectMessage = 'Mã xác thực thay đổi mật khẩu của bạn là: '
         const verificationCode = otp
         await sendEmail(email, subject, subjectMessage, verificationCode)
     
@@ -230,12 +231,17 @@ class AuthService {
         const otpRecord = await ForgotPasswordOTP.findOne({ email })
         const user = await User.findOne({ email })
 
-        if (!otpRecord) throw new BadRequestError('OTP not found')
-        if (!user) throw new BadRequestError('User not found')
-        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('OTP has expired')
+        
+        // 2. Check if the OTP is correct
+        if (!otpRecord || otpRecord.otp !== otp) {
+            throw new BadRequestError('Mã OTP không chính xác')
+        }
+        if (otpRecord.expiredAt < new Date()) throw new BadRequestError('Mã OTP đã hết hạn')
+
+        if (!user) throw new BadRequestError('')
 
         //2. Check if the OTP is correct
-        if (otpRecord.otp !== otp) throw new BadRequestError('Incorrect OTP')
+        if (otpRecord.otp !== otp) throw new BadRequestError('Mã OTP không chính xác')
 
         //3. Mark the otp is verified
         otpRecord.isVerified = true
@@ -250,12 +256,20 @@ class AuthService {
         //1. Find and check the OTP and user in the database
         const otpRecord = await ForgotPasswordOTP.findOne({ email })
         const user = await User.findOne({ email })
+        
+        // 2. Check if the OTP is correct
+         if (!otpRecord || otpRecord.otp !== otp) {
+            throw new BadRequestError('Mã OTP không chính xác')
+        }
 
-        if (!otpRecord) throw new BadRequestError('OTP not found')
-        if (!user) throw new BadRequestError('User not found')
+        if (otpRecord.expiredAt < new Date()) {
+            throw new BadRequestError('Mã OTP đã hết hạn')
+        }
+
+        if (!user) throw new BadRequestError('Tài khoản chưa được đăng kí')
 
         //2. Check if the OTP is verified
-        if (!otpRecord.isVerified) throw new BadRequestError('OTP not verified')
+        if (!otpRecord.isVerified) throw new BadRequestError('OTP không hợp lệ')
 
         //3. Hash the new password
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -282,7 +296,7 @@ class AuthService {
                 const permission = role.can(userRole)[action](resource)
                 if (!permission.granted) {
                     return res.status(401).json({
-                        error: "You don't have enough permission to perform this action",
+                        error: "Bạn không có quyền thực hiện thao tác này",
                     })
                 }
                 next()

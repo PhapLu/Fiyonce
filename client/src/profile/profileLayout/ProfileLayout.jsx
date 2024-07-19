@@ -7,12 +7,12 @@ import ProfileSidebar from "../profileSidebar/ProfileSidebar";
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
 import "./ProfileLayout.scss";
 
-export default function Profile() {
+export default function ProfileLayout() {
     const [profileBtnActive, setProfileNavActive] = useState(null);
     const { userInfo, setUserInfo } = useAuth();
     const [loading, setLoading] = useState(false);
     const { userId } = useParams();
-    const isProfileOwner = userInfo && userInfo._id === userId;
+    const isProfileOwner = userInfo && userInfo?._id === userId;
 
     const handleCoverClick = () => {
         document.getElementById('coverPhoto').click();
@@ -27,10 +27,10 @@ export default function Profile() {
         if (file) {
             setLoading(true);
             console.log(formData.get('file'));
-            console.log(userInfo._id);
+            console.log(userInfo?._id);
 
             try {
-                const response = await apiUtils.post(`upload/profile/avatarOrCover/${userInfo._id}`, formData);
+                const response = await apiUtils.post(`/upload/profile/avatarOrCover/${userInfo?._id}`, formData);
                 console.log(response);
                 if (response.data.metadata.image_url) {
                     setUserInfo({ ...userInfo, bg: response.data.metadata.image_url });
@@ -56,7 +56,7 @@ export default function Profile() {
         }
     };
 
-    const { data: profileInfo, error, isError, isLoading } = useQuery('fetchProfileById', fetchProfileById, {
+    const { data: profileInfo, error, isError, isLoading } = useQuery(['fetchProfileById', userId], fetchProfileById, {
         onError: (error) => {
             console.error('Error fetching profile:', error);
         },
@@ -121,20 +121,25 @@ export default function Profile() {
                         </div>
                         <div className="sub-nav-container">
                             <div className="sub-nav-container--left">
-                                <>
-                                    <Link
-                                        to={`/users/${userId}/profile_commission_services`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/profile_commission_services') ? "active" : ""}`}
-                                    >
-                                        <span>Dịch vụ</span>
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/profile_posts`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/profile_posts') ? "active" : ""}`}
-                                    >
-                                        <span>Tác phẩm</span>
-                                    </Link>
-                                </>
+                                {
+                                    userInfo?.role == "talent" && (
+                                        <>
+                                            <Link
+                                                to={`/users/${userId}/profile_commission_services`}
+                                                className={`sub-nav-item btn ${location.pathname.includes('/profile_commission_services') ? "active" : ""}`}
+                                            >
+                                                <span>Dịch vụ</span>
+                                            </Link>
+                                            <Link
+                                                to={`/users/${userId}/profile_posts`}
+                                                className={`sub-nav-item btn ${location.pathname.includes('/profile_posts') ? "active" : ""}`}
+                                            >
+                                                <span>Tác phẩm</span>
+                                            </Link>
+                                        </>
+                                    )
+                                }
+
                                 {
                                     isProfileOwner &&
                                     (
