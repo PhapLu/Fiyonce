@@ -23,7 +23,7 @@ class AuthController {
                 const { accessToken } = metadata.user
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
-                    secure: process.env.NODE_ENV === 'product',
+                    secure: process.env.NODE_ENV === 'production',
                     sameSite: 'none',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
