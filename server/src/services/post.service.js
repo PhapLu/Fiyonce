@@ -86,7 +86,7 @@ class PostService {
     static readPostsOfTalent = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError('User not found')
+        if (!talent) throw new NotFoundError('Talent not found')
         if (talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
 
         //2. Find artworks

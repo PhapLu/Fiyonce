@@ -1,6 +1,7 @@
 import Post from "../models/post.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
+import { AuthFailureError, BadRequestError } from "../core/error.response.js"
 
 class RecommenderService {
     static readPopularPosts = async () => {
@@ -172,17 +173,21 @@ class RecommenderService {
     static readFollowingPosts = async (userId) => {
         try {
             // Fetch the current user and their following list
-            const currentUser = await User.findById(userId).populate("following")
-    
+            const currentUser = await User.findById(userId)
+            console.log(currentUser)
+
+            // Extract the IDs of the users the current user is following
+            const followingIds = currentUser.following.map(user => user._id);
+
             // Fetch posts from users in the following list
-            const posts = await Post.find({
-                talentId: { $in: currentUser.following.map((follow) => follow._id) },
-            })
-            .populate("talentId")
-            .populate("artworks")
-            .populate("movementId")
-            .populate("postCategoryId")
-    
+            const posts = await Post.find({ talentId: { $in: followingIds } })
+                .populate('talentId')
+                .populate('artworks')
+                .populate('movementId')
+                .populate('postCategoryId')
+                .limit(50) // Limit the results to 50
+                .exec();
+            console.log(posts)
             // Compute the minimum and maximum values for scaling
             // const [minValues, maxValues] = await Promise.all([
             //     Post.aggregate([
@@ -332,12 +337,9 @@ class RecommenderService {
             //     posts: scoredPosts.slice(0, 50)
             // }
             
-            // Slice the posts to 50
-            const slicedPosts = posts.slice(0, 50)
-
             // Randomize the posts
-            const randomPosts = slicedPosts.sort(() => 0.5 - Math.random())
-            
+            const randomPosts = posts.sort(() => 0.5 - Math.random())
+
             return {
                 posts: randomPosts
             }
@@ -829,21 +831,25 @@ class RecommenderService {
 
     static readFollowingCommissionServices = async (userId) => {
         try {
-            const currentUser = await User.findById(userId).populate("following")
+            const currentUser = await User.findById(userId)
+            if(!currentUser) throw new BadRequestError("User not found")
+
+            // Extract the IDs of the users the current user is following
+            const followingIds = currentUser.following.map(user => user._id);
+
+            // Fetch commissionServices from users in the following list
             const commissionServices = await CommissionService.find({
-                talentId: { $in: currentUser.following.map((follow) => follow._id) },
+                talentId: { $in: followingIds},
             })
             .populate("talentId")
             .populate("artworks")
             .populate("movementId")
             .populate("serviceCategoryId")
             .populate("termOfServiceId")
-
-            // Slice the first 50 commission services
-            const top50CommissionServices = commissionServices.slice(0, 50)
-
+            .limit(50) // Limit the results to 50
+            .exec();
             // Randomize the order of commission services
-            const randomCommissionServices = top50CommissionServices.sort(() => 0.5 - Math.random())
+            const randomCommissionServices = commissionServices.sort(() => 0.5 - Math.random())
 
             return {
                 commissionServices: randomCommissionServices

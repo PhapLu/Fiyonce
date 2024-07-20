@@ -17,10 +17,10 @@ class PostController{
         }).send(res)
     }
 
-    readPosts = async(req, res, next) => {
+    readPostsOfTalent = async(req, res, next) => {
         new SuccessResponse({
             message: 'Get list posts success!',
-            metadata: await PostService.readPosts(req.userId)
+            metadata: await PostService.readPostsOfTalent(req.params.talentId)
         }).send(res)
     }
     

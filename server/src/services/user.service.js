@@ -74,8 +74,8 @@ class UserService {
         //2. Follow user
         currentUser.following.push(profileId)
         followedUser.followers.push(userId)
-        // await currentUser.save()
-        // await followedUser.save()
+        await currentUser.save()
+        await followedUser.save()
 
         return {
             user: currentUser

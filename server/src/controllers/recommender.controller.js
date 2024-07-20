@@ -33,7 +33,7 @@ class RecommenderController {
   readFollowingCommissionServices = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Commission Services success!',
-      metadata: await RecommenderService.readFollowingCommissionServices()
+      metadata: await RecommenderService.readFollowingCommissionServices(req.userId)
     }).send(res);
   }
 

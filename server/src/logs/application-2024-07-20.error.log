@@ -7,3 +7,12 @@
 2024-07-20 12:08:07::error::/v1/api/recommender/readLatestPosts::09e913d0-ed4a-4402-bf9c-6362c970e282::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
 2024-07-20 12:09:04::error::/v1/api/recommender/readLatestPosts::c2500352-235e-40b6-9b0e-2f05f52b3a16::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
 2024-07-20 12:10:55::error::/v1/api/recommender/readLatestPosts::8732b137-ab9c-4099-b799-df7730dcd20c::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 20:38:51::error::/v1/api/post/readPost/6688cd89229fc4022ea79044::34ca53f5-aea8-452f-be21-8010f9751a47::404 - 0ms - Response: {"status":404,"now":1721482731764}::{"message":"Post not found"}
+2024-07-20 20:39:32::error::/v1/api/post/createPost::e72650b8-eb71-45e8-a551-16041ea01438::403 - 0ms - Response: {"status":403,"now":1721482772974}::{"message":"You are not a talent"}
+2024-07-20 20:48:32::error::/v1/api/recommender/readFollowingPosts::d6f497e3-717c-47b0-aa86-1f5ee21cafcf::undefined - NaNms - Response: {}::{"message":"Failed to read following posts"}
+2024-07-20 20:49:21::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::769d9288-848a-4a79-9d14-1ab3bebe5179::undefined - NaNms - Response: {}::{"message":"PostService.readPosts is not a function"}
+2024-07-20 20:50:19::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::34e565cb-181a-4a03-973d-30e482f6af2a::404 - 1ms - Response: {"status":404,"now":1721483419724}::{"message":"User not found"}
+2024-07-20 20:51:52::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::aa8a17fe-9bea-4d79-a2d3-bbfb8f7bf2e2::404 - 0ms - Response: {"status":404,"now":1721483512614}::{"message":"User not found"}
+2024-07-20 20:52:05::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::25f6f2df-0f18-41e1-9060-cb9ea24b8f3c::404 - 1ms - Response: {"status":404,"now":1721483525685}::{"message":"User not found"}
+2024-07-20 20:52:25::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::90d384ad-e417-4b92-b78e-436f6b23fe4d::404 - 1ms - Response: {"status":404,"now":1721483545505}::{"message":"User not found"}
+2024-07-20 20:53:19::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::e4fea06e-1816-4c49-b785-b9c69dda4b12::404 - 2ms - Response: {"status":404,"now":1721483599818}::{"message":"User not found"}

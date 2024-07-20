@@ -75,3 +75,71 @@
 2024-07-20 20:23:41::info::/v1/api/recommender/readLatestCommissionServices::1fb3e4f1-adb7-4a05-a5e5-dab7de4f9d66::input-params ::GET::::{}
 2024-07-20 20:28:01::info::/v1/api/recommender/readLatestCommissionServices::6b60d229-cc9d-4170-97b2-25b67dee7a32::input-params ::GET::::{}
 2024-07-20 20:29:02::info::/v1/api/recommender/readLatestCommissionServices::d2c453db-989c-469c-aed9-59fb9d32867a::input-params ::GET::::{}
+2024-07-20 20:36:44::info::/v1/api/auth/users/login::bf16aea3-a288-4384-88d9-13f2ec09d51b::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-20 20:36:54::info::/v1/api/auth/users/login::b909ce8d-7db6-437c-9b44-ac7f40e1ff64::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-20 20:36:59::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::60775faf-ab5a-4d33-8edf-a3508f926055::input-params ::PATCH::::{}
+2024-07-20 20:37:08::info::/v1/api/recommender/readFollowingPosts::dcaa2e1d-843f-40ad-aa7c-6e9b089c8d16::input-params ::GET::::{}
+2024-07-20 20:37:38::info::/v1/api/user/me::64076364-9667-46ac-b0a7-c9182ce00614::input-params ::GET::::{}
+2024-07-20 20:38:51::info::/v1/api/post/readPost/6688cd89229fc4022ea79044::34ca53f5-aea8-452f-be21-8010f9751a47::input-params ::GET::::{}
+2024-07-20 20:38:51::error::/v1/api/post/readPost/6688cd89229fc4022ea79044::34ca53f5-aea8-452f-be21-8010f9751a47::404 - 0ms - Response: {"status":404,"now":1721482731764}::{"message":"Post not found"}
+2024-07-20 20:39:32::info::/v1/api/post/createPost::e72650b8-eb71-45e8-a551-16041ea01438::input-params ::POST::::{}
+2024-07-20 20:39:32::error::/v1/api/post/createPost::e72650b8-eb71-45e8-a551-16041ea01438::403 - 0ms - Response: {"status":403,"now":1721482772974}::{"message":"You are not a talent"}
+2024-07-20 20:39:43::info::/v1/api/auth/users/login::8370d79d-d0bb-4a50-91ae-4748bff1202c::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-20 20:40:07::info::/v1/api/post/createPost::23add8f2-cdc7-4b3d-9e7e-f2cfb42415a1::input-params ::POST::::{}
+2024-07-20 20:40:49::info::/v1/api/post/readPost/669bbe408c48291a3682b690::a0993f94-519c-4b9a-93ad-ededbab5b708::input-params ::GET::::{}
+2024-07-20 20:40:58::info::/v1/api/auth/users/login::32c0fbe0-4877-44cb-8b1c-74641c0dadd7::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-20 20:41:18::info::/v1/api/recommender/readFollowingPosts::40b661ab-113d-4605-ba5d-203eae3e4ac8::input-params ::GET::::{}
+2024-07-20 20:42:14::info::/v1/api/recommender/readFollowingPosts::8929d53a-e276-497c-a088-f4406062dad6::input-params ::GET::::{}
+2024-07-20 20:42:29::info::/v1/api/recommender/readFollowingPosts::7ff7fa54-2b21-4a24-aa56-65f8aa3dc593::input-params ::GET::::{}
+2024-07-20 20:43:28::info::/v1/api/recommender/readFollowingPosts::b6e6f7cd-3bc4-4268-807d-76b10c8a9d79::input-params ::GET::::{}
+2024-07-20 20:44:15::info::/v1/api/recommender/readFollowingPosts::239bc3ca-de74-4153-8d68-82d80a4486a3::input-params ::GET::::{}
+2024-07-20 20:44:32::info::/v1/api/recommender/readFollowingPosts::a46734d3-c21b-44dc-9482-74c045734181::input-params ::GET::::{}
+2024-07-20 20:45:56::info::/v1/api/recommender/readFollowingPosts::b2048601-7c47-4c7e-a9a9-51f35ffe68d6::input-params ::GET::::{}
+2024-07-20 20:48:32::info::/v1/api/recommender/readFollowingPosts::d6f497e3-717c-47b0-aa86-1f5ee21cafcf::input-params ::GET::::{}
+2024-07-20 20:48:32::error::/v1/api/recommender/readFollowingPosts::d6f497e3-717c-47b0-aa86-1f5ee21cafcf::undefined - NaNms - Response: {}::{"message":"Failed to read following posts"}
+2024-07-20 20:48:51::info::/v1/api/recommender/readFollowingPosts::6d69b04b-f553-4ca7-a941-8c7800308f54::input-params ::GET::::{}
+2024-07-20 20:49:21::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::769d9288-848a-4a79-9d14-1ab3bebe5179::input-params ::GET::::{}
+2024-07-20 20:49:21::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::769d9288-848a-4a79-9d14-1ab3bebe5179::undefined - NaNms - Response: {}::{"message":"PostService.readPosts is not a function"}
+2024-07-20 20:50:19::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::34e565cb-181a-4a03-973d-30e482f6af2a::input-params ::GET::::{}
+2024-07-20 20:50:19::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::34e565cb-181a-4a03-973d-30e482f6af2a::404 - 1ms - Response: {"status":404,"now":1721483419724}::{"message":"User not found"}
+2024-07-20 20:51:51::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::aa8a17fe-9bea-4d79-a2d3-bbfb8f7bf2e2::input-params ::GET::::{}
+2024-07-20 20:51:52::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::aa8a17fe-9bea-4d79-a2d3-bbfb8f7bf2e2::404 - 0ms - Response: {"status":404,"now":1721483512614}::{"message":"User not found"}
+2024-07-20 20:52:05::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::25f6f2df-0f18-41e1-9060-cb9ea24b8f3c::input-params ::GET::::{}
+2024-07-20 20:52:05::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::25f6f2df-0f18-41e1-9060-cb9ea24b8f3c::404 - 1ms - Response: {"status":404,"now":1721483525685}::{"message":"User not found"}
+2024-07-20 20:52:18::info::/v1/api/auth/users/login::fa22aa53-227e-4964-9af6-26b5b4a8f447::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-20 20:52:25::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::90d384ad-e417-4b92-b78e-436f6b23fe4d::input-params ::GET::::{}
+2024-07-20 20:52:25::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::90d384ad-e417-4b92-b78e-436f6b23fe4d::404 - 1ms - Response: {"status":404,"now":1721483545505}::{"message":"User not found"}
+2024-07-20 20:53:18::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::e4fea06e-1816-4c49-b785-b9c69dda4b12::input-params ::GET::::{}
+2024-07-20 20:53:19::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::e4fea06e-1816-4c49-b785-b9c69dda4b12::404 - 2ms - Response: {"status":404,"now":1721483599818}::{"message":"User not found"}
+2024-07-20 20:54:17::info::/v1/api/auth/users/login::1ba42b5a-1a42-445b-a503-f50ab82dfc97::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-20 20:54:31::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::dc763afe-1936-4b71-ab90-ba0f5f0f73c8::input-params ::GET::::{}
+2024-07-20 20:55:26::info::/v1/api/recommender/readFollowingPosts::b7d28e04-ccc7-47f8-aca7-93bcdf763c24::input-params ::GET::::{}
+2024-07-20 20:57:28::info::/v1/api/recommender/readFollowingPosts::0835da91-2f77-4db2-a0ce-97f7ea06bd7c::input-params ::GET::::{}
+2024-07-20 20:58:32::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::1549cd63-1378-46c7-8cd7-8f279e0bb015::input-params ::GET::::{}
+2024-07-20 20:58:42::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::ebb1a8df-c233-480f-8e40-d49308308ab1::input-params ::PATCH::::{}
+2024-07-20 20:59:02::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::49c0cb50-ed4d-473c-8c1c-49ef37ecd4b2::input-params ::GET::::{}
+2024-07-20 20:59:24::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::084d71bf-b1b5-4151-8afc-fcb6e7d43a4c::input-params ::GET::::{}
+2024-07-20 20:59:29::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::dfec3a07-0233-4807-a695-6d300d5b328b::input-params ::PATCH::::{}
+2024-07-20 20:59:53::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::c702a6d7-78c1-4a7e-bba1-d0033aac5aef::input-params ::GET::::{}
+2024-07-20 21:00:32::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::20123c1d-86fe-4790-82e5-3549c02eeed2::input-params ::GET::::{}
+2024-07-20 21:00:35::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::21fcdd87-9061-4680-b7e4-bd07f6da3688::input-params ::PATCH::::{}
+2024-07-20 21:00:41::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::e6711386-36fb-473b-af68-bfa9da3b10dd::input-params ::GET::::{}
+2024-07-20 21:00:53::info::/v1/api/recommender/readFollowingPosts::0210f2f1-3b14-4ace-a902-7a39aae75b54::input-params ::GET::::{}
+2024-07-20 21:01:28::info::/v1/api/recommender/readFollowingCommissionServices::6159005e-5f0c-4167-b124-a4764d790ae9::input-params ::GET::::{}
+2024-07-20 21:05:17::info::/v1/api/recommender/readFollowingCommissionServices::da6d032c-cbfa-4115-85cc-894ceb63d3db::input-params ::GET::::{}
+2024-07-20 21:07:04::info::/v1/api/recommender/readFollowingCommissionServices::1288b71e-c1f6-4927-8cf0-77664c41929a::input-params ::GET::::{}
+2024-07-20 21:07:51::info::/v1/api/recommender/readFollowingCommissionServices::5a3d0f33-d3be-4936-bf7b-11c84531d91f::input-params ::GET::::{}
+2024-07-20 21:10:01::info::/v1/api/recommender/readFollowingCommissionServices::bd274060-22b1-41b6-b5bd-877dd86e7f02::input-params ::GET::::{}
+2024-07-20 21:10:34::info::/v1/api/recommender/readFollowingPosts::ccb7ee23-8c07-4526-9277-5419210c8229::input-params ::GET::::{}
+2024-07-20 21:11:37::info::/v1/api/recommender/readFollowingCommissionServices::fb70f724-4571-4a4e-83bc-3c3b71d102bc::input-params ::GET::::{}
+2024-07-20 21:12:53::info::/v1/api/recommender/readFollowingCommissionServices::95604a48-77a8-4b10-931c-ff2df4b20a22::input-params ::GET::::{}
+2024-07-20 21:12:58::info::/v1/api/recommender/readFollowingCommissionServices::5b4d4770-27ca-4fc5-a353-d3bee1817d02::input-params ::GET::::{}
+2024-07-20 21:13:29::info::/v1/api/recommender/readFollowingCommissionServices::e1c03f22-752d-4376-8309-31965b1db3f6::input-params ::GET::::{}
+2024-07-20 21:13:50::info::/v1/api/recommender/readFollowingCommissionServices::529c57cd-411a-4b31-b8ea-bb708308f9b0::input-params ::GET::::{}
+2024-07-20 21:14:13::info::/v1/api/recommender/readFollowingCommissionServices::e514459d-ba4e-4717-b446-5dd9b0c1bd94::input-params ::GET::::{}
+2024-07-20 21:14:25::info::/v1/api/recommender/readFollowingCommissionServices::df4e2d69-3c29-4ddd-a3b4-6ad8b21acc6f::input-params ::GET::::{}
+2024-07-20 21:15:02::info::/v1/api/recommender/readFollowingCommissionServices::1ebbc57e-6b8b-4fdc-894a-01ecf8897acc::input-params ::GET::::{}
+2024-07-20 21:15:29::info::/v1/api/recommender/readFollowingCommissionServices::97827c0b-f8bf-4934-9c83-81d5cbda4d23::input-params ::GET::::{}
+2024-07-20 21:15:42::info::/v1/api/recommender/readFollowingCommissionServices::2ea05cde-57bc-4ed6-a16e-99937d5d73d6::input-params ::GET::::{}
+2024-07-20 21:16:01::info::/v1/api/recommender/readFollowingCommissionServices::6be47829-4378-4567-8ea8-15398c2f50cb::input-params ::GET::::{}
+2024-07-20 21:16:37::info::/v1/api/recommender/readFollowingCommissionServices::c822576f-e56e-429a-96ca-adcc3f1c1353::input-params ::GET::::{}
