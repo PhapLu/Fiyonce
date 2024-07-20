@@ -97,7 +97,7 @@ class OrderService {
             return order
         }))
 
-
+        console.log(ordersWithCounts)
         return {
             orders: ordersWithCounts
         }

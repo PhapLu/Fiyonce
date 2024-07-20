@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/auth/AuthContext";
 import { Link } from "react-router-dom";
-import { useTheme } from "../../contexts/theme/ThemeContext";
-import { useLanguage } from "../../contexts/language/LanguageContext";
+import { useSetting } from "../../contexts/setting/SettingContext";
 import "./MenuBar.scss";
 
 export default function MenuBar() {
     const { userInfo, logout } = useAuth();
-    const { theme, setTheme } = useTheme();
-    const { language, setLanguage } = useLanguage();
+    const { theme, setTheme, language, setLanguage } = useSetting();
     const [openSubMenu, setOpenSubMenu] = useState('');
     const [showThemeMenu, setShowThemeMenu] = useState(false);
 
