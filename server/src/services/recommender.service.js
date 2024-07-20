@@ -177,7 +177,7 @@ class RecommenderService {
             console.log(currentUser)
 
             // Extract the IDs of the users the current user is following
-            const followingIds = currentUser.following.map(user => user._id);
+            const followingIds = currentUser.following.map(user => user._id)
 
             // Fetch posts from users in the following list
             const posts = await Post.find({ talentId: { $in: followingIds } })
@@ -186,7 +186,7 @@ class RecommenderService {
                 .populate('movementId')
                 .populate('postCategoryId')
                 .limit(50) // Limit the results to 50
-                .exec();
+                .exec()
             console.log(posts)
             // Compute the minimum and maximum values for scaling
             // const [minValues, maxValues] = await Promise.all([
@@ -835,7 +835,7 @@ class RecommenderService {
             if(!currentUser) throw new BadRequestError("User not found")
 
             // Extract the IDs of the users the current user is following
-            const followingIds = currentUser.following.map(user => user._id);
+            const followingIds = currentUser.following.map(user => user._id)
 
             // Fetch commissionServices from users in the following list
             const commissionServices = await CommissionService.find({
@@ -847,7 +847,7 @@ class RecommenderService {
             .populate("serviceCategoryId")
             .populate("termOfServiceId")
             .limit(50) // Limit the results to 50
-            .exec();
+            .exec()
             // Randomize the order of commission services
             const randomCommissionServices = commissionServices.sort(() => 0.5 - Math.random())
 
