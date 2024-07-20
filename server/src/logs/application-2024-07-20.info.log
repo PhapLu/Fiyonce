@@ -1,0 +1,46 @@
+2024-07-20 09:11:46::info::/v1/api/recommender/readPopularPosts::84c6258c-d604-4eba-9dda-cabb6a984f51::input-params ::GET::::{}
+2024-07-20 09:18:02::info::/v1/api/recommender/readPopularPosts::34e0d3c0-36ab-4023-bc93-820de424cf62::input-params ::GET::::{}
+2024-07-20 09:20:08::info::/v1/api/recommender/readFollowingPosts::6bca8c2e-9085-4437-924b-d9dfd06daa98::input-params ::GET::::{}
+2024-07-20 09:21:42::info::/v1/api/recommender/readLatestPosts::29739e6d-165b-478b-a1ef-07d4acc3ca84::input-params ::GET::::{}
+2024-07-20 09:26:15::info::/v1/api/recommender/readPopularCommissionServices::333871bb-bc20-4321-898a-6a9abd5221e2::input-params ::GET::::{}
+2024-07-20 09:26:15::error::/v1/api/recommender/readPopularCommissionServices::333871bb-bc20-4321-898a-6a9abd5221e2::undefined - NaNms - Response: {}::{"message":"Failed to read popular commission service"}
+2024-07-20 10:17:40::info::/v1/api/recommender/readPopularCommissionServices::652848c1-1a32-4ea8-a8ad-35021369530e::input-params ::GET::::{}
+2024-07-20 10:17:40::error::/v1/api/recommender/readPopularCommissionServices::652848c1-1a32-4ea8-a8ad-35021369530e::undefined - NaNms - Response: {}::{"message":"RecommenderService.readPopularCommissionServices is not a function"}
+2024-07-20 10:18:21::info::/v1/api/recommender/readPopularCommissionServices::45c18674-0d11-4cee-8e50-365900efe21c::input-params ::GET::::{}
+2024-07-20 10:18:21::error::/v1/api/recommender/readPopularCommissionServices::45c18674-0d11-4cee-8e50-365900efe21c::undefined - NaNms - Response: {}::{"message":"Failed to read popular services"}
+2024-07-20 10:18:54::info::/v1/api/recommender/readPopularCommissionServices::94002933-4cc3-4805-b243-878bf560b015::input-params ::GET::::{}
+2024-07-20 10:20:14::info::/v1/api/recommender/readPopularCommissionServices::8f562849-e2ba-41f4-ace9-cfe32923ecf7::input-params ::GET::::{}
+2024-07-20 10:47:18::info::/v1/api/recommender/readLatestPosts::0ce0900b-b805-404e-9957-2fe1b507f5bd::input-params ::GET::::{}
+2024-07-20 10:47:44::info::/v1/api/recommender/readLatestPosts::93d450fd-8909-4428-b1ee-faea40c9d895::input-params ::GET::::{}
+2024-07-20 10:49:01::info::/v1/api/recommender/readLatestPosts::b2e07225-7ffa-4e38-be1f-5fb92a5c1355::input-params ::GET::::{}
+2024-07-20 10:49:38::info::/v1/api/recommender/readLatestPosts::36b8a2a9-d737-402e-ac60-e24c7acae78c::input-params ::GET::::{}
+2024-07-20 10:50:55::info::/v1/api/recommender/readLatestPosts::09a50a2a-fd67-4624-806a-b0fd9d8e0fc7::input-params ::GET::::{}
+2024-07-20 10:51:59::info::/v1/api/recommender/readLatestPosts::9a7a0712-5495-4f89-bc54-ab82e5fcfd1a::input-params ::GET::::{}
+2024-07-20 10:52:13::info::/v1/api/recommender/readLatestPosts::7a87313d-af21-445d-9cc1-e901f44017ee::input-params ::GET::::{}
+2024-07-20 10:58:25::info::/v1/api/recommender/readLatestPosts::ce97fe2d-ef8a-4c83-a0c4-70fd8c263853::input-params ::GET::::{}
+2024-07-20 10:58:26::error::/v1/api/recommender/readLatestPosts::ce97fe2d-ef8a-4c83-a0c4-70fd8c263853::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 11:00:13::info::/v1/api/recommender/readLatestPosts::bcbf19fb-c3b7-480e-af1d-0da966d6a3b8::input-params ::GET::::{}
+2024-07-20 11:01:03::info::/v1/api/recommender/readLatestPosts::bd658602-127b-46fb-855c-22774f0619e3::input-params ::GET::::{}
+2024-07-20 11:02:23::info::/v1/api/recommender/readLatestPosts::c22f6291-24f8-4021-bd97-edc503e12959::input-params ::GET::::{}
+2024-07-20 11:03:21::info::/v1/api/recommender/readLatestPosts::fa5e0d6b-9112-44e4-8a06-ab6792c12bfb::input-params ::GET::::{}
+2024-07-20 11:46:23::info::/v1/api/recommender/readLatestPosts::0c6662ab-8582-4b65-9ac9-72652baa35fd::input-params ::GET::::{}
+2024-07-20 11:46:24::error::/v1/api/recommender/readLatestPosts::0c6662ab-8582-4b65-9ac9-72652baa35fd::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 11:47:38::info::/v1/api/recommender/readLatestPosts::5a9b1487-66c0-43a1-9406-3454ee8ce22e::input-params ::GET::::{}
+2024-07-20 11:48:06::info::/v1/api/recommender/readLatestPosts::7af5e678-1dc6-4716-ba3d-722afe977b40::input-params ::GET::::{}
+2024-07-20 12:01:55::info::/v1/api/recommender/readLatestPosts::da09deeb-5bc9-484a-b4a6-096245c7ff85::input-params ::GET::::{}
+2024-07-20 12:02:44::info::/v1/api/recommender/readLatestPosts::34c5ac1b-4f93-41e4-aa52-5fe2debd5e3c::input-params ::GET::::{}
+2024-07-20 12:04:33::info::/v1/api/recommender/readLatestPosts::06534646-3203-4883-b078-a84db131713b::input-params ::GET::::{}
+2024-07-20 12:06:18::info::/v1/api/recommender/readLatestPosts::74504247-f320-4237-961b-c11451b7e09a::input-params ::GET::::{}
+2024-07-20 12:07:20::info::/v1/api/recommender/readLatestPosts::28cfc1fe-b114-40e0-93ad-444fadcc6a91::input-params ::GET::::{}
+2024-07-20 12:07:20::error::/v1/api/recommender/readLatestPosts::28cfc1fe-b114-40e0-93ad-444fadcc6a91::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:08:07::info::/v1/api/recommender/readLatestPosts::09e913d0-ed4a-4402-bf9c-6362c970e282::input-params ::GET::::{}
+2024-07-20 12:08:07::error::/v1/api/recommender/readLatestPosts::09e913d0-ed4a-4402-bf9c-6362c970e282::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:08:43::info::/v1/api/recommender/readLatestPosts::872b043e-dafa-412d-91a9-47253a8844c6::input-params ::GET::::{}
+2024-07-20 12:09:04::info::/v1/api/recommender/readLatestPosts::c2500352-235e-40b6-9b0e-2f05f52b3a16::input-params ::GET::::{}
+2024-07-20 12:09:04::error::/v1/api/recommender/readLatestPosts::c2500352-235e-40b6-9b0e-2f05f52b3a16::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:10:54::info::/v1/api/recommender/readLatestPosts::8732b137-ab9c-4099-b799-df7730dcd20c::input-params ::GET::::{}
+2024-07-20 12:10:55::error::/v1/api/recommender/readLatestPosts::8732b137-ab9c-4099-b799-df7730dcd20c::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:11:52::info::/v1/api/recommender/readLatestPosts::f6b914eb-f617-4445-b943-258a0fd82108::input-params ::GET::::{}
+2024-07-20 12:13:31::info::/v1/api/recommender/readLatestPosts::e887c07c-a882-4d9e-bd6a-ccd90762b3e9::input-params ::GET::::{}
+2024-07-20 12:14:58::info::/v1/api/recommender/readLatestPosts::c78a14ee-d751-468d-9f6d-16d46a1725af::input-params ::GET::::{}
+2024-07-20 12:18:14::info::/v1/api/recommender/readLatestPosts::adca08a5-b7c2-4a49-ace4-92594df8cee1::input-params ::GET::::{}

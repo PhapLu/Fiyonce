@@ -27,8 +27,12 @@ class UserService {
         //1. Check user
         const userProfile = await User.findById(profileId)
         if (!userProfile) throw new NotFoundError('User not found').select('-password');
+        
+        //2. Update views
+        userProfile.views += 1
+        await userProfile.save()
 
-        //2. Return user profile
+        //3. Return user profile
         return {
             user: userProfile
         }
@@ -56,23 +60,6 @@ class UserService {
         await currentUser.save()
         return {
             user: currentUser
-        }
-    }
-
-    static likeArtwork = async (userId, artworkId) => {
-        //1. Check user and artwork
-        const currentUser = await User.findById(userId)
-        const foundArtwork = await Artwork.findById(artworkId)
-        if (!currentUser) throw new NotFoundError('User not found')
-        if (!foundArtwork) throw new NotFoundError('Artwork not found')
-        if (foundArtwork.artwork_likes.includes(currentUser._id.toString()))
-            throw new BadRequestError('You did like this artwork')
-
-        //2. Like artwork
-        foundArtwork.artwork_likes.push(userId)
-        foundArtwork.save()
-        return {
-            artwork: foundArtwork
         }
     }
 

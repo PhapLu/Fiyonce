@@ -38,6 +38,7 @@ const UserSchema = new Schema(
     socialLinks: [
       { type: String, required: true }
     ],
+    views: { type: Number, default: 0 },
     bookmark: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'Artwork' }
     ],
@@ -68,27 +69,6 @@ UserSchema.pre('save', function(next) {
   }
   next()
 })
-// Define a list of predefined background image URLs
-// const predefinedBgImages = [
-//   'url1.jpg',
-//   'url2.jpg',
-//   'url3.jpg',
-//   'url4.jpg',
-//   'url5.jpg'
-// ]
-
-// // Middleware to set a random background image URL before saving the user document
-// UserSchema.pre('save', function (next) {
-//   // Check if the bgImg field is not already set
-//   if (!this.bg) {
-//     // Set a random URL from the predefined list
-//     const randomIndex = Math.floor(Math.random() * predefinedBgImages.length)
-//     this.bg = predefinedBgImages[randomIndex]
-//   }
-
-//   // Continue with the save operation
-//   next()
-// })
 
 // Indexing for searching
 UserSchema.index({ fullname: 'text', username: 'text', bio: 'text' })

@@ -22,6 +22,27 @@ class RecommenderController {
       metadata: await RecommenderService.readLatestPosts()
     }).send(res);
   }
+
+  readPopularCommissionServices = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get Popular Services success!',
+      metadata: await RecommenderService.readPopularCommissionServices()
+    }).send(res);
+  }
+
+  readFollowingCommissionServices = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get Popular Commission Services success!',
+      metadata: await RecommenderService.readFollowingCommissionServices()
+    }).send(res);
+  }
+
+  readLatestCommissionServices = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get Popular Services success!',
+      metadata: await RecommenderService.readLatestCommissionServices()
+    }).send(res);
+  }
 }
 
 export default new RecommenderController();

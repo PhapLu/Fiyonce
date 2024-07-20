@@ -13,6 +13,8 @@ const ServiceSchema = new mongoose.Schema({
         ref: 'ServiceCategory',
         required: true
     },
+    views: { type: Number, default: 0 },
+    orderCount: { type: Number, default: 0 },
     termOfServiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'TermOfService', required: true },
     movementId: { type: Schema.Types.ObjectId, ref: 'Movement', required: true },
     minPrice: { type: Number, required: true },

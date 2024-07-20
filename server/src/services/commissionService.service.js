@@ -65,8 +65,12 @@ class CommissionServiceService{
             .populate('talentId', 'stageName avatar')
             .populate('termOfServiceId')
         if(!service) throw new NotFoundError('Service not found')
-    
-        // 2. Read service
+        
+        // 2. Update views
+        service.views += 1
+        await service.save()
+
+        // 3. Read service
         return {
             commissionService: service
         }
