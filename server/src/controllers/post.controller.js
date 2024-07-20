@@ -51,6 +51,16 @@ class PostController{
             metadata: await PostService.deletePost(req.userId, req.params.postId)
         }).send(res)
     }
+
+     
+    likePost = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Update post success!',
+            metadata: await PostService.likePost(req.userId, req.params.postId)
+        }).send(res)
+    }
+
+
     ///END----CRUD////////
 
     likePost = async(req, res, next) => {

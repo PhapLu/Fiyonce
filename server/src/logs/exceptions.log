@@ -475,3 +475,16 @@ This file is being treated as an ES module because it has a '.js' file extension
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-07-20 13:15:49::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'content')
+TypeError: Cannot read properties of undefined (reading 'content')
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:65:38)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-20 20:46:43::error::undefined::undefined::uncaughtException: search is not defined
+ReferenceError: search is not defined
+    at file:///E:/Fiyonce/server/src/routes/recommender/index.js:7:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined

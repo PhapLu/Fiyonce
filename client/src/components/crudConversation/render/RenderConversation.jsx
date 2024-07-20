@@ -35,7 +35,6 @@ export default function RenderConversation() {
 
 
     useEffect(() => {
-
         socket.on('getMessage', (newMessage) => {
             console.log("NEW MESSAGE")
             console.log(newMessage);
@@ -114,6 +113,7 @@ export default function RenderConversation() {
             console.log(newMessage.content)
 
             socket.emit('sendMessage', {
+                conversationId,
                 senderId: userInfo._id,
                 receiverId: conversation.otherMember._id,
                 content: newMessage.content

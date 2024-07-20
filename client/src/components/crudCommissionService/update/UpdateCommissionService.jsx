@@ -1,5 +1,15 @@
+// Imports
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from 'react-query'
+
+// Resources
+
+// Contexts
+import { useModal } from "../../../contexts/modal/ModalContext.jsx";
+import { useMovement } from "../../../contexts/movement/MovementContext.jsx";
+
+// Utils
 import {
     formatCurrency,
     limitString,
@@ -8,8 +18,10 @@ import {
     formatNumber
 } from "../../../utils/formatter.js";
 import { isFilled, minValue } from "../../../utils/validator.js";
+
+// Styling
 import "./UpdateCommissionService.scss";
-import { useModal } from "../../../contexts/modal/ModalContext.jsx";
+import { createFormData, newRequest } from "../../../utils/newRequest.js";
 
 export default function UpdateCommissionService({
     updateCommissionService,
@@ -19,11 +31,57 @@ export default function UpdateCommissionService({
     updateMutation
 }) {
     const { setModalInfo } = useModal();
-    const [inputs, setInputs] = useState(updateCommissionService);
+    const { movements } = useMovement();
+
+
+    const fetchCommissionTos = async () => {
+        try {
+            const response = await newRequest.get('/termOfService/readTermOfServices');
+            return response.data.metadata.termOfServices;
+        } catch (error) {
+            console.error(error)
+            return null;
+        }
+    };
+
+    const { data: commissionToss, error: fetchingTossError, isError: isFetchingToss, isLoading } = useQuery('fetchCommissionTos', fetchCommissionTos, {
+        onError: (error) => {
+            console.error('Error fetching terms of services:', error);
+        },
+        onSuccess: (commissionToss) => {
+            console.log("Movements", commissionToss);
+        },
+    });
+
+    const [inputs, setInputs] = useState({
+        ...updateCommissionService
+    });
     const [errors, setErrors] = useState({});
     const [isSubmitUpdateCommissionServiceLoading, setIsSubmitUpdateCommissionServiceLoading] = useState(false);
-    const [isAddNewCommissionServiceCategory, setIsAddNewCommissionServiceCategory] = useState(false);
-    const [portfolios, setPortfolios] = useState(inputs?.artworks || Array(5).fill(null));
+    const [isCreateNewCommissionServiceCategory, setIsCreateNewCommissionServiceCategory] = useState(false);
+
+    const [artworks, setArtworks] = useState(Array(5).fill(null)); // Initialize as empty array
+    const urlToFile = async (url, filename, mimeType) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], filename, { type: mimeType });
+    };
+    console.log(updateCommissionService.artworks)
+    useEffect(() => {
+        async function fetchArtworks() {
+            if (updateCommissionService.artworks) {
+                const files = await Promise.all(
+                    updateCommissionService.artworks.map(async (artwork, index) => {
+                        const file = await urlToFile(artwork, `${index + Date.now()}.jpg`, 'image/jpeg');
+                        return file;
+                    })
+                );
+                setArtworks(files);
+                console.log(files)
+            }
+        }
+        fetchArtworks();
+    }, [updateCommissionService.artworks]);
 
     const updateCommissionRef = useRef();
     useEffect(() => {
@@ -42,7 +100,36 @@ export default function UpdateCommissionService({
     const validateInputs = () => {
         let errors = {};
 
-        // Validation logic
+        if (!inputs?.movementId) {
+            errors.movementId = "Vui lòng chọn trường phái nghệ thuật";
+        }
+
+        if (!isFilled(inputs?.newCommissionServiceCategoryTitle) && !isFilled(inputs?.serviceCategoryId)) {
+            errors.serviceCategoryId = "Vui lòng chọn thể loại dịch vụ của bạn";
+        }
+
+        if (!isFilled(inputs?.title)) {
+            errors.title = "Vui lòng điền tên dịch vụ";
+        }
+
+        if (!inputs?.deliverables) {
+            errors.deliverables = "Vui lòng nhập mô tả";
+        }
+
+        const filteredArtworks = artworks.filter((artwork) => artwork !== null);
+        if (!filteredArtworks || filteredArtworks.length < 3 || filteredArtworks.length > 5) {
+            errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
+        }
+
+        if (!inputs?.minPrice) {
+            errors.minPrice = "Vui lòng chọn mức giá tối thiểu";
+        } else if (!minValue(inputs?.minPrice, 50000)) {
+            errors.minPrice = "Mức giá tối thiểu không được dưới 50.000 VND";
+        }
+
+        if (!isFilled(inputs?.termOfServiceId)) {
+            errors.termOfServiceId = "Vui lòng chọn điều khoản dịch vụ";
+        }
 
         return errors;
     };
@@ -65,26 +152,24 @@ export default function UpdateCommissionService({
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const newPortfolios = [...portfolios];
+        const newArtworks = [...artworks];
         files.forEach((file) => {
-            if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, portfolios: "Dung lượng ảnh không được vượt quá 500KB." }));
+            if (file.size > 2000 * 1024) {
+                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
             } else {
-                const portfolioIndex = newPortfolios.findIndex((portfolio) => portfolio === null);
-                if (portfolioIndex !== -1) {
-                    newPortfolios[portfolioIndex] = file;
-                }
+                newArtworks.push(file);
             }
         });
-        setPortfolios(newPortfolios);
+        console.log(newArtworks)
+        setArtworks(newArtworks);
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
 
     const removeImage = (index) => {
-        const newPortfolios = [...portfolios];
-        newPortfolios[index] = null;
-        setPortfolios(newPortfolios);
+        const newArtworks = [...artworks];
+        newArtworks.splice(index, 1);
+        setArtworks(newArtworks);
     };
 
     const triggerFileInput = () => {
@@ -96,36 +181,65 @@ export default function UpdateCommissionService({
         setIsSubmitUpdateCommissionServiceLoading(true);
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
+            console.log(validationErrors)
             setErrors(validationErrors);
             setIsSubmitUpdateCommissionServiceLoading(false);
             return;
         }
+        console.log(inputs);
 
+        // Create commission service category
+        if (isCreateNewCommissionServiceCategory) {
+            try {
+                const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs?.newCommissionServiceCategoryTitle });
+                if (response) {
+                    const serviceCategoryId = response.data.metadata.serviceCategory._id;
+                    inputs.serviceCategoryId = serviceCategoryId;
+                }
+            } catch (error) {
+                // console.error("Failed to create new commission service category", error);
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    serverError: error.response.data.message
+                }));
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                });
+            }
+        }
+
+        const fd = createFormData(inputs, "files", artworks);
         try {
-            await updateMutation.mutateAsync(inputs);
-            setModalInfo({
-                status: "success",
-                message: "Cập nhật dịch vụ thành công"
-            })
+            const response = await updateMutation.mutateAsync(fd);
+            if (response) {
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật dịch vụ thành công"
+                });
+                setShowUpdateCommissionServiceForm(false);
+                setOverlayVisible(false);
+            }
         } catch (error) {
-            setModalInfo({
-                status: "success",
-                message: error.response.data.message
-            })
+            console.log(error);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 serverError: error.response.data.message
             }));
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            });
         } finally {
             setIsSubmitUpdateCommissionServiceLoading(false);
         }
     };
 
-    const filteredPortfolios = portfolios.filter((portfolio) => portfolio !== null);
-    const displayPortfolios = [...filteredPortfolios];
+    const filteredArtworks = artworks.filter((artwork) => artwork?.file !== null || artwork?.url !== null);
+    const displayArtworks = [...filteredArtworks];
 
-    while (displayPortfolios.length < 3) {
-        displayPortfolios.push(placeholderImage);
+    while (displayArtworks.length < 3) {
+        displayArtworks.push({ url: placeholderImage, file: null });
     }
 
     return (
@@ -150,18 +264,18 @@ export default function UpdateCommissionService({
                         : "Thể loại"}
                 </span>
                 <h3>{inputs?.title || "Tên dịch vụ"}</h3>
-                <span>Giá từ: <span className="highlight-text">{inputs?.minPrice ? formatCurrency(inputs?.minPrice) : "x"} VND</span></span>
+                <span>Giá từ: <span className="highlight-text"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} VND</span></span>
                 <hr />
                 <div className="images-layout-3">
-                    {displayPortfolios.slice(0, 3).map((portfolio, index) => (
+                    {displayArtworks.slice(0, 3).map((artwork, index) => (
                         <img
-                            key={index}
                             src={
-                                portfolio instanceof File
-                                    ? URL.createObjectURL(portfolio)
-                                    : portfolio
+                                artwork instanceof File
+                                    ? URL.createObjectURL(artwork)
+                                    : artwork?.url || placeholderImage
                             }
-                            alt={`portfolio ${index + 1}`}
+                            alt={`artwork ${index + 1}`}
+                            className="img-preview__img"
                         />
                     ))}
                 </div>
@@ -169,174 +283,197 @@ export default function UpdateCommissionService({
             </div>
 
             <div className="modal-form--right">
-                <h2 className="form__title">Chỉnh sửa dịch vụ</h2>
-                <div className="form-field with-create-btn">
-                    <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
-                    {!isAddNewCommissionServiceCategory ? (
-                        <>
-                            <select
-                                name="serviceCategoryId"
-                                value={inputs?.serviceCategoryId || ""}
-                                onChange={handleChange}
-                                className="form-field__input"
-                            >
-                                <option value="">-- Chọn loại dịch vụ --</option>
-                                {commissionServiceCategories.map((serviceCategory) => (
-                                    <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
-                                ))}
-                            </select>
-                            <button className="btn btn-2" onClick={() => setIsAddNewCommissionServiceCategory(true)}>Thêm thể loại</button>
-                        </>
-                    ) : (
-                        <>
-                            <input
-                                name="newCommissionServiceCategory"
-                                value={inputs?.newCommissionServiceCategory}
-                                onChange={handleChange}
-                                className="form-field__input"
-                                placeholder="Nhập tên thể loại"
-                            />
-                            <button className="btn btn-2" onClick={() => setIsAddNewCommissionServiceCategory(false)}>Hủy</button>
-                        </>
-                    )}
-                    {errors._id && <span className="form-field__error">{errors._id}</span>}
-                </div>
-
+                <h2 className="form__title">Cập nhật dịch vụ</h2>
                 <div className="form-field">
-                    <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
-                    <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
-                    <input
-                        id="title"
-                        name="title"
-                        value={inputs?.title}
+                    <label htmlFor="movementId" className="form-field__label">Trường phái</label>
+                    <span>{inputs?.movementId}</span>
+                    <select
+                        name="movementId"
+                        value={inputs?.movementId || ""}
                         onChange={handleChange}
                         className="form-field__input"
-                        placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                    />
-                    {errors.title && <span className="form-field__error">{errors.title}</span>}
+                    >
+                        <option value="">-- Chọn trường phái --</option>
+                        {movements?.map((movement) => (
+                            <option key={movement._id} value={movement._id}>{movement.title}</option>
+                        ))}
+                    </select>
+                    {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
                 </div>
-
-                <div className="form-field">
-                    <label htmlFor="deliverables" className="form-field__label">Mô tả</label>
-                    <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                    <textarea
-                        id="deliverables"
-                        name="deliverables"
-                        value={inputs?.deliverables}
-                        onChange={handleChange}
-                        className="form-field__input"
-                        placeholder="Mô tả chi tiết yêu cầu của bạn ..."
-                    />
-                    {errors.deliverables && <span className="form-field__error">{errors.deliverables}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label className="form-field__label">Tranh mẫu</label>
-                    <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
-                    {portfolios.map((portfolio, index) => {
-                        return (
-                            portfolio && (
-                                <div key={index} className="form-field__input img-preview">
-                                    <div className="img-preview--left">
-                                        <img
-                                            src={
-                                                portfolio instanceof File
-                                                    ? URL.createObjectURL(portfolio)
-                                                    : portfolio || placeholderImage
-                                            }
-                                            alt={`portfolio ${index + 1}`}
-                                            className="img-preview__img"
-                                        />
-                                        <div className="img-preview__info">
-                                            <span className="img-preview__name">
-                                                {portfolio instanceof File
-                                                    ? limitString(portfolio.name, 15)
-                                                    : "Tranh mẫu"}
-                                            </span>
-                                            <span className="img-preview__size">
-                                                {portfolio instanceof File
-                                                    ? formatFloat(bytesToKilobytes(portfolio.size), 1) + " KB"
-                                                    : ""}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="img-preview--right">
-                                        <svg
-                                            onClick={() => removeImage(index)}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="size-6 img-preview__close-ic"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            )
-                        );
-                    })}
-
-                    <div className="form-field with-ic add-link-btn btn-md" onClick={triggerFileInput}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        <span>Thêm ảnh</span>
-                        <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
+                <>
+                    <div className="form-field with-update-btn">
+                        <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
+                        {!isCreateNewCommissionServiceCategory ? (
+                            <>
+                                <select
+                                    name="serviceCategoryId"
+                                    value={inputs?.serviceCategoryId || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                >
+                                    <option value="">-- Chọn thể loại dịch vụ --</option>
+                                    {commissionServiceCategories.map((serviceCategory) => (
+                                        <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
+                                    ))}
+                                </select>
+                                <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(true)}>Thêm thể loại</button>
+                            </>
+                        ) : (
+                            <>
+                                <input
+                                    name="newCommissionServiceCategoryTitle"
+                                    value={inputs?.newCommissionServiceCategoryTitle}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Nhập tên thể loại"
+                                />
+                                <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(false)}>Hủy</button>
+                            </>
+                        )}
+                        {errors.serviceCategoryId && <span className="form-field__error">{errors.serviceCategoryId}</span>}
                     </div>
 
-                    {errors.portfolios && <span className="form-field__error">{errors.portfolios}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label htmlFor="minPrice" className="form-field__label">Giá cả (VND)</label>
-                    <span className="form-field__annotation">Cho biết mức phí cơ bản của dịch vụ (không tính kèm các dịch vụ đi kèm).</span>
-                    <input
-                        type="number"
-                        name="minPrice"
-                        value={inputs?.minPrice}
-                        className="form-field__input"
-                        onChange={handleChange}
-                        placeholder="Nhập mức tối thiểu"
-                    />
-                    {errors.minPrice && <span className="form-field__error">{errors.minPrice}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label htmlFor="notes" className="form-field__label">Lưu ý</label>
-                    <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn.</span>
-                    <textarea
-                        type=""
-                        name="notes"
-                        value={inputs?.notes}
-                        className="form-field__input"
-                        onChange={handleChange}
-                        placeholder="Nhập lưu ý ..."
-                    />
-                    {errors.notes && <span className="form-field__error">{errors.notes}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label className="form-field__label">
+                    <div className="form-field">
+                        <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
+                        <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
                         <input
-                            type="checkbox"
-                            name="agreeTerms"
-                            checked={inputs?.agreeTerms}
+                            id="title"
+                            name="title"
+                            value={inputs?.title}
                             onChange={handleChange}
-                        /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
-                    </label>
-                    {errors.agreeTerms && <span className="form-field__error">{errors.agreeTerms}</span>}
-                </div>
-                <div className="form-field">
-                    {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-                </div>
+                            className="form-field__input"
+                            placeholder="Mô tả chi tiết yêu cầu của bạn ..."
+                        />
+                        {errors.title && <span className="form-field__error">{errors.title}</span>}
+                    </div>
 
+                    <div className="form-field">
+                        <label htmlFor="deliverables" className="form-field__label">Mô tả</label>
+                        <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
+                        <textarea
+                            id="deliverables"
+                            name="deliverables"
+                            value={inputs?.deliverables}
+                            onChange={handleChange}
+                            className="form-field__input"
+                            placeholder="Mô tả chi tiết yêu cầu của bạn ..."
+                        />
+                        {errors.deliverables && <span className="form-field__error">{errors.deliverables}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        <label className="form-field__label">Tranh mẫu</label>
+                        <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
+                        {artworks?.map((artwork, index) => {
+                            return (
+                                artwork && (
+                                    <div key={index} className="form-field__input img-preview">
+                                        <div className="img-preview--left">
+                                            <img
+                                                src={
+                                                    artwork instanceof File
+                                                        ? URL.createObjectURL(artwork)
+                                                        : artwork || placeholderImage
+                                                }
+                                                alt={`artwork ${index + 1}`}
+                                                className="img-preview__img"
+                                            />
+                                            <div className="img-preview__info">
+                                                <span className="img-preview__name">
+                                                    {artwork instanceof File
+                                                        ? limitString(artwork.name, 15)
+                                                        : "Tranh mẫu"}
+                                                </span>
+                                                <span className="img-preview__size">
+                                                    {artwork instanceof File
+                                                        ? formatFloat(bytesToKilobytes(artwork.size), 1) + " KB"
+                                                        : ""}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="img-preview--right">
+                                            <svg
+                                                onClick={() => removeImage(index)}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                className="size-6 img-preview__close-ic"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                )
+                            );
+                        })}
+
+                        <div className="form-field with-ic update-link-btn btn-md" onClick={triggerFileInput}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic update-link-btn__ic">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            <span>Thêm ảnh</span>
+                            <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
+                        </div>
+
+                        {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        <label htmlFor="minPrice" className="form-field__label">Giá cả (VND)</label>
+                        <span className="form-field__annotation">Cho biết mức phí cơ bản của dịch vụ (không tính kèm các dịch vụ đi kèm).</span>
+                        <input
+                            type="number"
+                            name="minPrice"
+                            value={inputs?.minPrice}
+                            className="form-field__input"
+                            onChange={handleChange}
+                            placeholder="Nhập mức tối thiểu"
+                        />
+                        {errors.minPrice && <span className="form-field__error">{errors.minPrice}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        <label htmlFor="notes" className="form-field__label">Lưu ý</label>
+                        <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn về dịch vụ này.</span>
+                        <textarea
+                            type="text"
+                            name="notes"
+                            value={inputs?.notes}
+                            className="form-field__input"
+                            onChange={handleChange}
+                            placeholder="Nhập lưu ý ..."
+                        />
+                        {errors.notes && <span className="form-field__error">{errors.notes}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        <label htmlFor="termOfServiceId" className="form-field__label">Điều khoản dịch vụ</label>
+                        <select
+                            name="termOfServiceId"
+                            value={inputs?.termOfServiceId || ""}
+                            onChange={handleChange}
+                            className="form-field__input"
+                        >
+                            <option value="">-- Chọn điều khoản dịch vụ --</option>
+                            {commissionToss?.map((commissionTos) => (
+                                <option key={commissionTos._id} value={commissionTos._id}>{commissionTos.title}</option>
+                            ))}
+                        </select>
+                        {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                    </div>
+                </>
             </div>
+
             <div className="form__submit-btn-container">
                 <button
                     type="submit"
-                    className="form__submit-btn btn btn-2 btn-md"
+                    className="form__submit-btn-item btn btn-2 btn-md"
                     onClick={handleSubmit}
                     disabled={isSubmitUpdateCommissionServiceLoading}
                 >
@@ -345,6 +482,7 @@ export default function UpdateCommissionService({
                     ) : (
                         "Xác nhận"
                     )}
+
                 </button>
             </div>
         </div>

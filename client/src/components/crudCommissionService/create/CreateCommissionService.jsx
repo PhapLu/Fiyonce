@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 // Resources
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
+import { useMovement } from "../../../contexts/movement/MovementContext.jsx";
 import Modal from "../../../components/modal/Modal.jsx";
 
 // Utils
@@ -27,26 +28,7 @@ export default function CreateCommissionService({
     createMutation
 }) {
     const { setModalInfo } = useModal();
-
-    const fetchMovements = async () => {
-        try {
-            const response = await newRequest.get('movement/readMovements');
-            return response.data.metadata.movements;
-        } catch (error) {
-            console.error(error)
-            return null;
-        }
-    };
-
-    const { data: movements, error: fetchingMovementError, isError: isFetchingMovementError, isLoading: isFetchingMNovementLoading } = useQuery('fetchMovements', fetchMovements, {
-        onError: (error) => {
-            console.error('Error fetching art movements:', error);
-        },
-        onSuccess: (movements) => {
-            console.log("Movements", movements);
-        },
-    });
-
+    const {movements} = useMovement();
 
     const fetchCommissionTos = async () => {
         try {
@@ -60,7 +42,7 @@ export default function CreateCommissionService({
 
     const { data: commissionToss, error: fetchingTossError, isError: isFetchingToss, isLoading } = useQuery('fetchCommissionTos', fetchCommissionTos, {
         onError: (error) => {
-            console.error('Error fetching art movements:', error);
+            console.error('Error fetching art terms of services:', error);
         },
         onSuccess: (commissionToss) => {
             console.log("Movements", commissionToss);

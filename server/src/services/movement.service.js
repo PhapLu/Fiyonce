@@ -47,7 +47,7 @@ class MovementService {
         $lookup: {
           from: 'Posts',
           localField: '_id',
-          foreignField: 'movements',
+          foreignField: 'movementId',
           as: 'posts'
         }
       },
@@ -55,7 +55,7 @@ class MovementService {
         $lookup: {
           from: 'CommissionServices', // Assuming the collection name is 'CommissionServices'
           localField: '_id',
-          foreignField: 'movements', // Assuming the field name in CommissionServices is 'movements'
+          foreignField: 'movementId', // Assuming the field name in CommissionServices is 'movements'
           as: 'commissionServices'
         }
       },

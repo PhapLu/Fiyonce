@@ -25,7 +25,7 @@ class PostService {
             const uploadPromises = req.files.artworks.map(file => compressAndUploadImage({
                 buffer: file.buffer,
                 originalname: file.originalname,
-                folderName:`fiyonce/artworks/${userId}`,
+                folderName: `fiyonce/artworks/${userId}`,
                 width: 1920,
                 height: 1080
             }))
@@ -83,6 +83,26 @@ class PostService {
         }
     }
 
+    static likePost = async (userId, postId) => {
+        //1. Find artwork
+        const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
+        if (!post) throw new NotFoundError('Post not found')
+
+        // 2. Add the new like object to the likes array
+        post.likes = post.likes.concat({ user: new mongoose.Types.ObjectId(userId) });
+
+        // 3. Increase the view count
+        post.views += 1;
+
+        await post.save();
+
+        return {
+            post
+        }
+    }
+
+
+
     static readPostsOfTalent = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
@@ -135,7 +155,7 @@ class PostService {
                 allArtworks.push(...post.artworks);  // Add artworks from each post to the array
                 return allArtworks;
             }, []);
-            return {artworks};
+            return { artworks };
         } catch (error) {
             console.error('Error fetching artworks:', error);
             throw error;
@@ -204,9 +224,9 @@ class PostService {
             )
 
             //5. Check if the postCategory has changed and if the old postCategory is now empty
-            if (oldPostCategoryId.toString() !== updatedPost.postCategoryId.toString()){
-                const postsInOldPostCategory = await Post.find({oldPostCategoryId})
-                if(postsInOldPostCategory.length == 0){
+            if (oldPostCategoryId.toString() !== updatedPost.postCategoryId.toString()) {
+                const postsInOldPostCategory = await Post.find({ oldPostCategoryId })
+                if (postsInOldPostCategory.length == 0) {
                     await PostCategory.findByIdAndDelete(oldPostCategoryId)
                     console.log(`Deleted PostCategory ID: ${oldPostCategoryId}`)
                 }
@@ -246,8 +266,8 @@ class PostService {
         await Post.findByIdAndDelete(artworkId)
 
         //4. Delete postCategory if postCategory references is null
-        const remainingPostCategories = await Post.find({postCategoryId})
-        if(remainingPostCategories.length == 0){
+        const remainingPostCategories = await Post.find({ postCategoryId })
+        if (remainingPostCategories.length == 0) {
             await PostCategory.findByIdAndDelete(postCategoryId)
         }
 

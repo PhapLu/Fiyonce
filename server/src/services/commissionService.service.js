@@ -94,6 +94,7 @@ class CommissionServiceService{
     
         if (!talent) throw new NotFoundError('Talent not found')
         if (!service) throw new NotFoundError('Service not found')
+        if (!service.movementId) throw new NotFoundError('Movement not found')
         if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
     
         const oldCategoryId = service.serviceCategoryId // Store the old category ID

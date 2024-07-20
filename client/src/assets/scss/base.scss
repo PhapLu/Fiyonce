@@ -115,6 +115,21 @@ svg {
     width: 22px;
     height: 22px;
     object-fit: cover;
+
+    &.sm {
+        width: 18px;
+        height: 18px;
+    }
+
+    &.md {
+        width: 20px;
+        height: 20px;
+    }
+
+    &.lg {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 body {
@@ -1012,7 +1027,7 @@ table {
 .images-layout-3 {
     columns: 2;
     column-gap: 4px;
-    height: 300px;
+    height: 280px;
 
     img {
         width: 100px;

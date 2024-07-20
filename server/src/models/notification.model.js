@@ -11,10 +11,11 @@ const NotificationSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['interaction', 'order', 'update']
+        enum: ['interaction', 'order', 'system']
     },
     content: { type: String, required: true},
     senderAvatar: { type: String, required: true},
+    isSeen: {type: Boolean, required: true, default: false}
 },{
     timestamps: true,
     collection: COLLECTION_NAME

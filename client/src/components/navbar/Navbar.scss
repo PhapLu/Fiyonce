@@ -20,8 +20,8 @@
         padding: 6px;
 
         svg {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
         }
     }
 
@@ -44,6 +44,7 @@
         }
 
         .navbar__search-field {
+            position: relative;
             margin-left: 16px;
             display: flex;
             align-items: center;
@@ -80,6 +81,26 @@
 
             &:focus-within {
                 border: 2px solid #ff9e2f;
+            }
+
+            .search-result-container {
+                position: absolute;
+                background-color: var(--white-3-color);
+                border: 1px solid var(--gray-1-color);
+                box-shadow: var(--box-shadow-2);
+                border-radius: 8px;
+                top: calc(100% + 8px);
+                left: 0;
+                right: 0;
+                width: 100%;
+                min-height: 200px;
+                padding: 6px;
+
+                .search-result-item {
+                    border-radius: 8px;
+                    padding: 6px 10px;
+                    margin-bottom: 8px;
+                }
             }
         }
     }
@@ -156,15 +177,42 @@
             }
         }
 
+        .toggle-display-notifications-btn {
+            position: relative;
+
+            .render-notifications {
+                border: 2px solid var(--gray-1-color);
+                position: absolute;
+                left: -200px;
+                top: calc(100% + 8px);
+                background-color: var(--form-bg-2-color);
+                padding: 8px 12px 8px 16px;
+                border-radius: 8px;
+                min-width: 300px;
+                height: 350px;
+                box-shadow: var(--box-shadow-1);
+                overflow-y: scroll;
+
+                .unseen-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background-color: var(--orange-2-color);
+                }
+            }
+        }
+
         .noti-dot {
             position: absolute;
             top: 2px;
             right: 0px;
-            width: 14px;
-            height: 14px;
+            width: 17px;
+            height: 17px;
             border-radius: 50%;
-            background-color: red;
+            background-color: #ff4200;
             font-size: 1rem;
+            padding: 0 3px;
+            line-height: 0;
             color: white;
             /* text-align: center; */
             /* vertical-align: 10px; */
