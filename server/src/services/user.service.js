@@ -1,135 +1,149 @@
-import jwt from 'jsonwebtoken'
-import Artwork from '../models/artwork.model.js'
-import { User } from '../models/user.model.js'
-import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
-import Conversation from '../models/conversation.model.js'
+import jwt from "jsonwebtoken";
+import Artwork from "../models/artwork.model.js";
+import { User } from "../models/user.model.js";
+import {
+    AuthFailureError,
+    BadRequestError,
+    NotFoundError,
+} from "../core/error.response.js";
+import Conversation from "../models/conversation.model.js";
 
 class UserService {
     //-------------------CRUD----------------------------------------------------
     static updateProfile = async (userId, profileId, body) => {
         //1. Check user
-        const profile = await User.findById(profileId)
-        if (!profile) throw new NotFoundError('User not found')
-        if (profileId != userId) throw new AuthFailureError('You can only update your account')
+        const profile = await User.findById(profileId);
+        if (!profile) throw new NotFoundError("User not found");
+        if (profileId != userId)
+            throw new AuthFailureError("You can only update your account");
 
         //2. Update user
         const updatedUser = await User.findByIdAndUpdate(
             profileId,
             { $set: body },
             { new: true }
-        )
+        );
         return {
-            user: updatedUser
-        }
-    }
+            user: updatedUser,
+        };
+    };
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId)
-        if (!userProfile) throw new NotFoundError('User not found').select('-password');
-        
+        const userProfile = await User.findById(profileId);
+        if (!userProfile)
+            throw new NotFoundError("User not found").select("-password");
+
         //2. Update views
-        userProfile.views += 1
-        await userProfile.save()
+        userProfile.views += 1;
+        await userProfile.save();
 
         //3. Return user profile
         return {
-            user: userProfile
-        }
-    }
+            user: userProfile,
+        };
+    };
 
     static deleteProfile = async (userId, profileId) => {
         //1. Check user and profile
-        const userProfile = await User.findById(profileId)
-        if (!userProfile) throw new NotFoundError('User not found')
-        if (userId.toString() != profileId) throw new AuthFailureError('You can only delete your account')
+        const userProfile = await User.findById(profileId);
+        if (!userProfile) throw new NotFoundError("User not found");
+        if (userId.toString() != profileId)
+            throw new AuthFailureError("You can only delete your account");
 
         //2. Delete profile
-        await User.findByIdAndDelete(profileId)
-        return { success: true, message: 'User deleted successfully' }
-    }
+        await User.findByIdAndDelete(profileId);
+        return { success: true, message: "User deleted successfully" };
+    };
     //-------------------END CRUD----------------------------------------------------
     static addToBookmark = async (userId, artworkId) => {
         //1. Check user and artwork
-        const currentUser = await User.findById(userId)
-        if (!currentUser) throw new NotFoundError('User not found')
-        if (currentUser.bookmark.includes(artworkId)) throw new BadRequestError('Artwork already bookmarked')
+        const currentUser = await User.findById(userId);
+        if (!currentUser) throw new NotFoundError("User not found");
+        if (currentUser.bookmark.includes(artworkId))
+            throw new BadRequestError("Artwork already bookmarked");
 
         //2. Add to bookmark
-        currentUser.bookmark.push(artworkId)
-        await currentUser.save()
+        currentUser.bookmark.push(artworkId);
+        await currentUser.save();
         return {
-            user: currentUser
-        }
-    }
+            user: currentUser,
+        };
+    };
 
     static followUser = async (userId, profileId) => {
         //1. Check user and follow
-        const currentUser = await User.findById(userId)
-        const followedUser = await User.findById(profileId)
-        if (!currentUser) throw new NotFoundError('User not found')
-        if (!followedUser) throw new NotFoundError('User not found')
-        if (currentUser.following.includes(profileId)) throw new BadRequestError('You already follow this user')
+        const currentUser = await User.findById(userId);
+        const followedUser = await User.findById(profileId);
+        if (!currentUser) throw new NotFoundError("User not found");
+        if (!followedUser) throw new NotFoundError("User not found");
+        if (currentUser.following.includes(profileId))
+            throw new BadRequestError("You already follow this user");
 
         //2. Follow user
-        currentUser.following.push(profileId)
-        followedUser.followers.push(userId)
-        await currentUser.save()
-        await followedUser.save()
+        currentUser.following.push(profileId);
+        followedUser.followers.push(userId);
+        await currentUser.save();
+        await followedUser.save();
 
         return {
-            user: currentUser
-        }
-    }
+            user: currentUser,
+        };
+    };
 
     static unFollowUser = async (userId, profileId) => {
         // 1. Check user and unfollow
         const currentUser = await User.findById(userId);
         const followedUser = await User.findById(profileId);
-        if (!currentUser) throw new NotFoundError('User not found');
-        if (!followedUser) throw new NotFoundError('User not found');
-        if (!currentUser.following.includes(profileId)) throw new BadRequestError('You do not follow this user');
+        if (!currentUser) throw new NotFoundError("User not found");
+        if (!followedUser) throw new NotFoundError("User not found");
+        if (!currentUser.following.includes(profileId))
+            throw new BadRequestError("You do not follow this user");
 
         // 2. Unfollow user
-        currentUser.following = currentUser.following.filter(id => id.toString() !== profileId.toString());
-        followedUser.followers = followedUser.followers.filter(id => id.toString() !== userId.toString());
+        currentUser.following = currentUser.following.filter(
+            (id) => id.toString() !== profileId.toString()
+        );
+        followedUser.followers = followedUser.followers.filter(
+            (id) => id.toString() !== userId.toString()
+        );
         // await currentUser.save();
         // await followedUser.save();
-        console.log(currentUser)
+        console.log(currentUser);
         return {
-            user: currentUser
+            user: currentUser,
         };
-    }
+    };
 
     static me = async (accessToken) => {
         // 1. Decode accessToken and check
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-        if (!decoded) throw new AuthFailureError('Invalid token');
+        if (!decoded) throw new AuthFailureError("Invalid token");
 
         // 2. Find user
         const userId = decoded.id;
-        if (!userId) throw new AuthFailureError('Invalid validation');
+        if (!userId) throw new AuthFailureError("Invalid validation");
 
         // 3. Return user without password
-        const user = await User.findById(userId).select('-password');
-        if (!user) throw new NotFoundError('User not found');
+        const user = await User.findById(userId).select("-password");
+        if (!user) throw new NotFoundError("User not found");
 
         // Fetch unseen conversations
         const unSeenConversations = await Conversation.find({
             members: { $elemMatch: { user: userId } },
-            "messages.createdAt": { $gt: user.lastViewConversations }
-        }).populate('members.user messages.senderId seenBy.userId');
+            "messages.createdAt": { $gt: user.lastViewConversations },
+        }).populate("members.user messages.senderId seenBy.userId");
 
         // Create a plain JavaScript object with user data and add unSeenConversations
         const userData = {
             ...user.toObject(),
-            unSeenConversations: unSeenConversations
+            unSeenConversations: unSeenConversations,
         };
 
         return {
-            user: userData
+            user: userData,
         };
     };
 }
 
-export default UserService
+export default UserService;

@@ -1,41 +1,46 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const DOCUMENT_NAME = "Conversation"
-const COLLECTION_NAME = "Conversations"
+const DOCUMENT_NAME = "Conversation";
+const COLLECTION_NAME = "Conversations";
 
-const ConversationSchema = new mongoose.Schema({
-  members: [
+const ConversationSchema = new mongoose.Schema(
     {
-      user: {
-        type: mongoose.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
+        members: [
+            {
+                user: {
+                    type: mongoose.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
+            },
+        ],
+        messages: [
+            {
+                senderId: {
+                    type: mongoose.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
+                content: { type: String },
+                media: { type: [String] },
+                createdAt: { type: Date, default: Date.now },
+            },
+        ],
+        seenBy: [
+            {
+                userId: {
+                    type: mongoose.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
+            },
+        ],
     },
-  ],
-  messages: [
     {
-      senderId: {
-        type: mongoose.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-      content: { type: String },
-      media: { type: [String] },
-      createdAt: { type: Date, default: Date.now },
-    },
-  ],
-  seenBy: [{
-    userId: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-      required: true,
+        timestamps: true,
+        collection: COLLECTION_NAME,
     }
-  }]
-}, {
-  timestamps: true,
-  collection: COLLECTION_NAME
-})
+);
 
-const Conversation = mongoose.model(DOCUMENT_NAME, ConversationSchema)
-export default Conversation
+const Conversation = mongoose.model(DOCUMENT_NAME, ConversationSchema);
+export default Conversation;

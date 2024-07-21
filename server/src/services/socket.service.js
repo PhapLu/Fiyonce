@@ -1,58 +1,61 @@
-let users = []
+let users = [];
 
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) &&
-        users.push({ userId, socketId })
-}
+        users.push({ userId, socketId });
+};
 
 const removeUser = (socketId) => {
-    users = users.filter((user) => user.socketId !== socketId)
-}
+    users = users.filter((user) => user.socketId !== socketId);
+};
 
 const getUser = (userId) => {
-    return users.find((user) => user.userId === userId)
-}
+    return users.find((user) => user.userId === userId);
+};
 
 class SocketServices {
     connection(socket) {
-        console.log('User connected with id:', socket.id)
+        console.log("User connected with id:", socket.id);
 
         socket.on("addUser", (userId) => {
-            addUser(userId, socket.id)
-            global._io.emit("getUsers", users)
-            console.log("ADD USER")
-            console.log(users)
-        })
+            addUser(userId, socket.id);
+            global._io.emit("getUsers", users);
+            console.log("ADD USER");
+            console.log(users);
+        });
 
-        socket.on('disconnect', () => {
-            console.log('User disconnected with id:', socket.id)
-            removeUser(socket.id)
-            global._io.emit('getUsers', users)
-        })
+        socket.on("disconnect", () => {
+            console.log("User disconnected with id:", socket.id);
+            removeUser(socket.id);
+            global._io.emit("getUsers", users);
+        });
 
         socket.on("sendMessage", ({ senderId, receiverId, content }) => {
-            const user = getUser(receiverId)
+            const user = getUser(receiverId);
             global._io.to(user?.socketId).emit("getMessage", {
                 senderId,
                 content,
-            })
-        })
+            });
+        });
 
         socket.on("sendTalentRequest", ({ senderId, talentRequest }) => {
             global._io.emit("getTalentRequest", {
                 senderId,
                 talentRequest,
-            })
-        })
+            });
+        });
 
-        socket.on("sendNotification", ({ senderId, receiverId, notification }) => {
-            const user = getUser(receiverId)
-            global._io.to(user?.socketId).emit("getNotification", {
-                senderId,
-                notification,
-            })
-        })
+        socket.on(
+            "sendNotification",
+            ({ senderId, receiverId, notification }) => {
+                const user = getUser(receiverId);
+                global._io.to(user?.socketId).emit("getNotification", {
+                    senderId,
+                    notification,
+                });
+            }
+        );
     }
 }
 
-export default new SocketServices()
+export default new SocketServices();
