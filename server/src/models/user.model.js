@@ -69,7 +69,7 @@ UserSchema.pre("save", function (next) {
 });
 
 // Indexing for searching
-UserSchema.index({ fullname: "text", username: "text", bio: "text" });
+UserSchema.index({ fullname: 'text', email: 'text', bio: 'text' })
 
 const User = mongoose.model(DOCUMENT_NAME, UserSchema);
 // Define a discriminator for the "talent" role

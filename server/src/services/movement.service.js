@@ -44,41 +44,43 @@ class MovementService {
         };
     };
 
-    static readMovements = async () => {
-        const movements = await Movement.aggregate([
-            {
-                $lookup: {
-                    from: "Posts",
-                    localField: "_id",
-                    foreignField: "movements",
-                    as: "posts",
-                },
-            },
-            {
-                $lookup: {
-                    from: "CommissionServices", // Assuming the collection name is 'CommissionServices'
-                    localField: "_id",
-                    foreignField: "movements", // Assuming the field name in CommissionServices is 'movements'
-                    as: "commissionServices",
-                },
-            },
-            {
-                $addFields: {
-                    postCount: { $size: "$posts" },
-                    commissionServiceCount: { $size: "$commissionServices" },
-                },
-            },
-            {
-                $project: {
-                    posts: 0, // Exclude the artworks array to reduce payload size
-                    commissionServices: 0, // Exclude the commissionServices array to reduce payload size
-                },
-            },
-        ]);
-        return {
-            movements,
-        };
-    };
+  static readMovements = async () => {
+    const movements = await Movement.aggregate([
+      {
+        $lookup: {
+          from: 'Posts',
+          localField: '_id',
+          foreignField: 'movementId',
+          as: 'posts'
+        }
+      },
+      {
+        $lookup: {
+          from: 'CommissionServices', // Assuming the collection name is 'CommissionServices'
+          localField: '_id',
+          foreignField: 'movementId', // Assuming the field name in CommissionServices is 'movements'
+          as: 'commissionServices'
+        }
+      },
+      {
+        $addFields: {
+          postCount: { $size: '$posts' },
+          commissionServiceCount: { $size: '$commissionServices' }
+        }
+      },
+      {
+        $project: {
+          posts: 0, // Exclude the artworks array to reduce payload size
+          commissionServices: 0 // Exclude the commissionServices array to reduce payload size
+        }
+      }
+    ])
+    console.log("MOVEMENTS")
+    console.log(movements);
+    return {
+      movements
+    }
+  }
 
     static updateMovement = async (adminId, movementId, req) => {
         // 1. Check if admin and movement exist

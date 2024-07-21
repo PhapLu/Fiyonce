@@ -124,15 +124,15 @@ class CommissionServiceService {
         req
     ) => {
         // 1. Check talent and service
-        const talent = await User.findById(talentId);
-        const service = await CommissionService.findById(commissionServiceId);
-
-        if (!talent) throw new NotFoundError("Talent not found");
-        if (!service) throw new NotFoundError("Service not found");
-        if (service.talentId.toString() !== talentId)
-            throw new BadRequestError("You can only update your service");
-
-        const oldCategoryId = service.serviceCategoryId; // Store the old category ID
+        const talent = await User.findById(talentId)
+        const service = await CommissionService.findById(commissionServiceId)
+    
+        if (!talent) throw new NotFoundError('Talent not found')
+        if (!service) throw new NotFoundError('Service not found')
+        if (!service.movementId) throw new NotFoundError('Movement not found')
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
+    
+        const oldCategoryId = service.serviceCategoryId // Store the old category ID
         try {
             // 2. Handle file uploads if new files were uploaded
             if (req.files && req.files.files && req.files.files.length > 0) {

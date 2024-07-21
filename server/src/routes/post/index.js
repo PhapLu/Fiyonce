@@ -13,9 +13,11 @@ router.get('/readArtworks/:talentId', asyncHandler(postController.readArtworks))
 
 //authentication
 router.use(verifyToken)
-
 router.post('/createPost', uploadFields, asyncHandler(postController.createPost))
 router.patch('/updatePost/:postId', uploadFields, asyncHandler(postController.updatePost))
 router.delete('/deletePost/:postId', asyncHandler(postController.deletePost))
+
+router.patch('/likePost/:postId', uploadFields, asyncHandler(postController.likePost))
+
 
 export default router

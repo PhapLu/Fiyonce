@@ -8,6 +8,7 @@ import {
 
 class NotificationService {
     static createNotification = async (senderId, body) => {
+        console.log(body)
         //1. Check user
         const user = await User.findById(senderId);
         if (!user) throw new NotFoundError("User not found!");
@@ -71,36 +72,50 @@ class NotificationService {
         await notification.save();
 
         return {
-            notification,
-        };
-    };
+            notification
+        }
+    }
 
-    static readNotification = async (notificationId) => {
-        //1. Check notification
-        const notification = await Notification.findById(notificationId);
-        if (!notification) throw new NotFoundError("Notification not found!");
-
-        //2. Mark notification as seen
-        notification.isSeen = true;
-        await notification.save();
-
-        return {
-            notification,
-        };
-    };
-
-    static readNotifications = async (userId) => {
+    static async readNotification(userId, body) {
         //1. Check user
         const user = await User.findById(userId);
         if (!user) throw new NotFoundError("User not found!");
 
-        //2. Get notifications
-        const notifications = await Notification.find({ receiverId: userId });
+        // Mark a single notification as seen
+        const notification = await Notification.findByIdAndUpdate(
+            {
+                receiverId: userId,
+                _id: body.notificationId
+            },
+            { isSeen: true },
+            { new: true } // Return the updated document
+        );
 
-        return {
-            notifications,
-        };
-    };
+        if (!notification) {
+            throw new NotFoundError('Notification not found');
+        }
+
+        return { notification };
+    }
+
+    static async readNotifications(userId) {
+        // Mark multiple notifications as seen
+        await Notification.updateMany(
+            {
+                receiverId: userId,
+            },
+            { isSeen: true },
+            { new: true }
+        );
+
+        // Fetch the updated notifications
+        const updatedNotifications = await Notification.find({
+            receiverId: userId,
+            isSeen: true
+        });
+
+        return { notifications: updatedNotifications };
+    }
 }
 
 export default NotificationService;

@@ -1,14 +1,11 @@
-import Post from "../models/post.model.js";
-import Artwork from "../models/artwork.model.js";
-import { User } from "../models/user.model.js";
-import { BadRequestError, NotFoundError } from "../core/error.response.js";
-import {
-    compressAndUploadImage,
-    deleteFileByPublicId,
-    extractPublicIdFromUrl,
-} from "../utils/cloud.util.js";
-import PostCategory from "../models/postCategory.model.js";
-import mongoose, { Mongoose } from "mongoose";
+import Post from "../models/post.model.js"
+import Artwork from "../models/artwork.model.js"
+import { User } from "../models/user.model.js"
+import { BadRequestError, NotFoundError } from "../core/error.response.js"
+import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from "../utils/cloud.util.js"
+import PostCategory from "../models/postCategory.model.js"
+import mongoose, { Mongoose } from "mongoose"
+import jwt from 'jsonwebtoken'
 
 class PostService {
     static createPost = async (userId, req) => {
@@ -79,23 +76,84 @@ class PostService {
         }
     };
 
-    static readPost = async (postId) => {
-        a;
-        //1. Find artwork
-        const post = await Post.findById(postId)
-            .populate("talentId", "stageName avatar")
-            .populate("postCategoryId", "title")
-            .populate("movementId", "title")
-            .populate("artworks", "url")
-            .exec();
-        if (!post) throw new NotFoundError("Post not found");
+    static readPost = async (req, postId) => {
+        try {
+            // Extract token from cookies
+            const token = req.cookies.accessToken;
+
+            // Verify token
+            const payload = jwt.verify(token, process.env.JWT_SECRET);
+            req.userId = payload.id;
+            req.email = payload.email;
+
+            // Find user
+            const user = await User.findById(req.userId);
+
+            // Find post
+            const post = await Post.findById(postId)
+                .populate('talentId', 'stageName avatar')
+                .populate('postCategoryId', 'title')
+                .populate('movementId', 'title')
+                .populate('artworks', 'url')
+                .exec();
+            if (!post) throw new NotFoundError('Post not found');
+
+            // Check if user is post owner
+            if (req.userId !== post.talentId.toString()) {
+                post.views.push({ user: new mongoose.Types.ObjectId(req.userId) });
+                await post.save(); // Save the post to update views
+            }
+
+
+
+            return {
+                post
+            };
+        } catch (error) {
+            console.error('Error reading post:', error);
+            throw new Error('Failed to read post');
+        }
+    }
+
+
+    static likePost = async (userId, postId) => {
+        // Find user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('User not found')
+
+        // Find post
+        const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
+        if (!post) throw new NotFoundError('Post not found')
+
+        const likeIndex = post.likes.findIndex(like => like.user.toString() === userId);
+
+        // Let action to know if the user like/undo their interactions
+        let action = "like";
+
+        if (likeIndex === -1) {
+            // Add like
+            post.likes.push({ user: new mongoose.Types.ObjectId(userId) });
+            
+
+            // Check if user is post owner
+            if (userId !== post.talentId) {
+                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
+            }
+        } else {
+            // Remove like
+            post.likes.splice(likeIndex, 1);
+            action = "dislike";
+        }
+
+        await post.save();
 
         return {
             post,
-        };
-    };
+            action
+        }
+    }
 
-    static readPostsOfTalent = async (talentId) => {
+    static readPosts = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId);
         if (!talent) throw new NotFoundError("Talent not found");
@@ -156,8 +214,7 @@ class PostService {
             }, []);
             return { artworks };
         } catch (error) {
-            console.error("Error fetching artworks:", error);
-            throw error;
+            throw new BadRequestError("Error fetching artworks");
         }
     };
 
@@ -239,18 +296,11 @@ class PostService {
             );
 
             //5. Check if the postCategory has changed and if the old postCategory is now empty
-            if (
-                oldPostCategoryId.toString() !==
-                updatedPost.postCategoryId.toString()
-            ) {
-                const postsInOldPostCategory = await Post.find({
-                    oldPostCategoryId,
-                });
+            if (oldPostCategoryId.toString() !== updatedPost.postCategoryId.toString()) {
+                const postsInOldPostCategory = await Post.find({ oldPostCategoryId })
                 if (postsInOldPostCategory.length == 0) {
-                    await PostCategory.findByIdAndDelete(oldPostCategoryId);
-                    console.log(
-                        `Deleted PostCategory ID: ${oldPostCategoryId}`
-                    );
+                    await PostCategory.findByIdAndDelete(oldPostCategoryId)
+                    console.log(`Deleted PostCategory ID: ${oldPostCategoryId}`)
                 }
             }
 
@@ -296,9 +346,9 @@ class PostService {
         await Post.findByIdAndDelete(artworkId);
 
         //4. Delete postCategory if postCategory references is null
-        const remainingPostCategories = await Post.find({ postCategoryId });
+        const remainingPostCategories = await Post.find({ postCategoryId })
         if (remainingPostCategories.length == 0) {
-            await PostCategory.findByIdAndDelete(postCategoryId);
+            await PostCategory.findByIdAndDelete(postCategoryId)
         }
 
         return {
