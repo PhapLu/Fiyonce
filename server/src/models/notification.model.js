@@ -12,7 +12,7 @@ const NotificationSchema = new mongoose.Schema(
         type: {
             type: String,
             required: true,
-            enum: ["interaction", "order", "update"],
+            enum: ["interaction", "order", "system"],
         },
         isSeen: { type: Boolean, default: false },
         content: { type: String, required: true },
