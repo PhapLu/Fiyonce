@@ -73,7 +73,7 @@ class PostService {
         }
     }
 
-    static readPost = async (postId) => {
+    static readPost = async (postId) => {a
         //1. Find artwork
         const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
         if (!post) throw new NotFoundError('Post not found')

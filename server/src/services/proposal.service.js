@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import Order from "../models/order.model.js"
 import axios from 'axios'
 import Artwork from "../models/post.model.js"
-import sendEmail from '../middlewares/sendMail.js'
+import brevoSendEmail from '../configs/brevo.email.config.js'
 import Proposal from "../models/proposal.model.js"
 import MomoService from './momo.service.js'
 import { User } from "../models/user.model.js"
@@ -55,7 +55,7 @@ class ProposalService {
 
         const showedProposal = await proposal.populate('orderId')
 
-        //sendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully')
+        //brevoSendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully')
         return {
             proposal: showedProposal
         }
@@ -112,7 +112,7 @@ class ProposalService {
 
         //5. Send email to user
         // try {
-        //     await sendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent')
+        //     await brevoSendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent')
         // } catch (error) {
         //     throw new Error('Email service error')
         // }
@@ -311,7 +311,7 @@ class ProposalService {
 
     //     // 7. Send email to talent
     //     try {
-    //         await sendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
+    //         await brevoSendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
     //     } catch (error) {
     //         throw new Error('Email service error')
     //     }

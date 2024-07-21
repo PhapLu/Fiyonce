@@ -2,17 +2,12 @@ import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import role from "../middlewares/role.js"
-import sendEmail from "../middlewares/sendMail.js"
-import KeyTokenService from "./keyToken.service.js"
-import Key from "../models/keyToken.model.js"
 import ForgotPasswordOTP from "../models/forgotPasswordOTP.model.js"
 import UserOTPVerification from "../models/userOTPVerification.model.js"
 import { User } from "../models/user.model.js"
-import { createTokenPair, verifyJWT } from "../auth/authUtils.js"
-import { findByEmail} from '../utils/index.js'
-import { AuthFailureError, BadRequestError, ForbiddenError} from "../core/error.response.js"
+import { AuthFailureError, BadRequestError} from "../core/error.response.js"
 import { createUserQRCode } from "../utils/qrcode.util.js"
-import sendEmailSES from '../utils/email.util.js'
+import brevoSendEmail from '../configs/brevo.email.config.js'
 
 class AuthService {
     static login = async ({ email, password }) => {
@@ -103,7 +98,7 @@ class AuthService {
         const subject = 'Your OTP Code'
         const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`
         const verificationCode = otp
-        await sendEmail(email, subject, subjectMessage, verificationCode)
+        await brevoSendEmail(email, subject, subjectMessage, verificationCode)
         return {
             code: 201,
             metadata: {
@@ -216,7 +211,7 @@ class AuthService {
         const subject = '[Pastal] OTP thay đổi mật khẩu'
         const subjectMessage = 'Mã xác thực thay đổi mật khẩu của bạn là: '
         const verificationCode = otp
-        await sendEmail(email, subject, subjectMessage, verificationCode)
+        await brevoSendEmail(email, subject, subjectMessage, verificationCode)
     
         return {
             code: 200,

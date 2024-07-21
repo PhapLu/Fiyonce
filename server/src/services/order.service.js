@@ -5,6 +5,7 @@ import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError, NotFoundError } from "../core/error.response.js"
 import { compressAndUploadImage, extractPublicIdFromUrl, deleteFileByPublicId } from "../utils/cloud.util.js"
+import brevoSendEmail from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
 
 class OrderService {
@@ -445,7 +446,7 @@ class OrderService {
 
         //6. Send email to user
         // try {
-        //     await sendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
+        //     await brevoSendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
         // } catch (error) {
         //     throw new Error('Email service error')
         // }

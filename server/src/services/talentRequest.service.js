@@ -1,8 +1,8 @@
-import sendEmail from '../middlewares/sendMail.js'
 import TalentRequest from '../models/talentRequest.model.js'
 import { User } from '../models/user.model.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } from '../utils/cloud.util.js'
+import brevoSendEmail from '../configs/brevo.email.config.js'
 
 class TalentRequestService{
     static requestUpgradingToTalent = async (userId, req) => {
@@ -113,7 +113,7 @@ class TalentRequestService{
                 const publicId = extractPublicIdFromUrl(artwork)
                 await deleteFileByPublicId(publicId)
             })
-            await sendEmail(foundUser.email, 'Role Updated', 'Your role has been updated to talent')
+            await brevoSendEmail(foundUser.email, 'Role Updated', 'Your role has been updated to talent')
         } catch (error) {
             console.log('Failed:::', error)
             throw new Error('Email service error or image deletion failed')
@@ -151,7 +151,7 @@ class TalentRequestService{
                 const publicId = extractPublicIdFromUrl(artwork)
                 await deleteFileByPublicId(publicId)
             })
-            sendEmail(foundUser.email, 'Request Denied', 'Your request has been rejected')
+            await brevoSendEmail(foundUser.email, 'Request Denied', 'Your request has been rejected')
         } catch (error) {
             console.log('Failed:::', error)
             throw new Error('Email service error or image deletion failed')
