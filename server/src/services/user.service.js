@@ -3,6 +3,8 @@ import Artwork from '../models/artwork.model.js'
 import { User } from '../models/user.model.js'
 import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.response.js'
 import Conversation from '../models/conversation.model.js'
+import Notification from '../models/notification.model.js'
+import mongoose from 'mongoose'
 
 class UserService {
     //-------------------CRUD----------------------------------------------------
@@ -133,10 +135,20 @@ class UserService {
             "messages.createdAt": { $gt: user.lastViewConversations }
         }).populate('members.user messages.senderId seenBy.userId');
 
+        // Fetch unseen notifications
+        const unSeenNotifications = await Notification.find({
+            receiverId: new mongoose.Types.ObjectId(userId),
+            isSeen: false
+        });
+
+        console.log("MEEEE")
+        console.log(unSeenNotifications)
+
         // Create a plain JavaScript object with user data and add unSeenConversations
         const userData = {
             ...user.toObject(),
-            unSeenConversations: unSeenConversations
+            unSeenConversations: unSeenConversations,
+            unSeenNotifications: unSeenNotifications
         };
 
         return {

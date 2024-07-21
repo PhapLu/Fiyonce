@@ -2,6 +2,26 @@ import Post from "../models/post.model.js";
 import { User } from "../models/user.model.js";
 
 class RecommenderService {
+  static search = async (query) => {
+    if (!query.searchTerm) throw new BadRequestError("Invalid search Term")
+    const searchRegex = new RegExp(query.searchTerm, 'i'); // 'i' for case-insensitive search
+    const userResults = await User.find({
+      $or: [
+        { fullName: { $regex: searchRegex } },
+        { email: { $regex: searchRegex } },
+        { bio: { $regex: searchRegex } },
+      ]
+    });
+    // const artworkResults = await Artwork.find({ $text: { $search: query.searchTerm } });
+    console.log("SEARCH TERM")
+    console.log(query.searchTerm)
+    console.log(userResults)
+    return {
+      userResults,
+      // artworkResults
+    };
+  };
+
   static readPopularPosts = async () => {
     try {
       const posts = await Post.find()
@@ -34,7 +54,6 @@ class RecommenderService {
       }));
 
       scoredPosts.sort((a, b) => b.score - a.score);
-      console.log(scoredPosts)
       return { posts: scoredPosts.slice(0, 50) };
     } catch (error) {
       console.error('Error in readPopularPosts:', error);

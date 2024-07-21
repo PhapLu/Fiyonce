@@ -104,7 +104,7 @@ export default function Explore() {
     // Fetch artworks
 
     return (
-        <div className="explore">
+        <div className="explore pt-8">
             {/* Display informative news */}
             {/* <News /> */}
 
@@ -133,14 +133,14 @@ export default function Explore() {
                     </Link>
                 </div>
 
-                <div className="sub-nav-navigation--right">
+                {/* <div className="sub-nav-navigation--right">
                     <button className="btn btn-3 btn-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
                         </svg>
                         Chỉnh sửa newsfeed
                     </button>
-                </div>
+                </div> */}
             </div>
             <hr />
 

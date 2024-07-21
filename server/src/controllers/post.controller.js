@@ -13,7 +13,7 @@ class PostController{
     readPost = async(req, res, next) => {
         new SuccessResponse({
             message: 'Get an post success!',
-            metadata: await PostService.readPost(req.params.postId)
+            metadata: await PostService.readPost(req, req.params.postId)
         }).send(res)
     }
 
@@ -51,6 +51,16 @@ class PostController{
             metadata: await PostService.deletePost(req.userId, req.params.postId)
         }).send(res)
     }
+
+     
+    likePost = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Update post success!',
+            metadata: await PostService.likePost(req.userId, req.params.postId)
+        }).send(res)
+    }
+
+
     ///END----CRUD////////
 
     likePost = async(req, res, next) => {

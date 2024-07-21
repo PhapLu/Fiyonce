@@ -2,6 +2,13 @@ import { SuccessResponse } from "../core/success.response.js";
 import RecommenderService from "../services/recommender.service.js";
 
 class RecommenderController {
+  search = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get Popular Posts success!',
+      metadata: await RecommenderService.search(req.query)
+    }).send(res);
+  }
+
   readPopularPosts = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Posts success!',
