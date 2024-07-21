@@ -80,7 +80,9 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                             <img src={notification?.senderAvatar} alt="" className="user__avatar" />
                                             <div className="user__name">
                                                 <div className="user__name__sub-title">
-                                                    {limitString(notification?.content, 100)}
+                                                    <span>
+                                                        {limitString(notification?.content, 100)}
+                                                    </span>
                                                 </div>
                                                 <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
 
@@ -115,10 +117,11 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                             <img src={notification?.senderAvatar} alt="" className="user__avatar" />
                                             <div className="user__name">
                                                 <div className="user__name__sub-title">
-                                                    {limitString(notification?.content, 100)}
+                                                    <span>
+                                                        {limitString(notification?.content, 100)}
+                                                    </span>
                                                 </div>
                                                 <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
-
                                                     <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
                                                 </div>
                                             </div>

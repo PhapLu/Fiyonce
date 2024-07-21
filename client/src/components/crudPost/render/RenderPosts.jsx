@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation, useOutlet, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import Masonry from 'react-masonry-css';
 import { formatNumber } from "../../../utils/formatter.js";
 import "./RenderPosts.scss";
@@ -24,48 +24,59 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
     const profileInfo = useOutletContext();
     const isPostOwner = userId === userInfo?._id;
     const [postId, setPostId] = useState();
-    
+
+    // State to track the like status of posts
+    const [likedPosts, setLikedPosts] = useState([]);
+
+    // useEffect(() => {
+    //     socket.on('getNotification', (newNotification) => {
+    //         // handle notification
+    //     });
+
+    //     return () => {
+    //         socket.off('getNotification');
+    //         socket.emit('removeUser', userInfo._id);
+    //     };
+    // }, [userInfo._id]);
+
     useEffect(() => {
-        socket.on('getNotification', (newNotification) => {
-            alert(newNotification.content)
-            // console.log("NEW MESSAGE")
-            // console.log(newNotification);
-            // // alert(newNotification)
-            // setMessages((prevMessages) => [...prevMessages, newNotification]);
-            // // conversation?.messages?.push(newNotification);
-        });
-
-        return () => {
-            socket.off('getNotification');
-            socket.emit('removeUser', userInfo._id);
-        };
-    }, [userInfo._id]);
-
-    if (!posts) {
-        return null; // Or handle the loading state or empty state
-    }
-
+        if (posts) {
+            // Initialize the likedPosts state based on the posts data
+            const initialLikedPosts = posts.reduce((acc, post) => {
+                if (post.likes?.some(like => like.user === userInfo?._id)) {
+                    acc.push(post._id);
+                }
+                return acc;
+            }, []);
+            setLikedPosts(initialLikedPosts);
+        }
+    }, [posts, userInfo._id]);
 
     const handleLikePost = async (postId, postAuthorId) => {
-        console.log(postId)
-        console.log(postAuthorId)
         try {
             const response1 = await apiUtils.patch(`/post/likePost/${postId}`);
             if (response1) {
-                setModalInfo({ status: "success", message: "Thích bài viết thành công" });
-                console.log(response1);
+                console.log(response1)
+                if (response1.data.metadata.action == "like") {
+                    setModalInfo({ status: "success", message: "Đã thích bài viết" });
+                } else {
+                    setModalInfo({ status: "success", message: "Đã hoàn tác" });
+                }
 
-                // const fd = new FormData();
-                // fd.append("receiverId", postAuthorId);
-                // fd.append("type", "like");
-
-                // console.log(fd.get("receiverId"))
-                // console.log(fd.get("type"))
+                // Update like status
+                setLikedPosts(prevState => {
+                    const isLiked = prevState.includes(postId);
+                    if (isLiked) {
+                        // Remove from likedPosts
+                        return prevState.filter(id => id !== postId);
+                    } else {
+                        // Add to likedPosts
+                        return [...prevState, postId];
+                    }
+                });
 
                 const response2 = await apiUtils.post(`/notification/createNotification`, { receiverId: postAuthorId, type: "like" });
                 const notificationData = response2.data.metadata.notification;
-                console.log(response2);
-                console.log(response2.data.metadata.notification)
 
                 socket.emit('sendNotification', { senderId: userInfo._id, receiverId: postAuthorId, notification: notificationData });
             }
@@ -98,14 +109,9 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                 setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
             })
             .catch(err => {
-                setModalInfo({ status: "success", message: "Có lỗi xảy ra" });
+                setModalInfo({ status: "error", message: "Có lỗi xảy ra" });
             });
     };
-
-    const { postId: selectedPostId } = useParams();
-    console.log(selectedPostId)
-
-
 
     return (
         <div className="posts">
@@ -132,6 +138,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                 columnClassName="my-masonry-grid_column"
             >
                 {sortedPosts?.length > 0 && sortedPosts?.map((post, idx) => {
+                    const hasLiked = likedPosts.includes(post._id);
                     return (
                         <div key={idx} className="post-item" onClick={() => setPostId(post?._id)}>
                             <div className="post-item__img">
@@ -160,9 +167,15 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
 
                                 <div className="post-item__img__react-operation-container">
                                     <div className="post-item__img__react-operation-item" onClick={() => { handleLikePost(post._id, post.talentId._id) }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                        </svg>
+                                        {hasLiked ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 liked-ic hover-cursor-opacity">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25a5.973 5.973 0 0 0-1.753-4.247A5.971 5.971 0 0 0 15 2.25a5.973 5.973 0 0 0-4.247 1.753l-.253.253-.253-.253A5.973 5.973 0 0 0 6 2.25a5.973 5.973 0 0 0-4.247 1.753A5.973 5.973 0 0 0 0 8.25c0 1.613.626 3.127 1.753 4.247l8.974 8.974a.75.75 0 0 0 1.06 0l8.974-8.974A5.973 5.973 0 0 0 21 8.25Z" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25a5.973 5.973 0 0 0-1.753-4.247A5.971 5.971 0 0 0 15 2.25a5.973 5.973 0 0 0-4.247 1.753l-.253.253-.253-.253A5.973 5.973 0 0 0 6 2.25a5.973 5.973 0 0 0-4.247 1.753A5.973 5.973 0 0 0 0 8.25c0 1.613.626 3.127 1.753 4.247l8.974 8.974a.75.75 0 0 0 1.06 0l8.974-8.974A5.973 5.973 0 0 0 21 8.25Z" />
+                                            </svg>
+                                        )}
                                     </div>
                                     <div className="post-item__img__react-operation-item">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -184,7 +197,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                     </div>
                                 </div>
                                 <div className="user--right flex-align-center">
-                                    <span className="mr-4">{post.views}</span>
+                                    <span className="mr-4">{post?.views?.length}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sm">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />

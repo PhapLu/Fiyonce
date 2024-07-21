@@ -9,8 +9,13 @@ const PostSchema = new Schema({
     movementId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement'},
     description: { type: String },
     artworks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artwork', required: true }],
-    views: { type: Number, default: 0 },
     likes: {
+        type: [{
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+        }],
+        default: []
+    },
+    views: {
         type: [{
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
         }],

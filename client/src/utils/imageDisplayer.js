@@ -1,4 +1,5 @@
 export function resizeImageUrl(imageUrl, width) {
+    if (!imageUrl) return;
     // Check if the imageUrl already has 'upload' in the path
     const uploadIndex = imageUrl.indexOf('/upload/');
     if (uploadIndex !== -1) {

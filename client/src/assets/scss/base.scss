@@ -410,6 +410,19 @@ img {
     }
 }
 
+.bg-gray-1 {
+    background-color: var(--gray-1-color);
+}
+
+.liked-ic {
+    stroke: unset !important;
+    fill: #ff4141;
+
+    path {
+        filter: drop-shadow(1px 1px 3px rgb(255 41 45 / 60%)) !important;
+    }
+}
+
 // Buttons
 .btn {
     padding: 6px 12px;

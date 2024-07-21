@@ -13,7 +13,7 @@ class PostController{
     readPost = async(req, res, next) => {
         new SuccessResponse({
             message: 'Get an post success!',
-            metadata: await PostService.readPost(req.params.postId)
+            metadata: await PostService.readPost(req, req.params.postId)
         }).send(res)
     }
 

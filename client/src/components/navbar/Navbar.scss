@@ -51,7 +51,7 @@
             border: 2px solid var(--gray-1-color);
             border-radius: 16px;
             transition: border 0.1s;
-            min-width: 300px;
+            min-width: 320px;
             background-color: var(--gray-1-color);
             color: var(--black-2-color);
 
@@ -63,6 +63,7 @@
             }
 
             .navbar__search-field__input {
+                width: 100%;
                 padding: 10px 10px;
                 border: none;
                 padding-left: 8px;
@@ -96,10 +97,18 @@
                 min-height: 200px;
                 padding: 6px;
 
+                h4 {
+                    padding: 0 6px;
+
+                    span {
+                        padding: 4px 6px;
+                    }
+                }
+
                 .search-result-item {
                     border-radius: 8px;
-                    padding: 6px 10px;
-                    margin-bottom: 8px;
+                    padding: 6px 4px;
+                    margin-bottom: 4px;
                 }
             }
         }

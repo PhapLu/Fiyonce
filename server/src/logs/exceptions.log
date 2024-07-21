@@ -488,3 +488,51 @@ ReferenceError: search is not defined
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-07-21 08:49:42::error::undefined::undefined::uncaughtException: next is not defined
+ReferenceError: next is not defined
+    at file:///E:/Fiyonce/server/src/services/post.service.js:86:13
+    at E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at PostService.readPost (file:///E:/Fiyonce/server/src/services/post.service.js:82:13)
+    at readPost (file:///E:/Fiyonce/server/src/controllers/post.controller.js:16:41)
+    at file:///E:/Fiyonce/server/src/helpers/asyncHandler.js:3:9
+    at Layer.handle [as handle_request] (E:\Fiyonce\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Fiyonce\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Fiyonce\server\node_modules\express\lib\router\route.js:119:3)::undefined
+2024-07-21 08:50:05::error::undefined::undefined::uncaughtException: next is not defined
+ReferenceError: next is not defined
+    at file:///E:/Fiyonce/server/src/services/post.service.js:86:13
+    at E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at PostService.readPost (file:///E:/Fiyonce/server/src/services/post.service.js:82:13)
+    at readPost (file:///E:/Fiyonce/server/src/controllers/post.controller.js:16:41)
+    at file:///E:/Fiyonce/server/src/helpers/asyncHandler.js:3:9
+    at Layer.handle [as handle_request] (E:\Fiyonce\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Fiyonce\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Fiyonce\server\node_modules\express\lib\router\route.js:119:3)::undefined
+2024-07-21 08:51:40::error::undefined::undefined::uncaughtException: next is not defined
+ReferenceError: next is not defined
+    at file:///E:/Fiyonce/server/src/services/post.service.js:86:13
+    at E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at PostService.readPost (file:///E:/Fiyonce/server/src/services/post.service.js:82:13)
+    at readPost (file:///E:/Fiyonce/server/src/controllers/post.controller.js:16:41)
+    at file:///E:/Fiyonce/server/src/helpers/asyncHandler.js:3:9
+    at Layer.handle [as handle_request] (E:\Fiyonce\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Fiyonce\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Fiyonce\server\node_modules\express\lib\router\route.js:119:3)::undefined
+2024-07-21 08:52:38::error::undefined::undefined::uncaughtException: next is not defined
+ReferenceError: next is not defined
+    at file:///E:/Fiyonce/server/src/services/post.service.js:86:13
+    at E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (E:\Fiyonce\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at PostService.readPost (file:///E:/Fiyonce/server/src/services/post.service.js:82:13)
+    at readPost (file:///E:/Fiyonce/server/src/controllers/post.controller.js:16:41)
+    at file:///E:/Fiyonce/server/src/helpers/asyncHandler.js:3:9
+    at Layer.handle [as handle_request] (E:\Fiyonce\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Fiyonce\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Fiyonce\server\node_modules\express\lib\router\route.js:119:3)::undefined
