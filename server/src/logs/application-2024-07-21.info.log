@@ -1,0 +1,6 @@
+2024-07-21 10:25:54::info::/v1/api/user/me::a42a5f40-201f-42f3-9168-8a43c3db6727::input-params ::GET::::{}
+2024-07-21 10:26:04::error::/v1/api/user/me::a42a5f40-201f-42f3-9168-8a43c3db6727::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:26:04::info::/v1/api/movement/readMovements::542f76db-8bb9-4df6-a28d-8bd4797aeece::input-params ::GET::::{}
+2024-07-21 10:26:14::error::/v1/api/movement/readMovements::542f76db-8bb9-4df6-a28d-8bd4797aeece::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-21 10:26:14::info::/v1/api/recommender/readPopularPosts::069dfe74-b7b8-4dec-93eb-e21c7f7e5f25::input-params ::GET::::{}
+2024-07-21 10:26:24::error::/v1/api/recommender/readPopularPosts::069dfe74-b7b8-4dec-93eb-e21c7f7e5f25::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
