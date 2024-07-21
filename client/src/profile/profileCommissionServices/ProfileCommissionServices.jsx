@@ -124,7 +124,7 @@ export default function ProfileCommissionServices() {
     );
 
     const updateMutation = useMutation(
-        (updatedService) => apiUtils.patch(`/commissionService/updateCommissionService/${updatedService._id}`, updatedService),
+        (fd) => apiUtils.patch(`/commissionService/updateCommissionService/${fd.get("_id")}`, fd),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['fetchCommissionServiceCategories', userId]);

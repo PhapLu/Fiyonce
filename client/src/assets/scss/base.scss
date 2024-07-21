@@ -115,6 +115,21 @@ svg {
     width: 22px;
     height: 22px;
     object-fit: cover;
+
+    &.sm {
+        width: 18px;
+        height: 18px;
+    }
+
+    &.md {
+        width: 20px;
+        height: 20px;
+    }
+
+    &.lg {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 body {
@@ -392,6 +407,19 @@ img {
     &:hover {
         cursor: pointer;
         background-color: var(--gray-1-color);
+    }
+}
+
+.bg-gray-1 {
+    background-color: var(--gray-1-color);
+}
+
+.liked-ic {
+    stroke: unset !important;
+    fill: #ff4141;
+
+    path {
+        filter: drop-shadow(1px 1px 3px rgb(255 41 45 / 60%)) !important;
     }
 }
 
@@ -890,10 +918,10 @@ table {
     width: 100%;
     display: flex;
     justify-content: start;
+    flex-wrap: nowrap;
     align-items: center;
     border: 2px solid var(--gray-2-color);
     border-radius: 8px;
-    padding: 8px 10px;
     transition: border 0.1s;
     background-color: var(--white-2-color);
 
@@ -909,11 +937,11 @@ table {
     }
 
     .form-field__input {
-        width: unset;
+        // width: unset;
         border: none;
         outline: none;
-        padding: unset;
-        border-radius: unset;
+        // border-radius: unset;
+        // padding: 8px 10px;
 
         &[type="submit"] {
             border: none;
@@ -1012,7 +1040,7 @@ table {
 .images-layout-3 {
     columns: 2;
     column-gap: 4px;
-    height: 300px;
+    height: 280px;
 
     img {
         width: 100px;

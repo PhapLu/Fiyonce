@@ -109,8 +109,6 @@ export default function ProfilePosts() {
 
     const queryClient = useQueryClient();
 
-   
-
     const handleCategoryClick = (collectionId) => {
         setPostCategoryId(collectionId);
         if (collectionId === "all") {
@@ -165,7 +163,7 @@ export default function ProfilePosts() {
                 </div>
 
                 {posts.length > 0 ? (
-                    <RenderPosts layout={4} posts={posts}/>
+                    <RenderPosts layout={4} posts={posts} isDisplayOwner={false} allowEditDelete={true}/>
                 ) : (
                     <p>Hiện chưa có tác phẩm nào. <span className="highlight-text">Đăng tải</span> ngay</p>
                 )}

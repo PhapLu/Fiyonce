@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import { ThemeProvider } from './contexts/theme/ThemeContext';
-import { LanguageProvider } from './contexts/language/LanguageContext';
+import { SettingProvider } from './contexts/setting/SettingContext';
 import { ModalProvider } from './contexts/modal/ModalContext';
 import { AuthProvider } from './contexts/auth/AuthContext';
 import { ConversationProvider } from './contexts/conversation/ConversationContext';
@@ -14,8 +13,7 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <LanguageProvider>
+      <SettingProvider>
           <ModalProvider>
             <AuthProvider>
               <ConversationProvider>
@@ -25,8 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               </ConversationProvider>
             </AuthProvider>
           </ModalProvider>
-        </LanguageProvider>
-      </ThemeProvider>
+      </SettingProvider>
     </QueryClientProvider>
   </React.StrictMode >
 )

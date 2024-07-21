@@ -12,6 +12,6 @@ router.use(verifyToken)
 
 router.post('/createNotification', asyncHandler(notificationController.createNotification))
 router.patch('/readNotification/:notificationId', asyncHandler(notificationController.readNotification))
-router.get('/readNotifications', asyncHandler(notificationController.readNotifications))
+router.patch('/readNotifications', asyncHandler(notificationController.readNotifications))
 
 export default router
