@@ -13,10 +13,13 @@ import RenderPost from "./components/crudPost/render/RenderPost";
 // Pages
 import ProfileLayout from "./profile/profileLayout/ProfileLayout";
 import Forbidden from "./pages/forbidden/Forbidden";
-import BasicInfo from "./pages/basicInfo/BasicInfo";
+import ProfileBasicInfo from "./profile/profileBasicInfo/ProfileBasicInfo.jsx";
 import Explore from "./pages/explore/Explore";
 import ExplorePosts from "./pages/explorePosts/ExplorePosts";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
+import HelpCenter from "./pages/helpCenter/HelpCenter";
+import InMaintainance from "./pages/inMaintainance/InMaintainance";
+import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
 
 // Profiles
@@ -42,33 +45,33 @@ const routes = [
     element: <ProfileLayout />,
     children: [
       {
-        path: "/users/:userId/profile_commission_services",
+        path: "/users/:userId/profile-commission-services",
         element: <ProfileCommissionServices />,
       },
       {
-        path: "/users/:userId/profile_posts",
+        path: "/users/:userId/profile-posts",
         element: <ProfilePosts />,
         children: [
           {
-            path: "/users/:userId/profile_posts/create",
+            path: "/users/:userId/profile-posts/create",
             element: (
               <CreatePost />
             ),
           },
           {
-            path: "/users/:userId/profile_posts/:postId",
+            path: "/users/:userId/profile-posts/:postId",
             element: (
               <RenderPost />
             ),
           },
           {
-            path: "/users/:userId/profile_posts/:postId/update",
+            path: "/users/:userId/profile-posts/:postId/update",
             element: (
               <UpdatePost />
             ),
           },
           {
-            path: "/users/:userId/profile_posts/:postId/delete",
+            path: "/users/:userId/profile-posts/:postId/delete",
             element: (
               <DeletePost />
             ),
@@ -81,7 +84,7 @@ const routes = [
       },
       {
         path: "/users/:userId/basic-info",
-        element: <ProtectedRoute><BasicInfo /></ProtectedRoute>,
+        element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
       },
     ],
   },
@@ -97,7 +100,7 @@ const routes = [
             path: "/explore/posts",
             element: <ExplorePosts showPosts={true} />,
             children: [
-              // path: "/users/:userId/profile_posts/create",
+              // path: "/users/:userId/profile-posts/create",
               // element: (
               //   <CreatePost />
               // ),
@@ -116,11 +119,19 @@ const routes = [
             path: "/explore/commissionServices",
             // element: <CommissionServices showCommissionServices={true} />,
           },
+          {
+            path: "/explore/help-center",
+            element: <HelpCenter/>,
+          },
         ],
       },
       {
-        path: "/commission_market",
+        path: "/commission-market",
         element: <CommissionMarket />,
+      },
+      {
+        path: "/challenges",
+        element: <InDevelopment />,
       },
     ],
   },

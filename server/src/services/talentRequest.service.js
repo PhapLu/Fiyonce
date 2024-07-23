@@ -81,7 +81,7 @@ class TalentRequestService {
         if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         // 2. Find talent request
-        const talentRequest = await TalentRequest.findOne({ userId });
+        const talentRequest = await TalentRequest.findOne({ userId }).populate("userId", "fullName email");
         if (!talentRequest) {
             throw new NotFoundError("Yêu cầu họa sĩ không tồn tại");
         }
@@ -191,8 +191,9 @@ class TalentRequestService {
 
         //2. Find all talent requests
         const talentRequests = await TalentRequest.find({
-            status: status,
         }).populate("userId", "email fullName");
+        console.log("RRR")
+        console.log(talentRequests);
         return {
             talentRequests,
         };

@@ -37,7 +37,8 @@
         bottom: 22px;
     }
 
-    &.success {
+    &.success,
+    &.congrat {
         --modal-form-status-color: rgb(29, 187, 29);
     }
 

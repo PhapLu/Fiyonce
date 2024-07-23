@@ -20,6 +20,8 @@ class NotificationService {
             throw new BadRequestError("Hãy cung cấp đầy đủ những mục bắt buộc");
         }
         if (!receiver) throw new NotFoundError("Không tìm thấy người nhận");
+
+        if (senderId === receiverId) return;
         if (
             type !== "like" &&
             type !== "share" &&
@@ -112,7 +114,7 @@ class NotificationService {
         const updatedNotifications = await Notification.find({
             receiverId: userId,
             isSeen: true
-        });
+        }).sort({ createdAt: -1 });
 
         return { notifications: updatedNotifications };
     }

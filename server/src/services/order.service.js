@@ -106,14 +106,14 @@ class OrderService {
         const q = req.query;
         const filters = {
             isMemberArchived: false,
-            ...(q.isDirect && { isDirect: q.isDirect }),
+            ...(q.isDirect !== undefined && { isDirect: q.isDirect === 'true' }),
         };
 
         //1. Get all orders
-        const orders = await Order.find(filters).populate(
-            "talentChosenId",
-            "fullName avatar stageName"
-        );
+        const orders = await Order.find(filters)
+            .sort({ createdAt: -1 }) // Sort orders by createdAt in descending order
+            .populate("talentChosenId", "fullName avatar")
+            .populate("memberId", "fullName avatar");
 
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(

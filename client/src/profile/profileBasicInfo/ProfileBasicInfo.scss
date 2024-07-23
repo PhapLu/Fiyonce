@@ -1,4 +1,4 @@
-.basic-info {
+.profile-basic-info {
     section {
         margin-bottom: 24px;
     }
@@ -14,8 +14,8 @@
         .form-field__input {}
     }
 
-    .basic-info-section {
-        .basic-info-form {
+    .profile-basic-info-section {
+        .profile-basic-info-form {
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -23,7 +23,7 @@
         }
     }
 
-    .basic-info__button-container {
+    .profile-basic-info__button-container {
         button {
             margin-right: 12px;
         }

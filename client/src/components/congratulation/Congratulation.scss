@@ -1,0 +1,48 @@
+.congratulation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 2s ease-out; // Smooth opacity transition
+
+    &.fade-out {
+        opacity: 0;
+    }
+
+    .congratulation__content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        position: relative;
+        .congratulation__close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+    }
+}

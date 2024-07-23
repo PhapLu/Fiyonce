@@ -87,19 +87,20 @@ class PostService {
             // Extract token from cookies
             const token = req.cookies.accessToken;
 
-            // Verify token
-            if(token){
-                const payload = jwt.verify(token, process.env.JWT_SECRET);
-                req.userId = payload.id;
-                req.email = payload.email;
-            }
+            // Initialize user-related variables
+            let userId = null;
+            let email = null;
 
-            // Find user
-            const user = await User.findById(req.userId);
+            if (token) {
+                // Verify token if it exists
+                const payload = jwt.verify(token, process.env.JWT_SECRET);
+                userId = payload.id;
+                email = payload.email;
+            }
 
             // Find post
             const post = await Post.findById(postId)
-                .populate('talentId', 'stageName fullName avatar')
+                .populate('talentId', 'fullName stageName avatar')
                 .populate('postCategoryId', 'title')
                 .populate('movementId', 'title')
                 .populate('artworks', 'url')
@@ -121,19 +122,15 @@ class PostService {
         }
     }
 
+
     static likePost = async (userId, postId) => {
         // Find user
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
 
         // Find post
-        const post = await Post.findById(postId)
-            .populate('talentId', 'stageName avatar')
-            .populate('postCategoryId', 'title')
-            .populate('movementId', 'title')
-            .populate('artworks', 'url')
-            .exec()
-        if (!post) throw new NotFoundError('Bài viết không tồn tại')
+        const post = await Post.findById(postId);
+        if (!post) throw new NotFoundError('Post not found')
 
         const likeIndex = post.likes.findIndex(like => like.user.toString() === userId);
 
@@ -143,7 +140,6 @@ class PostService {
         if (likeIndex === -1) {
             // Add like
             post.likes.push({ user: new mongoose.Types.ObjectId(userId) });
-            
             // Check if user is post owner
             if (userId !== post.talentId) {
                 post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
@@ -162,6 +158,45 @@ class PostService {
         }
     }
 
+    //-------------------END CRUD----------------------------------------------------
+    static bookmarkPost = async (userId, postId) => {
+        // Find user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('User not found')
+
+        // Find post
+        const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
+        if (!post) throw new NotFoundError('Post not found')
+
+        const userPostBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.toString() === postId);
+        const postBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.user.toString() === userId);
+
+        // Let action to know if the user postBookmark/undo their interactions
+        let action = "bookmark";
+
+        if (userPostBookmarkIndex === -1) {
+            user.postBookmarks.push(postId);
+            post.bookmarks.push({ user: new mongoose.Types.ObjectId(userId) });
+
+            // Check if user is post owner
+            if (userId !== post.talentId) {
+                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
+            }
+        } else {
+            // Remove postBookmark
+            user.postBookmarks.splice(userPostBookmarkIndex, 1);
+            post.bookmarks.splice(postBookmarkIndex, 1);
+            action = "unbookmark";
+        }
+
+        await post.save();
+
+        return {
+            post,
+            action
+        }
+    };
+
     static readPosts = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId);
@@ -170,7 +205,7 @@ class PostService {
             throw new BadRequestError("Người này không phải là họa sĩ");
 
         //2. Find artworks
-        const artworks = await Post.find({ talentId });
+        const artworks = await Post.find({ talentId }).sort({ createdAt: -1 });
 
         return {
             posts: artworks,

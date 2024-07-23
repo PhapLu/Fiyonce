@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./Modal.scss";
+import Congratulation from "../congratulation/Congratulation";
 
 export default function Modal({ modalInfo }) {
     const [visible, setVisible] = useState(true);
@@ -10,8 +11,9 @@ export default function Modal({ modalInfo }) {
     const loadingLineRef = useRef(null);
 
     useEffect(() => {
+        // Reset state when modalInfo changes
         setVisible(true);
-        remainingTimeRef.current = 4000; // Reset the remaining time
+        remainingTimeRef.current = modalInfo?.status === "congrat" ? 5000 : 4000; // Reset the remaining time
         startTimeRef.current = Date.now(); // Reset the start time
         setHovered(false); // Reset hover state
 
@@ -30,29 +32,33 @@ export default function Modal({ modalInfo }) {
         }
 
         return () => clearTimeout(timerRef.current); // Cleanup timer on component unmount
-    }, [modalInfo]); // Add modalInfo as a dependency
+    }, [modalInfo, hovered]); // Add hovered to the dependency array
 
     const handleMouseEnter = () => {
-        setHovered(true);
-        clearTimeout(timerRef.current);
+        if (modalInfo?.status !== "congrat") {
+            setHovered(true);
+            clearTimeout(timerRef.current);
 
-        const elapsedTime = Date.now() - startTimeRef.current;
-        remainingTimeRef.current -= elapsedTime;
-        if (loadingLineRef.current) {
-            loadingLineRef.current.style.animationPlayState = 'paused';
+            const elapsedTime = Date.now() - startTimeRef.current;
+            remainingTimeRef.current -= elapsedTime;
+            if (loadingLineRef.current) {
+                loadingLineRef.current.style.animationPlayState = 'paused';
+            }
         }
     };
 
     const handleMouseLeave = () => {
-        setHovered(false);
+        if (modalInfo?.status !== "congrat") {
+            setHovered(false);
 
-        startTimeRef.current = Date.now();
-        timerRef.current = setTimeout(() => {
-            setVisible(false);
-        }, remainingTimeRef.current);
-        if (loadingLineRef.current) {
-            loadingLineRef.current.style.animationDuration = `${remainingTimeRef.current / 1000}s`;
-            loadingLineRef.current.style.animationPlayState = 'running';
+            startTimeRef.current = Date.now();
+            timerRef.current = setTimeout(() => {
+                setVisible(false);
+            }, remainingTimeRef.current);
+            if (loadingLineRef.current) {
+                loadingLineRef.current.style.animationDuration = `${remainingTimeRef.current / 1000}s`;
+                loadingLineRef.current.style.animationPlayState = 'running';
+            }
         }
     };
 
@@ -98,9 +104,24 @@ export default function Modal({ modalInfo }) {
                     </div>
                 )
             }
+
+            {
+                modalInfo?.status === "congrat" && (
+                    <>
+                        <Congratulation />
+                        <div className="modal-form__status-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 icon-only">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                    </>
+                )
+            }
+
             <p className="modal-form__content">
                 <strong>
                     {modalInfo?.status === "success" && "Thành công"}
+                    {modalInfo?.status === "congrat" && "Chúc mừng"}
                     {modalInfo?.status === "error" && "Thất bại"}
                     {modalInfo?.status === "warning" && "Cảnh báo"}
                     {modalInfo?.status === "info" && "Thông tin"}

@@ -13,6 +13,7 @@ import RenderProposals from "../../components/crudProposal/render/RenderProposal
 // Contexts
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 import { useModal } from "../../contexts/modal/ModalContext.jsx";
+import {useMovement } from "../../contexts/movement/MovementContext.jsx";
 
 // Utils
 import { limitString, formatTimeAgo, formatCurrency } from "../../utils/formatter.js";
@@ -24,6 +25,7 @@ import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
 import "./CommissionMarket.scss";
 
 export default function CommissionMarket() {
+    const {movements} = useMovement();
     // Initialize Masonry layout
     const breakpointColumnsObj = {
         default: 3,
@@ -50,6 +52,7 @@ export default function CommissionMarket() {
         try {
             const queryString = new URLSearchParams(params).toString();
             const response = await newRequest.get(`/order/readOrders?${queryString}`);
+            console.log(response)
             return response.data.metadata.orders;
         } catch (error) {
             return null;
@@ -155,15 +158,18 @@ export default function CommissionMarket() {
                             <div className="form-field">
 
                                 <select
-                                    id="status"
-                                    value={inputs.status || "*"}
+                                    id="movement"
+                                    value={inputs.movement || "*"}
                                     onChange={handleChange}
                                     className="form-field__input"
                                 >
 
                                     <option value="*">Tất cả trường phái</option>
-                                    <option value="realistic">Truyền thần</option>
-                                    <option value="illustration">Minh họa</option>
+                                    {movements?.length > 0 && movements?.map((movement, index) => {
+                                        return (
+                                            <option key={index} value={movement._id}>{movement.title}</option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                         </div>
@@ -185,66 +191,72 @@ export default function CommissionMarket() {
                 </section>
 
                 <section>
-                    <Masonry
-                        breakpointCols={breakpointColumnsObj}
-                        className="my-masonry-grid commission-market-container"
-                        columnClassName="my-masonry-grid_column"
-                    >
-                        {indirectOrders && indirectOrders.length > 0 && indirectOrders.map((indirectOrder) => {
-                            return (
-                                <div className="commission-market-item" key={indirectOrder._id} onClick={() => {
-                                    setCommissionOrder(indirectOrder); setShowRenderCommissionOrder(true); setOverlayVisible(true)
-                                }}>
-                                    <div className="commission-market-item__header">
-                                        <div className="commission-market-item__header--left user md">
-                                            <img src={indirectOrder.memberId.avatar} alt="" className="user__avatar" />
-                                            <div className="user__name">
-                                                <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
-                                                <div className="user__name__subtitle">
-                                                    {formatTimeAgo(indirectOrder.createdAt)}
+                    {indirectOrders && indirectOrders.length > 0 ? (
+                        <Masonry
+                            breakpointCols={breakpointColumnsObj}
+                            className="my-masonry-grid commission-market-container"
+                            columnClassName="my-masonry-grid_column"
+                        >
+                            {indirectOrders.map((indirectOrder) => {
+                                return (
+                                    <div className="commission-market-item" key={indirectOrder._id} onClick={() => {
+                                        setCommissionOrder(indirectOrder);
+                                        setShowRenderCommissionOrder(true);
+                                        setOverlayVisible(true);
+                                    }}>
+                                        <div className="commission-market-item__header">
+                                            <div className="commission-market-item__header--left user md">
+                                                <img src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" />
+                                                <div className="user__name">
+                                                    <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
+                                                    <div className="user__name__subtitle">
+                                                        {formatTimeAgo(indirectOrder.createdAt)}
+                                                    </div>
                                                 </div>
+                                            </div>
+
+                                            <div className="commission-market-item__header--right">
+                                                {indirectOrder.talentsApprovedCount > 0 && (
+                                                    <div className="status pending">
+                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
 
-                                        <div className="commission-market-item__header--right">
-                                            {indirectOrder.talentsApprovedCount > 0
-                                                && (
-                                                    <div className="status pending">
-                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount}  họa sĩ đã ứng</span>
-                                                    </div>)
-                                            }
+                                        <div className="commission-market-item__content">
+                                            <h2><span className="highlight-text">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span></h2>
+                                            <p>{limitString(indirectOrder.description, 330)}</p>
                                         </div>
 
-
-                                    </div>
-
-                                    <div className="commission-market-item__content">
-                                        <h2><span className="highlight-text">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span></h2>
-                                        <p>{limitString(indirectOrder.description, 330)}</p>
-                                    </div>
-                                    <div className="reference-container">
-                                        {indirectOrder.references.slice(0, 3).map((reference, index) => {
-                                            if (index === 2 && indirectOrder.references.length > 3) {
-                                                return (
-                                                    <div key={index} className="reference-item">
-                                                        <img src={resizeImageUrl(reference, 250)} alt="" /> {/* Use resizeImageUrl here */}
-                                                        <div className="reference-item__overlay">
-                                                            +{indirectOrder.references.length - 3}
+                                        <div className="reference-container">
+                                            {indirectOrder.references.slice(0, 3).map((reference, index) => {
+                                                if (index === 2 && indirectOrder.references.length > 3) {
+                                                    return (
+                                                        <div key={index} className="reference-item">
+                                                            <img src={resizeImageUrl(reference, 250)} alt="" /> {/* Use resizeImageUrl here */}
+                                                            <div className="reference-item__overlay">
+                                                                +{indirectOrder.references.length - 3}
+                                                            </div>
                                                         </div>
+                                                    );
+                                                }
+                                                return (
+                                                    <div className="reference-item" key={index}>
+                                                        <img src={resizeImageUrl(reference, 250)} alt="" />
                                                     </div>
                                                 );
-                                            }
-                                            return (
-                                                <div className="reference-item" key={index}>
-                                                    <img src={resizeImageUrl(reference, 250)} alt="" />
-                                                </div>
-                                            );
-                                        })}
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
-                    </Masonry>
+                                );
+                            })}
+                        </Masonry>
+                    ) : (
+                        <div>
+                            <h3 className="text-align-center w-100 mt-32">Hiện chưa có đơn hàng trên chợ commission...</h3>
+                        </div>
+                    )}
                 </section>
             </div>
             {/* Modal forms */}
@@ -255,9 +267,9 @@ export default function CommissionMarket() {
                         {showCreateComissionOrder && <CreateOrder isDirect={false} setShowCreateCommissionOrder={setShowCreateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
                         {showRenderComissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showUpdateComissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        
-                        {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible ={setOverlayVisible}/>}
-                    </div> 
+
+                        {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
+                    </div>
                 )
             }
         </>

@@ -43,6 +43,12 @@
             }
         }
     }
+
+    .form-field.half-split {
+        .form-field__input {
+            width: 45% !important;
+        }
+    }
 }
 
 

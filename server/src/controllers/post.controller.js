@@ -53,7 +53,6 @@ class PostController{
     }
 
     ///END----CRUD////////
-
     likePost = async(req, res, next) => {
         new SuccessResponse({
             message: 'Thích bài viết thành công',
@@ -61,6 +60,14 @@ class PostController{
         }).send(res)
     }
 
+    
+    bookmarkPost = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Like an post success!',
+            metadata: await PostService.bookmarkPost(req.userId, req.params.postId)
+        }).send(res)
+    }
+    
     //Query////////
     findAllPosts = async(req, res, next) =>{
         new SuccessResponse({

@@ -24,6 +24,7 @@ const UserSchema = new Schema(
             type: String,
             default: "/uploads/pastal_system_default_background.png",
         },
+        phone: { type: String },
         address: { type: String, default: "" },
         country: { type: String, default: "Vietnam" },
         bio: {
@@ -34,8 +35,8 @@ const UserSchema = new Schema(
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
         views: { type: Number, default: 0 },
-        postBookmark: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-        jobTitle: { type: String, trim: true, default: "" },
+        postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+        jobTitle: { type: String, default: "" },
         status: {
             type: String,
             default: "pending",

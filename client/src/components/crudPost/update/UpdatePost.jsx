@@ -25,7 +25,7 @@ export default function UpdatePost() {
 
     const closeForm = () => {
         if (userId) {
-            navigate(`/users/${userId}/profile_posts`);
+            navigate(`/users/${userId}/profile-posts`);
         } else {
             navigate(`/explore`);
         }
@@ -54,6 +54,8 @@ export default function UpdatePost() {
         try {
             const response = await apiUtils.get(`/post/readPost/${postId}`);
             const postData = response.data.metadata.post;
+            console.log(postData)
+            console.log(postData.artworks)
             const artworksWithFiles = await Promise.all(
                 postData.artworks.map(async (artwork, index) => {
                     const file = await urlToFile(artwork.url, `${index + Date.now()}.jpg`, 'image/jpeg');
@@ -62,12 +64,13 @@ export default function UpdatePost() {
             );
 
             return {
-                postCategoryId: postData.postCategoryId._id,
-                movementId: postData.movementId._id,
-                description: postData.description,
+                postCategoryId: postData.postCategoryId?._id || "",
+                movementId: postData.movementId?._id || "",
+                description: postData.description || "",
                 artworks: artworksWithFiles
             };
         } catch (error) {
+            console.log(error)
             return null;
         }
     };
@@ -79,14 +82,14 @@ export default function UpdatePost() {
         isLoading,
     } = useQuery("fetchPostByID", fetchPostByID, {
         onSuccess: (data) => {
+            console.log(data)
             setInputs(data);
-            console.log(data.artworks)
             setArtworks(data.artworks);
         }
     });
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return;
     }
 
     const validateInputs = () => {
@@ -282,7 +285,7 @@ export default function UpdatePost() {
                                     <div className="img-preview--left">
                                         <img
                                             src={
-                                                showcasingPost instanceof File 
+                                                showcasingPost instanceof File
                                                     ? URL.createObjectURL(showcasingPost)
                                                     : showcasingPost.url || placeholderImage
                                             }
@@ -292,9 +295,9 @@ export default function UpdatePost() {
                                         <div className="img-preview__info">
                                             <span className="img-preview__name">
                                                 {
-                                                showcasingPost instanceof File 
-                                                    ? limitString(showcasingPost.name, 15)
-                                                    : "Tranh mẫu"}
+                                                    showcasingPost instanceof File
+                                                        ? limitString(showcasingPost.name, 15)
+                                                        : "Tranh mẫu"}
                                             </span>
                                             <span className="img-preview__size">
                                                 {showcasingPost.file

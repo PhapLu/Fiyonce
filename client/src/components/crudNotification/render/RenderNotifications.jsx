@@ -59,13 +59,14 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
 
     const displayedInteractionNotifications = groupedNotifications?.order?.length > 0 ? groupedNotifications?.interaction?.slice(0, 3) : groupedNotifications?.interaction?.slice(0, 5);
     const displayedOrderNotifications = groupedNotifications?.interaction?.length > 0 ? groupedNotifications?.order?.slice(0, 3) : groupedNotifications?.order?.slice(0, 5);
+    
     return (
         <>
             <div className="render-notifications">
                 <h2>Thông báo</h2>
                 <hr />
                 <div className="notification-container">
-                    {displayedOrderNotifications?.length > 0 && (
+                    {displayedOrderNotifications?.length > 0 ? (
                         <>
                             <h4>Đơn hàng</h4>
                             {
@@ -100,6 +101,8 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                 })
                             }
                         </>
+                    ) : (
+                            <p>Hiện chưa có thông báo nào</p>
                     )}
 
                     {displayedInteractionNotifications?.length > 0 && (

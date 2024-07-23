@@ -33,36 +33,22 @@ export const AuthProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         if (userInfo) {
-            const newSocket = socketIOClient('http://localhost:8900'); // Adjust URL to your backend
+            const newSocket = socketIOClient('http://localhost:8900');
             setSocket(newSocket);
             newSocket.emit('addUser', userInfo._id);
-
-            // newSocket.on('connect', () => {
-            //     console.log('Connected to socket server with ID:', newSocket.id);
-            // });
-
-            // newSocket.on('disconnect', () => {
-            //     console.log('Disconnected from socket server');
-            // });
-
-            // return () => {
-            //     newSocket.disconnect();
-            // };
         }
     }, [userInfo]);
 
+
+
     // Fetch user profile data
     const fetchUserProfile = async () => {
-        // if (Cookies.get('accessToken')) {
         try {
             const response = await newRequest.get('/user/me');
-            console.log(response.data.metadata.user)
             return response.data.metadata.user;
         } catch (error) {
             return null;
         }
-        // }
-        // return null;
     };
 
     useEffect(() => {

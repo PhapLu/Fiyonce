@@ -31,7 +31,8 @@ export function isValidEmail(val) {
 }
 
 export function isValidPhone(val) {
-    const phoneRegex = /^(?:\+?(61))? ?(?:\((0)[1-9]\))? ?(?:[1-9][0-9]{0,3})? ?[0-9]{5,6}?$/;
+    // Regex for Vietnamese phone numbers
+    const phoneRegex = /^(0|\+84)(3|5|7|8|9)\d{8}$/;
 
     if (phoneRegex.test(val)) {
         return true;

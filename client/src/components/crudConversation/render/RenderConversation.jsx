@@ -38,7 +38,6 @@ export default function RenderConversation() {
         socket.on('getMessage', (newMessage) => {
             console.log("NEW MESSAGE")
             console.log(newMessage);
-            // alert(newMessage)
             setMessages((prevMessages) => [...prevMessages, newMessage]);
             // conversation?.messages?.push(newMessage);
         });

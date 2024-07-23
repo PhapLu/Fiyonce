@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import { useAuth } from '../../contexts/auth/AuthContext';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { apiUtils } from '../../utils/newRequest';
-const SOCKET_SERVER_URL = "http://localhost:8900"; // Update this with your server URL
 
 export default function AccountDashboard() {
+    const {userInfo, socket} = useAuth()
     const [talentRequests, setTalentRequests] = useState([]);
     const queryClient = useQueryClient();
 
@@ -69,13 +69,19 @@ export default function AccountDashboard() {
         }
     );
 
-    const handleUpgrade = (id) => {
-        alert(id)
-        upgradeMutation.mutate(id);
+    const handleUpgrade = async (talentRequest) => {
+        upgradeMutation.mutate(talentRequest._id);
     };
 
-    const handleDeny = (id) => {
-        denyMutation.mutate(id);
+    const handleDeny = async (talentRequest) => {
+        denyMutation.mutate(talentRequest._id);
+
+        const inputs = { receiverId: talentRequest.userId, type: "responseTalentRequest", url: `/users/${postAuthorId}/profile-posts/${selectedPostId}` }
+
+        const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
+        const notificationData = response2.data.metadata.notification;
+
+        socket.emit('sendNotification', { senderId: userInfo._id, receiverId: talentRequest.userId, notification: notificationData, url: notificationData.url });
     };
 
     if (isLoading) return <div>Loading...</div>;
@@ -139,12 +145,12 @@ export default function AccountDashboard() {
                                             {talentRequest.status === "approved" && "Đã chấp nhận"}
                                         </span>
                                     </td>
-                                    <td>{talentRequest.email}</td>
-                                    <td>{talentRequest.fullName}</td>
+                                    <td>{talentRequest.userId.email}</td>
+                                    <td>{talentRequest.userId.fullName}</td>
                                     <td>{talentRequest.stageName}</td>
                                     <td><a href={talentRequest.portfolioLink} target="_blank" rel="noopener noreferrer">Portfolio</a></td>
                                     <td>{talentRequest.jobTitle}</td>
-                                    <td>
+                                    <td className='flex-align-center'>
                                         {talentRequest.artworks.map((artwork, index) => (
                                             <img key={index} src={artwork} alt={`artwork-${index}`} />
                                         ))}
@@ -152,8 +158,8 @@ export default function AccountDashboard() {
                                     <td>
                                         {talentRequest.status === "pending" && (
                                         <>
-                                            <button className="btn btn-2" onClick={() => handleUpgrade(talentRequest._id)}>Chấp nhận</button>
-                                            <button className="btn btn-3" onClick={() => handleDeny(talentRequest._id)}>Từ chối</button>
+                                            <button className="btn btn-2" onClick={() => handleUpgrade(talentRequest)}>Chấp nhận</button>
+                                            <button className="btn btn-3" onClick={() => handleDeny(talentRequest)}>Từ chối</button>
                                         </>
                                         )}
                                     </td>
