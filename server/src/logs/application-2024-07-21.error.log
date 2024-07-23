@@ -1,3 +1,6 @@
+2024-07-21 10:26:04::error::/v1/api/user/me::a42a5f40-201f-42f3-9168-8a43c3db6727::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:26:14::error::/v1/api/movement/readMovements::542f76db-8bb9-4df6-a28d-8bd4797aeece::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-21 10:26:24::error::/v1/api/recommender/readPopularPosts::069dfe74-b7b8-4dec-93eb-e21c7f7e5f25::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
 2024-07-21 07:00:11::error::/v1/api/recommender/search::766b5379-8027-4ef8-b0d0-98270d5d6824::undefined - NaNms - Response: {}::{"message":"BadRequestError is not defined"}
 2024-07-21 07:00:13::error::/v1/api/recommender/search::12ecd12a-4b70-4de2-85bc-bc1196da45b2::undefined - NaNms - Response: {}::{"message":"BadRequestError is not defined"}
 2024-07-21 07:06:32::error::/v1/api/recommender/search::b44b3467-8fdd-4c22-9e1f-1e73a839a3f1::undefined - NaNms - Response: {}::{"message":"BadRequestError is not defined"}
@@ -82,3 +85,7 @@
 2024-07-21 17:00:34::error::/v1/api/talentRequest/readTalentRequestStatus::b70023ec-ea5c-4926-8a53-30f661003ba1::404 - 0ms - Response: {"status":404,"now":1721556034073}::{"message":"Talent request not found"}
 2024-07-21 17:00:34::error::/v1/api/talentRequest/readTalentRequestStatus::ea62c414-10d5-4189-b08d-2053527019bf::404 - 0ms - Response: {"status":404,"now":1721556034230}::{"message":"Talent request not found"}
 2024-07-21 17:03:39::error::/v1/api/post/readPost/669bbe408c48291a3682b690::2ae380c9-d90b-4ac4-bad0-fae7637fa1e7::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 10:26:54::error::/v1/api/user/me::0a47c4d2-3cc7-40a9-9471-c37101ffe5fd::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:27:05::error::/v1/api/movement/readMovements::3db3a919-c25e-42a8-89cf-3de9c4eda9d5::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-21 10:28:16::error::/v1/api/user/me::ec309e05-f90e-43bd-880f-13c7d0acc078::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:28:16::error::/v1/api/movement/readMovements::bc8a2367-9232-4aa2-bce2-98551dae80d2::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}

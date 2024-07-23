@@ -1,3 +1,9 @@
+2024-07-21 10:25:54::info::/v1/api/user/me::a42a5f40-201f-42f3-9168-8a43c3db6727::input-params ::GET::::{}
+2024-07-21 10:26:04::error::/v1/api/user/me::a42a5f40-201f-42f3-9168-8a43c3db6727::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:26:04::info::/v1/api/movement/readMovements::542f76db-8bb9-4df6-a28d-8bd4797aeece::input-params ::GET::::{}
+2024-07-21 10:26:14::error::/v1/api/movement/readMovements::542f76db-8bb9-4df6-a28d-8bd4797aeece::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-21 10:26:14::info::/v1/api/recommender/readPopularPosts::069dfe74-b7b8-4dec-93eb-e21c7f7e5f25::input-params ::GET::::{}
+2024-07-21 10:26:24::error::/v1/api/recommender/readPopularPosts::069dfe74-b7b8-4dec-93eb-e21c7f7e5f25::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
 2024-07-21 09:26:13::info::/v1/api/auth/users/forgotPassword::823cebdc-9417-4de5-93ef-35dd943e52e0::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
 2024-07-21 09:26:52::info::/v1/api/auth/users/forgotPassword::a1b4e0c5-7d19-4b1b-b659-83059e25a58a::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
 2024-07-21 09:27:35::info::/v1/api/auth/users/forgotPassword::82628cca-6c59-4720-a7d7-995d58dacf0b::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
@@ -1312,3 +1318,13 @@
 2024-07-21 17:03:38::info::/v1/api/post/readPost/669bbe408c48291a3682b690::2ae380c9-d90b-4ac4-bad0-fae7637fa1e7::input-params ::GET::::{}
 2024-07-21 17:03:39::error::/v1/api/post/readPost/669bbe408c48291a3682b690::2ae380c9-d90b-4ac4-bad0-fae7637fa1e7::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
 2024-07-21 17:06:48::info::/v1/api/movement/readMovements::83169c03-8866-4347-815b-f7393b493b08::input-params ::GET::::{}
+2024-07-21 10:26:44::info::/v1/api/user/me::0a47c4d2-3cc7-40a9-9471-c37101ffe5fd::input-params ::GET::::{}
+2024-07-21 10:26:54::error::/v1/api/user/me::0a47c4d2-3cc7-40a9-9471-c37101ffe5fd::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:26:54::info::/v1/api/movement/readMovements::3db3a919-c25e-42a8-89cf-3de9c4eda9d5::input-params ::GET::::{}
+2024-07-21 10:27:05::error::/v1/api/movement/readMovements::3db3a919-c25e-42a8-89cf-3de9c4eda9d5::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-21 10:28:06::info::/v1/api/user/me::ec309e05-f90e-43bd-880f-13c7d0acc078::input-params ::GET::::{}
+2024-07-21 10:28:06::info::/v1/api/movement/readMovements::bc8a2367-9232-4aa2-bce2-98551dae80d2::input-params ::GET::::{}
+2024-07-21 10:28:16::error::/v1/api/user/me::ec309e05-f90e-43bd-880f-13c7d0acc078::undefined - NaNms - Response: {}::{"message":"Operation `Users.findOne()` buffering timed out after 10000ms"}
+2024-07-21 10:28:16::error::/v1/api/movement/readMovements::bc8a2367-9232-4aa2-bce2-98551dae80d2::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-07-21 10:28:56::info::/v1/api/movement/readMovements::ff7fd51c-cdf8-46fa-821b-e229aca4551c::input-params ::GET::::{}
+2024-07-21 10:28:56::info::/v1/api/user/me::8a201b26-b085-4d26-9044-6ce5cb3168c3::input-params ::GET::::{}
