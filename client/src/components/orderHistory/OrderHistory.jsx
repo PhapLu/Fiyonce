@@ -19,40 +19,23 @@ import RenderProposal from "../crudProposal/render/RenderProposal";
 
 import RenderCommissionTos from "../crudCommissionTos/render/RenderCommissionTos";
 
+import TalentOrderHistory from "./TalentOrderHistory"
+import MemberOrderHistory from "./MemberOrderHistory"
+import ArchivedOrderHistory from "./ArchivedOrderHistory"
+
 //Contexts
 import { useModal } from "../../contexts/modal/ModalContext";
 
 // Utils
 import { apiUtils } from "../../utils/newRequest"
-import { formatCurrency } from "../../utils/formatter";
 
 // Styling
 import "./OrderHistory.scss";
 import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissionOrder";
 
 export default function OrderHistory() {
-    const queryClient = useQueryClient();
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
-    const [commissionOrder, setCommissionOrder] = useState();
-    const [showRenderCommissionOrder, setShowRenderCommissionOrder] = useState();
-    const [showUpdateCommissionOrder, setShowUpdateCommissionOrder] = useState();
-    const [showRenderProposals, setShowRenderProposals] = useState(false);
-
-    const [showCreateProposal, setShowCreateProposal] = useState(false);
-    const [showRenderProposal, setShowRenderProposal] = useState(false);
-
-    const [showRejectCommissionOrder, setShowRejectCommissionOrder] = useState(false);
-
-    const [showTalentOrderMoreActions, setShowTalentOrderMoreActions] = useState();
-    const [showArchiveCommissionOrder, setShowArchiveCommissionOrder] = useState(false);
-    const [showUnarchiveCommissionOrder, setShowUnarchiveCommissionOrder] = useState(false);
-    const [showReportCommissionOrder, setShowReportCommissionOrder] = useState(false);
-
-    const [showCommissionTosView, setShowCommissionTosView] = useState(false);
-
-    const [overlayVisible, setOverlayVisible] = useState();
-
     const [orderHistoryType, setOrderHistoryType] = useState(userInfo.role);
 
     const fetchTalentOrderHistory = async () => {
@@ -146,98 +129,7 @@ export default function OrderHistory() {
         }
     );
 
-    const createProposalMutation = useMutation(
-        async ({ orderId, inputs }) => {
-            const response = await apiUtils.post(`/proposal/sendProposal/${orderId}`, inputs);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
 
-    const rejectCommissionOrderMutation = useMutation(
-        async ({ orderId, fd }) => {
-            const response = await apiUtils.patch(`/order/rejectOrder/${orderId}`, { rejectMessage: fd.get("rejectMessage") });
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
-
-    const archiveCommissionOrderMutation = useMutation(
-        async (orderId) => {
-            const response = await apiUtils.patch(`/order/archiveOrder/${orderId}`);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-                queryClient.invalidateQueries('fetchArchivedOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
-
-    const unarchiveCommissionOrderMutation = useMutation(
-        async (orderId) => {
-            const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-                queryClient.invalidateQueries('fetchArchivedOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
-
-    const reportCommissionOrderMutation = useMutation(
-        async (orderId) => {
-            const response = await apiUtils.post(`/commissionReport/createCommissionReport/${orderId}`);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
-
-    const handleShowCreateProposal = () => {
-        if (termOfServices && termOfServices.length > 0) {
-            setShowCreateProposal(true);
-            setOverlayVisible(true);
-        } else {
-            setModalInfo({
-                status: "warning",
-                message: "Vui lòng tạo điều khoản dịch vụ trước"
-            })
-        }
-    }
-
-    const moreActionsRef = useRef(null);
-    const archiveOrderBtnRef = useRef(null);
-    const reportOrderBtnRef = useRef(null);
     // useEffect(() => {
     //     const handler = (e) => {
     //         if (moreActionsRef.current && !moreActionsRef.current.contains(e.target)) {
@@ -250,25 +142,6 @@ export default function OrderHistory() {
     //         document.removeEventListener("mousedown", handler);
     //     };
     // }, [moreActionsRef]);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (
-                moreActionsRef.current && !moreActionsRef.current.contains(event.target)
-                && archiveOrderBtnRef.current && !archiveOrderBtnRef.current.contains(event.target)
-                && reportOrderBtnRef.current && !reportOrderBtnRef.current.contains(event.target)
-                // && !event.target.closest('.conversation-item')
-            ) {
-                setShowTalentOrderMoreActions(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
 
 
     if (orderHistoryType === "member" && isFetchingMemberOrderHistoryLoading) {
@@ -286,7 +159,6 @@ export default function OrderHistory() {
     if (orderHistoryType === "talent" && isFetchingTalentOrderHistoryError) {
         return <span>Có lỗi xảy ra: {fetchingTalentOrderHistoryError.message}</span>
     }
-
 
     if (orderHistoryType === "archived" && isFetchingArchivedOrderHistoryLoading) {
         return <span>Đang tải...</span>
@@ -325,312 +197,33 @@ export default function OrderHistory() {
                             </button>
                         </div>
 
-                        <div className="profile-page__header--right">
-                            <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-                                </svg>
-                                Điều khoản
-                            </button>
-                        </div>
+                        {
+                            userInfo?.role === "talent" && (
+                                <div className="profile-page__header--right">
+                                    <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+                                        </svg>
+                                        Điều khoản
+                                    </button>
+                                </div>
+                            )
+                        }
                     </div>
 
                     {
-                        orderHistoryType === "talent" && (
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Trạng thái</th>
-                                        <th>Khách hàng</th>
-                                        <th>Giá dự kiến</th>
-                                        <th>Deadline dự kiến</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        talentOrderHistory?.length > 0 ? talentOrderHistory.map((order, index) => {
-                                            return (
-                                                <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
-                                                    <td >
-                                                        <div className={`status ${order.status}`}>
-                                                            <div className="status__bg"></div>
-                                                            <span className="status__title">
-                                                                {order.status === "pending" && "Đang đợi bạn xác nhận"}
-                                                                {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
-                                                                {order.status === "rejected" && "Bạn đã từ chối"}
-                                                                {order.status === "confirmed" && "Khách đã thanh toán cọc"}
-                                                                {order.status === "canceled" && "Đã hủy"}
-                                                                {order.status === "in_progress" && "Đang thực hiện đơn"}
-                                                                {order.status === "finished" && "Hoàn tất"}
-                                                                {order.status === "under_processing" && "Admin đang xử lí"}
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>{order.memberId.fullName || "-"}</td>
-                                                    <td>{`đ${formatCurrency(order.minPrice)}` || `đ${formatCurrency(order.price)}` || "-"}</td>
-                                                    <td>{order.deadline || "-"}</td>
-                                                    <td className="flex-align-center">
-                                                        <>
-                                                            {
-                                                                order.status === "pending" &&
-                                                                (
-                                                                    <>
-                                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); handleShowCreateProposal() }} className="btn btn-3">Soạn hợp đồng</button>
-                                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Từ chối</button>
-                                                                    </>
-                                                                )
-                                                            }
-                                                            {order.status === "approved" && (
-                                                                <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
-                                                            )}
-                                                        </>
-                                                        <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                                            </svg>
-
-                                                            {showTalentOrderMoreActions === order && (
-                                                                <div className="more-action-container" ref={archiveOrderBtnRef}>
-                                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" onClick={(e) => { e.stopPropagation(), setCommissionOrder(order), setShowArchiveCommissionOrder(true); setOverlayVisible(true) }}>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                                                        </svg>
-                                                                        Lưu trữ
-                                                                    </div>
-                                                                    <hr />
-                                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef} onClick={() => { setCommissionOrder(order), setShowReportCommissionOrder(true); setOverlayVisible(true) }}>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                                                        </svg>
-                                                                        Báo cáo
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }) : (
-                                            <tr className="non-hover">
-                                                <td colSpan={6}>Hiện chưa nhận được đơn hàng nào. Tham khảo
-                                                    <Link><span className="highlight-text"> cẩm nang họa sĩ </span></Link> để xây dựng hồ sơ tốt hơn.
-                                                </td>
-                                            </tr>
-                                        )
-                                    }
-                                </tbody>
-                            </table>
-                        )
+                        orderHistoryType === "talent" && <TalentOrderHistory orders={talentOrderHistory} ownOrderAsMember={userInfo} />
                     }
 
                     {
-                        orderHistoryType === "member" && (
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Trạng thái</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Giá dự kiến</th>
-                                        <th>Deadline dự kiến</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        memberOrderHistory?.length > 0 ? memberOrderHistory.map((order, index) => {
-                                            return (
-                                                <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
-                                                    <td >
-                                                        <div className={`status ${order.status}`}>
-                                                            <div className="status__bg"></div>
-                                                            <span className="status__title">
-                                                                {order.status === "pending" && "Đang đợi bạn xác nhận"}
-                                                                {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
-                                                                {order.status === "rejected" && "Bạn đã từ chối"}
-                                                                {order.status === "confirmed" && "Khách đã thanh toán cọc"}
-                                                                {order.status === "canceled" && "Đã hủy"}
-                                                                {order.status === "in_progress" && "Đang thực hiện đơn"}
-                                                                {order.status === "finished" && "Hoàn tất"}
-                                                                {order.status === "under_processing" && "Admin đang xử lí"}
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>{order.memberId.fullName || "-"}</td>
-                                                    <td>{`đ${formatCurrency(order.minPrice)}` || `đ${formatCurrency(order.price)}` || "-"}</td>
-                                                    <td>{order.deadline || "-"}</td>
-                                                    <td className="flex-align-center">
-                                                        <>
-                                                            {
-                                                                order.status === "pending" &&
-                                                                (
-                                                                    <>
-                                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); handleShowCreateProposal() }} className="btn btn-3">Soạn hợp đồng</button>
-                                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Từ chối</button>
-                                                                    </>
-                                                                )
-                                                            }
-                                                            {order.status === "approved" && (
-                                                                <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
-                                                            )}
-                                                        </>
-                                                        <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                                            </svg>
-
-                                                            {showTalentOrderMoreActions === order && (
-                                                                <div className="more-action-container" ref={archiveOrderBtnRef}>
-                                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" onClick={(e) => { e.stopPropagation(), setCommissionOrder(order), setShowArchiveCommissionOrder(true); setOverlayVisible(true) }}>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                                                        </svg>
-                                                                        Lưu trữ
-                                                                    </div>
-                                                                    <hr />
-                                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef} onClick={() => { setCommissionOrder(order), setShowReportCommissionOrder(true); setOverlayVisible(true) }}>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                                                        </svg>
-                                                                        Báo cáo
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }) : (
-                                            <tr className="non-hover">
-                                                <td colSpan={6}>Hiện chưa có đơn hàng nào. Để Pastal <Link><span className="highlight-text">tìm kiếm họa sĩ</span></Link> giúp bạn nhé
-                                                </td>
-                                            </tr>
-                                        )
-                                    }
-                                </tbody>
-                            </table>
-                        )
+                        orderHistoryType === "member" && <MemberOrderHistory orders={memberOrderHistory} />
                     }
 
                     {
-                        orderHistoryType === "archived" && (
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Trạng thái</th>
-                                        <th>Khách hàng</th>
-                                        <th>Giá dự kiến</th>
-                                        <th>Deadline dự kiến</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        archivedOrderHistory?.length > 0 ? archivedOrderHistory.map((order, index) => {
-                                            return (
-                                                <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
-                                                    <td >
-                                                        <div className={`status ${order.status}`}>
-                                                            <div className="status__bg"></div>
-                                                            <span className="status__title">
-                                                                {order.status === "pending" && "Đang đợi bạn xác nhận"}
-                                                                {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
-                                                                {order.status === "rejected" && "Bạn đã từ chối"}
-                                                                {order.status === "confirmed" && "Khách đã thanh toán cọc"}
-                                                                {order.status === "canceled" && "Đã hủy"}
-                                                                {order.status === "in_progress" && "Đang thực hiện đơn"}
-                                                                {order.status === "finished" && "Hoàn tất"}
-                                                                {order.status === "under_processing" && "Admin đang xử lí"}
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>{order.memberId.fullName || "-"}</td>
-                                                    <td>{`đ${formatCurrency(order.minPrice)}` || `đ${formatCurrency(order.price)}` || "-"}</td>
-                                                    <td>{order.deadline || "-"}</td>
-                                                    <td className="flex-align-center">
-                                                        <>
-                                                            {
-                                                                order.status === "pending" &&
-                                                                (
-                                                                    <>
-                                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); handleShowCreateProposal() }} className="btn btn-3">Soạn hợp đồng</button>
-                                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Từ chối</button>
-                                                                    </>
-                                                                )
-                                                            }
-                                                            {order.status === "approved" && (
-                                                                <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
-                                                            )}
-                                                        </>
-                                                        <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                                            </svg>
-
-                                                            {showTalentOrderMoreActions === order && (
-                                                                <div className="more-action-container" ref={archiveOrderBtnRef}>
-                                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" onClick={(e) => { e.stopPropagation(), setCommissionOrder(order), setShowUnarchiveCommissionOrder(true); setOverlayVisible(true) }}>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                                                        </svg>
-                                                                        Xóa khỏi lưu trữ
-                                                                    </div>
-                                                                    <hr />
-                                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef} onClick={() => { setCommissionOrder(order), setShowReportCommissionOrder(true); setOverlayVisible(true) }}>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                                                        </svg>
-                                                                        Báo cáo
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }) : (
-                                            <tr className="non-hover">
-                                                <td colSpan={6}>Hiện chưa nhận được đơn hàng nào. Tham khảo
-                                                    <Link><span className="highlight-text"> cẩm nang họa sĩ </span></Link> để xây dựng hồ sơ tốt hơn.
-                                                </td>
-                                            </tr>
-                                        )
-                                    }
-                                </tbody>
-                            </table>
-                        )
+                        orderHistoryType === "archived" && <ArchivedOrderHistory orders={archivedOrderHistory} />
                     }
                 </section>
             </div>
-
-            {/* Modal forms */}
-            {
-                overlayVisible &&
-                (
-                    <div className="overlay">
-                        {showRenderCommissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        {showUpdateCommissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        {showArchiveCommissionOrder && <ArchiveCommissionOrder commissionOrder={commissionOrder} setShowArchiveCommissionOrder={setShowArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} archiveCommissionOrderMutation={archiveCommissionOrderMutation} />}
-                        {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
-                        {showReportCommissionOrder && <ReportCommissionOrder commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
-
-
-                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createProposalMutation={createProposalMutation} />}
-                        {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />}
-
-                        {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
-                        {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
-
-                        {/* Commission TOS */}
-                        {showCommissionTosView &&
-                            <RenderCommissionTos
-                                setShowCommissionTosView={setShowCommissionTosView}
-                                setOverlayVisible={setOverlayVisible}
-                            />
-                        }
-                    </div>
-                )
-            }
         </>
     )
 }

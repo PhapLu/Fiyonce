@@ -1,6 +1,6 @@
 // Imports
 import { useState, useEffect, useRef } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { useQuery } from "react-query";
 
 // Resources
@@ -17,8 +17,8 @@ import { useMovement } from '../../contexts/movement/MovementContext.jsx';
 
 export default function Explore() {
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { movements } = useMovement();
-    console.log(movements)
 
     const [showRecommenders, setShowRecommenders] = useState(false);
     const [selectedRecommender, setSelectedRecommender] = useState({
@@ -101,10 +101,16 @@ export default function Explore() {
         });
     };
 
+    const handleRecommenderChange = (recommender) => {
+        setSelectedRecommender(recommender);
+        setSearchParams({ recommender: recommender.algorithm });
+        setShowRecommenders(false); // Hide the recommender container
+    };
+
     // Fetch artworks
 
     return (
-        <div className="explore pt-8">
+        <div className="explore">
             {/* Display informative news */}
             {/* <News /> */}
 
@@ -160,10 +166,7 @@ export default function Explore() {
                         <div className="recommender-container">
                             {recommenders && recommenders.map((recommender, idx) => {
                                 return (
-                                    <div key={idx} className="recommender-item" onClick={() => {
-                                        setSelectedRecommender(recommender);
-                                        setShowRecommenders(false); // Add this line to hide the container
-                                    }}>
+                                    <div key={idx} className="recommender-item" onClick={() => handleRecommenderChange(recommender)}>
                                         <span>{recommender.title}</span>
                                     </div>
                                 );

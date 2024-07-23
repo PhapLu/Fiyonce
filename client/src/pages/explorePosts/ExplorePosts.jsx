@@ -1,31 +1,45 @@
 // Imports
-import { useState } from "react";
+import { Outlet, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import {Outlet} from "react-router-dom"
+import { useEffect } from "react";
 
 // Resources
-import Posts from "../../components/crudPost/render/RenderPosts";
+import RenderPosts from "../../components/crudPost/render/RenderPosts";
 
 // Utils
-import { apiUtils } from "../../utils/newRequest"
-
-// Styling
+import { apiUtils } from "../../utils/newRequest";
 
 export default function ExplorePosts() {
-    const fetchRecommendedPopularPosts = async () => {
+    const [searchParams] = useSearchParams();
+    const recommenderType = searchParams.get("recommender") || "popular"; // Default to "popular" if not specified
+
+    const fetchRecommendedPosts = async () => {
         try {
-            const response = await apiUtils.get(`/recommender/readPopularPosts`);
-            console.log(response.data.metadata.posts)
+            let endpoint;
+            switch (recommenderType) {
+                case "following":
+                    endpoint = `/recommender/readFollowingPosts`;
+                    break;
+                case "latest":
+                    endpoint = `/recommender/readLatestPosts`;
+                    break;
+                case "popular":
+                default:
+                    endpoint = `/recommender/readPopularPosts`;
+                    break;
+            }
+            const response = await apiUtils.get(endpoint);
+            console.log(response.data.metadata.posts);
             return response.data.metadata.posts;
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return null;
         }
-    }
+    };
 
-    const { data: posts, error: fetchingPostss, isError: isFetchingPostssError, isLoading: isFetchingPostssLoading } = useQuery(
-        'fetchRecommendedPopularPosts',
-        fetchRecommendedPopularPosts,
+    const { data: posts, error: fetchingPosts, isError: isFetchingPostsError, isLoading: isFetchingPostsLoading } = useQuery(
+        ['fetchRecommendedPosts', recommenderType],
+        fetchRecommendedPosts,
         {
             onSuccess: (data) => {
                 console.log(data);
@@ -38,8 +52,10 @@ export default function ExplorePosts() {
 
     return (
         <>
-            <Posts layout={6} posts={posts} />
+            {isFetchingPostsLoading && <p>Loading posts...</p>}
+            {isFetchingPostsError && <p>Error fetching posts.</p>}
+            <RenderPosts isDisplayOwner={true} layout={6} posts={posts} />
             <Outlet />
         </>
-    )
+    );
 }

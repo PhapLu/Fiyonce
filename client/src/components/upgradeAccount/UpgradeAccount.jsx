@@ -203,7 +203,7 @@ const UpgradeAccount = ({ closeModal }) => {
                                 ))}
                             </div>
 
-                            <div className="form-field with-ic add-link-btn" onClick={triggerFileInput}>
+                            <div className="form-field with-ic btn add-link-btn" onClick={triggerFileInput}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>

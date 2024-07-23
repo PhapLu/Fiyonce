@@ -1,3 +1,21 @@
+2024-07-20 09:26:15::error::/v1/api/recommender/readPopularCommissionServices::333871bb-bc20-4321-898a-6a9abd5221e2::undefined - NaNms - Response: {}::{"message":"Failed to read popular commission service"}
+2024-07-20 10:17:40::error::/v1/api/recommender/readPopularCommissionServices::652848c1-1a32-4ea8-a8ad-35021369530e::undefined - NaNms - Response: {}::{"message":"RecommenderService.readPopularCommissionServices is not a function"}
+2024-07-20 10:18:21::error::/v1/api/recommender/readPopularCommissionServices::45c18674-0d11-4cee-8e50-365900efe21c::undefined - NaNms - Response: {}::{"message":"Failed to read popular services"}
+2024-07-20 10:58:26::error::/v1/api/recommender/readLatestPosts::ce97fe2d-ef8a-4c83-a0c4-70fd8c263853::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 11:46:24::error::/v1/api/recommender/readLatestPosts::0c6662ab-8582-4b65-9ac9-72652baa35fd::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:07:20::error::/v1/api/recommender/readLatestPosts::28cfc1fe-b114-40e0-93ad-444fadcc6a91::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:08:07::error::/v1/api/recommender/readLatestPosts::09e913d0-ed4a-4402-bf9c-6362c970e282::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:09:04::error::/v1/api/recommender/readLatestPosts::c2500352-235e-40b6-9b0e-2f05f52b3a16::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 12:10:55::error::/v1/api/recommender/readLatestPosts::8732b137-ab9c-4099-b799-df7730dcd20c::undefined - NaNms - Response: {}::{"message":"Failed to read latest posts"}
+2024-07-20 20:38:51::error::/v1/api/post/readPost/6688cd89229fc4022ea79044::34ca53f5-aea8-452f-be21-8010f9751a47::404 - 0ms - Response: {"status":404,"now":1721482731764}::{"message":"Post not found"}
+2024-07-20 20:39:32::error::/v1/api/post/createPost::e72650b8-eb71-45e8-a551-16041ea01438::403 - 0ms - Response: {"status":403,"now":1721482772974}::{"message":"You are not a talent"}
+2024-07-20 20:48:32::error::/v1/api/recommender/readFollowingPosts::d6f497e3-717c-47b0-aa86-1f5ee21cafcf::undefined - NaNms - Response: {}::{"message":"Failed to read following posts"}
+2024-07-20 20:49:21::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::769d9288-848a-4a79-9d14-1ab3bebe5179::undefined - NaNms - Response: {}::{"message":"PostService.readPosts is not a function"}
+2024-07-20 20:50:19::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::34e565cb-181a-4a03-973d-30e482f6af2a::404 - 1ms - Response: {"status":404,"now":1721483419724}::{"message":"User not found"}
+2024-07-20 20:51:52::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::aa8a17fe-9bea-4d79-a2d3-bbfb8f7bf2e2::404 - 0ms - Response: {"status":404,"now":1721483512614}::{"message":"User not found"}
+2024-07-20 20:52:05::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::25f6f2df-0f18-41e1-9060-cb9ea24b8f3c::404 - 1ms - Response: {"status":404,"now":1721483525685}::{"message":"User not found"}
+2024-07-20 20:52:25::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::90d384ad-e417-4b92-b78e-436f6b23fe4d::404 - 1ms - Response: {"status":404,"now":1721483545505}::{"message":"User not found"}
+2024-07-20 20:53:19::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::e4fea06e-1816-4c49-b785-b9c69dda4b12::404 - 2ms - Response: {"status":404,"now":1721483599818}::{"message":"User not found"}
 2024-07-20 07:29:05::error::/v1/api/user/me::280f80cb-cf0a-4289-8857-be2320e13c2c::403 - 1ms - Response: {"status":403,"now":1721435345701}::{"message":"Access token missing"}
 2024-07-20 07:29:21::error::/v1/api/user/me::82f581bc-85de-40d0-9605-88cf9a4e32b2::403 - 0ms - Response: {"status":403,"now":1721435361452}::{"message":"Access token missing"}
 2024-07-20 07:29:27::error::/v1/api/user/me::cca57abd-0e14-4f17-a05c-e65f5d44b4a0::403 - 0ms - Response: {"status":403,"now":1721435367404}::{"message":"Access token missing"}

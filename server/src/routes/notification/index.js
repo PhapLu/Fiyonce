@@ -11,8 +11,7 @@ const router = express.Router()
 router.use(verifyToken)
 
 router.post('/createNotification', asyncHandler(notificationController.createNotification))
-router.patch('/readNotification', asyncHandler(notificationController.readNotification))
+router.patch('/readNotification/:notificationId', asyncHandler(notificationController.readNotification))
 router.patch('/readNotifications', asyncHandler(notificationController.readNotifications))
-
 
 export default router

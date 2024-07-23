@@ -123,19 +123,21 @@
             max-height: 360px;
         }
 
-        &:hover {
-            .post-item__img__crud-operation-item {
-                display: block !important;
-            }
-
-            .post-item__img__react-operation-item {
-                display: block !important;
-            }
-
-            .post-item__img {
+        .post-item__img {
+            &:hover {
                 background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)) !important;
+
+                .post-item__img__crud-operation-item {
+                    display: block !important;
+                }
+    
+                .post-item__img__react-operation-item {
+                    display: block !important;
+                }
             }
         }
+
+
 
         .post-item__view {
             display: flex;

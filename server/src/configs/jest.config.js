@@ -1,17 +1,16 @@
 // jest.config.js
 export default {
-    testEnvironment: 'node',
+    testEnvironment: "node",
     transform: {
-      '^.+\\.js$': 'babel-jest'
+        "^.+\\.js$": "babel-jest",
     },
-    extensionsToTreatAsEsm: ['.js'],
+    extensionsToTreatAsEsm: [".js"],
     moduleNameMapper: {
-      '^@/(.*)$': '<rootDir>/src/$1',
+        "^@/(.*)$": "<rootDir>/src/$1",
     },
     globals: {
-      'babel-jest': {
-        useESM: true,
-      },
+        "babel-jest": {
+            useESM: true,
+        },
     },
-  }
-  
+};

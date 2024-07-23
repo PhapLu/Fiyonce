@@ -10,99 +10,103 @@ import jwt from 'jsonwebtoken'
 class PostService {
     static createPost = async (userId, req) => {
         //1. Check user
-        const user = await User.findById(userId)
-        if (!user) throw new NotFoundError('User not found')
-        if (user.role !== 'talent') throw new BadRequestError('You are not a talent')
+        const user = await User.findById(userId);
+        if (!user) throw new NotFoundError("User not found");
+        if (user.role !== "talent")
+            throw new BadRequestError("You are not a talent");
 
         //2. Validate request body
-        const { description, postCategoryId } = req.body
+        const { description, postCategoryId } = req.body;
         if (!req.files || !req.files.artworks)
-            throw new BadRequestError('Please provide artwork files')
+            throw new BadRequestError("Please provide artwork files");
         if (!userId || !description || !postCategoryId)
-            throw new BadRequestError('Please provide all required fields')
+            throw new BadRequestError("Please provide all required fields");
 
         //3. Upload artwork images to cloudinary
         try {
-            const uploadPromises = req.files.artworks.map(file => compressAndUploadImage({
-                buffer: file.buffer,
-                originalname: file.originalname,
-                folderName: `fiyonce/artworks/${userId}`,
-                width: 1920,
-                height: 1080
-            }))
-            const uploadResults = await Promise.all(uploadPromises)
-            const artworks = uploadResults.map(result => result.secure_url)
+            const uploadPromises = req.files.artworks.map((file) =>
+                compressAndUploadImage({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/artworks/${userId}`,
+                    width: 1920,
+                    height: 1080,
+                })
+            );
+            const uploadResults = await Promise.all(uploadPromises);
+            const artworks = uploadResults.map((result) => result.secure_url);
 
             //4. Create and save artwork
-            let artworksId = []
-            let newArtworks = []
+            let artworksId = [];
+            let newArtworks = [];
             await Promise.all(
                 artworks.map(async (artwork) => {
                     const newArtwork = new Artwork({
-                        url: artwork
-                    })
-                    await newArtwork.save()
-                    artworksId.push(newArtwork._id)
-                    newArtworks.push(newArtwork.toObject())
+                        url: artwork,
+                    });
+                    await newArtwork.save();
+                    artworksId.push(newArtwork._id);
+                    newArtworks.push(newArtwork.toObject());
                 })
-            )
+            );
 
             //5. Create and save post
             const newPost = new Post({
                 ...req.body,
                 talentId: userId,
-                artworks: artworksId
-            })
-            await newPost.save()
+                artworks: artworksId,
+            });
+            await newPost.save();
 
             //6. Add postId to artworks
             await Promise.all(
                 newArtworks.map(async (artwork) => {
-                    await Artwork.findByIdAndUpdate(
-                        artwork._id,
-                        { postId: newPost._id }
-                    )
-                }
-                ))
+                    await Artwork.findByIdAndUpdate(artwork._id, {
+                        postId: newPost._id,
+                    });
+                })
+            );
 
             return {
-                artwork: newPost
-            }
+                artwork: newPost,
+            };
         } catch (error) {
-            console.error('Error uploading images:', error)
-            throw new Error('File upload or database save failed')
+            console.error("Error uploading images:", error);
+            throw new Error("File upload or database save failed");
         }
-    }
+    };
 
     static readPost = async (req, postId) => {
         try {
             // Extract token from cookies
             const token = req.cookies.accessToken;
 
-            // Verify token
-            const payload = jwt.verify(token, process.env.JWT_SECRET);
-            req.userId = payload.id;
-            req.email = payload.email;
+            // Initialize user-related variables
+            let userId = null;
+            let email = null;
 
-            // Find user
-            const user = await User.findById(req.userId);
+            if (token) {
+                // Verify token if it exists
+                const payload = jwt.verify(token, process.env.JWT_SECRET);
+                userId = payload.id;
+                email = payload.email;
+            }
 
             // Find post
             const post = await Post.findById(postId)
-                .populate('talentId', 'stageName avatar')
+                .populate('talentId', 'fullName stageName avatar')
                 .populate('postCategoryId', 'title')
                 .populate('movementId', 'title')
                 .populate('artworks', 'url')
                 .exec();
+
             if (!post) throw new NotFoundError('Post not found');
 
-            // Check if user is post owner
-            if (req.userId !== post.talentId.toString()) {
-                post.views.push({ user: new mongoose.Types.ObjectId(req.userId) });
+            // If user is authenticated and not the post owner, increment the views
+            if (userId && userId !== post.talentId.toString()) {
+                post.views.push({ user: new mongoose.Types.ObjectId(userId) });
                 await post.save(); // Save the post to update views
             }
-
-
 
             return {
                 post
@@ -114,13 +118,14 @@ class PostService {
     }
 
 
+
     static likePost = async (userId, postId) => {
         // Find user
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError('User not found')
 
         // Find post
-        const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
+        const post = await Post.findById(postId);
         if (!post) throw new NotFoundError('Post not found')
 
         const likeIndex = post.likes.findIndex(like => like.user.toString() === userId);
@@ -131,7 +136,7 @@ class PostService {
         if (likeIndex === -1) {
             // Add like
             post.likes.push({ user: new mongoose.Types.ObjectId(userId) });
-            
+
 
             // Check if user is post owner
             if (userId !== post.talentId) {
@@ -151,124 +156,186 @@ class PostService {
         }
     }
 
-    static readPosts = async (talentId) => {
-        //1. Check talent
-        const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError('User not found')
-        if (talent.role !== 'talent') throw new BadRequestError('He/She is not a talent')
+    //-------------------END CRUD----------------------------------------------------
+    static bookmarkPost = async (userId, postId) => {
+        // Find user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('User not found')
 
-        //2. Find artworks
-        const artworks = await Post.find({ talentId })
+        // Find post
+        const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
+        if (!post) throw new NotFoundError('Post not found')
+
+        const userPostBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.toString() === postId);
+        const postBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.user.toString() === userId);
+
+        // Let action to know if the user postBookmark/undo their interactions
+        let action = "bookmark";
+
+        if (userPostBookmarkIndex === -1) {
+            user.postBookmarks.push(postId);
+            post.bookmarks.push({ user: new mongoose.Types.ObjectId(userId) });
+
+            // Check if user is post owner
+            if (userId !== post.talentId) {
+                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
+            }
+        } else {
+            // Remove postBookmark
+            user.postBookmarks.splice(userPostBookmarkIndex, 1);
+            post.bookmarks.splice(postBookmarkIndex, 1);
+            action = "unbookmark";
+        }
+
+        await post.save();
 
         return {
-            artworks
+            post,
+            action
         }
-    }
+    };
+
+    static readPosts = async (talentId) => {
+        //1. Check talent
+        const talent = await User.findById(talentId);
+        if (!talent) throw new NotFoundError("Talent not found");
+        if (talent.role !== "talent")
+            throw new BadRequestError("He/She is not a talent");
+
+        //2. Find artworks
+        const artworks = await Post.find({ talentId }).sort({ createdAt: -1 });
+
+        return {
+            artworks,
+        };
+    };
 
     static readPostCategoriesWithPosts = async (talentId) => {
         try {
             // Fetch all post categories
-            const postCategories = await PostCategory.find({ talentId }).lean()
+            const postCategories = await PostCategory.find({ talentId }).lean();
 
             // For each category, find associated posts
-            const categorizedPosts = await Promise.all(postCategories.map(async (category) => {
-                const posts = await Post.find({ postCategoryId: category._id }).populate('artworks', 'url').exec();
+            const categorizedPosts = await Promise.all(
+                postCategories.map(async (category) => {
+                    const posts = await Post.find({
+                        postCategoryId: category._id,
+                    })
+                        .populate("artworks", "url")
+                        .exec();
 
-                return {
-                    _id: category._id,
-                    title: category.title,
-                    posts
-                }
-            }))
-            return { categorizedPosts }
+                    return {
+                        _id: category._id,
+                        title: category.title,
+                        posts,
+                    };
+                })
+            );
+            return { categorizedPosts };
         } catch (error) {
-            console.error('Error fetching posts by category:', error)
-            throw new Error('Failed to fetch posts by category')
+            console.error("Error fetching posts by category:", error);
+            throw new Error("Failed to fetch posts by category");
         }
-    }
+    };
 
     static readArtworks = async (talentId) => {
         try {
             // Find posts where talentId matches
             const posts = await Post.find({ talentId })
                 .populate({
-                    path: 'artworks',  // Populate the artworks field
-                    model: 'Artwork',  // Model to populate from
-                    select: 'url'  // Optionally specify fields to select
+                    path: "artworks", // Populate the artworks field
+                    model: "Artwork", // Model to populate from
+                    select: "url", // Optionally specify fields to select
                 })
                 .exec();
 
             // Extract artworks from posts
             const artworks = posts.reduce((allArtworks, post) => {
-                allArtworks.push(...post.artworks);  // Add artworks from each post to the array
+                allArtworks.push(...post.artworks); // Add artworks from each post to the array
                 return allArtworks;
             }, []);
             return { artworks };
         } catch (error) {
             throw new BadRequestError("Error fetching artworks");
         }
-    }
+    };
 
     static updatePost = async (userId, artworkId, req) => {
         // 1. Check user and artwork
-        const user = await User.findById(userId)
-        const postToUpdate = await Post.findById(artworkId)
+        const user = await User.findById(userId);
+        const postToUpdate = await Post.findById(artworkId);
 
-        if (!user) throw new NotFoundError('User not found')
-        if (!postToUpdate) throw new NotFoundError('Post not found')
-        if (user.role !== 'talent') throw new BadRequestError('You are not a talent')
-        if (postToUpdate.talentId.toString() !== userId) throw new BadRequestError('You can only update your artwork')
-        const oldPostCategoryId = postToUpdate.postCategoryId
+        if (!user) throw new NotFoundError("User not found");
+        if (!postToUpdate) throw new NotFoundError("Post not found");
+        if (user.role !== "talent")
+            throw new BadRequestError("You are not a talent");
+        if (postToUpdate.talentId.toString() !== userId)
+            throw new BadRequestError("You can only update your artwork");
+        const oldPostCategoryId = postToUpdate.postCategoryId;
 
         // 2. Handle file uploads if new files were uploaded
         try {
             if (req.files && req.files.artworks) {
                 // Upload new files to Cloudinary
-                const uploadPromises = req.files.artworks.map(file => compressAndUploadImage({
-                    buffer: file.buffer,
-                    originalname: file.originalname,
-                    folderName: `fiyonce/artworks/${userId}`,
-                    width: 1920,
-                    height: 1080
-                }))
+                const uploadPromises = req.files.artworks.map((file) =>
+                    compressAndUploadImage({
+                        buffer: file.buffer,
+                        originalname: file.originalname,
+                        folderName: `fiyonce/artworks/${userId}`,
+                        width: 1920,
+                        height: 1080,
+                    })
+                );
 
-                const uploadResults = await Promise.all(uploadPromises)
-                const artworks = uploadResults.map(result => result.secure_url)
-                console.log("To be upload:")
-                console.log(artworks)
+                const uploadResults = await Promise.all(uploadPromises);
+                const artworks = uploadResults.map(
+                    (result) => result.secure_url
+                );
+                console.log("To be upload:");
+                console.log(artworks);
 
                 // Save new artworks to database
-                let artworksId = []
+                let artworksId = [];
                 await Promise.all(
                     artworks.map(async (artwork) => {
                         const newArtwork = new Artwork({
                             talentId: userId,
-                            url: artwork
-                        })
-                        await newArtwork.save()
-                        artworksId.push(new mongoose.Types.ObjectId(newArtwork))
+                            url: artwork,
+                        });
+                        await newArtwork.save();
+                        artworksId.push(
+                            new mongoose.Types.ObjectId(newArtwork)
+                        );
                     })
-                )
-                req.body.artworks = artworksId
+                );
+                req.body.artworks = artworksId;
 
                 // Delete old files from Cloudinary
-                const artworksToDelete = await Artwork.find({ _id: { $in: postToUpdate.artworks } })
-                const publicIds = artworksToDelete.map(artwork => extractPublicIdFromUrl(artwork.url))
-                await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+                const artworksToDelete = await Artwork.find({
+                    _id: { $in: postToUpdate.artworks },
+                });
+                const publicIds = artworksToDelete.map((artwork) =>
+                    extractPublicIdFromUrl(artwork.url)
+                );
+                await Promise.all(
+                    publicIds.map((publicId) => deleteFileByPublicId(publicId))
+                );
 
                 //Delete old artworks from database
-                await Artwork.deleteMany({ _id: { $in: postToUpdate.artworks } })
+                await Artwork.deleteMany({
+                    _id: { $in: postToUpdate.artworks },
+                });
             }
 
             // 3. Merge existing artwork fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...postToUpdate.toObject(), ...req.body }
+            const updatedFields = { ...postToUpdate.toObject(), ...req.body };
             console.log(updatedFields);
             // 4. Update artwork
             const updatedPost = await Post.findByIdAndUpdate(
                 artworkId,
                 updatedFields,
                 { new: true }
-            )
+            );
 
             //5. Check if the postCategory has changed and if the old postCategory is now empty
             if (oldPostCategoryId.toString() !== updatedPost.postCategoryId.toString()) {
@@ -280,37 +347,45 @@ class PostService {
             }
 
             return {
-                post: updatedPost
-            }
+                post: updatedPost,
+            };
         } catch (error) {
-            console.error('Error in updating post:', error)
-            throw new Error('Post update failed')
+            console.error("Error in updating post:", error);
+            throw new Error("Post update failed");
         }
-    }
+    };
 
     static deletePost = async (userId, artworkId) => {
         //1. Check user and artwork
-        const user = await User.findById(userId)
-        const postToDelete = await Post.findById(artworkId)
+        const user = await User.findById(userId);
+        const postToDelete = await Post.findById(artworkId);
 
-        if (!user) throw new NotFoundError('User not found')
-        if (!postToDelete) throw new NotFoundError('Post not found')
-        if (user.role !== 'talent') throw new BadRequestError('You are not a talent')
-        if (postToDelete.talentId.toString() !== userId) throw new BadRequestError('You can only delete your artwork')
+        if (!user) throw new NotFoundError("User not found");
+        if (!postToDelete) throw new NotFoundError("Post not found");
+        if (user.role !== "talent")
+            throw new BadRequestError("You are not a talent");
+        if (postToDelete.talentId.toString() !== userId)
+            throw new BadRequestError("You can only delete your artwork");
 
         //2. Delete old files from Cloudinary
         try {
-            const artworksToDelete = await Artwork.find({ _id: { $in: postToDelete.artworks } })
-            const publicIds = artworksToDelete.map(artwork => extractPublicIdFromUrl(artwork.url))
-            await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
+            const artworksToDelete = await Artwork.find({
+                _id: { $in: postToDelete.artworks },
+            });
+            const publicIds = artworksToDelete.map((artwork) =>
+                extractPublicIdFromUrl(artwork.url)
+            );
+            await Promise.all(
+                publicIds.map((publicId) => deleteFileByPublicId(publicId))
+            );
         } catch (error) {
-            console.log('Error deleting artwork images:', error)
+            console.log("Error deleting artwork images:", error);
         }
 
         //3. Delete artwork and post in database
-        const postCategoryId = postToDelete.postCategoryId
-        await Artwork.deleteMany({ _id: { $in: postToDelete.artworks } })
-        await Post.findByIdAndDelete(artworkId)
+        const postCategoryId = postToDelete.postCategoryId;
+        await Artwork.deleteMany({ _id: { $in: postToDelete.artworks } });
+        await Post.findByIdAndDelete(artworkId);
 
         //4. Delete postCategory if postCategory references is null
         const remainingPostCategories = await Post.find({ postCategoryId })
@@ -319,9 +394,9 @@ class PostService {
         }
 
         return {
-            message: 'Delete post and artwork success'
-        }
-    }
+            message: "Delete post and artwork success",
+        };
+    };
 }
 
-export default PostService
+export default PostService;

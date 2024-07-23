@@ -18,7 +18,7 @@ import { getSocialLinkIcon } from "../../utils/iconDisplayer.js"
 // Styling
 import "./ProfileSidebar.scss";
 
-export default function Sidebar({ profileInfo }) {
+export default function Sidebar({ profileInfo, setProfileInfo }) {
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
@@ -163,7 +163,7 @@ export default function Sidebar({ profileInfo }) {
                 const response = await apiUtils.post(`upload/profile/avatarOrCover/${profileInfo._id}`, formData);
                 if (response.data.metadata.image_url) {
                     setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                    profileInfo.avatar = response.data.metadata.image_url;
+                    setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -178,6 +178,14 @@ export default function Sidebar({ profileInfo }) {
 
     const handleFollowUser = async (e) => {
         e.preventDefault();
+
+        if (!userInfo) {
+            setModalInfo({
+                status: "error",
+                message: "Vui lòng đăng nhập để thực hiện thao tác"
+            })
+            return;
+        }
 
         setIsSubmitFollowUserLoading(true);
         try {
@@ -204,6 +212,14 @@ export default function Sidebar({ profileInfo }) {
     const handleUnFollowUser = async (e) => {
         e.preventDefault();
 
+        if (!userInfo) {
+            setModalInfo({
+                status: "error",
+                message: "Vui lòng đăng nhập để thực hiện thao tác"
+            })
+            return;
+        }
+
         setIsSubmitUnFollowUserLoading(true);
         try {
             const response = await apiUtils.patch(`/user/unFollowUser/${profileInfo._id}`)
@@ -224,6 +240,20 @@ export default function Sidebar({ profileInfo }) {
         } finally {
             setIsSubmitUnFollowUserLoading(true);
         }
+    }
+
+    const handleOpenConversation = async (e) => {
+        e.preventDefault();
+
+        if (!userInfo) {
+            setModalInfo({
+                status: "error",
+                message: "Vui lòng đăng nhập để thực hiện thao tác"
+            })
+            return;
+        }
+        setOtherMember({ _id: profileInfo._id, fullName: profileInfo.fullName, avatar: profileInfo.avatar })
+        setShowRenderConversation(true)
     }
 
     return (
@@ -287,7 +317,7 @@ export default function Sidebar({ profileInfo }) {
                         {socialLinks.map((link, index) => (
                             // <div key={index} className="link-form">
                             <div className="form-field with-ic">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic ml-8">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                 </svg>
                                 <input
@@ -362,7 +392,7 @@ export default function Sidebar({ profileInfo }) {
                         {!isProfileOwner &&
                             (
                                 <>
-                                    <button className="btn btn-3 btn-md mr-16" onClick={() => { setOtherMember({ _id: profileInfo._id, fullName: profileInfo.fullName, avatar: profileInfo.avatar }), setShowRenderConversation(true) }}>
+                                    <button className="btn btn-3 btn-md mr-16" onClick={handleOpenConversation}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                         </svg>
