@@ -53,21 +53,7 @@ class UserService {
         await User.findByIdAndDelete(profileId);
         return { success: true, message: "User deleted successfully" };
     };
-    //-------------------END CRUD----------------------------------------------------
-    static addToBookmark = async (userId, artworkId) => {
-        //1. Check user and artwork
-        const currentUser = await User.findById(userId);
-        if (!currentUser) throw new NotFoundError("User not found");
-        if (currentUser.bookmark.includes(artworkId))
-            throw new BadRequestError("Artwork already bookmarked");
 
-        //2. Add to bookmark
-        currentUser.bookmark.push(artworkId);
-        await currentUser.save();
-        return {
-            user: currentUser,
-        };
-    };
 
     static followUser = async (userId, profileId) => {
         //1. Check user and follow

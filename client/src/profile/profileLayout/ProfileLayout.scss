@@ -84,7 +84,7 @@
         display: flex;
         align-items: center;
         width: 65%;
-       
+
         &.full {
             width: 100%;
         }
@@ -92,7 +92,9 @@
         .btn {
             margin-right: 10px;
             border-radius: 20px;
-            min-width: 80px;
+            min-width: unset !important;
+            display: inline-block;
+            white-space: nowrap;
             padding: 6px 20px !important;
             font-size: 1.3rem;
         }

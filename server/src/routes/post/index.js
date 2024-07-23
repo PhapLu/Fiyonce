@@ -18,6 +18,7 @@ router.patch('/updatePost/:postId', uploadFields, asyncHandler(postController.up
 router.delete('/deletePost/:postId', asyncHandler(postController.deletePost))
 
 router.patch('/likePost/:postId', uploadFields, asyncHandler(postController.likePost))
+router.patch('/bookmarkPost/:postId', uploadFields, asyncHandler(postController.bookmarkPost))
 
 
 export default router

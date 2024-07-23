@@ -293,9 +293,10 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
             </div>
 
             <div className="form-field">
+                <div className="form__submit-btn-container">
                 <button
                     type="submit"
-                    className="form-field__input btn btn-2 btn-md"
+                    className="form__submit-btn-item btn btn-2 btn-md"
                     onClick={handleSubmit}
                     disabled={isSubmitCreatePostLoading}
                 >
@@ -305,6 +306,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                         "Đăng tải"
                     )}
                 </button>
+                </div>
             </div>
 
         </div>

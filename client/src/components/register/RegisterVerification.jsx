@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 
 // Resources
-import { useAuth } from "../../contexts/auth/AuthContext";
 
 // Contexts
+import { useAuth } from "../../contexts/auth/AuthContext";
 import { useModal } from "../../contexts/modal/ModalContext"
 
 // Utils
@@ -54,15 +54,16 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
             return;
         }
 
-        try {
-            const response = await apiUtils.post("/auth/users/verifyOtp", { ...inputs, email: registerInputs.email });
+        try {const response = await apiUtils.post("/auth/users/verifyOtp", { ...inputs, email: registerInputs.email });
             if (response) {
                 setModalInfo({
-                    status: "success",
+                    status: "congrat",
                     message: "Đăng kí tài khoản thành công"
                 });
                 login(registerInputs.email, registerInputs.password);
-                setShowMenu();
+                setShowRegisterForm(false);
+                setShowRegisterVerificationForm(false);
+                setShowMenu(false);
             }
         } catch (error) {
             setModalInfo({
@@ -75,10 +76,10 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
         }
     };
 
-    const handleResend = () => {
+    const handleResend = (e) => {
         setIsButtonDisabled(true);
         setCountdown(60);
-        handleRegisterSubmit();
+        handleRegisterSubmit(e);
 
         const timer = setInterval(() => {
             setCountdown((prevCountdown) => {
@@ -92,7 +93,7 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
         }, 1000);
     };
 
-    return (
+    return (<>
         <form className="form verify-registration-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowRegisterForm(false);
@@ -137,5 +138,6 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
                 </button>
             </div>
         </form>
+    </>
     );
 }

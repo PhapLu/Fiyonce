@@ -18,7 +18,7 @@ export default function DeletePost() {
     const deletePostRef = useRef();
 
     const closeForm = () => {
-        navigate(`/users/${userId}/profile_posts`);
+        navigate(`/users/${userId}/profile-posts`);
     };
 
     useEffect(() => {

@@ -102,16 +102,15 @@ class OrderService {
     static readOrders = async (req) => {
         const q = req.query;
         const filters = {
-            isTalentArchived: false,
             isMemberArchived: false,
-            ...(q.isDirect && { isDirect: q.isDirect }),
+            ...(q.isDirect !== undefined && { isDirect: q.isDirect === 'true' }),
         };
 
         //1. Get all orders
-        const orders = await Order.find(filters).populate(
-            "talentChosenId",
-            "fullName avatar"
-        );
+        const orders = await Order.find(filters)
+            .sort({ createdAt: -1 }) // Sort orders by createdAt in descending order
+            .populate("talentChosenId", "fullName avatar")
+            .populate("memberId", "fullName avatar");
 
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(
@@ -510,7 +509,7 @@ class OrderService {
         };
     };
 
-    static denyOrder = async (userId, orderId) => {
+    static rejectOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId);

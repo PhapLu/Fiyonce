@@ -22,7 +22,7 @@ export default function RenderPost() {
     const renderPostRef = useRef();
     const { userInfo, socket } = useAuth();
     const { setModalInfo } = useModal();
-    
+
     const [loading, setLoading] = useState(true);
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
@@ -36,7 +36,7 @@ export default function RenderPost() {
     useEffect(() => {
         const handler = (e) => {
             if (renderPostRef.current && !renderPostRef.current.contains(e.target)) {
-                navigate(userId ? `/users/${userId}/profile_posts` : `/explore/posts`);
+                navigate(userId ? `/users/${userId}/profile-posts` : `/explore/posts`);
             }
         };
         document.addEventListener("mousedown", handler);
@@ -48,6 +48,7 @@ export default function RenderPost() {
     const fetchPostByID = async () => {
         try {
             const response = await apiUtils.get(`/post/readPost/${postId}`);
+            console.log(response)
             return response.data.metadata.post;
         } catch (error) {
             console.log(error);
@@ -71,6 +72,10 @@ export default function RenderPost() {
     }, [post, userInfo]);
 
     const handleLikePost = async () => {
+        if (!userInfo) {
+            setModalInfo({ status: "error", message: "Bạn cần đăng nhập để thực hiện thao tác" });
+            return;
+        }
         try {
             const response = await apiUtils.patch(`/post/likePost/${postId}`);
             if (response) {
@@ -129,7 +134,7 @@ export default function RenderPost() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
 
-                        <Link to={`/users/${post?.talentId._id}/profile_commission_services`} className="user md">
+                        <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="user md hover-cursor-opacity">
                             <div className="user--left">
                                 <img src={resizeImageUrl(post?.talentId?.avatar, 100)} alt="" className="user__avatar" />
                                 <div className="user__name">
@@ -141,7 +146,7 @@ export default function RenderPost() {
 
                         <hr className="mb-16" />
                         {post?.movementId?.title && <button className="btn btn-4 br-16 mr-8">{post?.movementId?.title}</button>}
-                        {post.postCategoryId?.title && <Link to={`/users/${post?.talentId._id}/profile_commission_services`} className="btn btn-4 br-16 mr-8">{post?.postCategoryId?.title}</Link>}
+                        {post.postCategoryId?.title && <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="btn btn-4 br-16 mr-8">{post?.postCategoryId?.title}</Link>}
                         <p>{post.description}</p>
                         <br />
                         <span>Đăng tải lúc {formatDate(post.createdAt)}</span>

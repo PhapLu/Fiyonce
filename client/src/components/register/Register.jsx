@@ -70,7 +70,8 @@ export default function Register() {
         return errors;
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         // Initialize loading effect for the submit button
         setIsSubmitRegisterLoading(true);
 

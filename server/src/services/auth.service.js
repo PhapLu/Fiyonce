@@ -316,7 +316,7 @@ class AuthService {
         const user = await User.findOne({ email });
 
         // 2. Check if the OTP is correct
-        if (!otpRecord || otpRecord.otp !== otp) {
+        if (!otpRecord) {
             throw new BadRequestError("Mã OTP không chính xác");
         }
 

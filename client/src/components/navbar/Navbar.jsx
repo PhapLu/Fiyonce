@@ -24,6 +24,7 @@ export default function Navbar() {
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState();
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const searchFieldRef = useRef(null);
 
     const history = useNavigate();
     const handleSearchTermChange = async (e) => {
@@ -70,12 +71,13 @@ export default function Navbar() {
                     conversationsRef.current && !conversationsRef.current.contains(event.target) &&
                     !event.target.closest('.conversation-item')) ||
                 (notificationBtnRef.current && !notificationBtnRef.current.contains(event.target) &&
-                    !event.target.closest('.conversation-item')) ||
-                (searchFieldRef.current && !searchFieldRef.current.contains(event.target) &&
-                    !event.target.closest('.search-result-container'))
+                    !event.target.closest('.conversation-item'))
             ) {
                 setShowRenderConversations(false);
                 setShowRenderNotifications(false);
+            }
+            if (searchFieldRef.current && !searchFieldRef.current.contains(event.target) &&
+                !event.target.closest('.search-result-container')) {
                 setIsSearchFocused(false);
             }
         };
@@ -100,8 +102,8 @@ export default function Navbar() {
         }
     }
 
-    if (userInfo) {
-        useEffect(() => {
+    useEffect(() => {
+        if (userInfo && socket) {
             socket.on('getMessage', (newMessage) => {
                 console.log("NEW MESSAGE");
                 console.log(newMessage);
@@ -118,11 +120,12 @@ export default function Navbar() {
                 socket.off('getMessage');
                 socket.emit('removeUser', userInfo?._id);
             };
-        }, [unSeenConversations, userInfo?._id]);
+        }
+    }, [unSeenConversations, userInfo?._id, socket]);
 
-        useEffect(() => {
+    useEffect(() => {
+        if (userInfo && socket) {
             socket.on('getNotification', (newNotification) => {
-                // alert(newNotification.content)
                 if (unSeenNotifications.findIndex(convo => convo._id === newNotification._id) === -1) {
                     setUnSeenNotifications(prev => [...prev, { _id: newNotification._id }]);
                 }
@@ -132,15 +135,14 @@ export default function Navbar() {
                 socket.off('getNotification');
                 socket.emit('removeUser', userInfo?._id);
             };
-        }, [unSeenNotifications, userInfo?._id]);
-    }
+        }
+    }, [unSeenNotifications, userInfo?._id, socket]);
 
     const handleViewNotifications = async () => {
         setUnSeenNotifications([]);
         setShowRenderNotifications(true);
     }
 
-    const searchFieldRef = useRef(null);
 
     return (
         <>
@@ -168,7 +170,7 @@ export default function Navbar() {
                                 <hr />
                                 {searchResults?.users?.slice(0, 5).map((user, index) => {
                                     return (
-                                        <Link to={`/users/${user._id}/profile_commission_services`} key={index} className="search-result-item user sm gray-bg-hover">
+                                        <Link to={`/users/${user._id}/profile-commission-services`} key={index} className="search-result-item user sm gray-bg-hover">
                                             <div className="user--left">
                                                 <img src={resizeImageUrl(user.avatar, 50)} alt="" className="user__avatar" />
                                                 <div className="user__name flex-align-center">
@@ -193,8 +195,8 @@ export default function Navbar() {
                         <li className={`navbar-link-item ` + (location.pathname.includes('/explore') ? "active" : "")}>
                             <Link to="/explore/posts">Khám phá</Link>
                         </li>
-                        <li className={`navbar-link-item ` + (location.pathname.includes('/commission_market') ? "active" : "")}>
-                            <Link to="/commission_market">Chợ Commission</Link>
+                        <li className={`navbar-link-item ` + (location.pathname.includes('/commission-market') ? "active" : "")}>
+                            <Link to="/commission-market">Chợ Commission</Link>
                         </li>
                         <li className={`navbar-link-item ` + (location.pathname.includes('/challenges') ? "active" : "")}>
                             <Link to="/challenges">Thử thách</Link>
