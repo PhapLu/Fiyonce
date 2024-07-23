@@ -1560,3 +1560,7 @@
 2024-07-23 19:24:27::info::/v1/api/movement/readMovements::d1215c3e-3c26-4671-b437-11d36fad5c4b::input-params ::GET::::{}
 2024-07-23 19:24:27::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::431ebd91-5b12-41fc-9bdc-8bffb49ab183::input-params ::GET::::{}
 2024-07-23 19:24:27::info::/v1/api/post/readPostCategoriesWithPosts/665edd23fa87b27398b73d10::d1acf6b2-1ae8-461e-92c3-7403078ebb10::input-params ::GET::::{}
+2024-07-23 20:04:46::info::/v1/api/user/me::db3347fa-03a3-4349-8b05-3f1d70e89ff0::input-params ::GET::::{}
+2024-07-23 20:04:46::info::/v1/api/movement/readMovements::653eab2c-d3c0-49e3-868d-be03a2f6576e::input-params ::GET::::{}
+2024-07-23 20:04:46::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::350cfba2-384d-4ce7-b503-d2f4b16cd7c1::input-params ::GET::::{}
+2024-07-23 20:04:46::info::/v1/api/post/readPostCategoriesWithPosts/665edd23fa87b27398b73d10::58573b4f-55f6-472f-9af6-c7ab7a3f5b6f::input-params ::GET::::{}
