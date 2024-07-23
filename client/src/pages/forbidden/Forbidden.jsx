@@ -1,7 +1,22 @@
-import "./Forbidden.scss";
+// Imports
+import { Link } from "react-router-dom";
 
-export default function ForBidden() {
+// Styling
+import "./Forbidden.scss";
+import "../../assets/scss/buttons.scss";
+
+export default function Forbidden() {
     return (
-        <h1>403 - Forbidden:  You don't have permission to view this pag</h1>
+        <div className="not-found">
+            <div className="not-found__content">
+                <div className="dot dot-1"></div>
+                <div className="dot dot-2"></div>
+                <div className="dot dot-3"></div>
+                <h1>403</h1>
+                <h2>Bạn không có quyền truy cập trang này!</h2>
+                <h3>Vui lòng kiểm tra lại đường dẫn hoặc </h3>
+                <Link to="/" className="btn btn-hover color-4">Về trang chủ</Link>
+            </div>
+        </div>
     )
 }

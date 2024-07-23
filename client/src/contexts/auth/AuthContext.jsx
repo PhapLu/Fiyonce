@@ -36,26 +36,15 @@ export const AuthProvider = ({ children }) => {
             const newSocket = socketIOClient('https://fiyoncee.onrender.com'); // Adjust URL to your backend
             setSocket(newSocket);
             newSocket.emit('addUser', userInfo._id);
-
-            // newSocket.on('connect', () => {
-            //     console.log('Connected to socket server with ID:', newSocket.id);
-            // });
-
-            // newSocket.on('disconnect', () => {
-            //     console.log('Disconnected from socket server');
-            // });
-
-            // return () => {
-            //     newSocket.disconnect();
-            // };
         }
     }, [userInfo]);
+
+
 
     // Fetch user profile data
     const fetchUserProfile = async () => {
         try {
             const response = await newRequest.get('/user/me');
-            console.log(response.data.metadata.user)
             return response.data.metadata.user;
         } catch (error) {
             return null;
@@ -96,6 +85,7 @@ export const AuthProvider = ({ children }) => {
             const response = await newRequest.post("auth/users/login", { email, password });
             // alert("Successfully logged in as: " + response.data.metadata.user.email);
             setUserInfo(response.data.metadata.user);
+            setShowMenu(false);
             setShowLoginForm(false);
             setOverlayVisible(false);
         } catch (error) {

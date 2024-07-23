@@ -38,6 +38,9 @@ export function formatNumber(num, digits) {
 }
 
 export function formatCurrency(val) {
+    if (!val) {
+        return;
+    }
     // Convert the number to a string and use a regular expression to add periods as thousand separators
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
@@ -51,17 +54,32 @@ export function formatDate(val) {
     return `${day}/${month}/${year}`;
 }
 
-export function formatTimeAgo (date) {
+export function formatTimeAgo(date) {
     const distance = formatDistanceToNow(new Date(date), { addSuffix: true, locale: vi });
     return distance.replace('khoảng ', '').replace('dưới ', '').replace('trước', '').trim(); // Remove the "khoảng" prefix
 };
 
 
-export function maskString (str, n) {
+export function maskString(str, n) {
     if (str.length <= n) {
         return str;
     }
     const visiblePart = str.slice(0, n);
     const maskedPart = '*'.repeat(str.length - n);
     return visiblePart + maskedPart;
+};
+
+export function dateTimeAsYYYYMMDD(date) {
+    if (!date) return "";
+    const d = new Date(date);
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${year}-${month}-${day}`;
+}
+
+export function YYYYMMDDAsDDMMYYYY(date) {
+    if (!date) return '';
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
 };

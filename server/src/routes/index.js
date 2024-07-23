@@ -8,6 +8,7 @@ import reviewRoute from './review/index.js'
 import uploadRoute from './upload/index.js'
 import movementRoute from './movement/index.js'
 import proposalRoute from './proposal/index.js'
+import recommenderRoute from './recommender/index.js'
 import conversationRoute from './conversation/index.js'
 import postCategoryRoute from './postCategory/index.js'
 import notificationRoute from './notification/index.js'
@@ -34,6 +35,7 @@ router.use('/v1/api/review', reviewRoute)
 router.use('/v1/api/upload', uploadRoute)
 router.use('/v1/api/proposal', proposalRoute)
 router.use('/v1/api/movement', movementRoute)
+router.use('/v1/api/recommender', recommenderRoute)
 router.use('/v1/api/notification', notificationRoute)
 router.use('/v1/api/postCategory', postCategoryRoute)
 router.use('/v1/api/conversation', conversationRoute)

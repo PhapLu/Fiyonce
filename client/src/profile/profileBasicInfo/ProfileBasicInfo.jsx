@@ -2,27 +2,33 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
 
+// Contexts
+import { useAuth } from "../../contexts/auth/AuthContext.jsx";
+import { useModal } from '../../contexts/modal/ModalContext.jsx';
+
 // Resources
-import { useAuth } from "../../contexts/auth/AuthContext";
 
 // Utils
-import { apiUtils } from '../../utils/newRequest';
+import { apiUtils } from '../../utils/newRequest.js';
 import { isFilled, isValidPhone, hasSymbol, isValidEmail } from "../../utils/validator.js"
 
 // Styling
-import './BasicInfo.scss';
+import './ProfileBasicInfo.scss';
+import { YYYYMMDDAsDDMMYYYY, dateTimeAsYYYYMMDD } from '../../utils/formatter.js';
 
-export default function BasicInfo() {
+export default function ProfileBasicInfo() {
     // User info fetched by id (url parameter)
-    const profileInfo = useOutletContext();
+    const { profileInfo, setProfileInfo } = useOutletContext();
 
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
+    const { setModalInfo } = useModal();
 
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState(profileInfo);
+
     const [errors, setErrors] = useState({});
-    const [isSubmitBasicInfoLoading, setIsSubmitBasicInfoLoading] = useState(false);
+    const [isSubmitProfileBasicInfoLoading, setIsSubmitProfileBasicInfoLoading] = useState(false);
 
     const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
 
@@ -42,6 +48,7 @@ export default function BasicInfo() {
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+
 
         // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
@@ -67,11 +74,6 @@ export default function BasicInfo() {
     const validateInputs = () => {
         let errors = {};
 
-        // Validate stageName field if filled
-        if (!isFilled(inputs.stageName)) {
-            errors.stageName = 'Vui lòng điền nghệ danh';
-        }
-
         // Validate email field if filled
         if (isFilled(inputs.phone)) {
             if (!isValidPhone(inputs.phone)) {
@@ -93,32 +95,38 @@ export default function BasicInfo() {
         e.preventDefault();
 
         // Initialize loading effect for the submit button
-        setIsSubmitBasicInfoLoading(true);
+        setIsSubmitProfileBasicInfoLoading(true);
 
         // Validate user inputs
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             // Clear the loading effect if validation failed
-            setIsSubmitBasicInfoLoading(false);
+            setIsSubmitProfileBasicInfoLoading(false);
             return;
         }
 
         try {
+            console.log(inputs);
+            inputs.dob = inputs?.dob;
             const userId = profileInfo._id;
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
             const updatedData = { ...inputs, socialLinks: submittedSocialLinks };
             const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
+            console.log(response)
             if (response) {
-                alert("Successfully updated user information");
-                setUserInfo(response.data.metadata.updatedUser);
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật thông tin thành công"
+                })
+                setProfileInfo(response.data.metadata.user);
             }
         } catch (error) {
             console.error("Failed to update basic info:", error);
-            setErrors((prevErrors) => ({ ...prevErrors, serverError: error.response.data.message }));
+            // setErrors((prevErrors) => ({ ...prevErrors, serverError: error.response.data.message }));
         } finally {
             // Clear the loading effect
-            setIsSubmitBasicInfoLoading(false);
+            setIsSubmitProfileBasicInfoLoading(false);
         }
     };
 
@@ -131,12 +139,12 @@ export default function BasicInfo() {
     }
 
     return (
-        <div className="basic-info">
-            <section className="section basic-info-section">
+        <div className="profile-basic-info">
+            <section className="section profile-basic-info-section">
 
                 <h3 className="section__title">Thông tin cơ bản</h3>
 
-                <form className="form basic-info-form">
+                <form className="form profile-basic-info-form">
                     <div className="form-field">
                         <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
                         <input
@@ -150,24 +158,31 @@ export default function BasicInfo() {
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                     </div>
 
-                    <div className="form-field">
-                        <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
-                        <input
-                            type="text"
-                            name="stageName"
-                            value={inputs.stageName || ""}
-                            onChange={handleChange}
-                            className="form-field__input"
-                            placeholder="Nhập nghệ danh"
-                        />
-                        {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
-                    </div>
+
+                    {
+                        userInfo?.role == "talent" &&
+                        (
+                            <div className="form-field">
+                                <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
+                                <input
+                                    type="text"
+                                    name="stageName"
+                                    value={inputs.stageName || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Nhập nghệ danh"
+                                />
+                                {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
+                            </div>
+                        )
+                    }
+
 
                     <div className="form-field">
                         <label htmlFor="gender" className="form-field__label">Giới tính</label>
                         <select
                             name="gender"
-                            value={inputs.gender || ""}
+                            value={inputs?.gender || ""}
                             onChange={handleChange}
                             className="form-field__input"
                         >
@@ -184,10 +199,11 @@ export default function BasicInfo() {
                         <input
                             type="date"
                             name="dob"
-                            value={inputs.dob || ""}
+                            value={inputs?.dob ? dateTimeAsYYYYMMDD(inputs?.dob) : ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập ngày sinh"
+                            lang="vn"
                         />
                         {errors.dob && <span className="form-field__error">{errors.dob}</span>}
                     </div>
@@ -224,7 +240,7 @@ export default function BasicInfo() {
             <section className="section account-security-section">
                 <h3 className="section__title">Tài khoản và bảo mật</h3>
 
-                <form className="form basic-info-form" onSubmit={handleSubmit}>
+                <form className="form profile-basic-info-form" onSubmit={handleSubmit}>
                     <div className="form-field">
                         <label htmlFor="email" className="form-field__label">Email đăng nhập</label>
                         <input
@@ -232,7 +248,8 @@ export default function BasicInfo() {
                             name="email"
                             value={inputs.email || ""}
                             onChange={handleChange}
-                            className="form-field__input"
+                            readOnly={true}
+                            className="form-field__input outline-border-none"
                             placeholder="Nhập email đăng nhập"
                         />
                         {errors.email && <span className="form-field__error">{errors.email}</span>}
@@ -246,7 +263,7 @@ export default function BasicInfo() {
                 {socialLinks.map((link, index) => (
                     <div key={index} className="link-form">
                         <div className="form-field with-ic">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic ml-8">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                             </svg>
                             <input
@@ -262,7 +279,7 @@ export default function BasicInfo() {
                         </div>
                     </div>
                 ))}
-                <div className="form-field with-ic add-link-btn" onClick={addLinkInput}>
+                <div className="form-field with-ic add-link-btn btn" onClick={addLinkInput}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -275,14 +292,14 @@ export default function BasicInfo() {
                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
             </div>
 
-            <div className="basic-info__button-container">
+            <div className="profile-basic-info__button-container">
                 <button
                     type="submit"
                     className="form-field__input btn btn-2 btn-md"
-                    disabled={isSubmitBasicInfoLoading}
+                    disabled={isSubmitProfileBasicInfoLoading}
                     onClick={handleSubmit}
                 >
-                    {isSubmitBasicInfoLoading ? (
+                    {isSubmitProfileBasicInfoLoading ? (
                         <span className="btn-spinner"></span>
                     ) : (
                         "Lưu thay đổi"

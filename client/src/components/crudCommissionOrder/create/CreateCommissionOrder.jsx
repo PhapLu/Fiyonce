@@ -261,8 +261,8 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                         <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
                                         <li className="step-item">Họa sĩ xác nhận và gửi proposal</li>
                                         <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                                        <li className="step-item">Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
+                                        <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
+                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
                                     </ul>
                                 )
                             }
@@ -273,10 +273,10 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             <hr />
                             <ul className="step-container">
                                 <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                <li className="step-item">Các họa sĩ gửi proposal và khách hàng chọn ra họa sĩ phù hợp nhất</li>
-                                <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                                <li className="step-item">Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
+                                <li className="step-item">Các họa sĩ gửi proposal</li>
+                                <li className="step-item">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
+                                <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
+                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
                             </ul>
                         </>
                     )
@@ -315,7 +315,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
                             <div className="form-field">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng miêu tả yêu cầu của bạn về sản phẩm mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết thêm qua tin nhắn.</span>
+                                <span className="form-field__annotation">Ở phần này, vui lòng miêu tả yêu cầu của bạn về sản phẩm mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết qua tin nhắn.</span>
                                 <textarea
                                     id="description"
                                     name="description"
@@ -347,7 +347,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                     </div>
                                 ))}
 
-                                <div className="form-field with-ic add-link-btn" onClick={triggerFileInput}>
+                                <div className="form-field with-ic btn add-link-btn" onClick={triggerFileInput}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
@@ -477,7 +477,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             <div className="form-field">
                                 <label className="form-field__label">Giá cả</label>
                                 <span className="form-field__annotation">Cung cấp giá tiền tối thiểu và tối đa mà bạn có thể chi trả cho họa sĩ để hoàn thành tác phẩm theo yêu cầu của mình.</span>
-                                <div className="half-split">
+                                <div className="form-field half-split">
                                     <input
                                         type="number"
                                         name="minPrice"
@@ -535,16 +535,18 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                         </>
                     )}
             </div>
-            <button type="submit"
-                className="form__submit-btn btn btn-2 btn-md"
-                onClick={handleSubmit}
-                disabled={isSubmitOrderCommissionLoading}>
-                {isSubmitOrderCommissionLoading ? (
-                    <span className="btn-spinner"></span>
-                ) : (
-                    "Gửi yêu cầu"
-                )}
-            </button>
+            <div className="form__submit-btn-container">
+                <button type="submit"
+                    className="form__submit-btn-item btn btn-2 btn-md"
+                    onClick={handleSubmit}
+                    disabled={isSubmitOrderCommissionLoading}>
+                    {isSubmitOrderCommissionLoading ? (
+                        <span className="btn-spinner"></span>
+                    ) : (
+                        "Gửi yêu cầu"
+                    )}
+                </button>
+            </div>
         </div >
     )
 }

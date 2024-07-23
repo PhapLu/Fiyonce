@@ -1,0 +1,44 @@
+.coming-soon {
+    margin-bottom: 32px;
+
+    .coming-soon__countdown {
+        margin-bottom: 32px;
+
+        .coming-soon__countdown__box {
+            h4 {
+                font-size: 10rem;
+                line-height: 10rem;
+                position: relative;
+
+                // &::after {
+                //     position: absolute;
+                //     content: "";
+                //     width: 100%;
+                //     height: 1px;
+                //     background-color: white;
+                //     top: 50%;
+                //     left: 50%;
+                //     transform: translate(-50%, -50%);
+                // }
+            }
+
+            span {
+                font-size: 3rem;
+            }
+
+            padding: 28px 36px;
+            /* background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #ff45b0); */
+            box-shadow: 0 2px 25px rgba(252, 104, 110, 0.45);
+            border-radius: 16px;
+            color: #ff83a3;
+            /* background: -webkit-linear-gradient(#eee, #333); */
+            /* background: -webkit-linear-gradient(#eee, #333); */
+            margin: 12px;
+        }
+
+        span {
+            font-size: 4rem;
+            color: #ff7598;
+        }
+    }
+}

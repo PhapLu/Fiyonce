@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import {Link} from "react-router-dom"
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { apiUtils, createFormData } from "../../../utils/newRequest";
@@ -34,11 +35,9 @@ export default function RenderConversation() {
 
 
     useEffect(() => {
-
         socket.on('getMessage', (newMessage) => {
             console.log("NEW MESSAGE")
             console.log(newMessage);
-            // alert(newMessage)
             setMessages((prevMessages) => [...prevMessages, newMessage]);
             // conversation?.messages?.push(newMessage);
         });
@@ -113,6 +112,7 @@ export default function RenderConversation() {
             console.log(newMessage.content)
 
             socket.emit('sendMessage', {
+                conversationId,
                 senderId: userInfo._id,
                 receiverId: conversation.otherMember._id,
                 content: newMessage.content

@@ -26,13 +26,6 @@ class UserController {
             metadata: await UserService.deleteProfile(req.userId, req.params.profileId)
         }).send(res)
     }
-    //End CRUD
-    addToBookmark = async (req, res, next) => {
-        new SuccessResponse({
-            message: 'Add an artwork into bookmark success!',
-            metadata: await UserService.addToBookmark(req.userId, req.params.artworkId)
-        }).send(res)
-    }
 
     followUser = async (req, res, next) => {
         new SuccessResponse({

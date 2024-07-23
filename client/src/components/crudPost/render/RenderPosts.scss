@@ -1,11 +1,43 @@
 .posts {
+
+    .prev-btn,
+    .next-btn {
+        z-index: 100000;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--gray-1-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .prev-btn {
+        left: 40px;
+    }
+
+    .next-btn {
+        right: 40px;
+    }
+
     .my-masonry-grid {
         display: flex;
-        margin-left: -16px; /* gutter size offset */
+        margin-left: -16px;
+        /* gutter size offset */
         width: auto;
     }
+
     .my-masonry-grid_column {
-        padding-left: 16px; /* gutter size */
+        padding-left: 16px;
+        /* gutter size */
         background-clip: padding-box;
     }
 
@@ -91,19 +123,21 @@
             max-height: 360px;
         }
 
-        &:hover {
-            .post-item__img__crud-operation-item {
-                display: block !important;
-            }
-
-            .post-item__img__react-operation-item {
-                display: block !important;
-            }
-
-            .post-item__img {
+        .post-item__img {
+            &:hover {
                 background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)) !important;
+
+                .post-item__img__crud-operation-item {
+                    display: block !important;
+                }
+    
+                .post-item__img__react-operation-item {
+                    display: block !important;
+                }
             }
         }
+
+
 
         .post-item__view {
             display: flex;

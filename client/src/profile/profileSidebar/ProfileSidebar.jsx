@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
 
-// Resources
+// Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useConversation } from '../../contexts/conversation/ConversationContext.jsx';
+import { useModal } from '../../contexts/modal/ModalContext.jsx';
 
+// Resources
 import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
 
 // Utils
@@ -15,15 +17,15 @@ import { getSocialLinkIcon } from "../../utils/iconDisplayer.js"
 
 // Styling
 import "./ProfileSidebar.scss";
-import { useModal } from '../../contexts/modal/ModalContext.jsx';
 
-export default function Sidebar({ profileInfo }) {
+export default function Sidebar({ profileInfo, setProfileInfo }) {
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
+    const { setModalInfo } = useModal();
+    const { setOtherMember, setConversation, setShowRenderConversation } = useConversation();
+
     const { userId } = useParams();
     const isProfileOwner = userInfo?._id === userId;
-
-    const { setOtherMember, setConversation, setShowRenderConversation } = useConversation();
 
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState(profileInfo);
@@ -91,21 +93,15 @@ export default function Sidebar({ profileInfo }) {
     const validateInputs = () => {
         let errors = {};
 
-        // Validate stageName field if filled
-        if (!isFilled(inputs.stageName)) {
-            errors.stageName = 'Vui lòng điền nghệ danh';
-        }
-
-        // Validate stageName field if filled
-        if (!maxLength(inputs.bio, 150)) {
+        // Validate biography
+        if (!maxLength(inputs?.bio, 150)) {
             errors.bio = 'Bio không được vượt quá 150 kí tự';
         }
 
-
         // Validate fullname
-        if (!isFilled(inputs.fullName)) {
+        if (!isFilled(inputs?.fullName)) {
             errors.fullName = 'Vui lòng nhập họ và tên';
-        } else if (hasSymbol(inputs.fullName)) {
+        } else if (hasSymbol(inputs?.fullName)) {
             errors.fullName = 'Tên không được chứa kí tự đặc biệt';
         }
 
@@ -133,8 +129,13 @@ export default function Sidebar({ profileInfo }) {
             const updatedData = { ...inputs, socialLinks: submittedSocialLinks };
             const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
             if (response) {
-                alert("Successfully updated user information");
-                setUserInfo(response.data.metadata.updatedUser);
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật thông tin thành công"
+                })
+                console.log(response)
+                console.log(response.data.metadata.user)
+                setUserInfo(response.data.metadata.user);
                 setOpenEditProfileForm(false);
             }
         } catch (error) {
@@ -162,7 +163,7 @@ export default function Sidebar({ profileInfo }) {
                 const response = await apiUtils.post(`upload/profile/avatarOrCover/${profileInfo._id}`, formData);
                 if (response.data.metadata.image_url) {
                     setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                    profileInfo.avatar = response.data.metadata.image_url;
+                    setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -174,10 +175,17 @@ export default function Sidebar({ profileInfo }) {
 
     const [isSubmitFollowUserLoading, setIsSubmitFollowUserLoading] = useState();
     const [isSubmitUnFollowUserLoading, setIsSubmitUnFollowUserLoading] = useState();
-    const { setModalInfo } = useModal();
 
     const handleFollowUser = async (e) => {
         e.preventDefault();
+
+        if (!userInfo) {
+            setModalInfo({
+                status: "error",
+                message: "Vui lòng đăng nhập để thực hiện thao tác"
+            })
+            return;
+        }
 
         setIsSubmitFollowUserLoading(true);
         try {
@@ -204,6 +212,14 @@ export default function Sidebar({ profileInfo }) {
     const handleUnFollowUser = async (e) => {
         e.preventDefault();
 
+        if (!userInfo) {
+            setModalInfo({
+                status: "error",
+                message: "Vui lòng đăng nhập để thực hiện thao tác"
+            })
+            return;
+        }
+
         setIsSubmitUnFollowUserLoading(true);
         try {
             const response = await apiUtils.patch(`/user/unFollowUser/${profileInfo._id}`)
@@ -226,6 +242,20 @@ export default function Sidebar({ profileInfo }) {
         }
     }
 
+    const handleOpenConversation = async (e) => {
+        e.preventDefault();
+
+        if (!userInfo) {
+            setModalInfo({
+                status: "error",
+                message: "Vui lòng đăng nhập để thực hiện thao tác"
+            })
+            return;
+        }
+        setOtherMember({ _id: profileInfo._id, fullName: profileInfo.fullName, avatar: profileInfo.avatar })
+        setShowRenderConversation(true)
+    }
+
     return (
         <div className="sidebar">
             <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
@@ -240,26 +270,36 @@ export default function Sidebar({ profileInfo }) {
                 <div className="form edit-profile-form">
                     <div className="form-field">
                         <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
-                        <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
+                        <input type="text" id="fullName" name="fullName" value={inputs?.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                     </div>
-                    <div className="form-field">
-                        <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
-                        <input type="text" id="stageName" name="stageName" value={inputs.stageName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập nghệ danh" />
-                        {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
-                    </div>
-                    <div className="form-field">
-                        <label htmlFor="jobTitle" className="form-field__label">Vị trí công việc</label>
-                        <input type="text" id="jobTitle" name="jobTitle" value={inputs.jobTitle || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" />
-                        {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
-                    </div>
+                    {
+                        userInfo.role == "talent" && (
+                            <>
+                                <div className="form-field">
+                                    <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
+                                    <input type="text" id="stageName" name="stageName" value={inputs?.stageName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập nghệ danh" />
+                                    {errors.stageName && <span className="form-field__error">{errors.stageName}</span>}
+                                </div>
+
+                                <div className="form-field">
+                                    <label htmlFor="jobTitle" className="form-field__label">Vị trí công việc</label>
+                                    <input type="text" id="jobTitle" name="jobTitle" value={inputs?.jobTitle || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" />
+                                    {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
+                                </div>
+                            </>
+
+                        )
+                    }
+
+
                     <div className="form-field">
                         <label htmlFor="address" className="form-field__label">Địa chỉ</label>
                         <input
                             type="text"
                             id="address"
                             name="address"
-                            value={inputs.address || ""}
+                            value={inputs?.address || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập địa chỉ"
@@ -268,7 +308,7 @@ export default function Sidebar({ profileInfo }) {
                     </div>
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
-                        <textarea type="text" id="bio" name="bio" value={inputs.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)" />
+                        <textarea type="text" id="bio" name="bio" value={inputs?.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)" />
                         {errors.bio && <span className="form-field__error">{errors.bio}</span>}
                     </div>
 
@@ -277,7 +317,7 @@ export default function Sidebar({ profileInfo }) {
                         {socialLinks.map((link, index) => (
                             // <div key={index} className="link-form">
                             <div className="form-field with-ic">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic ml-8">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                 </svg>
                                 <input
@@ -329,7 +369,7 @@ export default function Sidebar({ profileInfo }) {
                         <span className="sidebar__name__email">{profileInfo.stageName}</span>
                     </div>
                     <div>
-                        {profileInfo.jobTitle && (
+                        {profileInfo.role === "talent" && profileInfo.jobTitle && (
                             <span className="sidebar__job-title">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
@@ -352,7 +392,7 @@ export default function Sidebar({ profileInfo }) {
                         {!isProfileOwner &&
                             (
                                 <>
-                                    <button className="btn btn-3 btn-md mr-16" onClick={() => { setOtherMember({ _id: profileInfo._id, fullName: profileInfo.fullName, avatar: profileInfo.avatar }), setShowRenderConversation(true) }}>
+                                    <button className="btn btn-3 btn-md mr-16" onClick={handleOpenConversation}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                         </svg>
@@ -405,13 +445,21 @@ export default function Sidebar({ profileInfo }) {
                                     <div key={key} className="sidebar__socials__link-item" dangerouslySetInnerHTML={{ __html: getSocialLinkIcon(socialLink) }}>
                                     </div>
                                 ))}
-                                {remainingLinksCount >= 0 && (
-                                    <div className="sidebar__socials__link-item" onClick={handleShowAllLinks}>
-                                        <i>
-                                            {showAllSocialLinks ? '__ Ẩn bớt' : `__ Hiển thị ${remainingLinksCount} liên kết khác`}
-                                        </i>
-                                    </div>
-                                )}
+                                {
+                                    showAllSocialLinks &&
+                                    (
+                                        <div className="sidebar__socials__link-item" onClick={handleShowAllLinks}>
+                                            <i>__ Ẩn bớt liên kết</i>
+                                        </div>
+                                    )
+                                }
+                                {
+                                    !showAllSocialLinks && remainingLinksCount > 0 && (
+                                        <div className="sidebar__socials__link-item" onClick={handleShowAllLinks}>
+                                            <i>__ Hiển thị {remainingLinksCount} liên kết</i>
+                                        </div>
+                                    )
+                                }
                             </div>
 
                         </div>}
@@ -441,8 +489,9 @@ export default function Sidebar({ profileInfo }) {
                         )
                     }
                 </>
-            )}
+            )
+            }
             {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />}
-        </div>
+        </div >
     );
 }

@@ -1,19 +1,24 @@
 // Imports
 import { useState, useEffect, useRef } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useSearchParams } from 'react-router-dom';
+import { useQuery } from "react-query";
 
 // Resources
 import Navbar from '../../components/navbar/Navbar.jsx';
 import News from "../../components/news/News.jsx";
 import BackToTop from '../../components/backToTop/BackToTop.jsx';
+
 // Utils
 import { formatNumber } from "../../utils/formatter.js";
 
 // Styling
 import "./Explore.scss";
+import { useMovement } from '../../contexts/movement/MovementContext.jsx';
 
 export default function Explore() {
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { movements } = useMovement();
 
     const [showRecommenders, setShowRecommenders] = useState(false);
     const [selectedRecommender, setSelectedRecommender] = useState({
@@ -35,65 +40,6 @@ export default function Explore() {
             algorithm: "latest"
         }
     ];
-
-
-    const categories = [
-        {
-            _id: 1,
-            thumbnail: "https://i.pinimg.com/236x/11/37/88/113788b87bdf1bf765c73713496203ed.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 2,
-            thumbnail: "https://i.pinimg.com/236x/b6/14/80/b61480d322d1d69e0dcbea46d6d1f442.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 3,
-            thumbnail: "https://i.pinimg.com/236x/3d/13/36/3d1336d16d5e112fd5a8393cec21cc38.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 4,
-            thumbnail: "https://i.pinimg.com/564x/c8/c8/d2/c8c8d2d31531485e4024a48087bfed5d.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 5,
-            thumbnail: "https://i.pinimg.com/564x/6f/b2/d7/6fb2d733f3c4001fefe5257af9762022.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 6,
-            thumbnail: "https://i.pinimg.com/564x/b2/d3/1a/b2d31acc946b21f8973d1bf36e1d700a.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 7,
-            thumbnail: "https://i.pinimg.com/564x/ca/2d/69/ca2d69b7b11636e7a71c06d7a64a0d62.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 8,
-            thumbnail: "https://i.pinimg.com/564x/86/cf/5a/86cf5aaab2e31d285006be7d69d32b97.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-        {
-            _id: 9,
-            thumbnail: "https://i.pinimg.com/564x/55/88/e4/5588e4170e71b5b3b65dce923d04c5cf.jpg",
-            title: "Truyen than",
-            count: 5200
-        },
-    ]
-
 
     const scrollContainerRef = useRef(null);
     const [showLeftButton, setShowLeftButton] = useState(false);
@@ -132,13 +78,13 @@ export default function Explore() {
                 scrollContainerRef.current.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [categories]);
+    }, [movements]);
 
     useEffect(() => {
-        if (categories && categories.length > 0) {
+        if (movements && movements.length > 0) {
             handleScroll();
         }
-    }, [categories]);
+    }, [movements]);
 
     const handleScroll = () => {
         const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
@@ -155,19 +101,23 @@ export default function Explore() {
         });
     };
 
+    const handleRecommenderChange = (recommender) => {
+        setSelectedRecommender(recommender);
+        setSearchParams({ recommender: recommender.algorithm });
+        setShowRecommenders(false); // Hide the recommender container
+    };
+
     // Fetch artworks
-
-
 
     return (
         <div className="explore">
             {/* Display informative news */}
-            <News />
+            {/* <News /> */}
 
             {/* Sub navigation bar of the page */}
             <div className="sub-nav-container">
                 <div className="sub-nav-container--left">
-                    <Link className={`sub-nav-item btn ${location.pathname.includes('explore/artworks') ? "active" : ""}`} to="/explore/artworks"
+                    <Link className={`sub-nav-item btn ${location.pathname.includes('explore/posts') ? "active" : ""}`} to="/explore/posts"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 0 0 .658-.663 48.422 48.422 0 0 0-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 0 1-.61-.58v0Z" />
@@ -189,14 +139,14 @@ export default function Explore() {
                     </Link>
                 </div>
 
-                <div className="sub-nav-navigation--right">
+                {/* <div className="sub-nav-navigation--right">
                     <button className="btn btn-3 btn-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
                         </svg>
                         Chỉnh sửa newsfeed
                     </button>
-                </div>
+                </div> */}
             </div>
             <hr />
 
@@ -216,10 +166,7 @@ export default function Explore() {
                         <div className="recommender-container">
                             {recommenders && recommenders.map((recommender, idx) => {
                                 return (
-                                    <div key={idx} className="recommender-item" onClick={() => {
-                                        setSelectedRecommender(recommender);
-                                        setShowRecommenders(false); // Add this line to hide the container
-                                    }}>
+                                    <div key={idx} className="recommender-item" onClick={() => handleRecommenderChange(recommender)}>
                                         <span>{recommender.title}</span>
                                     </div>
                                 );
@@ -231,12 +178,12 @@ export default function Explore() {
                 <div className="scroll">
                     <div className="scroll-container" ref={scrollContainerRef}>
                         <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
-                        {categories && categories.map((category, idx) => (
+                        {movements && movements.map((category, idx) => (
                             <div key={idx} className="explore__filter-item scroll-item flex-align-center">
                                 <img src={category.thumbnail} alt={category.title} className="scroll-item__thumbnail" />
                                 <div className="explore__filter-item__details">
                                     <span className="explore__filter-item__details__title">{category.title}</span>
-                                    <span className="explore__fitler-item__details__count">{formatNumber(category.count, 1)}</span>
+                                    <span className="explore__fitler-item__details__count">{category.postCount > 1000 ? formatNumber(category.postCount, 1) : category.postCount}</span>
                                 </div>
                             </div>
                         ))}
@@ -246,7 +193,7 @@ export default function Explore() {
             </div>
 
             <Outlet />
-            
+
             <BackToTop />
         </div>
     )

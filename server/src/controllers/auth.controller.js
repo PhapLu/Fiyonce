@@ -31,7 +31,7 @@ class AuthController {
             }
             // Sending response
             new SuccessResponse({
-                message: 'User has been logged in!',
+                message: 'Đăng nhập thành công',
                 metadata,
             }).send(res)
         } catch (error) {
@@ -64,7 +64,7 @@ class AuthController {
         res.clearCookie("accessToken", {
             sameSite: "none",
             secure: process.env.NODE_ENV === 'production',
-        }).status(200).send("User has been logged out.")
+        }).status(200).send("Đã đăng xuất")
     }
     
     signUp = async (req, res, next) => {
@@ -73,7 +73,7 @@ class AuthController {
     
             // Sending response
             new CREATED({
-                message: 'Registered! Please check your email for the OTP to verify your account.',
+                message: 'Đăng kí thành công! Vui lòng điền mã xác nhận được gửi đến email của bạn.',
                 metadata,
             }).send(res)
         } catch (error) {
@@ -99,7 +99,7 @@ class AuthController {
     
             // Sending response
             new SuccessResponse({
-                message: 'Account verified successfully!',
+                message: 'Xác thực tài khoản thành công',
                 metadata,
             }).send(res)
         } catch (error) {
@@ -109,20 +109,20 @@ class AuthController {
 
     forgotPassword = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Forgot password success!',
+            message: 'Đã gửi yêu cầu đổi mật khẩu',
             metadata: await AuthService.forgotPassword(req.body)
         }).send(res)
     }
 
     verifyResetPasswordOtp = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Forgot password success!',
+            message: 'Mã xác thực hợp lệ',
             metadata: await AuthService.verifyResetPasswordOtp(req.body)
         }).send(res)
     }
     resetPassword = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Reset password success!',
+            message: 'Đổi mật khẩu thành công',
             metadata: await AuthService.resetPassword(req.body)
         }).send(res)
     }

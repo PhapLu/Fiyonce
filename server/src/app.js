@@ -42,6 +42,7 @@ app.use(helmet.contentSecurityPolicy({
         scriptSrc: ["'self'"]
     }
 }))
+
 app.use(compression())
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))

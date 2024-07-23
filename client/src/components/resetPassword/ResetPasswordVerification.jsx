@@ -2,7 +2,10 @@
 import React, { useState } from "react";
 
 // Resources
+
+// Contexts
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
+import { useModal } from "../../contexts/modal/ModalContext.jsx";
 
 // Utils
 import { apiUtils } from "../../utils/newRequest.js";
@@ -14,7 +17,8 @@ import "./ResetPassword.scss";
 export default function ResetPasswordVerification({ resetPasswordEmail }) {
     // Resources from AuthContext
     const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm, showResetPasswordVerification, setShowResetPasswordVerificationForm } = useAuth();
-
+    const {setModalInfo} = useModal();
+    
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
@@ -64,6 +68,10 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
             }
         } catch (error) {
             console.error("Failed to reset password:", error);
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
             errors.serverError = error.response.data.message;
         } finally {
             // Clear the loading effect
@@ -83,7 +91,7 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
 
                 <h2 className="form__title">Đặt lại mật khẩu</h2>
 
-                <p>Fiyonce vừa gửi mã xác nhận đến {resetPasswordEmail}.
+                <p>Fiyonce vừa gửi mã xác nhận đến <span className="highlight-text">{resetPasswordEmail}</span>.
                     Để đặt lại mật khẩu, vui lòng điền mã xác thực.
                 </p>
 

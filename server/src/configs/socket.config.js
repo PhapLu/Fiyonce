@@ -8,12 +8,12 @@ export default function configureSocket(server) {
         cors: {
             origin: [process.env.NODE_ENV == 'production' ? process.env.ALLOWED_ORIGIN : 'http://localhost:3000'],
             methods: ["GET", "POST"],
-            credentials: true
-        }
-    })
+            credentials: true,
+        },
+    });
 
     // Global variable
     global._io = io
 
-    return io
+    return io;
 }
