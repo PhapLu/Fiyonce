@@ -15,12 +15,12 @@ class MovementService {
     static createMovement = async (adminId, req) => {
         //1. Check if admin exists
         const admin = await User.findById(adminId);
-        if (!admin) throw new AuthFailureError("Admin not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         //2. Validate request body
-        if (!req.body.title) throw new BadRequestError("Please provide title");
+        if (!req.body.title) throw new BadRequestError("Bạn chưa nhập tiêu đề");
         if (req.files && !req.files.thumbnail)
-            throw new BadRequestError("Please provide thumbnail");
+            throw new BadRequestError("Bạn chưa cung cấp thumbnail");
 
         //3.Upload thumbnail to cloudinary
         const thumbnailUploadResult = await compressAndUploadImage({
@@ -75,8 +75,6 @@ class MovementService {
         }
       }
     ])
-    console.log("MOVEMENTS")
-    console.log(movements);
     return {
       movements
     }
@@ -87,8 +85,8 @@ class MovementService {
         const admin = await User.findById(adminId);
         const movement = await Movement.findById(movementId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!movement) throw new BadRequestError("Movement not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!movement) throw new BadRequestError("Trường phái không tồn tại");
 
         // 2. Handle thumbnail upload
         try {
@@ -133,7 +131,7 @@ class MovementService {
             };
         } catch (error) {
             console.error("Error in updating movement:", error);
-            throw new Error("Movement update failed");
+            throw new BadRequestError("Cập nhật trường phái không thành công");
         }
     };
 
@@ -141,8 +139,8 @@ class MovementService {
         //1. Check if admin and movement exists
         const admin = await User.findById(adminId);
         const movement = await Movement.findById(movementId);
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!movement) throw new BadRequestError("Movement not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!movement) throw new BadRequestError("Trường phái không tồn tại");
 
         //2. Delete movement thumbnail from cloudinary
         const publicId = extractPublicIdFromUrl(movement.thumbnail);
@@ -152,7 +150,7 @@ class MovementService {
         await movement.deleteOne();
 
         return {
-            message: "Movement deleted",
+            message: "Xóa trường phái thành công",
         };
     };
 }

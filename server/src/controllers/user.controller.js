@@ -8,42 +8,36 @@ class UserController {
     //CRUD
     updateProfile = async (req, res, next) => {
         new SuccessResponse({
-            message: 'Update userProfile successfully!',
-            metadata: await UserService.updateProfile(req.userId, req.params.profileId, req.body)
+            message: 'Cập nhật thông tin thành công',
+            metadata: await UserService.updateProfile(req.userId, req.body)
         }).send(res)
     }
 
     readUserProfile = async (req, res, next) => {
         new SuccessResponse({
-            message: 'Read User profile success!',
+            message: 'Xem thông tin thành công',
             metadata: await UserService.readUserProfile(req.params.profileId)
         }).send(res)
     }
 
     deleteProfile = async (req, res, next) => {
         new SuccessResponse({
-            message: 'User has been deleted!',
-            metadata: await UserService.deleteProfile(req.userId, req.params.profileId)
+            message: 'Đã xóa profile thành công!',
+            metadata: await UserService.deleteProfile(req.userId)
         }).send(res)
     }
     //End CRUD
-    addToBookmark = async (req, res, next) => {
-        new SuccessResponse({
-            message: 'Add an artwork into bookmark success!',
-            metadata: await UserService.addToBookmark(req.userId, req.params.artworkId)
-        }).send(res)
-    }
 
     followUser = async (req, res, next) => {
         new SuccessResponse({
-            message: 'Follow user success!',
+            message: 'Đã theo dõi thành công',
             metadata: await UserService.followUser(req.userId, req.params.profileId)
         }).send(res)
     }
 
     unFollowUser = async (req, res, next) => {
         new SuccessResponse({
-            message: 'Unfollow user success!',
+            message: 'Đã hủy theo dõi thành công',
             metadata: await UserService.unFollowUser(req.userId, req.params.profileId)
         }).send(res)
     }
@@ -51,7 +45,7 @@ class UserController {
     me = async (req, res, next) => {
         if (!req.cookies.accessToken) throw new BadRequestError('Access token missing', 403)
         new SuccessResponse({
-            message: 'Me success!',
+            message: 'Đọc thông tin thành công',
             metadata: await UserService.me(req.cookies.accessToken)
         }).send(res)
     }

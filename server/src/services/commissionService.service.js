@@ -16,9 +16,9 @@ class CommissionServiceService {
     static createCommissionService = async (talentId, req) => {
         // 1. Check talent exists
         const talent = await User.findById(talentId);
-        if (!talent) throw new NotFoundError("Talent not found!");
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (talent.role !== "talent")
-            throw new BadRequestError("User is not a talent!");
+            throw new BadRequestError("Chỉ họa sĩ mới được tạo dịch vụ");
 
         // 2. Validate request body
         const {
@@ -30,7 +30,7 @@ class CommissionServiceService {
             deliverables,
         } = req.body;
         if (!req.files || !req.files.files) {
-            throw new BadRequestError("Please provide artwork files");
+            throw new BadRequestError("Bạn chưa cung cấp file ảnh");
         }
         if (
             !title ||
@@ -40,7 +40,7 @@ class CommissionServiceService {
             !termOfServiceId ||
             !movementId
         ) {
-            throw new BadRequestError("Please provide all required fields");
+            throw new BadRequestError("Hãy cung cấp đầy đủ những thông tin bắt buộc");
         }
 
         // 3. Upload files to Cloudinary (compressed) and get their URLs
@@ -80,7 +80,7 @@ class CommissionServiceService {
             };
         } catch (error) {
             console.error("Error uploading images:", error);
-            throw new Error("File upload or database save failed");
+            throw new Error("Tạo dịch vụ không thành công");
         }
     };
 
@@ -89,7 +89,7 @@ class CommissionServiceService {
         const service = await CommissionService.findById(commissionServiceId)
             .populate("talentId", "stageName avatar")
             .populate("termOfServiceId");
-        if (!service) throw new NotFoundError("Service not found");
+        if (!service) throw new NotFoundError("Dịch vụ không tồn tại");
 
         // 2. Update views
         service.views += 1;
@@ -104,9 +104,9 @@ class CommissionServiceService {
     static readCommissionServices = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId);
-        if (!talent) throw new NotFoundError("Talent not found");
+        if (!talent) throw new NotFoundError("Không tìm thấy họa sĩ");
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent");
+            throw new BadRequestError("Không tìm thấy họa sĩ");
 
         //2. Find services
         const services = await CommissionService.find({
@@ -127,10 +127,10 @@ class CommissionServiceService {
         const talent = await User.findById(talentId)
         const service = await CommissionService.findById(commissionServiceId)
     
-        if (!talent) throw new NotFoundError('Talent not found')
-        if (!service) throw new NotFoundError('Service not found')
-        if (!service.movementId) throw new NotFoundError('Movement not found')
-        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
+        if (!talent) throw new NotFoundError('Không tìm thấy họa sĩ')
+        if (!service) throw new NotFoundError('Dịch vụ không tồn tại')
+        if (!service.movementId) throw new NotFoundError('Trường phái không tồn tại')
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('Bạn không có quyền thực hiện thao tác này')
     
         const oldCategoryId = service.serviceCategoryId // Store the old category ID
         try {
@@ -182,7 +182,6 @@ class CommissionServiceService {
                 });
                 if (servicesInOldCategory.length === 0) {
                     await ServiceCategory.findByIdAndDelete(oldCategoryId);
-                    console.log(`Deleted Category ID: ${oldCategoryId}`);
                 }
             }
 
@@ -191,7 +190,7 @@ class CommissionServiceService {
             };
         } catch (error) {
             console.log("Error in updating commission service:", error);
-            throw new Error("Service update failed");
+            throw new Error("Cập nhật dịch vụ không thành công");
         }
     };
 
@@ -200,10 +199,10 @@ class CommissionServiceService {
         const talent = await User.findById(talentId);
         const service = await CommissionService.findById(commissionServiceId);
 
-        if (!talent) throw new NotFoundError("Talent not found");
-        if (!service) throw new NotFoundError("Service not found");
+        if (!talent) throw new NotFoundError("Không tìm thấy họa sĩ");
+        if (!service) throw new NotFoundError("Dịch vụ không tồn tại");
         if (service.talentId.toString() !== talentId)
-            throw new BadRequestError("You can only delete your service");
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này");
 
         // 2. Extract public IDs and delete files from Cloudinary
         const publicIds = service.artworks.map((artwork) =>
@@ -226,7 +225,7 @@ class CommissionServiceService {
         }
 
         return {
-            message: "Service and possibly empty category deleted successfully",
+            message: "Xóa dịch vụ thành công",
         };
     };
 }

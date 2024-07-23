@@ -24,7 +24,6 @@ router.patch('/unarchiveOrder/:orderId', asyncHandler(orderController.unarchiveO
 router.get('/readMemberOrderHistory', asyncHandler(orderController.readMemberOrderHistory))
 router.get('/readTalentOrderHistory', asyncHandler(orderController.readTalentOrderHistory))
 router.get('/readArchivedOrderHistory', asyncHandler(orderController.readArchivedOrderHistory))
-router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
 
 export default router

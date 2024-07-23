@@ -8,19 +8,29 @@ import mongoose from 'mongoose'
 
 class UserService {
     //-------------------CRUD----------------------------------------------------
-    static updateProfile = async (userId, profileId, body) => {
+    static updateProfile = async (userId, body) => {
         //1. Check user
-        const profile = await User.findById(profileId);
-        if (!profile) throw new NotFoundError("User not found");
-        if (profileId != userId)
-            throw new AuthFailureError("You can only update your account");
-
-        //2. Update user
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if(userId !== user._id.toString()) 
+            throw new AuthFailureError("Bạn chỉ có thể cập nhật thông tin cá nhân của bản thân")
+        
+        //2. Validate body
+        if( body._id || body.email || body.role || body.password
+            || body.accessToken || body.qrCode  || body.status
+            || body.followers || body.following || body.views
+            ) 
+            throw new BadRequestError("Không thể cập nhật thông tin này")
+        if(user.role !== 'talent' && body.jobTitle)
+            throw new BadRequestError("Chỉ tài khoản họa sĩ mới có thể cập nhật nghề nghiệp")
+        
+        //3. Update user
         const updatedUser = await User.findByIdAndUpdate(
-            profileId,
+            userId,
             { $set: body },
             { new: true }
-        );
+        ).select("-password")
+
         return {
             user: updatedUser,
         };
@@ -28,9 +38,9 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId);
+        const userProfile = await User.findById(profileId).select("-password -accessToken");
         if (!userProfile)
-            throw new NotFoundError("User not found").select("-password");
+            throw new NotFoundError("Không tìm thấy người này");
 
         //2. Update views
         userProfile.views += 1;
@@ -42,41 +52,28 @@ class UserService {
         };
     };
 
-    static deleteProfile = async (userId, profileId) => {
-        //1. Check user and profile
-        const userProfile = await User.findById(profileId);
-        if (!userProfile) throw new NotFoundError("User not found");
-        if (userId.toString() != profileId)
-            throw new AuthFailureError("You can only delete your account");
+    static deleteProfile = async (userId) => {
+        //1. Check user
+        const userProfile = await User.findById(userId);
+        if (!userProfile) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (userProfile._id.toString() !== userId)
+            throw new AuthFailureError("Bạn chỉ có thể xóa profile của bản thân");
 
         //2. Delete profile
-        await User.findByIdAndDelete(profileId);
-        return { success: true, message: "User deleted successfully" };
+        await User.findByIdAndDelete(userId);
+        return { success: true, message: "Xóa profile thành công" };
     };
     //-------------------END CRUD----------------------------------------------------
-    static addToBookmark = async (userId, artworkId) => {
-        //1. Check user and artwork
-        const currentUser = await User.findById(userId);
-        if (!currentUser) throw new NotFoundError("User not found");
-        if (currentUser.bookmark.includes(artworkId))
-            throw new BadRequestError("Artwork already bookmarked");
-
-        //2. Add to bookmark
-        currentUser.bookmark.push(artworkId);
-        await currentUser.save();
-        return {
-            user: currentUser,
-        };
-    };
 
     static followUser = async (userId, profileId) => {
         //1. Check user and follow
-        const currentUser = await User.findById(userId);
+        const currentUser = await User.findById(userId).select("-password");
         const followedUser = await User.findById(profileId);
-        if (!currentUser) throw new NotFoundError("User not found");
-        if (!followedUser) throw new NotFoundError("User not found");
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!followedUser) throw new NotFoundError("Không tìm thấy người này");
+        if(userId == profileId) throw new BadRequestError("Bạn không thể theo dõi bản thân");
         if (currentUser.following.includes(profileId))
-            throw new BadRequestError("You already follow this user");
+            throw new BadRequestError("Bạn đã theo dõi người này");
 
         //2. Follow user
         currentUser.following.push(profileId);
@@ -93,10 +90,10 @@ class UserService {
         // 1. Check user and unfollow
         const currentUser = await User.findById(userId);
         const followedUser = await User.findById(profileId);
-        if (!currentUser) throw new NotFoundError("User not found");
-        if (!followedUser) throw new NotFoundError("User not found");
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!followedUser) throw new NotFoundError("Không tìm thấy người này");
         if (!currentUser.following.includes(profileId))
-            throw new BadRequestError("You do not follow this user");
+            throw new BadRequestError("Bạn không theo dõi người này");
 
         // 2. Unfollow user
         currentUser.following = currentUser.following.filter(
@@ -105,9 +102,8 @@ class UserService {
         followedUser.followers = followedUser.followers.filter(
             (id) => id.toString() !== userId.toString()
         );
-        // await currentUser.save();
-        // await followedUser.save();
-        console.log(currentUser);
+        await currentUser.save();
+        await followedUser.save();
         return {
             user: currentUser,
         };
@@ -116,15 +112,15 @@ class UserService {
     static me = async (accessToken) => {
         // 1. Decode accessToken and check
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-        if (!decoded) throw new AuthFailureError("Invalid token");
+        if (!decoded) throw new AuthFailureError("Token không hợp lệ");
 
         // 2. Find user
         const userId = decoded.id;
-        if (!userId) throw new AuthFailureError("Invalid validation");
+        if (!userId) throw new AuthFailureError("Token không hợp lệ");
 
         // 3. Return user without password
         const user = await User.findById(userId).select("-password");
-        if (!user) throw new NotFoundError("User not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         // Fetch unseen conversations
         const unSeenConversations = await Conversation.find({
@@ -137,9 +133,6 @@ class UserService {
             receiverId: new mongoose.Types.ObjectId(userId),
             isSeen: false
         });
-
-        console.log("MEEEE")
-        console.log(unSeenNotifications)
 
         // Create a plain JavaScript object with user data and add unSeenConversations
         const userData = {

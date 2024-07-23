@@ -1,53 +1,56 @@
-import https from "https";
-import crypto from "crypto";
-import Order from "../models/order.model.js";
-import axios from "axios";
-import Artwork from "../models/post.model.js";
-import brevoSendEmail from "../configs/brevo.email.config.js";
-import Proposal from "../models/proposal.model.js";
-import MomoService from "./momo.service.js";
-import { User } from "../models/user.model.js";
+import https from "https"
+import crypto from "crypto"
+import Order from "../models/order.model.js"
+import axios from "axios"
+import Artwork from "../models/post.model.js"
+import brevoSendEmail from "../configs/brevo.email.config.js"
+import Proposal from "../models/proposal.model.js"
+import MomoService from "./momo.service.js"
+import { User } from "../models/user.model.js"
 import {
     AuthFailureError,
     BadRequestError,
     NotFoundError,
-} from "../core/error.response.js";
+} from "../core/error.response.js"
 
-const accessKey = "F8BBA842ECF85";
-const secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+const accessKey = "F8BBA842ECF85"
+const secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
 
 class ProposalService {
     static sendProposal = async (userId, orderId, body) => {
-        console.log("BODY");
-        console.log(body);
         //1. Check if user, order exists
-        const user = await User.findById(userId);
-        const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError("User not found")
+        if (!order) throw new NotFoundError("Order not found")
 
         //2. Check if user is a talent
         if (user.role !== "talent")
-            throw new AuthFailureError("You are not a talent");
+            throw new AuthFailureError("You are not a talent")
 
         //3. Check if user has already given proposal for the order
         const existingProposal = await Proposal.findOne({
             talentId: userId,
             orderId,
-        });
+        })
         if (existingProposal)
             throw new BadRequestError(
                 "You have already given proposal for this order"
-            );
+            )
+        let artworks = []
+        if(order.isDirect == false){
+            //4. Check if artworks are valid
+            if (body.artworks.length === 0)
+                throw new BadRequestError("Artworks are required")
+            
+            //5. Add artworksId to proposal
+            artworks.push(...body.artworks)
+            
+            //5.Check if price is valid
+            if (body.price < 0)
+                throw new BadRequestError("Price must be greater than 0")
 
-        //4. Check if artworks are valid
-        if (body.artworks.length === 0)
-            throw new BadRequestError("Artworks are required");
-
-        //5.Check if price is valid
-        if (body.price < 0)
-            throw new BadRequestError("Price must be greater than 0");
-
+        }
         //6. Send proposal
         const proposal = new Proposal({
             orderId,
@@ -55,14 +58,14 @@ class ProposalService {
             termOfServiceId: body.termOfServiceId,
             artworks: body.artworks,
             ...body,
-        });
-        await proposal.save();
+        })
+        await proposal.save()
 
         //7. Modify the order status to approved
-        order.status = "approved";
-        order.save();
+        order.status = "approved"
+        order.save()
 
-        const showedProposal = await proposal.populate("orderId");
+        const showedProposal = await proposal.populate("orderId")
         // try {
         //     brevoSendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully')
         // } catch (error) {
@@ -71,56 +74,56 @@ class ProposalService {
         // }
         return {
             proposal: showedProposal,
-        };
-    };
+        }
+    }
 
     static readProposal = async (userId, proposalId) => {
         //1. Check if proposal, user exists
         const proposal = await Proposal.findById(proposalId)
             .populate("termOfServiceId")
-            .populate("artworks", "url");
-        const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!proposal) throw new NotFoundError("Proposal not found");
+            .populate("artworks", "url")
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
+        if (!proposal) throw new NotFoundError("Proposal not found")
 
         return {
             proposal,
-        };
-    };
+        }
+    }
     static readProposalsByOrderId = async (orderId) => {
         //1. Check if order exists
-        const order = await Order.findById(orderId);
-        if (!order) throw new NotFoundError("Order not found");
+        const order = await Order.findById(orderId)
+        if (!order) throw new NotFoundError("Order not found")
 
         //2. Read all proposals of a order
         const proposals = await Proposal.find({ orderId: orderId }).populate(
             "talentChosenId",
             "fullName avatar"
-        );
+        )
 
         return {
             proposals,
-        };
-    };
+        }
+    }
     static updateProposal = async (userId, proposalId, body) => {
         //1. Check if proposal, user exists
-        const user = await User.findById(userId);
-        const proposal = await Proposal.findById(proposalId);
-        if (!proposal) throw new NotFoundError("Proposal not found");
-        if (!user) throw new NotFoundError("User not found");
+        const user = await User.findById(userId)
+        const proposal = await Proposal.findById(proposalId)
+        if (!proposal) throw new NotFoundError("Proposal not found")
+        if (!user) throw new NotFoundError("User not found")
 
         //2. Check if user is authorized to update proposal
         if (proposal.talentId.toString() !== userId)
             throw new AuthFailureError(
                 "You are not authorized to update this proposal"
-            );
+            )
 
         //3. Check order status
-        const order = await Order.findById(proposal.orderId);
+        const order = await Order.findById(proposal.orderId)
         if (order.status !== "pending" && order.status !== "approved")
             throw new BadRequestError(
                 "You cannot update proposal on this stage"
-            );
+            )
 
         //4. Update proposal
         const updatedProposal = await Proposal.findByIdAndUpdate(
@@ -129,8 +132,8 @@ class ProposalService {
                 $set: body,
             },
             { new: true }
-        );
-        await proposal.save();
+        )
+        await proposal.save()
 
         //5. Send email to user
         // try {
@@ -141,65 +144,65 @@ class ProposalService {
 
         return {
             proposal: updatedProposal,
-        };
-    };
+        }
+    }
 
     static deleteProposal = async (userId, proposalId) => {
         //1. Check proposal, user exists
-        const proposal = await Proposal.findById(proposalId);
-        const user = await User.findById(userId);
-        if (!proposal) throw new NotFoundError("Proposal not found");
-        if (!user) throw new NotFoundError("User not found");
+        const proposal = await Proposal.findById(proposalId)
+        const user = await User.findById(userId)
+        if (!proposal) throw new NotFoundError("Proposal not found")
+        if (!user) throw new NotFoundError("User not found")
 
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
             throw new AuthFailureError(
                 "You are not authorized to delete this proposal"
-            );
+            )
 
         //3. Check status of order
-        const order = await Order.findById(proposal.orderId);
+        const order = await Order.findById(proposal.orderId)
         if (order.status !== "pending" && order.status !== "approved")
             throw new BadRequestError(
                 "You cannot update proposal on this stage"
-            );
+            )
 
         //4. Delete proposal
-        await proposal.deleteOne();
+        await proposal.deleteOne()
 
         return {
             proposal,
-        };
-    };
+        }
+    }
     static readProposalsHistory = async (userId) => {
         //1. Check if user exists
-        const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
 
         //2. View all proposals of a talent
-        const proposals = await Proposal.find({ talentId: userId });
+        const proposals = await Proposal.find({ talentId: userId })
         return {
             proposals,
-        };
-    };
+        }
+    }
 
     static generatePaymentUrl = async (userId, proposalId) => {
         //1. Check if user exists
-        const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
 
         //2. Check if proposal exists
-        const proposal = await Proposal.findById(proposalId);
-        if (!proposal) throw new NotFoundError("Proposal not found");
+        const proposal = await Proposal.findById(proposalId)
+        if (!proposal) throw new NotFoundError("Proposal not found")
 
         //3. Check if order exists and is approved
-        const order = await Order.findById(proposal.orderId);
-        if (!order) throw new NotFoundError("Order not found");
+        const order = await Order.findById(proposal.orderId)
+        if (!order) throw new NotFoundError("Order not found")
         // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
 
         //4. Create payment with MoMo
-        const amount = proposal.price;
-        const paymentData = await MomoService.generatePaymentData(amount);
+        const amount = proposal.price
+        const paymentData = await MomoService.generatePaymentData(amount)
 
         const options = {
             method: "POST",
@@ -211,50 +214,50 @@ class ProposalService {
                 ),
             },
             data: JSON.stringify(paymentData),
-        };
+        }
 
-        let paymentResponse;
+        let paymentResponse
         try {
-            paymentResponse = await axios(options);
+            paymentResponse = await axios(options)
         } catch (error) {
-            console.log("Error generating payment URL: ", error);
+            console.log("Error generating payment URL: ", error)
         }
 
         //5. Update order with MoMo order id
-        order.momoOrderId = paymentResponse.data.orderId;
-        await order.save();
+        order.momoOrderId = paymentResponse.data.orderId
+        await order.save()
 
         return {
             paymentData,
             paymentResponse: paymentResponse.data,
-        };
-    };
+        }
+    }
 
     static momoCallback = async (body) => {
-        console.log("Call back:: ");
-        console.log(body);
+        console.log("Call back:: ")
+        console.log(body)
         //Confirm order
-        const order = await Order.findOne({ momoOrderId: body.orderId });
+        const order = await Order.findOne({ momoOrderId: body.orderId })
         if (body.resultCode == 0) {
-            order.status = "confirmed";
-            await order.save();
+            order.status = "confirmed"
+            await order.save()
         }
 
         return {
             order,
             body,
-        };
-    };
+        }
+    }
 
     static readMomoOrderStatus = async (body) => {
-        const { momoOrderId } = body;
+        const { momoOrderId } = body
 
-        const rawSignature = `accessKey=${accessKey}&orderId=${momoOrderId}&partnerCode=MOMO&requestId=${momoOrderId}`;
+        const rawSignature = `accessKey=${accessKey}&orderId=${momoOrderId}&partnerCode=MOMO&requestId=${momoOrderId}`
 
         const signature = crypto
             .createHmac("sha256", secretKey)
             .update(rawSignature)
-            .digest("hex");
+            .digest("hex")
 
         const requestBody = {
             partnerCode: "MOMO",
@@ -262,7 +265,7 @@ class ProposalService {
             orderId: momoOrderId,
             signature,
             lang: "vi",
-        };
+        }
 
         //options for axios
         const options = {
@@ -274,14 +277,14 @@ class ProposalService {
                 "Content-Type": "application/json",
             },
             data: requestBody,
-        };
+        }
 
-        let result = await axios(options);
+        let result = await axios(options)
 
         return {
             result: result.data,
-        };
-    };
+        }
+    }
 
     // static confirmProposal = async (userId, proposalId) => {
     //     // 1. Check if user exists
@@ -352,4 +355,4 @@ class ProposalService {
     // }
 }
 
-export default ProposalService;
+export default ProposalService

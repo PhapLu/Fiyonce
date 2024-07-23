@@ -5,42 +5,35 @@ class OrderController{
     //Order CRUD
     createOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Create order success!',
+            message: 'Tạo đơn hàng thành công',
             metadata: await OrderService.createOrder(req.userId, req)
         }).send(res)
     }
 
     readOrder = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read a order',
+            message: 'Xem đơn hàng thành công',
             metadata: await OrderService.readOrder(req.params.orderId)
         }).send(res)
     }
 
     readOrders = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read all orders',
+            message: 'Xem các đơn hàng thành công',
             metadata: await OrderService.readOrders(req) 
         }).send(res)
     }
 
     updateOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Update order successfully!',
-            metadata: await OrderService.updateOrder(req.userId, req.params.orderId, req.body)
-        }).send(res)
-    }
-
-    deleteOrder = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Delete order successfully!',
-            metadata: await OrderService.deleteOrder(req.userId, req.params.orderId)
+            message: 'Cập nhật đơn hàng thành công',
+            metadata: await OrderService.updateOrder(req.userId, req.params.orderId, req)
         }).send(res)
     }
 
     archiveOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Archive order successfully!',
+            message: 'Lưu trữ đơn hàng thành công',
             metadata: await OrderService.archiveOrder(req.userId, req.params.orderId)
         }).send(res)
     }
@@ -48,7 +41,7 @@ class OrderController{
     
     unarchiveOrder = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Archive order successfully!',
+            message: 'Hủy lưu trữ đơn hàng thành công',
             metadata: await OrderService.unarchiveOrder(req.userId, req.params.orderId)
         }).send(res)
     }
@@ -56,36 +49,29 @@ class OrderController{
     //End Order CRUD
     readMemberOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read all orders of a client',
+            message: 'Xem toàn bộ đơn hàng thành công',
             metadata: await OrderService.readMemberOrderHistory(req.userId)
         }).send(res)
     }
 
     readTalentOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read all orders of a client',
+            message: 'Xem toàn bộ đơn hàng thành công',
             metadata: await OrderService.readTalentOrderHistory(req.userId)
         }).send(res)
     }
 
     readArchivedOrderHistory = async(req, res, next) =>{
         new SuccessResponse({
-            message: 'Read all orders of a client',
+            message: 'Xem toàn bộ đơn hàng đã lưu trữ thành công',
             metadata: await OrderService.readArchivedOrderHistory(req.userId)
-        }).send(res)
-    }
-
-    chooseProposal = async (req, res, next) => {
-        new SuccessResponse({
-            message: 'Choose talent success!',
-            metadata: await OrderService.chooseProposal(req.userId, req.params.orderId, req.body.proposalId)
         }).send(res)
     }
 
     rejectOrder = async (req, res, next) => {
         console.log(req.body)
         new SuccessResponse({
-            message: 'Deny the order success!',
+            message: 'Đã từ chối hợp đồng',
             metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
         }).send(res)
     }

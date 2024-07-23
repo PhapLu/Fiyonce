@@ -32,21 +32,42 @@ const uploadAvatarOrCover = async (
 ) => {
     // 1. Check user, profileId, type is valid
     const user = await User.findById(userId);
-    if (!user) throw new BadRequestError("User not found");
-    if (!profileId) throw new BadRequestError("ProfileId missing");
+    if (!user) throw new BadRequestError("Bạn cần đăng nhập để thực hiện thao tác nàyd");
+    if (!profileId) throw new BadRequestError("Hãy cung cấp đầy đủ thông tin");
     if (user._id.toString() !== profileId)
-        throw new AuthFailureError(
-            "You can only set avatar/cover for your profile"
-        );
+        throw new AuthFailureError("Bạn chỉ có thể thay đổi avatar hoặc background của bản thân");
     if (type !== "avatar" && type !== "bg")
-        throw new BadRequestError("Invalid type of update");
+        throw new BadRequestError("Thay đổi ảnh đại diện hoặc background không thành công");
 
     let updatedUser;
     let imagePublicId;
     let dimensions;
 
     try {
-        // 2. Delete the old image in Cloudinary
+        // 2. Compress and upload the new image
+        const result = await compressAndUploadImage({
+            buffer: buffer,
+            originalname: originalname,
+            folderName: `fiyonce/profile/avatarOrCover/${profileId}`,
+            ...dimensions,
+        });
+
+        // 3. Update the user with the new image
+        if (type === "avatar") {
+            updatedUser = await User.findByIdAndUpdate(
+                profileId,
+                { $set: { avatar: result.secure_url } },
+                { new: true }
+            );
+        } else {
+            updatedUser = await User.findByIdAndUpdate(
+                profileId,
+                { $set: { bg: result.secure_url } },
+                { new: true }
+            );
+        }
+
+        // 4. Delete the old image in Cloudinary
         if (type == "avatar") {
             // Do not delete the default image
             if (!user.avatar.includes("pastal_system_default_avatar")) {
@@ -62,32 +83,7 @@ const uploadAvatarOrCover = async (
             }
             dimensions = { width: 1550, height: 285 };
         } else {
-            throw new BadRequestError("Invalid type");
-        }
-
-        // 3. Compress and upload the new image
-        const result = await compressAndUploadImage({
-            buffer: buffer,
-            originalname: originalname,
-            folderName: `fiyonce/profile/avatarOrCover/${profileId}`,
-            ...dimensions,
-        });
-
-        // 4. Update the user with the new image
-        // const updateField = type === 'avatar' ? { avatar: result.secure_url } : { bg: result.secure_url }
-        // updatedUser = await User.findByIdAndUpdate(profileId, { $set: updateField }, { new: true })
-        if (type === "avatar") {
-            updatedUser = await User.findByIdAndUpdate(
-                profileId,
-                { $set: { avatar: result.secure_url } },
-                { new: true }
-            );
-        } else {
-            updatedUser = await User.findByIdAndUpdate(
-                profileId,
-                { $set: { bg: result.secure_url } },
-                { new: true }
-            );
+            throw new BadRequestError("Thay đổi ảnh đại diện hoặc background không thành công");
         }
 
         return {
@@ -97,7 +93,7 @@ const uploadAvatarOrCover = async (
         };
     } catch (error) {
         console.error("Error uploading image:", error);
-        throw new Error("Error uploading image");
+        throw new BadRequestError("Thay đổi ảnh đại diện hoặc background không thành công");
     }
 };
 

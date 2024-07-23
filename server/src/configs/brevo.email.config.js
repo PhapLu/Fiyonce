@@ -95,7 +95,7 @@ async function brevoSendEmail(to, subject, subjectMessage, verificationCode) {
                     <img src="https://res.cloudinary.com/fiyonce/image/upload/v1717647058/fiyonce/system/email_logo_aedc4w.png" alt="Pastal">
                 </div>
                 <div class="content">
-                    <div class="content_container">
+                    <div  class="content_container">
                         <p class="content_head">Chào ${toEmail},</p>
                         <p>${subjectMessage}</p>
                         <div class="verification-code">${verificationCode}</div>

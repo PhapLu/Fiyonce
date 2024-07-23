@@ -16,16 +16,16 @@ class TalentRequestService {
     static requestUpgradingToTalent = async (userId, req) => {
         // 1. Check user exists and is not a talent
         const currentUser = await User.findById(userId);
-        if (!currentUser) throw new NotFoundError("User not found");
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (currentUser.role === "talent")
-            throw new BadRequestError("User already a talent");
+            throw new BadRequestError("Bạn đã là họa sĩ");
 
         // 2. Validate request body
         const { stageName, jobTitle, portfolioLink } = req.body;
         if (!req.files || !req.files.files)
-            throw new BadRequestError("Please provide artwork files");
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin bắt buộc");
         if (!userId || !stageName || !jobTitle || !portfolioLink)
-            throw new BadRequestError("Please provide all required fields");
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin bắt buộc");
 
         // 3. Check if user has requested before
         const talentRequest = await TalentRequest.findOne({ userId });
@@ -71,23 +71,23 @@ class TalentRequestService {
             };
         } catch (error) {
             console.log("Error uploading images:", error);
-            throw new Error("File upload or database save failed");
+            throw new BadRequestError("Gửi yêu cầu họa sĩ không thành công");
         }
     };
 
     static readTalentRequestStatus = async (userId) => {
         // 1. Check user exists
         const currentUser = await User.findById(userId);
-        if (!currentUser) throw new NotFoundError("User not found");
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         // 2. Find talent request
         const talentRequest = await TalentRequest.findOne({ userId });
         if (!talentRequest) {
-            throw new NotFoundError("Talent request not found");
+            throw new NotFoundError("Yêu cầu họa sĩ không tồn tại");
         }
 
         return {
-            talentRequestStatus: talentRequest.status,
+            talentRequestStatus: talentRequest,
         };
     };
 
@@ -95,21 +95,21 @@ class TalentRequestService {
     static upgradeRoleToTalent = async (adminId, requestId) => {
         // 1. Find and check request
         const request = await TalentRequest.findById(requestId);
-        if (!request) throw new NotFoundError("Request not found");
+        if (!request) throw new NotFoundError("Yêu cầu không tồn tại");
         if (request.status === "approved")
-            throw new BadRequestError("Request already approved");
+            throw new BadRequestError("Yêu cầu này đã được chấp nhận");
 
         // 2. Find and check admin user and user role
         const adminUser = await User.findById(adminId);
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         // 3. Find and check the user related to the request
         const userId = request.userId;
         const foundUser = await User.findById(userId);
-        if (!foundUser) throw new NotFoundError("User not found");
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (foundUser.role === "talent")
-            throw new BadRequestError("User already a talent");
+            throw new BadRequestError("Người này đã là họa sĩ");
 
         // 4. Mark request as approved
         request.status = "approved";
@@ -120,7 +120,7 @@ class TalentRequestService {
             userId,
             { $set: { role: "talent" } },
             { new: true }
-        );
+        ).select("-password");
 
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } =
@@ -132,14 +132,9 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork);
                 await deleteFileByPublicId(publicId);
             });
-            await brevoSendEmail(
-                foundUser.email,
-                "Role Updated",
-                "Your role has been updated to talent"
-            );
+            await brevoSendEmail( foundUser.email, "Nâng cấp tài khoản họa sĩ", "Tài khoản của bạn đã được nâng cấp thành họa sĩ");
         } catch (error) {
-            console.log("Failed:::", error);
-            throw new Error("Email service error or image deletion failed");
+            throw new BadRequestError("Nâng cấp tài khoản không thành công");
         }
 
         return {
@@ -150,9 +145,9 @@ class TalentRequestService {
     static denyTalentRequest = async (adminId, requestId) => {
         //1. Find and check request
         const request = await TalentRequest.findById(requestId);
-        if (!request) throw new NotFoundError("Request not found");
+        if (!request) throw new NotFoundError("Yêu cầu không tồn tại");
         if (request.status === "rejected")
-            throw new BadRequestError("Request already denied");
+            throw new BadRequestError("Yêu cầu này đã bị từ chối");
 
         //2. Find and check admin, user and user role
         const userId = request.userId;
@@ -160,10 +155,10 @@ class TalentRequestService {
         const foundUser = await User.findById(userId);
 
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission");
-        if (!foundUser) throw new NotFoundError("User not found");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (foundUser.role === "talent")
-            throw new BadRequestError("User already a talent");
+            throw new BadRequestError("Người này đã là họa sĩ");
 
         //3. Mark request as denied
         request.status = "rejected";
@@ -175,28 +170,24 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork);
                 await deleteFileByPublicId(publicId);
             });
-            await brevoSendEmail(
-                foundUser.email,
-                "Request Denied",
-                "Your request has been rejected"
-            );
+            await brevoSendEmail(foundUser.email, "Từ chối nâng cấp tài khoản họa sĩ", "Yêu cầu nâng cấp thành họa sĩ bạn đã bị từ chối");
         } catch (error) {
             console.log("Failed:::", error);
-            throw new Error("Email service error or image deletion failed");
+            throw new BadRequestError("Từ chối yêu cầu không thành công");
         }
 
         return {
             success: true,
-            message: "Request denied successfully",
+            message: "Từ chối yêu cầu họa sĩ thành công",
         };
     };
 
     static readTalentRequestsByStatus = async (adminId, status) => {
         //1. Check admin account
         const adminUser = await User.findById(adminId);
-        if (!adminUser) throw new NotFoundError("User not found");
+        if (!adminUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Find all talent requests
         const talentRequests = await TalentRequest.find({
@@ -210,13 +201,13 @@ class TalentRequestService {
     static readTalentRequest = async (adminId, requestId) => {
         //1. Check admin account
         const adminUser = await User.findById(adminId);
-        if (!adminUser) throw new NotFoundError("User not found");
+        if (!adminUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Find talent request by id
         const talentRequest = await TalentRequest.findById(requestId);
-        if (!talentRequest) throw new NotFoundError("Talent request not found");
+        if (!talentRequest) throw new NotFoundError("Yêu cầu không tồn tại");
         return {
             talentRequest,
         };

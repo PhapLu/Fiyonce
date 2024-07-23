@@ -6,21 +6,27 @@ import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } 
 import PostCategory from "../models/postCategory.model.js"
 import mongoose, { Mongoose } from "mongoose"
 import jwt from 'jsonwebtoken'
+import Movement from "../models/movement.model.js"
 
 class PostService {
     static createPost = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (user.role !== "talent")
-            throw new BadRequestError("You are not a talent");
+            throw new BadRequestError("Bạn không phải là họa sĩ");
 
         //2. Validate request body
-        const { description, postCategoryId } = req.body;
+        const { description, postCategoryId, movementId } = req.body;
         if (!req.files || !req.files.artworks)
-            throw new BadRequestError("Please provide artwork files");
-        if (!userId || !description || !postCategoryId)
-            throw new BadRequestError("Please provide all required fields");
+            throw new BadRequestError("Hãy cung cấp ảnh");
+        if (!userId || !description || !postCategoryId || !movementId)
+            throw new BadRequestError("Hãy cung cấp những mục bắt buộc");
+        const movement = await Movement.findById(movementId)
+        const postCategory = await PostCategory.findById(postCategoryId)
+        if(!movement) throw new NotFoundError("Trường phái không tồn tại")
+        if(!postCategory) throw new NotFoundError("Thể loại không tồn tại")
+
 
         //3. Upload artwork images to cloudinary
         try {
@@ -72,7 +78,7 @@ class PostService {
             };
         } catch (error) {
             console.error("Error uploading images:", error);
-            throw new Error("File upload or database save failed");
+            throw new BadRequestError("Tạo đơn hàng không thành công");
         }
     };
 
@@ -82,48 +88,52 @@ class PostService {
             const token = req.cookies.accessToken;
 
             // Verify token
-            const payload = jwt.verify(token, process.env.JWT_SECRET);
-            req.userId = payload.id;
-            req.email = payload.email;
+            if(token){
+                const payload = jwt.verify(token, process.env.JWT_SECRET);
+                req.userId = payload.id;
+                req.email = payload.email;
+            }
 
             // Find user
             const user = await User.findById(req.userId);
 
             // Find post
             const post = await Post.findById(postId)
-                .populate('talentId', 'stageName avatar')
+                .populate('talentId', 'stageName fullName avatar')
                 .populate('postCategoryId', 'title')
                 .populate('movementId', 'title')
                 .populate('artworks', 'url')
                 .exec();
-            if (!post) throw new NotFoundError('Post not found');
-
+            if (!post) throw new NotFoundError('Bài viết không tồn tại');
+            
             // Check if user is post owner
-            if (req.userId !== post.talentId.toString()) {
-                post.views.push({ user: new mongoose.Types.ObjectId(req.userId) });
+            if (req.userId && req.userId !== post.talentId.toString()) {
+                post.views.push({ user: new mongoose.Types.ObjectId(req.userId) }); // Push the new view
                 await post.save(); // Save the post to update views
             }
-
-
 
             return {
                 post
             };
         } catch (error) {
             console.error('Error reading post:', error);
-            throw new Error('Failed to read post');
+            throw new Error('Xem bài viết không thành công');
         }
     }
-
 
     static likePost = async (userId, postId) => {
         // Find user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError('User not found')
+        if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
 
         // Find post
-        const post = await Post.findById(postId).populate('talentId', 'stageName avatar').populate('postCategoryId', 'title').populate('movementId', 'title').populate('artworks', 'url').exec()
-        if (!post) throw new NotFoundError('Post not found')
+        const post = await Post.findById(postId)
+            .populate('talentId', 'stageName avatar')
+            .populate('postCategoryId', 'title')
+            .populate('movementId', 'title')
+            .populate('artworks', 'url')
+            .exec()
+        if (!post) throw new NotFoundError('Bài viết không tồn tại')
 
         const likeIndex = post.likes.findIndex(like => like.user.toString() === userId);
 
@@ -134,7 +144,6 @@ class PostService {
             // Add like
             post.likes.push({ user: new mongoose.Types.ObjectId(userId) });
             
-
             // Check if user is post owner
             if (userId !== post.talentId) {
                 post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
@@ -156,19 +165,22 @@ class PostService {
     static readPosts = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId);
-        if (!talent) throw new NotFoundError("Talent not found");
+        if (!talent) throw new NotFoundError("Họa sĩ không tồn tại");
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent");
+            throw new BadRequestError("Người này không phải là họa sĩ");
 
         //2. Find artworks
         const artworks = await Post.find({ talentId });
 
         return {
-            artworks,
+            posts: artworks,
         };
     };
 
     static readPostCategoriesWithPosts = async (talentId) => {
+        const talent = await User.findById(talentId)
+        if(!talent) throw new NotFoundError("Họa sĩ không tồn tại")
+
         try {
             // Fetch all post categories
             const postCategories = await PostCategory.find({ talentId }).lean();
@@ -192,7 +204,7 @@ class PostService {
             return { categorizedPosts };
         } catch (error) {
             console.error("Error fetching posts by category:", error);
-            throw new Error("Failed to fetch posts by category");
+            throw new BadRequestError("Xem bài viết không thành công");
         }
     };
 
@@ -214,21 +226,21 @@ class PostService {
             }, []);
             return { artworks };
         } catch (error) {
-            throw new BadRequestError("Error fetching artworks");
+            throw new BadRequestError("Xem tranh không thành công");
         }
     };
 
-    static updatePost = async (userId, artworkId, req) => {
+    static updatePost = async (userId, postId, req) => {
         // 1. Check user and artwork
         const user = await User.findById(userId);
-        const postToUpdate = await Post.findById(artworkId);
+        const postToUpdate = await Post.findById(postId);
 
-        if (!user) throw new NotFoundError("User not found");
-        if (!postToUpdate) throw new NotFoundError("Post not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!postToUpdate) throw new NotFoundError("Bài viết không tồn tại");
         if (user.role !== "talent")
-            throw new BadRequestError("You are not a talent");
+            throw new BadRequestError("Bạn không phải là họa sĩ");
         if (postToUpdate.talentId.toString() !== userId)
-            throw new BadRequestError("You can only update your artwork");
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này");
         const oldPostCategoryId = postToUpdate.postCategoryId;
 
         // 2. Handle file uploads if new files were uploaded
@@ -249,8 +261,6 @@ class PostService {
                 const artworks = uploadResults.map(
                     (result) => result.secure_url
                 );
-                console.log("To be upload:");
-                console.log(artworks);
 
                 // Save new artworks to database
                 let artworksId = [];
@@ -287,10 +297,10 @@ class PostService {
 
             // 3. Merge existing artwork fields with req.body to ensure fields not provided in req.body are retained
             const updatedFields = { ...postToUpdate.toObject(), ...req.body };
-            console.log(updatedFields);
+            
             // 4. Update artwork
             const updatedPost = await Post.findByIdAndUpdate(
-                artworkId,
+                postId,
                 updatedFields,
                 { new: true }
             );
@@ -300,7 +310,6 @@ class PostService {
                 const postsInOldPostCategory = await Post.find({ oldPostCategoryId })
                 if (postsInOldPostCategory.length == 0) {
                     await PostCategory.findByIdAndDelete(oldPostCategoryId)
-                    console.log(`Deleted PostCategory ID: ${oldPostCategoryId}`)
                 }
             }
 
@@ -309,21 +318,21 @@ class PostService {
             };
         } catch (error) {
             console.error("Error in updating post:", error);
-            throw new Error("Post update failed");
+            throw new Error("Cập nhật bài viết không thành công");
         }
     };
 
-    static deletePost = async (userId, artworkId) => {
+    static deletePost = async (userId, postId) => {
         //1. Check user and artwork
         const user = await User.findById(userId);
-        const postToDelete = await Post.findById(artworkId);
+        const postToDelete = await Post.findById(postId);
 
-        if (!user) throw new NotFoundError("User not found");
-        if (!postToDelete) throw new NotFoundError("Post not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!postToDelete) throw new NotFoundError("Bài viết không tồn tại");
         if (user.role !== "talent")
-            throw new BadRequestError("You are not a talent");
+            throw new BadRequestError("Bạn không phải là họa sĩ");
         if (postToDelete.talentId.toString() !== userId)
-            throw new BadRequestError("You can only delete your artwork");
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Delete old files from Cloudinary
         try {
@@ -343,7 +352,7 @@ class PostService {
         //3. Delete artwork and post in database
         const postCategoryId = postToDelete.postCategoryId;
         await Artwork.deleteMany({ _id: { $in: postToDelete.artworks } });
-        await Post.findByIdAndDelete(artworkId);
+        await Post.findByIdAndDelete(postId);
 
         //4. Delete postCategory if postCategory references is null
         const remainingPostCategories = await Post.find({ postCategoryId })
@@ -352,7 +361,7 @@ class PostService {
         }
 
         return {
-            message: "Delete post and artwork success",
+            message: "Xóa bài viết thành công",
         };
     };
 }

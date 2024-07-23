@@ -6,21 +6,21 @@ class NotificationController{
         console.log(req.userId)
         console.log(req.body)
         new SuccessResponse({
-            message: 'Create notification success!',
+            message: 'Tạo thông báo thành công',
             metadata: await NotificationService.createNotification(req.userId, req.body)
         }).send(res)
     }
 
     readNotification = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read notification success!',
-            metadata: await NotificationService.readNotification(req.userId, req.body)
+            message: 'Xem thông báo thành công',
+            metadata: await NotificationService.readNotification(req.userId, req.params.notificationId)
         }).send(res)
     }
 
     readNotifications = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read notifications success!',
+            message: 'Xem thông báo thành công',
             metadata: await NotificationService.readNotifications(req.userId, req.body)
         }).send(res)
     }

@@ -15,12 +15,12 @@ class CommissionReportService {
     static createCommissionReport = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         //2. Validate request body
         const { orderId, proposalId, content } = req.body;
         if (!orderId || !proposalId || !content)
-            throw new BadRequestError("Please provide all required fields");
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin bắt buộc");
 
         //3. Upload files to Cloudinary if exists
         try {
@@ -54,8 +54,7 @@ class CommissionReportService {
                 commissionReport,
             };
         } catch (error) {
-            console.log("Error uploading images or saving order:", error);
-            throw new Error("File upload or database save failed");
+            throw new Error("Lỗi khi tạo bản báo cáo");
         }
     };
 
@@ -65,7 +64,7 @@ class CommissionReportService {
             commissionReportId
         ).populate("orderId", "memberId talentChosenId");
         if (!commissionReport)
-            throw new NotFoundError("Commission Report not found");
+            throw new NotFoundError("Không tìm thấy bản báo cáo");
 
         //2. Return commissionReport
         return {
@@ -76,9 +75,9 @@ class CommissionReportService {
     static readCommissionReports = async (userId) => {
         //1. Check user as an admin
         const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (user.role !== "admin")
-            throw new AuthFailureError("User not authorized");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Get all commissionReports
         const commissionReports = await CommissionReport.find();
@@ -95,12 +94,12 @@ class CommissionReportService {
             commissionReportId
         );
 
-        if (!user) throw new NotFoundError("User not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!commissionReport)
-            throw new NotFoundError("Commission Report not found");
+            throw new NotFoundError("Không thể tìm thấy bản báo cáo");
         if (commissionReport.clientId.toString() !== userId)
             throw new AuthFailureError(
-                "You can only update your commission report"
+                "Bạn không có quyền thực hiện thao tác này"
             );
 
         //2. Handle file uploads if new files were uploaded
@@ -158,12 +157,12 @@ class CommissionReportService {
         const commissionReport = await CommissionReport.findById(
             commissionReportId
         );
-        if (!user) throw new NotFoundError("User not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!commissionReport)
-            throw new NotFoundError("Commission Report not found");
+            throw new NotFoundError("Không thể tìm thấy bản báo cáo");
         if (commissionReport.clientId.toString() !== userId)
             throw new AuthFailureError(
-                "You can only delete your commission report"
+                "Bạn không có quyền thực hiện thao tác này"
             );
 
         // 2. Extract public IDs and delete files from Cloudinary
@@ -178,7 +177,7 @@ class CommissionReportService {
         await commissionReport.deleteOne();
 
         return {
-            message: "Commission Report deleted successfully",
+            message: "Xóa bản báo cáo thành công",
         };
     };
 }

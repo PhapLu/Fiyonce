@@ -11,15 +11,15 @@ class NotificationService {
         console.log(body)
         //1. Check user
         const user = await User.findById(senderId);
-        if (!user) throw new NotFoundError("User not found!");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         //2. Validate request body
         const { receiverId, type, url } = body;
         const receiver = await User.findById(receiverId);
         if (!receiverId) {
-            throw new BadRequestError("Please provide all required fields");
+            throw new BadRequestError("Hãy cung cấp đầy đủ những mục bắt buộc");
         }
-        if (!receiver) throw new NotFoundError("Receiver not found!");
+        if (!receiver) throw new NotFoundError("Không tìm thấy người nhận");
         if (
             type !== "like" &&
             type !== "share" &&
@@ -28,7 +28,7 @@ class NotificationService {
             type !== "orderCommission" &&
             type !== "updateOrderStatus"
         ) {
-            throw new BadRequestError("Invalid type");
+            throw new BadRequestError("Phân loại thông báo không hợp lệ");
         }
 
         //3. Assign content based on type of notification
@@ -36,27 +36,27 @@ class NotificationService {
         let notificationType;
         switch (type) {
             case "like":
-                content = `${user.fullName} liked your post`;
+                content = `${user.fullName} đã thích bài viết của bạn`;
                 notificationType = "interaction";
                 break;
             case "share":
-                content = `${user.fullName} shared your post`;
+                content = `${user.fullName} đã chia sẻ bài viết của bạn`;
                 notificationType = "interaction";
                 break;
             case "bookmark":
-                content = `${user.fullName} bookmarked your post`;
+                content = `${user.fullName} đã lưu bài viết của bạn`;
                 notificationType = "interaction";
                 break;
             case "follow":
-                content = `${user.fullName} followed you`;
+                content = `${user.fullName} đã bắt đầu theo dõi bạn`;
                 notificationType = "interaction";
                 break;
             case "orderCommission":
-                content = `${user.fullName} ordered your commission`;
+                content = `${user.fullName} đã đặt com của bạn`;
                 notificationType = "order";
                 break;
             case "updateOrderStatus":
-                content = `${user.fullName} updated the status of your order`;
+                content = `${user.fullName} đã cập nhật trạng thái đơn hàng của bạn`;
                 notificationType = "order";
                 break;
         }
@@ -76,26 +76,26 @@ class NotificationService {
         }
     }
 
-    static async readNotification(userId, body) {
+    static async readNotification(userId, notificationId) {
         //1. Check user
         const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found!");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
-        // Mark a single notification as seen
+        //2. Mark a single notification as seen
         const notification = await Notification.findByIdAndUpdate(
             {
-                receiverId: userId,
-                _id: body.notificationId
+                notificationId
             },
             { isSeen: true },
-            { new: true } // Return the updated document
+            { new: true }
         );
 
-        if (!notification) {
-            throw new NotFoundError('Notification not found');
-        }
+        if (!notification) 
+            throw new NotFoundError('Thông báo không tồn tại');
 
-        return { notification };
+        return { 
+            notification 
+        };
     }
 
     static async readNotifications(userId) {

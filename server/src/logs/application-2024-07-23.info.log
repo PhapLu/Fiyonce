@@ -1,0 +1,457 @@
+2024-07-23 07:25:06::info::/v1/api/auth/users/signUp::ac4c89da-5992-4bf1-8e3c-1b6093e67667::input-params ::POST::::{"fullName":"Quang Nguyen","email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 07:27:27::info::/v1/api/auth/users/verifyOtp::bc4de256-a450-42cf-92d4-ccb6c250930e::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"505111"}
+2024-07-23 07:28:11::info::/v1/api/auth/users/logout::c711f0a3-9850-4075-9c41-7bdc8ef6472a::input-params ::POST::::{}
+2024-07-23 07:28:24::info::/v1/api/auth/users/login::700d325d-5d80-493c-9dc7-9dfcba45163f::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 07:28:51::info::/v1/api/auth/users/forgotPassword::36846779-af38-4b28-bdcf-a763d32614fa::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:29:38::info::/v1/api/access/users/verifyResetPasswordOtp::def727de-77b2-42ee-bf85-01f95ae07b86::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"103525"}
+2024-07-23 07:29:38::error::/v1/api/access/users/verifyResetPasswordOtp::def727de-77b2-42ee-bf85-01f95ae07b86::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 07:29:57::info::/v1/api/auth/users/verifyResetPasswordOtp::64dcf8e0-618f-41e5-96c0-b52bf9434087::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"103525"}
+2024-07-23 07:31:43::info::/v1/api/access/users/resetPassword::9e0dfd11-18a1-4642-aec8-3e8e83af8b78::input-params ::PATCH::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-23 07:31:43::error::/v1/api/access/users/resetPassword::9e0dfd11-18a1-4642-aec8-3e8e83af8b78::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 07:32:04::info::/v1/api/auth/users/resetPassword::d2745947-a877-4ffb-9169-26f90b394ffa::input-params ::PATCH::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 07:40:29::info::/v1/api/auth/users/forgotPassword::d746eb00-ec20-42c4-8e0b-15a28edb0e08::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:40:32::info::/v1/api/auth/users/forgotPassword::dec7f888-e348-4771-8a2e-86bfea3450ab::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:40:35::info::/v1/api/auth/users/forgotPassword::d3ec535c-1d47-44bd-96df-cf2e9ed3b2d2::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:40:38::info::/v1/api/auth/users/forgotPassword::1483445e-69b1-49c8-84e3-1b3afc85a5f8::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:40:41::info::/v1/api/auth/users/forgotPassword::002197c3-c483-44ce-a2ba-c2aab808e723::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:01::info::/v1/api/auth/users/forgotPassword::a2b0b13a-d854-4d0e-925e-8da276e0d52c::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:05::info::/v1/api/auth/users/forgotPassword::c956bde7-3614-4823-85c4-eac12597a82f::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:08::info::/v1/api/auth/users/forgotPassword::6017bbf4-4192-441d-9db1-bf0a4b6c995b::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:11::info::/v1/api/auth/users/forgotPassword::e1ceae86-1e13-4355-8baf-052064ba08aa::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:15::info::/v1/api/auth/users/forgotPassword::4e6c75a3-25fc-4e4a-9b2e-80401fefe89c::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:32::info::/v1/api/auth/users/forgotPassword::6889d51d-1392-42bb-9e60-9b9c8f536160::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 07:41:33::error::/v1/api/auth/users/forgotPassword::6889d51d-1392-42bb-9e60-9b9c8f536160::403 - 2ms - Response: {"status":403,"now":1721695293021}::{"message":"Error: OTP request limit reached for today"}
+2024-07-23 07:46:02::info::/v1/api/order/createOrder::35985900-b6c1-42f0-a7ef-59303d091172::input-params ::POST::::{}
+2024-07-23 07:48:31::info::/v1/api/order/createOrder::6f9e9e30-f3ee-48a8-9013-9f391fe1bbd3::input-params ::POST::::{}
+2024-07-23 07:48:58::info::/v1/api/order/createOrder::d44d093e-ca3a-4e85-a61d-3ce9028b6ae4::input-params ::POST::::{}
+2024-07-23 07:48:58::error::/v1/api/order/createOrder::d44d093e-ca3a-4e85-a61d-3ce9028b6ae4::undefined - NaNms - Response: {}::{"message":"commissionService.findById is not a function"}
+2024-07-23 07:50:18::info::/v1/api/order/createOrder::a48ee37c-8d9c-4287-87f8-c61aa9427b74::input-params ::POST::::{}
+2024-07-23 07:52:33::info::/v1/api/order/createOrder::a0148ff5-f079-4e2a-9223-ffb3b332db54::input-params ::POST::::{}
+2024-07-23 07:52:33::error::/v1/api/order/createOrder::a0148ff5-f079-4e2a-9223-ffb3b332db54::401 - 2ms - Response: {"status":401,"now":1721695953716}::{"message":"Người này không phải là họa sĩ"}
+2024-07-23 07:53:36::info::/v1/api/order/createOrder::5f14fea4-eaca-4d36-946f-636eaaad5d80::input-params ::POST::::{}
+2024-07-23 07:53:36::error::/v1/api/order/createOrder::5f14fea4-eaca-4d36-946f-636eaaad5d80::403 - 2ms - Response: {"status":403,"now":1721696016700}::{"message":"Bạn không thể tạo đơn hàng với bản thân"}
+2024-07-23 07:53:54::info::/v1/api/order/createOrder::2af40dce-c280-4cca-96a3-3bd90f909a43::input-params ::POST::::{}
+2024-07-23 07:53:55::error::/v1/api/order/createOrder::2af40dce-c280-4cca-96a3-3bd90f909a43::403 - 2ms - Response: {"status":403,"now":1721696035017}::{"message":"Bạn không thể tạo đơn hàng với bản thân"}
+2024-07-23 07:54:01::info::/v1/api/order/createOrder::2354b87e-d206-4d1b-b048-76c2f793b682::input-params ::POST::::{}
+2024-07-23 07:54:02::error::/v1/api/order/createOrder::2354b87e-d206-4d1b-b048-76c2f793b682::403 - 6ms - Response: {"status":403,"now":1721696042091}::{"message":"Bạn không thể tạo đơn hàng với bản thân"}
+2024-07-23 07:54:19::info::/v1/api/order/createOrder::e05ae8b9-f918-4044-ba55-5ce0694889f1::input-params ::POST::::{}
+2024-07-23 07:54:19::error::/v1/api/order/createOrder::e05ae8b9-f918-4044-ba55-5ce0694889f1::403 - 2ms - Response: {"status":403,"now":1721696059683}::{"message":"Bạn không thể tạo đơn hàng với bản thân"}
+2024-07-23 07:56:15::info::/v1/api/order/createOrder::f583d12a-a0eb-4765-86f1-146391b91998::input-params ::POST::::{}
+2024-07-23 07:58:30::info::/v1/api/order/readOrder/666aa7aabb23e20c8735a633::32543fa0-f63f-4072-8570-55db786c8f53::input-params ::GET::::{}
+2024-07-23 07:58:50::info::/v1/api/order/readOrders::b059a3cb-4441-467e-a474-412614809a8f::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 07:59:59::info::/v1/api/order/readOrders::2a3b0d27-8e8a-4efc-a8c7-b56c60148c1b::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 08:02:51::info::/v1/api/order/createOrder::97872e1c-bb89-42d0-a639-d56d3f7069ad::input-params ::POST::::{}
+2024-07-23 08:02:52::error::/v1/api/order/createOrder::97872e1c-bb89-42d0-a639-d56d3f7069ad::403 - 3ms - Response: {"status":403,"now":1721696572806}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 08:03:15::info::/v1/api/order/createOrder::eab485b6-ee1e-4101-8f10-85c579e2956f::input-params ::POST::::{}
+2024-07-23 08:03:15::error::/v1/api/order/createOrder::eab485b6-ee1e-4101-8f10-85c579e2956f::403 - 4ms - Response: {"status":403,"now":1721696595580}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:12:05::info::/v1/api/order/createOrder::cfbd166e-c136-4a12-8e70-099a286d5890::input-params ::POST::::{}
+2024-07-23 10:12:07::error::/v1/api/order/createOrder::cfbd166e-c136-4a12-8e70-099a286d5890::403 - 2ms - Response: {"status":403,"now":1721704327860}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:13:46::info::/v1/api/order/createOrder::1b8cbf7d-6f1e-43e4-9d7f-2c8d9b795ef3::input-params ::POST::::{}
+2024-07-23 10:13:47::error::/v1/api/order/createOrder::1b8cbf7d-6f1e-43e4-9d7f-2c8d9b795ef3::403 - 4ms - Response: {"status":403,"now":1721704427158}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:14:11::info::/v1/api/order/createOrder::99dc2f5f-ecea-47b6-ae05-61d91c481e82::input-params ::POST::::{}
+2024-07-23 10:14:11::error::/v1/api/order/createOrder::99dc2f5f-ecea-47b6-ae05-61d91c481e82::403 - 4ms - Response: {"status":403,"now":1721704451730}::{"message":"Giá tối đa không thể lớn hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:14:22::info::/v1/api/order/createOrder::cb993b90-6ddd-470f-a005-6b76cc5a94fa::input-params ::POST::::{}
+2024-07-23 10:15:51::info::/v1/api/order/createOrder::f40e36f3-ab81-460d-8779-903362cc2613::input-params ::POST::::{}
+2024-07-23 10:16:05::info::/v1/api/order/createOrder::e368b165-636a-4e46-b0f0-4ee3b812cdac::input-params ::POST::::{}
+2024-07-23 10:16:05::error::/v1/api/order/createOrder::e368b165-636a-4e46-b0f0-4ee3b812cdac::403 - 3ms - Response: {"status":403,"now":1721704565909}::{"message":"Giá tối đa không thể lớn hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:16:12::info::/v1/api/order/createOrder::d3d40433-ceea-4ec1-a390-e2552ca01361::input-params ::POST::::{}
+2024-07-23 10:16:12::error::/v1/api/order/createOrder::d3d40433-ceea-4ec1-a390-e2552ca01361::403 - 6ms - Response: {"status":403,"now":1721704572405}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:16:23::info::/v1/api/order/createOrder::6f91a9d1-ae8e-496a-9098-042cc48ed93b::input-params ::POST::::{}
+2024-07-23 10:17:49::info::/v1/api/order/createOrder::a9291f1a-0580-45d5-8021-c882abfd4237::input-params ::POST::::{}
+2024-07-23 10:18:03::info::/v1/api/order/createOrder::5f060949-4406-4499-8c6c-4971fbb21928::input-params ::POST::::{}
+2024-07-23 10:18:03::error::/v1/api/order/createOrder::5f060949-4406-4499-8c6c-4971fbb21928::403 - 1ms - Response: {"status":403,"now":1721704683532}::{"message":"Giá tối đa không thể lớn hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:18:16::info::/v1/api/order/createOrder::a4cb00be-cc82-4d9a-86ef-a4409218ae21::input-params ::POST::::{}
+2024-07-23 10:18:16::error::/v1/api/order/createOrder::a4cb00be-cc82-4d9a-86ef-a4409218ae21::403 - 6ms - Response: {"status":403,"now":1721704696721}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 10:18:25::info::/v1/api/order/createOrder::a9dd5be9-8a9b-4383-b636-a52f8aac4387::input-params ::POST::::{}
+2024-07-23 10:20:49::info::/v1/api/order/readOrder/669f2105014092ae29d72d27::169e070d-ee89-4dee-946a-7e13868829f6::input-params ::GET::::{}
+2024-07-23 10:21:13::info::/v1/api/order/readOrder/669f2105014092ae29d72d27::acbe02e7-e44f-4254-b42a-a79ed28fe6e0::input-params ::GET::::{}
+2024-07-23 10:21:49::info::/v1/api/order/readOrders::6b2258cb-304a-4ef7-a8a0-431478e83b26::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 10:22:03::info::/v1/api/order/readOrders::17dadb97-062f-4de4-a092-32bec2acd2ad::input-params ::GET::::{"isDirect":"false"}
+2024-07-23 10:22:14::info::/v1/api/order/readOrders::df9aeb90-29f4-4441-864c-11bcb99dc726::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 10:49:26::info::/v1/api/order/viewOrderHistory::ded733b9-d6fc-46bf-aace-c96589c4b4a9::input-params ::GET::::{}
+2024-07-23 10:49:26::error::/v1/api/order/viewOrderHistory::ded733b9-d6fc-46bf-aace-c96589c4b4a9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 10:50:00::info::/v1/api/order/readMemberOrderHistory::0580e24d-1dbb-4193-aa2b-d95af20fc5d8::input-params ::GET::::{}
+2024-07-23 10:50:21::info::/v1/api/auth/users/logout::ecac5ae8-808a-4fcb-8ee0-96c8b2207292::input-params ::POST::::{}
+2024-07-23 10:50:33::info::/v1/api/order/readMemberOrderHistory::5ccda1d2-6b41-46df-a909-88bdc991f8a5::input-params ::GET::::{}
+2024-07-23 10:50:33::error::/v1/api/order/readMemberOrderHistory::5ccda1d2-6b41-46df-a909-88bdc991f8a5::401 - 2ms - Response: {"status":401,"now":1721706633468}::{"message":"You are not authenticated!"}
+2024-07-23 10:53:25::info::/v1/api/order/readMemberOrderHistory::e610a82e-379e-443f-9388-3f169c09d0bb::input-params ::GET::::{}
+2024-07-23 10:53:25::error::/v1/api/order/readMemberOrderHistory::e610a82e-379e-443f-9388-3f169c09d0bb::401 - 1ms - Response: {"status":401,"now":1721706805819}::{"message":"Bạn cần đăng nhập để thực hiện thao tác này"}
+2024-07-23 10:53:30::info::/v1/api/auth/users/login::5281aed4-10e7-40d9-9a4c-10b57db7d79b::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 10:53:35::info::/v1/api/order/readMemberOrderHistory::114d400f-ef91-4af3-8ce2-10b41982f257::input-params ::GET::::{}
+2024-07-23 10:54:49::info::/v1/api/order/readArchivedOrderHistory::8fda971a-d6bd-42a1-ad40-afa731232710::input-params ::GET::::{}
+2024-07-23 10:56:06::info::/v1/api/brief/updateOrder/66601a2dd3737cbcac3bc939::e44f913e-e58d-41b0-bac3-a66e282ad941::input-params ::PATCH::::{"title":"This is the new title","description":"Description is changed in the test development"}
+2024-07-23 10:56:06::error::/v1/api/brief/updateOrder/66601a2dd3737cbcac3bc939::e44f913e-e58d-41b0-bac3-a66e282ad941::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 10:56:17::info::/v1/api/order/updateOrder/66601a2dd3737cbcac3bc939::a7b51a9a-599c-4e8a-8c5f-aa32b6f2d0f1::input-params ::PATCH::::{"title":"This is the new title","description":"Description is changed in the test development"}
+2024-07-23 10:56:17::error::/v1/api/order/updateOrder/66601a2dd3737cbcac3bc939::a7b51a9a-599c-4e8a-8c5f-aa32b6f2d0f1::404 - 0ms - Response: {"status":404,"now":1721706977158}::{"message":"Đơn hàng không tồn tại"}
+2024-07-23 11:09:52::info::/v1/api/order/createOrder::caed03ee-effb-4056-a456-99ee777325a1::input-params ::POST::::{}
+2024-07-23 11:10:13::info::/v1/api/order/createOrder::54b10b1f-b0c4-48be-8b7f-1de645ca50f8::input-params ::POST::::{}
+2024-07-23 11:19:13::info::/v1/api/order/createOrder::82fe70dc-67ef-469a-b579-4be707f0b8fe::input-params ::POST::::{}
+2024-07-23 11:19:31::info::/v1/api/order/createOrder::17f01f30-4f80-4a71-a833-2661dbc4f57e::input-params ::POST::::{}
+2024-07-23 11:20:55::info::/v1/api/order/updateOrder/667cdb3d1daaaae0c76d8b16::e0eb2d60-6ce7-4d18-9bf7-99c66e9e2850::input-params ::PATCH::::{}
+2024-07-23 11:20:55::error::/v1/api/order/updateOrder/667cdb3d1daaaae0c76d8b16::e0eb2d60-6ce7-4d18-9bf7-99c66e9e2850::401 - 0ms - Response: {"status":401,"now":1721708455502}::{"message":"Bạn không có quyền thực hiện thao tác này"}
+2024-07-23 11:21:24::info::/v1/api/order/readOrder/666aa7aabb23e20c8735a633::be236711-c828-42f2-b417-d49999a02054::input-params ::GET::::{}
+2024-07-23 11:21:27::info::/v1/api/order/readOrder/667cdb3d1daaaae0c76d8b16::ed7a1e31-5cce-4bf2-adb9-118d0f3f0357::input-params ::GET::::{}
+2024-07-23 11:21:36::info::/v1/api/order/readOrder/666aa7aabb23e20c8735a633::9633240d-91b0-4fcc-a8ed-11df775cae4f::input-params ::GET::::{}
+2024-07-23 11:22:06::info::/v1/api/order/readOrder/669effb385c829fa30a7d093::5a288e94-b407-4c6b-9ef0-107fda58e761::input-params ::GET::::{}
+2024-07-23 11:22:15::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::8d016a2d-08e6-4c02-ada4-b8f37867231b::input-params ::PATCH::::{}
+2024-07-23 11:22:15::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::8d016a2d-08e6-4c02-ada4-b8f37867231b::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:23:12::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::512d85b6-5a95-43bd-89ad-f2b29e90d3be::input-params ::PATCH::::{}
+2024-07-23 11:23:12::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::512d85b6-5a95-43bd-89ad-f2b29e90d3be::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:23:42::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::cdbb58b5-ddc4-4edd-93c0-a841adb035ed::input-params ::PATCH::::{}
+2024-07-23 11:23:42::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::cdbb58b5-ddc4-4edd-93c0-a841adb035ed::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:24:04::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::fe18daae-dde2-4924-bcea-2a49a5444341::input-params ::PATCH::::{}
+2024-07-23 11:24:05::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::fe18daae-dde2-4924-bcea-2a49a5444341::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:25:05::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::7c8bde6a-67e5-4786-9108-b05a2155091d::input-params ::PATCH::::{}
+2024-07-23 11:25:05::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::7c8bde6a-67e5-4786-9108-b05a2155091d::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:25:24::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::24d0e18f-e299-4ade-bc55-28f2e0224361::input-params ::PATCH::::{}
+2024-07-23 11:25:24::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::24d0e18f-e299-4ade-bc55-28f2e0224361::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:26:00::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::3c741d39-6a73-4f59-9310-0d136f747cee::input-params ::PATCH::::{}
+2024-07-23 11:26:00::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::3c741d39-6a73-4f59-9310-0d136f747cee::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:26:08::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::b6517e6b-6f88-4626-9806-1bf687499669::input-params ::PATCH::::{}
+2024-07-23 11:26:08::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::b6517e6b-6f88-4626-9806-1bf687499669::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:26:22::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::f1bac275-62d1-4fc1-8adc-fa3abadca7e2::input-params ::PATCH::::{}
+2024-07-23 11:26:23::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::f1bac275-62d1-4fc1-8adc-fa3abadca7e2::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'commissionServiceId')"}
+2024-07-23 11:27:00::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::2ff573ed-3ccb-4e8a-8301-51b497a496b5::input-params ::PATCH::::{}
+2024-07-23 11:27:00::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::2ff573ed-3ccb-4e8a-8301-51b497a496b5::403 - 1ms - Response: {"status":403,"now":1721708820633}::{"message":"Không thể cập nhật các trường này"}
+2024-07-23 11:27:06::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::deb3ef83-99d4-4064-9e96-61b794a4cfae::input-params ::PATCH::::{}
+2024-07-23 11:27:06::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::deb3ef83-99d4-4064-9e96-61b794a4cfae::403 - 2ms - Response: {"status":403,"now":1721708826848}::{"message":"Không thể cập nhật các trường này"}
+2024-07-23 11:27:09::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::46549ab5-1b09-4bec-901e-46da0ca8d265::input-params ::PATCH::::{}
+2024-07-23 11:27:10::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::46549ab5-1b09-4bec-901e-46da0ca8d265::403 - 0ms - Response: {"status":403,"now":1721708830044}::{"message":"Giá tối thiểu không thể lớn hơn giá tối đa"}
+2024-07-23 11:27:30::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::db06bd7f-8fa5-4bc3-9790-7035c9654d14::input-params ::PATCH::::{}
+2024-07-23 11:27:39::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::12439e74-8473-4e9a-8e8f-0de9bf72eed2::input-params ::PATCH::::{}
+2024-07-23 11:27:39::error::/v1/api/order/updateOrder/669effb385c829fa30a7d093::12439e74-8473-4e9a-8e8f-0de9bf72eed2::403 - 1ms - Response: {"status":403,"now":1721708859966}::{"message":"Không thể cập nhật các trường này"}
+2024-07-23 11:28:18::info::/v1/api/order/updateOrder/669effb385c829fa30a7d093::b96d7f96-f960-4446-a717-cc4cf45bf2dd::input-params ::PATCH::::{}
+2024-07-23 11:28:27::info::/v1/api/order/readMemberOrderHistory::483a265d-38a3-47b6-8e09-80759220bbcc::input-params ::GET::::{}
+2024-07-23 11:28:30::info::/v1/api/order/readOrders::e01e9651-968a-4264-ac52-96ceaa56ff32::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 11:28:34::info::/v1/api/order/readOrder/669effb385c829fa30a7d093::29dda6c1-18d5-46be-bc07-139bdeea856b::input-params ::GET::::{}
+2024-07-23 11:28:40::info::/v1/api/order/readArchivedOrderHistory::37ca94f3-f8c0-485d-a35b-9784da0f52e7::input-params ::GET::::{}
+2024-07-23 11:31:50::info::/v1/api/order/archiveOrder/669effb385c829fa30a7d093::443096a6-d3be-4975-9a10-ba7eec96e730::input-params ::GET::::{}
+2024-07-23 11:31:50::error::/v1/api/order/archiveOrder/669effb385c829fa30a7d093::443096a6-d3be-4975-9a10-ba7eec96e730::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 11:32:09::info::/v1/api/order/archiveOrder/669effb385c829fa30a7d093::abed592e-00ba-49f9-998c-c4d72f0f827e::input-params ::GET::::{}
+2024-07-23 11:32:09::error::/v1/api/order/archiveOrder/669effb385c829fa30a7d093::abed592e-00ba-49f9-998c-c4d72f0f827e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 11:32:18::info::/v1/api/order/archiveOrder/669effb385c829fa30a7d093::366fbb1d-0e99-407a-a826-a4b78c4889eb::input-params ::PATCH::::{}
+2024-07-23 11:38:59::info::/v1/api/order/readOrder/669effb385c829fa30a7d093::51f8f2ea-c9c1-441a-af12-456b7ce0958b::input-params ::GET::::{}
+2024-07-23 11:39:02::info::/v1/api/order/readOrders::1bcc12aa-b9d1-4187-beb8-1461898411d4::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 11:39:05::info::/v1/api/order/readMemberOrderHistory::95b713d8-92f5-4368-a654-5082a98f65ff::input-params ::GET::::{}
+2024-07-23 11:39:09::info::/v1/api/order/readTalentOrderHistory::a88cd300-d3de-40b5-a111-ce0062a0a2b8::input-params ::GET::::{}
+2024-07-23 11:39:09::error::/v1/api/order/readTalentOrderHistory::a88cd300-d3de-40b5-a111-ce0062a0a2b8::403 - 1ms - Response: {"status":403,"now":1721709549368}::{"message":"Bạn không phải là họa sĩ"}
+2024-07-23 11:39:13::info::/v1/api/order/readArchivedOrderHistory::fae6edf4-5e6d-4770-a8c5-746a349b17d0::input-params ::GET::::{}
+2024-07-23 11:41:33::info::/v1/api/order/rejectOrdder/669effb385c829fa30a7d093::f1a6c8cc-9f77-492f-b665-cdcf8a266d27::input-params ::PATCH::::{}
+2024-07-23 11:41:33::error::/v1/api/order/rejectOrdder/669effb385c829fa30a7d093::f1a6c8cc-9f77-492f-b665-cdcf8a266d27::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 11:41:41::info::/v1/api/order/rejectOrder/669effb385c829fa30a7d093::0b8eb3c8-771e-423a-880f-a151eb360108::input-params ::PATCH::::{}
+2024-07-23 11:41:41::error::/v1/api/order/rejectOrder/669effb385c829fa30a7d093::0b8eb3c8-771e-423a-880f-a151eb360108::401 - 0ms - Response: {"status":401,"now":1721709701745}::{"message":"Bạn không có quyền thực hiện thao tác này"}
+2024-07-23 11:47:27::info::/v1/api/order/unarchiveOrder/669effb385c829fa30a7d093::8fd55ad0-544b-417f-a48c-6f236358174f::input-params ::GET::::{}
+2024-07-23 11:47:27::error::/v1/api/order/unarchiveOrder/669effb385c829fa30a7d093::8fd55ad0-544b-417f-a48c-6f236358174f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 11:47:47::info::/v1/api/order/unarchiveOrder/669effb385c829fa30a7d093::9be501f7-c840-4192-afff-2251060ace21::input-params ::GET::::{}
+2024-07-23 11:47:47::error::/v1/api/order/unarchiveOrder/669effb385c829fa30a7d093::9be501f7-c840-4192-afff-2251060ace21::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 11:47:51::info::/v1/api/order/unarchiveOrder/669effb385c829fa30a7d093::a7bf6853-1bad-4c35-97fc-057586d9d14e::input-params ::PATCH::::{}
+2024-07-23 11:50:23::info::/v1/api/upload/profile/avatarOrCover/6660179bd3737cbcac3bc903::a42d4b43-8367-421e-947c-41ee0c549107::input-params ::POST::::{}
+2024-07-23 11:50:23::error::/v1/api/upload/profile/avatarOrCover/6660179bd3737cbcac3bc903::a42d4b43-8367-421e-947c-41ee0c549107::401 - 0ms - Response: {"status":401,"now":1721710223613}::{"message":"You can only set avatar/cover for your profile"}
+2024-07-23 11:50:58::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::d9f8e485-c66c-4c5c-bada-539abc289a86::input-params ::POST::::{}
+2024-07-23 11:50:58::error::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::d9f8e485-c66c-4c5c-bada-539abc289a86::undefined - NaNms - Response: {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"file","storageErrors":[]}::{"message":"Unexpected field"}
+2024-07-23 11:51:03::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::6023dd41-2999-4f02-9d44-2ce30bb80dd3::input-params ::POST::::{}
+2024-07-23 11:52:02::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::aab46d38-c76b-4d28-ab74-827cb27ceba1::input-params ::POST::::{}
+2024-07-23 11:52:02::error::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::aab46d38-c76b-4d28-ab74-827cb27ceba1::undefined - NaNms - Response: {}::{"message":"Cannot destructure property 'buffer' of 'file' as it is undefined."}
+2024-07-23 11:52:54::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::3972d1a3-0403-4bfa-8512-9ee856910706::input-params ::POST::::{}
+2024-07-23 11:53:00::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::8f5b595e-d5ec-4e19-b3b5-e9c20aecdc11::input-params ::POST::::{}
+2024-07-23 11:53:00::error::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::8f5b595e-d5ec-4e19-b3b5-e9c20aecdc11::403 - 0ms - Response: {"status":403,"now":1721710380512}::{"message":"Invalid type of update"}
+2024-07-23 11:56:39::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::031fee85-56a2-48b1-988b-067a7b0c3d49::input-params ::POST::::{}
+2024-07-23 11:56:39::error::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::031fee85-56a2-48b1-988b-067a7b0c3d49::403 - 1ms - Response: {"status":403,"now":1721710599769}::{"message":"Thay đổi ảnh đại diện hoặc background không thành công"}
+2024-07-23 11:56:47::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::45bf5c61-0cd2-43c5-954f-c9a60a7633d3::input-params ::POST::::{}
+2024-07-23 11:57:46::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::ea05c015-9f86-43a7-af63-91022266732b::input-params ::POST::::{}
+2024-07-23 12:00:55::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::93ebc592-f448-4d59-950e-69d47071196a::input-params ::POST::::{}
+2024-07-23 12:02:29::info::/v1/api/recommender/readPopularPosts::db4481f9-5afe-417c-a30e-0e264dc52058::input-params ::GET::::{}
+2024-07-23 12:02:42::info::/v1/api/recommender/readFollowingPosts::83cb6ae6-172a-43d4-9021-dbd453b13ae3::input-params ::GET::::{}
+2024-07-23 12:02:46::info::/v1/api/recommender/readLatestPosts::15911b6e-c0f8-4f6e-9bcd-66fb87125b40::input-params ::GET::::{}
+2024-07-23 12:05:36::info::/v1/api/notification/createNotification::68cb107d-a2e1-4a31-8871-15b31b567478::input-params ::POST::::{"receiverId":"666aa5e8f2cecdc820c83994","type":"follow"}
+2024-07-23 12:05:36::error::/v1/api/notification/createNotification::68cb107d-a2e1-4a31-8871-15b31b567478::undefined - NaNms - Response: {"errors":{"url":{"name":"ValidatorError","message":"Path `url` is required.","properties":{"message":"Path `url` is required.","type":"required","path":"url"},"kind":"required","path":"url"}},"_message":"Notification validation failed","name":"ValidationError","message":"Notification validation failed: url: Path `url` is required."}::{"message":"Notification validation failed: url: Path `url` is required."}
+2024-07-23 12:06:24::info::/v1/api/notification/createNotification::67527f85-e4fa-4d1d-adbe-7884059012e2::input-params ::POST::::{"receiverId":"666aa5e8f2cecdc820c83994","type":"follow"}
+2024-07-23 12:06:52::info::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::152f6603-e238-407d-9855-d5bfd927b284::input-params ::GET::::{}
+2024-07-23 12:06:52::error::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::152f6603-e238-407d-9855-d5bfd927b284::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 12:07:15::info::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::1e1738c3-f1a4-4dd2-bbb9-56be7e6ee7bb::input-params ::PATCH::::{}
+2024-07-23 12:07:15::error::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::1e1738c3-f1a4-4dd2-bbb9-56be7e6ee7bb::undefined - NaNms - Response: {"stringValue":"\"{ receiverId: '669ef8efb292c8dc4cd9b3c5', _id: undefined }\"","valueType":"Object","kind":"ObjectId","value":{"receiverId":"669ef8efb292c8dc4cd9b3c5"},"path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"{ receiverId: '669ef8efb292c8dc4cd9b3c5', _id: undefined }\" (type Object) at path \"_id\" for model \"Notification\""}::{"message":"Cast to ObjectId failed for value \"{ receiverId: '669ef8efb292c8dc4cd9b3c5', _id: undefined }\" (type Object) at path \"_id\" for model \"Notification\""}
+2024-07-23 12:10:09::info::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::33596728-c31c-4a21-b91d-adffe21358f8::input-params ::PATCH::::{}
+2024-07-23 12:10:09::error::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::33596728-c31c-4a21-b91d-adffe21358f8::undefined - NaNms - Response: {"stringValue":"\"{ receiverId: '669ef8efb292c8dc4cd9b3c5', _id: undefined }\"","valueType":"Object","kind":"ObjectId","value":{"receiverId":"669ef8efb292c8dc4cd9b3c5"},"path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"{ receiverId: '669ef8efb292c8dc4cd9b3c5', _id: undefined }\" (type Object) at path \"_id\" for model \"Notification\""}::{"message":"Cast to ObjectId failed for value \"{ receiverId: '669ef8efb292c8dc4cd9b3c5', _id: undefined }\" (type Object) at path \"_id\" for model \"Notification\""}
+2024-07-23 12:10:51::info::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::6cab7081-8fd4-4a5d-9c66-c9fc18059570::input-params ::PATCH::::{}
+2024-07-23 12:10:51::error::/v1/api/notification/readNotification/669f3a50f647c3b67c9cbc13::6cab7081-8fd4-4a5d-9c66-c9fc18059570::undefined - NaNms - Response: {"stringValue":"\"{\n  receiverId: new ObjectId('669ef8efb292c8dc4cd9b3c5'),\n  _id: undefined\n}\"","valueType":"Object","kind":"ObjectId","value":{"receiverId":"669ef8efb292c8dc4cd9b3c5"},"path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"{\n  receiverId: new ObjectId('669ef8efb292c8dc4cd9b3c5'),\n  _id: undefined\n}\" (type Object) at path \"_id\" for model \"Notification\""}::{"message":"Cast to ObjectId failed for value \"{\n  receiverId: new ObjectId('669ef8efb292c8dc4cd9b3c5'),\n  _id: undefined\n}\" (type Object) at path \"_id\" for model \"Notification\""}
+2024-07-23 12:12:52::info::/v1/api/notification/readNotifications::e632522c-660a-4fac-bd9c-138cd5bfac3f::input-params ::GET::::{}
+2024-07-23 12:12:52::error::/v1/api/notification/readNotifications::e632522c-660a-4fac-bd9c-138cd5bfac3f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 12:13:18::info::/v1/api/notification/readNotifications::a7375ff0-1574-4fcf-93a6-7a57ba6276bb::input-params ::PATCH::::{}
+2024-07-23 13:33:48::info::/v1/api/auth/users/login::7180c015-59af-4d9f-a5cc-76bddd76ecf8::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 13:33:48::error::/v1/api/auth/users/login::7180c015-59af-4d9f-a5cc-76bddd76ecf8::403 - 1ms - Response: {"status":403,"now":1721716428097}::{"message":"Tài khoản chưa được đăng kí"}
+2024-07-23 13:34:28::info::/v1/api/auth/users/signUp::b170542c-134b-466e-9a5f-48d794987f42::input-params ::POST::::{"fullName":"Quang Nguyen","email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 13:40:12::info::/v1/api/auth/users/verifyOtp::e3be673c-a270-403c-b7cc-080f0f43522d::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"505111"}
+2024-07-23 13:40:12::error::/v1/api/auth/users/verifyOtp::e3be673c-a270-403c-b7cc-080f0f43522d::403 - 1ms - Response: {"status":403,"now":1721716812222}::{"message":"Mã OTP không chính xác"}
+2024-07-23 13:40:23::info::/v1/api/auth/users/verifyOtp::0ecc73e1-c5a3-48fd-b2f9-b644396f7bc3::input-params ::POST::::{"email":"quangminhqungai@gmai.com","otp":"505111"}
+2024-07-23 13:40:23::error::/v1/api/auth/users/verifyOtp::0ecc73e1-c5a3-48fd-b2f9-b644396f7bc3::403 - 0ms - Response: {"status":403,"now":1721716823082}::{"message":"Mã OTP không chính xác"}
+2024-07-23 13:41:04::info::/v1/api/auth/users/verifyOtp::28f6f945-a91b-4b1d-874a-98f7cdfdc344::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"387316"}
+2024-07-23 13:42:08::info::/v1/api/auth/users/forgotPassword::71891ae1-02ac-48ea-af94-eb3e78b10bd8::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-07-23 13:42:58::info::/v1/api/auth/users/verifyResetPasswordOtp::bd01d03f-9e34-4aaa-9eb4-3d872369d6f2::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"103525"}
+2024-07-23 13:42:58::error::/v1/api/auth/users/verifyResetPasswordOtp::bd01d03f-9e34-4aaa-9eb4-3d872369d6f2::403 - 1ms - Response: {"status":403,"now":1721716978700}::{"message":"Mã OTP không chính xác"}
+2024-07-23 13:43:05::info::/v1/api/auth/users/verifyResetPasswordOtp::9f880844-804c-4b95-a8fb-bc760c432423::input-params ::POST::::{"email":"quangminhqungai@gmai.com","otp":"103525"}
+2024-07-23 13:43:05::error::/v1/api/auth/users/verifyResetPasswordOtp::9f880844-804c-4b95-a8fb-bc760c432423::403 - 1ms - Response: {"status":403,"now":1721716985288}::{"message":"Mã OTP không chính xác"}
+2024-07-23 13:44:01::info::/v1/api/auth/users/verifyResetPasswordOtp::33657a49-cedc-4704-bb12-1e388b85b78e::input-params ::POST::::{"email":"quangminhqungai@gmail.com","otp":"250195"}
+2024-07-23 13:44:25::info::/v1/api/auth/users/resetPassword::635bf3ca-9a75-4e17-97f2-8c4254af7d6e::input-params ::PATCH::::{"email":"quangminhqungai@gmai.com","password":"123456789"}
+2024-07-23 13:44:26::error::/v1/api/auth/users/resetPassword::635bf3ca-9a75-4e17-97f2-8c4254af7d6e::403 - 1ms - Response: {"status":403,"now":1721717066567}::{"message":"Mã OTP không chính xác"}
+2024-07-23 13:48:28::info::/v1/api/auth/users/resetPassword::0172bd38-7b85-49ee-80b3-995d8f1baf58::input-params ::PATCH::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 13:50:58::info::/v1/api/auth/users/login::0ca985a5-0331-4d8e-aafe-aa893beda7c7::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 14:19:16::info::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::9dcf5ab8-b799-4478-be8b-9364a6324d24::input-params ::POST::::{}
+2024-07-23 14:19:16::error::/v1/api/upload/profile/avatarOrCover/669ef8efb292c8dc4cd9b3c5::9dcf5ab8-b799-4478-be8b-9364a6324d24::401 - 1ms - Response: {"status":401,"now":1721719156835}::{"message":"Bạn chỉ có thể thay đổi avatar hoặc background của bản thân"}
+2024-07-23 14:19:45::info::/v1/api/upload/profile/avatarOrCover/669f5080b2ed10e519cbc81c::f23abda3-869d-4b63-82b9-6f9302aaf821::input-params ::POST::::{}
+2024-07-23 14:20:00::info::/v1/api/upload/profile/avatarOrCover/669f5080b2ed10e519cbc81c::f5f1ac03-b9ea-471a-ba09-b226557f0cd6::input-params ::POST::::{}
+2024-07-23 14:20:00::error::/v1/api/upload/profile/avatarOrCover/669f5080b2ed10e519cbc81c::f5f1ac03-b9ea-471a-ba09-b226557f0cd6::403 - 1ms - Response: {"status":403,"now":1721719200931}::{"message":"Thay đổi ảnh đại diện hoặc background không thành công"}
+2024-07-23 14:20:06::info::/v1/api/upload/profile/avatarOrCover/669f5080b2ed10e519cbc81c::b6b2ea11-9039-4b6a-8a85-3d3790b2f713::input-params ::POST::::{}
+2024-07-23 14:20:16::info::/v1/api/upload/profile/avatarOrCover/669f5080b2ed10e519cbc81c::8f275810-8051-4e56-89a4-77d99f3c0a48::input-params ::POST::::{}
+2024-07-23 14:20:38::info::/v1/api/auth/users/logout::61c6319a-c84e-4e39-be20-07445acbf92e::input-params ::POST::::{}
+2024-07-23 14:20:43::info::/v1/api/auth/users/login::41a4d23a-944b-42d2-a010-f8d81c4ae5d4::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 14:23:01::info::/v1/api/user/me::b230179c-bd11-4912-b564-fa3645432095::input-params ::GET::::{}
+2024-07-23 14:29:40::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::c8f31db7-6169-4695-8e9e-c4ed87f7ff73::input-params ::GET::::{}
+2024-07-23 14:32:34::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::fb746633-9bed-48bc-aaa6-5ca00632a6e3::input-params ::GET::::{}
+2024-07-23 14:34:18::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::0505db98-69a7-4f16-89cc-1e25e74817a8::input-params ::GET::::{}
+2024-07-23 14:35:16::info::/v1/api/user/me::8df2e878-35ea-4737-924d-1ac9cd8bd02b::input-params ::GET::::{}
+2024-07-23 14:45:32::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::e9b9fde2-bb84-43b0-a640-7782bf357682::input-params ::PATCH::::{}
+2024-07-23 14:47:36::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::796b7d8d-d593-4f29-a236-bf4683cb8d22::input-params ::PATCH::::{}
+2024-07-23 14:47:36::error::/v1/api/user/followUser/66601810d3737cbcac3bc91e::796b7d8d-d593-4f29-a236-bf4683cb8d22::403 - 2ms - Response: {"status":403,"now":1721720856258}::{"message":"You already follow this user"}
+2024-07-23 14:47:54::info::/v1/api/user/followUser/669f5080b2ed10e519cbc81c::1dbb9df9-c0a4-4042-83fa-c9ae029dc0a8::input-params ::PATCH::::{}
+2024-07-23 14:47:54::error::/v1/api/user/followUser/669f5080b2ed10e519cbc81c::1dbb9df9-c0a4-4042-83fa-c9ae029dc0a8::403 - 0ms - Response: {"status":403,"now":1721720874557}::{"message":"You can't follow yourself"}
+2024-07-23 14:50:44::info::/v1/api/user/followUser/66601810d3737cbcac3bc91e::57fd86ae-dec5-4557-8393-49e8288f1c94::input-params ::PATCH::::{}
+2024-07-23 14:51:09::info::/v1/api/user/unFollowUser/66601810d3737cbcac3bc91e::56065e1e-f718-4ff1-89b6-65cf82e81713::input-params ::PATCH::::{}
+2024-07-23 15:47:28::error::/v1/api/user/updateUserProfile/:profileId::2acb6f62-604c-458f-a58c-df9fe9920548::400 - NaNms - Response: {"expose":true,"statusCode":400,"status":400,"body":"{\r\n    \"stageName\":\"luuBi\",\r\n    \"fullName\": \"PhapLuQuoc\",\r\n    \"address\" : \"406 le Loi\",\r\n    \"bio\" : \"Thí í my bio\",\r\n    \"gender\" : \"male\",\r\n    \r\n}","type":"entity.parse.failed"}::{"message":"Unexpected token } in JSON at position 150"}
+2024-07-23 15:47:34::info::/v1/api/user/updateUserProfile/:profileId::a7e28fef-d6b6-4b40-87d4-74c8ad249af7::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"Thí í my bio","gender":"male"}
+2024-07-23 15:47:34::error::/v1/api/user/updateUserProfile/:profileId::a7e28fef-d6b6-4b40-87d4-74c8ad249af7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 15:48:14::info::/v1/api/user/updateUserProfile/66601810d3737cbcac3bc91e::8542ddfc-235b-4d51-87fa-e7de4ff85f57::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"Thí í my bio","gender":"male","jobTitle":"Freelancer","qrCode":"afsdf","accessToken":"sdfsf","email":"dsfsdf","password":"dsfsdf"}
+2024-07-23 15:48:14::error::/v1/api/user/updateUserProfile/66601810d3737cbcac3bc91e::8542ddfc-235b-4d51-87fa-e7de4ff85f57::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 15:49:11::info::/v1/api/user/updateUserProfile/66601810d3737cbcac3bc91e::e4582200-0319-4978-8606-440e37930ab8::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio","gender":"male","jobTitle":"Freelancer","qrCode":"afsdf","accessToken":"sdfsf","email":"dsfsdf","password":"dsfsdf"}
+2024-07-23 15:49:11::error::/v1/api/user/updateUserProfile/66601810d3737cbcac3bc91e::e4582200-0319-4978-8606-440e37930ab8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 15:49:51::info::/v1/api/user/updateUserProfile::b9a3c768-1032-49d3-a2d1-24c9991d2e39::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio","gender":"male"}
+2024-07-23 15:49:51::error::/v1/api/user/updateUserProfile::b9a3c768-1032-49d3-a2d1-24c9991d2e39::undefined - NaNms - Response: {}::{"message":"console.lof is not a function"}
+2024-07-23 15:50:06::info::/v1/api/user/updateUserProfile::f9273878-01bd-4141-9d6c-1a91676d3b31::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio","gender":"male","jobTitle":"Freelancer","qrCode":"afsdf","accessToken":"sdfsf","email":"dsfsdf","password":"dsfsdf"}
+2024-07-23 15:50:06::error::/v1/api/user/updateUserProfile::f9273878-01bd-4141-9d6c-1a91676d3b31::403 - 1ms - Response: {"status":403,"now":1721724606514}::{"message":"Không thể cập nhật thông tin này"}
+2024-07-23 15:50:15::error::/v1/api/user/updateUserProfile::751144f9-deef-4201-950c-7ff85ba68fe9::400 - NaNms - Response: {"expose":true,"statusCode":400,"status":400,"body":"{\r\n    \"stageName\":\"luuBi\",\r\n    \"fullName\": \"PhapLuQuoc\",\r\n    \"address\" : \"406 le Loi\",\r\n    \"bio\" : \"This is my bio\",\r\n    \"gender\" : \"male\",\r\n    \"jobTitle\" : \"Freelancer\",\r\n    \"qrCode\" : \"afsdf\",\r\n    \"accessToken\" : \"sdfsf\",\r\n    \"email\" : \"dsfsdf\",\r\n\r\n}","type":"entity.parse.failed"}::{"message":"Unexpected token } in JSON at position 260"}
+2024-07-23 15:50:18::info::/v1/api/user/updateUserProfile::1aa808b5-77c8-42ee-b438-8261ad2a3325::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio","gender":"male","jobTitle":"Freelancer","qrCode":"afsdf","accessToken":"sdfsf","email":"dsfsdf"}
+2024-07-23 15:50:18::error::/v1/api/user/updateUserProfile::1aa808b5-77c8-42ee-b438-8261ad2a3325::403 - 2ms - Response: {"status":403,"now":1721724618145}::{"message":"Không thể cập nhật thông tin này"}
+2024-07-23 15:50:24::info::/v1/api/user/updateUserProfile::a06b6f34-439d-4a61-9b0e-1d6f53906f51::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio","gender":"male","jobTitle":"Freelancer","qrCode":"afsdf"}
+2024-07-23 15:50:24::error::/v1/api/user/updateUserProfile::a06b6f34-439d-4a61-9b0e-1d6f53906f51::403 - 0ms - Response: {"status":403,"now":1721724624415}::{"message":"Không thể cập nhật thông tin này"}
+2024-07-23 15:50:37::info::/v1/api/user/updateUserProfile::c26cab1d-b686-4729-b33d-d245842a0e8c::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio","gender":"male"}
+2024-07-23 15:52:28::info::/v1/api/user/updateUserProfile::dba2664e-b291-4be9-92a6-f3a6e27506e8::input-params ::PATCH::::{"stageName":"luuBi222","fullName":"PhapLuQuoc 143848","address":"406 le Loi","bio":"This is my bio updated ","gender":"male","jobTitle":"Freelancer"}
+2024-07-23 15:52:28::error::/v1/api/user/updateUserProfile::dba2664e-b291-4be9-92a6-f3a6e27506e8::403 - 1ms - Response: {"status":403,"now":1721724748225}::{"message":"Chỉ tài khoản họa sĩ mới có thể cập nhật nghề nghiệp"}
+2024-07-23 15:52:33::info::/v1/api/user/updateUserProfile::60fb2b6f-a9db-4a42-bd22-547fb325c915::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio updated","gender":"male","jobTitle":"Freelancer"}
+2024-07-23 15:52:34::error::/v1/api/user/updateUserProfile::60fb2b6f-a9db-4a42-bd22-547fb325c915::403 - 0ms - Response: {"status":403,"now":1721724754022}::{"message":"Chỉ tài khoản họa sĩ mới có thể cập nhật nghề nghiệp"}
+2024-07-23 15:52:40::info::/v1/api/user/updateUserProfile::8583373d-76ec-4cd6-b019-3ecf8edb3ccf::input-params ::PATCH::::{"stageName":"luuBi","fullName":"PhapLuQuoc","address":"406 le Loi","bio":"This is my bio updated","gender":"male"}
+2024-07-23 16:05:20::info::/v1/api/post/readPost/669bbe408c48291a3682b690::8db37dbf-5e64-4649-a92a-d2296f456e3f::input-params ::GET::::{}
+2024-07-23 16:05:21::error::/v1/api/post/readPost/669bbe408c48291a3682b690::8db37dbf-5e64-4649-a92a-d2296f456e3f::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:06:52::info::/v1/api/post/readPost/669bbe408c48291a3682b690::d59d7156-39fb-40f9-b9cb-8545ad5ec504::input-params ::GET::::{}
+2024-07-23 16:06:52::error::/v1/api/post/readPost/669bbe408c48291a3682b690::d59d7156-39fb-40f9-b9cb-8545ad5ec504::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:07:49::info::/v1/api/post/readPost/669bbe408c48291a3682b690::74e9c610-2f94-490f-9fa5-a537a48a7b30::input-params ::GET::::{}
+2024-07-23 16:07:49::error::/v1/api/post/readPost/669bbe408c48291a3682b690::74e9c610-2f94-490f-9fa5-a537a48a7b30::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:08:50::info::/v1/api/post/readPost/669bbe408c48291a3682b690::417a3dc4-105a-41ef-a893-b59fa8afc412::input-params ::GET::::{}
+2024-07-23 16:08:50::error::/v1/api/post/readPost/669bbe408c48291a3682b690::417a3dc4-105a-41ef-a893-b59fa8afc412::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:10:01::info::/v1/api/post/readPost/669bbe408c48291a3682b690::3f620286-38c0-490e-9688-c515aa56b701::input-params ::GET::::{}
+2024-07-23 16:10:01::error::/v1/api/post/readPost/669bbe408c48291a3682b690::3f620286-38c0-490e-9688-c515aa56b701::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:10:44::info::/v1/api/post/readPost/669bbe408c48291a3682b690::31a74f44-289f-4cd6-bad6-77c3f93a5ea2::input-params ::GET::::{}
+2024-07-23 16:10:44::error::/v1/api/post/readPost/669bbe408c48291a3682b690::31a74f44-289f-4cd6-bad6-77c3f93a5ea2::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:12:10::info::/v1/api/post/readPost/669bbe408c48291a3682b690::dbc19108-5b94-49d3-8961-00d3afb6b503::input-params ::GET::::{}
+2024-07-23 16:12:11::error::/v1/api/post/readPost/669bbe408c48291a3682b690::dbc19108-5b94-49d3-8961-00d3afb6b503::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:12:29::info::/v1/api/post/readPost/669bbe408c48291a3682b690::240ea5d5-67a3-4281-9521-81e884efbf8e::input-params ::GET::::{}
+2024-07-23 16:12:30::error::/v1/api/post/readPost/669bbe408c48291a3682b690::240ea5d5-67a3-4281-9521-81e884efbf8e::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:13:32::info::/v1/api/post/readPost/669bbe408c48291a3682b690::c4d7671c-5ac1-4638-9638-8ba50561a90d::input-params ::GET::::{}
+2024-07-23 16:13:32::error::/v1/api/post/readPost/669bbe408c48291a3682b690::c4d7671c-5ac1-4638-9638-8ba50561a90d::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:15:52::info::/v1/api/post/readPost/669bbe408c48291a3682b690::12f51765-23b5-4b34-8151-5d651b34a946::input-params ::GET::::{}
+2024-07-23 16:18:20::info::/v1/api/auth/users/logout::784cc43b-5776-4d16-8f10-a68223de574e::input-params ::POST::::{}
+2024-07-23 16:18:24::info::/v1/api/post/readPost/669bbe408c48291a3682b690::89a5e216-73e2-4dea-b129-207036f46b56::input-params ::GET::::{}
+2024-07-23 16:18:24::error::/v1/api/post/readPost/669bbe408c48291a3682b690::89a5e216-73e2-4dea-b129-207036f46b56::undefined - NaNms - Response: {}::{"message":"Xem bài viết không thành công"}
+2024-07-23 16:19:59::info::/v1/api/post/readPost/669bbe408c48291a3682b690::36577482-525a-469b-95e2-4cd25e5a2a44::input-params ::GET::::{}
+2024-07-23 16:20:39::info::/v1/api/post/readPost/669bbe408c48291a3682b690::3914ce7c-3cd4-4fec-9ed9-b3e1cd6c93ba::input-params ::GET::::{}
+2024-07-23 16:32:00::info::/v1/api/post/readPost/669bbe408c48291a3682b690::eade2519-ee38-4ab3-a3a9-d26daa883064::input-params ::GET::::{}
+2024-07-23 16:32:07::info::/v1/api/auth/users/login::6c7deffd-a185-4775-b5fa-ea7433bdad04::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 16:32:18::info::/v1/api/post/readPost/669bbe408c48291a3682b690::2d871878-0c4f-4f84-aa50-6af9209b7c26::input-params ::GET::::{}
+2024-07-23 16:32:44::info::/v1/api/post/readPost/669bbe408c48291a3682b690::941cbb06-e30a-499b-90ed-5fcb62b129ff::input-params ::GET::::{}
+2024-07-23 16:33:04::info::/v1/api/auth/users/logout::2b220171-d219-4464-b418-edecfb0e0716::input-params ::POST::::{}
+2024-07-23 16:33:07::info::/v1/api/post/readPost/669bbe408c48291a3682b690::2ae9c0a3-5a28-4a6c-a4e8-e818a15bfc82::input-params ::GET::::{}
+2024-07-23 16:33:47::info::/v1/api/post/readPost/669bbe408c48291a3682b690::ab90d387-3704-460f-b18d-29467f5fa8aa::input-params ::GET::::{}
+2024-07-23 16:33:59::info::/v1/api/post/readPost/669bbe408c48291a3682b690::02d41813-dcdb-40d9-9d2a-1a0d9fae71c6::input-params ::GET::::{}
+2024-07-23 16:34:06::info::/v1/api/post/readPost/669bbe408c48291a3682b690::28281eb4-0b48-4c69-a537-6b7ee47dde61::input-params ::GET::::{}
+2024-07-23 16:35:49::info::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::ed6c304d-92f1-4144-9195-aa1d87d925c5::input-params ::GET::::{}
+2024-07-23 16:35:49::error::/v1/api/post/readPostsOfTalent/66601810d3737cbcac3bc91e::ed6c304d-92f1-4144-9195-aa1d87d925c5::undefined - NaNms - Response: {}::{"message":"PostService.readPostsOfTalent is not a function"}
+2024-07-23 16:38:02::info::/v1/api/post/readPosts/66601810d3737cbcac3bc91e::65527c2a-64c3-4d26-8a1d-c0164d51a65c::input-params ::GET::::{}
+2024-07-23 16:38:26::info::/v1/api/post/readPosts/66601810d3737cbcac3bc91e::ef3e9008-d4e5-4053-a7ef-21ac1e17b23d::input-params ::GET::::{}
+2024-07-23 16:41:01::info::/v1/api/post/readPostCategoriesWithPosts/66601810d3737cbcac3bc91e::e03ca755-07a8-4116-9627-abdd7beaa57d::input-params ::GET::::{}
+2024-07-23 16:41:28::info::/v1/api/post/readPostCategoriesWithPosts/66601810d3737cbcac3bc91e::abb4c49f-dd33-49c7-a03e-acd19cb2a307::input-params ::GET::::{}
+2024-07-23 16:41:58::info::/v1/api/post/readArtworks/66601810d3737cbcac3bc91e::492cfd66-f6b7-4236-b75f-935a00e95ff5::input-params ::GET::::{}
+2024-07-23 16:42:49::info::/v1/api/post/likePost/669bbe408c48291a3682b690::9cda99a6-bafd-400d-a7a5-cd087e6daaf1::input-params ::PATCH::::{}
+2024-07-23 16:42:49::error::/v1/api/post/likePost/669bbe408c48291a3682b690::9cda99a6-bafd-400d-a7a5-cd087e6daaf1::401 - 1ms - Response: {"status":401,"now":1721727769446}::{"message":"Bạn cần đăng nhập để thực hiện thao tác này"}
+2024-07-23 16:42:55::info::/v1/api/auth/users/login::92d60b89-79f6-457b-be0b-ce0ae0e26dea::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 16:42:58::info::/v1/api/post/likePost/669bbe408c48291a3682b690::020f16e8-ff3b-4e90-80fe-c333f3b30cec::input-params ::PATCH::::{}
+2024-07-23 16:53:53::info::/v1/api/notification/createNotification::f385320f-39e6-42f1-bf29-1ddf7b72921a::input-params ::POST::::{"receiverId":"66601810d3737cbcac3bc91e","type":"like"}
+2024-07-23 16:54:52::info::/v1/api/notification/readNotifications::30835f0e-a613-4b82-8a9d-3a71d14dce62::input-params ::PATCH::::{}
+2024-07-23 16:55:06::info::/v1/api/auth/users/login::46469d6d-1e89-4cdd-9fd9-ddcde4334bd6::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-23 16:55:10::info::/v1/api/notification/readNotifications::3d17b250-3c19-4c4e-bf9f-83e66d642006::input-params ::PATCH::::{}
+2024-07-23 16:55:30::info::/v1/api/notification/readNotifications::23501966-81ee-42f6-b11b-a9016507322e::input-params ::PATCH::::{}
+2024-07-23 16:55:49::info::/v1/api/auth/users/login::42b59bc1-d626-44e8-9dbb-ccfd4aea4057::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 16:56:35::info::/v1/api/conversation/createConversation::5b4863ce-354d-4a4b-9f46-8bf04e2276b0::input-params ::POST::::{}
+2024-07-23 16:57:13::info::/v1/api/auth/users/login::04a7dc5d-24f6-4da8-b8d7-f0d754ac634a::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"123456789"}
+2024-07-23 16:57:20::info::/v1/api/conversation/readConversations::abf612ca-27da-4d39-9c08-9f70f28b9f9e::input-params ::GET::::{}
+2024-07-23 16:58:15::info::/v1/api/conversation/readConversation/668fbc7de4762abf2093a9f0::65855e81-01e6-40f9-b132-32a50a3c0ac0::input-params ::GET::::{}
+2024-07-23 17:02:52::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::64dc0815-7ab1-4690-8495-b272280ffa90::input-params ::GET::::{}
+2024-07-23 17:04:51::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::5d5435d7-6d44-43fb-b385-238f748e34bd::input-params ::GET::::{}
+2024-07-23 17:07:29::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::a89e0cbe-ddc4-45af-ba34-4caf59ffd53b::input-params ::GET::::{}
+2024-07-23 17:08:28::info::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::1c2e1de8-230a-4840-b438-82fec14b76b6::input-params ::GET::::{}
+2024-07-23 17:08:28::error::/v1/api/conversation/readConversationWithOtherMember/66601810d3737cbcac3bc91e::1c2e1de8-230a-4840-b438-82fec14b76b6::403 - 0ms - Response: {"status":403,"now":1721729308612}::{"message":"Không thể xem đoạn hội thoại với chính mình"}
+2024-07-23 17:08:46::info::/v1/api/conversation/readConversationWithOtherMember/669f5080b2ed10e519cbc81c::283b9c6c-cfb2-4f59-bd9f-912b91036bbd::input-params ::GET::::{}
+2024-07-23 17:10:04::info::/v1/api/conversation/readConversationWithOtherMember/669f5080b2ed10e519cbc81c::730e8eef-1e99-4a71-9d35-cf09a71f2936::input-params ::GET::::{}
+2024-07-23 17:11:05::info::/v1/api/conversation/readConversationWithOtherMember/669f5080b2ed10e519cbc81c::5027b010-270f-4b07-89a5-46fbd5124224::input-params ::GET::::{}
+2024-07-23 17:14:58::info::/v1/api/conversation/sendMessage::69a5c33c-39c1-4a17-a254-5e3ab01d90aa::input-params ::PATCH::::{}
+2024-07-23 17:20:16::info::/v1/api/conversation/sendMessage::d3c10c68-17f8-4402-94aa-1e0593d6fa95::input-params ::PATCH::::{}
+2024-07-23 17:20:42::info::/v1/api/conversation/sendMessage::0d6d1309-3675-450f-99ec-2f08eaf21e95::input-params ::PATCH::::{}
+2024-07-23 17:42:29::info::/v1/api/conversation/sendMessage::72af72e4-dd28-4307-a62c-62ba7a36f19a::input-params ::PATCH::::{}
+2024-07-23 17:44:35::info::/v1/api/conversation/sendMessage::6d794023-a7f4-4f57-97f2-06cb6323418a::input-params ::PATCH::::{}
+2024-07-23 17:47:47::info::/v1/api/conversation/sendMessage::761e2ea9-85dd-494b-b70c-095b28e80630::input-params ::PATCH::::{}
+2024-07-23 17:47:47::error::/v1/api/conversation/sendMessage::761e2ea9-85dd-494b-b70c-095b28e80630::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 17:48:23::info::/v1/api/conversation/sendMessage::6dbe3235-a9cb-4e40-ae7f-bbae8fb69c2b::input-params ::PATCH::::{}
+2024-07-23 17:48:24::error::/v1/api/conversation/sendMessage::6dbe3235-a9cb-4e40-ae7f-bbae8fb69c2b::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 17:49:33::info::/v1/api/conversation/sendMessage::5f48c6ac-1722-4e3f-a958-1d9e32d37b59::input-params ::PATCH::::{}
+2024-07-23 17:49:33::error::/v1/api/conversation/sendMessage::5f48c6ac-1722-4e3f-a958-1d9e32d37b59::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 17:49:56::info::/v1/api/conversation/sendMessage::5e8c297f-4a94-4e5d-96da-deeeef5a5d2f::input-params ::PATCH::::{}
+2024-07-23 17:49:56::error::/v1/api/conversation/sendMessage::5e8c297f-4a94-4e5d-96da-deeeef5a5d2f::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 17:50:28::info::/v1/api/conversation/sendMessage::0a6ab183-ba8f-444b-8961-fdc019d64f8e::input-params ::PATCH::::{}
+2024-07-23 17:50:29::error::/v1/api/conversation/sendMessage::0a6ab183-ba8f-444b-8961-fdc019d64f8e::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 17:50:58::info::/v1/api/conversation/sendMessage::06fded16-1c35-43f2-90ec-db9732b3bc76::input-params ::PATCH::::{}
+2024-07-23 17:50:59::error::/v1/api/conversation/sendMessage::06fded16-1c35-43f2-90ec-db9732b3bc76::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 17:51:47::info::/v1/api/conversation/sendMessage::d75b9d87-fc31-4b04-9b9e-ea7c982cae37::input-params ::PATCH::::{}
+2024-07-23 17:51:47::error::/v1/api/conversation/sendMessage::d75b9d87-fc31-4b04-9b9e-ea7c982cae37::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 18:01:44::info::/v1/api/conversation/sendMessage::870ad95b-bb04-4421-b5a6-bc4ffbbecd48::input-params ::PATCH::::{}
+2024-07-23 18:01:45::error::/v1/api/conversation/sendMessage::870ad95b-bb04-4421-b5a6-bc4ffbbecd48::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 18:02:55::info::/v1/api/conversation/sendMessage::c0b9780d-67f1-4c40-9984-0e1f8fdd1ec2::input-params ::PATCH::::{}
+2024-07-23 18:05:34::info::/v1/api/conversation/sendMessage::2b34b356-b62e-4aa1-b4ba-dd5a05a76fe6::input-params ::PATCH::::{}
+2024-07-23 18:05:34::error::/v1/api/conversation/sendMessage::2b34b356-b62e-4aa1-b4ba-dd5a05a76fe6::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 18:07:28::info::/v1/api/conversation/sendMessage::15362a34-102c-4f6d-b4f0-49c4d5017971::input-params ::PATCH::::{}
+2024-07-23 18:07:28::error::/v1/api/conversation/sendMessage::15362a34-102c-4f6d-b4f0-49c4d5017971::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 18:07:50::info::/v1/api/conversation/sendMessage::84d14821-c77c-4a42-a385-5acf2aafce6f::input-params ::PATCH::::{}
+2024-07-23 18:07:50::error::/v1/api/conversation/sendMessage::84d14821-c77c-4a42-a385-5acf2aafce6f::undefined - NaNms - Response: {}::{"message":"Không thể gửi tin nhắn"}
+2024-07-23 18:09:12::info::/v1/api/conversation/sendMessage::5efd74e2-72e9-4714-9497-374731f9bb13::input-params ::PATCH::::{}
+2024-07-23 18:09:31::info::/v1/api/conversation/readConversations::82a590ea-cbf2-4eb8-81e2-fa686f9cc347::input-params ::GET::::{}
+2024-07-23 18:09:39::info::/v1/api/conversation/readConversationWithOtherMember/669f5080b2ed10e519cbc81c::05a9639b-6029-4d70-aeed-09aae36cf0ee::input-params ::GET::::{}
+2024-07-23 18:48:58::info::/v1/api/order/createOrder::15129263-0aeb-45a5-9c70-75eba152c412::input-params ::POST::::{}
+2024-07-23 18:48:59::error::/v1/api/order/createOrder::15129263-0aeb-45a5-9c70-75eba152c412::undefined - NaNms - Response: {"stringValue":"\"66601810d3737cbcac3bc91r\"","valueType":"string","kind":"ObjectId","value":"66601810d3737cbcac3bc91r","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"66601810d3737cbcac3bc91r\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"66601810d3737cbcac3bc91r\" (type string) at path \"_id\" for model \"User\""}
+2024-07-23 18:49:06::info::/v1/api/order/createOrder::fbc8d2fc-0d05-43e2-a0af-e2aa32fb1c45::input-params ::POST::::{}
+2024-07-23 18:49:06::error::/v1/api/order/createOrder::fbc8d2fc-0d05-43e2-a0af-e2aa32fb1c45::403 - 2ms - Response: {"status":403,"now":1721735346690}::{"message":"Họa sĩ không tồn tại"}
+2024-07-23 18:49:20::info::/v1/api/order/createOrder::c7fa5217-de6e-4394-a824-4eab3043352d::input-params ::POST::::{}
+2024-07-23 18:49:21::error::/v1/api/order/createOrder::c7fa5217-de6e-4394-a824-4eab3043352d::403 - 0ms - Response: {"status":403,"now":1721735361040}::{"message":"Dịch vụ không tồn tại"}
+2024-07-23 18:49:53::info::/v1/api/order/createOrder::fa17361f-a629-4be6-91e0-bd6d26baf83a::input-params ::POST::::{}
+2024-07-23 18:49:54::error::/v1/api/order/createOrder::fa17361f-a629-4be6-91e0-bd6d26baf83a::403 - 0ms - Response: {"status":403,"now":1721735394180}::{"message":"Bạn không thể tạo đơn hàng với bản thân"}
+2024-07-23 18:50:05::info::/v1/api/auth/users/login::dda3ecf2-3264-476e-a3aa-b4459c9b4a57::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 18:50:22::info::/v1/api/order/createOrder::36778118-3b07-417f-80c3-17b5c2193a92::input-params ::POST::::{}
+2024-07-23 18:50:22::error::/v1/api/order/createOrder::36778118-3b07-417f-80c3-17b5c2193a92::401 - 0ms - Response: {"status":401,"now":1721735422823}::{"message":"Người này không phải là họa sĩ"}
+2024-07-23 18:50:36::info::/v1/api/order/createOrder::800b857b-a7d2-472f-829b-3324964e4c94::input-params ::POST::::{}
+2024-07-23 18:50:36::error::/v1/api/order/createOrder::800b857b-a7d2-472f-829b-3324964e4c94::403 - 1ms - Response: {"status":403,"now":1721735436534}::{"message":"Giá tối đa không thể lớn hơn giá tối thiểu của dịch vụ"}
+2024-07-23 18:51:25::info::/v1/api/order/createOrder::2c0bbc1e-a15a-4658-a644-ef74972ff875::input-params ::POST::::{}
+2024-07-23 18:51:25::error::/v1/api/order/createOrder::2c0bbc1e-a15a-4658-a644-ef74972ff875::403 - 2ms - Response: {"status":403,"now":1721735485339}::{"message":"Giá tối đa không thể nhỏ hơn giá tối thiểu"}
+2024-07-23 18:51:50::info::/v1/api/order/createOrder::027323c1-003e-47b1-8115-737bfeba091e::input-params ::POST::::{}
+2024-07-23 18:51:50::error::/v1/api/order/createOrder::027323c1-003e-47b1-8115-737bfeba091e::403 - 2ms - Response: {"status":403,"now":1721735510921}::{"message":"Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ"}
+2024-07-23 18:52:15::info::/v1/api/order/createOrder::bbd5ed0e-eead-4b42-aba6-45a84408cfd5::input-params ::POST::::{}
+2024-07-23 18:52:31::info::/v1/api/order/createOrder::0e415baa-6596-4b2c-804f-a07f4303f6d1::input-params ::POST::::{}
+2024-07-23 18:53:10::info::/v1/api/order/readOrder/669f99826d20bc092ea5e51d::9a5833be-7d67-49d5-b018-95027f4c8197::input-params ::GET::::{}
+2024-07-23 18:53:13::info::/v1/api/order/readMemberOrderHistory::3ca87780-2033-4e7a-903b-50cffa3653d0::input-params ::GET::::{}
+2024-07-23 18:53:31::info::/v1/api/order/readOrders::849631ba-5000-44fa-903e-902a2eeea221::input-params ::GET::::{"isDirect":"true"}
+2024-07-23 18:53:46::info::/v1/api/order/readTalentOrderHistory::77e7d671-4eec-4914-bc4c-236ea8683965::input-params ::GET::::{}
+2024-07-23 18:53:46::error::/v1/api/order/readTalentOrderHistory::77e7d671-4eec-4914-bc4c-236ea8683965::403 - 0ms - Response: {"status":403,"now":1721735626305}::{"message":"Bạn không phải là họa sĩ"}
+2024-07-23 18:53:53::info::/v1/api/order/readArchivedOrderHistory::8de4b29f-9235-4bc6-a113-f31fb58f2731::input-params ::GET::::{}
+2024-07-23 18:54:01::info::/v1/api/order/readMemberOrderHistory::42028eec-9eab-4c02-a533-2731f26d1496::input-params ::GET::::{}
+2024-07-23 18:54:21::info::/v1/api/order/archiveOrder/669f99826d20bc092ea5e51d::d90a3630-df5c-48ac-a6a5-99ed3b341608::input-params ::PATCH::::{}
+2024-07-23 18:54:25::info::/v1/api/order/readArchivedOrderHistory::dd42c331-9b78-4aff-94c5-66e9fd857c21::input-params ::GET::::{}
+2024-07-23 18:54:37::info::/v1/api/order/unarchiveOrder/669f99826d20bc092ea5e51d::14971f26-0faf-43ee-94b6-a3d6b8984f01::input-params ::PATCH::::{}
+2024-07-23 18:54:42::info::/v1/api/order/readArchivedOrderHistory::e0e8fee2-4df5-4746-80b6-5ae7fae914f2::input-params ::GET::::{}
+2024-07-23 18:55:09::info::/v1/api/order/readMemberOrderHistory::ced14fef-b842-4713-b45b-bf25d88c18db::input-params ::GET::::{}
+2024-07-23 18:59:24::info::/v1/api/order/updateOrder/669f99826d20bc092ea5e51e::4120d4b3-d817-4923-a960-477315e6c02b::input-params ::PATCH::::{}
+2024-07-23 18:59:24::error::/v1/api/order/updateOrder/669f99826d20bc092ea5e51e::4120d4b3-d817-4923-a960-477315e6c02b::404 - 1ms - Response: {"status":404,"now":1721735964683}::{"message":"Đơn hàng không tồn tại"}
+2024-07-23 18:59:40::info::/v1/api/order/updateOrder/669f99826d20bc092ea5e51d::4d045e6e-4acd-4276-8c5c-372d9d4b84a8::input-params ::PATCH::::{}
+2024-07-23 18:59:40::error::/v1/api/order/updateOrder/669f99826d20bc092ea5e51d::4d045e6e-4acd-4276-8c5c-372d9d4b84a8::403 - 1ms - Response: {"status":403,"now":1721735980886}::{"message":"Không thể cập nhật các trường này"}
+2024-07-23 18:59:48::info::/v1/api/order/updateOrder/669f99826d20bc092ea5e51d::816e4504-10be-45a2-9e9a-bea31ac23d57::input-params ::PATCH::::{}
+2024-07-23 18:59:48::error::/v1/api/order/updateOrder/669f99826d20bc092ea5e51d::816e4504-10be-45a2-9e9a-bea31ac23d57::403 - 0ms - Response: {"status":403,"now":1721735988178}::{"message":"Giá tối thiểu không thể lớn hơn giá tối đa"}
+2024-07-23 19:00:11::info::/v1/api/order/updateOrder/669f99826d20bc092ea5e51d::53d94509-8210-4469-afbb-9ed6c8165ff5::input-params ::PATCH::::{}
+2024-07-23 19:00:39::info::/v1/api/order/updateOrder/669f99826d20bc092ea5e51d::cdbe18da-8371-4a7d-a6c9-ee48d5fb6741::input-params ::PATCH::::{}
+2024-07-23 20:44:15::info::/v1/api/talentRequest/requestUpgradingToTalent::758a5ba3-a1fd-42ba-89af-c60ed2860503::input-params ::POST::::{}
+2024-07-23 20:44:15::error::/v1/api/talentRequest/requestUpgradingToTalent::758a5ba3-a1fd-42ba-89af-c60ed2860503::403 - 2ms - Response: {"status":403,"now":1721742255756}::{"message":"Hãy nhập đầy đủ những thông tin bắt buộc"}
+2024-07-23 20:44:20::info::/v1/api/talentRequest/requestUpgradingToTalent::3fcce5e4-5cf4-4c76-a9bf-8c955156d627::input-params ::POST::::{}
+2024-07-23 20:46:56::info::/v1/api/talentRequest/viewTalentRequest/669fb3b935a55e7adc4c5587::19a2a40d-41e6-43e6-b40a-ea86a8cfb457::input-params ::GET::::{}
+2024-07-23 20:46:56::error::/v1/api/talentRequest/viewTalentRequest/669fb3b935a55e7adc4c5587::19a2a40d-41e6-43e6-b40a-ea86a8cfb457::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 20:47:15::info::/v1/api/talentRequest/readTalentRequest/669fb3b935a55e7adc4c5587::d3ca1d0a-b51a-4d1b-9292-a66682254293::input-params ::GET::::{}
+2024-07-23 20:54:05::info::/v1/api/talentRequest/readTalentRequest/669fb3b935a55e7adc4c5587::261a120f-1490-4ec2-83b6-a836e190b51f::input-params ::GET::::{}
+2024-07-23 20:54:14::info::/v1/api/talentRequest/readTalentRequestStatus/669fb3b935a55e7adc4c5587::8499849e-0bef-4d44-8851-b0b1f92c11db::input-params ::GET::::{}
+2024-07-23 20:54:14::error::/v1/api/talentRequest/readTalentRequestStatus/669fb3b935a55e7adc4c5587::8499849e-0bef-4d44-8851-b0b1f92c11db::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 20:54:36::info::/v1/api/talentRequest/readTalentRequestStatus::e89d8461-8303-4260-8438-b27655b7c64b::input-params ::GET::::{}
+2024-07-23 20:55:35::info::/v1/api/talentRequest/upgradeRoleToTalent/669fb3b935a55e7adc4c5587::b20da670-0f0d-42c9-9d13-cee54bc58c7b::input-params ::PATCH::::{}
+2024-07-23 20:56:00::info::/v1/api/auth/users/login::4ba9d737-3b5a-43ac-b2fd-f77b407625ae::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"123456789"}
+2024-07-23 20:59:20::info::/v1/api/talentRequest/upgradeRoleToTalent/669fb3b935a55e7adc4c5587::d21eb146-fb73-4ff6-87e3-9695f637a840::input-params ::PATCH::::{}
+2024-07-23 21:00:28::info::/v1/api/talentRequest/upgradeRoleToTalent/669fb3b935a55e7adc4c5587::2a81c308-cd94-439c-b149-25d9b498e251::input-params ::PATCH::::{}
+2024-07-23 21:00:28::error::/v1/api/talentRequest/upgradeRoleToTalent/669fb3b935a55e7adc4c5587::2a81c308-cd94-439c-b149-25d9b498e251::403 - 0ms - Response: {"status":403,"now":1721743228981}::{"message":"Yêu cầu này đã được chấp nhận"}
+2024-07-23 21:04:14::info::/v1/api/talentRequest/denyTalentRequest/669fb3b935a55e7adc4c5587::65f6f003-78e0-4d6d-afbf-df11b44a34a9::input-params ::PATCH::::{}
+2024-07-23 21:04:14::error::/v1/api/talentRequest/denyTalentRequest/669fb3b935a55e7adc4c5587::65f6f003-78e0-4d6d-afbf-df11b44a34a9::403 - 1ms - Response: {"status":403,"now":1721743454335}::{"message":"Người này đã là họa sĩ"}
+2024-07-23 21:04:39::info::/v1/api/talentRequest/readTalentRequest/669fb3b935a55e7adc4c5587::9160f6ad-d5ae-4689-b76e-7ee2793ca24a::input-params ::GET::::{}
+2024-07-23 21:04:45::info::/v1/api/talentRequest/viewTalentRequests::a7c9411d-ee56-4b06-9c00-b0b247952547::input-params ::GET::::{}
+2024-07-23 21:04:45::error::/v1/api/talentRequest/viewTalentRequests::a7c9411d-ee56-4b06-9c00-b0b247952547::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 21:04:53::info::/v1/api/talentRequest/readTalentRequests::9e595817-6bfb-4a4b-b92c-966665f486a4::input-params ::GET::::{}
+2024-07-23 21:04:53::error::/v1/api/talentRequest/readTalentRequests::9e595817-6bfb-4a4b-b92c-966665f486a4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 21:05:47::info::/v1/api/talentRequest/readTalentRequestsByStatus/pending::f609208e-397f-42f5-9ad6-9f9cc08af070::input-params ::GET::::{}
+2024-07-23 21:05:52::info::/v1/api/talentRequest/readTalentRequestsByStatus/approved::4930f846-5901-4081-8c1b-c1b91e37fed7::input-params ::GET::::{}
+2024-07-23 21:06:08::info::/v1/api/talentRequest/readTalentRequestsByStatus/rejected::67a6872a-c5bd-4a39-aa8c-5543e70cc0de::input-params ::GET::::{}
+2024-07-23 21:06:17::info::/v1/api/talentRequest/readTalentRequestsByStatus/approved::e6c5bc58-ad77-43e8-8dd2-4593d93143e6::input-params ::GET::::{}
+2024-07-23 21:14:28::info::/v1/api/auth/users/login::2da33bc0-f7f1-4362-9382-671821b9c689::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 21:18:33::info::/v1/api/postCategory/createPostCategory::ef0fa90e-1a0f-4c0e-847a-79c902bc1b19::input-params ::POST::::{"title":"YCH"}
+2024-07-23 21:19:17::info::/v1/api/artworkCategory/readArtworkCategories/66601810d3737cbcac3bc91e::461ec859-3d87-4bf4-bc0d-7cacdfd42355::input-params ::GET::::{}
+2024-07-23 21:19:17::error::/v1/api/artworkCategory/readArtworkCategories/66601810d3737cbcac3bc91e::461ec859-3d87-4bf4-bc0d-7cacdfd42355::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 21:19:31::info::/v1/api/artworkCategory/readArtworkCategories/669f5080b2ed10e519cbc81c::4901e242-78e4-4904-a715-7c8e898ce33a::input-params ::GET::::{}
+2024-07-23 21:19:31::error::/v1/api/artworkCategory/readArtworkCategories/669f5080b2ed10e519cbc81c::4901e242-78e4-4904-a715-7c8e898ce33a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-23 21:19:45::info::/v1/api/postCategory/readPostCategories/669f5080b2ed10e519cbc81c::59a13ea2-9663-4735-8624-cbdbbe55f54c::input-params ::GET::::{}
+2024-07-23 21:20:08::info::/v1/api/postCategory/updatePostCategory/669f5080b2ed10e519cbc81c::9859384e-fcdb-4641-8d24-b7dddaf5b866::input-params ::PATCH::::{"title":"Vtuber"}
+2024-07-23 21:20:08::error::/v1/api/postCategory/updatePostCategory/669f5080b2ed10e519cbc81c::9859384e-fcdb-4641-8d24-b7dddaf5b866::404 - 0ms - Response: {"status":404,"now":1721744408475}::{"message":"Dịch vụ không tồn tại"}
+2024-07-23 21:20:59::info::/v1/api/postCategory/updatePostCategory/669fbbb904d757fc09caf225::182fe73d-b23d-42b4-9a69-d83099905707::input-params ::PATCH::::{"title":"Vtuber"}
+2024-07-23 21:21:36::info::/v1/api/postCategory/readPostCategories/669f5080b2ed10e519cbc81c::eb378b2e-9e9f-47f7-bc40-763d2af6da94::input-params ::GET::::{}
+2024-07-23 21:22:25::info::/v1/api/post/createPost::f619ab05-188a-40b8-8ca9-8894d793c2e3::input-params ::POST::::{}
+2024-07-23 21:22:25::error::/v1/api/post/createPost::f619ab05-188a-40b8-8ca9-8894d793c2e3::403 - 1ms - Response: {"status":403,"now":1721744545715}::{"message":"Hãy cung cấp những mục bắt buộc"}
+2024-07-23 21:22:32::info::/v1/api/post/createPost::c1af2bd4-e148-4065-8874-73d69aed67ae::input-params ::POST::::{}
+2024-07-23 21:22:32::error::/v1/api/post/createPost::c1af2bd4-e148-4065-8874-73d69aed67ae::403 - 1ms - Response: {"status":403,"now":1721744552142}::{"message":"Hãy cung cấp ảnh"}
+2024-07-23 21:22:35::info::/v1/api/post/createPost::7a95ef1b-b615-4d2e-84f2-8cba540d8014::input-params ::POST::::{}
+2024-07-23 21:22:35::error::/v1/api/post/createPost::7a95ef1b-b615-4d2e-84f2-8cba540d8014::403 - 0ms - Response: {"status":403,"now":1721744555813}::{"message":"Hãy cung cấp những mục bắt buộc"}
+2024-07-23 21:22:43::info::/v1/api/post/createPost::f6d18828-2969-4488-98a4-1b9746b0ac8b::input-params ::POST::::{}
+2024-07-23 21:22:43::error::/v1/api/post/createPost::f6d18828-2969-4488-98a4-1b9746b0ac8b::403 - 0ms - Response: {"status":403,"now":1721744563332}::{"message":"Hãy cung cấp những mục bắt buộc"}
+2024-07-23 21:22:52::info::/v1/api/post/createPost::5fe33fc0-00ea-4294-b7fe-1a46ab750e78::input-params ::POST::::{}
+2024-07-23 21:22:52::error::/v1/api/post/createPost::5fe33fc0-00ea-4294-b7fe-1a46ab750e78::403 - 0ms - Response: {"status":403,"now":1721744572758}::{"message":"Hãy cung cấp những mục bắt buộc"}
+2024-07-23 21:23:02::info::/v1/api/post/createPost::e1bb4635-476a-445d-8892-14d2fff3a9f4::input-params ::POST::::{}
+2024-07-23 21:23:05::error::/v1/api/post/createPost::e1bb4635-476a-445d-8892-14d2fff3a9f4::403 - 0ms - Response: {"status":403,"now":1721744585634}::{"message":"Tạo đơn hàng không thành công"}
+2024-07-23 21:25:43::info::/v1/api/post/createPost::23859d26-42b7-41f7-ad13-252709a5cf20::input-params ::POST::::{}
+2024-07-23 21:25:43::error::/v1/api/post/createPost::23859d26-42b7-41f7-ad13-252709a5cf20::403 - 0ms - Response: {"status":403,"now":1721744743577}::{"message":"Hãy cung cấp những mục bắt buộc"}
+2024-07-23 21:26:30::info::/v1/api/post/createPost::926a2848-6f63-46f7-8cfa-18065de1d1bf::input-params ::POST::::{}
+2024-07-23 21:26:56::info::/v1/api/post/readArtworks/66601810d3737cbcac3bc91e::e7ae526e-76d3-4978-82f5-3d63bb71c358::input-params ::GET::::{}
+2024-07-23 21:27:08::info::/v1/api/post/readArtworks/669f5080b2ed10e519cbc81c::c34f9ec0-930b-4745-aa04-88e7a3f2d474::input-params ::GET::::{}
+2024-07-23 21:27:16::info::/v1/api/post/createPost::fda9e429-4f30-4aba-90e7-03d78ac8dac4::input-params ::POST::::{}
+2024-07-23 21:27:16::error::/v1/api/post/createPost::fda9e429-4f30-4aba-90e7-03d78ac8dac4::404 - 1ms - Response: {"status":404,"now":1721744836709}::{"message":"Trường phái không tồn tại"}
+2024-07-23 21:27:24::info::/v1/api/post/createPost::4559f95b-8267-4dd7-a1ba-a42d0d3d0498::input-params ::POST::::{}
+2024-07-23 21:27:24::error::/v1/api/post/createPost::4559f95b-8267-4dd7-a1ba-a42d0d3d0498::404 - 3ms - Response: {"status":404,"now":1721744844610}::{"message":"Thể loại không tồn tại"}
+2024-07-23 21:28:46::info::/v1/api/post/readPosts/669f5080b2ed10e519cbc81c::7855c29a-3cfb-4976-924f-a271d95fbc80::input-params ::GET::::{}
+2024-07-23 21:29:23::info::/v1/api/post/readPost/669fbd9a9f43a9cc713f9caa::7bd6f9a1-814d-417c-a0a9-77bd3e78c854::input-params ::GET::::{}
+2024-07-23 21:29:47::info::/v1/api/post/likePost/669fbd9a9f43a9cc713f9caa::6cc06966-7785-4819-906f-a95bfbe9b56b::input-params ::PATCH::::{}
+2024-07-23 21:30:18::info::/v1/api/post/readPostCategoriesWithPosts/669fbbb904d757fc09caf225::d296e2b5-d83a-428f-9d76-eb7d0d5f8d9b::input-params ::GET::::{}
+2024-07-23 21:30:41::info::/v1/api/post/readPostCategoriesWithPosts/669fbbb904d757fc09caf225::4578dd25-dddd-480b-834b-9f7ef373f007::input-params ::GET::::{}
+2024-07-23 21:31:17::info::/v1/api/post/readPostCategoriesWithPosts/669f5080b2ed10e519cbc81c::b57adf05-656e-4de4-8231-b68564c3abca::input-params ::GET::::{}
+2024-07-23 21:32:27::info::/v1/api/post/readPostCategoriesWithPosts/669f5080b2ed10e519cbc81c::cebe4ef2-3c0d-4447-8465-3a9334218d02::input-params ::GET::::{}
+2024-07-23 21:32:32::info::/v1/api/post/readPostCategoriesWithPosts/669f5080b2ed10e519cbc81d::67d66344-9fc6-475c-a2a9-58833ea830d8::input-params ::GET::::{}
+2024-07-23 21:32:32::error::/v1/api/post/readPostCategoriesWithPosts/669f5080b2ed10e519cbc81d::67d66344-9fc6-475c-a2a9-58833ea830d8::404 - 0ms - Response: {"status":404,"now":1721745152652}::{"message":"Họa sĩ không tồn tại"}
+2024-07-23 21:32:37::info::/v1/api/post/readPostCategoriesWithPosts/669f5080b2ed10e519cbc81c::82c89653-6904-4f04-9484-5ee1dfbb9d73::input-params ::GET::::{}
+2024-07-23 21:34:17::info::/v1/api/post/updatePost/669fbd9a9f43a9cc713f9cab::f6b485e7-65b0-4868-9a21-ddb7266a2d2c::input-params ::PATCH::::{}
+2024-07-23 21:34:19::error::/v1/api/post/updatePost/669fbd9a9f43a9cc713f9cab::f6b485e7-65b0-4868-9a21-ddb7266a2d2c::404 - 1ms - Response: {"status":404,"now":1721745259032}::{"message":"Bài viết không tồn tại"}
+2024-07-23 21:41:12::info::/v1/api/postCategory/createPostCategory::2c1f0de9-a095-41a7-b460-e464d043f7f5::input-params ::POST::::{"title":"YCH"}
+2024-07-23 21:41:25::info::/v1/api/post/updatePost/669fbd9a9f43a9cc713f9caa::228251ca-843f-4c1c-8f13-86260f1636a4::input-params ::PATCH::::{}
+2024-07-23 21:41:59::info::/v1/api/postCategory/readPostCategories/669f5080b2ed10e519cbc81c::954dd584-d841-43eb-b36c-9fae3ccfbd2e::input-params ::GET::::{}
+2024-07-23 21:42:14::info::/v1/api/postCategory/updatePostCategory/669fbbb904d757fc09caf225::40c6641b-66cd-4a99-9181-b9607c0fcd59::input-params ::PATCH::::{"title":"Vtuberr"}
+2024-07-23 21:42:14::error::/v1/api/postCategory/updatePostCategory/669fbbb904d757fc09caf225::40c6641b-66cd-4a99-9181-b9607c0fcd59::404 - 0ms - Response: {"status":404,"now":1721745734339}::{"message":"Thể loại không tồn tại"}
+2024-07-23 21:42:30::info::/v1/api/post/readArtworks/669f5080b2ed10e519cbc81c::f622dbff-7653-40f7-bad1-71679fe8ccea::input-params ::GET::::{}
+2024-07-23 21:43:15::info::/v1/api/auth/users/login::de43a136-0c96-42f4-acf5-2a8d2bb783f3::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-23 21:43:24::info::/v1/api/auth/users/login::ee0393b4-f221-42f8-b2cd-7b4be24d5bf0::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 21:43:28::info::/v1/api/auth/users/login::799d8da8-783b-48fd-b5f2-90add8668e6f::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-23 21:43:44::info::/v1/api/order/createOrder::38c04988-aded-4661-a5cd-d42bb1f15d0b::input-params ::POST::::{}
+2024-07-23 21:44:08::info::/v1/api/auth/users/login::8fd6011e-9c78-4426-94e5-c285678cd2b5::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"123456789"}
+2024-07-23 21:45:05::info::/v1/api/termOfService/createTermOfService::9dba5d9d-d113-4ab5-9bd9-1a790a46198f::input-params ::POST::::{"content":"This is TOS"}
+2024-07-23 21:45:05::error::/v1/api/termOfService/createTermOfService::9dba5d9d-d113-4ab5-9bd9-1a790a46198f::undefined - NaNms - Response: {"errors":{"title":{"name":"ValidatorError","message":"Path `title` is required.","properties":{"message":"Path `title` is required.","type":"required","path":"title"},"kind":"required","path":"title"}},"_message":"TermOfService validation failed","name":"ValidationError","message":"TermOfService validation failed: title: Path `title` is required."}::{"message":"TermOfService validation failed: title: Path `title` is required."}
+2024-07-23 21:46:39::info::/v1/api/termOfService/createTermOfService::4cf45d3f-0961-4a5a-8714-fea8d5ab0b0e::input-params ::POST::::{"title":"This is the title of TOS","content":"This is TOS"}
+2024-07-23 21:46:58::info::/v1/api/proposal/sendProposal/669fc1a9b9d1faa81c8700ed::48e6ed7c-b014-4781-8237-878d25362343::input-params ::POST::::{"title":"France's order","scope":"You will get a jpg file","startAt":"","deadline":"","price":80000,"termOfServiceId":"669fc24f3c8e00f3ed133492"}

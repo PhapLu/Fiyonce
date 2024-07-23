@@ -27,29 +27,32 @@ class OrderService {
         );
 
         //2. Check isDirect of order
-        if (isDirect == true) {
-            //direct order
+        if (isDirect == 'true') {
+            //Direct order
             const talent = await User.findById(talentChosenId);
-            const service = await commissionService.findById(
+            const service = await CommissionService.findById(
                 commissionServiceId
             );
 
-            if (!talent) throw new BadRequestError("Talent not found!");
+            if (!talent) throw new BadRequestError("Họa sĩ không tồn tại");
             if (!service)
-                throw new BadRequestError("commissionService not found!");
+                throw new BadRequestError("Dịch vụ không tồn tại");
             if (talent.role != "talent")
-                throw new AuthFailureError("He/She is not a talent!");
-            if (talent._id == userId)
-                throw new BadRequestError("You cannot choose yourself!");
+                throw new AuthFailureError("Người này không phải là họa sĩ");
+            if (talent._id.toString() == userId)
+                throw new BadRequestError("Bạn không thể tạo đơn hàng với bản thân");
             body.isDirect = true;
             body.talentChosenId = talentChosenId;
-            body.minPrice = commissionService.minPrice;
             body.commissionServiceId = commissionServiceId;
         } else {
-            //inDirect order
+            //InDirect order
             body.isDirect = false;
             body.talentChosenId = null;
         }
+        if(parseInt(body.minPrice) < commissionService.minPrice)
+            throw new BadRequestError("Giá tối thiểu không thể nhỏ hơn giá tối thiểu của dịch vụ");
+        if(parseInt(body.maxPrice) < parseInt(body.minPrice))
+            throw new BadRequestError("Giá tối đa không thể nhỏ hơn giá tối thiểu");
 
         //3. Upload req.files.files to cloudinary
         try {
@@ -82,16 +85,16 @@ class OrderService {
             };
         } catch (error) {
             console.log("Error uploading images or saving order:", error);
-            throw new Error("File upload or database save failed");
+            throw new BadRequestError("Tạo đơn hàng không thành công");
         }
     };
 
     static readOrder = async (orderId) => {
         const order = await Order.findById(orderId).populate(
             "talentChosenId",
-            "stageName avatar"
+            "stageName avatar fullName"
         );
-        if (!order) throw new NotFoundError("Order not found!");
+        if (!order) throw new NotFoundError("Đơn hàng không tồn tại");
 
         return {
             order,
@@ -102,7 +105,6 @@ class OrderService {
     static readOrders = async (req) => {
         const q = req.query;
         const filters = {
-            isTalentArchived: false,
             isMemberArchived: false,
             ...(q.isDirect && { isDirect: q.isDirect }),
         };
@@ -110,7 +112,7 @@ class OrderService {
         //1. Get all orders
         const orders = await Order.find(filters).populate(
             "talentChosenId",
-            "fullName avatar"
+            "fullName avatar stageName"
         );
 
         //2. Iterate over each order to add talentsApprovedCount
@@ -134,16 +136,24 @@ class OrderService {
         //1. check order and user
         const oldOrder = await Order.findById(orderId);
         const foundUser = await User.findById(userId);
-        if (!foundUser) throw new NotFoundError("User not found!");
-        if (!oldOrder) throw new NotFoundError("Order not found!");
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!oldOrder) throw new NotFoundError("Đơn hàng không tồn tại");
         if (oldOrder.memberId.toString() !== userId)
-            throw new AuthFailureError("You can update only your order");
-
-        //2. Check order status
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
+        
+        //2. Validate body
+        const body = req.body;
+        if(body.commissionServiceId || body.talentChosenId || body.memberId || body.status || body.isDirect || body.references || body.isTalentArchived)
+            throw new BadRequestError("Không thể cập nhật các trường này");
+        if(parseInt(body.minPrice) > parseInt(body.maxPrice))
+            throw new BadRequestError("Giá tối thiểu không thể lớn hơn giá tối đa");
+        
+        //3. Check order status
         if (oldOrder.status != "pending")
-            throw new BadRequestError("You cannot update order on this stage!");
+            throw new BadRequestError("Bạn không thể cập nhật đơn hàng ở bước này");
+        
+        //4. Handle file uploads if new files were uploaded
         try {
-            //3. Handle file uploads if new files were uploaded
             if (req.files && req.files.files && req.files.files.length > 0) {
                 // Upload new files to Cloudinary
                 const uploadPromises = req.files.files.map((file) =>
@@ -159,7 +169,7 @@ class OrderService {
                 const references = uploadResults.map(
                     (result) => result.secure_url
                 );
-                req.body.references = references;
+                body.references = references;
 
                 //Delete old images from cloudinary
                 const publicIds = oldOrder.references.map((reference) =>
@@ -170,36 +180,38 @@ class OrderService {
                 );
             }
 
-            //4. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...oldOrder.toObject(), ...req.body };
+            //5. Merge existing service fields with body to ensure fields not provided in body are retained
+            const updatedFields = { ...oldOrder.toObject(), ...body };
 
-            //5. update Order
+            //6. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
                 updatedFields,
                 { new: true }
             );
+            
+            //7. Send email to talent
+            //await brevoSendEmail(foundUser.email, 'Order rejected', 'Your order has been rejected by talent')
 
             return {
                 order: updatedOrder,
             };
         } catch (error) {
             console.log("Error in updating commission service:", error);
-            throw new Error("Service update failed");
+            throw new Error("Cập nhật đơn hàng không thành công");
         }
     };
-
     //End Order CRUD
 
     static readMemberOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId);
-        if (!foundUser) throw new NotFoundError("User not found!");
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
 
         //2. Get orders
         const orders = await Order.find({ memberId: clientId }).populate(
             "talentChosenId",
-            "stageName avatar"
+            "stageName fullName avatar"
         );
 
         return {
@@ -210,9 +222,9 @@ class OrderService {
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
         const foundTalent = await User.findById(talentId);
-        if (!foundTalent) throw new NotFoundError("Talent not found!");
+        if (!foundTalent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (foundTalent.role !== "talent")
-            throw new BadRequestError("You are not a talent!");
+            throw new BadRequestError("Bạn không phải là họa sĩ");
 
         try {
             // 2. Aggregate to get all orders involving the talent
@@ -359,11 +371,16 @@ class OrderService {
             return { talentOrderHistory: orders };
         } catch (error) {
             console.error("Error fetching orders by talent:", error);
-            throw error;
+            throw new BadRequestError('Lỗi khi lấy thông tin đơn hàng của họa sĩ');
         }
     };
 
     static readArchivedOrderHistory = async (userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        
+        //2. Get archived orders
         try {
             // Aggregate to get all archived orders involving the user
             const orders = await Order.aggregate([
@@ -461,13 +478,12 @@ class OrderService {
                 },
             ]);
 
-            console.log("ARCHIVED ORDER HISTORY");
-            console.log(orders.length);
-
-            return { archivedOrderHistory: orders };
+            return { 
+                archivedOrderHistory: orders 
+            };
         } catch (error) {
             console.error("Error fetching archived orders:", error);
-            throw error;
+            throw new BadRequestError('Lỗi khi lấy thông tin đơn hàng đã lưu trữ');
         }
     };
 
@@ -475,15 +491,15 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!order) throw new NotFoundError("Đơn hàng không tồn tại");
 
+        //2. Archive order
         if (userId == order.memberId.toString()) {
             order.isMemberArchived = true;
         } else {
             order.isTalentArchived = true;
         }
-
         order.save();
 
         return {
@@ -494,8 +510,8 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!order) throw new NotFoundError("Đơn hàng không tồn tại");
 
         if (userId == order.memberId.toString()) {
             order.isMemberArchived = false;
@@ -510,22 +526,20 @@ class OrderService {
         };
     };
 
-    static denyOrder = async (userId, orderId) => {
+    static rejectOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!order) throw new NotFoundError("Đơn hàng không tồn tại");
 
         //2. Check if user is authorized to deny order
         if (user.role !== "talent")
-            throw new AuthFailureError(
-                "You are not authorized to deny this order"
-            );
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //3. Check if order status is pending
         if (order.status !== "pending")
-            throw new BadRequestError("You cannot deny this order");
+            throw new BadRequestError("Bạn không thể từ chối đơn hàng ở bước này");
 
         //4. Deny order
         order.status = "rejected";
@@ -534,7 +548,7 @@ class OrderService {
         //5. Show order
         const deniedOrder = order.populate(
             "talentChosenId",
-            "stageName avatar"
+            "stageName avatar fullName"
         );
 
         //6. Send email to user
@@ -552,8 +566,8 @@ class OrderService {
     //     //1. Check user and order
     //     const foundUser = await User.findById(userId)
     //     const order = await Order.findById(orderId)
-    //     if(!foundUser) throw new NotFoundError('User not found!')
-    //     if(!order) throw new NotFoundError('Order not found!')
+    //     if(!foundUser) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
+    //     if(!order) throw new NotFoundError('Đơn hàng không tồn tại')
     //     if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
 
     //     //2. Check order status

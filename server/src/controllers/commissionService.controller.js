@@ -4,35 +4,35 @@ import CommissionServiceService from "../services/commissionService.service.js"
 class ServiceController{
     createCommissionService = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Create service success!',
+            message: 'Tạo dịch vụ thành công',
             metadata: await CommissionServiceService.createCommissionService(req.userId, req)
         }).send(res)
     }
 
     readCommissionService = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read service success!',
+            message: 'Xem dịch vụ thành công',
             metadata: await CommissionServiceService.readCommissionService(req.params.commissionServiceId)
         }).send(res)
     }
 
     readCommissionServices = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read services success!',
+            message: 'Xem dịch vụ thành công',
             metadata: await CommissionServiceService.readCommissionServices(req.params.talentId)
         }).send(res)
     }
 
     updateCommissionService = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Update service success!',
+            message: 'Cập nhật dịch vụ thành công!',
             metadata: await CommissionServiceService.updateCommissionService(req.userId, req.params.commissionServiceId, req)
         }).send(res)
     }
 
     deleteCommissionService = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Delete service success!',
+            message: 'Xóa dịch vụ thành công',
             metadata: await CommissionServiceService.deleteCommissionService(req.userId, req.params.commissionServiceId)
         }).send(res)
     }

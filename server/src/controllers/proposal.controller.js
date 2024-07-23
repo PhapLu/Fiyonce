@@ -4,7 +4,7 @@ import ProposalService from "../services/proposal.service.js"
 class ProposalController{
     sendProposal = async(req, res, next) => {
         new SuccessResponse({
-            message: 'send proposal to inDirect order success!',
+            message: 'Tạo hợp đồng thành công',
             metadata: await ProposalService.sendProposal(req.userId, req.params.orderId, req.body)
         }).send(res)
     }

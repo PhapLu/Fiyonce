@@ -31,7 +31,7 @@ class UploadController{
         }, req.userId, req.params.profileId, req.body.type)
     
         new SuccessResponse({
-            message: 'Upload file successfully!',
+            message: 'Cập nhật thông tin cá nhân thành công',
             metadata: uploadResult
         }).send(res)
     }

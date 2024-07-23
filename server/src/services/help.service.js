@@ -12,13 +12,13 @@ class HelpService {
     static createHelpTheme = async (adminId, body) => {
         //1. Check admin
         const admin = await User.findById(adminId);
-        if (!admin) throw new AuthFailureError("Admin not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Bạn chưa nhập tiêu đề");
 
         //3. Create help theme
         const helpTheme = await HelpTheme.create(body);
@@ -31,16 +31,16 @@ class HelpService {
     static createHelpTopic = async (adminId, body) => {
         //1. Check admin
         const admin = await User.findById(adminId);
-        if (!admin) throw new AuthFailureError("Admin not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Validate the body
         const { helpThemeId } = body;
         const helpTheme = await HelpTheme.findById(helpThemeId);
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
-        if (!helpTheme) throw new BadRequestError("Help theme not found");
+            throw new BadRequestError("Bạn chưa nhập tiêu đề");
+        if (!helpTheme) throw new BadRequestError("Chủ đề trợ giúp không tồn tại");
 
         //3. Create help topic
         const helpTopic = await HelpTopic.create(body);
@@ -53,16 +53,16 @@ class HelpService {
     static createHelpArticle = async (adminId, body) => {
         //1. Check admin
         const admin = await User.findById(adminId);
-        if (!admin) throw new AuthFailureError("Admin not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Validate the body
         const { helpTopicId } = body;
         const helpTopic = await HelpTopic.findById(helpTopicId);
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
-        if (!helpTopic) throw new BadRequestError("Help topic not found");
+            throw new BadRequestError("Bạn chưa nhập tiêu đề");
+        if (!helpTopic) throw new BadRequestError("Chủ đề trợ giúp không tồn tại");
 
         //3. Create help article
         const helpArticle = await HelpArticle.create(body);
@@ -75,7 +75,7 @@ class HelpService {
     static readHelpTheme = async (helpThemeId) => {
         //1. Check help theme
         const helpTheme = await HelpTheme.findById(helpThemeId);
-        if (!helpTheme) throw new NotFoundError("Help theme not found");
+        if (!helpTheme) throw new NotFoundError("Chủ đề trợ giúp không tồn tại");
 
         return {
             helpTheme,
@@ -85,7 +85,7 @@ class HelpService {
     static readHelpTopic = async (helpTopicId) => {
         //1. Check help topic
         const helpTopic = await HelpTopic.findById(helpTopicId);
-        if (!helpTopic) throw new NotFoundError("Help topic not found");
+        if (!helpTopic) throw new NotFoundError("Chủ đề trợ giúp không tồn tại");
 
         return {
             helpTopic,
@@ -95,7 +95,7 @@ class HelpService {
     static readHelpArticle = async (helpArticleId) => {
         //1. Check help article
         const helpArticle = await HelpArticle.findById(helpArticleId);
-        if (!helpArticle) throw new NotFoundError("Help article not found");
+        if (!helpArticle) throw new NotFoundError("Bài viết trợ giúp không tồn tại");
 
         return {
             helpArticle,
@@ -134,14 +134,14 @@ class HelpService {
         const admin = await User.findById(adminId);
         const helpTheme = await HelpTheme.findById(helpThemeId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpTheme) throw new NotFoundError("Help theme not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!helpTheme) throw new NotFoundError("Chủ đề trợ giúp không tồn tại");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Bạn chưa nhập tiêu đề");
 
         //3. Update help theme
         const updatedHelpTheme = await HelpTheme.findByIdAndUpdate(
@@ -160,14 +160,14 @@ class HelpService {
         const admin = await User.findById(adminId);
         const helpTopic = await HelpTopic.findById(helpTopicId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpTopic) throw new NotFoundError("Help topic not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!helpTopic) throw new NotFoundError("Chủ đề trợ giúp không tồn tại");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Bạn chưa nhập tiêu đề");
 
         //3. Update help topic
         const updatedHelpTopic = await HelpTopic.findByIdAndUpdate(
@@ -186,14 +186,14 @@ class HelpService {
         const admin = await User.findById(adminId);
         const helpArticle = await HelpArticle.findById(helpArticleId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpArticle) throw new NotFoundError("Help article not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!helpArticle) throw new NotFoundError("Bài viết trợ giúp không tồn tại");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Bạn chưa nhập tiêu đề");
         if (body.content === "")
             throw new BadRequestError("Content cannot be empty");
 
@@ -214,10 +214,10 @@ class HelpService {
         const admin = await User.findById(adminId);
         const helpTheme = await HelpTheme.findById(helpThemeId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpTheme) throw new NotFoundError("Help theme not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!helpTheme) throw new NotFoundError("Chủ đề trợ giúp không tồn tại");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Delete help theme
         await HelpTheme.findByIdAndDelete(helpThemeId);
@@ -232,10 +232,10 @@ class HelpService {
         const admin = await User.findById(adminId);
         const helpTopic = await HelpTopic.findById(helpTopicId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpTopic) throw new NotFoundError("Help topic not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!helpTopic) throw new NotFoundError("Chủ đề trợ giúp không tồn tại");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Delete help topic
         await HelpTopic.findByIdAndDelete(helpTopicId);
@@ -250,10 +250,10 @@ class HelpService {
         const admin = await User.findById(adminId);
         const helpArticle = await HelpArticle.findById(helpArticleId);
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpArticle) throw new NotFoundError("Help article not found");
+        if (!admin) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!helpArticle) throw new NotFoundError("Bài viết trợ giúp không tồn tại");
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Delete help article
         await HelpArticle.findByIdAndDelete(helpArticleId);

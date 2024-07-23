@@ -1262,3 +1262,53 @@
 2024-07-21 10:10:35::info::/v1/api/post/likePost/668bed3f06adf27e11cc6f1c::1e79935e-a401-45d6-8716-bb7f839b4325::input-params ::PATCH::::{}
 2024-07-21 10:10:36::info::/v1/api/post/likePost/668bed3f06adf27e11cc6f1c::05d5320b-9497-415f-b5f9-a57de48eea73::input-params ::PATCH::::{}
 2024-07-21 10:10:38::info::/v1/api/post/likePost/668bed3f06adf27e11cc6f1c::fee78f29-b282-417a-bcba-78ab701ed503::input-params ::PATCH::::{}
+2024-07-21 16:52:29::info::/v1/api/user/me::e3131d3e-350b-4344-b631-b2be4568f77d::input-params ::GET::::{}
+2024-07-21 16:52:29::error::/v1/api/user/me::e3131d3e-350b-4344-b631-b2be4568f77d::403 - 3ms - Response: {"status":403,"now":1721555549807}::{"message":"Access token missing"}
+2024-07-21 16:52:29::info::/v1/api/movement/readMovements::4341d544-1d11-40a7-a278-891ce73f37b5::input-params ::GET::::{}
+2024-07-21 16:52:30::info::/v1/api/order/readOrders::9fc76ec0-87b0-4e0e-92f9-c6e5f1c64f20::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-21 16:52:39::info::/v1/api/auth/users/login::0305a532-c49e-4846-87bf-b09809cf2349::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"123456789"}
+2024-07-21 16:52:44::info::/v1/api/movement/readMovements::737928b9-0290-49de-9178-d2348717ea6e::input-params ::GET::::{}
+2024-07-21 16:52:49::info::/v1/api/user/me::df0380a6-ac79-40b7-9a36-443c290d4bec::input-params ::GET::::{}
+2024-07-21 16:52:50::info::/v1/api/movement/readMovements::1cef9b9f-7974-4598-9ee7-3c82699f31ee::input-params ::GET::::{}
+2024-07-21 16:52:50::info::/v1/api/order/readOrders::402ed5f5-6bd5-45a1-8b77-9fe3549c1cf5::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-21 16:52:54::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::e4bf9bcc-cb8c-46cf-8ba2-6ea49a6d1823::input-params ::PATCH::::{"lastViewConversations":1721555574662}
+2024-07-21 16:52:54::info::/v1/api/conversation/readConversations::01d2629d-9a11-4956-9035-d877a5c65b54::input-params ::GET::::{}
+2024-07-21 16:52:57::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::a9606e62-2894-461f-b773-b10931fa6978::input-params ::PATCH::::{"lastViewConversations":1721555577424}
+2024-07-21 16:52:57::info::/v1/api/conversation/readConversations::7c22710f-0ce8-44aa-acd8-b0352b04789a::input-params ::GET::::{}
+2024-07-21 16:53:00::info::/v1/api/user/updateUserProfile/666aa5e8f2cecdc820c83994::bcfc548b-3629-409a-83d1-329164bb53fd::input-params ::PATCH::::{"lastViewConversations":1721555580099}
+2024-07-21 16:53:00::info::/v1/api/conversation/readConversations::cdeaff31-e811-4cf2-93aa-20bef9e75f88::input-params ::GET::::{}
+2024-07-21 16:58:57::info::/v1/api/movement/readMovements::2dfa9168-8a58-425b-b3d9-34006144aa62::input-params ::GET::::{}
+2024-07-21 16:58:57::info::/v1/api/order/readOrders::5c1876a6-d201-47c3-9ea3-821474542d9b::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-21 16:59:02::info::/v1/api/recommender/readPopularPosts::75b3ba40-d004-445d-88af-84b19114d002::input-params ::GET::::{}
+2024-07-21 16:59:06::info::/v1/api/post/readPost/668a04a0f2fb387fbf94f96f::c255be70-225e-48f0-a4a6-09d453ddb8e6::input-params ::GET::::{}
+2024-07-21 16:59:06::error::/v1/api/post/readPost/668a04a0f2fb387fbf94f96f::c255be70-225e-48f0-a4a6-09d453ddb8e6::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 16:59:09::info::/v1/api/recommender/readPopularPosts::d9a2939b-569c-486f-bf33-bcc6cfa273c4::input-params ::GET::::{}
+2024-07-21 16:59:10::info::/v1/api/post/readPost/668a084e430a3fb17b113ffc::e8935cce-b8d9-49a7-aea0-cc21c8af0380::input-params ::GET::::{}
+2024-07-21 16:59:10::error::/v1/api/post/readPost/668a084e430a3fb17b113ffc::e8935cce-b8d9-49a7-aea0-cc21c8af0380::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 16:59:11::info::/v1/api/recommender/readPopularPosts::11aa8990-b0d1-4c75-80f6-60100048b695::input-params ::GET::::{}
+2024-07-21 17:00:12::info::/v1/api/post/readPost/669bbe408c48291a3682b690::0100d0cc-4f0b-489f-bccc-634e03578203::input-params ::GET::::{}
+2024-07-21 17:00:12::error::/v1/api/post/readPost/669bbe408c48291a3682b690::0100d0cc-4f0b-489f-bccc-634e03578203::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 17:00:15::info::/v1/api/recommender/readPopularPosts::8de0b115-692f-4e0b-b1f2-49ff7897f305::input-params ::GET::::{}
+2024-07-21 17:00:16::info::/v1/api/post/readPost/669bbe408c48291a3682b690::4c71c885-22d3-4d2b-bdc4-685092d47262::input-params ::GET::::{}
+2024-07-21 17:00:16::error::/v1/api/post/readPost/669bbe408c48291a3682b690::4c71c885-22d3-4d2b-bdc4-685092d47262::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 17:00:19::info::/v1/api/recommender/readPopularPosts::081c17c6-4897-4323-bddf-879a5ff4dc86::input-params ::GET::::{}
+2024-07-21 17:00:19::info::/v1/api/post/readPost/669bbe408c48291a3682b690::714c68cf-53ff-43e1-ab06-2f4d6da7ea06::input-params ::GET::::{}
+2024-07-21 17:00:19::error::/v1/api/post/readPost/669bbe408c48291a3682b690::714c68cf-53ff-43e1-ab06-2f4d6da7ea06::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 17:00:20::info::/v1/api/recommender/readPopularPosts::39fdec4f-e623-489f-9ef2-7fb860ec4a15::input-params ::GET::::{}
+2024-07-21 17:00:26::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::fa8bf3bf-8d8a-4789-bdc2-e29cab733497::input-params ::GET::::{}
+2024-07-21 17:00:26::info::/v1/api/order/readTalentOrderHistory::7b018036-e16f-4a08-a196-a496aa0aaf18::input-params ::GET::::{}
+2024-07-21 17:00:26::info::/v1/api/order/readMemberOrderHistory::486a6cb5-8e96-44eb-a043-034530bfe75d::input-params ::GET::::{}
+2024-07-21 17:00:26::info::/v1/api/order/readArchivedOrderHistory::c974908a-7104-4193-843e-f0a88a05a9ca::input-params ::GET::::{}
+2024-07-21 17:00:26::info::/v1/api/termOfService/readTermOfServices::fa23180d-a306-40ee-a840-31e7839dfbda::input-params ::GET::::{}
+2024-07-21 17:00:26::error::/v1/api/order/readTalentOrderHistory::7b018036-e16f-4a08-a196-a496aa0aaf18::403 - 1ms - Response: {"status":403,"now":1721556026920}::{"message":"You are not a talent!"}
+2024-07-21 17:00:33::info::/v1/api/talentRequest/readTalentRequestStatus::b70023ec-ea5c-4926-8a53-30f661003ba1::input-params ::GET::::{}
+2024-07-21 17:00:34::error::/v1/api/talentRequest/readTalentRequestStatus::b70023ec-ea5c-4926-8a53-30f661003ba1::404 - 0ms - Response: {"status":404,"now":1721556034073}::{"message":"Talent request not found"}
+2024-07-21 17:00:34::info::/v1/api/talentRequest/readTalentRequestStatus::ea62c414-10d5-4189-b08d-2053527019bf::input-params ::GET::::{}
+2024-07-21 17:00:34::error::/v1/api/talentRequest/readTalentRequestStatus::ea62c414-10d5-4189-b08d-2053527019bf::404 - 0ms - Response: {"status":404,"now":1721556034230}::{"message":"Talent request not found"}
+2024-07-21 17:03:31::info::/v1/api/movement/readMovements::de8d44da-726b-4832-82f0-65515e821e39::input-params ::GET::::{}
+2024-07-21 17:03:31::info::/v1/api/user/readUserProfile/666aa5e8f2cecdc820c83994::70f57400-06b9-4f28-990d-fea21f60f66f::input-params ::GET::::{}
+2024-07-21 17:03:33::info::/v1/api/order/readOrders::9c91d9cb-9687-4706-b770-36f290421ee3::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-21 17:03:37::info::/v1/api/recommender/readPopularPosts::a342c094-bcf6-4f92-b765-12d797730e9e::input-params ::GET::::{}
+2024-07-21 17:03:38::info::/v1/api/post/readPost/669bbe408c48291a3682b690::2ae380c9-d90b-4ac4-bad0-fae7637fa1e7::input-params ::GET::::{}
+2024-07-21 17:03:39::error::/v1/api/post/readPost/669bbe408c48291a3682b690::2ae380c9-d90b-4ac4-bad0-fae7637fa1e7::undefined - NaNms - Response: {}::{"message":"Failed to read post"}
+2024-07-21 17:06:48::info::/v1/api/movement/readMovements::83169c03-8866-4347-815b-f7393b493b08::input-params ::GET::::{}

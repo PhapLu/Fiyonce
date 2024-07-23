@@ -15,8 +15,8 @@ class TermOfServiceService {
             throw new BadRequestError("User is not a talent");
 
         //2. Validate body
-        const { content } = body;
-        if (!content) throw new BadRequestError("All fields are required");
+        const { title, content } = body;
+        if (!content || !title) throw new BadRequestError("All fields are required");
 
         //3. Create termOfService
         const termOfService = new TermOfService({

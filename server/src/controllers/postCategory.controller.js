@@ -4,27 +4,27 @@ import PostCategoryService from "../services/postCategory.service.js"
 class PostCategoryController{
     createPostCategory = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Create postCategory success!',
+            message: 'Tạo album thành công',
             metadata: await PostCategoryService.createPostCategory(req.userId, req.body)
         }).send(res)
     }
     readPostCategories = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Read postCategories success!',
+            message: 'Xem album thành công',
             metadata: await PostCategoryService.readPostCategories(req.params.talentId)
         }).send(res)
     }
     
     updatePostCategory = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Update postCategory success!',
+            message: 'Cập nhật album thành công',
             metadata: await PostCategoryService.updatePostCategory(req.userId, req.params.postCategoryId, req.body)
         }).send(res)
     }
 
     deletePostCategory = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Delete postCategory success!',
+            message: 'Xóa album thành công',
             metadata: await PostCategoryService.deletePostCategory(req.userId, req.params.postCategoryId)
         }).send(res)
     }

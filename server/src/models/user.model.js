@@ -16,7 +16,6 @@ const UserSchema = new Schema(
             enum: ["member", "talent", "admin"],
             default: "member",
         },
-        jobTitle: { type: String, trim: true },
         avatar: {
             type: String,
             default: "/uploads/pastal_system_default_avatar.png",
@@ -36,7 +35,7 @@ const UserSchema = new Schema(
         socialLinks: [{ type: String, required: true }],
         views: { type: Number, default: 0 },
         postBookmark: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-        jobTitle: { type: String, default: "" },
+        jobTitle: { type: String, trim: true, default: "" },
         status: {
             type: String,
             default: "pending",

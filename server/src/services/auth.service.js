@@ -159,7 +159,7 @@ class AuthService {
             fullName: otpRecord.fullName,
             email: otpRecord.email,
             password: otpRecord.password,
-            role: "member", // Use the string directly
+            role: "member",
         });
 
         //Create qrCode
@@ -182,8 +182,8 @@ class AuthService {
         newUser.accessToken = token;
         await newUser.save();
 
-        const { password: hiddenPassword, ...userWithoutPassword } =
-            newUser.toObject(); // Ensure toObject() is used to strip the password
+        const { password: hiddenPassword, ...userWithoutPassword } = newUser.toObject(); // Ensure toObject() is used to strip the password
+        
         return {
             code: 200,
             metadata: {
@@ -195,9 +195,8 @@ class AuthService {
     static forgotPassword = async ({ email }) => {
         // 1. Find the user by email
         const user = await User.findOne({ email }).lean();
-        if (!user) {
+        if (!user) 
             throw new BadRequestError("Tài khoản chưa được đăng kí");
-        }
 
         const oldOtp = await ForgotPasswordOTP.findOne({ email }).lean();
         const today = new Date();
@@ -316,15 +315,14 @@ class AuthService {
         const user = await User.findOne({ email });
 
         // 2. Check if the OTP is correct
-        if (!otpRecord || otpRecord.otp !== otp) {
+        if (!otpRecord) 
             throw new BadRequestError("Mã OTP không chính xác");
-        }
 
-        if (otpRecord.expiredAt < new Date()) {
+        if (otpRecord.expiredAt < new Date()) 
             throw new BadRequestError("Mã OTP đã hết hạn");
-        }
 
-        if (!user) throw new BadRequestError("Tài khoản chưa được đăng kí");
+        if (!user) 
+            throw new BadRequestError("Tài khoản chưa được đăng kí");
 
         //2. Check if the OTP is verified
         if (!otpRecord.isVerified)
