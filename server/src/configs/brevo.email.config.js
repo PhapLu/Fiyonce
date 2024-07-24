@@ -92,7 +92,7 @@ async function brevoSendEmail(to, subject, subjectMessage, verificationCode) {
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="https://res.cloudinary.com/fiyonce/image/upload/v1717647058/fiyonce/system/email_logo_aedc4w.png" alt="Pastal">
+                    <img src="https://res.cloudinary.com/fiyonce/image/upload/v1721793532/fiyonce/system/email_logo_fqu2hq.png" alt="Pastal">
                 </div>
                 <div class="content">
                     <div class="content_container">

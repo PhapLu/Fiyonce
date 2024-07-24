@@ -4,17 +4,6 @@ dotenv.config()
 import AuthService from "../services/auth.service.js"
 import { CREATED, SuccessResponse } from "../core/success.response.js"
 class AuthController {
-    // handlerRefreshToken = async(req, res, next) =>{
-    //     new SuccessResponse({
-    //         message: 'Get token success!',
-    //         metadata: await AuthService.handlerRefreshToken({
-    //             refreshToken: req.refreshToken,
-    //             user: req.user,
-    //             keyStore: req.keyStore
-    //         })
-    //     })
-    // }
-
     login = async(req, res, next) =>{
         try {
             const { metadata, code } = await AuthService.login(req.body)
@@ -38,28 +27,7 @@ class AuthController {
             next(error) // Pass error to error handler middleware
         }
     }
-    // logout = async(req, res, next) =>{
-    //     try {
-    //         // Call the logout service function
-    //         console.log("KEYSTORE:",req.keyStore)
-    //         const keyStore = req.keyStore
-    //         console.log(keyStore)
-    //         console.log("Req User:", req.user)
-    //         await AuthService.logout(keyStore)
-    //         // Clearing the accessToken cookie
-    //         res.clearCookie("accessToken", {
-    //             sameSite: "none",
-    //             secure: true,
-    //         })
-    //         // Sending success response
-    //         new SuccessResponse({
-    //             message: "User has been logged out."
-    //         }).send(res)
-    //     } catch (error) {
-    //         // Handling errors
-    //         next(error)
-    //     }
-    // }
+
     logout = async(req, res, next) =>{
         res.clearCookie("accessToken", {
             sameSite: "none",

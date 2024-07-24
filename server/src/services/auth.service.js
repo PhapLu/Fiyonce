@@ -68,7 +68,7 @@ class AuthService {
                 // Same day request
                 if (oldOtp.requestCount >= 10) {
                     throw new BadRequestError(
-                        "Error: OTP request limit reached for today"
+                        "Số lần gửi yêu cầu của bạn đã vượt quá giới hạn trong ngày"
                     );
                 } else {
                     // Increment request count and generate new OTP
@@ -130,7 +130,7 @@ class AuthService {
             );
         } catch (error) {
             console.log("Error sending email:", error);
-            throw new Error("Error sending email");
+            throw new BadRequestError("Gửi email không thành công");
         }
         return {
             code: 201,
@@ -212,7 +212,7 @@ class AuthService {
                 // Same day request
                 if (oldOtp.requestCount >= 10) {
                     throw new BadRequestError(
-                        "Error: OTP request limit reached for today"
+                        "Số lần gửi yêu cầu của bạn đã vượt quá giới hạn trong ngày"
                     );
                 } else {
                     // Increment request count and generate new OTP
@@ -272,7 +272,7 @@ class AuthService {
             );
         } catch (error) {
             console.error(error);
-            throw new Error("Error sending email");
+            throw new BadRequestError("Gửi email không thành công");
         }
 
         return {
