@@ -53,7 +53,16 @@ export default function UpdateCommissionService({
     });
 
     const [inputs, setInputs] = useState({
-        ...updateCommissionService
+        _id: updateCommissionService._id || "",
+        movementId: updateCommissionService.movementId || "",
+        serviceCategoryId: updateCommissionService.serviceCategoryId || "",
+        title: updateCommissionService.title || "",
+        deliverables: updateCommissionService.deliverables || "",
+        artworks: updateCommissionService.artworks || "",
+        minPrice: updateCommissionService.minPrice || "",
+        notes: updateCommissionService.notes || "",
+        termOfServiceId: updateCommissionService.termOfServiceId || "",
+
     });
     const [errors, setErrors] = useState({});
     const [isSubmitUpdateCommissionServiceLoading, setIsSubmitUpdateCommissionServiceLoading] = useState(false);
@@ -96,7 +105,7 @@ export default function UpdateCommissionService({
         };
     }, []);
 
-   
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;

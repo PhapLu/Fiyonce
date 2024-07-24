@@ -547,6 +547,45 @@ class OrderService {
             order: deniedOrder,
         };
     };
+
+    static cancelOrder = async (userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId);
+        const order = await Order.findById(orderId);
+        if (!user) throw new NotFoundError("User not found");
+        if (!order) throw new NotFoundError("Order not found");
+
+        //2. Check if user is authorized to deny order
+        if (order.memberId != userId)
+            throw new AuthFailureError(
+                "You are not authorized to deny this order"
+            );
+
+        //3. Check if order status is pending
+        if (order.status !== "pending")
+            throw new BadRequestError("You cannot deny this order");
+
+        //4. Deny order
+        order.status = "canceled";
+        order.save();
+
+        //5. Show order
+        const deniedOrder = order.populate(
+            "talentChosenId",
+            "stageName avatar"
+        );
+
+        //6. Send email to user
+        // try {
+        //     await brevoSendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
+        // } catch (error) {
+        //     throw new Error('Email service error')
+        // }
+
+        return {
+            order: deniedOrder,
+        };
+    };
     // static deleteOrder = async(userId, orderId) => {
     //     //1. Check user and order
     //     const foundUser = await User.findById(userId)

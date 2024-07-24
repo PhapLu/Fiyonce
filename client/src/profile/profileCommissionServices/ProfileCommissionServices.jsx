@@ -27,8 +27,7 @@ import "./ProfileCommissionServices.scss";
 export default function ProfileCommissionServices() {
     const { userId } = useParams();
     const {userInfo} = useAuth();
-    const profileInfo = useOutletContext();
-    // alert(profileInfo);
+    const {profileInfo} = useOutletContext();
     const queryClient = useQueryClient();
 
     const isProfileOwner = userInfo?._id === userId;
@@ -133,6 +132,7 @@ export default function ProfileCommissionServices() {
             },
         }
     );
+
 
 
     // Commission Service Category
@@ -267,7 +267,7 @@ export default function ProfileCommissionServices() {
 
             {commissionServiceCategories?.length <= 0 ?
                 (
-                    <p>{isProfileOwner ? "Bạn" : `${profileInfo?.stageName || profileInfo?.fullName}`} hiện chưa có dịch vụ nào.</p>
+                    <p>{isProfileOwner ? "Bạn" : `${profileInfo?.fullName}`} hiện chưa có dịch vụ nào.</p>
                 ) : (commissionServiceCategories?.map((category, index) => (
                     <div
                         key={index}

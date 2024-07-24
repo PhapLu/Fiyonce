@@ -48,6 +48,7 @@ const OrderSchema = new mongoose.Schema(
         isTalentArchived: { type: Boolean, default: false },
         isMemberArchived: { type: Boolean, default: false },
         rejectMessage: { type: String },
+        cancelMessage: { type: String },
         minPrice: { type: Number },
         maxPrice: { type: Number },
         purpose: { type: String, enum: ["personal", "commercial"] },

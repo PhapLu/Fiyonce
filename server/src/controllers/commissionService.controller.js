@@ -12,7 +12,7 @@ class ServiceController{
     readCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read service success!',
-            metadata: await CommissionServiceService.readCommissionService(req.params.commissionServiceId)
+            metadata: await CommissionServiceService.readCommissionService(req, req.params.commissionServiceId)
         }).send(res)
     }
 

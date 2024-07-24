@@ -360,7 +360,8 @@ img {
         color: var(--pending-status-color);
     }
 
-    &.rejected {
+    &.rejected,
+    &.canceled {
         background-color: var(--rejected-status-bg-color);
         color: var(--rejected-status-color);
     }

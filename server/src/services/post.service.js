@@ -178,7 +178,7 @@ class PostService {
 
             // Check if user is post owner
             if (userId !== post.talentId) {
-                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
+                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });
             }
         } else {
             // Remove postBookmark

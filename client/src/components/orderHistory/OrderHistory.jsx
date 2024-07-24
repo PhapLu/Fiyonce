@@ -38,10 +38,9 @@ export default function OrderHistory() {
     const { userInfo } = useAuth();
     const [showCommissionTosView, setShowCommissionTosView] = useState();
     const [overlayVisible, setOverlayVisible] = useState();
-    const [orderHistoryType, setOrderHistoryType] = useState(userInfo.role);
+    const [orderHistoryType, setOrderHistoryType] = useState(userInfo?.role === "talent" ? "talent" : "member");
 
     const fetchTalentOrderHistory = async () => {
-        console.log("FETCH 01")
         try {
             const response = await apiUtils.get(`/order/readTalentOrderHistory`);
             return response.data.metadata.talentOrderHistory;
@@ -51,8 +50,6 @@ export default function OrderHistory() {
     };
 
     const fetchMemberOrderHistory = async () => {
-        console.log("FETCH 02")
-
         try {
             const response = await apiUtils.get(`/order/readMemberOrderHistory`);
             return response.data.metadata.memberOrderHistory;
@@ -62,8 +59,6 @@ export default function OrderHistory() {
     };
 
     const fetchArchivedOrderHistory = async () => {
-        console.log("FETCH 03")
-
         try {
             const response = await apiUtils.get(`/order/readArchivedOrderHistory`);
             console.log(response)

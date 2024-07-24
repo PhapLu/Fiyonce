@@ -47,9 +47,10 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
         try {
             const response = await apiUtils.get(`/commissionService/readCommissionService/${commissionServiceId}`);
             console.log(response.data.metadata.commissionService)
-            console.log(commissionService)
+            // console.log(commissionService)
             return response.data.metadata.commissionService;
         } catch (error) {
+            console.log(error)
             return null;
         }
     }
@@ -188,16 +189,19 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                 </div>
                             </div>
 
-                            <button
-                                className="btn btn-6 btn-md form__submit-btn"
-                                onClick={handleShowCreateCommissionOrderBtn}
-                            >
-                                Đặt ngay
-                            </button>
+                            <div className="form__submit-btn-container">
+                                <button
+                                    className="btn btn-2 btn-md form__submit-btn-item"
+                                    onClick={handleShowCreateCommissionOrderBtn}
+                                >
+                                    Đặt ngay
+                                </button>
+                            </div>
+
                         </div>
                     )
                     : (
-                        <CreateCommissionOrder setShowCreateCommissionOrderForm={setShowCreateCommissionOrder} isDirect={true} commissionService={commissionService} />
+                        <CreateCommissionOrder setShowCreateCommissionOrder={setShowCreateCommissionOrder} setOverlayVisible={setOverlayVisible} isDirect={true} commissionService={commissionService} />
                     )
             }
         </>
