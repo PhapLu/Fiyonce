@@ -36,53 +36,34 @@ import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissio
 export default function OrderHistory() {
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
+    const [showCommissionTosView, setShowCommissionTosView] = useState();
+    const [overlayVisible, setOverlayVisible] = useState();
     const [orderHistoryType, setOrderHistoryType] = useState(userInfo.role);
 
     const fetchTalentOrderHistory = async () => {
+        console.log("FETCH 01")
         try {
             const response = await apiUtils.get(`/order/readTalentOrderHistory`);
             return response.data.metadata.talentOrderHistory;
         } catch (error) {
             return null;
         }
-    }
-
-    const { data: talentOrderHistory, error: fetchingTalentOrderHistoryError, isError: isFetchingTalentOrderHistoryError, isLoading: isFetchingTalentOrderHistoryLoading } = useQuery(
-        'fetchTalentOrderHistory',
-        fetchTalentOrderHistory,
-        {
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching service by ID:', error);
-            },
-        }
-    );
+    };
 
     const fetchMemberOrderHistory = async () => {
+        console.log("FETCH 02")
+
         try {
             const response = await apiUtils.get(`/order/readMemberOrderHistory`);
             return response.data.metadata.memberOrderHistory;
         } catch (error) {
             return null;
         }
-    }
-
-    const { data: memberOrderHistory, error: fetchingMemberOrderHistoryError, isError: isFetchingMemberOrderHistoryError, isLoading: isFetchingMemberOrderHistoryLoading } = useQuery(
-        'fetchMemberOrderHistory',
-        fetchMemberOrderHistory,
-        {
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching service by ID:', error);
-            },
-        }
-    );
+    };
 
     const fetchArchivedOrderHistory = async () => {
+        console.log("FETCH 03")
+
         try {
             const response = await apiUtils.get(`/order/readArchivedOrderHistory`);
             console.log(response)
@@ -90,21 +71,7 @@ export default function OrderHistory() {
         } catch (error) {
             return null;
         }
-    }
-
-    const { data: archivedOrderHistory, error: fetchingArchivedOrderHistoryError, isError: isFetchingArchivedOrderHistoryError, isLoading: isFetchingArchivedOrderHistoryLoading } = useQuery(
-        'fetchArchivedOrderHistory',
-        fetchArchivedOrderHistory,
-        {
-            onSuccess: (data) => {
-                console.log(archivedOrderHistory)
-            },
-            onError: (error) => {
-                console.error('Error fetching service by ID:', error);
-            },
-        }
-    );
-
+    };
 
     const fetchTermOfServices = async () => {
         try {
@@ -113,36 +80,47 @@ export default function OrderHistory() {
         } catch (error) {
             return null;
         }
-    }
+    };
 
+    const {
+        data: talentOrderHistory,
+        error: fetchingTalentOrderHistoryError,
+        isError: isFetchingTalentOrderHistoryError,
+        isLoading: isFetchingTalentOrderHistoryLoading,
+        refetch: refetchTalentOrderHistory,
+    } = useQuery('fetchTalentOrderHistory', fetchTalentOrderHistory, {
+        enabled: false, // Disable automatic fetching
+    });
 
-    const { data: termOfServices, error: fetchingTermOfServicesError, isError: isFetchingTermOfServicesError, isLoading: isFetchingTermOfServicesLoading } = useQuery(
-        'fetchTermOfServices',
-        fetchTermOfServices,
-        {
-            onSuccess: (data) => {
-                // console.log(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching term of service:', error);
-            },
+    const {
+        data: memberOrderHistory,
+        error: fetchingMemberOrderHistoryError,
+        isError: isFetchingMemberOrderHistoryError,
+        isLoading: isFetchingMemberOrderHistoryLoading,
+        refetch: refetchMemberOrderHistory,
+    } = useQuery('fetchMemberOrderHistory', fetchMemberOrderHistory, {
+        enabled: false, // Disable automatic fetching
+    });
+
+    const {
+        data: archivedOrderHistory,
+        error: fetchingArchivedOrderHistoryError,
+        isError: isFetchingArchivedOrderHistoryError,
+        isLoading: isFetchingArchivedOrderHistoryLoading,
+        refetch: refetchArchivedOrderHistory,
+    } = useQuery('fetchArchivedOrderHistory', fetchArchivedOrderHistory, {
+        enabled: false, // Disable automatic fetching
+    });
+
+    useEffect(() => {
+        if (orderHistoryType === "talent" && userInfo.role === "talent") {
+            refetchTalentOrderHistory();
+        } else if (orderHistoryType === "member") {
+            refetchMemberOrderHistory();
+        } else if (orderHistoryType === "archived") {
+            refetchArchivedOrderHistory();
         }
-    );
-
-
-    // useEffect(() => {
-    //     const handler = (e) => {
-    //         if (moreActionsRef.current && !moreActionsRef.current.contains(e.target)) {
-    //             setShowTalentOrderMoreActions(null);
-    //         }
-    //     };
-
-    //     document.addEventListener("mousedown", handler);
-    //     return () => {
-    //         document.removeEventListener("mousedown", handler);
-    //     };
-    // }, [moreActionsRef]);
-
+    }, [orderHistoryType, userInfo.role, refetchTalentOrderHistory, refetchMemberOrderHistory, refetchArchivedOrderHistory]);
 
     if (orderHistoryType === "member" && isFetchingMemberOrderHistoryLoading) {
         return <span>Đang tải...</span>
@@ -224,6 +202,18 @@ export default function OrderHistory() {
                     }
                 </section>
             </div>
+
+            {overlayVisible && (
+                <div className="overlay">
+                    {/* Commission TOS */}
+                    {showCommissionTosView &&
+                        <RenderCommissionTos
+                            setShowCommissionTosView={setShowCommissionTosView}
+                            setOverlayVisible={setOverlayVisible}
+                        />
+                    }
+                </div>
+            )}
         </>
     )
 }

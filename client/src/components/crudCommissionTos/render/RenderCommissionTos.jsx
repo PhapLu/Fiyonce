@@ -112,6 +112,7 @@ export default function CommissionTos({ setShowCommissionTosView, setOverlayVisi
             {showCreateCommissionTosForm &&
                 <CreateCommissionTos
                     setShowCreateCommissionTosForm={setShowCreateCommissionTosForm}
+                    setShowCommissionTosView={setShowCommissionTosView}
                     setOverlayVisible={setOverlayVisible}
                 />
             }
@@ -121,7 +122,7 @@ export default function CommissionTos({ setShowCommissionTosView, setOverlayVisi
                 (
                     <DeleteCommissionTos
                         setShowDeleteCommissionTosForm={setShowDeleteCommissionTosForm}
-                        setShowRenderCommissionTosForm={setShowRenderCommissionTosForm}
+                        setShowCommissionTosView={setShowCommissionTosView}
                         setOverlayVisible={setOverlayVisible}
                         commissionTos={selectedCommissionTos}
                     />
@@ -133,7 +134,7 @@ export default function CommissionTos({ setShowCommissionTosView, setOverlayVisi
                 (
                     <UpdateCommissionTos
                         setShowUpdateCommissionTosForm={setShowUpdateCommissionTosForm}
-                        setShowRenderCommissionTosForm={setShowRenderCommissionTosForm}
+                        setShowCommissionTosView={setShowCommissionTosView}
                         setOverlayVisible={setOverlayVisible}
                         commissionTos={selectedCommissionTos}
                     />

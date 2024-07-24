@@ -16,10 +16,10 @@ class PostService {
             throw new BadRequestError("You are not a talent");
 
         //2. Validate request body
-        const { description, postCategoryId } = req.body;
+        const { movementId, postCategoryId } = req.body;
         if (!req.files || !req.files.artworks)
             throw new BadRequestError("Please provide artwork files");
-        if (!userId || !description || !postCategoryId)
+        if (!userId || !movementId || !postCategoryId)
             throw new BadRequestError("Please provide all required fields");
 
         //3. Upload artwork images to cloudinary
@@ -167,7 +167,7 @@ class PostService {
         if (!post) throw new NotFoundError('Post not found')
 
         const userPostBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.toString() === postId);
-        const postBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.user.toString() === userId);
+        const postBookmarkIndex = post.bookmarks.findIndex(bookmark => bookmark.user.toString() === userId);
 
         // Let action to know if the user postBookmark/undo their interactions
         let action = "bookmark";
@@ -186,7 +186,8 @@ class PostService {
             post.bookmarks.splice(postBookmarkIndex, 1);
             action = "unbookmark";
         }
-
+        
+        await user.save();
         await post.save();
 
         return {

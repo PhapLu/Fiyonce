@@ -191,7 +191,7 @@ export default function MemberOrderHistory({ orders }) {
                             )
                         }) : (
                             <tr className="non-hover">
-                                <td colSpan={6}>Hiện chưa có đơn hàng nào. Để Pastal <Link><span className="highlight-text">tìm kiếm họa sĩ</span></Link> giúp bạn nhé
+                                <td colSpan={6}>Hiện chưa có đơn hàng nào. <Link to="/commission-market"><span className="highlight-text">Tìm kiếm họa sĩ</span></Link> trên Chợ Commission nhé!
                                 </td>
                             </tr>
                         )

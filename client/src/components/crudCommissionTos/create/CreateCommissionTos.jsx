@@ -63,7 +63,7 @@ const modules = {
     }
 };
 
-export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setOverlayVisible }) {
+export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setShowCommissionTosView, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         content: `<h3>Điều khoản chung</h3>...
@@ -102,6 +102,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
         let handler = (e) => {
             if (createCommissionRef && createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
                 setShowCreateCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         };
@@ -189,6 +190,10 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                     status: "success",
                     message: "Thêm điều khoản dịch vụ thành công"
                 })
+
+                setShowCreateCommissionTosForm(false);
+                setShowCommissionTosView(false);
+                setOverlayVisible(false);
             }
         } catch (error) {
             setModalInfo({
@@ -199,8 +204,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
             // Clear the loading effect
             setIsSubmitCreateCommissionTosLoading(false);
         }
-        setShowCreateCommissionTosForm(false);
-        setOverlayVisible(false);
+
     };
 
     return (
@@ -213,6 +217,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowCreateCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

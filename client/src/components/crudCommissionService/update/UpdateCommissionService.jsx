@@ -21,7 +21,7 @@ import { isFilled, minValue } from "../../../utils/validator.js";
 
 // Styling
 import "./UpdateCommissionService.scss";
-import { createFormData, newRequest } from "../../../utils/newRequest.js";
+import { apiUtils, createFormData, newRequest } from "../../../utils/newRequest.js";
 
 export default function UpdateCommissionService({
     updateCommissionService,
@@ -32,7 +32,6 @@ export default function UpdateCommissionService({
 }) {
     const { setModalInfo } = useModal();
     const { movements } = useMovement();
-
 
     const fetchCommissionTos = async () => {
         try {
@@ -97,42 +96,7 @@ export default function UpdateCommissionService({
         };
     }, []);
 
-    const validateInputs = () => {
-        let errors = {};
-
-        if (!inputs?.movementId) {
-            errors.movementId = "Vui lòng chọn trường phái nghệ thuật";
-        }
-
-        if (!isFilled(inputs?.newCommissionServiceCategoryTitle) && !isFilled(inputs?.serviceCategoryId)) {
-            errors.serviceCategoryId = "Vui lòng chọn thể loại dịch vụ của bạn";
-        }
-
-        if (!isFilled(inputs?.title)) {
-            errors.title = "Vui lòng điền tên dịch vụ";
-        }
-
-        if (!inputs?.deliverables) {
-            errors.deliverables = "Vui lòng nhập mô tả";
-        }
-
-        const filteredArtworks = artworks.filter((artwork) => artwork !== null);
-        if (!filteredArtworks || filteredArtworks.length < 3 || filteredArtworks.length > 5) {
-            errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
-        }
-
-        if (!inputs?.minPrice) {
-            errors.minPrice = "Vui lòng chọn mức giá tối thiểu";
-        } else if (!minValue(inputs?.minPrice, 50000)) {
-            errors.minPrice = "Mức giá tối thiểu không được dưới 50.000 VND";
-        }
-
-        if (!isFilled(inputs?.termOfServiceId)) {
-            errors.termOfServiceId = "Vui lòng chọn điều khoản dịch vụ";
-        }
-
-        return errors;
-    };
+   
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -176,6 +140,57 @@ export default function UpdateCommissionService({
         document.getElementById('file-input').click();
     };
 
+    const filteredArtworks = artworks.filter((artwork) => artwork?.file !== null || artwork?.url !== null);
+    const displayArtworks = [...filteredArtworks];
+
+    while (displayArtworks.length < 3) {
+        displayArtworks.push({ url: placeholderImage, file: null });
+    }
+
+
+    const validateInputs = () => {
+        let errors = {};
+
+        if (!inputs?.movementId) {
+            errors.movementId = "Vui lòng chọn trường phái nghệ thuật";
+        }
+
+        if (isCreateNewCommissionServiceCategory) {
+            if (!isFilled(inputs?.newCommissionServiceCategoryTitle)) {
+                errors.serviceCategoryId = "Vui lòng chọn thể loại dịch vụ của bạn";
+            }
+        } else {
+            if (!isFilled(inputs?.serviceCategoryId)) {
+                errors.serviceCategoryId = "Vui lòng chọn thể loại dịch vụ của bạn";
+            }
+        }
+
+        if (!isFilled(inputs?.title)) {
+            errors.title = "Vui lòng điền tên dịch vụ";
+        }
+
+        if (!inputs?.deliverables) {
+            errors.deliverables = "Vui lòng nhập mô tả";
+        }
+
+        const filteredArtworks = artworks.filter((artwork) => artwork !== null);
+        if (!filteredArtworks || filteredArtworks.length < 3 || filteredArtworks.length > 5) {
+            errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
+        }
+
+        if (!inputs?.minPrice) {
+            errors.minPrice = "Vui lòng chọn mức giá tối thiểu";
+        } else if (!minValue(inputs?.minPrice, 50000)) {
+            errors.minPrice = "Mức giá tối thiểu không được dưới 50.000 VND";
+        }
+
+        if (!isFilled(inputs?.termOfServiceId)) {
+            errors.termOfServiceId = "Vui lòng chọn điều khoản dịch vụ";
+        }
+
+        return errors;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitUpdateCommissionServiceLoading(true);
@@ -197,14 +212,15 @@ export default function UpdateCommissionService({
                     inputs.serviceCategoryId = serviceCategoryId;
                 }
             } catch (error) {
+                console.log(error)
                 // console.error("Failed to create new commission service category", error);
                 setErrors((prevErrors) => ({
                     ...prevErrors,
-                    serverError: error.response.data.message
+                    serverError: error?.response?.data?.message
                 }));
                 setModalInfo({
                     status: "error",
-                    message: error.response.data.message
+                    message: error?.response?.data?.message
                 });
             }
         }
@@ -234,13 +250,6 @@ export default function UpdateCommissionService({
             setIsSubmitUpdateCommissionServiceLoading(false);
         }
     };
-
-    const filteredArtworks = artworks.filter((artwork) => artwork?.file !== null || artwork?.url !== null);
-    const displayArtworks = [...filteredArtworks];
-
-    while (displayArtworks.length < 3) {
-        displayArtworks.push({ url: placeholderImage, file: null });
-    }
 
     return (
         <div className="update-commission-service modal-form type-2" ref={updateCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
@@ -286,7 +295,6 @@ export default function UpdateCommissionService({
                 <h2 className="form__title">Cập nhật dịch vụ</h2>
                 <div className="form-field">
                     <label htmlFor="movementId" className="form-field__label">Trường phái</label>
-                    <span>{inputs?.movementId}</span>
                     <select
                         name="movementId"
                         value={inputs?.movementId || ""}
@@ -301,7 +309,7 @@ export default function UpdateCommissionService({
                     {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
                 </div>
                 <>
-                    <div className="form-field with-update-btn">
+                    <div className="form-field with-create-btn">
                         <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
                         {!isCreateNewCommissionServiceCategory ? (
                             <>

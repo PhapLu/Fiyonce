@@ -107,7 +107,6 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
         <>
             {
                 !showCreateCommissionOrder ?
-
                     (
                         <div className="render-commission-service modal-form type-2" ref={renderCommissionServiceRef} onClick={(e) => { e.stopPropagation() }}>
                             <Link to="/help_center" className="form__help" target="_blank">

@@ -277,13 +277,22 @@ class RecommenderService {
                         : 0;
 
                     // Define weights
+                    // const weights = {
+                    //     likes: 0.1,
+                    //     views: 0.1,
+                    //     followers: 0.05,
+                    //     bookmarks: 0.05,
+                    //     engagementRate: 0.1,
+                    //     postAgeWeight: 0.6,
+                    // };
+
                     const weights = {
-                        likes: 0.1,
-                        views: 0.1,
-                        followers: 0.05,
-                        bookmarks: 0.05,
-                        engagementRate: 0.1,
-                        postAgeWeight: 0.6,
+                        likes: 0,
+                        views: 0,
+                        followers: 0,
+                        bookmarks: 0,
+                        engagementRate: 0,
+                        postAgeWeight: 1,
                     };
 
                     // Calculate the score with normalized values

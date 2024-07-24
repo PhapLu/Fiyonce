@@ -60,7 +60,7 @@ const modules = {
     }
 };
 
-export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, setOverlayVisible, commissionTos }) {
+export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, setShowCommissionTosView, setOverlayVisible, commissionTos }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState(commissionTos);
     const [errors, setErrors] = useState({});
@@ -93,6 +93,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
         let handler = (e) => {
             if (updateCommissionRef && updateCommissionRef.current && !updateCommissionRef.current.contains(e.target)) {
                 setShowUpdateCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         };
@@ -183,6 +184,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                     message: "Cập nhật điều khoản dịch vụ thành công"
                 })
                 setShowUpdateCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         } catch (error) {
@@ -206,6 +208,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowUpdateCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -262,6 +265,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                             <p>Bạn có thể xem lại điều khoản dịch vụ của mình trong danh sách điều khoản dịch vụ.</p>
                             <button className="button button__primary" onClick={() => {
                                 setShowUpdateCommissionTosForm(false);
+                                setShowCommissionTosView(false);
                                 setOverlayVisible(false);
                             }}>Đóng</button>
                         </div>

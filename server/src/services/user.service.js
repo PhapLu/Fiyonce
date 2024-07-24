@@ -27,14 +27,17 @@ class UserService {
     };
 
     static readUserProfile = async (profileId) => {
+        console.log("ppppp")
+        console.log(profileId)
         //1. Check user
         const userProfile = await User.findById(profileId);
         if (!userProfile)
             throw new NotFoundError("User not found").select("-password");
-
+        console.log(userProfile)
         //2. Update views
         userProfile.views += 1;
         await userProfile.save();
+        console.log(userProfile)
 
         //3. Return user profile
         return {

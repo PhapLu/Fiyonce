@@ -38,7 +38,15 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                 }
                 return acc;
             }, []);
+
+            const initialBookmarkedPosts = posts.reduce((acc, post) => {
+                if (post.bookmarks?.some(bookmark => bookmark.user === userInfo?._id)) {
+                    acc.push(post._id);
+                }
+                return acc;
+            }, []);
             setLikedPosts(initialLikedPosts);
+            setBookmarkedPosts(initialBookmarkedPosts);
         }
     }, [posts, userInfo]);
 
@@ -50,7 +58,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
         try {
             const response1 = await apiUtils.patch(`/post/likePost/${selectedPostId}`);
             if (response1) {
-                console.log(response1)
+                const action = response1.data.metadata.action;
                 if (response1.data.metadata.action == "like") {
                     setModalInfo({ status: "success", message: "Đã thích bài viết" });
                 } else {
@@ -69,12 +77,15 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                     }
                 });
 
-                const inputs = { receiverId: postAuthorId, type: "like", url: `/users/${postAuthorId}/profile-posts/${selectedPostId}` }
+                if (action === "like" && userInfo?._id !== postAuthorId) {
+                    const inputs = { receiverId: postAuthorId, type: "like", url: `/users/${postAuthorId}/profile-posts/${selectedPostId}` }
 
-                const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
-                const notificationData = response2.data.metadata.notification;
+                    const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
+                    const notificationData = response2.data.metadata.notification;
 
-                socket.emit('sendNotification', { senderId: userInfo._id, receiverId: postAuthorId, notification: notificationData, url: notificationData.url });
+                    socket.emit('sendNotification', { senderId: userInfo._id, receiverId: postAuthorId, notification: notificationData, url: notificationData.url });
+                }
+
             }
 
         } catch (error) {
@@ -90,9 +101,9 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
         try {
             const response1 = await apiUtils.patch(`/post/bookmarkPost/${selectedPostId}`);
             if (response1) {
-                console.log(response1)
-                if (response1.data.metadata.action == "like") {
-                    setModalInfo({ status: "success", message: "Đã thích bài viết" });
+                const action = response1.data.metadata.action;
+                if (response1.data.metadata.action == "bookmark") {
+                    setModalInfo({ status: "success", message: "Đã lưu tranh" });
                 } else {
                     setModalInfo({ status: "success", message: "Đã hoàn tác" });
                 }
@@ -109,10 +120,12 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                     }
                 });
 
-                const response2 = await apiUtils.post(`/notification/createNotification`, { receiverId: postAuthorId, type: "bookmark" });
-                const notificationData = response2.data.metadata.notification;
+                if (action == "bookmark" && userInfo?._id !== postAuthorId) {
+                    const response2 = await apiUtils.post(`/notification/createNotification`, { receiverId: postAuthorId, type: "bookmark" });
+                    const notificationData = response2.data.metadata.notification;
 
-                socket.emit('sendNotification', { senderId: userInfo._id, receiverId: postAuthorId, notification: notificationData });
+                    socket.emit('sendNotification', { senderId: userInfo?._id, receiverId: postAuthorId, notification: notificationData });
+                }
             }
 
         } catch (error) {
@@ -239,14 +252,14 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                                     </svg>
                                                 )}
                                             </div>
-                                            <div className="post-item__img__react-operation-item" onClick={() => { handleBookmarkPost(post._id, post.talentId._id) }}>
+                                            <div className="post-item__img__react-operation-item" onClick={() => { handleBookmarkPost(post._id, post.talentId._id); }}>
                                                 {
                                                     hasBookmarked ? (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 bookmarked-ic hover-cursor-opacity">
                                                             <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
                                                         </svg>
                                                     ) : (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`size-6`}>
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                                         </svg>
                                                     )
@@ -258,6 +271,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                                 </svg>
                                             </div>
+
                                         </div>
                                     </div>
                                     {

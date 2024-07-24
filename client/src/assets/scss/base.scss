@@ -12,6 +12,7 @@
     --gray-2-color: #d8d7d7;
     --gray-3-color: #4D4D4D;
     --gray-4-color: #d8d7d7;
+    --gray-5-color: #bdbdbd;
 
     --red-1-color: #ff3e3e;
     --red-2-color: #e45454;
@@ -58,7 +59,8 @@ body.dark {
     --gray-1-color: #2a2b2c;
     --gray-2-color: #2a2b2c;
     --gray-3-color: #868181;
-    --gray-4-color: #868181;
+    --gray-4-color: #2d2d2d;
+    --gray-5-color: #757575;
 
     --orange-2-color: #ffa471;
     --orange-3-color: #6e4517;
@@ -423,6 +425,15 @@ img {
     }
 }
 
+.bookmarked-ic {
+    stroke: unset !important;
+    fill: #fbb117;
+
+    path {
+        filter: drop-shadow(1px 1px 3px rgb(255 41 45 / 60%)) !important;
+    }
+}
+
 // Buttons
 .btn {
     padding: 6px 12px;
@@ -519,7 +530,6 @@ img {
     }
 
     .scroll-item {
-
         position: relative;
         transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     }
@@ -541,14 +551,15 @@ img {
         cursor: pointer;
         z-index: 1;
         display: none;
+        border-radius: 8px;
     }
 
     .button-left {
-        left: 10px;
+        left: 0;
     }
 
     .button-right {
-        right: 10px;
+        right: 0;
     }
 
     .show {
@@ -589,7 +600,7 @@ hr {
 
     display: flex;
     border-radius: 50%;
-    background-color: var(--gray-4-color);
+    background-color: var(--gray-5-color);
     margin: 0 5px;
 }
 
@@ -1661,4 +1672,46 @@ table {
 
 .br-32 {
     border-radius: 32px;
+}
+
+
+
+.confetti-button.animate:before {
+    display: block;
+    animation: topBubbles ease-in-out 0.75s forwards;
+}
+
+.confetti-button.animate:after {
+    display: block;
+    animation: bottomBubbles ease-in-out 0.75s forwards;
+}
+
+@keyframes topBubbles {
+    0% {
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+    }
+
+    50% {
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+    }
+
+    100% {
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
+}
+
+@keyframes bottomBubbles {
+    0% {
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+    }
+
+    50% {
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+    }
+
+    100% {
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
 }

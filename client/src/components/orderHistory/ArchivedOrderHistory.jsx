@@ -57,7 +57,7 @@ export default function ArchivedOrderHistory({ orders }) {
     const archiveOrderBtnRef = useRef(null);
     const reportOrderBtnRef = useRef(null);
 
-    
+
     const unarchiveCommissionOrderMutation = useMutation(
         async (orderId) => {
             const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
@@ -171,8 +171,7 @@ export default function ArchivedOrderHistory({ orders }) {
                             )
                         }) : (
                             <tr className="non-hover">
-                                <td colSpan={6}>Hiện chưa nhận được đơn hàng nào. Tham khảo
-                                    <Link><span className="highlight-text"> cẩm nang họa sĩ </span></Link> để xây dựng hồ sơ tốt hơn.
+                                <td colSpan={6}>Mục lưu trữ đơn hàng đang trống.
                                 </td>
                             </tr>
                         )
@@ -197,13 +196,7 @@ export default function ArchivedOrderHistory({ orders }) {
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
 
-                        {/* Commission TOS */}
-                        {showCommissionTosView &&
-                            <RenderCommissionTos
-                                setShowCommissionTosView={setShowCommissionTosView}
-                                setOverlayVisible={setOverlayVisible}
-                            />
-                        }
+                       
                     </div>
                 )
             }
