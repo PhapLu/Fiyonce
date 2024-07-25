@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import nodemailer from "nodemailer";
-import { announcementTemplate, otpTemplate } from "../utils/templateEmail.util";
+import { announcementTemplate, otpTemplate } from "../utils/templateEmail.util.js";
 
 async function brevoSendEmail(to, subject, subjectMessage, verificationCode, message, template) {
     const toEmail = to.replace("@gmail.com", "");
