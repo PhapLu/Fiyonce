@@ -3,7 +3,6 @@ import crypto from "crypto";
 import Order from "../models/order.model.js";
 import axios from "axios";
 import Artwork from "../models/post.model.js";
-import brevoSendEmail from "../configs/brevo.email.config.js";
 import Proposal from "../models/proposal.model.js";
 import MomoService from "./momo.service.js";
 import { User } from "../models/user.model.js";
@@ -63,12 +62,6 @@ class ProposalService {
         order.save();
 
         const showedProposal = await proposal.populate("orderId");
-        // try {
-        //     brevoSendEmail(user.email, 'Proposal sent', 'Your proposal has been sent successfully')
-        // } catch (error) {
-        //     console.error(error)
-        //     throw new Error('Email service error')
-        // }
         return {
             proposal: showedProposal,
         };
@@ -131,14 +124,6 @@ class ProposalService {
             { new: true }
         );
         await proposal.save();
-
-        //5. Send email to user
-        // try {
-        //     await brevoSendEmail(member.email, 'Proposal updated', 'The proposal of your order has been updated by talent')
-        // } catch (error) {
-        //     throw new Error('Email service error')
-        // }
-
         return {
             proposal: updatedProposal,
         };
@@ -336,13 +321,6 @@ class ProposalService {
 
     //     // Refresh proposal to get updated data after save
     //     const updatedProposal = await Proposal.findById(proposalId)
-
-    //     // 7. Send email to talent
-    //     try {
-    //         await brevoSendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
-    //     } catch (error) {
-    //         throw new Error('Email service error')
-    //     }
 
     //     return {
     //         proposal: updatedProposal,

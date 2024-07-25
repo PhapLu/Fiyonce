@@ -132,19 +132,27 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork);
                 await deleteFileByPublicId(publicId);
             });
+            const subject = "Role Updated";
+            const subjectMessage = "Your role has been updated to talent";
+            const verificationCode = '';
+            const message = "Your role has been updated to talent";
+            const template = 'announcementTemplate';
             await brevoSendEmail(
                 foundUser.email,
-                "Role Updated",
-                "Your role has been updated to talent"
+                subject,
+                subjectMessage,
+                verificationCode,
+                message,
+                template
             );
+            return {
+                user: userWithoutPassword._doc,
+            };
         } catch (error) {
             console.log("Failed:::", error);
             throw new Error("Email service error or image deletion failed");
         }
 
-        return {
-            user: userWithoutPassword._doc,
-        };
     };
 
     static denyTalentRequest = async (adminId, requestId) => {
@@ -175,20 +183,28 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork);
                 await deleteFileByPublicId(publicId);
             });
+            const subject = "Request Denied";
+            const subjectMessage = "Your request has been rejected";
+            const verificationCode = '';
+            const message = "Your request has been rejected";
+            const template = 'announcementTemplate';
             await brevoSendEmail(
                 foundUser.email,
-                "Request Denied",
-                "Your request has been rejected"
+                subject,
+                subjectMessage,
+                verificationCode,
+                message,
+                template
             );
+            return {
+                success: true,
+                message: "Request denied successfully",
+            };
         } catch (error) {
             console.log("Failed:::", error);
             throw new Error("Email service error or image deletion failed");
         }
 
-        return {
-            success: true,
-            message: "Request denied successfully",
-        };
     };
 
     static readTalentRequestsByStatus = async (adminId, status) => {
