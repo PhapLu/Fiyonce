@@ -89,14 +89,6 @@ class OrderController{
             metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
-
-    cancelOrder = async (req, res, next) => {
-        console.log(req.body)
-        new SuccessResponse({
-            message: 'Deny the order success!',
-            metadata: await OrderService.cancelOrder(req.userId, req.params.orderId, req.body)
-        }).send(res)
-    }
 }
 
 export default new OrderController()

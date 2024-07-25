@@ -59,7 +59,6 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
 
     const displayedInteractionNotifications = groupedNotifications?.order?.length > 0 ? groupedNotifications?.interaction?.slice(0, 3) : groupedNotifications?.interaction?.slice(0, 5);
     const displayedOrderNotifications = groupedNotifications?.interaction?.length > 0 ? groupedNotifications?.order?.slice(0, 3) : groupedNotifications?.order?.slice(0, 5);
-    
     return (
         <>
             <div className="render-notifications">

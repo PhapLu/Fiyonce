@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
+
 // Contexts
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { useAuth } from "../../../contexts/auth/AuthContext";
@@ -21,7 +22,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
     }
 
     const { setModalInfo } = useModal();
-    const { userInfo } = useAuth();
+    const { socket, userInfo } = useAuth();
     const { userId: talentChosenId } = useParams();
 
     const [inputs, setInputs] = useState({
@@ -76,7 +77,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             errors.maxPrice = 'Vui lòng nhập giá tối đa';
         }
 
-        if (inputs.minPrice && inputs.maxPrice && inputs.minPrice > inputs.maxPrice) {
+        if (inputs.minPrice && inputs.maxPrice && (inputs.minPrice > inputs.maxPrice)) {
             errors.maxPrice = 'Giá tối đa phải lớn hơn giá tối thiểu';
         }
 
@@ -185,16 +186,28 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             inputs.isDirect = false;
         }
 
+        console.log("ABC")
+        console.log(inputs)
+
         const fd = createFormData(inputs, "files", references);
 
         // Handle order creation
         createOrder(fd, {
-            onSuccess: (data) => {
+            onSuccess: async (data) => {
                 setModalInfo({
                     status: "success",
                     message: "Đặt dịch vụ thành công"
                 });
                 setIsSuccessCreateCommissionOrder(true);
+
+                if (isDirect) {
+                    const inputs = { receiverId: talentChosenId, type: "orderCommission", url: `/users/${talentChosenId}/order-history` }
+
+                    const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
+                    const notificationData = response2.data.metadata.notification;
+
+                    socket.emit('sendNotification', { senderId: userInfo?._id, receiverId: talentChosenId, notification: notificationData, url: notificationData.url });
+                }
             },
             onError: (error) => {
                 errors.serverError = error.response.data.message;
@@ -514,6 +527,19 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             <div className="form-field">
                                 {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                             </div>
+
+                            <div className="form__submit-btn-container">
+                                <button type="submit"
+                                    className="form__submit-btn-item btn btn-2 btn-md"
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitOrderCommissionLoading}>
+                                    {isSubmitOrderCommissionLoading ? (
+                                        <span className="btn-spinner"></span>
+                                    ) : (
+                                        "Gửi yêu cầu"
+                                    )}
+                                </button>
+                            </div>
                         </>
                     ) : (
                         <>
@@ -534,18 +560,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             </p>
                         </>
                     )}
-            </div>
-            <div className="form__submit-btn-container">
-                <button type="submit"
-                    className="form__submit-btn-item btn btn-2 btn-md"
-                    onClick={handleSubmit}
-                    disabled={isSubmitOrderCommissionLoading}>
-                    {isSubmitOrderCommissionLoading ? (
-                        <span className="btn-spinner"></span>
-                    ) : (
-                        "Gửi yêu cầu"
-                    )}
-                </button>
             </div>
         </div >
     )

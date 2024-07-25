@@ -32,8 +32,9 @@ import { formatCurrency } from "../../utils/formatter";
 // Styling
 import "./OrderHistory.scss";
 import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissionOrder";
+import { resizeImageUrl } from "../../utils/imageDisplayer";
 
-export default function TalentOrderHistory({ orders }) {
+export default function TalentOrderHistory() {
     const queryClient = useQueryClient();
 
     const [commissionOrder, setCommissionOrder] = useState();
@@ -53,6 +54,7 @@ export default function TalentOrderHistory({ orders }) {
     const [showReportCommissionOrder, setShowReportCommissionOrder] = useState(false);
 
     const [showCommissionTosView, setShowCommissionTosView] = useState(false);
+    const [proposalId, setProposalId] = useState();
 
     const [overlayVisible, setOverlayVisible] = useState();
 
@@ -60,19 +62,26 @@ export default function TalentOrderHistory({ orders }) {
     const archiveOrderBtnRef = useRef(null);
     const reportOrderBtnRef = useRef(null);
 
-    const handleShowCreateProposal = () => {
-        if (termOfServices && termOfServices.length > 0) {
-            setShowCreateProposal(true);
-            setOverlayVisible(true);
-        } else {
-            setModalInfo({
-                status: "warning",
-                message: "Vui lòng tạo điều khoản dịch vụ trước"
-            })
-        }
-    }
 
-    
+
+    const fetchTalentOrderHistory = async () => {
+        try {
+            const response = await apiUtils.get(`/order/readTalentOrderHistory`);
+            return response.data.metadata.talentOrderHistory;
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const {
+        data: orders,
+        error: fetchingTalentOrderHistoryError,
+        isError: isFetchingTalentOrderHistoryError,
+        isLoading: isFetchingTalentOrderHistoryLoading,
+        refetch: refetchTalentOrderHistory,
+    } = useQuery('fetchTalentOrderHistory', fetchTalentOrderHistory, {
+    });
+
     const archiveCommissionOrderMutation = useMutation(
         async (orderId) => {
             const response = await apiUtils.patch(`/order/archiveOrder/${orderId}`);
@@ -90,8 +99,8 @@ export default function TalentOrderHistory({ orders }) {
     );
 
     const reportCommissionOrderMutation = useMutation(
-        async (orderId) => {
-            const response = await apiUtils.post(`/commissionReport/createCommissionReport/${orderId}`);
+        async (fd) => {
+            const response = await apiUtils.post(`/commissionReport/createCommissionReport`, fd);
             return response;
         },
         {
@@ -104,20 +113,7 @@ export default function TalentOrderHistory({ orders }) {
         }
     );
 
-    const createProposalMutation = useMutation(
-        async ({ orderId, inputs }) => {
-            const response = await apiUtils.post(`/proposal/sendProposal/${orderId}`, inputs);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
+
 
     const rejectCommissionOrderMutation = useMutation(
         async ({ orderId, fd }) => {
@@ -152,8 +148,13 @@ export default function TalentOrderHistory({ orders }) {
         };
     }, []);
 
-    
-    
+    if (isFetchingTalentOrderHistoryLoading) {
+        return <span>Đang tải...</span>
+    }
+
+    if (isFetchingTalentOrderHistoryError) {
+        return <span>Có lỗi xảy ra: {fetchingTalentOrderHistoryError.message}</span>
+    }
 
     return (
         <>
@@ -173,21 +174,27 @@ export default function TalentOrderHistory({ orders }) {
                             return (
                                 <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
                                     <td >
-                                        <div className={`status ${order.status}`}>
-                                            <div className="status__bg"></div>
-                                            <span className="status__title">
-                                                {order.status === "pending" && "Đang đợi bạn xác nhận"}
-                                                {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
-                                                {order.status === "rejected" && "Bạn đã từ chối"}
-                                                {order.status === "confirmed" && "Khách đã thanh toán cọc"}
-                                                {order.status === "canceled" && "Đã hủy"}
-                                                {order.status === "in_progress" && "Đang thực hiện đơn"}
-                                                {order.status === "finished" && "Hoàn tất"}
-                                                {order.status === "under_processing" && "Admin đang xử lí"}
-                                            </span>
-                                        </div>
+                                        <span className={`status ${order.status}`}>
+                                            {order.status === "pending" && "Đang đợi bạn xác nhận"}
+                                            {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
+                                            {order.status === "rejected" && "Bạn đã từ chối"}
+                                            {order.status === "confirmed" && "Khách đã thanh toán cọc"}
+                                            {order.status === "canceled" && "Đã hủy"}
+                                            {order.status === "in_progress" && "Đang thực hiện đơn"}
+                                            {order.status === "finished" && "Hoàn tất"}
+                                            {order.status === "under_processing" && "Admin đang xử lí"}
+                                        </span>
                                     </td>
-                                    <td>{order.memberId.fullName || "-"}</td>
+                                    <td>
+                                        <Link to={`/users/${order?.memberId._id}`} className="user sm hover-cursor-opacity">
+                                            <div className="user--left">
+                                                <img src={resizeImageUrl(order?.memberId?.avatar, 50)} alt="" className="user__avatar" />
+                                                <div className="user__name">
+                                                    <div className="fs-12">{order?.memberId?.fullName}</div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </td>
                                     <td>{`đ${formatCurrency(order.minPrice)}` || `đ${formatCurrency(order.price)}` || "-"}</td>
                                     <td>{order.deadline || "-"}</td>
                                     <td className="flex-align-center">
@@ -196,13 +203,13 @@ export default function TalentOrderHistory({ orders }) {
                                                 order.status === "pending" &&
                                                 (
                                                     <>
-                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); handleShowCreateProposal() }} className="btn btn-3">Soạn hợp đồng</button>
+                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowCreateProposal(true); setOverlayVisible(true); }} className="btn btn-3">Soạn hợp đồng</button>
                                                         <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Từ chối</button>
                                                     </>
                                                 )
                                             }
                                             {order.status === "approved" && (
-                                                <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
+                                                <button onClick={(e) => { e.stopPropagation(); setProposalId(order?.proposalId); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
                                             )}
                                         </>
                                         <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
@@ -218,13 +225,20 @@ export default function TalentOrderHistory({ orders }) {
                                                         </svg>
                                                         Lưu trữ
                                                     </div>
-                                                    <hr />
-                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef} onClick={() => { setCommissionOrder(order), setShowReportCommissionOrder(true); setOverlayVisible(true) }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                                        </svg>
-                                                        Báo cáo
-                                                    </div>
+                                                    {
+                                                        ["confirmed", "in_progress", "finished", "canceled", "under_processing"].includes(order?.status)
+                                                        && (
+                                                            <>
+                                                                <hr />
+                                                                <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef} onClick={() => { setCommissionOrder(order); setProposalId(order?.proposalId); setShowReportCommissionOrder(true); setOverlayVisible(true) }}>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                                                    </svg>
+                                                                    Báo cáo
+                                                                </div>
+                                                            </>
+                                                        )
+                                                    }
                                                 </div>
                                             )}
                                         </button>
@@ -247,15 +261,14 @@ export default function TalentOrderHistory({ orders }) {
                 overlayVisible &&
                 (
                     <div className="overlay">
-                        {showRenderCommissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setOverlayVisible={setOverlayVisible} />}
+                        {showRenderCommissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowCreateProposal={setShowCreateProposal} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setOverlayVisible={setOverlayVisible} />}
                         {showUpdateCommissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
                         {showArchiveCommissionOrder && <ArchiveCommissionOrder commissionOrder={commissionOrder} setShowArchiveCommissionOrder={setShowArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} archiveCommissionOrderMutation={archiveCommissionOrderMutation} />}
                         {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
-                        {showReportCommissionOrder && <ReportCommissionOrder commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
+                        {showReportCommissionOrder && <ReportCommissionOrder proposalId={proposalId} commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
 
-
-                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createProposalMutation={createProposalMutation} />}
-                        {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />}
+                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} />}
+                        {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} proposalId={proposalId} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />}
 
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}

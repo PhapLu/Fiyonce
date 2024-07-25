@@ -7,7 +7,7 @@ import "../../assets/scss/buttons.scss";
 
 export default function NotFound() {
     return (
-        <div className="not-found">
+        <div className="static-page not-found">
             <div className="not-found__content">
                 <div className="dot dot-1"></div>
                 <div className="dot dot-2"></div>

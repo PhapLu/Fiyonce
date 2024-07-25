@@ -234,10 +234,11 @@ span {
 
 img {
     display: block;
+    object-fit: cover;
 }
 
 .fs-12 {
-    font-size: 1.2rem;
+    font-size: 1.2rem !important;
 }
 
 .fs-13 {
@@ -317,7 +318,7 @@ img {
 .border-text {
     padding: 12px 20px;
     border-radius: 16px;
-    border: 1px solid var(--gray-3-color);
+    border: 1px solid var(--gray-2-color);
     box-shadow: var(--box-shadow-1);
 }
 
@@ -326,7 +327,7 @@ img {
 }
 
 .w-100 {
-    width: 100%;
+    width: 100% !important;
 }
 
 .mb-8 {
@@ -361,7 +362,8 @@ img {
     }
 
     &.rejected,
-    &.canceled {
+    &.canceled,
+    &.under_processing {
         background-color: var(--rejected-status-bg-color);
         color: var(--rejected-status-color);
     }

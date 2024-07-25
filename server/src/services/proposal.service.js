@@ -5,7 +5,9 @@ import axios from "axios";
 import Artwork from "../models/post.model.js";
 import brevoSendEmail from "../configs/brevo.email.config.js";
 import Proposal from "../models/proposal.model.js";
+import CommissionService from "../models/commissionService.model.js";
 import MomoService from "./momo.service.js";
+
 import { User } from "../models/user.model.js";
 import {
     AuthFailureError,
@@ -40,27 +42,40 @@ class ProposalService {
                 "You have already given proposal for this order"
             );
 
-        //4. Check if artworks are valid
-        if (body.artworks.length === 0)
-            throw new BadRequestError("Artworks are required");
-
         //5.Check if price is valid
         if (body.price < 0)
             throw new BadRequestError("Price must be greater than 0");
 
-        //6. Send proposal
-        const proposal = new Proposal({
-            orderId,
-            talentId: userId,
-            termOfServiceId: body.termOfServiceId,
-            artworks: body.artworks,
-            ...body,
-        });
+
+        let proposal;
+
+        //4. Check if artworks are valid
+        if (order.isDirect) {
+            const commissionService = await CommissionService.findById(order.commissionServiceId);
+            //6. Send proposal
+            proposal = new Proposal({
+                orderId,
+                talentId: userId,
+                termOfServiceId: commissionService.termOfServiceId,
+                ...body,
+            });
+        } else {
+            if (body.artworks.length === 0) throw new BadRequestError("Artworks are required");
+
+            proposal = new Proposal({
+                orderId,
+                talentId: userId,
+                termOfServiceId: body.termOfServiceId,
+                artworks: body.artworks,
+                ...body,
+            });
+        }
+
         await proposal.save();
 
         //7. Modify the order status to approved
         order.status = "approved";
-        order.save();
+        await order.save();
 
         const showedProposal = await proposal.populate("orderId");
         // try {
@@ -87,16 +102,20 @@ class ProposalService {
             proposal,
         };
     };
-    static readProposalsByOrderId = async (orderId) => {
+    static readProposals = async (orderId) => {
+        console.log("PROPOSALS")
+        console.log(orderId)
         //1. Check if order exists
         const order = await Order.findById(orderId);
         if (!order) throw new NotFoundError("Order not found");
 
         //2. Read all proposals of a order
         const proposals = await Proposal.find({ orderId: orderId }).populate(
-            "talentChosenId",
+            "talentId",
             "fullName avatar"
-        );
+        ).populate("artworks", "url");
+
+        console.log(proposals)
 
         return {
             proposals,
@@ -169,17 +188,6 @@ class ProposalService {
 
         return {
             proposal,
-        };
-    };
-    static readProposalsHistory = async (userId) => {
-        //1. Check if user exists
-        const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
-
-        //2. View all proposals of a talent
-        const proposals = await Proposal.find({ talentId: userId });
-        return {
-            proposals,
         };
     };
 
@@ -283,73 +291,73 @@ class ProposalService {
         };
     };
 
-    // static confirmProposal = async (userId, proposalId) => {
-    //     // 1. Check if user exists
-    //     const user = await User.findById(userId)
-    //     if (!user) throw new NotFoundError('User not found')
+    static confirmProposal = async (userId, proposalId) => {
+        // 1. Check if user exists
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('User not found')
 
-    //     // 2. Check if proposal exists
-    //     const proposal = await Proposal.findById(proposalId)
-    //     // if (!proposal) throw new NotFoundError('Proposal not found')
+        // 2. Check if proposal exists
+        const proposal = await Proposal.findById(proposalId)
+        // if (!proposal) throw new NotFoundError('Proposal not found')
 
-    //     // 3. Check if talent exists
-    //     const talent = await User.findById(proposal.talentId)
-    //     // if (!talent) throw new NotFoundError('Talent not found')
+        // 3. Check if talent exists
+        const talent = await User.findById(proposal.talentId)
+        // if (!talent) throw new NotFoundError('Talent not found')
 
-    //     // 4. Check if order exists and is approved
-    //     const order = await Order.findById(proposal.orderId)
-    //     // if (!order) throw new NotFoundError('Order not found')
-    //     // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
+        // 4. Check if order exists and is approved
+        const order = await Order.findById(proposal.orderId)
+        // if (!order) throw new NotFoundError('Order not found')
+        // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
 
-    //     // 5. Create payment with MoMo
-    //     // const amount = proposal.price
-    //     // const paymentData = await MomoService.generatePaymentData(amount)
-    // const options = {
-    //     hostname: 'test-payment.momo.vn',
-    //     port: 443,
-    //     path: '/v2/gateway/api/create',
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Content-Length': Buffer.byteLength(JSON.stringify(paymentData))
-    //     }
-    // }
+        // 5. Create payment with MoMo
+        // const amount = proposal.price
+        // const paymentData = await MomoService.generatePaymentData(amount)
+        // const options = {
+        //     hostname: 'test-payment.momo.vn',
+        //     port: 443,
+        //     path: '/v2/gateway/api/create',
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Content-Length': Buffer.byteLength(JSON.stringify(paymentData))
+        //     }
+        // }
 
-    //     // const paymentResponse = await new Promise((resolve, reject) => {
-    //     //     const apiReq = https.request(options, apiRes => {
-    //     //         let data = ''
-    //     //         apiRes.on('data', chunk => { data += chunk })
-    //     //         apiRes.on('end', () => { resolve(JSON.parse(data)) })
-    //     //     })
+        // const paymentResponse = await new Promise((resolve, reject) => {
+        //     const apiReq = https.request(options, apiRes => {
+        //         let data = ''
+        //         apiRes.on('data', chunk => { data += chunk })
+        //         apiRes.on('end', () => { resolve(JSON.parse(data)) })
+        //     })
 
-    //     //     apiReq.on('error', error => { reject(`Error: ${error.message}`) })
-    //     //     apiReq.write(JSON.stringify(paymentData))
-    //     //     apiReq.end()
-    //     // })
+        //     apiReq.on('error', error => { reject(`Error: ${error.message}`) })
+        //     apiReq.write(JSON.stringify(paymentData))
+        //     apiReq.end()
+        // })
 
-    //     // 6. Confirm proposal
-    //     order.status = 'confirmed'
-    //     if (!order.talentChosenId) {
-    //         order.talentChosenId = proposal.talentId
-    //     }
-    //     await order.save()
+        // 6. Confirm proposal
+        order.status = 'confirmed'
+        if (!order.isDirect) {
+            order.talentChosenId = proposal.talentId
+        }
+        await order.save()
 
-    //     // Refresh proposal to get updated data after save
-    //     const updatedProposal = await Proposal.findById(proposalId)
+        // // 7. Send email to talent
+        // try {
+        //     await brevoSendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
+        // } catch (error) {
+        //     throw new Error('Email service error')
+        // }
 
-    //     // 7. Send email to talent
-    //     try {
-    //         await brevoSendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
-    //     } catch (error) {
-    //         throw new Error('Email service error')
-    //     }
+        return {
+            proposal
+        }
 
-    //     return {
-    //         proposal: updatedProposal,
-    //         // paymentData: paymentResponse,
-    //         // paymentResponse: paymentResponse
-    //     }
-    // }
+        // return {
+        //     // paymentData: paymentResponse,
+        //     // paymentResponse: paymentResponse
+        // }
+    }
 }
 
 export default ProposalService;

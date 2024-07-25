@@ -85,7 +85,6 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
 
                     socket.emit('sendNotification', { senderId: userInfo._id, receiverId: postAuthorId, notification: notificationData, url: notificationData.url });
                 }
-
             }
 
         } catch (error) {

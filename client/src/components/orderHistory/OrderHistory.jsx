@@ -40,107 +40,6 @@ export default function OrderHistory() {
     const [overlayVisible, setOverlayVisible] = useState();
     const [orderHistoryType, setOrderHistoryType] = useState(userInfo?.role === "talent" ? "talent" : "member");
 
-    const fetchTalentOrderHistory = async () => {
-        try {
-            const response = await apiUtils.get(`/order/readTalentOrderHistory`);
-            return response.data.metadata.talentOrderHistory;
-        } catch (error) {
-            return null;
-        }
-    };
-
-    const fetchMemberOrderHistory = async () => {
-        try {
-            const response = await apiUtils.get(`/order/readMemberOrderHistory`);
-            return response.data.metadata.memberOrderHistory;
-        } catch (error) {
-            return null;
-        }
-    };
-
-    const fetchArchivedOrderHistory = async () => {
-        try {
-            const response = await apiUtils.get(`/order/readArchivedOrderHistory`);
-            console.log(response)
-            return response.data.metadata.archivedOrderHistory;
-        } catch (error) {
-            return null;
-        }
-    };
-
-    const fetchTermOfServices = async () => {
-        try {
-            const response = await apiUtils.get(`/termOfService/readTermOfServices`);
-            return response.data.metadata.termOfServices;
-        } catch (error) {
-            return null;
-        }
-    };
-
-    const {
-        data: talentOrderHistory,
-        error: fetchingTalentOrderHistoryError,
-        isError: isFetchingTalentOrderHistoryError,
-        isLoading: isFetchingTalentOrderHistoryLoading,
-        refetch: refetchTalentOrderHistory,
-    } = useQuery('fetchTalentOrderHistory', fetchTalentOrderHistory, {
-        enabled: false, // Disable automatic fetching
-    });
-
-    const {
-        data: memberOrderHistory,
-        error: fetchingMemberOrderHistoryError,
-        isError: isFetchingMemberOrderHistoryError,
-        isLoading: isFetchingMemberOrderHistoryLoading,
-        refetch: refetchMemberOrderHistory,
-    } = useQuery('fetchMemberOrderHistory', fetchMemberOrderHistory, {
-        enabled: false, // Disable automatic fetching
-    });
-
-    const {
-        data: archivedOrderHistory,
-        error: fetchingArchivedOrderHistoryError,
-        isError: isFetchingArchivedOrderHistoryError,
-        isLoading: isFetchingArchivedOrderHistoryLoading,
-        refetch: refetchArchivedOrderHistory,
-    } = useQuery('fetchArchivedOrderHistory', fetchArchivedOrderHistory, {
-        enabled: false, // Disable automatic fetching
-    });
-
-    useEffect(() => {
-        if (orderHistoryType === "talent" && userInfo.role === "talent") {
-            refetchTalentOrderHistory();
-        } else if (orderHistoryType === "member") {
-            refetchMemberOrderHistory();
-        } else if (orderHistoryType === "archived") {
-            refetchArchivedOrderHistory();
-        }
-    }, [orderHistoryType, userInfo.role, refetchTalentOrderHistory, refetchMemberOrderHistory, refetchArchivedOrderHistory]);
-
-    if (orderHistoryType === "member" && isFetchingMemberOrderHistoryLoading) {
-        return <span>Đang tải...</span>
-    }
-
-    if (orderHistoryType === "member" && isFetchingMemberOrderHistoryError) {
-        return <span>Có lỗi xảy ra: {fetchingMemberOrderHistoryError.message}</span>
-    }
-
-    if (orderHistoryType === "talent" && isFetchingTalentOrderHistoryLoading) {
-        return <span>Đang tải...</span>
-    }
-
-    if (orderHistoryType === "talent" && isFetchingTalentOrderHistoryError) {
-        return <span>Có lỗi xảy ra: {fetchingTalentOrderHistoryError.message}</span>
-    }
-
-    if (orderHistoryType === "archived" && isFetchingArchivedOrderHistoryLoading) {
-        return <span>Đang tải...</span>
-    }
-
-    if (orderHistoryType === "archived" && isFetchingArchivedOrderHistoryError) {
-        return <span>Có lỗi xảy ra: {fetchingArchivedOrderHistoryError.message}</span>
-    }
-
     return (
         <>
             <div className="order-history">
@@ -185,15 +84,15 @@ export default function OrderHistory() {
                     </div>
 
                     {
-                        orderHistoryType === "talent" && <TalentOrderHistory orders={talentOrderHistory} ownOrderAsMember={userInfo} />
+                        orderHistoryType === "talent" && <TalentOrderHistory />
                     }
 
                     {
-                        orderHistoryType === "member" && <MemberOrderHistory orders={memberOrderHistory} />
+                        orderHistoryType === "member" && <MemberOrderHistory/>
                     }
 
                     {
-                        orderHistoryType === "archived" && <ArchivedOrderHistory orders={archivedOrderHistory} />
+                        orderHistoryType === "archived" && <ArchivedOrderHistory/>
                     }
                 </section>
             </div>

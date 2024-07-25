@@ -13,7 +13,7 @@ import RenderProposals from "../../components/crudProposal/render/RenderProposal
 // Contexts
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 import { useModal } from "../../contexts/modal/ModalContext.jsx";
-import {useMovement } from "../../contexts/movement/MovementContext.jsx";
+import { useMovement } from "../../contexts/movement/MovementContext.jsx";
 
 // Utils
 import { limitString, formatTimeAgo, formatCurrency } from "../../utils/formatter.js";
@@ -23,9 +23,10 @@ import { newRequest } from "../../utils/newRequest.js";
 // Styling
 import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
 import "./CommissionMarket.scss";
+import CreateProposal from "../../components/crudProposal/create/CreateProposal.jsx";
 
 export default function CommissionMarket() {
-    const {movements} = useMovement();
+    const { movements } = useMovement();
     // Initialize Masonry layout
     const breakpointColumnsObj = {
         default: 3,
@@ -43,6 +44,7 @@ export default function CommissionMarket() {
     const [showUpdateComissionOrder, setShowUpdateCommissionOrder] = useState(false);
     const [showDeleteComissionOrder, setShowDeleteCommissionOrder] = useState(false);
 
+    const [showCreateProposal, setShowCreateProposal] = useState(false);
     const [showRenderProposals, setShowRenderProposals] = useState(false);
 
     const { userInfo } = useAuth();
@@ -216,11 +218,16 @@ export default function CommissionMarket() {
                                             </div>
 
                                             <div className="commission-market-item__header--right">
-                                                {indirectOrder.talentsApprovedCount > 0 && (
+                                                {indirectOrder?.talentChosenId ? (
+                                                    <div className="status approved">
+                                                        <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                                                    </div>
+                                                ) : indirectOrder?.talentsApprovedCount > 0 && (
                                                     <div className="status pending">
                                                         <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
                                                     </div>
                                                 )}
+
                                             </div>
                                         </div>
 
@@ -265,9 +272,9 @@ export default function CommissionMarket() {
                     <div className="overlay">
                         {/* CRUD commission order */}
                         {showCreateComissionOrder && <CreateOrder isDirect={false} setShowCreateCommissionOrder={setShowCreateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        {showRenderComissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
+                        {showRenderComissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowCreateProposal={setShowCreateProposal} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showUpdateComissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-
+                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} />}
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                     </div>
                 )

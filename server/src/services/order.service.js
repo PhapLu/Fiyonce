@@ -27,10 +27,10 @@ class OrderService {
         );
 
         //2. Check isDirect of order
-        if (isDirect == true) {
+        if (isDirect == 'true') {
             //direct order
             const talent = await User.findById(talentChosenId);
-            const service = await commissionService.findById(
+            const service = await CommissionService.findById(
                 commissionServiceId
             );
 
@@ -117,7 +117,6 @@ class OrderService {
             orders.map(async (order) => {
                 const talentsApprovedCount = await Proposal.find({
                     orderId: order._id,
-                    status: "approved",
                 }).countDocuments();
                 order._doc.talentsApprovedCount = talentsApprovedCount; // Add the count to the order
                 return order;
@@ -547,68 +546,6 @@ class OrderService {
             order: deniedOrder,
         };
     };
-
-    static cancelOrder = async (userId, orderId) => {
-        //1. Check if user, order exists
-        const user = await User.findById(userId);
-        const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
-
-        //2. Check if user is authorized to deny order
-        if (order.memberId != userId)
-            throw new AuthFailureError(
-                "You are not authorized to deny this order"
-            );
-
-        //3. Check if order status is pending
-        if (order.status !== "pending")
-            throw new BadRequestError("You cannot deny this order");
-
-        //4. Deny order
-        order.status = "canceled";
-        order.save();
-
-        //5. Show order
-        const deniedOrder = order.populate(
-            "talentChosenId",
-            "stageName avatar"
-        );
-
-        //6. Send email to user
-        // try {
-        //     await brevoSendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
-        // } catch (error) {
-        //     throw new Error('Email service error')
-        // }
-
-        return {
-            order: deniedOrder,
-        };
-    };
-    // static deleteOrder = async(userId, orderId) => {
-    //     //1. Check user and order
-    //     const foundUser = await User.findById(userId)
-    //     const order = await Order.findById(orderId)
-    //     if(!foundUser) throw new NotFoundError('User not found!')
-    //     if(!order) throw new NotFoundError('Order not found!')
-    //     if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
-
-    //     //2. Check order status
-    //     if(oldOrder.status != 'pending' && oldOrder.status != 'approved')
-    //         throw new BadRequestError('You cannot delete order on this stage!')
-
-    //     //3. Extract public IDs and delete files from Cloudinary
-    //     const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference))
-    //     await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
-
-    //     //4. Delete order
-    //     await order.deleteOne()
-
-    //     return{
-    //         message: 'Order deleted successfully!'
-    //     }
-    // }
 }
 
 export default OrderService;

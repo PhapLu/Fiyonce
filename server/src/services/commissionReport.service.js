@@ -10,6 +10,7 @@ import {
     extractPublicIdFromUrl,
     deleteFileByPublicId,
 } from "../utils/cloud.util.js";
+import Order from "../models/order.model.js";
 
 class CommissionReportService {
     static createCommissionReport = async (userId, req) => {
@@ -19,8 +20,13 @@ class CommissionReportService {
 
         //2. Validate request body
         const { orderId, proposalId, content } = req.body;
+
+
         if (!orderId || !proposalId || !content)
             throw new BadRequestError("Please provide all required fields");
+
+        const order = await Order.findById(orderId);
+        if (!order) throw new BadRequestError("Order not found");
 
         //3. Upload files to Cloudinary if exists
         try {
@@ -42,13 +48,16 @@ class CommissionReportService {
 
             //4. Create commissionReport
             const commissionReport = new CommissionReport({
-                clientId: userId,
+                userId: userId,
                 orderId,
                 proposalId,
                 content,
                 evidences,
             });
             await commissionReport.save();
+
+            order.status = "under_processing";
+            await order.save();
 
             return {
                 commissionReport,
@@ -98,7 +107,7 @@ class CommissionReportService {
         if (!user) throw new NotFoundError("User not found");
         if (!commissionReport)
             throw new NotFoundError("Commission Report not found");
-        if (commissionReport.clientId.toString() !== userId)
+        if (commissionReport.userId.toString() !== userId)
             throw new AuthFailureError(
                 "You can only update your commission report"
             );
@@ -149,7 +158,7 @@ class CommissionReportService {
             return {
                 commissionReport: updatedCommissionReport,
             };
-        } catch (error) {}
+        } catch (error) { }
     };
 
     static deleteCommissionReport = async (userId, commissionReportId) => {
@@ -161,7 +170,7 @@ class CommissionReportService {
         if (!user) throw new NotFoundError("User not found");
         if (!commissionReport)
             throw new NotFoundError("Commission Report not found");
-        if (commissionReport.clientId.toString() !== userId)
+        if (commissionReport.userId.toString() !== userId)
             throw new AuthFailureError(
                 "You can only delete your commission report"
             );

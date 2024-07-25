@@ -29,9 +29,8 @@ import { formatCurrency } from "../../utils/formatter";
 
 // Styling
 import "./OrderHistory.scss";
-import CancelCommissionOrder from "../crudCommissionOrder/cancel/CancelCommissionOrder";
 
-export default function MemberOrderHistory({ orders }) {
+export default function MemberOrderHistory() {
     const queryClient = useQueryClient();
 
     const [commissionOrder, setCommissionOrder] = useState();
@@ -44,7 +43,6 @@ export default function MemberOrderHistory({ orders }) {
     const [showCreateProposal, setShowCreateProposal] = useState(false);
     const [showRenderProposal, setShowRenderProposal] = useState(false);
 
-    const [showCancelCommissionOrder, setShowCancelCommissionOrder] = useState(false);
 
     const [showArchiveCommissionOrder, setShowArchiveCommissionOrder] = useState(false);
     const [showUnarchiveCommissionOrder, setShowUnarchiveCommissionOrder] = useState(false);
@@ -57,6 +55,24 @@ export default function MemberOrderHistory({ orders }) {
     const moreActionsRef = useRef(null);
     const archiveOrderBtnRef = useRef(null);
     const reportOrderBtnRef = useRef(null);
+
+
+    const fetchMemberOrderHistory = async () => {
+        try {
+            const response = await apiUtils.get(`/order/readMemberOrderHistory`);
+            return response.data.metadata.memberOrderHistory;
+        } catch (error) {
+            return null;
+        }
+    };
+    const {
+        data: orders,
+        error: fetchingMemberOrderHistoryError,
+        isError: isFetchingMemberOrderHistoryError,
+        isLoading: isFetchingMemberOrderHistoryLoading,
+        refetch: refetchMemberOrderHistory,
+    } = useQuery('fetchMemberOrderHistory', fetchMemberOrderHistory, {
+    });
 
 
     const cancelCommissionOrderMutation = useMutation(
@@ -124,6 +140,14 @@ export default function MemberOrderHistory({ orders }) {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    if (isFetchingMemberOrderHistoryLoading) {
+        return <span>Đang tải...</span>
+    }
+
+    if (isFetchingMemberOrderHistoryError) {
+        return <span>Có lỗi xảy ra: {fetchingMemberOrderHistoryError.message}</span>
+    }
 
     return (
         <>
@@ -222,8 +246,6 @@ export default function MemberOrderHistory({ orders }) {
                         {showReportCommissionOrder && <ReportCommissionOrder commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
 
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
-                        {showCancelCommissionOrder && <CancelCommissionOrder commissionOrder={commissionOrder} setShowCancelCommissionOrder={setShowCancelCommissionOrder} setOverlayVisible={setOverlayVisible} cancelCommissionOrderMutation={cancelCommissionOrderMutation} />}
-
                     </div>
                 )
             }

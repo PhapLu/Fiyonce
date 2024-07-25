@@ -13,6 +13,7 @@ import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/forma
 
 // Styling
 import "./RenderProposals.scss"
+import { apiUtils } from "../../../utils/newRequest";
 
 
 export default function RenderProposals({ commissionOrder, setShowRenderProposals, setOverlayVisible }) {
@@ -20,66 +21,66 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
         return;
     }
 
-    const  [proposal, setProposal] = useState();
+    const [proposal, setProposal] = useState();
     const [showRenderProposal, setShowRenderProposal] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(false);
 
-    const fetchProposalsByOrderId = async () => {
+    const fetchProposals = async () => {
         try {
-            // const response = await newRequest.get(`/proposals/readProposalsByOrderId/:${commissionOrder._id}`);
-            // return response.data.metadata.proposals;
-            return [
-                {
-                    _id: 1,
-                    talentChosenId: {
-                        _id: 1,
-                        fullName: "John Doe",
-                        avatar: "https://i.pinimg.com/474x/61/eb/44/61eb4455fef6a3fca18cb0f53bd25eef.jpg"
-                    },
-                    scope: "Ban se nhan duoc ...",
-                    artworks: [
-                        {
-                            _id: 1,
-                            url: "https://i.pinimg.com/236x/c1/3f/cb/c13fcbce0b55b9aa9a3cdf0c7c6ea61c.jpg",
-                        },
-                        {
-                            _id: 2,
-                            url: "https://i.pinimg.com/236x/84/8c/7b/848c7bc0d8887b1a68eead56bb49f08f.jpg",
-                        },
-                    ],
-                    price: 500000,
-                    createdAt: "2024-05-18",
-                },
-                {
-                    _id: 2,
-                    talentChosenId: {
-                        _id: 1,
-                        fullName: "John Doe",
-                        avatar: "https://i.pinimg.com/474x/61/eb/44/61eb4455fef6a3fca18cb0f53bd25eef.jpg"
-                    },
-                    scope: "Ban se nhan duoc ...",
-                    artworks: [
-                        {
-                            _id: 1,
-                            url: "https://i.pinimg.com/236x/c1/3f/cb/c13fcbce0b55b9aa9a3cdf0c7c6ea61c.jpg",
-                        },
-                        {
-                            _id: 2,
-                            url: "https://i.pinimg.com/236x/84/8c/7b/848c7bc0d8887b1a68eead56bb49f08f.jpg",
-                        },
-                    ],
-                    price: 500000,
-                    createdAt: "2024-06-18",
-                }
-            ]
+            const response = await apiUtils.get(`/proposal/readProposals/${commissionOrder._id}`);
+            return response.data.metadata.proposals;
+            // return [
+            //     {
+            //         _id: 1,
+            //         talentId: {
+            //             _id: 1,
+            //             fullName: "John Doe",
+            //             avatar: "https://i.pinimg.com/474x/61/eb/44/61eb4455fef6a3fca18cb0f53bd25eef.jpg"
+            //         },
+            //         scope: "Ban se nhan duoc ...",
+            //         artworks: [
+            //             {
+            //                 _id: 1,
+            //                 url: "https://i.pinimg.com/236x/c1/3f/cb/c13fcbce0b55b9aa9a3cdf0c7c6ea61c.jpg",
+            //             },
+            //             {
+            //                 _id: 2,
+            //                 url: "https://i.pinimg.com/236x/84/8c/7b/848c7bc0d8887b1a68eead56bb49f08f.jpg",
+            //             },
+            //         ],
+            //         price: 500000,
+            //         createdAt: "2024-05-18",
+            //     },
+            //     {
+            //         _id: 2,
+            //         talentId: {
+            //             _id: 1,
+            //             fullName: "John Doe",
+            //             avatar: "https://i.pinimg.com/474x/61/eb/44/61eb4455fef6a3fca18cb0f53bd25eef.jpg"
+            //         },
+            //         scope: "Ban se nhan duoc ...",
+            //         artworks: [
+            //             {
+            //                 _id: 1,
+            //                 url: "https://i.pinimg.com/236x/c1/3f/cb/c13fcbce0b55b9aa9a3cdf0c7c6ea61c.jpg",
+            //             },
+            //             {
+            //                 _id: 2,
+            //                 url: "https://i.pinimg.com/236x/84/8c/7b/848c7bc0d8887b1a68eead56bb49f08f.jpg",
+            //             },
+            //         ],
+            //         price: 500000,
+            //         createdAt: "2024-06-18",
+            //     }
+            // ]
         } catch (error) {
             return null;
         }
     }
 
     const { data: proposals, error, isError, isLoading } = useQuery(
-        ['fetchProposalsByOrderId'],
-        () => fetchProposalsByOrderId(), // Pass a function that calls fetchProposalsByOrderId
+        ['fetchProposals'],
+        () => fetchProposals(), // Pass a function that calls 
         {
             onSuccess: (data) => {
                 console.log(data);
@@ -105,7 +106,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
     }, [setShowRenderProposals, setOverlayVisible]);
 
     return (
-        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposal={proposal} proposalId={proposal._id} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal}/> : (
+        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposal={proposal} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal} /> : (
             <div className="render-proposals modal-form type-2" ref={renderProposalsRef} onClick={(e) => { e.stopPropagation() }}>
                 <Link to="/help_center" className="form__help" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
@@ -120,6 +121,15 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
                 <div className="modal-form--left">
+                    {commissionOrder?.talentChosenId ? (
+                        <div className="status approved">
+                            <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                        </div>
+                    ) : (
+                        <div className="status pending">
+                            <span className="highlight-text">&nbsp;{commissionOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                        </div>
+                    )}
                     {
                         commissionOrder.isDirect ? (
                             <>
@@ -185,9 +195,9 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                             return (
                                 <div className="proposal-item" key={index}>
                                     <div className="user md">
-                                        <img src={proposal.talentChosenId.avatar} alt={proposal.talentChosenId.fullName} className="user__avatar" />
+                                        <img src={proposal.talentId.avatar} alt={proposal.talentId.fullName} className="user__avatar" />
                                         <div className="user__name">
-                                            <div className="user__name__title">{proposal.talentChosenId.fullName}</div>
+                                            <div className="user__name__title">{proposal.talentId.fullName}</div>
                                             <div className="user__name__subtitle">
                                                 {formatTimeAgo(proposal.createdAt)}
                                             </div>
@@ -206,7 +216,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                         })}
                                     </div>
                                     <div>
-                                        <button className="btn btn-3 btn-md" onClick={() => {setProposal(proposal); setShowRenderProposal(true)}}>
+                                        <button className="btn btn-3 btn-md" onClick={() => { setProposal(proposal); setShowRenderProposal(true) }}>
                                             Xem hợp đồng
                                         </button>
                                         <button className="btn btn-3 btn-md">
@@ -216,7 +226,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                 </div>
                             )
                         }) : (
-                            <span>Tạm thời chưa có họa sĩ ứng đơn hàng của bạn.</span>
+                            <p className="text-align-center">Tạm thời chưa có họa sĩ ứng đơn hàng của bạn.</p>
                         )
                     }
 
