@@ -90,38 +90,43 @@ const routes = [
   },
   {
     path: "/",
-    element: <Layout></Layout>,
+    element: <Layout />,
     children: [
+      // {
+      //   path: "/",
+      //   element: <Explore />,
+      //   children: [
+      //     {
+      //       path: "/",
+      //       element: <ExplorePosts showPosts={true} />,
+      //     }
+      //   ]
+      // },
       {
-        path: "/explore",
-        element: <Explore></Explore>,
+        path: "/",
+        element: <Explore />,
         children: [
           {
-            path: "/explore/posts",
+            path: "/",
             element: <ExplorePosts showPosts={true} />,
             children: [
-              // path: "/users/:userId/profile-posts/create",
-              // element: (
-              //   <CreatePost />
-              // ),
               {
-                path: "/explore/posts/:postId",
-                element: (<RenderPost />),
+                path: "/:postId",
+                element: <RenderPost />,
               },
-            ]
+            ],
           },
-
           {
-            path: "/explore/talents",
+            path: "/talents",
             element: <Talents showTalents={true} />,
           },
           {
-            path: "/explore/commissionServices",
+            path: "/commissionServices",
             // element: <CommissionServices showCommissionServices={true} />,
           },
           {
-            path: "/explore/help-center",
-            element: <HelpCenter/>,
+            path: "/help-center",
+            element: <HelpCenter />,
           },
         ],
       },

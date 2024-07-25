@@ -148,7 +148,7 @@ export default function Navbar() {
         <>
             <div className={`navbar ${shadow ? 'with-shadow' : ''}`}>
                 <div className="navbar--left">
-                    <Link to="/explore/posts" className="flex-align-center">
+                    <Link to="/" className="flex-align-center">
                         {/* <img src={Logo} alt="Logo" className="navbar__brand-logo" /> */}
                         <h3 className="navbar__brand-name">Pastal<span className="highlight-text">&#x2022;</span></h3>
                     </Link>
@@ -192,8 +192,8 @@ export default function Navbar() {
 
                 <div className="navbar--right">
                     <ul className="navbar-link-container">
-                        <li className={`navbar-link-item ` + (location.pathname.includes('/explore') ? "active" : "")}>
-                            <Link to="/explore/posts">Khám phá</Link>
+                        <li className={`navbar-link-item ` + (location.pathname.split('/').filter(Boolean).length === 0 ? "active" : "")}>
+                            <Link to="/">Khám phá</Link>
                         </li>
                         <li className={`navbar-link-item ` + (location.pathname.includes('/commission-market') ? "active" : "")}>
                             <Link to="/commission-market">Chợ Commission</Link>

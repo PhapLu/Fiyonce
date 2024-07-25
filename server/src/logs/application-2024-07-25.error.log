@@ -114,3 +114,19 @@
 2024-07-25 18:21:30::error::/v1/api/commissionReport/createCommissionReport::bef9c66d-b994-40b3-a6e0-3a8e19f19a73::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
 2024-07-25 18:21:59::error::/v1/api/commissionReport/createCommissionReport::67e033a1-f261-47b0-b37e-94e46b9a8eaa::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
 2024-07-25 18:23:04::error::/v1/api/commissionReport/createCommissionReport::764b62a4-ba69-4600-9ba2-5e9284354dd8::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-07-25 21:21:37::error::/v1/api/user/me::94d48a48-dc23-41ff-81e3-6208aa18b6e7::403 - 1ms - Response: {"status":403,"now":1721917297668}::{"message":"Access token missing"}
+2024-07-25 21:21:57::error::/v1/api/user/me::7d7a880e-d0b2-43b6-8e83-36e223b66531::403 - 0ms - Response: {"status":403,"now":1721917317600}::{"message":"Access token missing"}
+2024-07-25 21:23:44::error::/v1/api/user/me::af353f26-0714-45a4-865c-ddd489e593dc::403 - 0ms - Response: {"status":403,"now":1721917424032}::{"message":"Access token missing"}
+2024-07-25 21:24:15::error::/v1/api/user/me::d9e88f7e-9a03-457e-8846-74b50c27237b::403 - 0ms - Response: {"status":403,"now":1721917455621}::{"message":"Access token missing"}
+2024-07-25 21:24:17::error::/v1/api/auth/users/verifyResetPasswordOtp::a33ad07f-ec8a-4fd9-b365-08312ca2e802::403 - 1ms - Response: {"status":403,"now":1721917457616}::{"message":"Mã OTP không chính xác"}
+2024-07-25 21:24:27::error::/v1/api/user/me::51ec54b0-3bf1-4ce7-bf6c-b271dbb5b09f::403 - 0ms - Response: {"status":403,"now":1721917467813}::{"message":"Access token missing"}
+2024-07-25 21:24:45::error::/v1/api/user/me::2e984a71-0a3b-431e-82e6-e3b84c258ff9::403 - 0ms - Response: {"status":403,"now":1721917485491}::{"message":"Access token missing"}
+2024-07-25 21:24:47::error::/v1/api/user/me::22a24a83-ea4e-470f-872f-256a5e0c2b5b::403 - 0ms - Response: {"status":403,"now":1721917487964}::{"message":"Access token missing"}
+2024-07-25 21:24:56::error::/v1/api/user/me::2d49a424-8f9f-4958-8590-11fbc5b57bdb::403 - 0ms - Response: {"status":403,"now":1721917496967}::{"message":"Access token missing"}
+2024-07-25 21:25:08::error::/v1/api/user/me::4f7546bd-6a34-4a1e-ad88-954a8ea27be4::403 - 0ms - Response: {"status":403,"now":1721917508336}::{"message":"Access token missing"}
+2024-07-25 21:25:12::error::/v1/api/user/me::eeed792c-ef26-46bb-a9ab-003415e2b3e5::403 - 0ms - Response: {"status":403,"now":1721917512226}::{"message":"Access token missing"}
+2024-07-25 21:25:16::error::/v1/api/user/me::894c70c4-3721-4e1e-bd56-8dc211b655dd::403 - 1ms - Response: {"status":403,"now":1721917516346}::{"message":"Access token missing"}
+2024-07-25 21:25:38::error::/v1/api/user/me::1dcd895e-04a1-46f9-bc15-d6997a37cdde::403 - 1ms - Response: {"status":403,"now":1721917538199}::{"message":"Access token missing"}
+2024-07-25 21:25:39::error::/v1/api/user/me::5c58e51a-ff16-4f43-8044-10b3310249f7::403 - 0ms - Response: {"status":403,"now":1721917539347}::{"message":"Access token missing"}
+2024-07-25 21:26:35::error::/v1/api/user/me::cbf62f30-eb80-40f0-9602-27e51a219fb7::403 - 0ms - Response: {"status":403,"now":1721917595149}::{"message":"Access token missing"}
+2024-07-25 21:26:46::error::/v1/api/user/me::cb721c00-311b-41a8-90ac-63aec6b364a7::403 - 0ms - Response: {"status":403,"now":1721917606519}::{"message":"Access token missing"}

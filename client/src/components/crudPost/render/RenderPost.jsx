@@ -38,7 +38,7 @@ export default function RenderPost() {
     useEffect(() => {
         const handler = (e) => {
             if (renderPostRef.current && !renderPostRef.current.contains(e.target)) {
-                navigate(userId ? `/users/${userId}/profile-posts` : `/explore/posts`);
+                navigate(userId ? `/users/${userId}/profile-posts` : `/`);
             }
         };
         document.addEventListener("mousedown", handler);
