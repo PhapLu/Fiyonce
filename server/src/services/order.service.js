@@ -27,7 +27,7 @@ class OrderService {
         );
 
         //2. Check isDirect of order
-        if (isDirect == true) {
+        if (isDirect == 'true') {
             //direct order
             const talent = await User.findById(talentChosenId);
             const service = await commissionService.findById(
