@@ -82,8 +82,8 @@ class OrderService {
             //5. Send email to user
             if(talentChosenId !== null){
                 try {
-                    const subject = "New order";
-                    const subjectMessage = "You have a new order";
+                    const subject = "";
+                    const subjectMessage = "";
                     const verificationCode = "";
                     const message = `You have a new order from ${user.fullName}. Please check the order details and accept or reject the order.`
                     const template = "announcementTemplate"
@@ -559,8 +559,8 @@ class OrderService {
         //6. Send email to user
         const member = await User.findById(order.memberId);
         try {
-            const subject = "New order";
-            const subjectMessage = "You have a new order";
+            const subject = "";
+            const subjectMessage = "";
             const verificationCode = "";
             const message = 'Your order has been denied by the talent you chose. Please check the order details and try again with another talent.'
             const template = "announcementTemplate"

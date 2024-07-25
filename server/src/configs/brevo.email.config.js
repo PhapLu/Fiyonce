@@ -21,7 +21,7 @@ async function brevoSendEmail(to, subject, subjectMessage, verificationCode, mes
         if(template === 'otpTemplate'){
             htmlContent = otpTemplate(toEmail, subjectMessage, verificationCode);
         }else if(template === 'announcementTemplate'){
-            htmlContent = announcementTemplate(toEmail, subjectMessage, message);
+            htmlContent = announcementTemplate(toEmail, message);
         }
 
         //Define the mail options

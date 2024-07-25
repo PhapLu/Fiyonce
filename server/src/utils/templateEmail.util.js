@@ -101,24 +101,103 @@ const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
     `;
 };
 
-const announcementTemplate = (toEmail, subjectMessage, message) => {
+const announcementTemplate = (toEmail, message) => {
     return `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-                /* Different styles here */
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <!-- Different content here -->
-                <p>Hello ${toEmail},</p>
-                <p>${subjectMessage}</p>
-                <p>${message}</p>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
+            body {
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                width: 600px;
+                margin: 0 auto;
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #fff;
+            }
+            .header {
+                text-align: left;
+            }
+            .header img {
+                width: 100px;
+            }
+            .content {
+                background-size: cover;
+                text-align: center;
+                margin-top: 20px;
+                padding: 20px;
+                padding-bottom: 0px;
+                font-size: 20px;
+                border-radius: 10px;
+                font-weight: bold;
+            }
+            .content_container {
+                padding: 5px 30px;
+                text-align: left;
+                border-radius: 10px;
+                display: inline-block;
+            }
+            .content_head {
+                font-weight: bold;
+            }
+            .content_message{
+                font-size: 16px;
+                font-weight: 500;
+            }
+            .footer {
+                text-align: left;
+                font-weight: 400;
+            }
+            .footer_final_p {
+                margin: 0;
+            }
+            .fiyonce_help {
+                color: #ff9027;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .social-icons {
+                display: flex;
+            }
+            .horizontal_line {
+                display: block; /* Make the element a block element */
+                width: 100%; /* Full width */
+                border-top: 1px solid #000; /* Black border on the top */
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <img src="https://res.cloudinary.com/fiyonce/image/upload/v1721793532/fiyonce/system/email_logo_fqu2hq.png" alt="Pastal">
             </div>
-        </body>
-        </html>
+            <div class="content">
+                <div class="content_container">
+                    <p class="content_head">Chào ${toEmail},</p>
+                    <div class="content_message">${message}</div>
+                </div>
+            </div>
+            <hr class="horizontal_line">
+            <div style='font-size: 15px;' class="footer">
+                <p>Fiyonce là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
+                <span>Hiện tại Fiyonce vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
+                <p class="footer_final_p">Hẹn gặp lại trên Fiyonce.</p>
+                <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
+                <div class="social-icons">
+                    <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718068817/fiyonce/system/facebook_icon_sk9jnu.png" style="object-fit: cover; border-radius:0px;display:block" class="CToWUd" data-bit="iit" /></a>
+                    <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064053/fiyonce/system/tiktok_icon_zkvjzu.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
+                    <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064137/fiyonce/system/instagram_icon_lzz8ox.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
+                    <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064187/fiyonce/system/pinterest_icon_xjzzls.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
     `;
 };
 

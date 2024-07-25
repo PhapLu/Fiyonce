@@ -132,8 +132,8 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork);
                 await deleteFileByPublicId(publicId);
             });
-            const subject = "Role Updated";
-            const subjectMessage = "Your role has been updated to talent";
+            const subject = "";
+            const subjectMessage = "";
             const verificationCode = '';
             const message = "Your role has been updated to talent";
             const template = 'announcementTemplate';
@@ -183,10 +183,10 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork);
                 await deleteFileByPublicId(publicId);
             });
-            const subject = "Request Denied";
-            const subjectMessage = "Your request has been rejected";
+            const subject = "";
+            const subjectMessage = "";
             const verificationCode = '';
-            const message = "Your request has been rejected";
+            const message = "Your request has been denied";
             const template = 'announcementTemplate';
             await brevoSendEmail(
                 foundUser.email,
