@@ -119,14 +119,18 @@ class AuthService {
 
         // 4. Send OTP email
         try {
-            const subject = "Your OTP Code";
+            const subject = "[Pastal] OTP đăng kí tài khoản";
             const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`;
             const verificationCode = otp;
+            const message = '';
+            const template = "otpTemplate";
             await brevoSendEmail(
                 email,
                 subject,
                 subjectMessage,
-                verificationCode
+                verificationCode,
+                message,
+                template
             );
         } catch (error) {
             console.log("Error sending email:", error);
@@ -264,11 +268,15 @@ class AuthService {
             const subject = "[Pastal] OTP thay đổi mật khẩu";
             const subjectMessage = "Mã xác thực thay đổi mật khẩu của bạn là: ";
             const verificationCode = otp;
+            const message = '';
+            const template = "otpTemplate";
             await brevoSendEmail(
                 email,
                 subject,
                 subjectMessage,
-                verificationCode
+                verificationCode,
+                message,
+                template
             );
         } catch (error) {
             console.error(error);
