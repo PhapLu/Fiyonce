@@ -13,7 +13,7 @@ import RenderProposals from "../../crudProposal/render/RenderProposals";
 import "./RenderCommissionOrder.scss";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
-export default function RenderCommissionOrder({ commissionOrder, setShowRenderCommissionOrder, setShowRenderProposals, setShowUpdateCommissionOrder, setOverlayVisible }) {
+export default function RenderCommissionOrder({ commissionOrder, setShowCreateProposal, setShowRenderCommissionOrder, setShowRenderProposals, setShowUpdateCommissionOrder, setOverlayVisible }) {
     if (!commissionOrder) {
         return;
     }
@@ -52,6 +52,23 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="modal-form--left">
+                <Link to={`/users/${commissionOrder?.memberId._id}`} className="user md hover-cursor-opacity">
+                    <div className="user--left">
+                        <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
+                        <div className="user__name">
+                            <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
+                        </div>
+                    </div>
+                </Link>
+                {commissionOrder?.talentChosenId ? (
+                    <div className="status approved mt-8 mb-8">
+                        <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                    </div>
+                ) : (
+                    <div className="status pending mt-8 mb-8">
+                        <span className="highlight-text fs-12">&nbsp;{commissionOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                    </div>
+                )}
                 {
                     commissionOrder.isDirect ? (
                         <>
@@ -74,8 +91,8 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
                                         <li className={`step-item ${["approved", "confirmed"].includes(commissionOrder.status) && "checked"}`}>Khách hàng thanh toán đặt cọc</li>
                                         {commissionOrder.status === "under_processing" ? <li className="step-item checked">Admin đang xử lí</li> : (
                                             <>
-                                                <li className={`step-item ${["approved", "confirmed", "in_progress"].includes(commissionOrder.status) && "checked"}`}>Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                                <li className={`step-item ${["approved", "confirmed", "finished"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
+                                                <li className={`step-item ${["in_progress"].includes(commissionOrder.status) && "checked"}`}>Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
+                                                <li className={`step-item ${["finished"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
                                             </>
                                         )}
                                     </ul>
@@ -109,11 +126,6 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
             </div>
             <div className="modal-form--right">
                 <h2 className="form__title">Thông tin đơn hàng</h2>
-                <div className="form-field">
-                    <label htmlFor="title" className="form-field__label">Tên đơn hàng</label>
-                    <span>{commissionOrder.title}</span>
-                </div>
-
                 <div className="form-field">
                     <label htmlFor="description" className="form-field__label">Mô tả</label>
                     <span>{commissionOrder.description}</span>
@@ -161,18 +173,22 @@ export default function RenderCommissionOrder({ commissionOrder, setShowRenderCo
 
                 <div className="form__submit-btn-container">
                     {
-
                         isOrderOwner && (
                             <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowUpdateCommissionOrder(true) }}>Cập nhật</button>
                         )
                     }
                     {
                         (isOrderOwner || commissionOrder.isDirect === false) && (
-                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowRenderProposals(true) }}>Hợp đồng ({commissionOrder.talentsApprovedCount})</button>
+                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowRenderProposals(true) }}>Xem hồ sơ ({commissionOrder.talentsApprovedCount})</button>
                         )
                     }
                     {
-                        isTalentChosen && (<button className="form__submit-btn-item btn btn-2 btn-md">Tạo hợp đồng</button>)
+                        commissionOrder.isDirect ? (
+                            isTalentChosen && (<button className="form__submit-btn-item btn btn-2 btn-md">Tạo hợp đồng</button>)
+                        ) : (
+                            !isOrderOwner && userInfo.role == "talent") && (
+                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowCreateProposal(true) }}>Ứng commission</button>
+                        )
                     }
                 </div>
 

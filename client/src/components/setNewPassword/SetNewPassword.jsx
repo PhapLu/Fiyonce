@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/auth/AuthContext";
 import { apiUtils } from "../../utils/newRequest";
 import "./SetNewPassword.scss";
-import { isFilled, minLength, isMatch } from "../../utils/validator.js";
+import { isFilled, minLength, isMatch, isValidPassword } from "../../utils/validator.js";
 
 export default function SetNewPassword({ resetPasswordEmail }) {
     const [inputs, setInputs] = useState({});

@@ -1,0 +1,34 @@
+.payment-method-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+
+    .payment-method-item {
+        display: flex;
+        align-items: center;
+        border: 2px solid var(--gray-2-color);
+        border-radius: 12px;
+        padding: 4px;
+        width: 33%;
+        margin-right: 12px;
+
+        span {
+            font-size: 1.2rem;
+        }
+
+        &.active {
+            border: 2px solid var(--orange-1-color);
+        }
+
+        img {
+            height: 40px;
+            width: 40px;
+        }
+
+        &:last-child {
+            margin-right: 0px;
+        }
+    }
+
+}

@@ -2,29 +2,37 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useQuery } from "react-query";
+import MoMoPayment from "/uploads/momo_payment.png"
+import AtmPayment from "/uploads/atm_payment.png"
+import VisaPayment from "/uploads/visa_payment.png"
 
 // Contexts
+import { useModal } from "../../../contexts/modal/ModalContext";
 
 // Components
 
 // Utils
-import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/formatter";
+import { formatCurrency, formatDate, formatTimeAgo, limitString } from "../../../utils/formatter";
 import { apiUtils, newRequest } from "../../../utils/newRequest";
 
 // Styling
-// import "./RenderProposal.scss"
+import "./RenderProposal.scss"
+import { useAuth } from "../../../contexts/auth/AuthContext";
 
-
-export default function RenderProposal({ commissionOrder, setShowRenderProposal, setOverlayVisible }) {
+export default function RenderProposal({ proposalId, commissionOrder, setShowRenderProposal, setOverlayVisible }) {
     if (!commissionOrder) {
         return;
     }
-    console.log(commissionOrder)
-    const [isProcedureVisible, setIsProcedureVisible] = useState(false);
+    const { setModalInfo } = useModal();
+    const { userInfo, socket } = useAuth();
+    const isOrderOwnerAsMember = userInfo?._id === commissionOrder?.memberId?._id;
+
+    const [isSuccessConfirmProposal, setIsSuccessConfirmProposal] = useState(false);
+    const [isProcedureVisible, setIsProcedureVisible] = useState(true);
 
     const fetchProposal = async () => {
         try {
-            const response = await apiUtils.get(`/proposal/readProposal/${commissionOrder.proposalId}`);
+            const response = await apiUtils.get(`/proposal/readProposal/${proposalId}`);
             console.log(response)
             return response.data.metadata.proposal;
             // console.log({
@@ -88,26 +96,42 @@ export default function RenderProposal({ commissionOrder, setShowRenderProposal,
         e.preventDefault();
 
         try {
-            const response1 = await apiUtils.post(`/proposal/confirmProposal/${proposal?._id}`);
-            const paymentResponse = response1.data.metadata.paymentResponse;
-            console.log(response1.data.metadata.paymentResponse);
-            // setPaymentUrlsetPaymentUrl(response1.data.metadata.paymentData)
-            console.log(paymentResponse)
-            window.open(paymentResponse.payUrl)
+            const response = await apiUtils.patch(`/proposal/confirmProposal/${proposal?._id}`);
+            console.log(response.data.metadata.proposal)
+            if (response) {
+                setModalInfo({
+                    status: "success",
+                    message: "Thanh toán thành công"
+                })
+            }
+            // const paymentResponse = response1.data.metadata.paymentResponse;
+            // console.log(response1.data.metadata.paymentResponse);
+            // window.open(paymentResponse.payUrl)
 
             // const response2 = await newRequest.post('https://test-payment.momo.vn/v2/gateway/api/create', paymentData);
             // console.log(response2)
             // Navigate(response.data.metadata.paymentData.paymentUrl);
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setModalInfo({
+                status: "error",
+                message: error?.response?.data?.message
+            })
         }
     }
+
+
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('momo');
+
+    const paymentMethods = [
+        { id: 'momo', name: 'Ví MoMo', imgSrc: MoMoPayment },
+        { id: 'atm', name: 'Thẻ ATM nội địa', imgSrc: AtmPayment },
+        { id: 'visa', name: 'Thẻ ATM quốc tế', imgSrc: VisaPayment },
+    ];
 
     if (isLoading) {
         return <div className="loading-spinner" />;
     }
-
-    // return;
 
     return (
         <div className="render-proposals modal-form type-2" ref={renderProposalRef} onClick={(e) => { e.stopPropagation() }}>
@@ -124,6 +148,15 @@ export default function RenderProposal({ commissionOrder, setShowRenderProposal,
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="modal-form--left">
+                {commissionOrder?.talentChosenId ? (
+                    <div className="status approved">
+                        <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                    </div>
+                ) : (
+                    <div className="status pending">
+                        <span className="highlight-text">&nbsp;{commissionOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                    </div>
+                )}
                 {
                     commissionOrder.isDirect ? (
                         <>
@@ -146,8 +179,8 @@ export default function RenderProposal({ commissionOrder, setShowRenderProposal,
                                         <li className={`step-item ${["approved", "confirmed"].includes(commissionOrder.status) && "checked"}`}>Khách hàng thanh toán đặt cọc</li>
                                         {commissionOrder.status === "under_processing" ? <li className="step-item checked">Admin đang xử lí</li> : (
                                             <>
-                                                <li className={`step-item ${["approved", "confirmed", "in_progress"].includes(commissionOrder.status) && "checked"}`}>Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                                <li className={`step-item ${["approved", "confirmed", "finished"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
+                                                <li className={`step-item ${["in_progress"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
+                                                <li className={`step-item ${["finished"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
                                             </>
                                         )}
                                     </ul>
@@ -160,10 +193,10 @@ export default function RenderProposal({ commissionOrder, setShowRenderProposal,
                             <hr />
                             <ul className="step-container">
                                 <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                <li className="step-item checked">Các họa sĩ gửi proposal và khách hàng chọn ra họa sĩ phù hợp nhất</li>
-                                <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                                <li className="step-item">Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
+                                <li className="step-item checked">Các họa sĩ gửi proposal</li>
+                                <li className="step-item">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
+                                <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
+                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
                             </ul>
                         </>
                     )
@@ -181,46 +214,76 @@ export default function RenderProposal({ commissionOrder, setShowRenderProposal,
             </div>
 
             <div className="modal-form--right">
-                <h2 className="form__title">Chi tiết hồ sơ</h2>
-                <div className="form-field">
-                    <label htmlFor="scope" className="form-field__label">Phạm vi hợp đồng</label>
-                    <span>{proposal?.scope}</span>
-                </div>
+                {isSuccessConfirmProposal ? (
+                    <h2 className="form__title">Thanh toán thành công</h2>
 
-                {commissionOrder?.isDirect && proposal?.artworks?.length > 0 && (
-                    <div className="form-field">
-                        <label htmlFor="scope" className="form-field__label">Tranh tham khảo</label>
-                        <div className="reference-container">
-                            {proposal?.artworks.map((artwork, index) => {
-                                return (
-                                    <div className="reference-item" key={index}>
-                                        {/* {artwork} */}
-                                        <img src={artwork.url} alt="Tranh tham khảo" />
+                ) : (
+                    <>
+                        <h2 className="form__title">Chi tiết hồ sơ</h2>
+                        <div className="form-field">
+                            <label htmlFor="scope" className="form-field__label">Phạm vi hợp đồng</label>
+                            <span>{proposal?.scope}</span>
+                        </div>
+
+                        {!commissionOrder?.isDirect && proposal?.artworks?.length > 0 && (
+                            <div className="form-field">
+                                <label htmlFor="scope" className="form-field__label">Tranh tham khảo</label>
+                                <div className="reference-container">
+                                    {proposal?.artworks.map((artwork, index) => (
+                                        <div className="reference-item" key={index}>
+                                            <img src={artwork.url} alt="Tranh tham khảo" />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="form-field">
+                            <label htmlFor="scope" className="form-field__label">Thời gian</label>
+                            <div>
+                                <span>Bắt đầu từ ngày: {formatDate(proposal?.startAt)}</span>
+                                <br />
+                                <span>Đến ngày: {formatDate(proposal?.deadline)}</span>
+                            </div>
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="termOfServiceId" className="form-field__label">Điều khoản dịch vụ</label>
+                            <div className="border-text w-100" dangerouslySetInnerHTML={{ __html: proposal?.termOfServiceId.content }}></div>
+                        </div>
+
+                        {
+                            isOrderOwnerAsMember && !["confirmed", "canceled",
+                                "in_progress",
+                                "finished",
+                                "under_processing"].includes(commissionOrder?.status) && (
+                                    <div className="form-field">
+                                        <label htmlFor="price" className="form-field__label">Thanh toán</label>
+
+                                        <div className="border-text w-100">
+                                            <span>Giá trị đơn hàng: <span className="highlight-text">{formatCurrency(proposal?.price)}đ</span></span>
+                                            <p className="fw-bold">Phương thức thanh toán</p>
+                                            <div className="payment-method-container">
+                                                {paymentMethods.map(method => (
+                                                    <div
+                                                        key={method.id}
+                                                        className={`payment-method-item ${selectedPaymentMethod === method.id ? 'active' : ''}`}
+                                                        onClick={() => setSelectedPaymentMethod(method.id)}
+                                                    >
+                                                        <img src={method.imgSrc} alt={method.name} />
+                                                        <span>{method.name}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <hr />
+                                            <p className="text-align-center">Bạn vẫn chưa bị trừ tiền</p>
+                                            <button className="btn btn-md btn-hover color-4 w-100" onClick={handlePayment}>Thanh toán qua {selectedPaymentMethod ? paymentMethods.find(method => method.id === selectedPaymentMethod).name : '...'}</button>
+                                        </div>
                                     </div>
                                 )
-                            })
-                            }
-                        </div>
-                    </div>
+                        }
+                    </>
                 )}
-
-
-
-                <div className="form-field">
-                    <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
-                    <div className="border-text w-100" dangerouslySetInnerHTML={{ __html: proposal?.termOfServiceId.content }}></div>
-                </div>
-
-                <div className="form-field">
-                    <label htmlFor="scope" className="form-field__label">Thanh toán</label>
-                    <span>{proposal?.price}</span>
-                </div>
-
-                <button className="btn btn-2 btn-md" onClick={handlePayment}>
-                    Pay with Momo
-                </button>
-
-
             </div>
         </div >
     )

@@ -14,7 +14,7 @@ const ServiceSchema = new mongoose.Schema(
             ref: "ServiceCategory",
             required: true,
         },
-        views: { type: Number, default: 0 },
+        views: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         orderCount: { type: Number, default: 0 },
         termOfServiceId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +33,7 @@ const ServiceSchema = new mongoose.Schema(
                 title: { type: String, required: true },
                 value: { type: Number, required: true },
                 isPercentage: { type: Boolean, default: false },
+                default: []
             },
         ],
         notes: { type: String },

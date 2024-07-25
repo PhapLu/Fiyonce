@@ -29,9 +29,8 @@ import { formatCurrency } from "../../utils/formatter";
 
 // Styling
 import "./OrderHistory.scss";
-import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissionOrder";
 
-export default function MemberOrderHistory({ orders }) {
+export default function MemberOrderHistory() {
     const queryClient = useQueryClient();
 
     const [commissionOrder, setCommissionOrder] = useState();
@@ -44,7 +43,6 @@ export default function MemberOrderHistory({ orders }) {
     const [showCreateProposal, setShowCreateProposal] = useState(false);
     const [showRenderProposal, setShowRenderProposal] = useState(false);
 
-    const [showRejectCommissionOrder, setShowRejectCommissionOrder] = useState(false);
 
     const [showArchiveCommissionOrder, setShowArchiveCommissionOrder] = useState(false);
     const [showUnarchiveCommissionOrder, setShowUnarchiveCommissionOrder] = useState(false);
@@ -58,7 +56,41 @@ export default function MemberOrderHistory({ orders }) {
     const archiveOrderBtnRef = useRef(null);
     const reportOrderBtnRef = useRef(null);
 
-    
+
+    const fetchMemberOrderHistory = async () => {
+        try {
+            const response = await apiUtils.get(`/order/readMemberOrderHistory`);
+            return response.data.metadata.memberOrderHistory;
+        } catch (error) {
+            return null;
+        }
+    };
+    const {
+        data: orders,
+        error: fetchingMemberOrderHistoryError,
+        isError: isFetchingMemberOrderHistoryError,
+        isLoading: isFetchingMemberOrderHistoryLoading,
+        refetch: refetchMemberOrderHistory,
+    } = useQuery('fetchMemberOrderHistory', fetchMemberOrderHistory, {
+    });
+
+
+    const cancelCommissionOrderMutation = useMutation(
+        async ({ orderId, fd }) => {
+            const response = await apiUtils.patch(`/order/cancelOrder/${orderId}`, { cancelMessage: fd.get("cancelMessage") });
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchTalentOrderHistory');
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
+
+
     const archiveCommissionOrderMutation = useMutation(
         async (orderId) => {
             const response = await apiUtils.patch(`/order/archiveOrder/${orderId}`);
@@ -89,7 +121,7 @@ export default function MemberOrderHistory({ orders }) {
             },
         }
     );
-    
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -109,6 +141,14 @@ export default function MemberOrderHistory({ orders }) {
         };
     }, []);
 
+    if (isFetchingMemberOrderHistoryLoading) {
+        return <span>Đang tải...</span>
+    }
+
+    if (isFetchingMemberOrderHistoryError) {
+        return <span>Có lỗi xảy ra: {fetchingMemberOrderHistoryError.message}</span>
+    }
+
     return (
         <>
             <table>
@@ -127,22 +167,19 @@ export default function MemberOrderHistory({ orders }) {
                             return (
                                 <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
                                     <td >
-                                        <div className={`status ${order?.status}`}>
-                                            <div className="status__bg"></div>
-                                            <span className="status__title">
-                                                {
-                                                    order?.status === "pending" ? "Đang đợi họa sĩ xác nhận" :
-                                                        order?.status === "approved" ? "Đang đợi bạn thanh toán" :
-                                                            order?.status === "rejected" ? "Họa sĩ đã từ chối" :
-                                                                order?.status === "confirmed" ? "Bạn đã thanh toán cọc" :
-                                                                    order?.status === "canceled" ? "Bạn đã hủy" :
-                                                                        order?.status === "in_progress" ? "Họa sĩ đang thực hiện" :
-                                                                            order?.status === "finished" ? "Hoàn tất" :
-                                                                                order?.status === "under_processing" ? "Admin đang xử lí" :
-                                                                                    ""
-                                                }
-                                            </span>
-                                        </div>
+                                        <span className={`status ${order?.status}`}>
+                                            {
+                                                order?.status === "pending" ? "Đang đợi họa sĩ xác nhận" :
+                                                    order?.status === "approved" ? "Đang đợi bạn thanh toán" :
+                                                        order?.status === "rejected" ? "Họa sĩ đã từ chối" :
+                                                            order?.status === "confirmed" ? "Đã thanh toán cọc" :
+                                                                order?.status === "canceled" ? "Bạn đã hủy đơn" :
+                                                                    order?.status === "in_progress" ? "Họa sĩ đang thực hiện" :
+                                                                        order?.status === "finished" ? "Hoàn tất" :
+                                                                            order?.status === "under_processing" ? "Admin đang xử lí" :
+                                                                                ""
+                                            }
+                                        </span>
 
                                     </td>
                                     <td>{order?.title || "-"}</td>
@@ -154,8 +191,7 @@ export default function MemberOrderHistory({ orders }) {
                                                 order?.status === "pending" &&
                                                 (
                                                     <>
-                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); handleShowCreateProposal() }} className="btn btn-3">Soạn hợp đồng</button>
-                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Từ chối</button>
+                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowCancelCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Hủy đơn</button>
                                                     </>
                                                 )
                                             }
@@ -191,7 +227,7 @@ export default function MemberOrderHistory({ orders }) {
                             )
                         }) : (
                             <tr className="non-hover">
-                                <td colSpan={6}>Hiện chưa có đơn hàng nào. Để Pastal <Link><span className="highlight-text">tìm kiếm họa sĩ</span></Link> giúp bạn nhé
+                                <td colSpan={6}>Hiện chưa có đơn hàng nào. <Link to="/commission-market"><span className="highlight-text">Tìm kiếm họa sĩ</span></Link> trên Chợ Commission nhé!
                                 </td>
                             </tr>
                         )
@@ -210,8 +246,6 @@ export default function MemberOrderHistory({ orders }) {
                         {showReportCommissionOrder && <ReportCommissionOrder commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
 
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
-                        {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
-
                     </div>
                 )
             }

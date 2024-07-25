@@ -62,10 +62,10 @@ export default function RejectCommissionOrder({ commissionOrder, setShowRejectCo
             console.log(rejectMessage);
             const fd = new FormData();
             fd.append("rejectMessage", rejectMessage);
-            console.log(commissionOrder.orderId)
+            console.log(commissionOrder._id)
             console.log(fd.get("rejectMessage"))
             // const response = await apiUtils.patch(`/order/rejectOrder/${commissionOrder.orderId}`, fd);
-            const response = await rejectCommissionOrderMutation.mutateAsync({orderId: commissionOrder.orderId, fd});
+            const response = await rejectCommissionOrderMutation.mutateAsync({orderId: commissionOrder._id, fd});
             if (response) {
                 setModalInfo({
                     status: "success",

@@ -140,7 +140,6 @@ class OrderService {
             orders.map(async (order) => {
                 const talentsApprovedCount = await Proposal.find({
                     orderId: order._id,
-                    status: "approved",
                 }).countDocuments();
                 order._doc.talentsApprovedCount = talentsApprovedCount; // Add the count to the order
                 return order;
@@ -580,29 +579,6 @@ class OrderService {
             order: deniedOrder,
         };
     };
-    // static deleteOrder = async(userId, orderId) => {
-    //     //1. Check user and order
-    //     const foundUser = await User.findById(userId)
-    //     const order = await Order.findById(orderId)
-    //     if(!foundUser) throw new NotFoundError('User not found!')
-    //     if(!order) throw new NotFoundError('Order not found!')
-    //     if(foundUser._id != order.memberId.toString()) throw new AuthFailureError('You can delete only your order!')
-
-    //     //2. Check order status
-    //     if(oldOrder.status != 'pending' && oldOrder.status != 'approved')
-    //         throw new BadRequestError('You cannot delete order on this stage!')
-
-    //     //3. Extract public IDs and delete files from Cloudinary
-    //     const publicIds = order.references.map(reference => extractPublicIdFromUrl(reference))
-    //     await Promise.all(publicIds.map(publicId => deleteFileByPublicId(publicId)))
-
-    //     //4. Delete order
-    //     await order.deleteOne()
-
-    //     return{
-    //         message: 'Order deleted successfully!'
-    //     }
-    // }
 }
 
 export default OrderService;

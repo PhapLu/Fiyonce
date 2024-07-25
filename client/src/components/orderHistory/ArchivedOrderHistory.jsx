@@ -11,7 +11,6 @@ import RenderCommissionOrder from "../crudCommissionOrder/render/RenderCommissio
 import UpdateCommissionOrder from "../crudCommissionOrder/update/UpdateCommissionOrder";
 import ArchiveCommissionOrder from "../crudCommissionOrder/archive/ArchiveCommissionOrder";
 import UnarchiveCommissionOrder from "../crudCommissionOrder/archive/UnarchiveCommissionOrder";
-import ReportCommissionOrder from "../crudCommissionOrder/report/ReportCommissionOrder";
 
 import RenderProposals from "../crudProposal/render/RenderProposals";
 import CreateProposal from "../crudProposal/create/CreateProposal";
@@ -30,7 +29,7 @@ import { formatCurrency } from "../../utils/formatter";
 import "./OrderHistory.scss";
 import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissionOrder";
 
-export default function ArchivedOrderHistory({ orders }) {
+export default function ArchivedOrderHistory() {
     const queryClient = useQueryClient();
 
     const [showArchiveOrderMoreActions, setShowArchiveOrderMoreActions] = useState();
@@ -47,9 +46,6 @@ export default function ArchivedOrderHistory({ orders }) {
 
     const [showArchiveCommissionOrder, setShowArchiveCommissionOrder] = useState(false);
     const [showUnarchiveCommissionOrder, setShowUnarchiveCommissionOrder] = useState(false);
-    const [showReportCommissionOrder, setShowReportCommissionOrder] = useState(false);
-
-    const [showCommissionTosView, setShowCommissionTosView] = useState(false);
 
     const [overlayVisible, setOverlayVisible] = useState();
 
@@ -57,7 +53,25 @@ export default function ArchivedOrderHistory({ orders }) {
     const archiveOrderBtnRef = useRef(null);
     const reportOrderBtnRef = useRef(null);
 
-    
+    const fetchArchivedOrderHistory = async () => {
+        try {
+            const response = await apiUtils.get(`/order/readArchivedOrderHistory`);
+            console.log(response)
+            return response.data.metadata.archivedOrderHistory;
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const {
+        data: orders,
+        error: fetchingArchivedOrderHistoryError,
+        isError: isFetchingArchivedOrderHistoryError,
+        isLoading: isFetchingArchivedOrderHistoryLoading,
+        refetch: refetchArchivedOrderHistory,
+    } = useQuery('fetchArchivedOrderHistory', fetchArchivedOrderHistory, {
+    });
+
     const unarchiveCommissionOrderMutation = useMutation(
         async (orderId) => {
             const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
@@ -67,6 +81,21 @@ export default function ArchivedOrderHistory({ orders }) {
             onSuccess: () => {
                 queryClient.invalidateQueries('fetchTalentOrderHistory');
                 queryClient.invalidateQueries('fetchArchivedOrderHistory');
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
+
+    const reportCommissionOrderMutation = useMutation(
+        async (orderId) => {
+            const response = await apiUtils.post(`/commissionReport/createCommissionReport/${orderId}`);
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchTalentOrderHistory');
             },
             onError: (error) => {
                 return error;
@@ -93,6 +122,14 @@ export default function ArchivedOrderHistory({ orders }) {
         };
     }, []);
 
+    if (isFetchingArchivedOrderHistoryLoading) {
+        return <span>Đang tải...</span>
+    }
+
+    if (isFetchingArchivedOrderHistoryError) {
+        return <span>Có lỗi xảy ra: {fetchingArchivedOrderHistoryError.message}</span>
+    }
+
     return (
         <>
             <table>
@@ -111,19 +148,16 @@ export default function ArchivedOrderHistory({ orders }) {
                             return (
                                 <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
                                     <td >
-                                        <div className={`status ${order.status}`}>
-                                            <div className="status__bg"></div>
-                                            <span className="status__title">
-                                                {order.status === "pending" && "Đang đợi bạn xác nhận"}
-                                                {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
-                                                {order.status === "rejected" && "Bạn đã từ chối"}
-                                                {order.status === "confirmed" && "Khách đã thanh toán cọc"}
-                                                {order.status === "canceled" && "Đã hủy"}
-                                                {order.status === "in_progress" && "Đang thực hiện đơn"}
-                                                {order.status === "finished" && "Hoàn tất"}
-                                                {order.status === "under_processing" && "Admin đang xử lí"}
-                                            </span>
-                                        </div>
+                                        <span className={`status ${order.status}`}>
+                                            {order.status === "pending" && "Đang đợi bạn xác nhận"}
+                                            {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
+                                            {order.status === "rejected" && "Bạn đã từ chối"}
+                                            {order.status === "confirmed" && "Khách đã thanh toán cọc"}
+                                            {order.status === "canceled" && "Đã hủy"}
+                                            {order.status === "in_progress" && "Đang thực hiện đơn"}
+                                            {order.status === "finished" && "Hoàn tất"}
+                                            {order.status === "under_processing" && "Admin đang xử lí"}
+                                        </span>
                                     </td>
                                     <td>{order.memberId.fullName || "-"}</td>
                                     <td>{`đ${formatCurrency(order.minPrice)}` || `đ${formatCurrency(order.price)}` || "-"}</td>
@@ -156,13 +190,6 @@ export default function ArchivedOrderHistory({ orders }) {
                                                         </svg>
                                                         Xóa khỏi lưu trữ
                                                     </div>
-                                                    <hr />
-                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef} onClick={() => { setCommissionOrder(order), setShowReportCommissionOrder(true); setOverlayVisible(true) }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                                        </svg>
-                                                        Báo cáo
-                                                    </div>
                                                 </div>
                                             )}
                                         </button>
@@ -171,8 +198,7 @@ export default function ArchivedOrderHistory({ orders }) {
                             )
                         }) : (
                             <tr className="non-hover">
-                                <td colSpan={6}>Hiện chưa nhận được đơn hàng nào. Tham khảo
-                                    <Link><span className="highlight-text"> cẩm nang họa sĩ </span></Link> để xây dựng hồ sơ tốt hơn.
+                                <td colSpan={6}>Mục lưu trữ đơn hàng đang trống.
                                 </td>
                             </tr>
                         )
@@ -188,22 +214,12 @@ export default function ArchivedOrderHistory({ orders }) {
                         {showUpdateCommissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
                         {showArchiveCommissionOrder && <ArchiveCommissionOrder commissionOrder={commissionOrder} setShowArchiveCommissionOrder={setShowArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} archiveCommissionOrderMutation={archiveCommissionOrderMutation} />}
                         {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
-                        {showReportCommissionOrder && <ReportCommissionOrder commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
-
 
                         {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createProposalMutation={createProposalMutation} />}
                         {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />}
 
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
-
-                        {/* Commission TOS */}
-                        {showCommissionTosView &&
-                            <RenderCommissionTos
-                                setShowCommissionTosView={setShowCommissionTosView}
-                                setOverlayVisible={setOverlayVisible}
-                            />
-                        }
                     </div>
                 )
             }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { isFilled, minLength, isValidEmail } from "../../../utils/validator.js";
 
 export default function DeleteCommissionServiceCategory({
@@ -54,8 +54,23 @@ export default function DeleteCommissionServiceCategory({
         }
     };
 
+    // Toggle display overlay box
+    const deleteCommissionServiceCategoryRef = useRef();
+    useEffect(() => {
+        let handler = (e) => {
+            if (deleteCommissionServiceCategoryRef && deleteCommissionServiceCategoryRef.current && !deleteCommissionServiceCategoryRef.current.contains(e.target)) {
+                setShowDeleteCommissionServiceCategoryForm(false);
+                setOverlayVisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
+    });
+
     return (
-        <div className="modal-form type-3">
+        <div className="modal-form type-3" ref={deleteCommissionServiceCategoryRef} onClick={(e) => { e.stopPropagation() }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowDeleteCommissionServiceCategoryForm(false);
                 setOverlayVisible(false);
@@ -82,33 +97,6 @@ export default function DeleteCommissionServiceCategory({
                     )}
                 </button>
             </div>
-            {/* <div className="modal-content">
-                <span
-                    className="close"
-                    onClick={() => {
-                        setShowDeleteCommissionServiceCategoryForm(false);
-                        setOverlayVisible(false);
-                    }}
-                >
-                    &times;
-                </span>
-                <h2>Delete Commission Service Category</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="title">Title</label>
-                        <input
-                            type="text"
-                            id="title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                        Save Changes
-                    </button>
-                </form>
-            </div> */}
         </div>
     );
 }

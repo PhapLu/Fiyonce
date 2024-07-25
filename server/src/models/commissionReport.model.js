@@ -5,7 +5,7 @@ const COLLECTION_NAME = "CommissionReports";
 
 const CommissionReportSchema = new mongoose.Schema(
     {
-        clientId: {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,

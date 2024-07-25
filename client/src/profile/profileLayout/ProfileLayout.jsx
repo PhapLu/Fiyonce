@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from 'react-query';
 import { useParams, useLocation, Outlet, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
@@ -70,6 +70,10 @@ export default function ProfileLayout() {
         },
     });
 
+    useEffect(() => {
+        setProfileInfo(data);
+    }, [data, userId]);
+
     if (isLoading) {
         return <span>Đang tải...</span>;
     }
@@ -86,7 +90,7 @@ export default function ProfileLayout() {
         <>
             <Navbar />
             <div className='app with-sidebar'>
-                <ProfileSidebar profileInfo={profileInfo} setProfileInfo={setProfileInfo}/>
+                <ProfileSidebar profileInfo={profileInfo} setProfileInfo={setProfileInfo} />
                 <div className="outlet-content">
                     <div className="profile">
                         <div className="profile__bg">
@@ -184,7 +188,7 @@ export default function ProfileLayout() {
                         </div>
                         <hr />
                     </div>
-                    <Outlet context={{profileInfo, setProfileInfo}} />
+                    <Outlet context={{ profileInfo, setProfileInfo }} />
                 </div>
             </div>
         </>

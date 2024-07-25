@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { isFilled } from "../../../utils/validator.js";
 import { useModal } from "../../../contexts/modal/ModalContext";
 
@@ -67,8 +67,24 @@ export default function UpdateCommissionServiceCategory({
         }
     };
 
+    // Toggle display overlay box
+    const updateCommissionServiceCategoryRef = useRef();
+    useEffect(() => {
+        let handler = (e) => {
+            if (updateCommissionServiceCategoryRef && updateCommissionServiceCategoryRef.current && !updateCommissionServiceCategoryRef.current.contains(e.target)) {
+                setShowUpdateCommissionServiceCategoryForm(false);
+                setOverlayVisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
+    });
+
+
     return (
-        <div className="modal-form type-3">
+        <div className="modal-form type-3" ref={updateCommissionServiceCategoryRef} onClick={(e) => { e.stopPropagation() }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowUpdateCommissionServiceCategoryForm(false);
                 setOverlayVisible(false);

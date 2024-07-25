@@ -16,10 +16,10 @@ class PostService {
             throw new BadRequestError("Bạn không phải là họa sĩ");
 
         //2. Validate request body
-        const { description, postCategoryId } = req.body;
+        const { movementId, postCategoryId } = req.body;
         if (!req.files || !req.files.artworks)
             throw new BadRequestError("Hãy nhập những thông tin bắt buộc");
-        if (!userId || !description || !postCategoryId)
+        if (!userId || !movementId || !postCategoryId)
             throw new BadRequestError("Hãy nhập những thông tin bắt buộc");
 
         //3. Upload artwork images to cloudinary
@@ -167,7 +167,7 @@ class PostService {
         if (!post) throw new NotFoundError('Tác phẩm không tồn tại')
 
         const userPostBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.toString() === postId);
-        const postBookmarkIndex = user.postBookmarks.findIndex(postBookmark => postBookmark.user.toString() === userId);
+        const postBookmarkIndex = post.bookmarks.findIndex(bookmark => bookmark.user.toString() === userId);
 
         // Let action to know if the user postBookmark/undo their interactions
         let action = "bookmark";
@@ -178,7 +178,7 @@ class PostService {
 
             // Check if user is post owner
             if (userId !== post.talentId) {
-                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });;
+                post.views.concat({ user: new mongoose.Types.ObjectId(userId) });
             }
         } else {
             // Remove postBookmark
@@ -186,7 +186,8 @@ class PostService {
             post.bookmarks.splice(postBookmarkIndex, 1);
             action = "unbookmark";
         }
-
+        
+        await user.save();
         await post.save();
 
         return {

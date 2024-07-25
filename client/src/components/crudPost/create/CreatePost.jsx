@@ -4,7 +4,7 @@ import { Link, useOutletContext } from "react-router-dom";
 
 // Contexts
 import { useMovement } from "../../../contexts/movement/MovementContext.jsx"
-import {useModal} from "../../../contexts/modal/ModalContext.jsx";
+import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 
 // Utils
 import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
@@ -184,7 +184,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                         <option key={movement._id} value={movement._id}>{movement.title}</option>
                     ))}
                 </select>
-                {errors.movement && <span className="form-field__error">{errors.movement}</span>}
+                {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
             </div>
             <div className="form-field with-create-btn">
                 <label htmlFor="postCategoryId" className="form-field__label">Album</label>
@@ -293,10 +293,9 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
             </div>
 
             <div className="form-field">
-                <div className="form__submit-btn-container">
                 <button
                     type="submit"
-                    className="form__submit-btn-item btn btn-2 btn-md"
+                    className="form-field__input btn btn-2 btn-md"
                     onClick={handleSubmit}
                     disabled={isSubmitCreatePostLoading}
                 >
@@ -306,7 +305,6 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                         "Đăng tải"
                     )}
                 </button>
-                </div>
             </div>
 
         </div>

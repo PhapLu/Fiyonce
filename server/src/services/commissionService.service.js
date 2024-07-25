@@ -11,6 +11,8 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js";
+import mongoose from "mongoose";
+import jwt from 'jsonwebtoken'
 
 class CommissionServiceService {
     static createCommissionService = async (talentId, req) => {
@@ -84,15 +86,35 @@ class CommissionServiceService {
         }
     };
 
-    static readCommissionService = async (commissionServiceId) => {
+    static readCommissionService = async (req, commissionServiceId) => {
         // 1. Check service
         const service = await CommissionService.findById(commissionServiceId)
-            .populate("talentId", "stageName avatar")
+            .populate("talentId", "fullName stageName avatar")
             .populate("termOfServiceId");
+
+        console.log(service);
+
         if (!service) throw new NotFoundError("Service not found");
 
-        // 2. Update views
-        service.views += 1;
+        const token = req.cookies.accessToken;
+
+        // Initialize user-related variables
+        let userId = null;
+        let email = null;
+
+        if (token) {
+            // Verify token if it exists
+            const payload = jwt.verify(token, process.env.JWT_SECRET);
+            userId = payload.id;
+            email = payload.email;
+        }
+
+        // If user is authenticated and not the service owner, increment the views
+        if (userId && userId !== service.talentId.toString()) {
+            service.views.push(userId);
+        }
+
+        // Save the service to update views
         await service.save();
 
         // 3. Read service
@@ -118,25 +140,22 @@ class CommissionServiceService {
         };
     };
 
-    static updateCommissionService = async (
-        talentId,
-        commissionServiceId,
-        req
-    ) => {
-        // 1. Check talent and service
-        const talent = await User.findById(talentId)
-        const service = await CommissionService.findById(commissionServiceId)
-    
-        if (!talent) throw new NotFoundError('Talent not found')
-        if (!service) throw new NotFoundError('Service not found')
-        if (!service.movementId) throw new NotFoundError('Movement not found')
-        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
-    
-        const oldCategoryId = service.serviceCategoryId // Store the old category ID
+    static updateCommissionService = async (talentId, commissionServiceId, req) => {
+        const talent = await User.findById(talentId);
+        const service = await CommissionService.findById(commissionServiceId);
+
+        if (!talent) throw new NotFoundError('Talent not found');
+        if (!service) throw new NotFoundError('Service not found');
+        if (!service.movementId) throw new NotFoundError('Movement not found');
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
+
+        const oldCategoryId = service.serviceCategoryId;
+
         try {
-            // 2. Handle file uploads if new files were uploaded
+            const updates = { ...req.body };
+
+            // Handle file uploads if new files were uploaded
             if (req.files && req.files.files && req.files.files.length > 0) {
-                // Upload new files to Cloudinary
                 const uploadPromises = req.files.files.map((file) =>
                     compressAndUploadImage({
                         buffer: file.buffer,
@@ -147,39 +166,24 @@ class CommissionServiceService {
                     })
                 );
                 const uploadResults = await Promise.all(uploadPromises);
-                const artworks = uploadResults.map(
-                    (result) => result.secure_url
-                );
-                req.body.artworks = artworks;
+                const artworks = uploadResults.map((result) => result.secure_url);
+                updates.artworks = artworks;
 
                 // Delete old files from Cloudinary
                 const publicIds = service.artworks.map((artwork) =>
                     extractPublicIdFromUrl(artwork)
                 );
-                await Promise.all(
-                    publicIds.map((publicId) => deleteFileByPublicId(publicId))
-                );
+                await Promise.all(publicIds.map((publicId) => deleteFileByPublicId(publicId)));
             }
 
-            // 3. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...service.toObject(), ...req.body };
-
-            // 4. Update the service
             const updatedService = await CommissionService.findByIdAndUpdate(
                 commissionServiceId,
-                updatedFields,
-                { new: true }
+                { $set: updates },
+                { new: true, runValidators: true }
             );
 
-            // 5. Check if the category has changed and if the old category is now empty
-            if (
-                oldCategoryId &&
-                oldCategoryId.toString() !==
-                    updatedService.serviceCategoryId.toString()
-            ) {
-                const servicesInOldCategory = await CommissionService.find({
-                    serviceCategoryId: oldCategoryId,
-                });
+            if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
+                const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
                 if (servicesInOldCategory.length === 0) {
                     await ServiceCategory.findByIdAndDelete(oldCategoryId);
                     console.log(`Deleted Category ID: ${oldCategoryId}`);

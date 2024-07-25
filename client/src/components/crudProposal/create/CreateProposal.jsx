@@ -8,12 +8,12 @@ import "./CreateProposal.scss"
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../../../utils/formatter";
-import { isFilled } from "../../../utils/validator";
+import { isFilled, minValue } from "../../../utils/validator";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
-
-export default function CreateProposal({ commissionOrder, termOfServices, setShowCreateProposal, setOverlayVisible, createProposalMutation }) {
+export default function CreateProposal({ commissionOrder, setShowCreateProposal, setOverlayVisible }) {
+    const queryClient = useQueryClient();
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [selectedTermOfService, setSelectedTermOfService] = useState();
@@ -21,6 +21,52 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
     const { setModalInfo } = useModal();
     const [selectedArtworks, setSelectedArtworks] = useState([]);
     const { userInfo } = useAuth();
+
+    const createProposalMutation = useMutation(
+        async ({ orderId, inputs }) => {
+            const response = await apiUtils.post(`/proposal/sendProposal/${orderId}`, inputs);
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchTalentOrderHistory');
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
+
+
+    const fetchTermOfServices = async () => {
+        try {
+            const response = await apiUtils.get(`/termOfService/readTermOfServices`);
+            return response.data.metadata.termOfServices;
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const {
+        data: termOfServices,
+        error: fetchingTermOfServicesError,
+        isError: isFetchingTermOfServicesError,
+        isLoading: isFetchingTermOfServicesLoading,
+        refetch: refetchTermOfServices,
+    } = useQuery('fetchTermOfServices', fetchTermOfServices, {
+    });
+
+    const handleShowCreateProposal = () => {
+        if (termOfServices && termOfServices.length > 0) {
+            setShowCreateProposal(true);
+            setOverlayVisible(true);
+        } else {
+            setModalInfo({
+                status: "warning",
+                message: "Vui lòng tạo điều khoản dịch vụ trước"
+            })
+        }
+    }
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -116,17 +162,28 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
             errors.deadline = "Vui lòng chọn hạn chót";
         }
 
-        if (!(selectedArtworks?.length > 1)) {
-            errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
+        if (inputs.startAt > inputs.deadline) {
+            errors.startAt = "Ngày bắt đầu diễn ra trước deadline";
+        }
+
+        if (commissionOrder?.isDirect == false) {
+            if (selectedArtworks?.length < 3 || selectedArtworks?.length > 5) {
+                errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
+            }
+            if (!isFilled(inputs.termOfServiceId)) {
+                errors.termOfServiceId = "Vui lòng chọn 1 điều khoản dịch vụ";
+            }
         }
 
         if (!isFilled(inputs.price)) {
             errors.price = "Vui lòng nhập giá trị đơn hàng";
+        } else {
+            if (!minValue(inputs?.price, 100000)) {
+                errors.price = "Giá trị đơn hàng phải trên 100.000đ";
+            }
         }
 
-        if (!isFilled(inputs.termOfServiceId)) {
-            errors.termOfServiceId = "Vui lòng chọn 1 điều khoản dịch vụ";
-        }
+       
 
         return errors;
     }
@@ -144,7 +201,7 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
         inputs.artworks = selectedArtworks.map((artwork) => artwork._id);
 
         try {
-            const response = await createProposalMutation.mutateAsync({orderId: commissionOrder._id, inputs});
+            const response = await createProposalMutation.mutateAsync({ orderId: commissionOrder._id, inputs });
             if (response) {
                 setModalInfo({
                     status: "success",
@@ -242,33 +299,36 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     {errors.scope && <span className="form-field__error">{errors.scope}</span>}
                 </div>
 
-                <div className="form-field">
-                    <label className="form-field__label">Tranh mẫu</label>
-                    <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
-                    <div className="img-preview-container border-text">
-                        {artworks?.length > 0 && artworks?.map((artwork, index) => {
-                            return (
-                                <div key={artwork._id}
-                                    className={`img-preview-item ${selectedArtworks.includes(artwork) ? "active" : ""}`}
-                                    onClick={() => toggleArtworkSelection(artwork)}>
-                                    <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
-                                </div>
-                            )
-                        })}
-                    </div>
+                {commissionOrder?.isDirect == false && (
+                    <div className="form-field">
+                        <label className="form-field__label">Tranh mẫu</label>
+                        <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
+                        <div className="img-preview-container border-text">
+                            {artworks?.length > 0 && artworks?.map((artwork, index) => {
+                                return (
+                                    <div key={artwork._id}
+                                        className={`img-preview-item ${selectedArtworks.includes(artwork) ? "active" : ""}`}
+                                        onClick={() => toggleArtworkSelection(artwork)}>
+                                        <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
+                                    </div>
+                                )
+                            })}
+                        </div>
 
-                    {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
-                </div>
+                        {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
+                    </div>
+                )}
+
 
                 <div className="form-field">
                     <label htmlFor="startAt" className="form-field__label">Thời gian dự kiến</label>
                     <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
                     <div className="half-split">
                         <label htmlFor="startAt">Bắt đầu</label>
-                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange}/>
+                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange} />
                         -
                         <label htmlFor="deadline">Hạn chót</label>
-                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange}/>
+                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange} />
                     </div>
                     {errors.startAt && <span className="form-field__error">{errors.startAt}</span>}
                     {errors.deadline && <span className="form-field__error">{errors.deadline}</span>}
@@ -281,29 +341,33 @@ export default function CreateProposal({ commissionOrder, termOfServices, setSho
                     {errors.price && <span className="form-field__error">{errors.price}</span>}
                 </div>
 
-                <div className="form-field">
-                    <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
-                    <span className="form-field__annotation">Vui lòng chọn một trong những điều khoản dịch vụ của bạn</span>
+                {
+                    commissionOrder?.isDirect == false && (
+                        <div className="form-field">
+                            <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
+                            <span className="form-field__annotation">Vui lòng chọn một trong những điều khoản dịch vụ của bạn</span>
 
-                    <div className="w-100 display-inline-block">
-                        {
-                            termOfServices?.map((termOfService, index) => {
-                                return (
-                                    <div className="mb-8 " key={index}>
-                                        <label className="flex-align-center w-100">
-                                            <input type="radio" name="termOfServiceId" value={termOfService._id} onChange={handleChange} />
-                                            {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
-                                        </label>
-                                    </div>)
-                            }
-                            )
-                        }
-                        {selectedTermOfService?.content &&
-                            <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
-                        }
-                    </div>
-                    {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
-                </div>
+                            <div className="w-100 display-inline-block">
+                                {
+                                    termOfServices?.map((termOfService, index) => {
+                                        return (
+                                            <div className="mb-8 " key={index}>
+                                                <label className="flex-align-center w-100">
+                                                    <input type="radio" name="termOfServiceId" value={termOfService._id} onChange={handleChange} />
+                                                    {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
+                                                </label>
+                                            </div>)
+                                    }
+                                    )
+                                }
+                                {selectedTermOfService?.content &&
+                                    <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
+                                }
+                            </div>
+                            {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
+                        </div>
+                    )
+                }
             </div>
 
             <div className="form__submit-btn-container">

@@ -39,7 +39,7 @@ export default function InDevelopment() {
     }, [timeLeft]);
 
     return (
-        <div className="not-found coming-soon">
+        <div className="static-page not-found coming-soon">
             <div className="not-found__content">
                 <h2>Dự kiến ra mắt sau</h2>
                 <br />

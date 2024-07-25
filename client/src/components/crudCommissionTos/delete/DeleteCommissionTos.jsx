@@ -14,7 +14,7 @@ import { isFilled } from "../../../utils/validator.js";
 import "./DeleteCommissionTos.scss";
 import { apiUtils } from "../../../utils/newRequest.js";
 
-export default function DeleteCommissionTos({ setShowDeleteCommissionTosForm, setShowRenderCommissionTosForm, setOverlayVisible, commissionTos }) {
+export default function DeleteCommissionTos({ setShowDeleteCommissionTosForm, setShowCommissionTosView, setOverlayVisible, commissionTos }) {
     // Initialize variables for inputs, errors, loading effect
     const [errors, setErrors] = useState({});
     const [isSubmitDeleteCommissionTosLoading, setIsSubmitDeleteCommissionTosLoading] = useState(false);
@@ -46,6 +46,7 @@ export default function DeleteCommissionTos({ setShowDeleteCommissionTosForm, se
         let handler = (e) => {
             if (deleteCommissionRef && deleteCommissionRef.current && !deleteCommissionRef.current.contains(e.target)) {
                 setShowDeleteCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         };
@@ -70,6 +71,7 @@ export default function DeleteCommissionTos({ setShowDeleteCommissionTosForm, se
                     message: "Xóa điều khoản dịch vụ thành công"
                 })
                 setShowDeleteCommissionTosForm(false);
+                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         } catch (error) {

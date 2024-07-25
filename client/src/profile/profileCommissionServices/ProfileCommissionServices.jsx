@@ -27,8 +27,7 @@ import "./ProfileCommissionServices.scss";
 export default function ProfileCommissionServices() {
     const { userId } = useParams();
     const {userInfo} = useAuth();
-    const profileInfo = useOutletContext();
-    // alert(profileInfo);
+    const {profileInfo} = useOutletContext();
     const queryClient = useQueryClient();
 
     const isProfileOwner = userInfo?._id === userId;
@@ -48,7 +47,7 @@ export default function ProfileCommissionServices() {
     const [deleteCommissionServiceCategory, setDeleteCommissionServiceCategory] = useState();
 
 
-    const [showCommissionTosView, setShowCommissionTosView] = useState(false);
+    const [showCommissionTosView, setShowCommissionTosView ] = useState(false);
 
     const [showRenderCommissionService, setShowRenderCommissionService] = useState(false);
     const [renderCommissionServiceId, setRenderCommissionServiceId] = useState();
@@ -66,6 +65,7 @@ export default function ProfileCommissionServices() {
         try {
             const response = await newRequest.get(`/serviceCategory/readServiceCategoriesWithServices/${userId}`);
             console.log(response.data.metadata.categorizedServices)
+            console.log(response)
             return response.data.metadata.categorizedServices;
         } catch (error) {
             console.error(error);
@@ -132,6 +132,7 @@ export default function ProfileCommissionServices() {
             },
         }
     );
+
 
 
     // Commission Service Category
@@ -248,7 +249,7 @@ export default function ProfileCommissionServices() {
                 </div>
                 {isProfileOwner &&
                     <div className="profile-page__header--right">
-                        <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
+                        <button className="btn btn-3" onClick={() => { setShowCommissionTosView (true); setOverlayVisible(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
                             </svg>
@@ -266,7 +267,7 @@ export default function ProfileCommissionServices() {
 
             {commissionServiceCategories?.length <= 0 ?
                 (
-                    <p>{isProfileOwner ? "Bạn" : `${profileInfo?.stageName || profileInfo?.fullName}`} hiện chưa có dịch vụ nào.</p>
+                    <p>{isProfileOwner ? "Bạn" : `${profileInfo?.fullName}`} hiện chưa có dịch vụ nào.</p>
                 ) : (commissionServiceCategories?.map((category, index) => (
                     <div
                         key={index}
@@ -401,7 +402,7 @@ export default function ProfileCommissionServices() {
                     {/* Commission TOS */}
                     {showCommissionTosView &&
                         <RenderCommissionTos
-                            setShowCommissionTosView={setShowCommissionTosView}
+                            setShowCommissionTosView ={setShowCommissionTosView }
                             setOverlayVisible={setOverlayVisible}
                         />
                     }

@@ -97,13 +97,12 @@ function extractUsernameFromUrl(url) {
         // No username found, return hostname without 'www.'
         return hostname.replace('www.', '');
     } catch (e) {
-        console.error("Invalid URL:", e);
         // Return hostname without 'www.' if URL is invalid
         try {
             const hostname = new URL(url).hostname;
             return hostname.replace('www.', '');
         } catch (innerError) {
-            return "Invalid URL";
+            return url.slice(0, 20) + "...";
         }
     }
 }

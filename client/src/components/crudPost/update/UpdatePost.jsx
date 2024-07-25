@@ -19,8 +19,7 @@ export default function UpdatePost() {
     const [errors, setErrors] = useState({});
     const [isSubmitUpdatePostLoading, setIsSubmitUpdatePostLoading] = useState(false);
     const [isCreateNewShowcasingPostCategory, setIsCreateNewShowcasingPostCategory] = useState(false);
-    const [artworks, setArtworks] = useState([]);
-
+    const [artworks, setArtworks] = useState(Array(5).fill(null)); // Initialize as empty array
     const updatePostRef = useRef();
 
     const closeForm = () => {
@@ -49,13 +48,64 @@ export default function UpdatePost() {
         return new File([blob], filename, { type: mimeType });
     };
 
+
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            setInputs((prevState) => ({
+                ...prevState,
+                [name]: checked
+            }));
+        } else {
+            setInputs((prevState) => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+        setErrors((values) => ({ ...values, [name]: '' }));
+    };
+
+    const handleImageChange = (e) => {
+        e.preventDefault();
+        const files = Array.from(e.target.files);
+        const newArtworks = [...artworks];
+        files.forEach((file) => {
+            if (file.size > 2000 * 1024) {
+                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
+            } else {
+                newArtworks.push(file);
+            }
+        });
+        console.log("NEW FILES")
+        console.log(newArtworks)
+        setArtworks(newArtworks);
+    };
+
+    const placeholderImage = "/uploads/default_image_placeholder.png";
+
+    const removeImage = (index) => {
+        const newArtworks = [...artworks];
+        newArtworks.splice(index, 1);
+        setArtworks(newArtworks);
+    };
+
+    const triggerFileInput = () => {
+        document.getElementById('file-input').click();
+    };
+
+    const filteredArtworks = artworks.filter((artwork) => artwork?.file !== null || artwork?.url !== null);
+    const displayArtworks = [...filteredArtworks];
+
+    while (displayArtworks.length < 3) {
+        displayArtworks.push({ url: placeholderImage, file: null });
+    }
+
     // Fetch post details by ID
     const fetchPostByID = async () => {
         try {
             const response = await apiUtils.get(`/post/readPost/${postId}`);
             const postData = response.data.metadata.post;
-            console.log(postData)
-            console.log(postData.artworks)
             const artworksWithFiles = await Promise.all(
                 postData.artworks.map(async (artwork, index) => {
                     const file = await urlToFile(artwork.url, `${index + Date.now()}.jpg`, 'image/jpeg');
@@ -85,7 +135,8 @@ export default function UpdatePost() {
             console.log(data)
             setInputs(data);
             setArtworks(data.artworks);
-        }
+        },
+        refetchOnWindowFocus: false, // Prevent refetching on window focus
     });
 
     if (isLoading) {
@@ -104,47 +155,6 @@ export default function UpdatePost() {
         }
 
         return errors;
-    };
-
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        if (type === 'checkbox') {
-            setInputs((prevState) => ({
-                ...prevState,
-                [name]: checked
-            }));
-        } else {
-            setInputs((prevState) => ({
-                ...prevState,
-                [name]: value
-            }));
-        }
-        setErrors((values) => ({ ...values, [name]: '' }));
-    };
-
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        const newArtworks = [...artworks];
-        files.forEach((file) => {
-            if (file.size > 2000 * 1024) {
-                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
-            } else {
-                newArtworks.push({ url: null, file });
-            }
-        });
-        setArtworks(newArtworks);
-    };
-
-    const placeholderImage = "/uploads/default_image_placeholder.png";
-
-    const removeImage = (index) => {
-        const newArtworks = [...artworks];
-        newArtworks.splice(index, 1);
-        setArtworks(newArtworks);
-    };
-
-    const triggerFileInput = () => {
-        document.getElementById('file-input').click();
     };
 
     const handleSubmit = async (e) => {
@@ -175,14 +185,15 @@ export default function UpdatePost() {
         }
 
         console.log(inputs)
-        const fd = createFormData(inputs, 'artworks', artworks.filter(f => f !== null));
+        console.log(artworks)
+        const fd = createFormData(inputs, 'artworks', artworks);
 
         try {
             const response = await apiUtils.patch(`/post/updatePost/${postId}`, fd);
             if (response) {
                 setModalInfo({
                     status: "success",
-                    message: "Đăng tác phẩm thành công"
+                    message: "Cập nhật bài đăng thành công"
                 });
                 closeForm();
             }
@@ -199,13 +210,6 @@ export default function UpdatePost() {
             setIsSubmitUpdatePostLoading(false);
         }
     };
-
-    const filteredShowcasingPosts = artworks.filter((showcasingPost) => showcasingPost.file !== null || showcasingPost.url !== null);
-    const displayShowcasingPosts = [...filteredShowcasingPosts];
-
-    while (displayShowcasingPosts.length < 3) {
-        displayShowcasingPosts.push({ url: placeholderImage, file: null });
-    }
 
     return (
         <div className="overlay">
@@ -230,7 +234,7 @@ export default function UpdatePost() {
                             <option key={movement._id} value={movement._id}>{movement.title}</option>
                         ))}
                     </select>
-                    {errors.movement && <span className="form-field__error">{errors.movement}</span>}
+                    {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
                 </div>
                 <div className="form-field with-create-btn">
                     <label htmlFor="postCategoryId" className="form-field__label">Album</label>
@@ -278,30 +282,30 @@ export default function UpdatePost() {
                 </div>
 
                 <div className="form-field">
-                    {displayShowcasingPosts?.map((showcasingPost, index) => {
+                    <label className="form-field__label">Tranh mẫu</label>
+                    {artworks?.map((artwork, index) => {
                         return (
-                            showcasingPost && (
+                            artwork && (
                                 <div key={index} className="form-field__input img-preview">
                                     <div className="img-preview--left">
                                         <img
                                             src={
-                                                showcasingPost instanceof File
-                                                    ? URL.createObjectURL(showcasingPost)
-                                                    : showcasingPost.url || placeholderImage
+                                                artwork instanceof File
+                                                    ? URL.createObjectURL(artwork)
+                                                    : artwork || placeholderImage
                                             }
-                                            alt={`showcasingPost ${index + 1}`}
+                                            alt={`artwork ${index + 1}`}
                                             className="img-preview__img"
                                         />
                                         <div className="img-preview__info">
                                             <span className="img-preview__name">
-                                                {
-                                                    showcasingPost instanceof File
-                                                        ? limitString(showcasingPost.name, 15)
-                                                        : "Tranh mẫu"}
+                                                {artwork instanceof File
+                                                    ? limitString(artwork.name, 15)
+                                                    : "Tranh mẫu"}
                                             </span>
                                             <span className="img-preview__size">
-                                                {showcasingPost.file
-                                                    ? formatFloat(bytesToKilobytes(showcasingPost.file.size), 1) + " KB"
+                                                {artwork instanceof File
+                                                    ? formatFloat(bytesToKilobytes(artwork.size), 1) + " KB"
                                                     : ""}
                                             </span>
                                         </div>
@@ -324,8 +328,8 @@ export default function UpdatePost() {
                         );
                     })}
 
-                    <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
+                    <div className="form-field with-ic update-link-btn btn-md" onClick={triggerFileInput}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic update-link-btn__ic">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                         <span>Thêm ảnh</span>
@@ -334,6 +338,7 @@ export default function UpdatePost() {
 
                     {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
                 </div>
+
 
                 <div className="form-field">
                     {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}

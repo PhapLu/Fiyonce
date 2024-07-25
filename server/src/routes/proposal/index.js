@@ -7,7 +7,7 @@ import { uploadFields } from "../../configs/multer.config.js"
 
 const router = express.Router()
 //Member
-router.get('/readProposalsByOrderId/:orderId', asyncHandler(proposalController.readProposalsByOrderId))
+router.get('/readProposals/:orderId', asyncHandler(proposalController.readProposals))
 
 //authentication
 //router.use(authenticationV2)
@@ -18,8 +18,11 @@ router.post('/sendProposal/:orderId', asyncHandler(proposalController.sendPropos
 router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
+
+
+router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
+
 //END CRUD
-router.get('/readProposalsHistory', asyncHandler(proposalController.readProposalsHistory))
 router.post('/generatePaymentUrl/:proposalId', asyncHandler(proposalController.generatePaymentUrl))
 router.post('/momoCallback', asyncHandler(proposalController.momoCallback))
 router.post('/readMomoOrderStatus', asyncHandler(proposalController.readMomoOrderStatus))

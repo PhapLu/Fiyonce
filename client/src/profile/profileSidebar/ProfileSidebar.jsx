@@ -94,7 +94,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         let errors = {};
 
         // Validate biography
-        if (!maxLength(inputs?.bio, 150)) {
+        if (inputs?.bio && !maxLength(inputs?.bio, 150)) {
             errors.bio = 'Bio không được vượt quá 150 kí tự';
         }
 
@@ -133,9 +133,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     status: "success",
                     message: "Cập nhật thông tin thành công"
                 })
-                console.log(response)
-                console.log(response.data.metadata.user)
                 setUserInfo(response.data.metadata.user);
+                setProfileInfo(response.data.metadata.user);
                 setOpenEditProfileForm(false);
             }
         } catch (error) {
@@ -314,9 +313,9 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
                     <div className="form-field">
                         <label htmlFor="socialLinks" className="form-field__label">Liên kết</label>
-                        {socialLinks.map((link, index) => (
+                        {socialLinks?.map((link, index) => (
                             // <div key={index} className="link-form">
-                            <div className="form-field with-ic">
+                            <div className="form-field with-ic" key={index}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic ml-8">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                                 </svg>
@@ -425,7 +424,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <div className="sidebar__follow">
                         <span className="sidebar__follow__follower">{profileFollowers?.length === 0 ? "Chưa có người theo dõi" : `${profileFollowers?.length} người theo dõi`}</span>
                         {" " + "-" + " "}
-                        <span className="sidebar__follow__following">{profileInfo.following.length === 0 ? "Chưa theo dõi" : `${profileInfo.following.length} đang theo dõi`}</span>
+                        <span className="sidebar__follow__following">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                     </div>
 
                     {profileInfo.bio && (
@@ -436,7 +435,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         </div>
                     )}
 
-                    {profileInfo.socialLinks && profileInfo.socialLinks.length > 0 &&
+                    {profileInfo.socialLinks && profileInfo?.socialLinks?.length > 0 &&
                         <div className="sidebar__section sidebar__socials">
                             <p className="sidebar__section__title">Liên kết</p>
                             <hr />

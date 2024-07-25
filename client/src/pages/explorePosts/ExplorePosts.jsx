@@ -1,7 +1,7 @@
 // Imports
-import { Outlet, useSearchParams } from "react-router-dom";
+import { Outlet, useOutletContext, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Resources
 import RenderPosts from "../../components/crudPost/render/RenderPosts";
@@ -12,6 +12,8 @@ import { apiUtils } from "../../utils/newRequest";
 export default function ExplorePosts() {
     const [searchParams] = useSearchParams();
     const recommenderType = searchParams.get("recommender") || "popular"; // Default to "popular" if not specified
+    const { selectedMovement } = useOutletContext();
+    const [filteredPosts, setFilteredPosts] = useState([]);
 
     const fetchRecommendedPosts = async () => {
         try {
@@ -29,8 +31,9 @@ export default function ExplorePosts() {
                     break;
             }
             const response = await apiUtils.get(endpoint);
-            console.log(response.data.metadata.posts);
-            return response.data.metadata.posts;
+            let posts = response.data.metadata.posts;
+
+            return posts;
         } catch (error) {
             console.log(error);
             return null;
@@ -42,7 +45,7 @@ export default function ExplorePosts() {
         fetchRecommendedPosts,
         {
             onSuccess: (data) => {
-                console.log(data);
+                setFilteredPosts(data);
             },
             onError: (error) => {
                 console.error('Error fetching posts:', error);
@@ -50,11 +53,21 @@ export default function ExplorePosts() {
         }
     );
 
+    // Filter posts when selectedMovement changes
+    useEffect(() => {
+        if (selectedMovement && posts) {
+            const filtered = posts.filter(post => post?.movementId?._id === selectedMovement?._id);
+            setFilteredPosts(filtered);
+        } else {
+            setFilteredPosts(posts || []);
+        }
+    }, [selectedMovement, posts]);
+
     return (
         <>
             {isFetchingPostsLoading && <p>Loading posts...</p>}
             {isFetchingPostsError && <p>Error fetching posts.</p>}
-            <RenderPosts isDisplayOwner={true} layout={6} posts={posts} />
+            <RenderPosts isDisplayOwner={true} layout={6} posts={filteredPosts} />
             <Outlet />
         </>
     );

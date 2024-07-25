@@ -38,27 +38,27 @@ class NotificationService {
         let notificationType;
         switch (type) {
             case "like":
-                content = `${user.fullName} liked your post`;
+                content = `${user.fullName} đã thích bài viết của bạn`;
                 notificationType = "interaction";
                 break;
             case "share":
-                content = `${user.fullName} shared your post`;
+                content = `${user.fullName} chia sẻ bài viết của bạn`;
                 notificationType = "interaction";
                 break;
             case "bookmark":
-                content = `${user.fullName} bookmarked your post`;
+                content = `${user.fullName} đã lưu bài viết của bạn`;
                 notificationType = "interaction";
                 break;
             case "follow":
-                content = `${user.fullName} followed you`;
+                content = `${user.fullName} đã theo dõi bạn`;
                 notificationType = "interaction";
                 break;
             case "orderCommission":
-                content = `${user.fullName} ordered your commission`;
+                content = `${user.fullName} đã đặt commission của bạn`;
                 notificationType = "order";
                 break;
             case "updateOrderStatus":
-                content = `${user.fullName} updated the status of your order`;
+                content = `${user.fullName} đã cập nhật trạng thái đơn hàng`;
                 notificationType = "order";
                 break;
         }
