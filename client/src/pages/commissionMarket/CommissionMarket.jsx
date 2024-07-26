@@ -208,6 +208,9 @@ export default function CommissionMarket() {
                                     }}>
                                         <div className="commission-market-item__header">
                                             <div className="commission-market-item__header--left user md">
+
+                                            <div className="user--left"> 
+                                                
                                                 <img src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" />
                                                 <div className="user__name">
                                                     <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
@@ -215,6 +218,8 @@ export default function CommissionMarket() {
                                                         {formatTimeAgo(indirectOrder.createdAt)}
                                                     </div>
                                                 </div>
+                                            </div>
+
                                             </div>
 
                                             <div className="commission-market-item__header--right">
@@ -227,7 +232,6 @@ export default function CommissionMarket() {
                                                         <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
                                                     </div>
                                                 )}
-
                                             </div>
                                         </div>
 

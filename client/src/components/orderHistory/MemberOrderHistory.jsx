@@ -190,9 +190,9 @@ export default function MemberOrderHistory() {
                                             {
                                                 order?.status === "pending" &&
                                                 (
-                                                    <>
+                                                    {/* <>
                                                         <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowCancelCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Hủy đơn</button>
-                                                    </>
+                                                    </> */}
                                                 )
                                             }
                                             {order?.status === "approved" && (

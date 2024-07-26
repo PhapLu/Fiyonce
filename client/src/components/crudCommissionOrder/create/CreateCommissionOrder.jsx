@@ -27,7 +27,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const [inputs, setInputs] = useState({
         fileTypes: [],
-        title: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
     });
 
     const [errors, setErrors] = useState({});
@@ -52,10 +51,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const validateInputs = () => {
         let errors = {};
-
-        if (!inputs.title) {
-            errors.title = 'Vui lòng nhập tên đơn hàng';
-        }
 
         if (!inputs.description) {
             errors.description = 'Vui lòng nhập mô tả';
@@ -244,7 +239,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                     commissionService && (
                         <>
                             <span>
-                                {commissionService.serviceCategoryId.title}
+                                {commissionService?.serviceCategoryId?.title}
                             </span>
                             <h3>{commissionService?.title || "Tên dịch vụ"}</h3>
                             <span>Giá từ: <span className="highlight-text"> {(commissionService?.minPrice && formatCurrency(commissionService?.minPrice)) || "x"} VND</span></span>
@@ -312,19 +307,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
                     (
                         <>
-
-                            <div className="form-field">
-                                <label htmlFor="title" className="form-field__label">Tên đơn hàng</label>
-                                <input
-                                    id="title"
-                                    name="title"
-                                    value={inputs.title || ""}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Nhập tên đơn hàng để tiện ghi nhớ và theo dõi"
-                                />
-                                {errors.title && <span className="form-field__error">{errors.title}</span>}
-                            </div>
 
                             <div className="form-field">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>

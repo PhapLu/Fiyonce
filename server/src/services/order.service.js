@@ -220,10 +220,9 @@ class OrderService {
         if (!foundUser) throw new NotFoundError("User not found!");
 
         //2. Get orders
-        const orders = await Order.find({ memberId: clientId }).populate(
-            "talentChosenId",
-            "stageName avatar"
-        );
+        const orders = await Order.find({ memberId: clientId })
+        .populate("talentChosenId", "stageName avatar")
+        .populate("memberId", "fullName avatar");
 
         return {
             memberOrderHistory: orders,
