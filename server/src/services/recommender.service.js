@@ -269,7 +269,7 @@ class RecommenderService {
                         (new Date() - new Date(post.createdAt)) /
                         (60 * 60 * 1000);
                     const scaledPostAge =
-                        (hoursSinceCreation - minAge) / (maxAge - minAge);
+                        1 / (hoursSinceCreation - minAge) / (maxAge - minAge);
 
                     // Calculate engagement rate
                     const engagementRate = post.views.length
@@ -812,26 +812,25 @@ class RecommenderService {
                         (service.orderCount - minOrderCount) /
                         (maxOrderCount - minOrderCount);
                     const serviceViewsScaled =
-                        (service.views - minServiceViews) /
+                        (service.views.length - minServiceViews) /
                         (maxServiceViews - minServiceViews);
-                    const followersScaled =
-                        (talent.followers.length - minFollowersCount) /
-                        (maxFollowersCount - minFollowersCount);
-                    const artistViewsScaled =
+                    const followersScaled = (maxFollowersCount === minFollowersCount)
+                        ? 0
+                        : (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount);
+                    const artistViewsScaled =  (maxArtistViews === minArtistViews) ? 0 :
                         (talent.views - minArtistViews) /
                         (maxArtistViews - minArtistViews);
                     const ageInHours =
                         (new Date() - new Date(service.createdAt)) /
                         (60 * 60 * 1000);
-                    const ageScaled = (ageInHours - minAge) / (maxAge - minAge);
-
+                    const ageScaled = 1 / (ageInHours - minAge) / (maxAge - minAge);
                     // Define weights
                     const weights = {
-                        orderCount: 0.05,
-                        serviceViews: 0.05,
-                        followers: 0.25,
-                        artistViews: 0.05,
-                        ageInHours: 0.6,
+                        orderCount: 0,
+                        serviceViews: 0,
+                        followers: 0,
+                        artistViews: 0,
+                        ageInHours: 1,
                     };
 
                     // Calculate the score with normalized values
@@ -841,7 +840,6 @@ class RecommenderService {
                         followersScaled * weights.followers +
                         artistViewsScaled * weights.artistViews +
                         ageScaled * weights.ageInHours;
-
                     return { ...service.toObject(), score };
                 })
             );
@@ -867,7 +865,6 @@ class RecommenderService {
                 ...top20CommissionServices,
                 ...random30CommissionServices,
             ];
-
             return {
                 commissionServices: finalCommissionServices,
             };

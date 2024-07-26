@@ -80,7 +80,7 @@ class OrderService {
             await order.save();
 
             //5. Send email to user
-            if(talentChosenId !== null){
+            if(order.isDirect == true && talentChosenId !== null){
                 try {
                     const subject = "";
                     const subjectMessage = "";
