@@ -17,8 +17,8 @@ import "./ResetPassword.scss";
 export default function ResetPasswordVerification({ resetPasswordEmail }) {
     // Resources from AuthContext
     const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm, showResetPasswordVerification, setShowResetPasswordVerificationForm } = useAuth();
-    const {setModalInfo} = useModal();
-    
+    const { setModalInfo } = useModal();
+
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
@@ -83,6 +83,7 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
         <>
             <form className="form register-form" onSubmit={handleSubmit}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
+                    setShowResetPasswordForm(false);
                     setShowResetPasswordVerificationForm(false);
                     setOverlayVisible(false);
                 }}>

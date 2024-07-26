@@ -21,7 +21,7 @@ export default function SetNewPassword({ resetPasswordEmail }) {
 
     const validateInputs = () => {
         let errors = {};
-        
+
         // Validate passwords
         if (!isFilled(inputs.password)) {
             errors.password = 'Vui lòng nhập mật khẩu';
@@ -76,6 +76,7 @@ export default function SetNewPassword({ resetPasswordEmail }) {
             <form className="form register-form" onSubmit={handleSubmit}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={
                     () => {
+                        setShowResetPasswordForm(false);
                         setShowSetNewPasswordForm(false);
                         setOverlayVisible(false);
                     }
