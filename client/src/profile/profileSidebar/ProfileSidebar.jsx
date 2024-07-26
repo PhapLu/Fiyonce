@@ -195,7 +195,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
             setModalInfo({
                 status: "success",
-                message: "Follow thanh conng"
+                message: "Đã theo dõi"
             })
         } catch (error) {
             console.log(error);

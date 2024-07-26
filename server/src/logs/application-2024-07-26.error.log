@@ -1,0 +1,10 @@
+2024-07-26 11:46:21::error::/v1/api/recommender/search::5afdfca9-d209-4072-a979-5fd8b2a49291::403 - 0ms - Response: {"status":403,"now":1721969181288}::{"message":"Invalid search Term"}
+2024-07-26 11:47:19::error::/v1/api/recommender/search::1ca65949-55e4-4da3-8735-292425a66cdf::403 - 1ms - Response: {"status":403,"now":1721969239917}::{"message":"Invalid search Term"}
+2024-07-26 11:49:54::error::/v1/api/recommender/search::903af85a-f2d7-457c-83e7-d013aebec454::403 - 0ms - Response: {"status":403,"now":1721969394382}::{"message":"Invalid search Term"}
+2024-07-26 11:49:57::error::/v1/api/recommender/search::149ff839-a37c-4127-a523-06a0db2ac2b6::403 - 0ms - Response: {"status":403,"now":1721969397568}::{"message":"Invalid search Term"}
+2024-07-26 11:50:28::error::/v1/api/recommender/search::5a4a8ad1-5f8b-4043-a475-b973e05ad5b4::403 - 1ms - Response: {"status":403,"now":1721969428634}::{"message":"Invalid search Term"}
+2024-07-26 11:50:29::error::/v1/api/recommender/search::135a7406-a698-4962-aea2-6d229ecdbf94::403 - 0ms - Response: {"status":403,"now":1721969429572}::{"message":"Invalid search Term"}
+2024-07-26 11:50:30::error::/v1/api/recommender/search::a1340828-891e-4121-9494-6a27a858b6ba::403 - 0ms - Response: {"status":403,"now":1721969430519}::{"message":"Invalid search Term"}
+2024-07-26 11:50:30::error::/v1/api/recommender/search::c4a7d80b-6b43-4354-8d42-906a193d5e6d::403 - 0ms - Response: {"status":403,"now":1721969430735}::{"message":"Invalid search Term"}
+2024-07-26 11:50:30::error::/v1/api/recommender/search::fa7ff81f-6d4a-420c-af19-cc72d79c2786::403 - 0ms - Response: {"status":403,"now":1721969430945}::{"message":"Invalid search Term"}
+2024-07-26 11:50:32::error::/v1/api/recommender/search::d4da4d10-bff6-4149-93a9-e1e30c6ba64a::403 - 0ms - Response: {"status":403,"now":1721969432202}::{"message":"Invalid search Term"}

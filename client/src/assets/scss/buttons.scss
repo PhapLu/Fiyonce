@@ -90,6 +90,11 @@
     box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
 }
 
-.static-page.btn-4 {
-    box-shadow: 0 20px 46px rgba(252, 104, 110, 0.95);
+.static-page {
+    .color-4 {
+        min-width: 220px;
+        box-shadow: 0 20px 46px rgba(252, 104, 110, 0.95);
+        padding: 20px;
+        font-size: 2rem;
+    }
 }

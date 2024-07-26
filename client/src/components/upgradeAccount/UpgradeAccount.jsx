@@ -37,6 +37,7 @@ const UpgradeAccount = ({ closeModal }) => {
         const value = e.target.value;
         setInputs((values) => ({ ...values, [name]: value }));
         setErrors((values) => ({ ...values, [name]: '' })); // Clear the error for this field
+        validateInputs();
     };
 
     const handleImageChange = (e) => {
@@ -44,13 +45,13 @@ const UpgradeAccount = ({ closeModal }) => {
         const newArtworks = [...artworks];
 
         files.forEach((file) => {
-            if (file.size > 500 * 1024) {
-                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 500KB." }));
-            } else if (newArtworks.length < 7) {
+            if (file.size > 20000 * 1024) {
+                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
+            } else if (newArtworks.length < 5) {
                 newArtworks.push(file);
                 setErrors((values) => ({ ...values, artworks: "" }));
             } else {
-                setErrors((values) => ({ ...values, artworks: "Bạn có thể chọn tối đa 3 tác phẩm." }));
+                setErrors((values) => ({ ...values, artworks: "Bạn có thể chọn tối đa 5 tác phẩm." }));
             }
         });
         setArtworks(newArtworks);
@@ -75,7 +76,7 @@ const UpgradeAccount = ({ closeModal }) => {
 
         if (artworks.length < 3) {
             errors.artworks = "Vui lòng cung cấp tối thiểu 3 tranh.";
-        } else if (artworks.length < 3) {
+        } else if (artworks.length < 5) {
             errors.artworks = "Vui lòng cung cấp tối thiểu tối đa 5 tranh.";
         }
 
@@ -104,21 +105,23 @@ const UpgradeAccount = ({ closeModal }) => {
         try {
             const formData = createFormData(inputs, "files", artworks);
             const response = await apiUtils.post(`/talentRequest/requestUpgradingToTalent`, formData);
-            console.log(response);
             if (response) {
-                alert("Successfully request for upgrading account")
+                setModalInfo({
+                    status: "success",
+                    message: "Yêu cầu nâng cấp tài khoản thành công"
+                })
                 closeModal()
             }
-
 
             socket.emit('sendTalentRequest', {
                 senderId: "665929dd1937df564df71660",
                 talentRequest: response.data.metadata.talentRequest,
             });
         } catch (error) {
-            console.log("Error")
-            console.log(error);
-            console.log(error.response.data.message);
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
             setErrors((values) => ({ ...values, serverError: error.response.data.message }));
         }
     };
