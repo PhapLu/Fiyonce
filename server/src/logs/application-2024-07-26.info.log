@@ -31,3 +31,11 @@
 2024-07-26 10:10:02::info::/v1/api/recommender/readLatestCommissionServices::1f0a0262-7e4c-453d-9e51-e036524c946c::input-params ::GET::::{}
 2024-07-26 10:11:22::info::/v1/api/recommender/readLatestCommissionServices::a8ec9813-d40e-4376-8be2-19f51d98d9c4::input-params ::GET::::{}
 2024-07-26 10:12:40::info::/v1/api/recommender/readLatestCommissionServices::528d97d8-fef1-45e3-8c81-79ec56712b8a::input-params ::GET::::{}
+2024-07-26 13:38:03::info::/v1/api/order/updateOrder/66a2fa77b6dda4d8cf57312f::9342ab73-1a03-45a4-9a2d-88fbcc3daffd::input-params ::PATCH::::{}
+2024-07-26 13:38:04::error::/v1/api/order/updateOrder/66a2fa77b6dda4d8cf57312f::9342ab73-1a03-45a4-9a2d-88fbcc3daffd::401 - 1ms - Response: {"status":401,"now":1721975884005}::{"message":"You can update only your order"}
+2024-07-26 13:38:28::info::/v1/api/auth/users/login::1b88a51a-5f0d-44d4-a24c-db3d0af50eb0::input-params ::POST::::{"email":"taichinhlcp@gmail.com","password":"123456789"}
+2024-07-26 13:38:28::error::/v1/api/auth/users/login::1b88a51a-5f0d-44d4-a24c-db3d0af50eb0::401 - 2ms - Response: {"status":401,"now":1721975908696}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-07-26 13:38:33::info::/v1/api/auth/users/login::5d8305be-acb1-47cb-947c-2fb04fe02a26::input-params ::POST::::{"email":"taichinhlcp@gmail.com","password":"123456789AZ@"}
+2024-07-26 13:38:42::info::/v1/api/order/updateOrder/66a2fa77b6dda4d8cf57312f::718d4f97-2463-4a9c-b6dc-0079c83f7950::input-params ::PATCH::::{}
+2024-07-26 13:39:17::info::/v1/api/order/updateOrder/66a2fa77b6dda4d8cf57312f::9cc662c8-5945-4967-9106-72c5a3eb4e6f::input-params ::PATCH::::{}
+2024-07-26 13:40:52::info::/v1/api/order/updateOrder/66a2fa77b6dda4d8cf57312f::88ee4e0b-42ea-49f7-b7c2-703b2461990d::input-params ::PATCH::::{}

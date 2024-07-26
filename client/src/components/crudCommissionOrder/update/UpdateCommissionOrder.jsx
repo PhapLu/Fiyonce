@@ -32,7 +32,7 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
 
     const [errors, setErrors] = useState({});
     const [isSubmitOrderCommissionLoading, setIsSubmitUpdateCommissionOrderLoading] = useState(false);
-    const [isSuccessOrderCommission, setIsSuccessUpdateCommissionOrder] = useState(false);
+    const [isSuccessUpdateOrderCommission, setIsSuccessUpdateCommissionOrder] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
     const [references, setReferences] = useState(commissionOrder.references);
 
@@ -292,7 +292,7 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
                 <h2 className="form__title">Chỉnh sửa yêu cầu</h2>
 
 
-                {!isSuccessOrderCommission ?
+                {!isSuccessUpdateOrderCommission ?
 
                     (
                         <>
@@ -515,7 +515,7 @@ export default function UpdateCommissionOrder({ commissionOrder, setShowUpdateCo
                     ) : (
                         <>
                             <p className="text-align-center">
-                                Đặt hàng thành công!
+                            Cập nhật đơn hàng thành công!
                                 <br />
                                 {commissionOrder.isDirect ? "Họa sĩ" : "Các họa sĩ"} sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
                                 <br />

@@ -152,6 +152,7 @@ class OrderService {
     };
 
     static updateOrder = async (userId, orderId, req) => {
+        console.log(req.body)
         //1. check order and user
         const oldOrder = await Order.findById(orderId);
         const foundUser = await User.findById(userId);

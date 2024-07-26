@@ -27,7 +27,7 @@ class OrderController{
     updateOrder = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update order successfully!',
-            metadata: await OrderService.updateOrder(req.userId, req.params.orderId, req.body)
+            metadata: await OrderService.updateOrder(req.userId, req.params.orderId, req)
         }).send(res)
     }
 
