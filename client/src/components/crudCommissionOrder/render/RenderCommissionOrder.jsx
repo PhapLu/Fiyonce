@@ -52,14 +52,14 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="modal-form--left">
-                <Link to={`/users/${commissionOrder?.memberId._id}`} className="user md hover-cursor-opacity">
-                    <div className="user--left">
+                <div className="user md">
+                    <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
                         <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                         <div className="user__name">
                             <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
                         </div>
-                    </div>
-                </Link>
+                    </Link>
+                </div>
                 {commissionOrder?.talentChosenId ? (
                     <div className="status approved mt-8 mb-8">
                         <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>

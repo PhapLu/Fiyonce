@@ -68,7 +68,7 @@ export default function Auth() {
                                 <img src={AuthenticationImg} className="modal-form__img" alt="Authentication image" />
                                 <h2>Pastal</h2>
                                 <span className="line"></span>
-                                <p>Nền tảng vẽ tranh theo yêu cầu <br />hàng đầu Việt Nam</p>
+                                <p>Nền tảng vẽ tranh theo yêu cầu <br />hàng đầu tại Việt Nam</p>
                                 <p className="mt-32">Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ em vùng cao, trồng thêm cây xanh, và tạo sân chơi nuôi dưỡng đam mê hội họa cho các thế hệ họa sĩ tiếp theo.</p>
                                 <p className="modal-form__img-reference">sáng tác bởi @re_name</p>
                             </div>

@@ -18,6 +18,7 @@ import { apiUtils, newRequest } from "../../../utils/newRequest";
 // Styling
 import "./RenderProposal.scss"
 import { useAuth } from "../../../contexts/auth/AuthContext";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 export default function RenderProposal({ proposalId, commissionOrder, setShowRenderProposal, setOverlayVisible }) {
     if (!commissionOrder) {
@@ -148,6 +149,15 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="modal-form--left">
+                <div className="user md">
+                    <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
+                        <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
+                        <div className="user__name">
+                            <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
+                        </div>
+                    </Link>
+                </div>
+
                 {commissionOrder?.talentChosenId ? (
                     <div className="status approved">
                         <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
@@ -257,30 +267,30 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
                                 "in_progress",
                                 "finished",
                                 "under_processing"].includes(commissionOrder?.status) && (
-                                    <div className="form-field">
-                                        <label htmlFor="price" className="form-field__label">Thanh toán</label>
+                                <div className="form-field">
+                                    <label htmlFor="price" className="form-field__label">Thanh toán</label>
 
-                                        <div className="border-text w-100">
-                                            <span>Giá trị đơn hàng: <span className="highlight-text">{formatCurrency(proposal?.price)}đ</span></span>
-                                            <p className="fw-bold">Phương thức thanh toán</p>
-                                            <div className="payment-method-container">
-                                                {paymentMethods.map(method => (
-                                                    <div
-                                                        key={method.id}
-                                                        className={`payment-method-item ${selectedPaymentMethod === method.id ? 'active' : ''}`}
-                                                        onClick={() => setSelectedPaymentMethod(method.id)}
-                                                    >
-                                                        <img src={method.imgSrc} alt={method.name} />
-                                                        <span>{method.name}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <hr />
-                                            <p className="text-align-center">Bạn vẫn chưa bị trừ tiền</p>
-                                            <button className="btn btn-md btn-hover color-4 w-100" onClick={handlePayment}>Thanh toán qua {selectedPaymentMethod ? paymentMethods.find(method => method.id === selectedPaymentMethod).name : '...'}</button>
+                                    <div className="border-text w-100">
+                                        <span>Giá trị đơn hàng: <span className="highlight-text">{formatCurrency(proposal?.price)}đ</span></span>
+                                        <p className="fw-bold">Phương thức thanh toán</p>
+                                        <div className="payment-method-container">
+                                            {paymentMethods.map(method => (
+                                                <div
+                                                    key={method.id}
+                                                    className={`payment-method-item ${selectedPaymentMethod === method.id ? 'active' : ''}`}
+                                                    onClick={() => setSelectedPaymentMethod(method.id)}
+                                                >
+                                                    <img src={method.imgSrc} alt={method.name} />
+                                                    <span>{method.name}</span>
+                                                </div>
+                                            ))}
                                         </div>
+                                        <hr />
+                                        <p className="text-align-center">Bạn vẫn chưa bị trừ tiền</p>
+                                        <button className="btn btn-md btn-hover color-4 w-100" onClick={handlePayment}>Thanh toán qua {selectedPaymentMethod ? paymentMethods.find(method => method.id === selectedPaymentMethod).name : '...'}</button>
                                     </div>
-                                )
+                                </div>
+                            )
                         }
                     </>
                 )}

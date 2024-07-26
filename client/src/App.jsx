@@ -89,19 +89,17 @@ const routes = [
     ],
   },
   {
+    path: "/help-center",
+    element: <InDevelopment />,
+  },
+  {
+    path: "/terms-and-policies",
+    element: <InDevelopment />,
+  },
+  {
     path: "/",
     element: <Layout />,
     children: [
-      // {
-      //   path: "/",
-      //   element: <Explore />,
-      //   children: [
-      //     {
-      //       path: "/",
-      //       element: <ExplorePosts showPosts={true} />,
-      //     }
-      //   ]
-      // },
       {
         path: "/",
         element: <Explore />,
@@ -124,10 +122,7 @@ const routes = [
             path: "/commissionServices",
             // element: <CommissionServices showCommissionServices={true} />,
           },
-          {
-            path: "/help-center",
-            element: <HelpCenter />,
-          },
+
         ],
       },
       {

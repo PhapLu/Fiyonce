@@ -14,6 +14,7 @@ import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/forma
 // Styling
 import "./RenderProposals.scss"
 import { apiUtils } from "../../../utils/newRequest";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 
 export default function RenderProposals({ commissionOrder, setShowRenderProposals, setOverlayVisible }) {
@@ -121,6 +122,15 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
                 <div className="modal-form--left">
+                    <div className="user md">
+                        <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
+                            <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
+                            <div className="user__name">
+                                <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
+                            </div>
+                        </Link>
+                    </div>
+
                     {commissionOrder?.talentChosenId ? (
                         <div className="status approved">
                             <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
@@ -216,7 +226,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                         })}
                                     </div>
                                     <div>
-                                        <button className="btn btn-3 btn-md" onClick={() => { setProposal(proposal); setShowRenderProposal(true) }}>
+                                        <button className="btn btn-2 btn-md" onClick={() => { setProposal(proposal); setShowRenderProposal(true) }}>
                                             Xem hợp đồng
                                         </button>
                                         <button className="btn btn-3 btn-md">
