@@ -152,7 +152,6 @@ class OrderService {
     };
 
     static updateOrder = async (userId, orderId, req) => {
-        console.log(req.body.memberId)
         //1. check order and user
         const oldOrder = await Order.findById(orderId);
         const foundUser = await User.findById(userId);
@@ -193,8 +192,13 @@ class OrderService {
             }
 
             //4. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...oldOrder.toObject(), ...req.body };
-
+            let memberId
+            if(req.body.memberId){
+                memberId = req.body.memberId._id
+            }
+            req.body.memberId = memberId
+            const updatedFields =  { ...oldOrder.toObject(), ...req.body };
+            
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
