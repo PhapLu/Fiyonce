@@ -4674,3 +4674,6 @@
 2024-07-25 22:00:35::info::/v1/api/user/readUserProfile/665edd23fa87b27398b73d10::81f6db85-5e0c-4796-b484-6090266a3b38::input-params ::GET::::{}
 2024-07-25 22:00:35::info::/v1/api/order/readTalentOrderHistory::7150484b-c015-4287-983e-c8c09658715f::input-params ::GET::::{}
 2024-07-25 22:00:46::info::/v1/api/recommender/readPopularPosts::c6835da0-81af-4be4-94fa-ab6738d849e5::input-params ::GET::::{}
+2024-07-25 22:05:23::info::/v1/api/movement/readMovements::01bd7d60-8429-400f-aa0c-561b58f7cbfb::input-params ::GET::::{}
+2024-07-25 22:05:23::info::/v1/api/recommender/readPopularPosts::e8ec9244-98bb-4dac-9839-337a2e2da7a7::input-params ::GET::::{}
+2024-07-25 22:05:25::info::/v1/api/movement/readMovements::67916baa-ba8d-4c07-99fa-27eb47ae5ec4::input-params ::GET::::{}

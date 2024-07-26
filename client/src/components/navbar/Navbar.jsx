@@ -166,7 +166,7 @@ export default function Navbar() {
                         />
                         {isSearchFocused && searchResults?.users?.length > 0 && (
                             <div className="search-result-container">
-                                <h4 className="p-4">Họa sĩ <span className="ml-4 p-4 fs-12 bg-gray-1 fw-500 br-8">123</span></h4>
+                                <h4 className="p-4">Họa sĩ <span className="ml-4 p-4 fs-12 bg-gray-1 fw-500 br-8">{searchResults?.users?.length}</span></h4>
                                 <hr />
                                 {searchResults?.users?.slice(0, 5).map((user, index) => {
                                     return (
@@ -175,8 +175,19 @@ export default function Navbar() {
                                                 <img src={resizeImageUrl(user.avatar, 50)} alt="" className="user__avatar" />
                                                 <div className="user__name flex-align-center">
                                                     <div className="user__name__title fw-600">{user?.fullName}</div>
-                                                    <span className="dot-delimiter sm"></span>
-                                                    <span className="fs-13">{user?.jobTitle || user?.stageName}</span>
+                                                    {
+                                                        user?.jobTitle ?
+                                                            <>
+                                                                <span className="dot-delimiter sm"></span>
+                                                                <span className="fs-14">{user?.jobTitle}</span>
+                                                            </>
+                                                            : user?.stageName ?
+                                                                <>
+                                                                    <span className="dot-delimiter sm"></span>
+                                                                    <span className="fs-14">{user?.stageName}</span>
+                                                                </> :
+                                                                <span></span>
+                                                    }
                                                 </div>
                                             </div>
                                             <div className="user--right flex-align-center">

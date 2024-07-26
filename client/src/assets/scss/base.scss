@@ -380,6 +380,7 @@ img {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    padding-top: 16px;
 
     .sub-nav-item {
         margin-right: 20px;
@@ -505,8 +506,10 @@ img {
 }
 
 .btn-4 {
-    // border: 2px solid var(--gray-1-color);
     background-color: var(--gray-4-color) !important;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gray-3-color);
 }
 
 .btn-5 {
@@ -952,6 +955,7 @@ table {
         margin-right: 8px;
     }
 
+
     .form-field__input {
         // width: unset;
         border: none;
@@ -966,7 +970,9 @@ table {
 }
 
 .user {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     .user--left {
         display: flex;

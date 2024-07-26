@@ -64,7 +64,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
         if (!inputs.minPrice) {
             errors.minPrice = 'Vui lòng nhập giá tối thiểu';
-        } else if (inputs.minPrice < 100000) {
+        } else if (parseFloat(inputs.minPrice) < 100000) {
             errors.minPrice = 'Giá trị đơn hàng tối thiểu là 100.000 VND';
         }
 
@@ -72,7 +72,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             errors.maxPrice = 'Vui lòng nhập giá tối đa';
         }
 
-        if (inputs.minPrice && inputs.maxPrice && (inputs.minPrice > inputs.maxPrice)) {
+        if (inputs.minPrice && inputs.maxPrice && (parseFloat(inputs.minPrice) > parseFloat(inputs.maxPrice))) {
             errors.maxPrice = 'Giá tối đa phải lớn hơn giá tối thiểu';
         }
 

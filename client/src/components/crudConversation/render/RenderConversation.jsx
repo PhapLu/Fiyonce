@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { apiUtils, createFormData } from "../../../utils/newRequest";
@@ -158,14 +158,14 @@ export default function RenderConversation() {
     return (
         <div className="render-conversation">
             <div className="user md">
-                <div className="user--left">
+                <Link className="user--left">
                     {arrivalMessage}
                     <img src={conversation?.otherMember?.avatar} alt="" className="user__avatar" />
                     <div className="user__name">
                         <div className="user__name__title">{conversation?.otherMember?.fullName}</div>
                         <div className="user__name__sub-title">{`${conversation?.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {conversation?.lastMessage?.content}</div>
                     </div>
-                </div>
+                </Link>
                 <div className="user--right">
                     {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8" onClick={() => { setMinimizeConversation(false) }}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />

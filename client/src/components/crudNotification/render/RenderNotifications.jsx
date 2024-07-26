@@ -85,7 +85,6 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                                     </span>
                                                 </div>
                                                 <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
-
                                                     <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.updatedAt)}</span>
                                                 </div>
                                             </div>
@@ -101,7 +100,7 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                             }
                         </>
                     ) : (
-                            <p>Hiện chưa có thông báo nào</p>
+                        <p>Hiện chưa có thông báo nào</p>
                     )}
 
                     {displayedInteractionNotifications?.length > 0 && (
