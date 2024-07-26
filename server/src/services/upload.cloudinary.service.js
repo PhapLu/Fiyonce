@@ -60,7 +60,7 @@ const uploadAvatarOrCover = async (
                 imagePublicId = extractPublicIdFromUrl(user.bg);
                 await deleteFileByPublicId(imagePublicId);
             }
-            dimensions = { width: 1550, height: 285 };
+            dimensions = { width: 1920, height: 400 };
         } else {
             throw new BadRequestError("Invalid type");
         }
