@@ -8,7 +8,6 @@ import {
 
 class NotificationService {
     static createNotification = async (senderId, body) => {
-        console.log(body)
         //1. Check user
         const user = await User.findById(senderId);
         if (!user) throw new NotFoundError("User not found!");

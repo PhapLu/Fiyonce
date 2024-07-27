@@ -20,8 +20,6 @@ class SocketServices {
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id);
             global._io.emit("getUsers", users);
-            console.log("ADD USER");
-            console.log(users);
         });
 
         socket.on("disconnect", () => {
@@ -31,20 +29,7 @@ class SocketServices {
         });
 
         socket.on("sendMessage", ({ conversationId, senderId, receiverId, content }) => {
-            // console.log("SENDER ID")
-            // console.log(senderId)
-            // console.log("RECEIVER ID")
-            // console.log(receiverId)
             const receiver = getUser(receiverId)
-
-            // console.log(content)
-            console.log("SEND MESSAGE")
-            console.log(users)
-
-            console.log("RECEIVER INFO")
-            console.log(receiver)
-
-            console.log(content)
 
             global._io.to(receiver?.socketId).emit("getMessage", {
                 conversationId,
@@ -62,8 +47,6 @@ class SocketServices {
 
         socket.on("sendNotification", ({ senderId, receiverId, notification }) => {
             const user = getUser(receiverId)
-            console.log(receiverId)
-            console.log(notification)
             global._io.to(user?.socketId).emit("getNotification",
                 notification,
             )

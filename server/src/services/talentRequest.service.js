@@ -217,8 +217,6 @@ class TalentRequestService {
         //2. Find all talent requests
         const talentRequests = await TalentRequest.find({
         }).populate("userId", "email fullName");
-        console.log("RRR")
-        console.log(talentRequests);
         return {
             talentRequests,
         };

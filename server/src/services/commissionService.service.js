@@ -92,8 +92,6 @@ class CommissionServiceService {
             .populate("talentId", "fullName stageName avatar")
             .populate("termOfServiceId");
 
-        console.log(service);
-
         if (!service) throw new NotFoundError("Service not found");
 
         const token = req.cookies.accessToken;
@@ -186,7 +184,6 @@ class CommissionServiceService {
                 const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId });
                 if (servicesInOldCategory.length === 0) {
                     await ServiceCategory.findByIdAndDelete(oldCategoryId);
-                    console.log(`Deleted Category ID: ${oldCategoryId}`);
                 }
             }
 

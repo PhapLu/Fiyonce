@@ -19,8 +19,6 @@ const secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 
 class ProposalService {
     static sendProposal = async (userId, orderId, body) => {
-        console.log("BODY");
-        console.log(body);
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId);
@@ -96,8 +94,6 @@ class ProposalService {
         };
     };
     static readProposals = async (orderId) => {
-        console.log("PROPOSALS")
-        console.log(orderId)
         //1. Check if order exists
         const order = await Order.findById(orderId);
         if (!order) throw new NotFoundError("Order not found");
@@ -107,8 +103,6 @@ class ProposalService {
             "talentId",
             "fullName avatar"
         ).populate("artworks", "url");
-
-        console.log(proposals)
 
         return {
             proposals,
@@ -224,8 +218,6 @@ class ProposalService {
     };
 
     static momoCallback = async (body) => {
-        console.log("Call back:: ");
-        console.log(body);
         //Confirm order
         const order = await Order.findOne({ momoOrderId: body.orderId });
         if (body.resultCode == 0) {

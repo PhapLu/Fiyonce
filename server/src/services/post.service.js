@@ -328,7 +328,6 @@ class PostService {
 
             // 3. Merge existing artwork fields with req.body to ensure fields not provided in req.body are retained
             const updatedFields = { ...postToUpdate.toObject(), ...req.body };
-            console.log(updatedFields);
             // 4. Update artwork
             const updatedPost = await Post.findByIdAndUpdate(
                 artworkId,

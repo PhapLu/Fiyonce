@@ -193,7 +193,6 @@ class OrderService {
 
             //4. Validate body and merge existing service fields with req.body to ensure fields not provided in req.body are retained
             const { memberId, talentChosenId, ...filteredBody } = req.body;
-            console.log(filteredBody)
             const updatedFields =  { ...oldOrder.toObject(), ...filteredBody };
             
             //5. update Order

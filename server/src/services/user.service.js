@@ -27,17 +27,14 @@ class UserService {
     };
 
     static readUserProfile = async (profileId) => {
-        console.log("ppppp")
-        console.log(profileId)
         //1. Check user
         const userProfile = await User.findById(profileId);
         if (!userProfile)
             throw new NotFoundError("User not found").select("-password");
-        console.log(userProfile)
+        
         //2. Update views
         userProfile.views += 1;
         await userProfile.save();
-        console.log(userProfile)
 
         //3. Return user profile
         return {
@@ -94,9 +91,9 @@ class UserService {
         followedUser.followers = followedUser.followers.filter(
             (id) => id.toString() !== userId.toString()
         );
-        // await currentUser.save();
-        // await followedUser.save();
-        console.log(currentUser);
+        await currentUser.save();
+        await followedUser.save();
+
         return {
             user: currentUser,
         };
@@ -126,9 +123,6 @@ class UserService {
             receiverId: new mongoose.Types.ObjectId(userId),
             isSeen: false
         });
-
-        console.log("MEEEE")
-        console.log(unSeenNotifications)
 
         // Create a plain JavaScript object with user data and add unSeenConversations
         const userData = {

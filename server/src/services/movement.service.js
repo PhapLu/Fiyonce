@@ -75,8 +75,6 @@ class MovementService {
         }
       }
     ])
-    console.log("MOVEMENTS")
-    console.log(movements);
     return {
       movements
     }

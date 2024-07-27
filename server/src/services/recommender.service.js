@@ -342,7 +342,6 @@ class RecommenderService {
         try {
             // Fetch the current user and their following list
             const currentUser = await User.findById(userId);
-            console.log(currentUser);
 
             // Extract the IDs of the users the current user is following
             const followingIds = currentUser.following.map((user) => user._id);
@@ -355,7 +354,6 @@ class RecommenderService {
                 .populate("postCategoryId")
                 .limit(50) // Limit the results to 50
                 .exec();
-            console.log(posts);
             // Compute the minimum and maximum values for scaling
             // const [minValues, maxValues] = await Promise.all([
             //     Post.aggregate([
@@ -673,7 +671,6 @@ class RecommenderService {
 
             // Sort services by score
             scoredServices.sort((a, b) => b.score - a.score);
-            console.log(scoredServices)
 
             // Select the top 20 scored services
             const top20Services = scoredServices.slice(0, 20);
