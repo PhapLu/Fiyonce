@@ -168,7 +168,7 @@ export default function TalentOrderHistory() {
                         <th>Thao tác</th>
                     </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                     {
                         orders?.length > 0 ? orders.map((order, index) => {
                             return (
@@ -253,7 +253,7 @@ export default function TalentOrderHistory() {
                             </tr>
                         )
                     }
-                </tbody>
+                </tbody> */}
             </table>
 
             {/* Modal forms */}
