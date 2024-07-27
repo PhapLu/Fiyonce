@@ -93,7 +93,7 @@ class UserService {
         );
         await currentUser.save();
         await followedUser.save();
-
+        console.log(currentUser);
         return {
             user: currentUser,
         };

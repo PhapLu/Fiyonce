@@ -119,9 +119,9 @@ export default function Explore() {
         } else {
             setSelectedMovement(movement);
         }
-        setSearchParams({ recommender: recommender.algorithm });
         setShowRecommenders(false); // Hide the recommender container
     };
+    
 
 
     // Fetch artworks
@@ -210,7 +210,7 @@ export default function Explore() {
                 </div>
             </div>
 
-            <Outlet context={{ selectedMovement }} />
+            <Outlet context={{ selectedRecommender, selectedMovement }} /> 
 
             <BackToTop />
         </div>

@@ -19,15 +19,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <SettingProvider>
-          <ModalProvider>
-            <AuthProvider>
-              <ConversationProvider>
-                <MovementProvider>
+        <ModalProvider>
+          <AuthProvider>
+            <ConversationProvider>
+              <MovementProvider>
                   <App />
-                </MovementProvider>
-              </ConversationProvider>
-            </AuthProvider>
-          </ModalProvider>
+              </MovementProvider>
+            </ConversationProvider>
+          </AuthProvider>
+        </ModalProvider>
       </SettingProvider>
     </QueryClientProvider>
   </React.StrictMode >

@@ -60,6 +60,7 @@ export default function MemberOrderHistory() {
     const fetchMemberOrderHistory = async () => {
         try {
             const response = await apiUtils.get(`/order/readMemberOrderHistory`);
+            console.log(response.data.metadata.memberOrderHistory)
             return response.data.metadata.memberOrderHistory;
         } catch (error) {
             return null;
@@ -155,7 +156,7 @@ export default function MemberOrderHistory() {
                 <thead>
                     <tr>
                         <th>Trạng thái</th>
-                        <th>Tên đơn hàng</th>
+                        <th>Dịch vụ</th>
                         <th>Giá dự kiến</th>
                         <th>Deadline dự kiến</th>
                         <th>Thao tác</th>
@@ -182,8 +183,16 @@ export default function MemberOrderHistory() {
                                         </span>
 
                                     </td>
-                                    <td>{order?.title || "-"}</td>
-                                    <td>{`đ${formatCurrency(order?.minPrice)}` || `đ${formatCurrency(order?.price)}` || "-"}</td>
+                                    {order?.isDirect ? (
+                                        <td>{order?.commissionServiceId?.title}</td>
+                                    ) : (
+                                        <td>{"Đặt hàng trên Chợ Commission"}</td>
+                                    )}
+                                    {order?.isDirect ? (
+                                        <td>{`đ${formatCurrency(order?.commissionServiceId?.price)}` || `đ${formatCurrency(order?.price)}` || "-"}</td>
+                                    ) : (
+                                        <td>{`đ${formatCurrency(order?.minPrice)} - đ${formatCurrency(order?.maxPrice)}` || `đ${formatCurrency(order?.price)}` || "-"}</td>
+                                    )}
                                     <td>{order?.deadline || "-"}</td>
                                     <td className="flex-align-center">
                                         <>

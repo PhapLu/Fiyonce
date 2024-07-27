@@ -28,10 +28,12 @@ export default function Navbar() {
 
     const history = useNavigate();
     const handleSearchTermChange = async (e) => {
-        setQuery(e.target.value);
-        if (e.target.value) {
+        const searchTerm = e.target.value;
+        setQuery(searchTerm);
+
+        if (searchTerm) {
             try {
-                const response = await apiUtils.get(`/recommender/search?searchTerm=${query}`);
+                const response = await apiUtils.get(`/recommender/search?searchTerm=${searchTerm}`);
                 const userSearchResults = response.data.metadata.userResults;
                 console.log(userSearchResults);
                 setSearchResults({ users: userSearchResults });
@@ -40,6 +42,7 @@ export default function Navbar() {
             }
         }
     }
+
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -203,7 +206,7 @@ export default function Navbar() {
 
                 <div className="navbar--right">
                     <ul className="navbar-link-container">
-                        <li className={`navbar-link-item ` + (location.pathname.split('/').filter(Boolean).length === 0 || location.pathname.includes('/talents') || location.pathname.includes('/commission-services')? "active" : "")}>
+                        <li className={`navbar-link-item ` + (location.pathname.split('/').filter(Boolean).length === 0 || location.pathname.includes('/talents') || location.pathname.includes('/commission-services') ? "active" : "")}>
                             <Link to="/">Khám phá</Link>
                         </li>
                         <li className={`navbar-link-item ` + (location.pathname.includes('/commission-market') ? "active" : "")}>

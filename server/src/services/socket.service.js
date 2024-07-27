@@ -28,14 +28,20 @@ class SocketServices {
             global._io.emit("getUsers", users);
         });
 
-        socket.on("sendMessage", ({ conversationId, senderId, receiverId, content }) => {
-            const receiver = getUser(receiverId)
+        socket.on("sendMessage", (newMessage) => {
+            console.log(newMessage)
+            const receiver = getUser(newMessage.receiverId)
 
-            global._io.to(receiver?.socketId).emit("getMessage", {
-                conversationId,
-                senderId,
-                content,
-            });
+            // console.log(content)
+            console.log("SEND MESSAGE")
+            console.log(users)
+
+            console.log("RECEIVER INFO")
+            console.log(receiver)
+
+            console.log(newMessage.message)
+
+            global._io.to(receiver?.socketId).emit("getMessage", newMessage);
         });
 
         socket.on("sendTalentRequest", ({ senderId, talentRequest }) => {

@@ -20,15 +20,6 @@ export default function AccountDashboard() {
     }, [data]);
 
     useEffect(() => {
-        const socket = io(SOCKET_SERVER_URL, {
-            withCredentials: true
-        });
-
-        socket.on('connect', () => {
-            console.log('Connected to socket server:', socket.id);
-            socket.emit('addUser', "6662c4f8a0fe5944a1ea33cc");
-        });
-
         socket.on('getTalentRequest', (data) => {
             setTalentRequests((prevRequests) => {
                 if (data && data.talentRequest) {

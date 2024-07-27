@@ -219,14 +219,21 @@ class OrderService {
         if (!foundUser) throw new NotFoundError("User not found!");
 
         //2. Get orders
-        const orders = await Order.find({ memberId: clientId })
-        .populate("talentChosenId", "stageName avatar")
-        .populate("memberId", "fullName avatar");
+        let orders;
+        try {
+            orders = await Order.find({ memberId: clientId })
+                .populate("talentChosenId", "stageName avatar")
+                .populate("commissionServiceId", "price title");
+        } catch (error) {
+            console.error("Error populating orders:", error);
+            throw new Error("Failed to fetch orders");
+        }
 
         return {
             memberOrderHistory: orders,
         };
     };
+
 
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
@@ -306,6 +313,12 @@ class OrderService {
                             title: {
                                 $arrayElemAt: [
                                     "$commissionServiceDetails.title",
+                                    0,
+                                ],
+                            },
+                            title: {
+                                $arrayElemAt: [
+                                    "$commissionServiceDetails.price",
                                     0,
                                 ],
                             },

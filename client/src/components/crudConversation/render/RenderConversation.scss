@@ -11,7 +11,7 @@
     box-shadow: var(--box-shadow-1);
 
     .user {
-        padding: 6px 8px;
+        padding: 6px 12px;
         box-shadow: 0 4px 3px -3px var(--gray-2-color);
 
         .user__avatar {
@@ -30,7 +30,7 @@
 
     .message-container {
         overflow-y: scroll;
-        padding: 6px 4px 6px 8px;
+        padding: 6px 6px 6px 12px;
         height: calc(100% - 100px);
         margin-bottom: 100px;
 
@@ -38,6 +38,8 @@
             // display: flex;
             // align-items: center;
             // width: 100%;
+            display: flex;
+            flex-wrap: wrap;
 
             img {
                 width: 160px;
@@ -45,6 +47,7 @@
                 max-height: 230px;
                 border-radius: 8px;
                 object-fit: cover;
+                margin-bottom: 4px;
             }
 
             .message-item__content {
@@ -53,18 +56,20 @@
                 /* border-radius: 12px; */
                 /* padding: 8px 12px; */
                 font-size: 1.3rem;
-                margin-bottom: 8px;
+                margin-bottom: 4px;
+                width: 100%;
 
                 span {
                     text-align: start;
-                    max-width: 70%;
+                    // max-width: 70%;
                     border-radius: 12px;
                     padding: 8px 12px;
                 }
             }
 
             &.right {
-                text-align: end;
+                // text-align: end;
+                justify-content: end;
 
                 .message-item__content {
                     justify-content: end;
@@ -79,6 +84,8 @@
             }
 
             &.left {
+                justify-content: start;
+
                 .message-item__content {
                     justify-content: start;
                 }
@@ -124,7 +131,6 @@
         }
 
         .send-message--middle {
-            padding: 10px 12px;
             background-color: var(--gray-1-color);
             border-radius: 16px;
 
@@ -169,6 +175,8 @@
             }
 
             input {
+                width: 100%;
+                padding: 10px 12px;
                 background-color: transparent;
                 border: none;
                 outline: none;

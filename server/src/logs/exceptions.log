@@ -600,3 +600,17 @@ ReferenceError: next is not defined
     at Layer.handle [as handle_request] (E:\Fiyonce\server\node_modules\express\lib\router\layer.js:95:5)
     at next (E:\Fiyonce\server\node_modules\express\lib\router\route.js:149:13)
     at Route.dispatch (E:\Fiyonce\server\node_modules\express\lib\router\route.js:119:3)::undefined
+2024-07-27 19:06:59::error::undefined::undefined::uncaughtException: receiverId is not defined
+ReferenceError: receiverId is not defined
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:38:38)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-27 19:08:38::error::undefined::undefined::uncaughtException: message is not defined
+ReferenceError: message is not defined
+    at Socket.<anonymous> (file:///E:/Fiyonce/server/src/services/socket.service.js:47:25)
+    at Socket.emit (node:events:519:28)
+    at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
+    at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined

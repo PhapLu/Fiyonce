@@ -301,13 +301,10 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             </div>
             <div className="modal-form--right">
                 <h2 className="form__title">Mô tả yêu cầu</h2>
-
-
                 {!isSuccessOrderCommission ?
 
                     (
                         <>
-
                             <div className="form-field">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
                                 <span className="form-field__annotation">Ở phần này, vui lòng miêu tả yêu cầu của bạn về sản phẩm mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết qua tin nhắn.</span>

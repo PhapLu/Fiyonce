@@ -182,7 +182,6 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
             });
     };
 
-    const { postId } = useParams();
 
     return (
         <div className="posts">
