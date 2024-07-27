@@ -3,9 +3,9 @@
     position: absolute;
     top: calc(100% + 8px);
     right: -20px;
-    min-width: 280px;
+    min-width: 300px;
     border: 1px solid var(--gray-1-color);
-    padding: 18px 24px;
+    padding: 18px 20px;
     border-radius: 8px;
     background-color: var(--white-3-color);
     box-shadow: var(--box-shadow-2);
@@ -23,8 +23,8 @@
             .submenu__title__back-ic {
                 position: absolute;
                 left: 2px;
-                width: 30px;
-                height: 30px;
+                width: 32px;
+                height: 32px;
                 border-radius: 50%;
                 padding: 6px;
 

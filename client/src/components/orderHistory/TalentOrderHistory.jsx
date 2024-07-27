@@ -190,7 +190,7 @@ export default function TalentOrderHistory() {
                                             <div className="user--left">
                                                 <img src={resizeImageUrl(order?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                                                 <div className="user__name">
-                                                    <div className="fs-12">{order?.memberId?.fullName}</div>
+                                                    <div className="fs-13">{order?.memberId?.fullName}</div>
                                                 </div>
                                             </div>
                                         </Link>

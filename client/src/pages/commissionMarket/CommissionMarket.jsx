@@ -177,7 +177,7 @@ export default function CommissionMarket() {
                         </div>
 
                         <div className="collation-form__section sort">
-                            <strong>Sắp xếp theo</strong>
+                            <strong>Sắp xếp</strong>
                             <div className="form-field">
                                 <select
                                     id="status"
@@ -186,6 +186,7 @@ export default function CommissionMarket() {
                                     className="form-field__input"
                                 >
                                     <option value="*">Thời gian đăng tải</option>
+                                    <option value="*"></option>
                                 </select>
                             </div>
                         </div>
@@ -193,7 +194,7 @@ export default function CommissionMarket() {
                 </section>
 
                 <section>
-                    {indirectOrders && indirectOrders.length > 0 ? (
+                    {indirectOrders?.length > 0 ? (
                         <Masonry
                             breakpointCols={breakpointColumnsObj}
                             className="my-masonry-grid commission-market-container"
@@ -207,47 +208,48 @@ export default function CommissionMarket() {
                                         setOverlayVisible(true);
                                     }}>
                                         <div className="commission-market-item__header">
-                                            <div className="commission-market-item__header--left user md">
+                                            <div className="mb-8">
+                                                {indirectOrder?.talentChosenId ? (
+                                                    <span className="status approved">
+                                                        <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                                                    </span>
+                                                ) : indirectOrder?.talentsApprovedCount > 0 && (
+                                                    <span className="status pending">
+                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                                                    </span>
+                                                )}
+                                            </div>
 
-                                            <div className="user--left"> 
-                                                
-                                                <img src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" />
-                                                <div className="user__name">
-                                                    <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
-                                                    <div className="user__name__subtitle">
-                                                        {formatTimeAgo(indirectOrder.createdAt)}
+                                            <div className="user md">
+                                                <div className="user--left">
+                                                    <img src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" />
+                                                    <div className="user__name">
+                                                        <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
+                                                        <div className="user__name__subtitle">
+                                                            {formatTimeAgo(indirectOrder.createdAt)}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            </div>
-
-                                            <div className="commission-market-item__header--right">
-                                                {indirectOrder?.talentChosenId ? (
-                                                    <div className="status approved">
-                                                        <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
-                                                    </div>
-                                                ) : indirectOrder?.talentsApprovedCount > 0 && (
-                                                    <div className="status pending">
-                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
-                                                    </div>
-                                                )}
                                             </div>
                                         </div>
 
                                         <div className="commission-market-item__content">
-                                            <h2><span className="highlight-text">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span></h2>
-                                            <p>{limitString(indirectOrder.description, 330)}</p>
+                                            <div className="mt-8">
+                                                <span className="highlight-text">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span>
+                                            </div>
+                                            <div className="mt-8">
+                                                <span >{limitString(indirectOrder.description, 330)}</span>
+                                            </div>
                                         </div>
 
                                         <div className="reference-container">
-                                            {indirectOrder.references.slice(0, 3).map((reference, index) => {
-                                                if (index === 2 && indirectOrder.references.length > 3) {
+                                            {indirectOrder?.references.slice(0, 3).map((reference, index) => {
+                                                if (index === 2 && indirectOrder?.references?.length > 3) {
                                                     return (
                                                         <div key={index} className="reference-item">
                                                             <img src={resizeImageUrl(reference, 250)} alt="" /> {/* Use resizeImageUrl here */}
                                                             <div className="reference-item__overlay">
-                                                                +{indirectOrder.references.length - 3}
+                                                                +{indirectOrder?.references?.length - 3}
                                                             </div>
                                                         </div>
                                                     );

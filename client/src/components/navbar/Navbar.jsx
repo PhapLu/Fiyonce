@@ -203,7 +203,7 @@ export default function Navbar() {
 
                 <div className="navbar--right">
                     <ul className="navbar-link-container">
-                        <li className={`navbar-link-item ` + (location.pathname.split('/').filter(Boolean).length === 0 ? "active" : "")}>
+                        <li className={`navbar-link-item ` + (location.pathname.split('/').filter(Boolean).length === 0 || location.pathname.includes('/talents') || location.pathname.includes('/commission-services')? "active" : "")}>
                             <Link to="/">Khám phá</Link>
                         </li>
                         <li className={`navbar-link-item ` + (location.pathname.includes('/commission-market') ? "active" : "")}>

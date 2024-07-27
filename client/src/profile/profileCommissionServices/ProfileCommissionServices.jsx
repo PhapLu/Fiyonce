@@ -26,8 +26,8 @@ import "./ProfileCommissionServices.scss";
 
 export default function ProfileCommissionServices() {
     const { userId } = useParams();
-    const {userInfo} = useAuth();
-    const {profileInfo} = useOutletContext();
+    const { userInfo } = useAuth();
+    const { profileInfo } = useOutletContext();
     const queryClient = useQueryClient();
 
     const isProfileOwner = userInfo?._id === userId;
@@ -47,7 +47,7 @@ export default function ProfileCommissionServices() {
     const [deleteCommissionServiceCategory, setDeleteCommissionServiceCategory] = useState();
 
 
-    const [showCommissionTosView, setShowCommissionTosView ] = useState(false);
+    const [showCommissionTosView, setShowCommissionTosView] = useState(false);
 
     const [showRenderCommissionService, setShowRenderCommissionService] = useState(false);
     const [renderCommissionServiceId, setRenderCommissionServiceId] = useState();
@@ -249,7 +249,7 @@ export default function ProfileCommissionServices() {
                 </div>
                 {isProfileOwner &&
                     <div className="profile-page__header--right">
-                        <button className="btn btn-3" onClick={() => { setShowCommissionTosView (true); setOverlayVisible(true) }}>
+                        <button className="btn btn-3" onClick={() => { setShowCommissionTosView(true); setOverlayVisible(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
                             </svg>
@@ -297,10 +297,24 @@ export default function ProfileCommissionServices() {
                             <div className="profile-commission-service__category-item__service-container">
                                 {category.commissionServices?.map((service, serviceIndex) => (
                                     <div key={serviceIndex} className="profile-commission-service__category-item__service-item">
-                                        <div className="profile-commission-service__category-item__service-item--left images-layout-3">
-                                            {service?.artworks.slice(0, 3)?.map((artwork, artworkIndex) => (
-                                                <img key={artworkIndex} src={artwork} alt={`Artwork ${artworkIndex + 1}`} />
-                                            ))}
+                                        <div className="profile-commission-service__category-item__service-item--left image-container images-layout-3">
+                                            {service?.artworks.slice(0, 3).map((artwork, index) => {
+                                                if (index === 2 && service?.artworks.length > 3) {
+                                                    return (
+                                                        <div className="image-item">
+                                                            <img key={index} src={artwork} className="" alt={`Artwork ${index + 1}`} />
+                                                            <div className="image-item__overlay">
+                                                                +{service?.artworks?.length - 3}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                                return (
+                                                    <div className="image-item">
+                                                        <img key={index} src={artwork} alt={`Artwork ${index + 1}`} />
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                         {/* {!isProfileOwner &&
                                             <button className="btn btn-3 icon-only bookmark-service-btn">
@@ -402,7 +416,7 @@ export default function ProfileCommissionServices() {
                     {/* Commission TOS */}
                     {showCommissionTosView &&
                         <RenderCommissionTos
-                            setShowCommissionTosView ={setShowCommissionTosView }
+                            setShowCommissionTosView={setShowCommissionTosView}
                             setOverlayVisible={setOverlayVisible}
                         />
                     }
