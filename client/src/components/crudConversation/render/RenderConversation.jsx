@@ -202,7 +202,7 @@ export default function RenderConversation() {
             </div>
             <div className="send-message flex-justify-space-between flex-align-center">
                 <div className="send-message--left flex-align-center mr-8">
-                    <input id="image-upload" type="file" multiple onChange={handleImageChange} style={{ display: "none" }} />
+                    <input id="image-upload" type="file" onChange={handleImageChange} style={{ display: "none" }} />
                     {/* {
                         inputs?.content || media?.length > 0 ? (
                             <>
@@ -249,7 +249,7 @@ export default function RenderConversation() {
                             {
                                 media.map((media, index) => {
                                     return (
-                                        <div className="preview-img-item mr-8" key={index}>
+                                        <div className="preview-img-item mr-8 ml-8 mt-8" key={index}>
                                             <img
                                                 src={
                                                     media instanceof File

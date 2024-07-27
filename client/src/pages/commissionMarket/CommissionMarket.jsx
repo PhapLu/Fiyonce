@@ -216,8 +216,8 @@ export default function CommissionMarket() {
                                         <div className="commission-market-item__header">
                                             <div className="mb-8">
                                                 {indirectOrder?.status == "approved" ? (
-                                                    <span className="status approved">
-                                                        <span> &nbsp;Đã chọn họa sĩ</span>
+                                                    <span className="status pending">
+                                                        <span> &nbsp;{indirectOrder?.talentsApprovedCount} họa sĩ đã ứng</span>
                                                     </span>
                                                 ) : indirectOrder?.status == "confirmed" ? (
                                                     <span className="status approved">
