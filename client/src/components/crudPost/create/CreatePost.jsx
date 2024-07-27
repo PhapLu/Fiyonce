@@ -123,8 +123,6 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                     ...prevErrors,
                     serverError: error.response.data.message
                 }));
-            } finally {
-                setIsSubmitCreatePostLoading(false);
             }
         }
         const fd = createFormData(inputs, 'artworks', artworks);
@@ -293,6 +291,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
             </div>
 
             <div className="form-field">
+
                 <button
                     type="submit"
                     className="form-field__input btn btn-2 btn-md"
