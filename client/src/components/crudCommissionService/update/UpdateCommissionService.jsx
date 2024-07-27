@@ -284,18 +284,40 @@ export default function UpdateCommissionService({
                 <h3>{inputs?.title || "Tên dịch vụ"}</h3>
                 <span>Giá từ: <span className="highlight-text"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} VND</span></span>
                 <hr />
-                <div className="images-layout-3">
-                    {displayArtworks.slice(0, 3).map((artwork, index) => (
-                        <img
-                            src={
-                                artwork instanceof File
-                                    ? URL.createObjectURL(artwork)
-                                    : artwork?.url || placeholderImage
-                            }
-                            alt={`artwork ${index + 1}`}
-                            className="img-preview__img"
-                        />
-                    ))}
+                <div className="image-container images-layout-3">
+                    {displayArtworks.slice(0, 3).map((portfolio, index) => {
+                        if (index === 2 && displayArtworks.length > 3) {
+                            return (
+                                <div className="image-item">
+                                    <img
+                                        key={index}
+                                        src={
+                                            portfolio instanceof File
+                                                ? URL.createObjectURL(portfolio)
+                                                : portfolio
+                                        }
+                                        alt={`portfolio ${index + 1}`}
+                                    />
+                                    <div className="image-item__overlay">
+                                        +{displayArtworks?.length - 3}
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (
+                            <div className="image-item">
+                                <img
+                                    key={index}
+                                    src={
+                                        portfolio instanceof File
+                                            ? URL.createObjectURL(portfolio)
+                                            : portfolio
+                                    }
+                                    alt={`portfolio ${index + 1}`}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
                 <p>*Lưu ý: <i>{inputs?.notes || "Lưu ý cho khách hàng"}</i></p>
             </div>
