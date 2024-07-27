@@ -279,7 +279,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                                         src={
                                             portfolio instanceof File
                                                 ? URL.createObjectURL(portfolio)
-                                                : portfolio
+                                                : portfolio.url
                                         }
                                         alt={`portfolio ${index + 1}`}
                                     />
