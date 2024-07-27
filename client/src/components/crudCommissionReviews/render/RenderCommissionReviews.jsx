@@ -146,9 +146,13 @@ export default function CommissionReviews({ setShowRenderCommissionReviews, setO
                         </svg>
                     </span>
                     <div className="rating-item__progress-bar">
-                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 5).length / reviews.length * 100))}%` }}></div>
+                        <div className="rating-item__progress-bar__filled" style={{ width: `0%` }}></div>
+                        {/* <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 5).length / reviews.length * 100))}%` }}></div> */}
                     </div>
-                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 5).length / reviews.length * 100))}%</span>
+                    <span className="rating-item__percentage">
+                        0%
+                    </span>
+                    {/* <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 5).length / reviews.length * 100))}%</span> */}
                 </div>
                 <div className="rating-item">
                     <span className="rating-item__star">
@@ -158,9 +162,13 @@ export default function CommissionReviews({ setShowRenderCommissionReviews, setO
                         </svg>
                     </span>
                     <div className="rating-item__progress-bar">
-                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 4).length / reviews.length * 100))}%` }}></div>
+                        <div className="rating-item__progress-bar__filled" style={{ width: `0%` }}></div>
+                        {/* <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 4).length / reviews.length * 100))}%` }}></div> */}
                     </div>
-                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 4).length / reviews.length * 100))}%</span>
+                    <span className="rating-item__percentage">
+                        0%
+                    </span>
+                    {/* <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 4).length / reviews.length * 100))}%</span> */}
                 </div>
                 <div className="rating-item">
                     <span className="rating-item__star">
@@ -170,9 +178,13 @@ export default function CommissionReviews({ setShowRenderCommissionReviews, setO
                         </svg>
                     </span>
                     <div className="rating-item__progress-bar">
-                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 3).length / reviews.length * 100))}%` }}></div>
+                        <div className="rating-item__progress-bar__filled" style={{ width: `0%` }}></div>
+                        {/* <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 3).length / reviews.length * 100))}%` }}></div> */}
                     </div>
-                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 3).length / reviews.length * 100))}%</span>
+                    <span className="rating-item__percentage">
+                        0%
+                    </span>
+                    {/* <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 3).length / reviews.length * 100))}%</span> */}
                 </div>
                 <div className="rating-item">
                     <span className="rating-item__star">
@@ -182,9 +194,13 @@ export default function CommissionReviews({ setShowRenderCommissionReviews, setO
                         </svg>
                     </span>
                     <div className="rating-item__progress-bar">
-                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 2).length / reviews.length * 100))}%` }}></div>
+                        <div className="rating-item__progress-bar__filled" style={{ width: `0%` }}></div>
+                        {/* <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 2).length / reviews.length * 100))}%` }}></div> */}
                     </div>
-                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 2).length / reviews.length * 100))}%</span>
+                    <span className="rating-item__percentage">
+                        0%
+                    </span>
+                    {/* <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 2).length / reviews.length * 100))}%</span> */}
                 </div>
                 <div className="rating-item">
                     <span className="rating-item__star">
@@ -194,9 +210,13 @@ export default function CommissionReviews({ setShowRenderCommissionReviews, setO
                         </svg>
                     </span>
                     <div className="rating-item__progress-bar">
-                        <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 1).length / reviews.length * 100))}%` }}></div>
+                        <div className="rating-item__progress-bar__filled" style={{ width: `0%` }}></div>
+                        {/* <div className="rating-item__progress-bar__filled" style={{ width: `${Math.round((reviews.filter(review => review.rating === 1).length / reviews.length * 100))}%` }}></div> */}
                     </div>
-                    <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 1).length / reviews.length * 100))}%</span>
+                    <span className="rating-item__percentage">
+                        0%
+                    </span>
+                    {/* <span className="rating-item__percentage">{Math.round((reviews.filter(review => review.rating === 1).length / reviews.length * 100))}%</span> */}
                 </div>
             </div>
 
@@ -216,7 +236,7 @@ export default function CommissionReviews({ setShowRenderCommissionReviews, setO
                     </div>
                 )) :
                     (
-                        <span>Hiện chưa có đánh giá nào</span>
+                        <p className='text-align-center'>Hiện chưa có đánh giá nào</p>
                     )}
             </div>
         </div>
