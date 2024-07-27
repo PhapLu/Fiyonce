@@ -269,18 +269,40 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                 </div>
                 <span>Giá: <span className="highlight-text"> {inputs?.price ? formatCurrency(inputs?.price) : "x"} VND</span></span>
                 <hr />
-                <div className="images-layout-3">
-                    {displayedSelectedArtworks?.slice(0, 3)?.map((selectedArtwork, index) => (
-                        <img
-                            key={index}
-                            src={
-                                selectedArtwork.url instanceof File
-                                    ? URL.createObjectURL(selectedArtwork.url)
-                                    : selectedArtwork.url || placeholderImage
-                            }
-                            alt={`Tranh mẫu ${index + 1}`}
-                        />
-                    ))}
+                <div className="image-container images-layout-3">
+                    {displayedSelectedArtworks.slice(0, 3).map((portfolio, index) => {
+                        if (index === 2 && displayedSelectedArtworks.length > 3) {
+                            return (
+                                <div className="image-item">
+                                    <img
+                                        key={index}
+                                        src={
+                                            portfolio instanceof File
+                                                ? URL.createObjectURL(portfolio)
+                                                : portfolio
+                                        }
+                                        alt={`portfolio ${index + 1}`}
+                                    />
+                                    <div className="image-item__overlay">
+                                        +{displayedSelectedArtworks?.length - 3}
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (
+                            <div className="image-item">
+                                <img
+                                    key={index}
+                                    src={
+                                        portfolio instanceof File
+                                            ? URL.createObjectURL(portfolio)
+                                            : portfolio
+                                    }
+                                    alt={`portfolio ${index + 1}`}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
                 <br />
                 <h4>Phạm vi công việc: </h4>
