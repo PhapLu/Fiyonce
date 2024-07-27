@@ -30,12 +30,9 @@ class SocketServices {
             global._io.emit("getUsers", users);
         });
 
-        socket.on("sendMessage", ({ conversationId, senderId, receiverId, content }) => {
-            // console.log("SENDER ID")
-            // console.log(senderId)
-            // console.log("RECEIVER ID")
-            // console.log(receiverId)
-            const receiver = getUser(receiverId)
+        socket.on("sendMessage", (newMessage) => {
+            console.log(newMessage)
+            const receiver = getUser(newMessage.receiverId)
 
             // console.log(content)
             console.log("SEND MESSAGE")
@@ -44,13 +41,9 @@ class SocketServices {
             console.log("RECEIVER INFO")
             console.log(receiver)
 
-            console.log(content)
+            console.log(newMessage.message)
 
-            global._io.to(receiver?.socketId).emit("getMessage", {
-                conversationId,
-                senderId,
-                content,
-            });
+            global._io.to(receiver?.socketId).emit("getMessage", newMessage);
         });
 
         socket.on("sendTalentRequest", ({ senderId, talentRequest }) => {

@@ -94,8 +94,8 @@ class UserService {
         followedUser.followers = followedUser.followers.filter(
             (id) => id.toString() !== userId.toString()
         );
-        // await currentUser.save();
-        // await followedUser.save();
+        await currentUser.save();
+        await followedUser.save();
         console.log(currentUser);
         return {
             user: currentUser,

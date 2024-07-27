@@ -190,7 +190,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         try {
             const response = await apiUtils.patch(`/user/followUser/${profileInfo._id}`)
             console.log(response);
-            setProfileFollowers([...profileFollowers, response.data.metadata.user.followers]);
+            // setProfileFollowers([...profileFollowers, response.data.metadata.user.followers]);
             setUserFollowing(response.data.metadata.user.following)
 
             setModalInfo({
@@ -228,7 +228,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
             setModalInfo({
                 status: "success",
-                message: "Unfollow thanh conng"
+                message: "Đã hủy theo dõi"
             })
         } catch (error) {
             console.log(error);
@@ -273,7 +273,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                     </div>
                     {
-                        userInfo.role == "talent" && (
+                        userInfo?.role == "talent" && (
                             <>
                                 <div className="form-field">
                                     <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
@@ -368,7 +368,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         <span className="sidebar__name__email">{profileInfo.stageName}</span>
                     </div>
                     <div>
-                        {profileInfo.role === "talent" && profileInfo.jobTitle && (
+                        {profileInfo?.role === "talent" && profileInfo.jobTitle && (
                             <span className="sidebar__job-title">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
@@ -422,7 +422,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <br />
 
                     <div className="sidebar__follow">
-                        <span className="sidebar__follow__follower">{profileFollowers?.length === 0 ? "Chưa có người theo dõi" : `${profileFollowers?.length} người theo dõi`}</span>
+                        <span className="sidebar__follow__follower">{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
                         {" " + "-" + " "}
                         <span className="sidebar__follow__following">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                     </div>
@@ -475,7 +475,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                 </button>
 
                                 {
-                                    profileInfo.role != "talent1" && (
+                                    profileInfo?.role != "talent" && (
                                         <button className="sidebar__btn btn btn-1" onClick={() => setOpenUpgradeAccountForm(true)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
                                                 <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />

@@ -11,14 +11,13 @@ import { apiUtils } from "../../utils/newRequest";
 
 export default function ExplorePosts() {
     const [searchParams] = useSearchParams();
-    const recommenderType = searchParams.get("recommender") || "popular"; // Default to "popular" if not specified
-    const { selectedMovement } = useOutletContext();
+    const { selectedRecommender, selectedMovement } = useOutletContext(); // Add this to use the context
     const [filteredPosts, setFilteredPosts] = useState([]);
 
     const fetchRecommendedPosts = async () => {
         try {
             let endpoint;
-            switch (recommenderType) {
+            switch (selectedRecommender.algorithm) {
                 case "following":
                     endpoint = `/recommender/readFollowingPosts`;
                     break;
@@ -41,7 +40,7 @@ export default function ExplorePosts() {
     };
 
     const { data: posts, error: fetchingPosts, isError: isFetchingPostsError, isLoading: isFetchingPostsLoading } = useQuery(
-        ['fetchRecommendedPosts', recommenderType],
+        ['fetchRecommendedPosts', selectedRecommender],
         fetchRecommendedPosts,
         {
             onSuccess: (data) => {

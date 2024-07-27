@@ -10,24 +10,30 @@ import Post from "../models/post.model.js";
 
 class PostCategoryService {
     static createPostCategory = async (talentId, body) => {
-        //1. Check talent
-        const talent = await User.findById(talentId);
-        if (!talent) throw new NotFoundError("Talent not found");
-        if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent");
-
-        //2. Validate body
-        if (!body.title) throw new BadRequestError("Title is required");
-
-        //3. Create service
-        const postCategory = new PostCategory({
-            title: body.title,
-            talentId,
-        });
-        await postCategory.save();
-        return {
-            postCategory,
-        };
+        try {
+            //1. Check talent
+            console.log(talentId, body)
+            const talent = await User.findById(talentId);
+            if (!talent) throw new NotFoundError("Talent not found");
+            if (talent.role !== "talent")
+                throw new BadRequestError("He/She is not a talent");
+    
+            //2. Validate body
+            if (!body.title) throw new BadRequestError("Title is required");
+    
+            //3. Create service
+            const postCategory = new PostCategory({
+                title: body.title,
+                talentId,
+            });
+            console.log(postCategory);
+            await postCategory.save();
+            return {
+                postCategory,
+            };
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     static readPostCategories = async (talentId) => {

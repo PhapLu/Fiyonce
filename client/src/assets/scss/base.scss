@@ -156,7 +156,7 @@ body {
 }
 
 .app {
-    margin: 72px 4% 50px !important;
+    margin: 72px 3% 50px !important;
 
     &.with-sidebar {
         display: flex;
@@ -331,6 +331,10 @@ img {
 
 .w-100 {
     width: 100% !important;
+}
+
+.w-unset {
+    width: unset !important;
 }
 
 .mb-8 {
@@ -513,7 +517,7 @@ img {
     background-color: var(--gray-4-color) !important;
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--gray-3-color);
+    color: var(--black-2-color);
 }
 
 .btn-5 {
@@ -759,7 +763,6 @@ table {
         &:last-of-type {
             margin-right: 0;
         }
-
     }
 
     thead {}
@@ -774,6 +777,7 @@ table {
 
 // Forms
 .form-field {
+    width: 100%;
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
@@ -938,7 +942,7 @@ table {
 }
 
 .form-field.with-ic {
-    margin-bottom: 0;
+    margin-bottom: 8px;
     width: 100%;
     display: flex;
     justify-content: start;

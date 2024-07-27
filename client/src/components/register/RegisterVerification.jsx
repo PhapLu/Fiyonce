@@ -119,7 +119,7 @@ export default function RegisterVerification({ handleRegisterSubmit, registerInp
             </div>
             <p>
                 Không nhận được mã?{" "}
-                <span className={`highlight-text ${isButtonDisabled ? "disabled" : ""}`} onClick={!isButtonDisabled ? handleResend : null}>
+                <span className={`highlight-text with-hover-effect ${isButtonDisabled ? "disabled" : ""}`} onClick={!isButtonDisabled ? handleResend : null}>
                     {isButtonDisabled ? `Gửi lại sau ${countdown}s` : "Gửi lại"}
                 </span>
             </p>

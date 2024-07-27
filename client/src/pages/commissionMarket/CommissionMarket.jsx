@@ -1,5 +1,5 @@
 // Imports
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import Masonry from 'react-masonry-css';
 
@@ -13,7 +13,6 @@ import RenderProposals from "../../components/crudProposal/render/RenderProposal
 // Contexts
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 import { useModal } from "../../contexts/modal/ModalContext.jsx";
-import { useMovement } from "../../contexts/movement/MovementContext.jsx";
 
 // Utils
 import { limitString, formatTimeAgo, formatCurrency } from "../../utils/formatter.js";
@@ -26,8 +25,6 @@ import "./CommissionMarket.scss";
 import CreateProposal from "../../components/crudProposal/create/CreateProposal.jsx";
 
 export default function CommissionMarket() {
-    const { movements } = useMovement();
-    // Initialize Masonry layout
     const breakpointColumnsObj = {
         default: 3,
         1200: 3,
@@ -38,7 +35,6 @@ export default function CommissionMarket() {
     const [inputs, setInputs] = useState({});
     const [commissionOrder, setCommissionOrder] = useState();
 
-    // CRUD commission order
     const [showCreateComissionOrder, setShowCreateCommissionOrder] = useState(false);
     const [showRenderComissionOrder, setShowRenderCommissionOrder] = useState(false);
     const [showUpdateComissionOrder, setShowUpdateCommissionOrder] = useState(false);
@@ -64,7 +60,7 @@ export default function CommissionMarket() {
     const queryParameters = { isDirect: false, sortBy: 'createdAt', sortOrder: 'desc' };
     const { data: indirectOrders, error, isError, isLoading } = useQuery(
         ['fetchIndirectOrders', queryParameters],
-        () => fetchIndirectOrders(queryParameters), // Pass a function that calls fetchIndirectOrders
+        () => fetchIndirectOrders(queryParameters),
         {
             onSuccess: (data) => {
                 console.log(data);
@@ -75,7 +71,30 @@ export default function CommissionMarket() {
         }
     );
 
+    const [filteredOrders, setFilteredOrders] = useState([]);
     const [overlayVisible, setOverlayVisible] = useState(false);
+
+    useEffect(() => {
+        if (indirectOrders) {
+            const filtered = indirectOrders.filter(order => {
+                const matchesKeyword = inputs.fullName
+                    ? (order.description.toLowerCase().includes(inputs.fullName.toLowerCase()) ||
+                        order.memberId.fullName.toLowerCase().includes(inputs.fullName.toLowerCase()))
+                    : true;
+                const matchesStatus = inputs.status && inputs.status !== '*'
+                    ? order.status === inputs.status
+                    : true;
+                const matchesMinPrice = inputs.minPrice
+                    ? order.minPrice >= parseFloat(inputs.minPrice)
+                    : true;
+                const matchesMaxPrice = inputs.maxPrice
+                    ? order.maxPrice <= parseFloat(inputs.maxPrice)
+                    : true;
+                return matchesKeyword && matchesStatus && matchesMinPrice && matchesMaxPrice;
+            });
+            setFilteredOrders(filtered);
+        }
+    }, [inputs, indirectOrders]);
 
     const handleOpenCreateCommissionOrder = () => {
         if (userInfo) {
@@ -127,7 +146,7 @@ export default function CommissionMarket() {
                     <div className="form collation-form">
                         <div className="collation-form__section">
                             <strong>Tìm kiếm</strong>
-                            <div className="form-field with-ic">
+                            <div className="form-field with-ic w-unset">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-6 navbar__search-field__ic ml-8">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
@@ -143,8 +162,8 @@ export default function CommissionMarket() {
                         </div>
 
                         <div className="collation-form__section filter">
-                            <strong>Bộ lọc</strong>
-                            <div className="form-field">
+                            <strong>Trạng thái</strong>
+                            <div className="form-field w-unset">
                                 <select
                                     id="status"
                                     value={inputs.status || "*"}
@@ -152,55 +171,42 @@ export default function CommissionMarket() {
                                     className="form-field__input"
                                 >
                                     <option value="*" >Tất cả trạng thái</option>
-                                    <option value="pending">Đang chờ</option>
+                                    <option value="pending">Đang đợi họa sĩ ứng</option>
                                     <option value="confirmed">Đã chọn họa sĩ và thanh toán</option>
                                 </select>
                             </div>
 
-                            <div className="form-field">
-
-                                <select
-                                    id="movement"
-                                    value={inputs.movement || "*"}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                >
-
-                                    <option value="*">Tất cả trường phái</option>
-                                    {movements?.length > 0 && movements?.map((movement, index) => {
-                                        return (
-                                            <option key={index} value={movement._id}>{movement.title}</option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
                         </div>
 
                         <div className="collation-form__section sort">
-                            <strong>Sắp xếp</strong>
-                            <div className="form-field">
-                                <select
-                                    id="status"
-                                    value={inputs.status || "*"}
+                            <strong>Khoảng giá</strong>
+                            <div className="form-field w-unset">
+                                <input type="text" id="minPrice"
+                                    value={inputs?.minPrice || ""}
                                     onChange={handleChange}
-                                    className="form-field__input"
-                                >
-                                    <option value="*">Thời gian đăng tải</option>
-                                    <option value="*"></option>
-                                </select>
+                                    placeholder="Nhập giá tối thiểu"
+                                    className="form-field__input" />
+                            </div>
+                            -
+                            <div className="form-field w-unset">
+                                <input type="text" id="maxPrice"
+                                    value={inputs?.maxPrice || ""}
+                                    onChange={handleChange}
+                                    placeholder="Nhập giá tối đa"
+                                    className="form-field__input" />
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <section>
-                    {indirectOrders?.length > 0 ? (
+                    {filteredOrders?.length > 0 ? (
                         <Masonry
                             breakpointCols={breakpointColumnsObj}
                             className="my-masonry-grid commission-market-container"
                             columnClassName="my-masonry-grid_column"
                         >
-                            {indirectOrders.map((indirectOrder) => {
+                            {filteredOrders.map((indirectOrder) => {
                                 return (
                                     <div className="commission-market-item" key={indirectOrder._id} onClick={() => {
                                         setCommissionOrder(indirectOrder);
@@ -209,7 +215,11 @@ export default function CommissionMarket() {
                                     }}>
                                         <div className="commission-market-item__header">
                                             <div className="mb-8">
-                                                {indirectOrder?.talentChosenId ? (
+                                                {indirectOrder?.status == "approved" ? (
+                                                    <span className="status approved">
+                                                        <span> &nbsp;Đã chọn họa sĩ</span>
+                                                    </span>
+                                                ) : indirectOrder?.status == "confirmed" ? (
                                                     <span className="status approved">
                                                         <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
                                                     </span>
@@ -225,7 +235,7 @@ export default function CommissionMarket() {
                                                     <img src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" />
                                                     <div className="user__name">
                                                         <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
-                                                        <div className="user__name__subtitle">
+                                                        <div className="user__name__subtitle fs-13 mt-4">
                                                             {formatTimeAgo(indirectOrder.createdAt)}
                                                         </div>
                                                     </div>
@@ -234,10 +244,10 @@ export default function CommissionMarket() {
                                         </div>
 
                                         <div className="commission-market-item__content">
-                                            <div className="mt-8">
-                                                <span className="highlight-text">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span>
+                                            <div className="mt-16">
+                                                <span className="highlight-text fs-16">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span>
                                             </div>
-                                            <div className="mt-8">
+                                            <div className="mt-8 mb-16">
                                                 <span >{limitString(indirectOrder.description, 330)}</span>
                                             </div>
                                         </div>
@@ -267,7 +277,7 @@ export default function CommissionMarket() {
                         </Masonry>
                     ) : (
                         <div>
-                            <h3 className="text-align-center w-100 mt-32">Hiện chưa có đơn hàng trên chợ commission...</h3>
+                            <h3 className="text-align-center w-100 mt-32">Không tìm thấy kết quả ...</h3>
                         </div>
                     )}
                 </section>

@@ -7,22 +7,21 @@ import { AuthProvider } from './contexts/auth/AuthContext';
 import { ConversationProvider } from './contexts/conversation/ConversationContext';
 import { MovementProvider } from './contexts/movement/MovementContext';
 import { QueryClient, QueryClientProvider } from 'react-query'
-
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <SettingProvider>
-          <ModalProvider>
-            <AuthProvider>
-              <ConversationProvider>
-                <MovementProvider>
+        <ModalProvider>
+          <AuthProvider>
+            <ConversationProvider>
+              <MovementProvider>
                   <App />
-                </MovementProvider>
-              </ConversationProvider>
-            </AuthProvider>
-          </ModalProvider>
+              </MovementProvider>
+            </ConversationProvider>
+          </AuthProvider>
+        </ModalProvider>
       </SettingProvider>
     </QueryClientProvider>
   </React.StrictMode >

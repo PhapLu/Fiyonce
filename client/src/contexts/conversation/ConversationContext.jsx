@@ -9,7 +9,6 @@ export const useConversation = () => {
     return useContext(ConversationContext);
 };
 
-
 export const ConversationProvider = ({ children }) => {
     const [otherMember, setOtherMember] = useState();
     const [showRenderConversation, setShowRenderConversation] = useState(false);

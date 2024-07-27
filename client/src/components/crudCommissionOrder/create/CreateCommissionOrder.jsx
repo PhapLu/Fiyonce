@@ -27,7 +27,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const [inputs, setInputs] = useState({
         fileTypes: [],
-        title: commissionService ? `Đặt dịch vụ ${commissionService.title}` : "Đăng yêu cầu lên chợ commission"
     });
 
     const [errors, setErrors] = useState({});
@@ -52,10 +51,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const validateInputs = () => {
         let errors = {};
-
-        if (!inputs.title) {
-            errors.title = 'Vui lòng nhập tên đơn hàng';
-        }
 
         if (!inputs.description) {
             errors.description = 'Vui lòng nhập mô tả';
@@ -306,26 +301,10 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             </div>
             <div className="modal-form--right">
                 <h2 className="form__title">Mô tả yêu cầu</h2>
-
-
                 {!isSuccessOrderCommission ?
 
                     (
                         <>
-
-                            <div className="form-field">
-                                <label htmlFor="title" className="form-field__label">Tên đơn hàng</label>
-                                <input
-                                    id="title"
-                                    name="title"
-                                    value={inputs.title || ""}
-                                    onChange={handleChange}
-                                    className="form-field__input"
-                                    placeholder="Nhập tên đơn hàng để tiện ghi nhớ và theo dõi"
-                                />
-                                {errors.title && <span className="form-field__error">{errors.title}</span>}
-                            </div>
-
                             <div className="form-field">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
                                 <span className="form-field__annotation">Ở phần này, vui lòng miêu tả yêu cầu của bạn về sản phẩm mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết qua tin nhắn.</span>

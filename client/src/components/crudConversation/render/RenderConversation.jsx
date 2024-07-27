@@ -19,9 +19,11 @@ export default function RenderConversation() {
     const [media, setMedia] = useState([]);
     const messagesEndRef = useRef(null);
     const [arrivalMessage, setArrivalMessage] = useState();
-    const { conversation, setShowRenderConversation } = useConversation();
+    const { setOtherMember, conversation, setShowRenderConversation } = useConversation();
     const [conversationId, setConversationId] = useState(conversation._id);
     const [messages, setMessages] = useState(conversation?.messages || []);
+    const [isSendMessageLoading, setIsSendMessageLoading] = useState(false)
+    console.log(messages)
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,10 +36,13 @@ export default function RenderConversation() {
     }, [messages]);
 
 
+    // <img key={index} src={media instanceof File ? URL.createObjectURL(media) : media} alt="Media" />
     useEffect(() => {
         socket.on('getMessage', (newMessage) => {
+
             console.log("NEW MESSAGE")
-            console.log(newMessage);
+            console.log(newMessage)
+            // console.log(newMessage);
             setMessages((prevMessages) => [...prevMessages, newMessage]);
             // conversation?.messages?.push(newMessage);
         });
@@ -83,6 +88,8 @@ export default function RenderConversation() {
 
     const handleSendMessage = async () => {
         const fd = createFormData(inputs, "media", media);
+        setIsSendMessageLoading(true);
+
 
         try {
             console.log("PASSED CONVERSATION DATA")
@@ -105,23 +112,20 @@ export default function RenderConversation() {
             setConversationId(response.data.metadata.conversation._id)
             // Add the new message immediately
 
-            // conversation?.messages?.push(newMessage);
-            console.log(userInfo._id)
-            console.log(conversation.otherMember._id)
-            console.log("SENT MESSAGE")
-            console.log(newMessage.content)
-
-            socket.emit('sendMessage', {
-                conversationId,
-                senderId: userInfo._id,
-                receiverId: conversation.otherMember._id,
-                content: newMessage.content
+            socket.emit('sendMessage', 
+            {
+                ...newMessage,
+                senderId: userInfo?._id,
+                receiverId: conversation?.otherMember?._id
+            }
+                
                 // media: newMessage.media
-            });
+            );
         } catch (error) {
             console.log(error);
             // setModalInfo({ status: "error", message: error.response.data.message });
         }
+        setIsSendMessageLoading(false);
     };
 
 
@@ -158,14 +162,14 @@ export default function RenderConversation() {
     return (
         <div className="render-conversation">
             <div className="user md">
-                <Link className="user--left">
+                <div className="user--left">
                     {arrivalMessage}
-                    <img src={conversation?.otherMember?.avatar} alt="" className="user__avatar" />
+                    <img src={conversation.otherMember?.avatar} alt="" className="user__avatar" />
                     <div className="user__name">
-                        <div className="user__name__title">{conversation?.otherMember?.fullName}</div>
-                        <div className="user__name__sub-title">{`${conversation?.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {conversation?.lastMessage?.content}</div>
+                        <div className="user__name__title">{conversation.otherMember?.fullName}</div>
+                        <div className="user__name__sub-title">{`${conversation.lastMember?.id === userInfo._id ? "Bạn :" : ""}`} {conversation.lastMessage?.content}</div>
                     </div>
-                </Link>
+                </div>
                 <div className="user--right">
                     {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8" onClick={() => { setMinimizeConversation(false) }}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
@@ -199,7 +203,7 @@ export default function RenderConversation() {
             <div className="send-message flex-justify-space-between flex-align-center">
                 <div className="send-message--left flex-align-center mr-8">
                     <input id="image-upload" type="file" multiple onChange={handleImageChange} style={{ display: "none" }} />
-                    {
+                    {/* {
                         inputs?.content || media?.length > 0 ? (
                             <>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity" onClick={() => setShowMediaOptions(!showMediaOptions)}>
@@ -225,18 +229,18 @@ export default function RenderConversation() {
                                 }
                             </>
                         ) : (
-                            <>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8 hover-cursor-opacity">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
-                                </svg>
-                                <label htmlFor="image-upload" className="flex-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                    </svg>
-                                </label>
-                            </>
+                            <> */}
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8 hover-cursor-opacity">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                    </svg> */}
+                    <label htmlFor="image-upload" className="flex-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+                    </label>
+                    {/* </>
                         )
-                    }
+                    } */}
                 </div>
 
                 <div className={`send-message--middle ${inputs?.content || media ? "typing" : ""}`}>
@@ -266,9 +270,13 @@ export default function RenderConversation() {
                     <input type="text" name="content" value={inputs.content || ''} onChange={handleChange} placeholder="Nhấn Enter để gửi" onKeyPress={handleKeyPress} />
                 </div>
                 <div className="send-message--right">
-                    <svg onClick={handleSendMessage} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-8 hover-cursor-opacity">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                    </svg>
+                    <div className="form__submit-btn-container">
+                        {isSendMessageLoading ? (
+                            <span className="btn-spinner"></span>
+                        ) : <svg onClick={handleSendMessage} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-8 hover-cursor-opacity">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                        </svg>}
+                    </div>
                 </div>
             </div>
         </div>

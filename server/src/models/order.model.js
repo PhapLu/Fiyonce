@@ -6,7 +6,7 @@ const OrderSchema = new mongoose.Schema(
     {
         commissionServiceId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Service",
+            ref: "CommissionService",
         },
         memberId: {
             type: mongoose.Schema.Types.ObjectId,

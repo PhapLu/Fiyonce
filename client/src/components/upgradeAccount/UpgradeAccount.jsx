@@ -9,12 +9,15 @@ import { createFormData, apiUtils } from '../../utils/newRequest.js';
 import "./UpgradeAccount.scss";
 
 import { io } from 'socket.io-client';
+import { useModal } from '../../contexts/modal/ModalContext.jsx';
 const SOCKET_SERVER_URL = "http://localhost:8900"; // Update this with your server URL
 
 const UpgradeAccount = ({ closeModal }) => {
+    const {setModalInfo } = useModal();
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [artworks, setArtworks] = useState([]);
+    const [isSubmitUpgradeAccountLoading, setIsSubmitUpgradeAccountLoading] = useState(false);
     const [talentRequestStatus, setTalentRequestStatus] = useState();
     const { id } = useParams();
 
@@ -76,8 +79,8 @@ const UpgradeAccount = ({ closeModal }) => {
 
         if (artworks.length < 3) {
             errors.artworks = "Vui lòng cung cấp tối thiểu 3 tranh.";
-        } else if (artworks.length < 5) {
-            errors.artworks = "Vui lòng cung cấp tối thiểu tối đa 5 tranh.";
+        } else if (artworks.length > 5) {
+            errors.artworks = "Vui lòng cung cấp tối đa 5 tranh.";
         }
 
         return errors;
@@ -86,8 +89,11 @@ const UpgradeAccount = ({ closeModal }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validateInputs();
+        setIsSubmitUpgradeAccountLoading(true);
+
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            setIsSubmitUpgradeAccountLoading(false);
             return;
         }
 
@@ -124,6 +130,7 @@ const UpgradeAccount = ({ closeModal }) => {
             })
             setErrors((values) => ({ ...values, serverError: error.response.data.message }));
         }
+        setIsSubmitUpgradeAccountLoading(false);
     };
 
 
@@ -222,7 +229,17 @@ const UpgradeAccount = ({ closeModal }) => {
                         </div>
 
                         <div className="form-field">
-                            <input type="submit" value="Gửi yêu cầu" className="form-field__input btn btn-2 btn-md" />
+                            <button
+                                className="form-field__input btn btn-2 btn-md"
+                                disabled={isSubmitUpgradeAccountLoading}
+                                onClick={handleSubmit}
+                            >
+                                {isSubmitUpgradeAccountLoading ? (
+                                    <span className="btn-spinner"></span>
+                                ) : (
+                                    "Gửi yêu cầu"
+                                )}
+                            </button>
                         </div>
                     </>
                 }
