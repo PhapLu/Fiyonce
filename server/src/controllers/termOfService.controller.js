@@ -12,7 +12,7 @@ class TermOfServiceController{
     readTermOfServices = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read termOfServices success!',
-            metadata: await TermOfServiceService.readTermOfServices()
+            metadata: await TermOfServiceService.readTermOfServices(req.userId)
         }).send(res)
     }
 

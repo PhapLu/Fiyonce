@@ -6,11 +6,11 @@ import termOfServiceController from '../../controllers/termOfService.controller.
 const router = express.Router()
 
 router.get('/readTermOfService/:termOfServiceId', asyncHandler(termOfServiceController.readTermOfService))
-router.get('/readTermOfServices', asyncHandler(termOfServiceController.readTermOfServices))
 
 //authentication
 router.use(verifyToken)
 
+router.get('/readTermOfServices', asyncHandler(termOfServiceController.readTermOfServices))
 router.post('/createTermOfService', asyncHandler(termOfServiceController.createTermOfService))
 router.patch('/updateTermOfService/:termOfServiceId', asyncHandler(termOfServiceController.updateTermOfService))
 router.delete('/deleteTermOfService/:termOfServiceId', asyncHandler(termOfServiceController.deleteTermOfService))

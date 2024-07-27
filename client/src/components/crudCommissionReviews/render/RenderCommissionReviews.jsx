@@ -11,33 +11,33 @@ import './RenderCommissionReviews.scss';
 
 export default function CommissionReviews({ setShowRenderCommissionReviews, setOverlayVisible }) {
     const reviews = [
-        {
-            id: 1,
-            user: {
-                name: 'John Doe',
-                avatar: 'https://via.placeholder.com/50',
-            },
-            rating: 5,
-            content: 'Amazing artwork! The quality and detail are fantastic. Highly recommend!',
-        },
-        {
-            id: 2,
-            user: {
-                name: 'Jane Smith',
-                avatar: 'https://via.placeholder.com/50',
-            },
-            rating: 4,
-            content: 'Very good service and beautiful paintings. Will order again.',
-        },
-        {
-            id: 3,
-            user: {
-                name: 'Emily Johnson',
-                avatar: 'https://via.placeholder.com/50',
-            },
-            rating: 5,
-            content: 'Exceeded my expectations. Great artist!',
-        },
+        // {
+        //     id: 1,
+        //     user: {
+        //         name: 'John Doe',
+        //         avatar: 'https://via.placeholder.com/50',
+        //     },
+        //     rating: 5,
+        //     content: 'Amazing artwork! The quality and detail are fantastic. Highly recommend!',
+        // },
+        // {
+        //     id: 2,
+        //     user: {
+        //         name: 'Jane Smith',
+        //         avatar: 'https://via.placeholder.com/50',
+        //     },
+        //     rating: 4,
+        //     content: 'Very good service and beautiful paintings. Will order again.',
+        // },
+        // {
+        //     id: 3,
+        //     user: {
+        //         name: 'Emily Johnson',
+        //         avatar: 'https://via.placeholder.com/50',
+        //     },
+        //     rating: 5,
+        //     content: 'Exceeded my expectations. Great artist!',
+        // },
     ];
 
     const [filteredReviews, setFilteredReviews] = useState(reviews);

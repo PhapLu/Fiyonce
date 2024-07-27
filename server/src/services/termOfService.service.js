@@ -40,9 +40,9 @@ class TermOfServiceService {
         };
     };
 
-    static readTermOfServices = async (termOfServiceId) => {
+    static readTermOfServices = async (talentId) => {
         //1. Check if termOfService exists
-        const termOfServices = await TermOfService.find();
+        const termOfServices = await TermOfService.find({talentId: talentId});
 
         return {
             termOfServices,
