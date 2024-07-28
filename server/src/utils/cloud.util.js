@@ -7,7 +7,7 @@ export const compressAndUploadImage = async ({ buffer, originalname, folderName,
     //slice the originalname to just 30 first character and the time(for specify each image)
     const slicedOriginalName = originalname.slice(0, 30);
     const currentTime = new Date().toISOString()
-    const finalName = slicedOriginalName + "_" + currentTime;
+    const finalName = slicedOriginalName + "_" + currentTime.trim()
     // Compress the image using sharp with specified width and height
     const compressedBuffer = await sharp(buffer)
       .resize(width, height, { fit: 'inside' }) // Resize to fit within the specified dimensions
