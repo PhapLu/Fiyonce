@@ -63,7 +63,7 @@ export default function MemberOrderHistory() {
     const fetchMemberOrderHistory = async () => {
         try {
             const response = await apiUtils.get(
-                /order/readMemberOrderHistory
+                `/order/readMemberOrderHistory`
             );
             console.log(response.data.metadata.memberOrderHistory);
             return response.data.metadata.memberOrderHistory;
