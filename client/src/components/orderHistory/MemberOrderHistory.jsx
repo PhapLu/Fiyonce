@@ -132,6 +132,21 @@ export default function MemberOrderHistory() {
         }
     );
 
+    const unarchiveCommissionOrderMutation = useMutation(
+        async (orderId) => {
+            const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries("fetchMemberOrderHistory");
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -391,6 +406,7 @@ export default function MemberOrderHistory() {
                             setShowRenderCommissionOrder={
                                 setShowRenderCommissionOrder
                             }
+                            setShowRenderProposals={setShowRenderProposals}
                             setOverlayVisible={setOverlayVisible}
                         />
                     )}
