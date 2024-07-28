@@ -4,10 +4,10 @@ import { v2 as cloudinary, v2 } from 'cloudinary'
 
 export const compressAndUploadImage = async ({ buffer, originalname, folderName, width, height }) => {
   try {
-    //slice the originalname to just a half of it
-    console.log(originalname);
-    const slicedOriginalName = originalname.slice(0, originalname.length / 2)
-    console.log(slicedOriginalName);
+    //slice the originalname to just 30 first character and the time(for specify each image)
+    const slicedOriginalName = originalname.slice(0, 30);
+    const currentTime = new Date().toISOString()
+    const finalName = slicedOriginalName + "_" + currentTime;
     // Compress the image using sharp with specified width and height
     const compressedBuffer = await sharp(buffer)
       .resize(width, height, { fit: 'inside' }) // Resize to fit within the specified dimensions
@@ -19,7 +19,7 @@ export const compressAndUploadImage = async ({ buffer, originalname, folderName,
       return new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream({
           resource_type: 'image',
-          public_id: slicedOriginalName,
+          public_id: finalName,
           folder: folderName,
         }, (error, result) => {
           if (error) {
