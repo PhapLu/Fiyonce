@@ -12,6 +12,7 @@ const PostCategorySchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
+            
         },
     },
     {
