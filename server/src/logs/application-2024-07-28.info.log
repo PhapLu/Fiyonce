@@ -1,0 +1,42 @@
+2024-07-28 09:53:25::info::/user/me::933248a9-aaa9-4dff-9e49-df1c088137f5::input-params ::GET::::{}
+2024-07-28 09:53:25::error::/user/me::933248a9-aaa9-4dff-9e49-df1c088137f5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:27::info::/user/me::bb3526f4-6083-4705-a56b-0a7c7f90da57::input-params ::GET::::{}
+2024-07-28 09:53:27::error::/user/me::bb3526f4-6083-4705-a56b-0a7c7f90da57::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:28::info::/movement/readMovements::4160dce8-9075-430a-9f13-f0c058170376::input-params ::GET::::{}
+2024-07-28 09:53:28::error::/movement/readMovements::4160dce8-9075-430a-9f13-f0c058170376::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:28::info::/post/readPost/commission_market::6212cfb5-ceac-405f-adb3-d34a82b3b7bd::input-params ::GET::::{}
+2024-07-28 09:53:28::error::/post/readPost/commission_market::6212cfb5-ceac-405f-adb3-d34a82b3b7bd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:28::info::/recommender/readPopularPosts::46538aff-3688-4e74-9973-936e3a9040f2::input-params ::GET::::{}
+2024-07-28 09:53:28::error::/recommender/readPopularPosts::46538aff-3688-4e74-9973-936e3a9040f2::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:32::info::/movement/readMovements::f9bc035a-fb52-43de-890c-dfe4caf4418a::input-params ::GET::::{}
+2024-07-28 09:53:32::error::/movement/readMovements::f9bc035a-fb52-43de-890c-dfe4caf4418a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:32::info::/user/me::cba69ea5-489f-44f4-b894-c5134d73b334::input-params ::GET::::{}
+2024-07-28 09:53:32::error::/user/me::cba69ea5-489f-44f4-b894-c5134d73b334::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:33::info::/user/me::a1702f58-2152-47af-80ac-dcb1c0e6cd7e::input-params ::GET::::{}
+2024-07-28 09:53:33::error::/user/me::a1702f58-2152-47af-80ac-dcb1c0e6cd7e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:33::info::/movement/readMovements::210fd101-f1ff-4029-a848-18278f3624d8::input-params ::GET::::{}
+2024-07-28 09:53:33::error::/movement/readMovements::210fd101-f1ff-4029-a848-18278f3624d8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:33::info::/recommender/readPopularPosts::403c5665-825a-4e06-8c3c-403a3da7e3d5::input-params ::GET::::{}
+2024-07-28 09:53:33::error::/recommender/readPopularPosts::403c5665-825a-4e06-8c3c-403a3da7e3d5::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:36::info::/order/readOrders::4a4582d1-a892-489b-9877-41e3c42178b6::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-28 09:53:36::error::/order/readOrders::4a4582d1-a892-489b-9877-41e3c42178b6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:36::info::/recommender/readPopularPosts::d962908b-6180-4d61-9b92-6947fb3b6979::input-params ::GET::::{}
+2024-07-28 09:53:36::error::/recommender/readPopularPosts::d962908b-6180-4d61-9b92-6947fb3b6979::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:38::info::/order/readOrders::04202cfe-5515-45a0-9505-9a073f77374a::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-28 09:53:38::error::/order/readOrders::04202cfe-5515-45a0-9505-9a073f77374a::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:39::info::/order/readOrders::588878b1-f8ea-4af9-a872-be58ef3ec09f::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-28 09:53:39::error::/order/readOrders::588878b1-f8ea-4af9-a872-be58ef3ec09f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:52::info::/user/me::9877f97c-e263-4a80-bb7c-c19e1bcfdcef::input-params ::GET::::{}
+2024-07-28 09:53:52::error::/user/me::9877f97c-e263-4a80-bb7c-c19e1bcfdcef::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:52::info::/movement/readMovements::1470e6f1-1bae-424a-93db-a8ce64e993fa::input-params ::GET::::{}
+2024-07-28 09:53:52::error::/movement/readMovements::1470e6f1-1bae-424a-93db-a8ce64e993fa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:53:52::info::/order/readOrders::3a72eccf-c75d-46e7-8c1f-0c51a6a76290::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-28 09:53:52::error::/order/readOrders::3a72eccf-c75d-46e7-8c1f-0c51a6a76290::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:54:45::info::/user/me::498bc205-3197-4a98-8595-5359ac765b78::input-params ::GET::::{}
+2024-07-28 09:54:45::error::/user/me::498bc205-3197-4a98-8595-5359ac765b78::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:54:45::info::/movement/readMovements::9d067eda-bd45-46cd-bb80-5c38307c1d70::input-params ::GET::::{}
+2024-07-28 09:54:45::error::/movement/readMovements::9d067eda-bd45-46cd-bb80-5c38307c1d70::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:54:45::info::/order/readOrders::a00c0bd3-708f-4591-b19d-c2366b007462::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-07-28 09:54:45::error::/order/readOrders::a00c0bd3-708f-4591-b19d-c2366b007462::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-28 09:54:55::info::/user/me::dbf24231-ba19-4406-8b0b-7e41e2de4048::input-params ::GET::::{}
+2024-07-28 09:54:55::error::/user/me::dbf24231-ba19-4406-8b0b-7e41e2de4048::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}

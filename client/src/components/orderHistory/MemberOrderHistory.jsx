@@ -149,6 +149,7 @@ export default function MemberOrderHistory() {
     if (isFetchingMemberOrderHistoryError) {
         return <span>Có lỗi xảy ra: {fetchingMemberOrderHistoryError.message}</span>
     }
+    return;
 
     return (
         <>
