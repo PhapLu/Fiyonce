@@ -19,18 +19,20 @@ import mongoose from "mongoose";
 class OrderService {
     //Order CRUD
     static createOrder = async (userId, req) => {
-        //1. Get type and talentChosenId
+        //1. Get type, talentChosenId and check user
+        const user = await User.findById(userId)
         const body = req.body;
         const { isDirect, talentChosenId, commissionServiceId } = body;
         const commissionService = await CommissionService.findById(
             commissionServiceId
         );
-
+        
         //2. Check isDirect of order
+        let talent = null;
         if (isDirect == 'true') {
             //direct order
-            const talent = await User.findById(talentChosenId);
-            const service = await CommissionService.findById(
+            talent = await User.findById(talentChosenId);
+            const service = await commissionService.findById(
                 commissionServiceId
             );
 
@@ -77,12 +79,33 @@ class OrderService {
             });
             await order.save();
 
+            //5. Send email to user
+            if(order.isDirect == true && talentChosenId !== null){
+                try {
+                    const subject = "";
+                    const subjectMessage = "";
+                    const verificationCode = "";
+                    const message = 'You have a new order from ${user.fullName}. Please check the order details and accept or reject the order';
+                    const template = "announcementTemplate"
+                    await brevoSendEmail(
+                        talent.email,
+                        subject,
+                        subjectMessage,
+                        verificationCode,
+                        message,
+                        template
+                    );
+                } catch (error) {
+                    throw new BadRequestError("Email service error");
+                }
+            }
+
             return {
                 order,
             };
         } catch (error) {
             console.log("Error uploading images or saving order:", error);
-            throw new Error("File upload or database save failed");
+            throw new BadRequestError("File upload or database save failed");
         }
     };
 
@@ -168,9 +191,10 @@ class OrderService {
                 );
             }
 
-            //4. Merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const updatedFields = { ...oldOrder.toObject(), ...req.body };
-
+            //4. Validate body and merge existing service fields with req.body to ensure fields not provided in req.body are retained
+            const { memberId, talentChosenId, ...filteredBody } = req.body;
+            const updatedFields =  { ...oldOrder.toObject(), ...filteredBody };
+            
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
@@ -471,9 +495,6 @@ class OrderService {
                 },
             ]);
 
-            console.log("ARCHIVED ORDER HISTORY");
-            console.log(orders.length);
-
             return { archivedOrderHistory: orders };
         } catch (error) {
             console.error("Error fetching archived orders:", error);
@@ -548,11 +569,24 @@ class OrderService {
         );
 
         //6. Send email to user
-        // try {
-        //     await brevoSendEmail(user.email, 'Order rejected', 'Your order has been rejected by talent')
-        // } catch (error) {
-        //     throw new Error('Email service error')
-        // }
+        const member = await User.findById(order.memberId);
+        try {
+            const subject = "";
+            const subjectMessage = "";
+            const verificationCode = "";
+            const message = 'Your order has been denied by the talent you chose. Please check the order details and try again with another talent.'
+            const template = "announcementTemplate"
+            await brevoSendEmail(
+                member.email,
+                subject,
+                subjectMessage,
+                verificationCode,
+                message,
+                template
+            );
+        } catch (error) {
+            throw new BadRequestError("Email service error");
+        }
 
         return {
             order: deniedOrder,

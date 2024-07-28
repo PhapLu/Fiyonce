@@ -179,7 +179,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                     }
                     {
                         (isOrderOwner || commissionOrder.isDirect === false) && (
-                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowRenderProposals(true) }}>Xem hồ sơ ({commissionOrder.talentsApprovedCount})</button>
+                            <button className="form__submit-btn-item btn btn-2 btn-md" onClick={() => { setShowRenderCommissionOrder(false); setShowRenderProposals(true) }}>Xem hồ sơ ({commissionOrder.talentsApprovedCount || "0"})</button>
                         )
                     }
                     {

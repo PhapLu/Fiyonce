@@ -15,12 +15,15 @@ import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/forma
 import "./RenderProposals.scss"
 import { apiUtils } from "../../../utils/newRequest";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
+import { useConversation } from "../../../contexts/conversation/ConversationContext";
 
 
 export default function RenderProposals({ commissionOrder, setShowRenderProposals, setOverlayVisible }) {
     if (!commissionOrder) {
         return;
     }
+
+    const {setOtherMember} = useConversation();
 
     const [proposal, setProposal] = useState();
     const [showRenderProposal, setShowRenderProposal] = useState(false);
@@ -29,6 +32,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
     const fetchProposals = async () => {
         try {
             const response = await apiUtils.get(`/proposal/readProposals/${commissionOrder._id}`);
+            console.log(response)
             return response.data.metadata.proposals;
             // return [
             //     {
@@ -229,7 +233,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                         <button className="btn btn-2 btn-md" onClick={() => { setProposal(proposal); setShowRenderProposal(true) }}>
                                             Xem hợp đồng
                                         </button>
-                                        <button className="btn btn-3 btn-md">
+                                        <button className="btn btn-3 btn-md" onClick={() => {setOtherMember(proposal?.talentId)}}>
                                             Liên hệ
                                         </button>
                                     </div>

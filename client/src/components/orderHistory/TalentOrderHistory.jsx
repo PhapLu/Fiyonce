@@ -130,6 +130,23 @@ export default function TalentOrderHistory() {
         }
     );
 
+    const unarchiveCommissionOrderMutation = useMutation(
+        async (orderId) => {
+            const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchTalentOrderHistory');
+                queryClient.invalidateQueries('fetchArchivedOrderHistory');
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
+
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (

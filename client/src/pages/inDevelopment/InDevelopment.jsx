@@ -5,7 +5,7 @@ import "../../assets/scss/buttons.scss";
 
 export default function InDevelopment() {
     const calculateTimeLeft = () => {
-        const targetDate = new Date("2024-08-01T00:00:00"); // Replace with your target date
+        const targetDate = new Date("2024-08-09T00:00:00"); // Replace with your target date
         const now = new Date();
         const difference = targetDate - now;
 
