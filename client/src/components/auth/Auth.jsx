@@ -8,7 +8,7 @@ import Register from "../register/Register";
 import RegisterVerification from "../register/RegisterVerification.jsx";
 import SetNewPassword from "../setNewPassword/SetNewPassword.jsx";
 
-import AuthenticationImg from "../../assets/img/authentication-img.png";
+import AuthenticationImg from "../../assets/img/authentication-imgg.png";
 import "./Auth.scss";
 import { useSetting } from "../../contexts/setting/SettingContext.jsx";
 
