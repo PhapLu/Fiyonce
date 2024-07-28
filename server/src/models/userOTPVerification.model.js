@@ -28,6 +28,7 @@ const UserOTPVerificationSchema = new Schema(
         expiredAt: {
             type: Date,
             required: true,
+            
             index: { expires: 1800 }, // Expire after 1800 seconds (30 minutes)
         },
         requestCount: {
