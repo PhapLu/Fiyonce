@@ -21,6 +21,7 @@ import HelpCenter from "./pages/helpCenter/HelpCenter";
 import InMaintainance from "./pages/inMaintainance/InMaintainance";
 import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
+import CommissionServices from "./components/commissionServices/CommissionServices";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
@@ -120,7 +121,7 @@ const routes = [
           },
           {
             path: "/commissionServices",
-            // element: <CommissionServices showCommissionServices={true} />,
+            element: <CommissionServices showCommissionServices={true} />,
           },
 
         ],
