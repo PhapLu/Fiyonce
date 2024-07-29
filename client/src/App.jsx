@@ -14,8 +14,8 @@ import RenderPost from "./components/crudPost/render/RenderPost";
 import ProfileLayout from "./profile/profileLayout/ProfileLayout";
 import Forbidden from "./pages/forbidden/Forbidden";
 import ProfileBasicInfo from "./profile/profileBasicInfo/ProfileBasicInfo.jsx";
-import Explore from "./pages/explore/Explore";
-import ExplorePosts from "./pages/explorePosts/ExplorePosts";
+import ExploreLayout from "./explore/exploreLayout/ExploreLayout.jsx";
+import ExplorePosts from "./explore/explorePosts/ExplorePosts.jsx";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
 import HelpCenter from "./pages/helpCenter/HelpCenter";
 import InMaintainance from "./pages/inMaintainance/InMaintainance";
@@ -42,54 +42,6 @@ const queryClient = new QueryClient();
 
 const routes = [
   {
-    path: "/users/:userId",
-    element: <ProfileLayout />,
-    children: [
-      {
-        path: "/users/:userId/profile-commission-services",
-        element: <ProfileCommissionServices />,
-      },
-      {
-        path: "/users/:userId/profile-posts",
-        element: <ProfilePosts />,
-        children: [
-          {
-            path: "/users/:userId/profile-posts/create",
-            element: (
-              <CreatePost />
-            ),
-          },
-          {
-            path: "/users/:userId/profile-posts/:postId",
-            element: (
-              <RenderPost />
-            ),
-          },
-          {
-            path: "/users/:userId/profile-posts/:postId/update",
-            element: (
-              <UpdatePost />
-            ),
-          },
-          {
-            path: "/users/:userId/profile-posts/:postId/delete",
-            element: (
-              <DeletePost />
-            ),
-          },
-        ]
-      },
-      {
-        path: "/users/:userId/order-history",
-        element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
-      },
-      {
-        path: "/users/:userId/basic-info",
-        element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
-      },
-    ],
-  },
-  {
     path: "/help-center",
     element: <InDevelopment />,
   },
@@ -102,8 +54,56 @@ const routes = [
     element: <Layout />,
     children: [
       {
+        path: "/users/:userId",
+        element: <ProfileLayout />,
+        children: [
+          {
+            path: "/users/:userId/profile-commission-services",
+            element: <ProfileCommissionServices />,
+          },
+          {
+            path: "/users/:userId/profile-posts",
+            element: <ProfilePosts />,
+            children: [
+              {
+                path: "/users/:userId/profile-posts/create",
+                element: (
+                  <CreatePost />
+                ),
+              },
+              {
+                path: "/users/:userId/profile-posts/:postId",
+                element: (
+                  <RenderPost />
+                ),
+              },
+              {
+                path: "/users/:userId/profile-posts/:postId/update",
+                element: (
+                  <UpdatePost />
+                ),
+              },
+              {
+                path: "/users/:userId/profile-posts/:postId/delete",
+                element: (
+                  <DeletePost />
+                ),
+              },
+            ]
+          },
+          {
+            path: "/users/:userId/order-history",
+            element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
+          },
+          {
+            path: "/users/:userId/basic-info",
+            element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
+          },
+        ],
+      },
+      {
         path: "/",
-        element: <Explore />,
+        element: <ExploreLayout />,
         children: [
           {
             path: "/",

@@ -61,11 +61,9 @@ export default function Register() {
 
         // Validate fullname
         if (!isFilled(inputs.fullName)) {
-            errors.fullName = 'Vui lòng nhập họ và tên';
-        } else if (!minLength(inputs.fullName, 6)) {
-            errors.fullName = 'Họ và tên phải trên 6 kí tự';
-        } else if (hasSymbol(inputs.fullName)) {
-            errors.fullName = 'Tên không được chứa kí tự đặc biệt';
+            errors.fullName = 'Vui lòng nhập họ tên';
+        } else if (!minLength(inputs.fullName, 4)) {
+            errors.fullName = 'Họ tên phải trên 4 kí tự';
         }
         return errors;
     };
@@ -126,6 +124,7 @@ export default function Register() {
 
                         <div className="form-field ">
                             <label htmlFor="password" className="form-field__label">Mật khẩu</label>
+                            <span className="form-field__annotation">Mật khẩu phải chứa ít nhất 6 kí tự, 1 số và 1 kí tự đặc biệt</span>
                             <div className="form-field with-ic flex-justify-space-between">
                                 <input type={isPasswordVisible ? "text" : "password"} id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu" autoComplete="on" />
                                 {isPasswordVisible ? (
@@ -163,7 +162,7 @@ export default function Register() {
                         </div>
 
                         <div className="form-field">
-                            <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
+                            <label htmlFor="fullName" className="form-field__label">Họ tên</label>
                             <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" autoComplete="on" />
                             {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                         </div>

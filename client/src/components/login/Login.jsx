@@ -1,5 +1,6 @@
 // Imports
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Components
 import { useAuth } from "../../contexts/auth/AuthContext";
@@ -141,6 +142,8 @@ export default function Login() {
             </p>
 
             <br />
+
+            <Link to="/v1/api/auth/google">Login with GG</Link>
 
             {/* Other login options: Google or Facebook */}
             {/* <ul className="login-option-container">

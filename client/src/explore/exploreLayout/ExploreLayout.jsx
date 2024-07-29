@@ -12,7 +12,7 @@ import BackToTop from '../../components/backToTop/BackToTop.jsx';
 import { formatNumber } from "../../utils/formatter.js";
 
 // Styling
-import "./Explore.scss";
+import "./ExploreLayout.scss";
 import { useMovement } from '../../contexts/movement/MovementContext.jsx';
 
 export default function Explore() {
