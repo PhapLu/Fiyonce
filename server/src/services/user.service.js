@@ -28,9 +28,9 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId);
+        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar");
         if (!userProfile)
-            throw new NotFoundError("User not found").select("-password");
+            throw new NotFoundError("User not found");
         
         //2. Update views
         userProfile.views += 1;

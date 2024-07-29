@@ -270,8 +270,9 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     return (
         <div className="sidebar">
+            <img src={profileInfo.bg || "/uploads/pastal_system_default_background.png"} alt="" className="sidebar__bg desktop-hide" />
+
             <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
-                <img src={"/uploads/pastal_system_default_background.png"} alt="" className="sidebar__avatar__bg desktop-hide" />
                 <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
                 {
                     isProfileOwner && (<>
@@ -466,6 +467,26 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <br />
 
                     <div className="sidebar__follow">
+                        <div className="sidebar__follow__follow-container">
+                            {/* //  <img src="1.png" style="position:absolute; top:0px; left:10px; z-index:0" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:20px; z-index:1" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:30px; z-index:2" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:40px; z-index:3" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:50px; z-index:4" />
+                        */}
+                            {
+                                profileInfo?.followers?.map((follower, index) => {
+                                    return (
+                                        <div index={index} className="user sm sidebar__follow__follow-item">
+                                            <div className="user--left">
+                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+
                         <span className="sidebar__follow__follower">{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
                         {" " + "-" + " "}
                         <span className="sidebar__follow__following">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>

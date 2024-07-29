@@ -119,7 +119,6 @@ const routes = [
         path: "/commissionServices",
         element: <CommissionServices showCommissionServices={true} />,
       },
-
     ],
   },
   {
