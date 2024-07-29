@@ -57,18 +57,17 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         return null;
     }
 
-    useEffect(() => {
-        if (profileInfo) {
-            setInputs(profileInfo);
-            setSocialLinks(profileInfo.socialLinks || []);
-        }
-    }, [profileInfo]);
+    // useEffect(() => {
+    //     if (profileInfo) {
+    //         setInputs(profileInfo);
+    //         setSocialLinks(profileInfo.socialLinks || []);
+    //     }
+    // }, [userId]);
 
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        console.log(inputs)
 
         // Update input value & clear error
         setInputs((values) => ({ ...values, [name]: value }));
@@ -255,14 +254,32 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setShowRenderConversation(true)
     }
 
+    const [pronoun, setPronoun] = useState("");
+    const [customPronoun, setCustomPronoun] = useState("");
+
+    const handlePronounChange = (e) => {
+        setPronoun(e.target.value);
+        if (e.target.value !== "custom") {
+            setCustomPronoun(""); // Clear custom pronoun if not selected
+        }
+    };
+
+    const handleCustomPronounChange = (e) => {
+        setCustomPronoun(e.target.value);
+    };
+
     return (
         <div className="sidebar">
             <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
                 <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
-                <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 sidebar__avatar__ic">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                </svg>
-                <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+                {
+                    isProfileOwner && (<>
+                        <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 sidebar__avatar__ic">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+                    </>)
+                }
             </div>
 
             {openEditProfileForm ? (
@@ -293,6 +310,31 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
 
                     <div className="form-field">
+                        <label htmlFor="pronoun" className="form-field__label">Pronoun</label>
+                        <select
+                            name="movementId"
+                            value={pronoun || ""}
+                            onChange={handlePronounChange}
+                            className="form-field__input"
+                        >
+                            <option value="">Không đề cập</option>
+                            <option value="him">Nam | Anh ấy</option>
+                            <option value="her">Nữ  | Cô ấy</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        {pronoun === "custom" && (
+                            <input
+                                type="text"
+                                value={customPronoun}
+                                onChange={handleCustomPronounChange}
+                                className="form-field__input mt-8"
+                                placeholder="Bạn muốn được gọi là?"
+                            />
+                        )}
+                        {errors.pronoun && <span className="form-field__error">{errors.pronoun}</span>}
+                    </div>
+
+                    <div className="form-field">
                         <label htmlFor="address" className="form-field__label">Địa chỉ</label>
                         <input
                             type="text"
@@ -305,6 +347,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         />
                         {errors.address && <span className="form-field__error">{errors.address}</span>}
                     </div>
+
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
                         <textarea type="text" id="bio" name="bio" value={inputs?.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)" />

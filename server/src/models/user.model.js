@@ -32,7 +32,12 @@ const UserSchema = new Schema(
             type: String,
             maxlength: [200, "Bio cannot exceed 200 characters"],
         },
-        gender: { type: String, enum: ["male", "female", "other"] },
+        profileStatus: {
+            icon: { type: String, default: "" },
+            title: { type: String, default: "" },
+            expireAt: { type: Date, default: null },
+        },
+        pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
         views: { type: Number, default: 0 },
@@ -45,16 +50,11 @@ const UserSchema = new Schema(
         },
         followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
         following: [{ type: Schema.Types.ObjectId, ref: "User" }],
-        // rating: {
-        //   type: Number,
-        //   default: 5,
-        //   min: [0, "Rating cannot be negative"],
-        //   max: [5, "Rating cannot exceed 5"]
-        // },
         accessToken: { type: String },
         qrCode: { type: String }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
+        timeZone: {type: String, default: ""},
     },
     {
         timestamps: true,

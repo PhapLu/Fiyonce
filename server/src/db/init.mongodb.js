@@ -3,9 +3,7 @@ dotenv.config()
 
 import mongoose, { mongo } from 'mongoose'
 import { countConnect } from '../helpers/check.connect.js'
-import config from '../configs/config.mongodb.js'
-// const {host, name, port} = config.db
-const connectString = process.env.MONGODB_CONNECTION_STRING 
+const connectString = process.env.NODE_ENV=='production' ? process.env.MONGODB_CONNECTION_STRING : process.env.MONGODB_LOCAL_CONNECTION_STRING
 
 class Database {
     constructor() {

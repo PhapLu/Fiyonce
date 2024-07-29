@@ -1,0 +1,211 @@
+2024-07-29 13:01:55::error::/user/me::b160fb16-2a3f-4252-b70b-6307b489d83d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:01:55::error::/movement/readMovements::faf1c87d-7f17-44c1-8a70-bff150c315b7::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:01:55::error::/recommender/readPopularPosts::3a6dd6fa-dedf-4a65-b369-2af69016fd9d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:09::error::/movement/readMovements::3aff3dc4-2e88-4d5b-895b-7ead1d98f641::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:09::error::/user/me::a6e65977-dd80-400e-a951-0a7c8f7c290e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:10::error::/user/me::3b2c4c96-2908-41a4-b3dc-a20159ee927f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:10::error::/movement/readMovements::6f80e44d-3e61-43c4-a016-f2936aa3c925::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:10::error::/recommender/readPopularPosts::39db3733-760d-4b09-a7e2-349da0e29c11::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:22::error::/movement/readMovements::ab1405aa-fafb-49ee-b3c1-db50fbc93771::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:22::error::/user/me::ecb6f9c5-9018-402a-8abe-8a2203d06e03::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:23::error::/user/me::f2c4f3b5-db54-4010-bfbe-4331a16f0b51::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:23::error::/movement/readMovements::9a1b4ab1-fbf3-4f90-bf7c-df72b9b254f6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:24::error::/recommender/readPopularPosts::a6cebfe5-2b31-4d7a-b63c-37647dbb3b67::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:36::error::/user/me::d8b60aa1-d234-472c-89c0-34f884d3726d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:36::error::/movement/readMovements::8894f630-bf26-4661-abd0-1a13c00cb1cb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:36::error::/recommender/readPopularPosts::9d080787-b9fa-45b8-9534-74e163eb7ff0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:43::error::/user/me::4912333d-0515-44ea-b26c-2157877056f3::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:43::error::/movement/readMovements::30697270-e479-4780-83f0-4d4e1e198cd8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:43::error::/recommender/readPopularPosts::3b7d3399-a626-4395-ac80-02616980f4c4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:52::error::/user/me::011d2e2b-1043-4921-b475-f854e7b86aa6::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:52::error::/movement/readMovements::c99d52b5-b8a9-4ee2-9d88-fbe974ccdcda::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:02:52::error::/recommender/readPopularPosts::f9f2dc38-e76e-4fa9-a937-bbe899d2ccdd::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:02::error::/user/me::e6ce3197-cb16-46da-8799-85c584cf6553::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:02::error::/movement/readMovements::6d385328-7c21-4c8c-8b87-160547e9f664::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:02::error::/recommender/readPopularPosts::3d9190f3-03f9-4e3b-91d7-0791774494b1::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:03::error::/user/me::443a3d86-0829-45bf-99eb-544e847204e0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:03::error::/movement/readMovements::eed76402-69a5-4a76-9ee8-5f24cafa175f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:03::error::/recommender/readPopularPosts::49c157f2-9fc7-4d94-bef1-af434bce0402::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:03::error::/user/me::bfe32847-162c-402a-a358-9e1ffe6898c9::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:03::error::/movement/readMovements::d4cb83ef-4c3a-4b73-946a-fb06c3ac51ed::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:03::error::/recommender/readPopularPosts::c480f12f-74f8-4bb4-9553-d8e17c03c85d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:25::error::/user/me::a0e1c87c-7144-48bb-8986-e1af85017199::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-29 13:03:26::error::/v1/api/user/me::4776eb8e-170e-4f6f-abfd-dd6a528c63d7::404 - 1ms - Response: {"status":404,"now":1722233006906}::{"message":"User not found"}
+2024-07-29 13:03:28::error::/v1/api/user/me::0e8e52c4-75a0-4fea-8d90-9f5745103d09::404 - 0ms - Response: {"status":404,"now":1722233008568}::{"message":"User not found"}
+2024-07-29 13:03:29::error::/v1/api/user/me::b9c4bc70-8f71-4448-90ae-896ac0da6a91::404 - 0ms - Response: {"status":404,"now":1722233009838}::{"message":"User not found"}
+2024-07-29 13:03:36::error::/v1/api/user/me::8854cddd-2c59-4d21-ae52-0f997e244a70::404 - 0ms - Response: {"status":404,"now":1722233016572}::{"message":"User not found"}
+2024-07-29 13:03:37::error::/v1/api/user/me::bde34542-7930-43f6-b8d9-15f787e03950::404 - 0ms - Response: {"status":404,"now":1722233017914}::{"message":"User not found"}
+2024-07-29 13:03:44::error::/v1/api/user/me::1cd66c5f-77a8-49c1-bd9d-e05b93e875d5::404 - 1ms - Response: {"status":404,"now":1722233024587}::{"message":"User not found"}
+2024-07-29 13:03:45::error::/v1/api/user/me::65b3d079-97a0-448a-a2aa-1bd9c323d225::404 - 1ms - Response: {"status":404,"now":1722233025404}::{"message":"User not found"}
+2024-07-29 13:04:51::error::/v1/api/user/me::b5d237eb-db45-4eda-a11e-2205f1e48e21::404 - 0ms - Response: {"status":404,"now":1722233091752}::{"message":"User not found"}
+2024-07-29 13:04:52::error::/v1/api/user/me::4c5e15ee-1e18-4a35-b657-095b8d5e53fb::404 - 1ms - Response: {"status":404,"now":1722233092685}::{"message":"User not found"}
+2024-07-29 13:05:04::error::/v1/api/user/me::cbeaa9c0-d98f-4070-9ab2-47f343ccf1aa::404 - 1ms - Response: {"status":404,"now":1722233104744}::{"message":"User not found"}
+2024-07-29 13:05:05::error::/v1/api/user/me::2e6fd699-8214-4cb1-8bad-02c2a8766ea1::404 - 0ms - Response: {"status":404,"now":1722233105797}::{"message":"User not found"}
+2024-07-29 13:06:12::error::/v1/api/user/me::406bbbea-3f69-4a21-8f33-ee6cc7405fce::404 - 1ms - Response: {"status":404,"now":1722233172652}::{"message":"User not found"}
+2024-07-29 13:06:13::error::/v1/api/user/me::4b087a29-f45b-4468-8873-d01e2ade044b::404 - 1ms - Response: {"status":404,"now":1722233173481}::{"message":"User not found"}
+2024-07-29 13:06:13::error::/v1/api/user/me::0c41a8d4-046f-42c6-a435-d150cf6d3107::404 - 0ms - Response: {"status":404,"now":1722233173560}::{"message":"User not found"}
+2024-07-29 13:09:03::error::/v1/api/user/me::38288f89-7bd6-4dea-a01c-bceb9275d636::404 - 0ms - Response: {"status":404,"now":1722233343090}::{"message":"User not found"}
+2024-07-29 13:09:11::error::/v1/api/user/me::c3e039ef-f461-4028-98d0-04d71970ecbe::404 - 0ms - Response: {"status":404,"now":1722233351786}::{"message":"User not found"}
+2024-07-29 13:11:48::error::/v1/api/user/me::82bd726a-152c-42ba-a7ca-ba5bd87a7b24::404 - 1ms - Response: {"status":404,"now":1722233508546}::{"message":"User not found"}
+2024-07-29 13:11:52::error::/v1/api/user/me::110a3069-beb2-4bc1-b8a6-8374aa030364::404 - 0ms - Response: {"status":404,"now":1722233512765}::{"message":"User not found"}
+2024-07-29 13:11:53::error::/v1/api/user/me::4de0e68c-dc86-4b41-b542-bdc759cacb50::404 - 0ms - Response: {"status":404,"now":1722233513653}::{"message":"User not found"}
+2024-07-29 13:11:54::error::/v1/api/user/me::1120623f-65ec-4173-815f-ed916b4b7e96::404 - 0ms - Response: {"status":404,"now":1722233514832}::{"message":"User not found"}
+2024-07-29 13:11:57::error::/v1/api/user/me::c98f2a87-666e-4025-93b3-036cf3a40365::404 - 0ms - Response: {"status":404,"now":1722233517500}::{"message":"User not found"}
+2024-07-29 13:12:37::error::/v1/api/user/me::013af479-4717-46cc-9226-8fc1d0f8ba67::404 - 0ms - Response: {"status":404,"now":1722233557390}::{"message":"User not found"}
+2024-07-29 13:12:39::error::/v1/api/user/me::f0e63fdd-c719-4abe-ac7f-ae525ee34bc3::404 - 0ms - Response: {"status":404,"now":1722233559482}::{"message":"User not found"}
+2024-07-29 13:13:04::error::/v1/api/user/me::0ef02239-2c69-4c05-ae60-aaf934f99653::404 - 0ms - Response: {"status":404,"now":1722233584748}::{"message":"User not found"}
+2024-07-29 13:15:49::error::/v1/api/user/me::38af1ab2-651c-4eaf-aaf2-cedb7757d2f3::404 - 0ms - Response: {"status":404,"now":1722233749178}::{"message":"User not found"}
+2024-07-29 13:15:59::error::/v1/api/user/me::bc5d2ca4-f5f4-4dab-a702-61e9b176239e::404 - 1ms - Response: {"status":404,"now":1722233759703}::{"message":"User not found"}
+2024-07-29 13:18:26::error::/v1/api/user/me::d4c2d877-7036-4098-939f-d17480978701::404 - 0ms - Response: {"status":404,"now":1722233906667}::{"message":"User not found"}
+2024-07-29 13:18:29::error::/v1/api/user/me::0f5890c7-ad75-4644-ae3c-3e3f2d618cb6::404 - 0ms - Response: {"status":404,"now":1722233909991}::{"message":"User not found"}
+2024-07-29 13:19:08::error::/v1/api/user/me::8a34b741-1acb-46cd-bbe7-606018d1053c::404 - 0ms - Response: {"status":404,"now":1722233948161}::{"message":"User not found"}
+2024-07-29 13:19:23::error::/v1/api/user/me::abc9caec-1e21-4d01-bafe-b7c835e6f58a::404 - 0ms - Response: {"status":404,"now":1722233963123}::{"message":"User not found"}
+2024-07-29 13:19:46::error::/v1/api/user/me::ec7560c6-f52d-4588-9a4e-faf9589e44b4::404 - 1ms - Response: {"status":404,"now":1722233986039}::{"message":"User not found"}
+2024-07-29 13:47:57::error::/v1/api/user/me::deb938b7-7230-447b-9b15-d193ba5df33d::404 - 0ms - Response: {"status":404,"now":1722235677889}::{"message":"User not found"}
+2024-07-29 13:49:58::error::/v1/api/user/me::36436423-c0c2-4961-b78f-d67b38620bb4::404 - 0ms - Response: {"status":404,"now":1722235798010}::{"message":"User not found"}
+2024-07-29 13:50:32::error::/v1/api/user/me::cb1f9792-2169-40e7-bbf1-1d61eb0ee550::404 - 0ms - Response: {"status":404,"now":1722235832722}::{"message":"User not found"}
+2024-07-29 13:50:42::error::/v1/api/user/me::23874c85-1407-4bde-9d7d-4e19e775f810::404 - 0ms - Response: {"status":404,"now":1722235842671}::{"message":"User not found"}
+2024-07-29 13:51:00::error::/v1/api/user/me::d6db457e-fa1c-40d7-8c8b-95b6c7bf36bc::404 - 1ms - Response: {"status":404,"now":1722235860717}::{"message":"User not found"}
+2024-07-29 13:51:04::error::/v1/api/user/me::842ab269-f5af-4acd-a4ed-cd8ff70c287a::404 - 1ms - Response: {"status":404,"now":1722235864935}::{"message":"User not found"}
+2024-07-29 13:51:28::error::/v1/api/user/me::79c83f8a-e7c0-469d-9131-152ac2fe8c7a::404 - 0ms - Response: {"status":404,"now":1722235888942}::{"message":"User not found"}
+2024-07-29 13:51:30::error::/v1/api/user/me::c94be8cc-589f-41ba-83bf-12ef60eb76f3::404 - 0ms - Response: {"status":404,"now":1722235890364}::{"message":"User not found"}
+2024-07-29 13:52:25::error::/v1/api/user/me::6d249329-218c-46f0-bedf-232cd377b880::404 - 0ms - Response: {"status":404,"now":1722235945809}::{"message":"User not found"}
+2024-07-29 13:52:40::error::/v1/api/user/me::a77b11ea-c769-4999-ae02-c1a9ef5c7cf5::404 - 0ms - Response: {"status":404,"now":1722235960017}::{"message":"User not found"}
+2024-07-29 13:52:50::error::/v1/api/user/me::9a4b71d8-5da1-4349-87bc-e720c0b1d587::404 - 0ms - Response: {"status":404,"now":1722235970291}::{"message":"User not found"}
+2024-07-29 13:53:11::error::/v1/api/user/me::272473a0-c233-4194-8558-ae736a555ce7::404 - 0ms - Response: {"status":404,"now":1722235991817}::{"message":"User not found"}
+2024-07-29 13:55:20::error::/v1/api/user/me::fc86133f-2173-4f66-af02-38ea1c804865::404 - 0ms - Response: {"status":404,"now":1722236120618}::{"message":"User not found"}
+2024-07-29 13:56:09::error::/v1/api/user/me::dea637ae-9f73-4799-ac03-b6c5995bf0ea::404 - 0ms - Response: {"status":404,"now":1722236169746}::{"message":"User not found"}
+2024-07-29 13:56:30::error::/v1/api/order/readMemberOrderHistory::f4cee8c1-3eaa-40b7-980a-b31499a1b6f1::404 - 0ms - Response: {"status":404,"now":1722236190649}::{"message":"User not found!"}
+2024-07-29 13:56:37::error::/v1/api/order/readMemberOrderHistory::e919c7fb-d3af-4648-9700-4064388c0f88::404 - 1ms - Response: {"status":404,"now":1722236197400}::{"message":"User not found!"}
+2024-07-29 13:57:31::error::/v1/api/order/readMemberOrderHistory::559be241-666e-4af5-a4bf-7d8600dff3f0::404 - 0ms - Response: {"status":404,"now":1722236251381}::{"message":"User not found!"}
+2024-07-29 13:57:32::error::/v1/api/order/readMemberOrderHistory::520a6028-4bae-4172-b7c3-d4badc79018b::404 - 0ms - Response: {"status":404,"now":1722236252339}::{"message":"User not found!"}
+2024-07-29 13:57:34::error::/v1/api/user/me::8ec7eaa8-fc24-4f3f-bfd8-c8649ecd0892::404 - 0ms - Response: {"status":404,"now":1722236254143}::{"message":"User not found"}
+2024-07-29 13:57:37::error::/v1/api/order/readMemberOrderHistory::101ac9f4-397d-4b3c-bc0f-937a4ed1cb55::404 - 0ms - Response: {"status":404,"now":1722236257829}::{"message":"User not found!"}
+2024-07-29 14:05:06::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::06b385f5-4d39-477a-b91d-4013897facbc::401 - 0ms - Response: {"status":401,"now":1722236706686}::{"message":"You can only update your account"}
+2024-07-29 14:05:36::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::36ec0d52-cd3d-4aa8-981d-ed710c5ca2c2::401 - 0ms - Response: {"status":401,"now":1722236736632}::{"message":"You can only update your account"}
+2024-07-29 14:06:22::error::/v1/api/user/me::3414e16d-1a11-4291-ae93-e7dd49ede3e4::404 - 0ms - Response: {"status":404,"now":1722236782608}::{"message":"User not found"}
+2024-07-29 14:06:26::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::741678eb-cbe5-4d90-855d-9075e2f08ee5::401 - 0ms - Response: {"status":401,"now":1722236786699}::{"message":"You can only update your account"}
+2024-07-29 14:08:38::error::/v1/api/user/me::dd5356ed-60c1-47d0-b365-26272395eed1::404 - 0ms - Response: {"status":404,"now":1722236918509}::{"message":"User not found"}
+2024-07-29 14:08:39::error::/v1/api/auth/users/login::01a3470d-5f56-49e0-89f8-46fa4da7abd2::undefined - NaNms - Response: {}::{"message":"foundUser.save is not a function"}
+2024-07-29 14:08:59::error::/v1/api/user/me::d55e4fa0-94ec-4e7f-b3bd-7f86fce13b78::404 - 2ms - Response: {"status":404,"now":1722236939753}::{"message":"User not found"}
+2024-07-29 14:09:00::error::/v1/api/auth/users/login::ad1d8060-92e2-487a-9ee0-c888cef24cf6::undefined - NaNms - Response: {}::{"message":"foundUser.save is not a function"}
+2024-07-29 14:09:24::error::/v1/api/user/me::0fe1b3a9-361a-4912-b225-0e2b78fb69f7::404 - 2ms - Response: {"status":404,"now":1722236964742}::{"message":"User not found"}
+2024-07-29 14:09:25::error::/v1/api/auth/users/login::c3488ebd-e013-4faf-9a2c-66f0addb0aea::undefined - NaNms - Response: {}::{"message":"foundUser.save is not a function"}
+2024-07-29 14:09:37::error::/v1/api/user/me::b9a5c090-79f9-45af-87d5-dc42fa35cef6::404 - 2ms - Response: {"status":404,"now":1722236977959}::{"message":"User not found"}
+2024-07-29 14:09:42::error::/v1/api/user/me::21f91358-f3f4-41f9-9e90-fc66710c3598::404 - 1ms - Response: {"status":404,"now":1722236982017}::{"message":"User not found"}
+2024-07-29 14:09:44::error::/v1/api/user/me::0a3a0943-4066-4ae8-9140-e1c4e73ca6a5::404 - 1ms - Response: {"status":404,"now":1722236984150}::{"message":"User not found"}
+2024-07-29 14:09:44::error::/v1/api/user/me::518e025d-36cd-4b23-ae60-8143eef2ee00::404 - 0ms - Response: {"status":404,"now":1722236984482}::{"message":"User not found"}
+2024-07-29 14:09:48::error::/v1/api/user/readUserProfile/undefined::604a0260-ca4a-4ac8-a629-cd7f46f86558::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-07-29 14:09:55::error::/v1/api/user/readUserProfile/undefined::23fcb32e-75dc-46dd-b33f-b245c4e336d0::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-07-29 14:09:57::error::/v1/api/user/me::21efe9ce-b622-490b-b577-f027d70eca5e::404 - 0ms - Response: {"status":404,"now":1722236997456}::{"message":"User not found"}
+2024-07-29 14:09:58::error::/v1/api/user/me::a23f63f4-1cb5-49e2-875d-765cd0bee1c6::404 - 0ms - Response: {"status":404,"now":1722236998986}::{"message":"User not found"}
+2024-07-29 14:10:24::error::/v1/api/user/me::8f968e6f-2e74-43b2-861e-fc3bcdc294f4::404 - 1ms - Response: {"status":404,"now":1722237024507}::{"message":"User not found"}
+2024-07-29 14:10:28::error::/v1/api/order/readMemberOrderHistory::4381f1b3-d446-48cf-ad9f-b32c43e667c9::404 - 1ms - Response: {"status":404,"now":1722237028434}::{"message":"User not found!"}
+2024-07-29 14:10:32::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::922463e0-a6d4-46ac-be15-ffc3c94bda26::401 - 0ms - Response: {"status":401,"now":1722237032196}::{"message":"You can only update your account"}
+2024-07-29 14:10:54::error::/v1/api/order/readMemberOrderHistory::887cd4d1-89be-4700-b754-08cdcad14c37::401 - 0ms - Response: {"status":401,"now":1722237054785}::{"message":"You are not authenticated!"}
+2024-07-29 14:10:55::error::/v1/api/user/me::2e7c43e5-264f-4775-9499-fa0551c83bcc::403 - 1ms - Response: {"status":403,"now":1722237055078}::{"message":"Access token missing"}
+2024-07-29 14:10:58::error::/v1/api/order/readMemberOrderHistory::61b09ff8-aaeb-4ceb-b8d3-b5ba1084787c::401 - 0ms - Response: {"status":401,"now":1722237058150}::{"message":"You are not authenticated!"}
+2024-07-29 14:11:02::error::/v1/api/order/readMemberOrderHistory::d6e5958f-f1d5-410c-8c6d-dd5352349e99::401 - 0ms - Response: {"status":401,"now":1722237062314}::{"message":"You are not authenticated!"}
+2024-07-29 14:11:04::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::1ca95a85-3bb5-4a11-af64-91803986d506::401 - 0ms - Response: {"status":401,"now":1722237064298}::{"message":"You are not authenticated!"}
+2024-07-29 14:11:29::error::/v1/api/order/readMemberOrderHistory::11de628f-9475-4b37-bdd4-cc1aee18f2bf::401 - 0ms - Response: {"status":401,"now":1722237089475}::{"message":"You are not authenticated!"}
+2024-07-29 14:11:29::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::fd4a07bf-235f-428a-881d-58c890dbefc0::401 - 1ms - Response: {"status":401,"now":1722237089592}::{"message":"You are not authenticated!"}
+2024-07-29 14:11:50::error::/v1/api/order/readMemberOrderHistory::022051d1-b86a-4626-b100-4b5dfe7f4720::401 - 0ms - Response: {"status":401,"now":1722237110650}::{"message":"You are not authenticated!"}
+2024-07-29 14:11:50::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::5f227253-57b4-4915-a380-3fd8116573d4::401 - 0ms - Response: {"status":401,"now":1722237110799}::{"message":"You are not authenticated!"}
+2024-07-29 14:12:02::error::/v1/api/order/readMemberOrderHistory::81759686-b366-4b90-b882-82d6417ec3d2::401 - 0ms - Response: {"status":401,"now":1722237122217}::{"message":"You are not authenticated!"}
+2024-07-29 14:12:02::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::2b8eff2c-51c0-4312-abec-8737cd656870::401 - 0ms - Response: {"status":401,"now":1722237122366}::{"message":"You are not authenticated!"}
+2024-07-29 14:12:47::error::/v1/api/order/readMemberOrderHistory::8c50d3b9-53ef-4cfb-9e64-8e748339bc37::401 - 1ms - Response: {"status":401,"now":1722237167661}::{"message":"You are not authenticated!"}
+2024-07-29 14:13:00::error::/v1/api/order/readMemberOrderHistory::dc6bffea-439b-4c02-a232-3a40fda4b3e3::401 - 1ms - Response: {"status":401,"now":1722237180841}::{"message":"You are not authenticated!"}
+2024-07-29 14:13:02::error::/v1/api/user/me::297090d6-18d0-4ea9-9330-7ff7b4f8a23d::403 - 1ms - Response: {"status":403,"now":1722237182219}::{"message":"Access token missing"}
+2024-07-29 14:13:10::error::/v1/api/user/me::56faf48c-af76-4f6a-89ee-1c3bb6652072::403 - 1ms - Response: {"status":403,"now":1722237190465}::{"message":"Access token missing"}
+2024-07-29 14:13:10::error::/v1/api/order/readMemberOrderHistory::70e80ac4-e3e1-44ce-b96a-1ca68c7eeef0::401 - 0ms - Response: {"status":401,"now":1722237190825}::{"message":"You are not authenticated!"}
+2024-07-29 14:13:20::error::/v1/api/order/readMemberOrderHistory::2948a241-7086-4b77-96aa-6886bc92e051::401 - 0ms - Response: {"status":401,"now":1722237200801}::{"message":"You are not authenticated!"}
+2024-07-29 14:13:20::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::cd94bc9c-b543-4421-b004-f2bdf5736068::401 - 0ms - Response: {"status":401,"now":1722237200905}::{"message":"You are not authenticated!"}
+2024-07-29 14:14:57::error::/v1/api/order/readMemberOrderHistory::abfa63e0-b3b9-4efd-9eb7-85b7d94e4444::401 - 1ms - Response: {"status":401,"now":1722237297634}::{"message":"You are not authenticated!"}
+2024-07-29 14:14:58::error::/v1/api/user/me::71a07182-afe6-402c-9b4d-4dd785b83bed::403 - 0ms - Response: {"status":403,"now":1722237298032}::{"message":"Access token missing"}
+2024-07-29 14:15:03::error::/v1/api/order/readMemberOrderHistory::147c8856-502b-47db-a036-81d078298a9d::401 - 0ms - Response: {"status":401,"now":1722237303570}::{"message":"You are not authenticated!"}
+2024-07-29 14:15:14::error::/v1/api/order/readMemberOrderHistory::cff81b50-35ef-4fad-934e-e8b888360c9a::401 - 0ms - Response: {"status":401,"now":1722237314930}::{"message":"You are not authenticated!"}
+2024-07-29 14:15:17::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::cefd04bd-231d-486a-833b-4dfda6637aaf::401 - 1ms - Response: {"status":401,"now":1722237317234}::{"message":"You are not authenticated!"}
+2024-07-29 14:16:42::error::/v1/api/user/me::f5b15c40-3f37-4f1f-adb7-6e0e0c5f371c::403 - 1ms - Response: {"status":403,"now":1722237402469}::{"message":"Access token missing"}
+2024-07-29 14:16:48::error::/v1/api/order/readMemberOrderHistory::c4fad95c-eb33-4178-967f-29f0bd75177d::401 - 2ms - Response: {"status":401,"now":1722237408417}::{"message":"You are not authenticated!"}
+2024-07-29 14:17:30::error::/v1/api/order/readMemberOrderHistory::c7d6026c-9795-49b2-b07a-e5d38bf63000::401 - 1ms - Response: {"status":401,"now":1722237450706}::{"message":"You are not authenticated!"}
+2024-07-29 14:19:31::error::/v1/api/order/readMemberOrderHistory::e6538c25-f2cd-4f77-b6f2-c45b02022528::401 - 1ms - Response: {"status":401,"now":1722237571614}::{"message":"You are not authenticated!"}
+2024-07-29 14:19:32::error::/v1/api/user/me::9a2faf41-958d-4805-bbd8-de0e8f0f76f1::403 - 1ms - Response: {"status":403,"now":1722237572124}::{"message":"Access token missing"}
+2024-07-29 14:19:35::error::/v1/api/order/readMemberOrderHistory::f0984083-196d-4af6-b582-bf35b3d229be::401 - 1ms - Response: {"status":401,"now":1722237575172}::{"message":"You are not authenticated!"}
+2024-07-29 14:19:58::error::/v1/api/order/readMemberOrderHistory::b3c5fc5e-4200-407b-9b46-e9bbe432b1be::401 - 0ms - Response: {"status":401,"now":1722237598420}::{"message":"You are not authenticated!"}
+2024-07-29 14:19:59::error::/v1/api/user/me::e2cc1782-a95a-4bf1-9afb-39fdbe13d11b::403 - 1ms - Response: {"status":403,"now":1722237599635}::{"message":"Access token missing"}
+2024-07-29 14:20:01::error::/v1/api/order/readMemberOrderHistory::3d1897fe-938c-406d-9709-d50980490662::401 - 0ms - Response: {"status":401,"now":1722237601537}::{"message":"You are not authenticated!"}
+2024-07-29 14:20:27::error::/v1/api/order/readMemberOrderHistory::3c69fd1f-f303-4a28-8996-cd7438dae720::401 - 1ms - Response: {"status":401,"now":1722237627118}::{"message":"You are not authenticated!"}
+2024-07-29 14:20:27::error::/v1/api/user/me::49671982-add3-4bcf-8a2b-30d75ce1edc7::403 - 1ms - Response: {"status":403,"now":1722237627643}::{"message":"Access token missing"}
+2024-07-29 14:20:30::error::/v1/api/order/readMemberOrderHistory::e8a35408-1c33-47ae-8846-85a06c9055aa::401 - 0ms - Response: {"status":401,"now":1722237630202}::{"message":"You are not authenticated!"}
+2024-07-29 14:20:32::error::/v1/api/user/me::07b874e0-c4de-492d-ab37-e2f798caddfa::403 - 1ms - Response: {"status":403,"now":1722237632271}::{"message":"Access token missing"}
+2024-07-29 14:20:34::error::/v1/api/order/readMemberOrderHistory::ff6977aa-4194-4166-ab2e-eb993b506983::401 - 0ms - Response: {"status":401,"now":1722237634005}::{"message":"You are not authenticated!"}
+2024-07-29 14:21:20::error::/v1/api/order/readMemberOrderHistory::1c814a33-1664-4421-bf2b-ec22ea819771::401 - 2ms - Response: {"status":401,"now":1722237680806}::{"message":"You are not authenticated!"}
+2024-07-29 14:21:21::error::/v1/api/user/me::b8f63923-1a5c-4e3b-a9d3-6ec6983796dc::403 - 1ms - Response: {"status":403,"now":1722237681281}::{"message":"Access token missing"}
+2024-07-29 14:21:22::error::/v1/api/order/readMemberOrderHistory::f021ae61-464b-4d92-b14e-0984f3b5d21f::401 - 0ms - Response: {"status":401,"now":1722237682884}::{"message":"You are not authenticated!"}
+2024-07-29 14:22:12::error::/v1/api/order/readMemberOrderHistory::949d9d30-b9d3-4bd8-853c-918fce407727::401 - 1ms - Response: {"status":401,"now":1722237732292}::{"message":"You are not authenticated!"}
+2024-07-29 14:22:13::error::/v1/api/user/me::286e6178-03c3-42c1-b461-cbc8efd30d29::403 - 0ms - Response: {"status":403,"now":1722237733245}::{"message":"Access token missing"}
+2024-07-29 14:28:10::error::/v1/api/order/readMemberOrderHistory::8edbbf9b-56ca-4bcc-8012-ca3e5e21949b::401 - 1ms - Response: {"status":401,"now":1722238090837}::{"message":"You are not authenticated!"}
+2024-07-29 14:28:11::error::/v1/api/user/me::d070d230-acb5-428e-937a-dba4ba089449::403 - 0ms - Response: {"status":403,"now":1722238091896}::{"message":"Access token missing"}
+2024-07-29 14:28:17::error::/v1/api/user/me::e5eb937f-a8c9-4c3e-95f2-085560390fe7::403 - 0ms - Response: {"status":403,"now":1722238097558}::{"message":"Access token missing"}
+2024-07-29 14:28:38::error::/v1/api/order/readMemberOrderHistory::0352d931-fcfc-4e43-a560-b4e983f9fa68::401 - 1ms - Response: {"status":401,"now":1722238118938}::{"message":"You are not authenticated!"}
+2024-07-29 14:28:40::error::/v1/api/user/me::8772c8a0-5edd-4579-b946-f4dcac0d6e7b::403 - 1ms - Response: {"status":403,"now":1722238120137}::{"message":"Access token missing"}
+2024-07-29 15:12:57::error::/v1/api/user/me::9e95b0b2-1ec4-47b9-97ce-9dc05a33a19c::403 - 2ms - Response: {"status":403,"now":1722240777177}::{"message":"Access token missing"}
+2024-07-29 15:13:46::error::/v1/api/user/me::d0762780-ef6a-44dc-800d-01acaf190e67::403 - 1ms - Response: {"status":403,"now":1722240826909}::{"message":"Access token missing"}
+2024-07-29 15:15:05::error::/v1/api/user/me::de97b78c-c508-4c37-a5d9-6a75766121ec::403 - 0ms - Response: {"status":403,"now":1722240905763}::{"message":"Access token missing"}
+2024-07-29 15:15:27::error::/v1/api/user/me::0c7fe393-eea7-48e1-a21f-807d5bf145e6::403 - 1ms - Response: {"status":403,"now":1722240927772}::{"message":"Access token missing"}
+2024-07-29 15:15:31::error::/v1/api/user/me::8c2e4324-5f45-4991-b406-cee991dd5b88::403 - 0ms - Response: {"status":403,"now":1722240931603}::{"message":"Access token missing"}
+2024-07-29 15:15:34::error::/v1/api/user/me::00196a9f-0532-4540-adc2-34643428c065::403 - 0ms - Response: {"status":403,"now":1722240934685}::{"message":"Access token missing"}
+2024-07-29 15:15:37::error::/v1/api/user/me::9b847d40-d7e4-4f4f-961e-7cafbe43368e::403 - 0ms - Response: {"status":403,"now":1722240937573}::{"message":"Access token missing"}
+2024-07-29 15:15:42::error::/v1/api/user/me::1d69428c-93e7-4cb7-9993-c16747e81ec9::403 - 0ms - Response: {"status":403,"now":1722240942477}::{"message":"Access token missing"}
+2024-07-29 15:15:49::error::/v1/api/user/me::124f9cc9-d62e-4901-866f-95aeca3f9dc1::403 - 0ms - Response: {"status":403,"now":1722240949281}::{"message":"Access token missing"}
+2024-07-29 15:15:52::error::/v1/api/user/updateUserProfile/66a73d101c548b7a8f1efcd5::564aba3d-9a60-48fb-b9b4-0d83abd621b9::401 - 0ms - Response: {"status":401,"now":1722240952205}::{"message":"You are not authenticated!"}
+2024-07-29 15:16:09::error::/v1/api/user/me::cc306bf3-b9a3-4159-8fef-493eaca1086e::403 - 0ms - Response: {"status":403,"now":1722240969801}::{"message":"Access token missing"}
+2024-07-29 15:16:47::error::/v1/api/user/me::e919bc14-70c8-4d94-9b25-cc6b2ae4d3e4::403 - 0ms - Response: {"status":403,"now":1722241007327}::{"message":"Access token missing"}
+2024-07-29 15:16:52::error::/v1/api/user/me::9db24b44-3bba-404c-87ee-e45911e831c3::403 - 0ms - Response: {"status":403,"now":1722241012052}::{"message":"Access token missing"}
+2024-07-29 15:16:52::error::/v1/api/user/me::b4e9f709-2f9f-425f-9408-10946cd35386::403 - 0ms - Response: {"status":403,"now":1722241012576}::{"message":"Access token missing"}
+2024-07-29 15:16:59::error::/v1/api/user/me::b7edc6f4-6cfd-40a1-97fe-855e64529b0d::403 - 0ms - Response: {"status":403,"now":1722241019197}::{"message":"Access token missing"}
+2024-07-29 15:17:03::error::/v1/api/user/me::891b5dd1-8656-432d-b28f-0354ca050a0a::403 - 0ms - Response: {"status":403,"now":1722241023247}::{"message":"Access token missing"}
+2024-07-29 15:17:45::error::/v1/api/user/me::dba49b5d-42a4-4265-85b3-e536534ce742::403 - 0ms - Response: {"status":403,"now":1722241065734}::{"message":"Access token missing"}
+2024-07-29 15:53:37::error::/v1/api/user/me::0988ec8e-f929-4555-85ff-615c86608b97::403 - 1ms - Response: {"status":403,"now":1722243217618}::{"message":"Access token missing"}
+2024-07-29 15:53:40::error::/v1/api/user/me::c60d2fd9-eeb5-460b-a502-6b2faf765cf9::403 - 1ms - Response: {"status":403,"now":1722243220995}::{"message":"Access token missing"}
+2024-07-29 15:56:46::error::/v1/api/user/me::3f848e0f-4879-4410-8e69-213022fe1712::403 - 0ms - Response: {"status":403,"now":1722243406415}::{"message":"Access token missing"}
+2024-07-29 15:56:52::error::/v1/api/user/me::94150432-659c-47db-aca0-0ffdedf619bb::403 - 0ms - Response: {"status":403,"now":1722243412224}::{"message":"Access token missing"}
+2024-07-29 15:57:55::error::/v1/api/user/me::0c946f0f-38f6-4479-bd2a-4e0462bb2dff::403 - 1ms - Response: {"status":403,"now":1722243475994}::{"message":"Access token missing"}
+2024-07-29 15:59:16::error::/v1/api/user/me::fe8f934a-aadc-4662-87da-796cbc666107::403 - 0ms - Response: {"status":403,"now":1722243556331}::{"message":"Access token missing"}
+2024-07-29 16:04:44::error::/v1/api/user/me::6a943810-6b8e-4368-aaf1-ac3a5d13e7e7::403 - 0ms - Response: {"status":403,"now":1722243884300}::{"message":"Access token missing"}
+2024-07-29 16:04:45::error::/v1/api/user/me::1043240e-81ef-4e9c-ae3a-ef5a4059b73c::403 - 1ms - Response: {"status":403,"now":1722243885680}::{"message":"Access token missing"}
+2024-07-29 16:08:23::error::/v1/api/user/me::b910ed71-9307-416e-88f2-ef8ca7be9fff::403 - 0ms - Response: {"status":403,"now":1722244103932}::{"message":"Access token missing"}
+2024-07-29 16:08:26::error::/v1/api/user/me::a334f64d-7d11-46a0-8bd5-6931f25ff200::403 - 0ms - Response: {"status":403,"now":1722244106778}::{"message":"Access token missing"}
+2024-07-29 16:48:11::error::/v1/api/user/me::2ff8d2af-ae69-4b69-8b8d-37619014c805::403 - 1ms - Response: {"status":403,"now":1722246491227}::{"message":"Access token missing"}
+2024-07-29 16:48:13::error::/v1/api/recommender/readPopularPosts::d5793aad-0cea-4496-a4a2-86ef0bbcf0cd::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:48:20::error::/v1/api/user/me::911a3803-9a90-4f3d-b80c-93baaa1cbd61::403 - 0ms - Response: {"status":403,"now":1722246500103}::{"message":"Access token missing"}
+2024-07-29 16:48:20::error::/v1/api/recommender/readPopularPosts::512b7743-00cb-423f-9cf6-4ff44e2bb0a1::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:48:21::error::/v1/api/recommender/readLatestPosts::33b0195e-0059-4637-83d0-75f0fdd40a10::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:49:15::error::/v1/api/user/me::b5ba97c8-e47e-4d9a-8250-2981ce6af702::403 - 0ms - Response: {"status":403,"now":1722246555416}::{"message":"Access token missing"}
+2024-07-29 16:49:16::error::/v1/api/recommender/readLatestPosts::f50bb7e4-904c-44c7-81e9-e6fb5cff2a6c::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:49:32::error::/v1/api/user/me::e61278a6-952c-42dc-b12d-21e5eb260517::403 - 0ms - Response: {"status":403,"now":1722246572996}::{"message":"Access token missing"}
+2024-07-29 16:49:33::error::/v1/api/recommender/readLatestPosts::af5b18b2-3ed2-4605-b4d1-ecebbb506e3b::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:49:34::error::/v1/api/user/me::7b0b1cba-411c-4b02-a3ca-a1ab0312cb72::403 - 1ms - Response: {"status":403,"now":1722246574140}::{"message":"Access token missing"}
+2024-07-29 16:49:34::error::/v1/api/recommender/readLatestPosts::bf84ad09-cf0e-4dde-8535-e20c1071c4a1::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:49:35::error::/v1/api/auth/users/login::8a865642-15f2-40c9-80c7-c1aec9d4c7bd::401 - 0ms - Response: {"status":401,"now":1722246575208}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-07-29 16:49:39::error::/v1/api/user/me::366e43e1-f0d2-4acb-8ecc-dff3445a3072::403 - 1ms - Response: {"status":403,"now":1722246579334}::{"message":"Access token missing"}
+2024-07-29 16:49:40::error::/v1/api/recommender/readLatestPosts::9d655559-b189-48b0-9dda-6d72a6ad8906::undefined - NaNms - Response: {}::{"message":"Failed to read popular posts"}
+2024-07-29 16:50:04::error::/v1/api/user/me::5c4fec5b-f681-47bf-a29f-3a2fd927af36::403 - 1ms - Response: {"status":403,"now":1722246604712}::{"message":"Access token missing"}
+2024-07-29 16:50:05::error::/v1/api/user/me::af7405fc-d9cf-4cc7-aa8e-434d184cbb25::403 - 1ms - Response: {"status":403,"now":1722246605082}::{"message":"Access token missing"}
+2024-07-29 16:50:18::error::/v1/api/user/me::0137f04e-17a3-4e53-944a-61292011bb34::403 - 0ms - Response: {"status":403,"now":1722246618075}::{"message":"Access token missing"}
+2024-07-29 16:50:20::error::/v1/api/user/me::ca6cc9f7-2e55-467d-a494-5e6d3ef194e6::403 - 0ms - Response: {"status":403,"now":1722246620034}::{"message":"Access token missing"}
+2024-07-29 16:50:27::error::/v1/api/user/me::5d48f91a-fadc-4ab6-ae5f-e640440414b3::403 - 0ms - Response: {"status":403,"now":1722246627716}::{"message":"Access token missing"}
+2024-07-29 16:50:31::error::/v1/api/user/me::e2aadb42-529d-447a-9dde-60e8425eda19::403 - 0ms - Response: {"status":403,"now":1722246631332}::{"message":"Access token missing"}
+2024-07-29 16:50:35::error::/v1/api/user/me::8405869a-1b8c-4c4b-a5fe-83226614da89::403 - 0ms - Response: {"status":403,"now":1722246635327}::{"message":"Access token missing"}
+2024-07-29 16:50:39::error::/v1/api/user/me::e5865892-3fbc-47b5-bb65-f1e2e0edbf3a::403 - 1ms - Response: {"status":403,"now":1722246639326}::{"message":"Access token missing"}
+2024-07-29 16:50:42::error::/v1/api/user/me::d10f1da9-0013-43a6-8ba6-b662e9b76c92::403 - 0ms - Response: {"status":403,"now":1722246642088}::{"message":"Access token missing"}
+2024-07-29 16:50:44::error::/v1/api/user/me::64c61b01-2a54-4fa2-9d76-87ca1a215cea::403 - 0ms - Response: {"status":403,"now":1722246644297}::{"message":"Access token missing"}
+2024-07-29 16:50:50::error::/v1/api/user/me::591f0ad6-5c7d-4a5e-9966-b7fb9a1d7d92::403 - 1ms - Response: {"status":403,"now":1722246650752}::{"message":"Access token missing"}
+2024-07-29 16:52:30::error::/v1/api/user/me::29011b0f-67fd-4bfa-a002-22bb1177bf15::403 - 0ms - Response: {"status":403,"now":1722246750771}::{"message":"Access token missing"}
+2024-07-29 16:52:54::error::/v1/api/user/me::df1e36cf-8879-458f-be50-8ab26b9eb1e3::403 - 0ms - Response: {"status":403,"now":1722246774522}::{"message":"Access token missing"}
+2024-07-29 16:53:09::error::/v1/api/user/me::a9a400eb-be4e-4d21-b828-6b9f601ccc7a::403 - 0ms - Response: {"status":403,"now":1722246789925}::{"message":"Access token missing"}
+2024-07-29 16:56:17::error::/v1/api/user/me::b82d0450-8a32-433a-8145-f4ed98c7b4d6::403 - 1ms - Response: {"status":403,"now":1722246977129}::{"message":"Access token missing"}
+2024-07-29 17:01:21::error::/v1/api/user/me::f06d3a6f-add7-40f6-a279-5ff43d871cf4::403 - 0ms - Response: {"status":403,"now":1722247281766}::{"message":"Access token missing"}
+2024-07-29 17:01:32::error::/v1/api/user/me::8b89ccee-d8b2-4ce7-91a4-5a27342bfd69::403 - 0ms - Response: {"status":403,"now":1722247292275}::{"message":"Access token missing"}
+2024-07-29 17:01:37::error::/v1/api/user/me::f2a0740d-7e3c-4c3a-9e0f-e3ff6ca2f581::403 - 0ms - Response: {"status":403,"now":1722247297313}::{"message":"Access token missing"}
+2024-07-29 17:01:51::error::/v1/api/auth/users/login::fc7d36ae-f2b0-4c25-9e94-43b9690861af::401 - 0ms - Response: {"status":401,"now":1722247311059}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}

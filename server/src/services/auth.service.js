@@ -12,7 +12,7 @@ import brevoSendEmail from "../configs/brevo.email.config.js";
 class AuthService {
     static login = async ({ email, password }) => {
         // 1. Check email in the database
-        const foundUser = await User.findOne({ email }).lean();
+        const foundUser = await User.findOne({ email });
         if (!foundUser)
             throw new BadRequestError("Tài khoản chưa được đăng kí");
 
@@ -32,12 +32,15 @@ class AuthService {
             },
             process.env.JWT_SECRET
         );
+
         foundUser.accessToken = token;
+        await foundUser.save();
+
         const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
         return {
             code: 200,
             metadata: {
-                user: userWithoutPassword,
+                user: userWithoutPassword._doc,
             },
         };
     };
