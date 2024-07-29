@@ -9,7 +9,7 @@ import { MovementProvider } from './contexts/movement/MovementContext';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import {disableReactDevTools} from '@fvilers/disable-react-devtools'
 
-if(process.env.NODE_ENV === 'production') {
+if(import.meta.env.VITE_ENV === 'production') {
   disableReactDevTools()
 }
 

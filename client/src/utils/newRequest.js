@@ -16,7 +16,7 @@ import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 
 const newRequest = axios.create({
-  baseURL: (import.meta.env.VITE_NODE_ENV === 'production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN) + "/v1/api",
+  baseURL: (import.meta.env.VITE_ENV === 'production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN) + "/v1/api",
   withCredentials: true,
 });
 

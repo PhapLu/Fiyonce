@@ -115,3 +115,65 @@
 2024-07-29 13:06:13::info::/v1/api/movement/readMovements::1d9ab6a4-2381-4b2f-af07-1a9f2a385eb1::input-params ::GET::::{}
 2024-07-29 13:06:13::info::/v1/api/recommender/readPopularPosts::ca18aac7-0578-411c-a78b-1a2cffb71232::input-params ::GET::::{}
 2024-07-29 13:06:18::info::/v1/api/recommender/readPopularPosts::f947d948-3228-4f1f-b584-2a8fcc0b2e51::input-params ::GET::::{}
+2024-07-29 13:09:03::info::/v1/api/user/me::38288f89-7bd6-4dea-a01c-bceb9275d636::input-params ::GET::::{}
+2024-07-29 13:09:03::error::/v1/api/user/me::38288f89-7bd6-4dea-a01c-bceb9275d636::404 - 0ms - Response: {"status":404,"now":1722233343090}::{"message":"User not found"}
+2024-07-29 13:09:03::info::/v1/api/movement/readMovements::765125c3-e60b-44ec-833d-75b122871fb8::input-params ::GET::::{}
+2024-07-29 13:09:03::info::/v1/api/recommender/readPopularPosts::76d45851-3d63-4f5d-88cb-87960e64754d::input-params ::GET::::{}
+2024-07-29 13:09:11::info::/v1/api/movement/readMovements::f8fc211f-d039-453b-842b-36adcee759f8::input-params ::GET::::{}
+2024-07-29 13:09:11::info::/v1/api/user/me::c3e039ef-f461-4028-98d0-04d71970ecbe::input-params ::GET::::{}
+2024-07-29 13:09:11::info::/v1/api/recommender/readPopularPosts::4e242839-72f5-4e21-8f8c-6e900e82c8c1::input-params ::GET::::{}
+2024-07-29 13:09:11::error::/v1/api/user/me::c3e039ef-f461-4028-98d0-04d71970ecbe::404 - 0ms - Response: {"status":404,"now":1722233351786}::{"message":"User not found"}
+2024-07-29 13:11:48::info::/v1/api/user/me::82bd726a-152c-42ba-a7ca-ba5bd87a7b24::input-params ::GET::::{}
+2024-07-29 13:11:48::error::/v1/api/user/me::82bd726a-152c-42ba-a7ca-ba5bd87a7b24::404 - 1ms - Response: {"status":404,"now":1722233508546}::{"message":"User not found"}
+2024-07-29 13:11:48::info::/v1/api/movement/readMovements::c32204fc-46da-46d8-bf92-6080823fff48::input-params ::GET::::{}
+2024-07-29 13:11:48::info::/v1/api/recommender/readPopularPosts::b44c2685-d032-4c39-a21a-ca277b26169b::input-params ::GET::::{}
+2024-07-29 13:11:52::info::/v1/api/user/me::110a3069-beb2-4bc1-b8a6-8374aa030364::input-params ::GET::::{}
+2024-07-29 13:11:52::error::/v1/api/user/me::110a3069-beb2-4bc1-b8a6-8374aa030364::404 - 0ms - Response: {"status":404,"now":1722233512765}::{"message":"User not found"}
+2024-07-29 13:11:52::info::/v1/api/movement/readMovements::4aed4ce8-72ba-4225-9894-c112831bd01f::input-params ::GET::::{}
+2024-07-29 13:11:52::info::/v1/api/recommender/readPopularPosts::9fc5e26b-6a93-4f67-9aa5-ebec1334a61f::input-params ::GET::::{}
+2024-07-29 13:11:53::info::/v1/api/movement/readMovements::4afff529-8454-4d2c-9a08-b7f2bf056a0d::input-params ::GET::::{}
+2024-07-29 13:11:53::info::/v1/api/user/me::4de0e68c-dc86-4b41-b542-bdc759cacb50::input-params ::GET::::{}
+2024-07-29 13:11:53::error::/v1/api/user/me::4de0e68c-dc86-4b41-b542-bdc759cacb50::404 - 0ms - Response: {"status":404,"now":1722233513653}::{"message":"User not found"}
+2024-07-29 13:11:54::info::/v1/api/user/me::1120623f-65ec-4173-815f-ed916b4b7e96::input-params ::GET::::{}
+2024-07-29 13:11:54::error::/v1/api/user/me::1120623f-65ec-4173-815f-ed916b4b7e96::404 - 0ms - Response: {"status":404,"now":1722233514832}::{"message":"User not found"}
+2024-07-29 13:11:54::info::/v1/api/movement/readMovements::59cab880-4557-426a-8d74-a44b3b08b180::input-params ::GET::::{}
+2024-07-29 13:11:54::info::/v1/api/recommender/readPopularPosts::fef3f18e-a3c7-4b03-af5a-f8a081811fb2::input-params ::GET::::{}
+2024-07-29 13:11:57::info::/v1/api/user/me::c98f2a87-666e-4025-93b3-036cf3a40365::input-params ::GET::::{}
+2024-07-29 13:11:57::error::/v1/api/user/me::c98f2a87-666e-4025-93b3-036cf3a40365::404 - 0ms - Response: {"status":404,"now":1722233517500}::{"message":"User not found"}
+2024-07-29 13:11:57::info::/v1/api/movement/readMovements::388d94ae-39ba-4da1-8c01-23d2555a8ab8::input-params ::GET::::{}
+2024-07-29 13:11:57::info::/v1/api/recommender/readPopularPosts::c5296184-f8e4-4505-a2bb-f22ca52b3d90::input-params ::GET::::{}
+2024-07-29 13:12:37::info::/v1/api/user/me::013af479-4717-46cc-9226-8fc1d0f8ba67::input-params ::GET::::{}
+2024-07-29 13:12:37::info::/v1/api/movement/readMovements::91540a5c-8bc1-461c-b371-a686fd6958f0::input-params ::GET::::{}
+2024-07-29 13:12:37::info::/v1/api/recommender/readPopularPosts::56c1f151-f404-4298-9763-18011bb74f4e::input-params ::GET::::{}
+2024-07-29 13:12:37::error::/v1/api/user/me::013af479-4717-46cc-9226-8fc1d0f8ba67::404 - 0ms - Response: {"status":404,"now":1722233557390}::{"message":"User not found"}
+2024-07-29 13:12:39::info::/v1/api/user/me::f0e63fdd-c719-4abe-ac7f-ae525ee34bc3::input-params ::GET::::{}
+2024-07-29 13:12:39::info::/v1/api/movement/readMovements::8051ee04-a3bb-4a12-a5dd-99c41a1ef922::input-params ::GET::::{}
+2024-07-29 13:12:39::info::/v1/api/recommender/readPopularPosts::15358fb9-14c0-4b5e-b774-3cc31d47f3a6::input-params ::GET::::{}
+2024-07-29 13:12:39::error::/v1/api/user/me::f0e63fdd-c719-4abe-ac7f-ae525ee34bc3::404 - 0ms - Response: {"status":404,"now":1722233559482}::{"message":"User not found"}
+2024-07-29 13:13:04::info::/v1/api/user/me::0ef02239-2c69-4c05-ae60-aaf934f99653::input-params ::GET::::{}
+2024-07-29 13:13:04::error::/v1/api/user/me::0ef02239-2c69-4c05-ae60-aaf934f99653::404 - 0ms - Response: {"status":404,"now":1722233584748}::{"message":"User not found"}
+2024-07-29 13:13:04::info::/v1/api/movement/readMovements::d41076d8-0813-4182-9252-7dacc27ea6f8::input-params ::GET::::{}
+2024-07-29 13:13:04::info::/v1/api/recommender/readPopularPosts::99819281-ea88-4689-b644-4afe8a97ceac::input-params ::GET::::{}
+2024-07-29 13:15:49::info::/v1/api/movement/readMovements::ad96a0f1-b677-4b59-b0c2-52f422c1981a::input-params ::GET::::{}
+2024-07-29 13:15:49::info::/v1/api/recommender/readPopularPosts::ec939e5b-07e5-4e18-a3ad-813c84cfed71::input-params ::GET::::{}
+2024-07-29 13:15:49::info::/v1/api/user/me::38af1ab2-651c-4eaf-aaf2-cedb7757d2f3::input-params ::GET::::{}
+2024-07-29 13:15:49::error::/v1/api/user/me::38af1ab2-651c-4eaf-aaf2-cedb7757d2f3::404 - 0ms - Response: {"status":404,"now":1722233749178}::{"message":"User not found"}
+2024-07-29 13:15:59::info::/v1/api/user/me::bc5d2ca4-f5f4-4dab-a702-61e9b176239e::input-params ::GET::::{}
+2024-07-29 13:15:59::error::/v1/api/user/me::bc5d2ca4-f5f4-4dab-a702-61e9b176239e::404 - 1ms - Response: {"status":404,"now":1722233759703}::{"message":"User not found"}
+2024-07-29 13:15:59::info::/v1/api/movement/readMovements::a53767a0-bc51-41bd-9d56-6998886fc4a4::input-params ::GET::::{}
+2024-07-29 13:15:59::info::/v1/api/recommender/readPopularPosts::8b5932ed-091b-4e0a-a36e-c5f3aa3e2dd8::input-params ::GET::::{}
+2024-07-29 13:18:26::info::/v1/api/user/me::d4c2d877-7036-4098-939f-d17480978701::input-params ::GET::::{}
+2024-07-29 13:18:26::info::/v1/api/movement/readMovements::eb7af7a5-de5f-4983-a890-dd004c30b023::input-params ::GET::::{}
+2024-07-29 13:18:26::info::/v1/api/recommender/readPopularPosts::ac70b7e9-5745-472d-a54b-78a2b248fd1c::input-params ::GET::::{}
+2024-07-29 13:18:26::error::/v1/api/user/me::d4c2d877-7036-4098-939f-d17480978701::404 - 0ms - Response: {"status":404,"now":1722233906667}::{"message":"User not found"}
+2024-07-29 13:18:29::info::/v1/api/user/me::0f5890c7-ad75-4644-ae3c-3e3f2d618cb6::input-params ::GET::::{}
+2024-07-29 13:18:29::info::/v1/api/movement/readMovements::9d85b00e-d514-4de8-817d-694ec79147be::input-params ::GET::::{}
+2024-07-29 13:18:29::info::/v1/api/recommender/readPopularPosts::ea2fb995-175a-4338-bfb9-1acc8770ca60::input-params ::GET::::{}
+2024-07-29 13:18:29::error::/v1/api/user/me::0f5890c7-ad75-4644-ae3c-3e3f2d618cb6::404 - 0ms - Response: {"status":404,"now":1722233909991}::{"message":"User not found"}
+2024-07-29 13:19:08::info::/v1/api/user/me::8a34b741-1acb-46cd-bbe7-606018d1053c::input-params ::GET::::{}
+2024-07-29 13:19:08::error::/v1/api/user/me::8a34b741-1acb-46cd-bbe7-606018d1053c::404 - 0ms - Response: {"status":404,"now":1722233948161}::{"message":"User not found"}
+2024-07-29 13:19:08::info::/v1/api/movement/readMovements::72f9fc81-6a87-4a73-b9ed-f572f6b537ea::input-params ::GET::::{}
+2024-07-29 13:19:08::info::/v1/api/recommender/readPopularPosts::5ecde4f7-7ad6-4299-9d9e-8eadb0babc21::input-params ::GET::::{}
+2024-07-29 13:19:23::info::/v1/api/user/me::abc9caec-1e21-4d01-bafe-b7c835e6f58a::input-params ::GET::::{}
+2024-07-29 13:19:23::info::/v1/api/movement/readMovements::a357366f-690e-4719-a8e8-49e14f7ba855::input-params ::GET::::{}
+2024-07-29 13:19:23::error::/v1/api/user/me::abc9caec-1e21-4d01-bafe-b7c835e6f58a::404 - 0ms - Response: {"status":404,"now":1722233963123}::{"message":"User not found"}
