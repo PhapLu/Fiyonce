@@ -271,6 +271,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     return (
         <div className="sidebar">
             <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
+                <img src={"/uploads/pastal_system_default_background.png"} alt="" className="sidebar__avatar__bg desktop-hide" />
                 <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
                 {
                     isProfileOwner && (<>
