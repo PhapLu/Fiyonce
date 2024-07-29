@@ -13,8 +13,8 @@ class AuthController {
 
                 // Setting accessToken in a cookie
                 res.cookie("accessToken", accessToken, {
-                    // secure: process.env.NODE_ENV === 'production',
-                    // sameSite: 'none',
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'none',
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 * 30, // 1 month
                 })
@@ -31,8 +31,8 @@ class AuthController {
 
     logout = async (req, res, next) => {
         res.clearCookie("accessToken", {
-            // sameSite: "none",
-            // secure: process.env.NODE_ENV === 'production',
+            sameSite: "none",
+            secure: process.env.NODE_ENV === 'production',
         }).status(200).send("Đã đăng xuất")
     }
 
