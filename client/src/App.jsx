@@ -21,6 +21,7 @@ import InMaintainance from "./pages/inMaintainance/InMaintainance";
 import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
 import CommissionServices from "./components/commissionServices/CommissionServices";
+import Layout from "./pages/layout/Layout.jsx";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
@@ -122,14 +123,19 @@ const routes = [
     ],
   },
   {
-    path: "/commission-market",
-    element: <CommissionMarket />,
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/commission-market",
+        element: <CommissionMarket />,
+      },
+      {
+        path: "/challenges",
+        element: <InDevelopment />,
+      },
+    ]
   },
-  {
-    path: "/challenges",
-    element: <InDevelopment />,
-  },
-
   {
     path: "/dashboard/",
     element: <DashboardLayout />,
