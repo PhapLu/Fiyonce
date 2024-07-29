@@ -65,7 +65,11 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                 <h2>Thông báo</h2>
                 <hr />
                 <div className="notification-container">
-                    {displayedOrderNotifications?.length > 0 ? (
+                    {displayedOrderNotifications?.length < 1 && displayedInteractionNotifications?.length < 1 && 
+                        <p>Hiện chưa có thông báo nào</p>
+
+                    }
+                    {displayedOrderNotifications?.length > 0 && (
                         <>
                             <h4>Đơn hàng</h4>
                             {
@@ -99,8 +103,6 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                 })
                             }
                         </>
-                    ) : (
-                        <p>Hiện chưa có thông báo nào</p>
                     )}
 
                     {displayedInteractionNotifications?.length > 0 && (

@@ -390,6 +390,9 @@ img {
     margin-top: 20px;
     padding-top: 16px;
 
+    
+
+
     .sub-nav-item {
         margin-right: 20px;
         font-size: 1.5rem;
@@ -661,7 +664,7 @@ hr {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    transition: all 0.8s ease-in-out;
+    // transition: all 0.8s ease-in-out;
     transform: translate(-50%, -50%);
     opacity: 1;
     width: calc(100% + 4px);
@@ -1654,6 +1657,22 @@ table {
     margin-bottom: 8px;
 }
 
+.mr-12 {
+    margin-right: 12px;
+}
+
+.ml-12 {
+    margin-left: 12px;
+}
+
+.mt-12 {
+    margin-top: 12px;
+}
+
+.mb-12 {
+    margin-bottom: 12px;
+}
+
 .mr-16 {
     margin-right: 16px;
 }
@@ -1758,5 +1777,48 @@ table {
     100% {
         background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
+}
+
+// RESPONSIVE
+/* PC styles (>= 1024px) */
+@media only screen and (min-width: 1024px) {
+    .desktop-hide {
+        display: none !important;
+    }
+
+}
+
+/* Tablet styles (740px to 1023px) */
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .tablet-hide {
+        display: none !important;
+    }
+
+    html {
+        // font-size: 62.5%;
+        line-height: 1.6rem;
+    }
+
+    .app {
+        margin: 60px 2.5% 40px !important;
+    }
+    
+    .sub-nav-container {
+        padding-top: 10px;
+    }
+
+    body {}
+
+}
+
+/* Mobile styles (<= 739px) */
+@media only screen and (max-width: 739px) {
+    .mobile-hide {
+        display: none !important;
+    }
+
+    html {
+        font-size: 55.5%;
     }
 }

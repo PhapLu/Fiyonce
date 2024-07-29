@@ -12,8 +12,8 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
     const breakpointColumnsObj = {
         default: layout,
         1200: 6,
-        800: 2,
-        600: 1
+        1023: 4,
+        739: 2
     };
 
     const { setModalInfo } = useModal();

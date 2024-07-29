@@ -75,3 +75,28 @@
         }
     }
 }
+
+// RESPONSIVE
+/* PC styles (>= 1024px) */
+@media only screen and (min-width: 1024px) {
+
+
+    /* Add your PC-specific styles here */
+}
+
+/* Tablet styles (740px to 1023px) */
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .explore {
+        .explore__filter-container {
+            margin: 12px 0;
+        }
+    }
+    /* Add your tablet-specific styles here */
+}
+
+/* Mobile styles (<= 739px) */
+@media only screen and (max-width: 739px) {
+    body {}
+
+    /* Add your mobile-specific styles here */
+}
