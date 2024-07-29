@@ -2,6 +2,9 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { useQuery } from 'react-query'
 import Cookies from 'js-cookie';
+// import dotenv from 'dotenv'
+// dotenv.config()
+
 
 // Contexts
 import { useModal } from "../../contexts/modal/ModalContext.jsx";
@@ -33,7 +36,10 @@ export const AuthProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         if (userInfo) {
-            const newSocket = socketIOClient('https://fiyoncee.onrender.com'); // Adjust URL to your backend
+            const newSocket = socketIOClient(import.meta.env.VITE_ENV=='production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN); // Adjust URL to your backend
+            console.log(import.meta.env.VITE_ENV)
+            console.log(import.meta.env.VITE_SERVER_ORIGIN)
+            console.log(import.meta.env.VITE_SERVER_LOCAL_ORIGIN)
             setSocket(newSocket);
             newSocket.emit('addUser', userInfo._id);
         }

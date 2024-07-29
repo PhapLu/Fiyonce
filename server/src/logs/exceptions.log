@@ -614,3 +614,9 @@ ReferenceError: message is not defined
     at Socket.emitUntyped (E:\Fiyonce\server\node_modules\socket.io\dist\typed-events.js:69:22)
     at E:\Fiyonce\server\node_modules\socket.io\dist\socket.js:704:39
     at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-07-29 13:04:34::error::undefined::undefined::uncaughtException: CLIENT_LOCAL_ORIGIN is not defined
+ReferenceError: CLIENT_LOCAL_ORIGIN is not defined
+    at file:///E:/Fiyonce/server/src/app.js:37:13
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined

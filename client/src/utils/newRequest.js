@@ -1,11 +1,26 @@
+// import axios from 'axios';
+// import Cookies from 'js-cookie';
+// import { jwtDecode } from 'jwt-decode';
+
+// console.log(process.env.NODE_ENV)
+// console.log(process.env.SERVER_ORIGIN)
+// console.log(process.env.SERVER_LOCAL_ORIGIN)
+
+// const newRequest = axios.create({
+//     baseURL: process.env.NODE_ENV == 'production' ? process.env.SERVER_ORIGIN : process.env.SERVER_LOCAL_ORIGIN,
+//     withCredentials: true,
+// });
+
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const newRequest = axios.create({
-    baseURL: "https://fiyoncee.onrender.com/v1/api/",
-    withCredentials: true,
+  baseURL: (import.meta.env.VITE_NODE_ENV === 'production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN) + "/v1/api",
+  withCredentials: true,
 });
+
+
 
 const getLoggedInRequestConfig = (data) => {
     let contentType = 'application/json';
@@ -64,7 +79,7 @@ function createFormData(inputs, filesKey, files) {
 
 
 
-export { createFormData, newRequest, apiUtils};
+export { createFormData, newRequest, apiUtils };
 
 
 

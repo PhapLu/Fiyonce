@@ -29,10 +29,15 @@ app.use(globalLimiter)
 
 // Init middlewares
 app.use(cors({
-    origin: [process.env.NODE_ENV == 'production' ? process.env.ALLOWED_ORIGIN : 'http://localhost:3000'],
+    origin: [process.env.NODE_ENV == 'production' ? process.env.CLIENT_ORIGIN : process.env.CLIENT_LOCAL_ORIGIN],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
     credentials: true,
 }))
+
+console.log(process.env.NODE_ENV)
+console.log(process.env.CLIENT_ORIGIN)
+console.log(process.env.CLIENT_LOCAL_ORIGIN)
+
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(helmet())
