@@ -236,3 +236,67 @@
         }
     }
 }
+
+// RESPONSIVE
+/* PC styles (>= 1024px) */
+@media only screen and (min-width: 1024px) {
+
+
+    /* Add your PC-specific styles here */
+}
+
+
+/* Tablet and Mobile */
+@media only screen and (max-width: 1023px) {
+    .hamburger-menu-container {
+        position: fixed;
+        left: -320px;
+        top: 0;
+        bottom: 0;
+        width: 300px;
+        background-color: var(--white-3-color);
+        z-index: 100;
+        transition: 0.3s linear;
+        padding: 28px 2.5%;
+
+        &.active {
+            left: 0;
+        }
+
+        .hamburger-menu-item {
+            display: block;
+            width: 100%;
+            padding: 16px 8px ;
+            border-radius: 8px;
+            font-size: 1.5rem;
+
+            &.active {
+                font-size: 1.8rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+}
+
+
+/* Tablet styles (740px to 1023px) */
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .navbar {
+        padding: 8px 2.5%;
+
+
+        .navbar-link-item {
+            display: none;
+        }
+    }
+
+    /* Add your tablet-specific styles here */
+}
+
+/* Mobile styles (<= 739px) */
+@media only screen and (max-width: 739px) {
+    body {}
+
+    /* Add your mobile-specific styles here */
+}

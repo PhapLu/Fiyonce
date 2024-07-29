@@ -5,7 +5,6 @@ import 'boxicons';
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
-import Layout from "./Layout";
 import Talents from "./components/talents/Talents";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
@@ -50,92 +49,87 @@ const routes = [
     element: <InDevelopment />,
   },
   {
-    path: "/",
-    element: <Layout />,
+    path: "/users/:userId",
+    element: <ProfileLayout />,
     children: [
       {
-        path: "/users/:userId",
-        element: <ProfileLayout />,
+        path: "/users/:userId/profile-commission-services",
+        element: <ProfileCommissionServices />,
+      },
+      {
+        path: "/users/:userId/profile-posts",
+        element: <ProfilePosts />,
         children: [
           {
-            path: "/users/:userId/profile-commission-services",
-            element: <ProfileCommissionServices />,
+            path: "/users/:userId/profile-posts/create",
+            element: (
+              <CreatePost />
+            ),
           },
           {
-            path: "/users/:userId/profile-posts",
-            element: <ProfilePosts />,
-            children: [
-              {
-                path: "/users/:userId/profile-posts/create",
-                element: (
-                  <CreatePost />
-                ),
-              },
-              {
-                path: "/users/:userId/profile-posts/:postId",
-                element: (
-                  <RenderPost />
-                ),
-              },
-              {
-                path: "/users/:userId/profile-posts/:postId/update",
-                element: (
-                  <UpdatePost />
-                ),
-              },
-              {
-                path: "/users/:userId/profile-posts/:postId/delete",
-                element: (
-                  <DeletePost />
-                ),
-              },
-            ]
+            path: "/users/:userId/profile-posts/:postId",
+            element: (
+              <RenderPost />
+            ),
           },
           {
-            path: "/users/:userId/order-history",
-            element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
+            path: "/users/:userId/profile-posts/:postId/update",
+            element: (
+              <UpdatePost />
+            ),
           },
           {
-            path: "/users/:userId/basic-info",
-            element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
+            path: "/users/:userId/profile-posts/:postId/delete",
+            element: (
+              <DeletePost />
+            ),
           },
-        ],
+        ]
       },
       {
-        path: "/",
-        element: <ExploreLayout />,
-        children: [
-          {
-            path: "/",
-            element: <ExplorePosts showPosts={true} />,
-            children: [
-              {
-                path: "/:postId",
-                element: <RenderPost />,
-              },
-            ],
-          },
-          {
-            path: "/talents",
-            element: <Talents showTalents={true} />,
-          },
-          {
-            path: "/commissionServices",
-            element: <CommissionServices showCommissionServices={true} />,
-          },
-
-        ],
+        path: "/users/:userId/order-history",
+        element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
       },
       {
-        path: "/commission-market",
-        element: <CommissionMarket />,
-      },
-      {
-        path: "/challenges",
-        element: <InDevelopment />,
+        path: "/users/:userId/basic-info",
+        element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
       },
     ],
   },
+  {
+    path: "/",
+    element: <ExploreLayout />,
+    children: [
+      {
+        path: "/",
+        element: <ExplorePosts showPosts={true} />,
+        children: [
+          {
+            path: "/:postId",
+            element: <RenderPost />,
+          },
+        ],
+      },
+      {
+        path: "/talents",
+        element: <Talents showTalents={true} />,
+      },
+      {
+        path: "/commissionServices",
+        element: <CommissionServices showCommissionServices={true} />,
+      },
+
+    ],
+  },
+  {
+    path: "/commission-market",
+    element: <CommissionMarket />,
+  },
+  {
+    path: "/challenges",
+    element: <InDevelopment />,
+  },
+
   {
     path: "/dashboard/",
     element: <DashboardLayout />,

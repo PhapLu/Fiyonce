@@ -146,11 +146,48 @@ export default function Navbar() {
         setShowRenderNotifications(true);
     }
 
+    const [showHamburgerMenu, setShowHamburgerMenu] = useState();
+
 
     return (
         <>
             <div className={`navbar ${shadow ? 'with-shadow' : ''}`}>
                 <div className="navbar--left">
+                    <svg onClick={() => { setShowHamburgerMenu(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 lg mr-12 desktop-hide hover-cursor-opacity">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+
+                    <div className={`desktop-hide ${showHamburgerMenu ? "overlay" : ""}`} onClick={() => { setShowHamburgerMenu(false) }}>
+                        <ul onClick={(e) => { e.stopPropagation() }} className={`hamburger-menu-container ${showHamburgerMenu ? "active" : ""}`}>
+                            <svg onClick={() => { setShowHamburgerMenu(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 lg mr-8 ml-8 mb-12 desktop-hide hover-cursor-opacity">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                            <Link to="/" className={`hamburger-menu-item gray-bg-hover ${location.pathname.split('/').filter(Boolean).length === 0 || location.pathname.includes('/talents') || location.pathname.includes('/commission-services') ? "active" : ""}`}>
+                                Khám phá
+                            </Link>
+                            <Link to="/commission-market" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/commission-market') ? "active" : "")}>
+                                Chợ Commission
+                            </Link>
+                            <Link to="/challenges" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                Thử thách
+                            </Link>
+
+                            <hr className="mt-8 mb-8" />
+                            <Link to="/challenges" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                Về Pastal
+                            </Link>
+                            <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                Trung tâm trợ giúp
+                            </Link>
+                            <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                Chính sách
+                            </Link>
+                            <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                Điều khoản
+                            </Link>
+                        </ul>
+                    </div>
+
                     <Link to="/" className="flex-align-center">
                         {/* <img src={Logo} alt="Logo" className="navbar__brand-logo" /> */}
                         <h3 className="navbar__brand-name">Pastal<span className="highlight-text">&#x2022;</span></h3>
@@ -215,7 +252,7 @@ export default function Navbar() {
                         <li className={`navbar-link-item ` + (location.pathname.includes('/challenges') ? "active" : "")}>
                             <Link to="/challenges">Thử thách</Link>
                         </li>
-                        <hr className="navbar__veritcal-hr" />
+                        <hr className="navbar__veritcal-hr tablet-hide" />
                         {userInfo && (
                             <>
                                 <div className="mr-8 toggle-display-conversations-btn" ref={messageButtonRef}>
