@@ -34,10 +34,6 @@ app.use(cors({
     credentials: true,
 }))
 
-console.log(process.env.NODE_ENV)
-console.log(process.env.CLIENT_ORIGIN)
-console.log(process.env.CLIENT_LOCAL_ORIGIN)
-
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(helmet())
