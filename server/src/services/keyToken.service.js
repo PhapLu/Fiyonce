@@ -38,6 +38,7 @@ class KeyTokenService {
 
             return tokens ? tokens.publicKey : null;
         } catch (error) {
+            console.log("Error creating key token:", error);
             return error;
         }
     };

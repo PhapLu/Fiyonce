@@ -898,7 +898,10 @@ class RecommenderService {
             return {
                 commissionServices: randomCommissionServices,
             };
-        } catch (error) { }
+        } catch (error) {
+            console.error("Error in readFollowingCommissionServices:", error);
+            throw new BadRequestError("Failed to read following commission services");
+        }
     };
 }
 

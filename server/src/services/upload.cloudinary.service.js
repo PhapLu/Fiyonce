@@ -20,6 +20,7 @@ const uploadImageFromURL = async () => {
         return result;
     } catch (error) {
         console.error(error);
+        throw new BadRequestError("Error uploading image");
     }
 };
 
@@ -126,6 +127,7 @@ const uploadImagesFromLocal = async ({
         return uploadURLs;
     } catch (error) {
         console.error("Error uploading image::", error);
+        throw new BadRequestError("Error uploading image");
     }
 };
 

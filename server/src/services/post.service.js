@@ -257,6 +257,7 @@ class PostService {
             }, []);
             return { artworks };
         } catch (error) {
+            console.error("Error fetching artworks:", error);
             throw new BadRequestError("Xem tác phẩm không thành công");
         }
     };
@@ -377,6 +378,7 @@ class PostService {
             );
         } catch (error) {
             console.log("Error deleting artwork images:", error);
+            throw new BadRequestError("Xóa tác phẩm không thành công");
         }
 
         //3. Delete artwork and post in database
