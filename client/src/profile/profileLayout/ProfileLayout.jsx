@@ -97,7 +97,7 @@ export default function ProfileLayout() {
                             <img
                                 src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
                                 alt={`${profileInfo.fullName}'s cover photo`}
-                                className={`profile__bg__img ${loading ? "skeleton-img" : ""}`}
+                                className={`tablet-hide mobile-hide profile__bg__img ${loading ? "skeleton-img" : ""}`}
                             />
                             {
                                 isProfileOwner && (

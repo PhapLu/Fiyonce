@@ -8,6 +8,7 @@ import OrderHistory from "./components/orderHistory/OrderHistory";
 import Talents from "./components/talents/Talents";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
+import RenderNews from "./components/crudNews/render/RenderNews";
 
 // Pages
 import ProfileLayout from "./profile/profileLayout/ProfileLayout";
@@ -32,6 +33,7 @@ import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
 import ArtDashboard from "./dashboard/artDashboard/ArtDashboard";
 import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDashboard";
 import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
+import NewsDashboard from "./dashboard/newsDashboard/NewsDashboard";
 import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
 import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 import CreatePost from "./components/crudPost/create/CreatePost";
@@ -133,6 +135,10 @@ const routes = [
         path: "/challenges",
         element: <InDevelopment />,
       },
+      {
+        path: "/newss/:newsId",
+        element: <RenderNews />,
+      },
     ]
   },
   {
@@ -154,6 +160,10 @@ const routes = [
       {
         path: "/dashboard/accounts",
         element: <AccountDashboard />,
+      },
+      {
+        path: "/dashboard/news",
+        element: <NewsDashboard />,
       },
       {
         path: "/dashboard/challenges",

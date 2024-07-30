@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import "./News.scss";
+import "./RenderNewss.scss";
 import { useQuery } from 'react-query';
 import { useRef, useState, useEffect } from 'react';
 
-export default function News() {
+export default function Newss() {
     // Fetch news
-    const fetchNews = async () => {
+    const fetchNewss = async () => {
         try {
             // Simulated data fetching
             return [{
@@ -70,7 +70,7 @@ export default function News() {
         }
     };
 
-    const { data: news, error, isError, isLoading } = useQuery('fetchNews', fetchNews, {
+    const { data: news, error, isError, isLoading } = useQuery('fetchNewss', fetchNewss, {
         onError: (error) => {
             console.error('Error fetching news:', error);
         },
@@ -148,11 +148,11 @@ export default function News() {
     }
 
     return (
-        <div className="news scroll">
+        <div className="explore-news scroll">
             <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
             <div className="news-container scroll-container" ref={scrollContainerRef}>
                 {news && news.map((newItem) => (
-                    <Link className="news-item scroll-item" to={`/news/${newItem._id}`} key={newItem._id}>
+                    <Link to={`/newss/${newItem._id}`} className="news-item scroll-item" key={newItem._id}>
                         <img src={newItem.thumbnail} alt={newItem.title} className="news-item__thumbnail" />
                         <div className="news-item__content">
                             <h4 className="news-item__title">{newItem.title}</h4>

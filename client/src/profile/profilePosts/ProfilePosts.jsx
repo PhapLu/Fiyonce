@@ -45,7 +45,6 @@ export default function ProfilePosts() {
         isLoading,
     } = useQuery("fetchPosts", fetchPosts);
 
-
     const createPostMutation = useMutation(
         async (formData) => {
             console.log(formData)
@@ -243,13 +242,9 @@ export default function ProfilePosts() {
 
                 {posts.length > 0 ? (
                     <RenderPosts isSorting={true} layout={4} posts={posts} isDisplayOwner={false} allowEditDelete={true} />
-                ) : (
-                    isProfileOwner ? (
-                        <p> Hiện chưa có tác phẩm nào.</p>
-                    ) : (
-                        <p>Hiện chưa có tác phẩm nào. <span className="highlight-text">Đăng tải</span> ngay</p>
-                    )
-                )}
+                ) :
+                    (<p>Hiện chưa có tác phẩm nào.</p>)
+                }
             </div >
 
             {overlayVisible && (

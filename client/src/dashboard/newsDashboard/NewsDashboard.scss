@@ -1,0 +1,29 @@
+.news-form-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--white-3-color);
+    border-radius: 16px;
+    
+    .form-section {
+        width: 48%;
+        padding: 40px;
+
+    }
+
+    .preview-section {
+        width: 48%;
+        padding: 40px;
+        overflow: hidden;
+        img {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        .preview-section__thumbnail {
+            width: 100%;
+            border-radius: 16px;
+            height: 200px;
+        }
+    }
+}

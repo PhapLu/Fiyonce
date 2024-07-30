@@ -213,7 +213,7 @@ export default function ProfileCommissionServices() {
                 scrollContainerRef.current.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [commissionServiceCategories]);
+    }, []);
 
     if (isLoading) {
         return <span>Đang tải...</span>

@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 // Resources
 import Navbar from '../../components/navbar/Navbar.jsx';
-import News from "../../components/news/News.jsx";
+import RenderNews from "../../components/crudNews/render/RenderNewss.jsx";
 import BackToTop from '../../components/backToTop/BackToTop.jsx';
 
 // Utils
@@ -134,7 +134,7 @@ export default function Explore() {
 
                 <div className="explore">
                     {/* Display informative news */}
-                    {/* <News /> */}
+                    <RenderNews />
 
                     {/* Sub navigation bar of the page */}
                     <div className="sub-nav-container">
