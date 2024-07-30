@@ -134,13 +134,13 @@ export default function ProfileLayout() {
                                                 to={`/users/${userId}/profile-commission-services`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
                                             >
-                                                <span>Dịch vụ</span>
+                                                Dịch vụ
                                             </Link>
                                             <Link
                                                 to={`/users/${userId}/profile-posts`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
                                             >
-                                                <span>Tác phẩm</span>
+                                                Tác phẩm
                                             </Link>
                                         </>
                                     )) : (
@@ -149,13 +149,13 @@ export default function ProfileLayout() {
                                                 to={`/users/${userId}/profile-commission-services`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
                                             >
-                                                <span>Dịch vụ</span>
+                                                Dịch vụ
                                             </Link>
                                             <Link
                                                 to={`/users/${userId}/profile-posts`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
                                             >
-                                                <span>Tác phẩm</span>
+                                                Tác phẩm
                                             </Link>
                                         </>
                                     )
@@ -169,14 +169,14 @@ export default function ProfileLayout() {
                                                 to={`/users/${userId}/order-history`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
                                             >
-                                                <span>Đơn hàng</span>
+                                                Đơn hàng
                                             </Link>
 
                                             <Link
                                                 to={`/users/${userId}/basic-info`}
                                                 className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
                                             >
-                                                <span>Thông tin cơ bản</span>
+                                                Thông tin cơ bản
                                             </Link>
                                         </>
                                     )

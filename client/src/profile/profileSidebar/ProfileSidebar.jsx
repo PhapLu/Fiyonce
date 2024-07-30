@@ -270,8 +270,9 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     return (
         <div className="sidebar">
+            <img src={profileInfo.bg || "/uploads/pastal_system_default_background.png"} alt="" className="sidebar__bg desktop-hide" />
+
             <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
-                <img src={"/uploads/pastal_system_default_background.png"} alt="" className="sidebar__avatar__bg desktop-hide" />
                 <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
                 {
                     isProfileOwner && (<>
@@ -430,44 +431,71 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             </span>
                         )}
                     </div>
-                    <div className="flex-justify-center flex-align-center mt-16">
+                    {!isProfileOwner &&
+                        (
+                            <div className="flex-justify-center flex-align-center mt-16 mb-8">
+                                <button className="btn btn-3 btn-md mr-16" onClick={handleOpenConversation}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                                    </svg>
+                                    Nhắn tin
+                                </button>
+                                {
+                                    userFollowing.includes(profileInfo._id) ? (
+                                        <button className="btn btn-2 btn-md" onClick={handleUnFollowUser}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            Đã theo dõi
+                                        </button>
+                                    ) : (
+                                        <button className="btn btn-2 btn-md" onClick={handleFollowUser}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                            </svg>
+                                            Theo dõi
+                                        </button>
+                                    )
+                                }
+                            </div>
+                        )
 
-                        {!isProfileOwner &&
-                            (
-                                <>
-                                    <button className="btn btn-3 btn-md mr-16" onClick={handleOpenConversation}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                                        </svg>
-                                        Nhắn tin
-                                    </button>
-                                    {
-                                        userFollowing.includes(profileInfo._id) ? (
-                                            <button className="btn btn-2 btn-md" onClick={handleUnFollowUser}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
-                                                Đã theo dõi
-                                            </button>
-                                        ) : (
-                                            <button className="btn btn-2 btn-md" onClick={handleFollowUser}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                                                </svg>
-                                                Theo dõi
-                                            </button>
-                                        )
-                                    }
-                                </>
-                            )
-
-                        }
-                    </div>
+                    }
                     <br />
 
                     <div className="sidebar__follow">
+                        <div className="sidebar__follow__follow-container" style={{ 'width': `${profileInfo?.followers?.length > 4 ? '100px' : profileInfo?.followers?.length == 3 ? '78px' : profileInfo?.followers?.length == 2 ? '58px' : profileInfo?.followers?.length == 1 ? '38px' : ''}` }}>
+                            {/* //  <img src="1.png" style="position:absolute; top:0px; left:10px; z-index:0" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:20px; z-index:1" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:30px; z-index:2" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:40px; z-index:3" />
+                                //  <img src="1.png" style="position:absolute; top:0px; left:50px; z-index:4" />
+                        */}
+                            {
+                                profileInfo?.followers?.slice(0, 4)?.reverse().map((follower, index) => {
+                                    if (index == 3) {
+                                        return <div index={index} className="user sm sidebar__follow__follow-item">
+                                            <div className="user--left">
+                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                                <div className="overlay">
+                                                    <span>{profileInfo?.followers.length - 4 > 0 ? "..." : ""}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    return (
+                                        <div index={index} className="user sm sidebar__follow__follow-item">
+                                            <div className="user--left">
+                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+
                         <span className="sidebar__follow__follower">{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
-                        {" " + "-" + " "}
+                        &nbsp; - &nbsp;
                         <span className="sidebar__follow__following">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                     </div>
 
