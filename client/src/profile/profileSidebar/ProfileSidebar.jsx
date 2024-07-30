@@ -464,7 +464,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <br />
 
                     <div className="sidebar__follow">
-                        <div className="sidebar__follow__follow-container" style={{ 'width': `${profileInfo?.followers?.length > 4 ? '100px' : profileInfo?.followers?.length == 3 ? '78px' : profileInfo?.followers?.length == 2 ? '58px' : profileInfo?.followers?.length == 1 ? '38px' : ''}` }}>
+                        <div className="sidebar__follow__follow-container" style={{ 'width': `${profileInfo?.followers?.length >= 4 ? '100px' : profileInfo?.followers?.length == 3 ? '78px' : profileInfo?.followers?.length == 2 ? '58px' : profileInfo?.followers?.length == 1 ? '38px' : ''}` }}>
                             {/* //  <img src="1.png" style="position:absolute; top:0px; left:10px; z-index:0" />
                                 //  <img src="1.png" style="position:absolute; top:0px; left:20px; z-index:1" />
                                 //  <img src="1.png" style="position:absolute; top:0px; left:30px; z-index:2" />
