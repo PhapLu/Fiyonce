@@ -82,3 +82,4 @@
 2024-07-30 16:05:36::info::/v1/api/movement/updateMovement/66a8acd038623c4209df8075::63eba8a0-6d71-4580-a403-17af95fdb60a::input-params ::PATCH::::{}
 2024-07-30 17:16:56::info::/v1/api/movement/createMovement::5f9e1a33-d7e8-440b-a01e-04dbe8165b3f::input-params ::POST::::{}
 2024-07-30 17:16:58::error::/v1/api/movement/createMovement::5f9e1a33-d7e8-440b-a01e-04dbe8165b3f::undefined - NaNms - Response: {"message":"Invalid cloud_name Pastal","name":"Error","http_code":401}::{"message":"Invalid cloud_name Pastal"}
+2024-07-30 17:23:33::info::/v1/api/movement/createMovement::4ef42ded-3cac-42dd-ad6d-887116deafcd::input-params ::POST::::{}
