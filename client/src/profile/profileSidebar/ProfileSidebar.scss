@@ -130,42 +130,77 @@
     }
 
     .sidebar__follow {
-        text-align: center;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .sidebar__follow__follow-container {
-            // position: relative;
-
+            position: relative;
+            display: flex;
+            align-items: center;
+            // max-width: 80px;
+            
             .sidebar__follow__follow-item {
+                transform: translateY(-50%);
 
                 &:nth-of-type(1) {
-                    position: absolute;
-                    top: 0px;
-                    left: 10px;
-                    z-index: 0;
+                    transform: translateX(0px);
+                    // position: absolute;
+                    // top: 0px;
+                    // left: 0px;
+                    z-index: 3;
                 }
 
                 &:nth-of-type(2) {
-                    position: absolute;
-                    top: 0px;
-                    left: 20px;
-                    z-index: 1;
-                }
-
-                &:nth-of-type(3) {
-                    position: absolute;
-                    top: 0px;
-                    left: 30px;
+                    transform: translateX(-12px);
+                    // position: absolute;
+                    // top: 0px;
+                    // left: 20px;
                     z-index: 2;
                 }
 
-                // position: absolute;
-                // left: 30px;
-                // top: 50%;
+                &:nth-of-type(3) {
+                    transform: translateX(-24px);
+                    z-index: 1;
+                    // position: absolute;
+                    // top: 0px;
+                    // left: 40px;
+                    // z-index: 1;
+                }
+
+                &:nth-of-type(4) {
+                    transform: translateX(-36px);
+                    z-index: 0;
+                    // position: absolute;
+                    // top: 0px;
+                    // left: 60px;
+                    // z-index: 0;
+                }
+
+                .user--left {
+                    position: relative;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .overlay {
+                    position: absolute;
+                    width: 32px;
+                    height: 32px;
+                    // left: 0;
+                    border-radius: 50%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    display: block;
+                    text-align: center;
+                    line-height: 32px;
+                    font-size: 1rem;
+                    color: white;
+                }
 
                 img {
                     // margin-right: 50%;
-                    transform: translateY(-50PX);
+                    // transform: translateY(-50PX);
                 }
             }
         }

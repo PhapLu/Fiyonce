@@ -20,7 +20,7 @@ class UserService {
             profileId,
             { $set: body },
             { new: true }
-        );
+        ).populate("followers", "avatar");
         return {
             user: updatedUser,
         };
