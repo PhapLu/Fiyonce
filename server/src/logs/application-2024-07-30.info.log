@@ -26,3 +26,57 @@
 2024-07-30 13:22:15::info::/v1/api/news/deleteNews/66a8848347ace990a76e0f95::b70e6dd7-1efc-40a2-a204-2c1d92c12385::input-params ::DELETE::::{}
 2024-07-30 13:22:24::info::/v1/api/news/createNews::e02eb308-56d7-4d22-a3ef-c9614c84c40d::input-params ::POST::::{}
 2024-07-30 13:22:34::info::/v1/api/news/readNewss::a51b617b-26c6-4916-b6cb-d96bb2541b6d::input-params ::GET::::{}
+2024-07-30 13:25:05::info::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::80fcca36-793b-4d11-b249-afe9779b4c77::input-params ::GET::::{}
+2024-07-30 13:25:05::error::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::80fcca36-793b-4d11-b249-afe9779b4c77::undefined - NaNms - Response: {"errors":{"views":{"stringValue":"\"NaN\"","valueType":"number","kind":"Number","value":null,"path":"views","reason":{"generatedMessage":true,"code":"ERR_ASSERTION","actual":false,"expected":true,"operator":"=="},"name":"CastError","message":"Cast to Number failed for value \"NaN\" (type number) at path \"views\""}},"_message":"News validation failed","name":"ValidationError","message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}::{"message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}
+2024-07-30 13:26:59::info::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::ff5793de-abb1-408c-bd8b-2efd083f8f99::input-params ::GET::::{}
+2024-07-30 13:26:59::error::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::ff5793de-abb1-408c-bd8b-2efd083f8f99::undefined - NaNms - Response: {"errors":{"views":{"stringValue":"\"NaN\"","valueType":"number","kind":"Number","value":null,"path":"views","reason":{"generatedMessage":true,"code":"ERR_ASSERTION","actual":false,"expected":true,"operator":"=="},"name":"CastError","message":"Cast to Number failed for value \"NaN\" (type number) at path \"views\""}},"_message":"News validation failed","name":"ValidationError","message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}::{"message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}
+2024-07-30 13:28:00::info::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::1bb091d5-404c-4868-a83d-209821f1c157::input-params ::GET::::{}
+2024-07-30 13:28:00::error::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::1bb091d5-404c-4868-a83d-209821f1c157::undefined - NaNms - Response: {"errors":{"views":{"stringValue":"\"NaN\"","valueType":"number","kind":"Number","value":null,"path":"views","reason":{"generatedMessage":true,"code":"ERR_ASSERTION","actual":false,"expected":true,"operator":"=="},"name":"CastError","message":"Cast to Number failed for value \"NaN\" (type number) at path \"views\""}},"_message":"News validation failed","name":"ValidationError","message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}::{"message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}
+2024-07-30 13:28:08::info::/v1/api/news/readNews/66a88631d946539fa17998b3::38ce860c-d85a-42d0-9600-723b96319ea2::input-params ::GET::::{}
+2024-07-30 13:28:08::error::/v1/api/news/readNews/66a88631d946539fa17998b3::38ce860c-d85a-42d0-9600-723b96319ea2::undefined - NaNms - Response: {"errors":{"views":{"stringValue":"\"NaN\"","valueType":"number","kind":"Number","value":null,"path":"views","reason":{"generatedMessage":true,"code":"ERR_ASSERTION","actual":false,"expected":true,"operator":"=="},"name":"CastError","message":"Cast to Number failed for value \"NaN\" (type number) at path \"views\""}},"_message":"News validation failed","name":"ValidationError","message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}::{"message":"News validation failed: views: Cast to Number failed for value \"NaN\" (type number) at path \"views\""}
+2024-07-30 13:30:02::info::/v1/api/news/readNews/66a88631d946539fa17998b3::19cfdc8e-eb21-4dcf-b4f4-b85f4857306f::input-params ::GET::::{}
+2024-07-30 13:32:11::info::/v1/api/news/readNews/66a8858356e8855239795dc8::1b1ca13e-cc3b-4d15-8ae9-efb77a047822::input-params ::GET::::{}
+2024-07-30 13:32:27::info::/v1/api/news/readNews/66a886a3d96ee65b8c36bb43::d7668ede-c645-47bd-b49e-86fdc5f44e55::input-params ::GET::::{}
+2024-07-30 13:33:52::info::/v1/api/news/readNewss::c356bb42-2a50-487f-b373-646b19140ad7::input-params ::GET::::{}
+2024-07-30 13:38:36::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::5b561286-7c4d-4cc0-aa88-aed02c31b693::input-params ::GET::::{}
+2024-07-30 13:38:36::error::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::5b561286-7c4d-4cc0-aa88-aed02c31b693::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-30 13:38:49::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::fac0b9d5-ea86-40e9-a735-ada054df2c04::input-params ::PATCH::::{}
+2024-07-30 13:39:41::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::7ce5bb04-e49f-4a74-a2f2-f5b0f71eba25::input-params ::PATCH::::{}
+2024-07-30 13:41:40::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::93a4d500-ed8d-4ced-9916-069816ea43ff::input-params ::PATCH::::{}
+2024-07-30 13:41:40::error::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::93a4d500-ed8d-4ced-9916-069816ea43ff::undefined - NaNms - Response: {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"thumbnail","storageErrors":[]}::{"message":"Unexpected field"}
+2024-07-30 13:42:30::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::93bef0c1-440e-49c1-bb69-e83ad4b1ae09::input-params ::PATCH::::{}
+2024-07-30 13:43:21::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::82c0dbe2-fe90-463d-ab35-f3ca6495fbba::input-params ::PATCH::::{}
+2024-07-30 13:43:53::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::d03bf8da-9424-45c2-8a92-5b9a47127f67::input-params ::PATCH::::{}
+2024-07-30 13:44:16::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::23025ddd-c6df-4606-a02e-6f5a02b7ac4d::input-params ::PATCH::::{}
+2024-07-30 13:45:06::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::168742cd-1336-4f1f-b85c-25d1ee1e7b22::input-params ::PATCH::::{}
+2024-07-30 13:45:07::error::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::168742cd-1336-4f1f-b85c-25d1ee1e7b22::403 - 1ms - Response: {"status":403,"now":1722321907095}::{"message":"Error updating news"}
+2024-07-30 13:45:18::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::264eed55-db77-46ca-92ab-7bba2c69a448::input-params ::PATCH::::{}
+2024-07-30 13:45:57::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::e8d98cce-4055-429b-b9ec-c756af8e1663::input-params ::PATCH::::{}
+2024-07-30 13:49:57::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::346ac5b3-7fe2-446e-8b4f-064e9b4e1fe0::input-params ::PATCH::::{}
+2024-07-30 13:51:00::info::/v1/api/news/createNews::9b2c2df8-1a11-4202-9a21-e469c077c435::input-params ::POST::::{}
+2024-07-30 13:54:10::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::94cf79da-4f97-43ac-8629-2a84b1a1336f::input-params ::PATCH::::{}
+2024-07-30 13:54:11::error::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::94cf79da-4f97-43ac-8629-2a84b1a1336f::403 - 1ms - Response: {"status":403,"now":1722322451142}::{"message":"Error updating news"}
+2024-07-30 13:54:58::info::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::d039023d-ec73-45f0-bd6f-381c4cb826e2::input-params ::PATCH::::{}
+2024-07-30 13:57:18::info::/v1/api/news/createNews::8139898b-a4ba-455f-b2ec-b29e7de1cacc::input-params ::POST::::{}
+2024-07-30 13:57:46::info::/v1/api/news/updateNews/66a88ed19b851785137a045b::7d0d119e-1918-4c47-bc84-22715dc29004::input-params ::PATCH::::{}
+2024-07-30 13:59:20::info::/v1/api/news/createNews::b901ab77-61f4-4a66-957e-e3a4fb506a4d::input-params ::POST::::{}
+2024-07-30 13:59:57::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::c7f1dfd9-a6d7-4df6-a6a2-f4e962c0328f::input-params ::PATCH::::{}
+2024-07-30 15:38:15::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::f6defb0b-25a8-4c01-ae5a-da1c5dc91826::input-params ::PATCH::::{}
+2024-07-30 15:39:10::info::/v1/api/news/createNews::ced86284-ef26-4ce4-bda9-479269e94e59::input-params ::POST::::{}
+2024-07-30 15:41:37::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::f86f77f7-5a7a-4299-841c-79feeffafdb8::input-params ::PATCH::::{}
+2024-07-30 15:42:31::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::c71ee78d-79b2-415c-aceb-0326f3c9fee4::input-params ::PATCH::::{}
+2024-07-30 15:43:41::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::d016e1b1-22ea-4e0a-ab2f-4aa340f10de1::input-params ::PATCH::::{}
+2024-07-30 15:43:52::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::237a3e38-0c7a-43c3-aad9-77399dae7005::input-params ::PATCH::::{}
+2024-07-30 15:45:06::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::bfa63383-8ba0-4b2b-ad35-1a4a950b00a6::input-params ::PATCH::::{}
+2024-07-30 15:49:38::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::26d2fdf5-240d-4494-9f36-29d0f16a99df::input-params ::PATCH::::{}
+2024-07-30 15:52:49::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::fd380af5-0fbd-495b-ba75-d8ff809e64ee::input-params ::PATCH::::{}
+2024-07-30 15:54:44::info::/v1/api/news/createNews::034af64e-0bb3-4899-a91c-1ef61daecbf6::input-params ::POST::::{}
+2024-07-30 15:54:56::info::/v1/api/news/updateNews/66a88f4b6591f1237638365c::1acba278-95ac-4090-9077-648b5d242b3a::input-params ::PATCH::::{}
+2024-07-30 15:57:00::info::/v1/api/news/createNews::b322f233-163f-4c6e-b7e8-b0d5818a1254::input-params ::POST::::{}
+2024-07-30 15:57:00::error::/v1/api/news/createNews::b322f233-163f-4c6e-b7e8-b0d5818a1254::undefined - NaNms - Response: {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"thumbnail","storageErrors":[]}::{"message":"Unexpected field"}
+2024-07-30 15:57:47::info::/v1/api/news/createNews::6f3d90cb-50b4-45dc-a76d-c75696478b89::input-params ::POST::::{}
+2024-07-30 15:58:29::info::/v1/api/news/updateNews/66a8ab0ecdbe09cfa34f777f::98312b4a-5ddd-4e2b-9bad-6320c3a80f52::input-params ::PATCH::::{}
+2024-07-30 16:01:46::info::/v1/api/movement/createMovement::42ce3b26-11b2-4345-b142-ecd3b9623097::input-params ::POST::::{}
+2024-07-30 16:02:05::info::/v1/api/movement/updateMovement/66a8abfd38623c4209df806d::1c4a6be9-d3be-490a-9125-3f6abab89e6c::input-params ::PATCH::::{}
+2024-07-30 16:05:17::info::/v1/api/movement/createMovement::715f1488-4173-42d3-926a-a982408c5079::input-params ::POST::::{}
+2024-07-30 16:05:36::info::/v1/api/movement/updateMovement/66a8acd038623c4209df8075::63eba8a0-6d71-4580-a403-17af95fdb60a::input-params ::PATCH::::{}

@@ -8,7 +8,7 @@ const NewsSchema = new mongoose.Schema(
         subTitle: { type: String, default: "" },
         content: { type: String, required: true },
         thumbnail: { type: String, required: true },
-        views: { type: Number},
+        views: { type: Number, default: 0},
         isPinned: { type: Boolean, required: true, default: false },
         isPrivate: { type: Boolean, required: true, default: true},
     },

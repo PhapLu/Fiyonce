@@ -22,13 +22,13 @@ class NewsService {
         if(!req.body.title) throw new BadRequestError("Please provide title")
         if(!req.body.content) throw new BadRequestError("Please provide content")
         if(req.files && !req.files.thumbnail) throw new BadRequestError("Please provide thumbnail")
-
+        if(req.files && req.files.thumbnail.length == 0) throw new BadRequestError("Please provide thumbnail")
         try {
             //3. Upload thumbnail to cloudinary
             const thumbnailUploadResult = await compressAndUploadImage({
                 buffer: req.files.thumbnail[0].buffer,
                 originalname: req.files.thumbnail[0].originalname,
-                folderName: `fiyonce/news/admin: ${adminId}`,
+                folderName: `fiyonce/news/admin`,
                 width: 1920,
                 height: 1080
             })
@@ -99,20 +99,21 @@ class NewsService {
         try {
             //3. Upload thumbnail to cloudinary
             if(req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
+                const thumbnailToDelete = news.thumbnail
+                console.log(thumbnailToDelete);
                 const thumbnailUploadResult = await compressAndUploadImage({
                     buffer: req.files.thumbnail[0].buffer,
                     originalname: req.files.thumbnail[0].originalname,
-                    folderName: `fiyonce/news/admin: ${adminId}`,
+                    folderName: `fiyonce/news/admin`,
                     width: 1920,
                     height: 1080
                 })
                 const thumbnail = thumbnailUploadResult.secure_url
-                news.thumbnail = thumbnail
-    
+                
                 //4. Delete old thumbnail
-                const oldThumbnailPublicId = extractPublicIdFromUrl(news.thumbnail)
+                const oldThumbnailPublicId = extractPublicIdFromUrl(thumbnailToDelete)
                 await deleteFileByPublicId(oldThumbnailPublicId)
-    
+                news.thumbnail = thumbnail
             }
             
             //4. Check if pinned news is at limit(3), if so, unpin the oldest

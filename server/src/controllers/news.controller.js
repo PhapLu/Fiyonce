@@ -10,6 +10,7 @@ class NewsController{
     }
 
     readNews = async(req, res, next) => {
+        console.log('start');
         new SuccessResponse({
             message: 'Read news success!',
             metadata: await NewsService.readNews(req.params.newsId)
