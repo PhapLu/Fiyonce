@@ -33,6 +33,7 @@ class PostCategoryService {
             };
         } catch (error) {
             console.log(error)
+            throw new BadRequestError("Error creating post category");
         }
     };
 

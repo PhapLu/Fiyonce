@@ -86,12 +86,13 @@ class MovementService {
         const movement = await Movement.findById(movementId);
 
         if (!admin) throw new AuthFailureError("Admin not found");
+        if(admin.role !== 'admin') throw new AuthFailureError("Unauthorized");
         if (!movement) throw new BadRequestError("Movement not found");
 
         // 2. Handle thumbnail upload
         try {
             let thumbnailUrl = movement.thumbnail; // Retain the existing thumbnail URL
-
+            console.log(thumbnailUrl);
             if (
                 req.files &&
                 req.files.thumbnail &&
@@ -105,9 +106,12 @@ class MovementService {
                     height: 1080,
                 });
                 thumbnailUrl = thumbnailUploadResult.secure_url;
+                console.log(thumbnailUrl);
 
                 // 3. Delete old thumbnail from cloudinary if a new one is uploaded
                 if (thumbnailUploadResult && movement.thumbnail !== "") {
+                    console.log('Delete');
+                    console.log(movement.thumbnail);
                     const publicId = extractPublicIdFromUrl(movement.thumbnail);
                     await deleteFileByPublicId(publicId);
                 }

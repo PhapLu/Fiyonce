@@ -585,6 +585,7 @@ class OrderService {
                 template
             );
         } catch (error) {
+            console.error("Error sending email:", error);
             throw new BadRequestError("Email service error");
         }
 
