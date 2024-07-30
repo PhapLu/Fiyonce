@@ -86,6 +86,7 @@ class MovementService {
         const movement = await Movement.findById(movementId);
 
         if (!admin) throw new AuthFailureError("Admin not found");
+        if(admin.role !== 'admin') throw new AuthFailureError("Unauthorized");
         if (!movement) throw new BadRequestError("Movement not found");
 
         // 2. Handle thumbnail upload

@@ -1,0 +1,28 @@
+2024-07-30 13:09:17::info::/v1/api/news/createNews::9e3b9490-d64c-4bdd-a6bb-639e2825c1ea::input-params ::POST::::{}
+2024-07-30 13:09:17::error::/v1/api/news/createNews::9e3b9490-d64c-4bdd-a6bb-639e2825c1ea::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'role')"}
+2024-07-30 13:09:29::info::/v1/api/auth/users/login::e3e5395f-75d7-41fb-a818-e86875471273::input-params ::POST::::{"email":"taichinhlcp@gmail.com","password":"123456789AZ@"}
+2024-07-30 13:09:32::info::/v1/api/news/createNews::03b836b7-2e71-432b-a41d-213ac349566b::input-params ::POST::::{}
+2024-07-30 13:09:55::info::/v1/api/auth/users/login::20530a71-00e9-4bc9-a311-22573a25dd44::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-07-30 13:10:04::info::/v1/api/news/createNews::56a30d6b-4f8d-453f-8aa2-6fc8cef1dfe6::input-params ::POST::::{}
+2024-07-30 13:11:40::info::/v1/api/news/createNews::f0189fa4-13d9-4d47-9b34-a5f78553ca9e::input-params ::POST::::{}
+2024-07-30 13:12:18::info::/v1/api/news/readNews::55082e05-d2d1-460f-ac09-23ff9167ba15::input-params ::GET::::{}
+2024-07-30 13:12:18::error::/v1/api/news/readNews::55082e05-d2d1-460f-ac09-23ff9167ba15::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-30 13:12:23::info::/v1/api/news/readNewss::f40699a9-9322-42e5-8cc3-f20bb006fc1e::input-params ::GET::::{}
+2024-07-30 13:12:39::info::/v1/api/news/createNews::03735786-3200-41e5-b5b6-8b4db4a3b81d::input-params ::POST::::{}
+2024-07-30 13:12:48::info::/v1/api/news/readNewss::1dbfee53-cd2d-49e4-984a-0d33017862fc::input-params ::GET::::{}
+2024-07-30 13:13:07::info::/v1/api/news/createNews::0b584530-c645-417e-afb1-7074137b0ed7::input-params ::POST::::{}
+2024-07-30 13:13:20::info::/v1/api/news/createNews::f71ccdd9-91a4-4333-8e4e-8107e21a6271::input-params ::POST::::{}
+2024-07-30 13:14:18::info::/v1/api/news/createNews::443dbae7-0d3f-4f3c-b602-7bfa1134ce58::input-params ::POST::::{}
+2024-07-30 13:14:30::info::/v1/api/news/readNewss::a4e1bbbd-01ae-4363-b7d9-18fba5833124::input-params ::GET::::{}
+2024-07-30 13:15:11::info::/v1/api/news/readNewss::e34f4ea7-4276-4bda-8e20-137b4d1a88b6::input-params ::GET::::{}
+2024-07-30 13:17:36::info::/v1/api/news/createNews::cbe4175a-da14-4191-bd27-3cfbd3f23422::input-params ::POST::::{}
+2024-07-30 13:17:45::info::/v1/api/news/readNewss::d27b8179-b924-4787-91df-25bac5743e5f::input-params ::GET::::{}
+2024-07-30 13:19:21::info::/v1/api/news/deleteNews/66a8841e47ace990a76e0f87::31301e7c-9a5c-405b-8b9e-e078430f0cfa::input-params ::GET::::{}
+2024-07-30 13:19:21::error::/v1/api/news/deleteNews/66a8841e47ace990a76e0f87::31301e7c-9a5c-405b-8b9e-e078430f0cfa::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-07-30 13:19:49::info::/v1/api/news/deleteNews/66a8841e47ace990a76e0f87::b9c5965e-855e-40b3-b189-a86a97fce214::input-params ::DELETE::::{}
+2024-07-30 13:20:08::info::/v1/api/news/readNewss::108b531f-b9fd-49ac-ad81-22f05324e1d4::input-params ::GET::::{}
+2024-07-30 13:20:31::info::/v1/api/news/createNews::970cfb3f-60c9-4950-b29e-fb7fbf3ac42b::input-params ::POST::::{}
+2024-07-30 13:20:40::info::/v1/api/news/readNewss::76844ec9-3069-4c76-a1d4-800d5360ddcd::input-params ::GET::::{}
+2024-07-30 13:22:15::info::/v1/api/news/deleteNews/66a8848347ace990a76e0f95::b70e6dd7-1efc-40a2-a204-2c1d92c12385::input-params ::DELETE::::{}
+2024-07-30 13:22:24::info::/v1/api/news/createNews::e02eb308-56d7-4d22-a3ef-c9614c84c40d::input-params ::POST::::{}
+2024-07-30 13:22:34::info::/v1/api/news/readNewss::a51b617b-26c6-4916-b6cb-d96bb2541b6d::input-params ::GET::::{}
