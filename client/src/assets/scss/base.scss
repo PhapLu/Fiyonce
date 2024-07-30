@@ -2,6 +2,7 @@
 
 :root {
     // Light theme colors
+    --black-1-color: black;
     --black-1-color: #2a2b2c;
     --black-2-color: #262626;
     --black-3-color: #191919;
@@ -50,6 +51,7 @@
 body.dark {
     transition: 0s linear;
     // Light theme colors
+    --black-color: white;
     --black-1-color: #dddddd;
     --black-2-color: #a8a8a8;
     --black-3-color: rgb(187, 183, 183);
@@ -327,6 +329,18 @@ img {
 
 .display-inline-block {
     display: inline-block;
+}
+
+.w-30 {
+    width: 30% !important;
+}
+
+.w-40 {
+    width: 40% !important;
+}
+
+.w-50 {
+    width: 50% !important;
 }
 
 .w-100 {
@@ -931,6 +945,20 @@ table {
             width: 48%;
         }
 
+    }
+
+    .third-split {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+
+        .form-field__label {}
+
+        .form-field__input {
+            width: 30%;
+        }
     }
 
     .form-field__error {

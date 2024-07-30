@@ -1,52 +1,92 @@
+// Imports
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+
+// Components
+
+import CreateNews from '../../components/crudNews/create/CreateNews.jsx';
+import UpdateNews from '../../components/crudNews/update/UpdateNews.jsx';
+import DeleteNews from '../../components/crudNews/delete/DeleteNews.jsx';
+
+
+// Contexts
+import { useModal } from "../../contexts/modal/ModalContext.jsx";
+
+// Utils
 import { apiUtils } from '../../utils/newRequest';
 
 // Styling
 import "./NewsDashboard.scss";
+import { isFilled } from '../../utils/validator';
+import { limitString } from '../../utils/formatter.js';
 
 export default function NewsDashboard() {
     const [overlayVisible, setOverlayVisible] = useState(false);
-    const [showCreateNewsForm, setShowCreateNewsForm] = useState(false);
-    const [showUpdateNewsForm, setShowUpdateNewsForm] = useState(false);
-    const [showDeleteNewsForm, setShowDeleteNewsForm] = useState(false);
-    const [selectedNews, setSelectedNews] = useState(null);
-    const [inputs, setInputs] = useState({});
-    const [errors, setErrors] = useState({});
-    const [thumbnail, setThumbnail] = useState(null);
+    const [showCreateNews, setShowCreateNews] = useState(false);
+    const [showUpdateNews, setShowUpdateNews] = useState(false);
+    const [showDeleteNews, setShowDeleteNews] = useState(false);
+    const [news, setNews] = useState(null);
 
     const queryClient = useQueryClient();
+    const [isSubmitCreateNewsLoading, setIsSubmitCreateNewsLoading] = useState(false);
+    const { setModalInfo } = useModal();
 
     const fetchNewss = async () => {
         try {
             const response = await apiUtils.get("/news/readNewss");
+            console.log(response);
             return response.data.metadata.newss;
         } catch (error) {
             return null;
         }
     };
 
-    const { data: newss, isError, error, isLoading } = useQuery('newss', fetchNewss);
-
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
-        if (name === 'thumbnail') {
-            setThumbnail(URL.createObjectURL(files[0]));
+    const { data: newss, isError, error, isLoading } = useQuery('fetchNewss', fetchNewss);
+    const createNewsMutation = useMutation(
+        (newNews) => apiUtils.post("/news/createNews", newNews),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchNewss');
+                setOverlayVisible(false);
+                setShowCreateNews(false);
+                setModalInfo({
+                    status: "success",
+                    message: "Tạo bản tin thành công"
+                })
+            }
         }
-        setInputs(prev => ({ ...prev, [name]: value }));
-    };
+    );
 
-    const handleSubmit = async () => {
-        // Implement form submission logic
-    };
+    const updateNewsMutation = useMutation(
+        (updatedNews) => apiUtils.patch(`/news/updateNews/${updatedNews.get("_id")}`, updatedNews),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchNewss');
+                setOverlayVisible(false);
+                setShowUpdateNews(false);
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật bản tin thành công"
+                })
+            }
+        }
+    );
 
-    const handleUpdateNews = (news) => {
-        // Implement update logic
-    };
+    const deleteNewsMutation = useMutation(
+        (newsId) => apiUtils.delete(`/news/deleteNews/${newsId}`),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchNewss');
+                setOverlayVisible(false);
+                setShowDeleteNews(false);
+                setModalInfo({
+                    status: "success",
+                    message: "Xóa bản tin thành công"
+                })
+            }
+        }
+    );
 
-    const handleDeleteNews = (news) => {
-        // Implement delete logic
-    };
 
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error: {error.message}</div>;
@@ -58,132 +98,58 @@ export default function NewsDashboard() {
                     <div className="section-header">
                         <div className="section-header--left">
                             <h3 className="section-header__title">Bản tin</h3>
-                            <svg onClick={() => { setShowCreateNewsForm(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 btn add-btn">
+                            <svg onClick={() => { setOverlayVisible(true); setShowCreateNews(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 btn add-btn">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </div>
                     </div>
 
-                    {true && (
-                        <div className="news-form-container mb-32">
-                            <div className="form-section">
-                                <h2 className="form__title">Thêm tin tức</h2>
-                                <div className="form-field">
-                                    <label htmlFor="title" className="form-field__label">Tiêu đề</label>
-                                    <input
-                                        id="title"
-                                        name="title"
-                                        value={inputs?.title || ''}
-                                        onChange={handleChange}
-                                        className="form-field__input"
-                                        placeholder="Nhập tiêu đề"
-                                    />
-                                    {errors.title && <span className="form-field__error">{errors.title}</span>}
-                                </div>
-
-                                <div className="form-field">
-                                    <label htmlFor="subTitle" className="form-field__label">Tiêu đề phụ</label>
-                                    <input
-                                        id="subTitle"
-                                        name="subTitle"
-                                        value={inputs?.subTitle || ''}
-                                        onChange={handleChange}
-                                        className="form-field__input"
-                                        placeholder="Nhập tiêu đề phụ"
-                                    />
-                                    {errors.subTitle && <span className="form-field__error">{errors.subTitle}</span>}
-                                </div>
-
-                                <div className="form-field">
-                                    <div className="form-field half-split">
-                                        <select className="form-field__input" name="isPrivate" value={inputs?.isPrivate || ''} onChange={handleChange} className="form-field__input">
-                                            <option value="true">Công khai</option>
-                                            <option value="false">Riêng tư</option>
-                                        </select>
-
-                                        <select className="form-field__input" name="isPinned" value={inputs?.isPinned || ''} onChange={handleChange} className="form-field__input">
-                                            <option value="true">Có</option>
-                                            <option value="false">Không</option>
-                                        </select>
-                                        {errors.isPrivate && <span className="form-field__error">{errors.isPrivate}</span>}
-                                        {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
-                                    </div>
-
-                                </div>
-
-                                <div className="form-field">
-                                    <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
-                                    <input type="file" className="form-field__input" name="thumbnail" id="fileInput" onChange={handleChange} />
-                                    {errors.thumbnail && <span className="form-field__error">{errors.thumbnail}</span>}
-                                </div>
-
-                                <div className="form-field">
-                                    <label htmlFor="content" className="form-field__label">Content</label>
-                                    <textarea name="content" value={inputs?.content || ''} onChange={handleChange} className="form-field__input"></textarea>
-                                    {errors.content && <span className="form-field__error">{errors.content}</span>}
-                                </div>
-
-                                {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-
-                                <div className="form-field">
-                                    <button type="submit" className="form-field__input btn btn-2 btn-md" disabled={isLoading} onClick={handleSubmit}>
-                                        {isLoading ? 'Đang thêm...' : 'Thêm mới'}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="preview-section">
-                                <h2 className="form__title">Preview</h2>
-                                {thumbnail && (
-                                    <img src={thumbnail} alt="Thumbnail" className="preview-section__thumbnail" />
-                                )}
-
-                            <h2 className='text-align-center'>{inputs?.title}</h2>
-                            <h4 className='text-align-center'>{inputs?.subTitle}</h4>
-                            <div contentEditable='true' dangerouslySetInnerHTML={{ __html: `${inputs?.content}` }}></div>
-                        </div>
-                        </div>
-                    )}
-
-
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>STT</th>
-                        <th>Tiêu đề</th>
-                        <th>Lượt xem</th>
-                        <th>Cập nhật lúc</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        newss?.length > 0 ? (
-                            newss.map((news, index) => (
-                                <tr key={news._id}>
-                                    <td><img src={news.thumbnail} alt="" /></td>
-                                    <td>{index + 1}</td>
-                                    <td>{news.title} | {news.subTitle} </td>
-                                    <td>{news.views}</td>
-                                    <td>{news.updatedAt}</td>
-                                    <td>
-                                        <button className="btn btn-2" onClick={() => handleUpdateNews(news)}>Chỉnh sửa</button>
-                                        <button className="btn btn-3" onClick={() => handleDeleteNews(news)}>Xóa</button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
+                    <table>
+                        <thead>
                             <tr>
-                                <td colSpan="5">Không có dữ liệu</td>
+                                <th></th>
+                                <th>STT</th>
+                                <th>Tiêu đề</th>
+                                <th>Lượt xem</th>
+                                <th>Cập nhật lúc</th>
+                                <th>Thao tác</th>
                             </tr>
-                        )
-                    }
-                </tbody>
-            </table>
-        </section >
-
+                        </thead>
+                        <tbody>
+                            {
+                                newss?.length > 0 ? (
+                                    newss.map((news, index) => (
+                                        <tr key={news._id}>
+                                            <td><img src={news.thumbnail} alt="" /></td>
+                                            <td>{index + 1}</td>
+                                            <td><span className='fw-bold'>{news.title}</span>
+                                                <br />{limitString(news.subTitle, 50)} </td>
+                                            <td>{news.views}</td>
+                                            <td>{news.updatedAt}</td>
+                                            <td>
+                                                <button className="btn btn-2" onClick={() => { setNews(news); setOverlayVisible(true); setShowUpdateNews(true) }}>Chỉnh sửa</button>
+                                                <button className="btn btn-3" onClick={() => { setNews(news); setOverlayVisible(true); setShowDeleteNews(true) }}>Xóa</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="5">Không có dữ liệu</td>
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </section >
             </div >
+            {overlayVisible && (
+                <div className="overlay">
+                    {showCreateNews && <CreateNews news={news} setShowCreateNews={setShowCreateNews} setOverlayVisible={setOverlayVisible} createNewsMutation={createNewsMutation} />}
+                    {showUpdateNews && <UpdateNews news={news} setShowUpdateNews={setShowUpdateNews} setOverlayVisible={setOverlayVisible} updateNewsMutation={updateNewsMutation} />}
+                    {showDeleteNews && <DeleteNews news={news} setShowDeleteNews={setShowDeleteNews} setOverlayVisible={setOverlayVisible} deleteNewsMutation={deleteNewsMutation} />}
+                </div>
+            )}
+
         </>
     );
 }

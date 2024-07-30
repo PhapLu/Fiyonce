@@ -1,27 +1,57 @@
 import { useState, useEffect, useRef } from "react";
 import { isFilled } from "../../../utils/validator.js";
-import "./CreateNews.scss"
+import { useQuery } from "react-query";
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
     ClassicEditor, ImageInsert,
+    Highlight,
     ImageResize,
     ImageStyle,
     ImageToolbar,
     ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
 } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css';
-export default function CreateNews({
-    setShowCreateNews,
+import { apiUtils } from "../../../utils/newRequest.js";
+
+export default function UpdateNews({
+    news,
+    setShowUpdateNews,
     setOverlayVisible,
-    createNewsMutation,
+    updateNewsMutation,
 }) {
+
+    const fetchNewsById = async () => {
+        try {
+            const response = await apiUtils.get(`/news/readNews/${news._id}`);
+            return response.data.metadata.news;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    };
+
+    const {
+        data: newsData,
+        error,
+        isError,
+        isLoading,
+    } = useQuery("fetchNewsById", fetchNewsById);
+
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [thumbnail, setThumbnail] = useState(null);
-    const createCommissionRef = useRef();
-    const [isSubmitCreateNewsLoading, setIsSubmitCreateNewsLoading] = useState();
-    const [editorData, setEditorData] = useState('');
+    const updateCommissionRef = useRef();
+    const [isSubmitUpdateNewsLoading, setIsSubmitUpdateNewsLoading] = useState();
+    const [editorData, setEditorData] = useState("");
+
+    useEffect(() => {
+        if (newsData) {
+            setInputs(newsData);
+            setEditorData(newsData?.content);
+            setThumbnail(newsData?.thumbnail || null);
+        }
+    }, []);
 
     const handleImageChange = (event) => {
         const { name, value, files } = event.target;
@@ -67,12 +97,12 @@ export default function CreateNews({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitCreateNewsLoading(true);
+        setIsSubmitUpdateNewsLoading(true);
 
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitCreateNewsLoading(false);
+            setIsSubmitUpdateNewsLoading(false);
             return;
         }
 
@@ -89,34 +119,31 @@ export default function CreateNews({
             console.log(inputs)
             console.log(thumbnail)
 
-            const response = await createNewsMutation.mutateAsync(fd);
+            const response = await updateNewsMutation.mutateAsync(fd);
             console.log(response);
-            setModalInfo({
-                status: "success",
-                message: "Thêm bản tin thành công"
-            })
+        
         } catch (error) {
-            console.error("Failed to create new news:", error);
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                serverError: error.response.data.message
-            }));
+            console.error("Failed to update new news:", error);
+            // setErrors((prevErrors) => ({
+            //     ...prevErrors,
+            //     serverError: error.response.data.message
+            // }));
         } finally {
-            setIsSubmitCreateNewsLoading(false);
+            setIsSubmitUpdateNewsLoading(false);
         }
     };
 
     return (
-        <div className="create-commission-service modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
+        <div className="update-commission-service modal-form type-2" ref={updateCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateNews(false);
+                setShowUpdateNews(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
             <div className="modal-form--left">
-                <h2 className="form__title">Thêm tin tức</h2>
+                <h2 className="form__title">Cập nhật tin tức</h2>
                 <div className="form-field">
                     <label htmlFor="title" className="form-field__label">Tiêu đề</label>
                     <input
@@ -145,9 +172,17 @@ export default function CreateNews({
 
                 <div className="form-field">
                     <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
+                    
+                    <div className="form-field__input img-preview">
+                        <div className="img-preview--left">
+                            <img src={thumbnail instanceof File ? URL.createObjectURL(thumbnail) : thumbnail} alt="Artwork 1" className="img-preview__img" />
+                            <div className="img-preview__info">
+                                <span className="img-preview__name">Preview</span>
+                            </div>
+                        </div>
+                    </div>
                     <input type="file" className="form-field__input" name="thumbnail" id="fileInput" onChange={handleImageChange} />
                     {errors.thumbnail && <span className="form-field__error">{errors.thumbnail}</span>}
-                    {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
                 </div>
 
                 <div className="form-field">
@@ -181,13 +216,14 @@ export default function CreateNews({
                         config={{
                             plugins: [Essentials, ImageInsert,
                                 ImageResize,
+                                Highlight,
                                 ImageStyle,
                                 ImageToolbar,
                                 ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
                             toolbar: {
                                 items: [
                                     'sourceEditing', '|', 'bold', 'italic', '|',
-                                    'fontSize', 'fontFamily', 'fontColor', '|'
+                                    'fontSize', 'highlight', 'fontColor', '|'
                                 ]
                             },
                             mention: {
@@ -205,15 +241,15 @@ export default function CreateNews({
             {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
 
             <div className="form__submit-btn-container">
-                <button type="submit" className="btn btn-2 btn-md form__submit-btn-item" disabled={isSubmitCreateNewsLoading} onClick={handleSubmit}>
-                    {isSubmitCreateNewsLoading ? 'Đang thêm...' : 'Thêm mới'}
+                <button type="submit" className="btn btn-2 btn-md form__submit-btn-item" disabled={isSubmitUpdateNewsLoading} onClick={handleSubmit}>
+                    {isSubmitUpdateNewsLoading ? 'Đang cập nhật...' : 'Cập nhật'}
                 </button>
             </div>
 
 
             {/* <div className="preview-section border-text">
                 {thumbnail && (
-                    <img src={URL.createObjectURL(thumbnail)} alt="Thumbnail" className="preview-section__thumbnail" />
+                    <img src={URL.updateObjectURL(thumbnail)} alt="Thumbnail" className="preview-section__thumbnail" />
                 )}
 
                 <h2 className='text-align-center'>{inputs?.title}</h2>

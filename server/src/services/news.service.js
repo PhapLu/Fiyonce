@@ -15,14 +15,14 @@ class NewsService {
     static createNews = async (adminId, req) => {
         //1. Check admin
         const admin = await User.findById(adminId)
-        if(!admin) throw new AuthFailureError("Admin not found")
-        if(admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
 
         //2. Validate request body
-        if(!req.body.title) throw new BadRequestError("Please provide title")
-        if(!req.body.content) throw new BadRequestError("Please provide content")
-        if(req.files && !req.files.thumbnail) throw new BadRequestError("Please provide thumbnail")
-        if(req.files && req.files.thumbnail.length == 0) throw new BadRequestError("Please provide thumbnail")
+        if (!req.body.title) throw new BadRequestError("Please provide title")
+        if (!req.body.content) throw new BadRequestError("Please provide content")
+        if (req.files && !req.files.thumbnail) throw new BadRequestError("Please provide thumbnail")
+        if (req.files && req.files.thumbnail.length == 0) throw new BadRequestError("Please provide thumbnail")
         try {
             //3. Upload thumbnail to cloudinary
             const thumbnailUploadResult = await compressAndUploadImage({
@@ -33,11 +33,11 @@ class NewsService {
                 height: 1080
             })
             const thumbnail = thumbnailUploadResult.secure_url
-            
+
             //4. Check if pinned news is at limit(3), if so, unpin the oldest
-            if(req.body.isPinned && req.body.isPinned === 'true') {
-                const pinnedNews = await News.find({isPinned: true})
-                if(pinnedNews.length >= 3) {
+            if (req.body.isPinned && req.body.isPinned === 'true') {
+                const pinnedNews = await News.find({ isPinned: true })
+                if (pinnedNews.length >= 3) {
                     const oldestPinnedNews = pinnedNews.sort((a, b) => a.createdAt - b.createdAt)[0]
                     oldestPinnedNews.isPinned = false
                     await oldestPinnedNews.save()
@@ -50,7 +50,7 @@ class NewsService {
                 ...req.body
             })
             await news.save()
-    
+
             return {
                 news
             }
@@ -63,7 +63,7 @@ class NewsService {
     static readNews = async (newsId) => {
         //1. Check news
         const news = await News.findById(newsId)
-        if(!news) throw new NotFoundError("News not found")
+        if (!news) throw new NotFoundError("News not found")
 
         //2. Increment views
         news.views += 1
@@ -74,31 +74,29 @@ class NewsService {
         }
     }
 
-    static readNewss = async() => {
+    static readNewss = async () => {
         //1. Read pinned news and the rest
-        const news = await News.find().sort({isPinned: -1, createdAt: -1})
-        const pinnedNews = news.filter(news => news.isPinned)
-        const otherNews = news.filter(news => !news.isPinned)
+        const newss = await News.find().sort({ isPinned: -1, createdAt: -1 })
+
 
         return {
-            pinnedNews,
-            otherNews
+            newss
         }
     }
 
     static updateNews = async (adminId, newsId, req) => {
         //1. Check admin
         const admin = await User.findById(adminId)
-        if(!admin) throw new AuthFailureError("Admin not found")
-        if(admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
 
         //2. Check if news exists
         const news = await News.findById(newsId)
-        if(!news) throw new NotFoundError("News not found")
+        if (!news) throw new NotFoundError("News not found")
 
         try {
             //3. Upload thumbnail to cloudinary
-            if(req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
+            if (req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
                 const thumbnailToDelete = news.thumbnail
                 console.log(thumbnailToDelete);
                 const thumbnailUploadResult = await compressAndUploadImage({
@@ -109,17 +107,17 @@ class NewsService {
                     height: 1080
                 })
                 const thumbnail = thumbnailUploadResult.secure_url
-                
+
                 //4. Delete old thumbnail
                 const oldThumbnailPublicId = extractPublicIdFromUrl(thumbnailToDelete)
                 await deleteFileByPublicId(oldThumbnailPublicId)
                 news.thumbnail = thumbnail
             }
-            
+
             //4. Check if pinned news is at limit(3), if so, unpin the oldest
-            if(req.body.isPinned && req.body.isPinned === 'true') {
-                const pinnedNews = await News.find({isPinned: true})
-                if(pinnedNews.length >= 3) {
+            if (req.body.isPinned && req.body.isPinned === 'true') {
+                const pinnedNews = await News.find({ isPinned: true })
+                if (pinnedNews.length >= 3) {
                     const oldestPinnedNews = pinnedNews.sort((a, b) => a.createdAt - b.createdAt)[0]
                     oldestPinnedNews.isPinned = false
                     await oldestPinnedNews.save()
@@ -133,7 +131,7 @@ class NewsService {
             news.isPinned = req.body.isPinned || news.isPinned
             news.isPrivate = req.body.isPrivate || news.isPrivate
             await news.save()
-    
+
             return {
                 news
             }
@@ -146,12 +144,12 @@ class NewsService {
     static deleteNews = async (adminId, newsId) => {
         //1. Check admin
         const admin = await User.findById(adminId)
-        if(!admin) throw new AuthFailureError("Admin not found")
-        if(admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
 
         //2. Check if news exists
         const news = await News.findById(newsId)
-        if(!news) throw new NotFoundError("News not found")
+        if (!news) throw new NotFoundError("News not found")
 
         //3. Delete thumbnail
         const thumbnailPublicId = extractPublicIdFromUrl(news.thumbnail)

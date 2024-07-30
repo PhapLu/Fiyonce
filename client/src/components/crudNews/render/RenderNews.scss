@@ -5,7 +5,7 @@
         text-align: center;
 
         .news-header__title {
-            color: var(--black-1-color);
+            color: var(--black-color);
             font-size: 3rem;
         }
 
@@ -18,18 +18,35 @@
         .news-header__thumbnail {
             margin: 40px 0 50px;
             width: 100%;
-            height: 380px;
+            height: 400px;
         }
     }
 
     .news-content {
         margin: 0 4%;
 
-        p {
+        p,
+        span {
             color: var(--black-3-color);
             text-align: justify;
             font-size: 1.6rem;
             line-height: 2.6rem;
+        }
+
+        .text-tiny {
+            font-size: 1.4rem;
+        }
+
+        .text-small {
+            font-size: 1.8rem;
+        }
+
+        .text-big {
+            font-size: 2.4rem;
+        }
+
+        .text-huge {
+            font-size: 3.2rem;
         }
     }
 }
