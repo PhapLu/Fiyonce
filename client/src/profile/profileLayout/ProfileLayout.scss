@@ -121,6 +121,22 @@
     /* Add your PC-specific styles here */
 }
 
+@media only screen and (max-width: 1023px) {
+    .navbar {
+        background-color: unset;
+
+        .navbar__search-field {}
+    }
+
+    .app.with-sidebar {
+        margin: 0 !important;
+
+        .sidebar {
+            margin: 0 !important;
+        }
+    }
+}
+
 /* Tablet styles (740px to 1023px) */
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
     .app.with-sidebar {
@@ -134,6 +150,7 @@
             border-radius: 12px;
             padding: 40px 48px;
             box-shadow: var(--box-shadow-1);
+
             .sidebar__avatar__bg {
                 width: 100%;
                 ;
