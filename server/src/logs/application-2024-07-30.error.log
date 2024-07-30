@@ -10,3 +10,4 @@
 2024-07-30 13:45:07::error::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::168742cd-1336-4f1f-b85c-25d1ee1e7b22::403 - 1ms - Response: {"status":403,"now":1722321907095}::{"message":"Error updating news"}
 2024-07-30 13:54:11::error::/v1/api/news/updateNews/66a886a3d96ee65b8c36bb43::94cf79da-4f97-43ac-8629-2a84b1a1336f::403 - 1ms - Response: {"status":403,"now":1722322451142}::{"message":"Error updating news"}
 2024-07-30 15:57:00::error::/v1/api/news/createNews::b322f233-163f-4c6e-b7e8-b0d5818a1254::undefined - NaNms - Response: {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"thumbnail","storageErrors":[]}::{"message":"Unexpected field"}
+2024-07-30 17:16:58::error::/v1/api/movement/createMovement::5f9e1a33-d7e8-440b-a01e-04dbe8165b3f::undefined - NaNms - Response: {"message":"Invalid cloud_name Pastal","name":"Error","http_code":401}::{"message":"Invalid cloud_name Pastal"}
