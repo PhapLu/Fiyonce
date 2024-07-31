@@ -28,7 +28,7 @@ class NewsService {
             const thumbnailUploadResult = await compressAndUploadImage({
                 buffer: req.files.thumbnail[0].buffer,
                 originalname: req.files.thumbnail[0].originalname,
-                folderName: `fiyonce/news/admin`,
+                folderName: `fiyonce/admin/news`,
                 width: 1920,
                 height: 1080
             })
@@ -89,7 +89,7 @@ class NewsService {
     static updateNews = async (adminId, newsId, req) => {
         //1. Check admin
         const admin = await User.findById(adminId)
-        if(!admin) throw new AuthFailureError("Admin not found")
+        if(!admin) throw new NotFoundError("Admin not found")
         if(admin.role !== 'admin') throw new AuthFailureError("Unauthorized")
 
         //2. Check if news exists
@@ -98,22 +98,24 @@ class NewsService {
 
         try {
             //3. Upload thumbnail to cloudinary
+            const thumbnailToDelete = news.thumbnail
+            let thumbnailUpdated
+
             if(req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
-                const thumbnailToDelete = news.thumbnail
-                console.log(thumbnailToDelete);
                 const thumbnailUploadResult = await compressAndUploadImage({
                     buffer: req.files.thumbnail[0].buffer,
                     originalname: req.files.thumbnail[0].originalname,
-                    folderName: `fiyonce/news/admin`,
+                    folderName: `fiyonce/admin/news`,
                     width: 1920,
                     height: 1080
                 })
-                const thumbnail = thumbnailUploadResult.secure_url
+                thumbnailUpdated = thumbnailUploadResult.secure_url
                 
                 //4. Delete old thumbnail
-                const oldThumbnailPublicId = extractPublicIdFromUrl(thumbnailToDelete)
-                await deleteFileByPublicId(oldThumbnailPublicId)
-                news.thumbnail = thumbnail
+                if(thumbnailUploadResult ) {
+                    const oldThumbnailPublicId = extractPublicIdFromUrl(thumbnailToDelete)
+                    await deleteFileByPublicId(oldThumbnailPublicId)
+                }
             }
             
             //4. Check if pinned news is at limit(3), if so, unpin the oldest
@@ -127,15 +129,17 @@ class NewsService {
             }
 
             //5. Update news
-            news.title = req.body.title || news.title
-            news.subTitle = req.body.subTitle || news.subTitle
-            news.content = req.body.content || news.content
-            news.isPinned = req.body.isPinned || news.isPinned
-            news.isPrivate = req.body.isPrivate || news.isPrivate
-            await news.save()
-    
+            const updatedNews = await News.findByIdAndUpdate(
+                newsId,
+                {
+                    thumbnail: thumbnailUpdated || thumbnailToDelete,
+                    ...req.body
+                },
+                {new: true}
+            )
+
             return {
-                news
+                news: updatedNews
             }
         } catch (error) {
             console.error(`Error in NewsService.updateNews(): ${error}`)
@@ -153,12 +157,13 @@ class NewsService {
         const news = await News.findById(newsId)
         if(!news) throw new NotFoundError("News not found")
 
-        //3. Delete thumbnail
-        const thumbnailPublicId = extractPublicIdFromUrl(news.thumbnail)
-        await deleteFileByPublicId(thumbnailPublicId)
-
-        //4. Delete news
+        //3. Delete news
+        const thumbnailToDelete = news.thumbnail
         await news.deleteOne()
+
+        //4. Delete thumbnail
+        const thumbnailPublicId = extractPublicIdFromUrl(thumbnailToDelete)
+        await deleteFileByPublicId(thumbnailPublicId)
 
         return {
             news

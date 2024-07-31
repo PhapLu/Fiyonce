@@ -5,6 +5,7 @@ import helpRoute from './help/index.js'
 import postRoute from './post/index.js'
 import newsRoute from './news/index.js'
 import orderRoute from './order/index.js'
+import badgeRoute from './badge/index.js'
 import reviewRoute from './review/index.js'
 import uploadRoute from './upload/index.js'
 import movementRoute from './movement/index.js'
@@ -32,6 +33,7 @@ router.use('/v1/api/user', userRoute)
 router.use('/v1/api/help', helpRoute)
 router.use('/v1/api/post', postRoute)
 router.use('/v1/api/news', newsRoute)
+router.use('/v1/api/badge', badgeRoute)
 router.use('/v1/api/order', orderRoute)
 router.use('/v1/api/review', reviewRoute)
 router.use('/v1/api/upload', uploadRoute)
