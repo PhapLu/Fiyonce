@@ -18,7 +18,7 @@ export const compressAndUploadImage = async ({
         // Compress the image using sharp with specified width and height
         const compressedBuffer = await sharp(buffer)
             .resize(width, height, { fit: "inside" }) // Resize to fit within the specified dimensions
-            .jpeg({ quality: 80 }) // Compress to JPEG with 80% quality
+            .jpeg({ quality: 85 }) // Compress to JPEG with 80% quality
             .toBuffer();
 
         // Function to upload image to Cloudinary
