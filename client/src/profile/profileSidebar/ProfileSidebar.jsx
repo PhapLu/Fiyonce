@@ -1,11 +1,12 @@
 // Imports
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
 
 // Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useConversation } from '../../contexts/conversation/ConversationContext.jsx';
 import { useModal } from '../../contexts/modal/ModalContext.jsx';
+import CropImage from '../../components/cropImage/CropImage.jsx';
 
 // Resources
 import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
@@ -18,7 +19,105 @@ import { getSocialLinkIcon } from "../../utils/iconDisplayer.js"
 // Styling
 import "./ProfileSidebar.scss";
 
+async function getCroppedImg(imageSrc, pixelCrop) {
+    const image = await createImage(imageSrc);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+
+    ctx.drawImage(
+        image,
+        pixelCrop.x,
+        pixelCrop.y,
+        pixelCrop.width,
+        pixelCrop.height,
+        0,
+        0,
+        pixelCrop.width,
+        pixelCrop.height
+    );
+
+    return new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+            if (blob) {
+                resolve(new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' }));
+            } else {
+                reject(new Error('Canvas is empty'));
+            }
+        }, 'image/jpeg');
+    });
+}
+
+function createImage(url) {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.addEventListener('load', () => resolve(image));
+        image.addEventListener('error', (error) => reject(error));
+        image.setAttribute('crossOrigin', 'anonymous');
+        image.src = url;
+    });
+}
+
 export default function Sidebar({ profileInfo, setProfileInfo }) {
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
+    const [croppedImage, setCroppedImage] = useState(null);
+
+    const handleFileUpload = async (croppedFile) => {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('type', "avatar");
+
+        try {
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
+            if (response.data.metadata.image_url) {
+                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleAvatarClick = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const imageDataUrl = URL.createObjectURL(file);
+            setSelectedImage(imageDataUrl);
+            setIsCropping(true);
+        }
+    };
+
+    const handleCropComplete = async (croppedFile) => {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('type', "avatar");
+
+        try {
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
+            if (response.data.metadata.image_url) {
+                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setIsCropping(false);
+        }
+    };
+
+    const handleCancelCrop = () => {
+        setIsCropping(false);
+        setSelectedImage(null);
+    };
+
+
+
+
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
@@ -145,31 +244,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         }
     };
 
-    const handleAvatarClick = () => {
-        document.getElementById('fileInput').click();
-    };
 
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('type', "avatar");
 
-        if (file) {
-            setUploadAvatarLoading(true);
-            try {
-                const response = await apiUtils.post(`upload/profile/avatarOrCover/${profileInfo._id}`, formData);
-                if (response.data.metadata.image_url) {
-                    setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                    setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            } finally {
-                setUploadAvatarLoading(false);
-            }
-        }
-    };
 
     const [isSubmitFollowUserLoading, setIsSubmitFollowUserLoading] = useState();
     const [isSubmitUnFollowUserLoading, setIsSubmitUnFollowUserLoading] = useState();
@@ -282,6 +358,15 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
                     </>)
                 }
+                {isCropping && (
+                    <CropImage
+                        imageSrc={selectedImage}
+                        onCropComplete={handleCropComplete}
+                        onCancel={handleCancelCrop}
+                    />
+                )}
+                {croppedImage && <img src={croppedImage} alt="Cropped" />}
+
             </div>
 
             {openEditProfileForm ? (
