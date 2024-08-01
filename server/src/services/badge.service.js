@@ -77,7 +77,7 @@ class BadgeService {
             const iconToDelete = badge.icon
             let iconUpdated
 
-            if(req.files && !req.files.thumbnail && req.files.thumbnail.length > 0) {
+            if(req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
                 //3. Compress and upload the image to Cloudinary
                 const thumbnailUploadResult = await compressAndUploadImage({
                     buffer: req.files.thumbnail[0].buffer,

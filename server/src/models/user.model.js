@@ -5,8 +5,6 @@ const COLLECTION_NAME = "Users";
 
 const UserSchema = new Schema(
     {
-        //user_id: {type: Number, required: true},
-        //user_salf:{ type: String, default: ''},
         stageName: { type: String, default: "" },
         fullName: { type: String, required: true, trim: true },
         email: { type: String, required: true, trim: true, unique: true },
@@ -37,6 +35,10 @@ const UserSchema = new Schema(
             title: { type: String, default: "" },
             expireAt: { type: Date, default: null },
         },
+        badge: [{ 
+            badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
+            count: { type: Number, default: 0 }
+        }],
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
@@ -78,14 +80,9 @@ const TalentUser = User.discriminator(
     "talent",
     new Schema({
         // Add role-specific fields here
-
         creativeFields: [
             { type: mongoose.Schema.Types.ObjectId, ref: "Field" },
         ],
-        badges: {
-            type: String,
-            enum: ["trusted", "topContributor", "emerging"],
-        },
     })
 );
 

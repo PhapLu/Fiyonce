@@ -22,7 +22,7 @@ class SubmissionService {
         if (!challenge) throw new NotFoundError("Challenge not found")
 
         //2. Validate request body
-        if (!req.body.title || !req.files.artworks || !req.files.artworks.length == 0)
+        if (!req.body.title || !req.files.artworks || req.files.artworks.length == 0)
             throw new BadRequestError("Please provide required fields")
         if(req.body.votes) throw new BadRequestError("This field is not allowed")
 
@@ -40,9 +40,8 @@ class SubmissionService {
         const submission = new Submission({
             challengeId,
             userId,
-            title: req.body.title,
             artwork,
-            description: req.body.description,
+            ...req.body,
         })
         await submission.save()
 
@@ -125,7 +124,7 @@ class SubmissionService {
         }
     }
 
-    static readSubmission = async (adminId, submissionId) => {
+    static readSubmission = async (submissionId) => {
         //1. Check submission
         const submission = await Submission.findById(submissionId)
         if(!submission) throw new NotFoundError("Submission not found")

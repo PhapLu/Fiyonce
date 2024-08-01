@@ -19,7 +19,7 @@ class ChallengeService {
         if(admin.role !== 'admin') throw new AuthFailureError("Admin not found")
 
         //2. Validate request body
-        if (!req.body.title || !req.body.title || !req.body.startDate || !req.body.endDate || req.body.prizes || req.body.rules) 
+        if (!req.body.title || !req.body.description) 
             throw new BadRequestError("Please provide required fields")
 
         //3. Upload thumbnail to cloudinary
@@ -70,7 +70,7 @@ class ChallengeService {
         if(admin.role !== 'admin') throw new AuthFailureError("Admin not found")
 
         //2. Validate request body
-        if (!req.body.title || !req.body.title || !req.body.startDate || !req.body.endDate || req.body.prizes || req.body.rules) 
+        if (!req.body.title || !req.body.description) 
             throw new BadRequestError("Please provide required fields")
 
         //3. Upload thumbnail to cloudinary

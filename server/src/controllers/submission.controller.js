@@ -15,6 +15,13 @@ class SubmissionController {
             metadata: await SubmissionService.updateSubmission(req.userId, req.params.submissionId, req)
         }).send(res)
     }
+
+    voteSubmission = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Vote talent request success!',
+            metadata: await SubmissionService.voteSubmission(req.userId, req.params.submissionId)
+        }).send(res)
+    }
     
     readSubmissions = async(req, res, next) => {
         new SuccessResponse({

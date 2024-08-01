@@ -8,9 +8,8 @@ const BadgeSchema = new mongoose.Schema(
         description: { type: String, required: true },
         icon: { type: String, required: true },
         level: { type: String, enum: ["easy", "intermediate", "hard", "extremelyHard"], default: "easy"},
-        count: { type: Number, required: true },
-    },
-    {
+        count: { type: Number },
+    },{
         timestamps: true,
         collection: COLLECTION_NAME,
     }

@@ -774,3 +774,27 @@ ReferenceError: Schema is not defined
 ReferenceError: Schema is not defined
     at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:28:21::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:29:30::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:29:42::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:30:28::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:30:49::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:31:15::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

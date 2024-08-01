@@ -9,7 +9,7 @@ const ChallengeSchema = new mongoose.Schema(
         thumbnail: { type: String},
         startDate: { type: Date},
         endDate: { type: Date},
-        prizes: { type: String, default: ''  },
+        prizes: { type: String, default: '' },
         rules: { type: String, default: '' },
         status: { type: String, enum: ['upcoming', 'ongoing', 'completed'], default: 'upcoming' },
     },{
