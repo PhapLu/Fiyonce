@@ -5,10 +5,11 @@ const COLLECTION_NAME = "Users";
 
 const UserSchema = new Schema(
     {
+        googleId: { type: String, default: "" },
         stageName: { type: String, default: "" },
         fullName: { type: String, required: true, trim: true },
         email: { type: String, required: true, trim: true, unique: true },
-        password: { type: String, required: true },
+        password: { type: String, default: '' },
         role: {
             type: String,
             enum: ["member", "talent", "admin"],

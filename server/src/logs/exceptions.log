@@ -810,3 +810,11 @@ ReferenceError: passport is not defined
 ReferenceError: passport is not defined
     at file:///D:/Adam/OnisonProject/server/src/routes/auth/index.js:20:23
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 10:28:33::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/configs/passport.config.js:1:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 10:28:47::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/configs/passport.config.js:1:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

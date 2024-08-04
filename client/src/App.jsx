@@ -25,7 +25,7 @@ import Layout from "./pages/layout/Layout.jsx";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
-
+import LoginPage from "./pages/Login/LoginPage";
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
@@ -48,6 +48,10 @@ const routes = [
   {
     path: "/terms-and-policies",
     element: <InDevelopment />,
+  },
+  {
+    path:'/login-test',
+    element:<LoginPage />
   },
   {
     path: "/users/:userId",
