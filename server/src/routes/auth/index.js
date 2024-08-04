@@ -1,8 +1,10 @@
 import express from "express"
 import authController from "../../controllers/auth.controller.js"
+import passport from 'passport'
 import { asyncHandler } from "../../auth/checkAuth.js"
 import { authenticationV2 } from "../../auth/authUtils.js"
 import { verifyToken } from "../../middlewares/jwt.js"
+import '../../configs/passport.config.js'
 
 const router = express.Router()
 
@@ -14,8 +16,16 @@ router.post('/users/logout', asyncHandler(authController.logout))
 router.post('/users/forgotPassword', asyncHandler(authController.forgotPassword))
 router.post('/users/verifyResetPasswordOtp', asyncHandler(authController.verifyResetPasswordOtp))
 router.patch('/users/resetPassword', asyncHandler(authController.resetPassword))
-//authentication
-//router.use(authenticationV2)
-router.use(verifyToken)
-//router.post('/users/handlerRefreshToken', asyncHandler(authController.handlerRefreshToken))
+
+//Google OAuth Routes
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    // Successful authentication, redirect to your desired route.
+    res.redirect('/profile');
+  }
+);
+
 export default router

@@ -798,3 +798,15 @@ ReferenceError: Schema is not defined
 ReferenceError: Schema is not defined
     at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 08:04:22::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/app.js:54:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 08:10:14::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/auth/index.js:19:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 08:10:49::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/auth/index.js:20:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

@@ -239,6 +239,9 @@ class ConversationService {
                 media,
             });
             await conversation.save();
+            
+            //5. Update seenBy array
+            conversation.seenBy.concat({ userId })
 
             // 5. Format conversation
             const formattedConversation = {
