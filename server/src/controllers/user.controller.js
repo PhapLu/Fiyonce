@@ -48,6 +48,13 @@ class UserController {
             metadata: await UserService.me(req.cookies.accessToken)
         }).send(res)
     }
+    
+    recommendUsers = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Recommend users success!',
+            metadata: await UserService.recommendUsers(req.userId)
+        }).send(res)
+    }
 }
 
 export default new UserController()

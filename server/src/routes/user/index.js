@@ -17,6 +17,7 @@ router.patch('/updateUserProfile/:profileId', asyncHandler(userController.update
 router.patch('/followUser/:profileId', asyncHandler(userController.followUser))
 router.patch('/unFollowUser/:profileId', asyncHandler(userController.unFollowUser))
 router.patch('/bookmarkPost/:postId', asyncHandler(userController.bookmarkPost))
+router.patch('/recommendUsers', asyncHandler(userController.recommendUsers))
 router.delete('/delete/:profileId', asyncHandler(userController.deleteProfile))
 
 export default router

@@ -20,6 +20,8 @@ class SubmissionService {
         const challenge = await Challenge.findById(challengeId)
         if (!user) throw new NotFoundError("User not found")
         if (!challenge) throw new NotFoundError("Challenge not found")
+        if(challenge.participants.includes(userId)) 
+            throw new BadRequestError("You have already submitted")
 
         //2. Validate request body
         if (!req.body.title || !req.files.artworks || req.files.artworks.length == 0)
@@ -35,7 +37,6 @@ class SubmissionService {
             height: 1080,
         })
         const artwork = artworkUploadResult.secure_url
-
         //4. Create submission
         const submission = new Submission({
             challengeId,
@@ -45,6 +46,10 @@ class SubmissionService {
         })
         await submission.save()
 
+        //5. Add user to challenge participants
+        challenge.participants.push(userId)
+        await challenge.save()
+        
         return {
             submission
         }
@@ -60,31 +65,30 @@ class SubmissionService {
 
         //2. Validate request body
         if(req.body.votes) throw new BadRequestError("This field is not allowed")
-
         //3. Upload artwork to cloudinary
-        const submissionToDelete = submission.artwork
-        let submissionUpdated
-        if(req.files && req.files.artworks && req.files.artworks.length > 0){
-            const artworkUploadResult = await compressAndUploadImage({
-                buffer: req.files.artworks[0].buffer,
-                originalname: req.files.artworks[0].originalname,
-                folderName: `fiyonce/user/submissions`,
-                width: 1920,
-                height: 1080,
-            })
-            submissionUpdated = artworkUploadResult.secure_url
+        // const submissionToDelete = submission.artwork
+        // let submissionUpdated
+        // if(req.files && req.files.artworks && req.files.artworks.length > 0){
+        //     const artworkUploadResult = await compressAndUploadImage({
+        //         buffer: req.files.artworks[0].buffer,
+        //         originalname: req.files.artworks[0].originalname,
+        //         folderName: `fiyonce/user/submissions`,
+        //         width: 1920,
+        //         height: 1080,
+        //     })
+        //     submissionUpdated = artworkUploadResult.secure_url
             
-            //4. Delete old artwork
-            const publicId = extractPublicIdFromUrl(submissionToDelete)
-            await deleteFileByPublicId(publicId)
-        }
+        //     //4. Delete old artwork
+        //     const publicId = extractPublicIdFromUrl(submissionToDelete)
+        //     await deleteFileByPublicId(publicId)
+        // }
 
         //5. Update submission
         const updatedSubmission = await Submission.findByIdAndUpdate(
             submissionId,
             {
                 title: req.body.title || submission.title,
-                artwork: submissionUpdated || submission.artwork,
+                // artwork: submissionUpdated || submission.artwork,
                 description: req.body.description || submission.description,
             },
             { new: true }

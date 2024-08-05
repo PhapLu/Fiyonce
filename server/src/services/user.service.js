@@ -98,6 +98,19 @@ class UserService {
         };
     };
 
+    static recommendUsers = async(userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found");
+
+        //2. Get 10 talent users (stageName, avatar, fullName) each request
+        const talentUsers = await User.find({ role: "talent" }).select("stageName avatar fullName").limit(10)
+        
+        return {
+            users: talentUsers
+        }
+    }
+
     static me = async (accessToken) => {
         // 1. Decode accessToken and check
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);

@@ -36,10 +36,17 @@ const UserSchema = new Schema(
             title: { type: String, default: "" },
             expireAt: { type: Date, default: null },
         },
-        badge: [{ 
+        badges: [{ 
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
             count: { type: Number, default: 0 }
         }],
+        badgeProgress: [{
+            badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
+            level: { type: Number, default: 1 },
+            progress: { type: Map, of: Number, default: {} }, // E.g., { "likes": 50, "shares": 5 }
+            completed: { type: Boolean, default: false }
+        }],
+        referralCode: { type: String},
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],

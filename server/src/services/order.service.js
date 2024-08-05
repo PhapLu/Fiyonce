@@ -390,7 +390,9 @@ class OrderService {
                 },
             ]);
 
-            return { talentOrderHistory: orders };
+            return { 
+                talentOrderHistory: orders 
+            };
         } catch (error) {
             console.error("Error fetching orders by talent:", error);
             throw error;

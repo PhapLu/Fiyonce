@@ -13,7 +13,7 @@ router.get('/readSubmissions', asyncHandler(submissionController.readSubmissions
 router.use(verifyToken)
 
 router.post('/createSubmission/:challengeId', uploadFields, asyncHandler(submissionController.createSubmission))
-router.patch('/updateSubmission/:submissionId', uploadFields, asyncHandler(submissionController.updateSubmission))
+router.patch('/updateSubmission/:submissionId', asyncHandler(submissionController.updateSubmission))
 router.patch('/voteSubmission/:submissionId', asyncHandler(submissionController.voteSubmission))
 
 export default router
