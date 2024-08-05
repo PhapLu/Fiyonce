@@ -818,3 +818,7 @@ ReferenceError: passport is not defined
 ReferenceError: passport is not defined
     at file:///D:/Adam/OnisonProject/server/src/configs/passport.config.js:1:1
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-05 21:16:14::error::undefined::undefined::uncaughtException: time is not defined
+ReferenceError: time is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/badge.model.js:15:5
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

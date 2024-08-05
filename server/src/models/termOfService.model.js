@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "TermOfService";
 const COLLECTION_NAME = "TermOfServices";
 

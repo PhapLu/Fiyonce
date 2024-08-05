@@ -1,5 +1,7 @@
-// models/ReferralCode.js
 import mongoose from "mongoose";
+
+const DOCUMENT_NAME = "ReferralCode";
+const COLLECTION_NAME = "ReferralCodes";
 
 const referralCodeSchema = new mongoose.Schema(
     {
@@ -16,9 +18,10 @@ const referralCodeSchema = new mongoose.Schema(
         },
     },
     {
+        collection: COLLECTION_NAME,
         timestamps: true,
     }
 );
 
-const ReferralCode = mongoose.model("ReferralCode", referralCodeSchema);
+const ReferralCode = mongoose.model(DOCUMENT_NAME, referralCodeSchema);
 export default ReferralCode;

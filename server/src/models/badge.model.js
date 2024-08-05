@@ -1,18 +1,23 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+
+const DOCUMENT_NAME = "Badge"
+const COLLECTION_NAME = "Badges"
 
 const badgeSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    title: { type: String, required: true },
     description: { type: String, required: true },
     icon: { type: String, required: true },
-    levels: { type: String, enum: ["easy", "medium", "hard"], required: true },
+    level: { type: String, enum: ["easy", "medium", "hard"], required: true },
     type: {
         type: String,
         enum: ["platform_contributor", "commission_count", "achievement"],
         required: true,
     },
     criteria: { type: Map, of: Number, required: true },
-    createdAt: { type: Date, default: Date.now },
-});
+},{
+    collection: COLLECTION_NAME,
+    timestamps: true
+})
 
-const Badge = mongoose.model("Badge", badgeSchema);
-export default Badge;
+const Badge = mongoose.model(DOCUMENT_NAME, badgeSchema)
+export default Badge

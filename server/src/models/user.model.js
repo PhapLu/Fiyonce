@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
-const DOCUMENT_NAME = "User";
-const COLLECTION_NAME = "Users";
+import mongoose from "mongoose"
+const Schema = mongoose.Schema
+
+const DOCUMENT_NAME = "User"
+const COLLECTION_NAME = "Users"
 
 const UserSchema = new Schema(
     {
@@ -70,19 +71,19 @@ const UserSchema = new Schema(
         timestamps: true,
         collection: COLLECTION_NAME,
     }
-);
+)
 // Middleware to set the verificationExpiry field to 30 minutes in the future
 UserSchema.pre("save", function (next) {
     if (this.isNew || this.isModified("verificationExpiry")) {
-        this.verificationExpiry = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+        this.verificationExpiry = new Date(Date.now() + 30 * 60 * 1000) // 30 minutes
     }
-    next();
-});
+    next()
+})
 
 // Indexing for searching
 UserSchema.index({ fullName: 'text', stageName: 'text', email: 'text', bio: 'text' })
 
-const User = mongoose.model(DOCUMENT_NAME, UserSchema);
+const User = mongoose.model(DOCUMENT_NAME, UserSchema)
 // Define a discriminator for the "talent" role
 const TalentUser = User.discriminator(
     "talent",
@@ -92,13 +93,13 @@ const TalentUser = User.discriminator(
             { type: mongoose.Schema.Types.ObjectId, ref: "Field" },
         ],
     })
-);
+)
 
 // Define a discriminator for the "member" role (no specific fields needed)
-const MemberUser = User.discriminator("member", new Schema({}));
+const MemberUser = User.discriminator("member", new Schema({}))
 
 // Define a discriminator for the "admin" role (no specific fields needed)
-const AdminUser = User.discriminator("admin", new Schema({}));
+const AdminUser = User.discriminator("admin", new Schema({}))
 
-export { User, TalentUser, MemberUser, AdminUser };
+export { User, TalentUser, MemberUser, AdminUser }
 // export default User

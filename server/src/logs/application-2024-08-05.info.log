@@ -88,3 +88,7 @@
 2024-08-05 10:57:21::info::/v1/api/recommender/readPopularPosts::4c3d4c4a-72de-4dda-abd0-88de6dac8a92::input-params ::GET::::{}
 2024-08-05 10:57:26::info::/v1/api/movement/readMovements::f381d4ba-4a1e-44da-a3bb-eb4fea121899::input-params ::GET::::{}
 2024-08-05 10:57:26::info::/v1/api/recommender/readPopularPosts::e7ae0a07-d370-477c-aff4-9c8423fc9fa9::input-params ::GET::::{}
+2024-08-05 21:08:38::info::/v1/api/auth/users/login::84431d3d-bf09-4331-92bb-27b73d3de031::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-08-05 21:08:45::info::/v1/api/user/followUser/66a58ec99acbcdfb3d3f1692::cede8739-f77d-4092-8cda-628756d9f578::input-params ::PATCH::::{}
+2024-08-05 21:08:45::error::/v1/api/user/followUser/66a58ec99acbcdfb3d3f1692::cede8739-f77d-4092-8cda-628756d9f578::403 - 0ms - Response: {"status":403,"now":1722866925444}::{"message":"You already follow this user"}
+2024-08-05 21:09:17::info::/v1/api/user/followUser/66a70bf6b6441aa476576aa5::ecc22159-4e95-4cef-9e37-48f8d14ef850::input-params ::PATCH::::{}

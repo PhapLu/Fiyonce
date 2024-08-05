@@ -1,4 +1,5 @@
-import mongoose, { Types } from "mongoose"
+import mongoose from "mongoose"
+
 const DOCUMENT_NAME = "Challenge"
 const COLLECTION_NAME = "Challenges"
 

@@ -1,4 +1,5 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "Order";
 const COLLECTION_NAME = "Orders";
 

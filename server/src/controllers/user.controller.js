@@ -1,8 +1,6 @@
 import UserService from '../services/user.service.js'
-import { CREATED, SuccessResponse } from "../core/success.response.js"
-import { ErrorResponse, BadRequestError } from '../core/error.response.js'
-import { User } from '../models/user.model.js'
-import KeyTokenService from '../services/keyToken.service.js'
+import { SuccessResponse } from "../core/success.response.js"
+import { BadRequestError } from '../core/error.response.js'
 
 class UserController {
     //CRUD
