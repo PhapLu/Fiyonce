@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
@@ -40,12 +40,12 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
 
         setLoadingStates(prev => ({ ...prev, [follower._id]: true }));
         try {
-            const response = await apiUtils.patch(`/user/followUser/${follower._id}`);
+            await apiUtils.patch(`/user/followUser/${follower._id}`);
 
             // Update the userInfo state
             setUserInfo(prev => ({
                 ...prev,
-                following: [...prev.following, follower._id]
+                following: [...prev.following, follower]
             }));
 
             // Update the local followers state if profile owner
@@ -87,7 +87,7 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
             // Update the userInfo state
             setUserInfo(prev => ({
                 ...prev,
-                following: prev.following.filter(id => id !== follower._id)
+                following: prev.following.filter(f => f._id !== follower._id)
             }));
 
             // Update the local followers state if profile owner
@@ -97,9 +97,6 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
                     following: prev.following.filter(f => f._id !== follower._id)
                 }));
             }
-
-            // Remove the unfollowed user from the followers list
-            setShowFollowers(followers.filter(f => f._id !== follower._id));
 
             setModalInfo({
                 status: "success",
@@ -124,10 +121,10 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-            <div className="follower-container">
+            <div className="follow-container">
                 {followers?.length > 0 ? (
                     followers.map((follower) => (
-                        <div className="follower-item" key={follower._id}>
+                        <div className="follow-item" key={follower._id}>
                             <div className="user lg">
                                 <div className="user--left">
                                     <img src={resizeImageUrl(follower?.avatar, 100)} className="user__avatar" alt="Avatar" />
@@ -135,13 +132,13 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
                                 <div className="user--right">
                                     <div className="user__name">
                                         <span className="user__name__title">{follower?.fullName}</span>
-                                        <span className="user__name__sub-title">{follower?.fullName}</span>
+                                        <span className="user__name__sub-title">{follower?.stageName}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="btn-container">
-                                {userInfo?.following?.includes(follower._id) ? (
+                                {userInfo?.following?.some(followingEl => followingEl._id === follower._id) ? (
                                     <button
                                         className="btn btn-md btn-2"
                                         onClick={() => handleUnFollowUser(follower)}
@@ -162,7 +159,7 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
                         </div>
                     ))
                 ) : (
-                    <p>Hiện chưa có người theo dõi</p>
+                    <p className="text-align-center fs-16 mt-32">Hiện chưa có người theo dõi</p>
                 )}
             </div>
         </div>

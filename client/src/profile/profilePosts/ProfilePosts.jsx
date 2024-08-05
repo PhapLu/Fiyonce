@@ -186,11 +186,11 @@ export default function ProfilePosts() {
     };
 
     if (isLoading) {
-        return <span>Đang tải...</span>;
+        return;
     }
 
     if (isError) {
-        return <span>Có lỗi xảy ra: {error.message}</span>;
+        return;
     }
 
     return (

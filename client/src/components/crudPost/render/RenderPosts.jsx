@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import Masonry from 'react-masonry-css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { formatNumber } from "../../../utils/formatter.js";
 import "./RenderPosts.scss";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
 import { resizeImageUrl } from "../../../utils/imageDisplayer.js";
 import { apiUtils } from "../../../utils/newRequest.js";
+import { ClipLoader } from 'react-spinners';
 
 export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete, posts, layout }) {
     const breakpointColumnsObj = {
@@ -212,13 +215,14 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                 <div key={idx} className="post-item" onClick={() => setSelectedPostId(post?._id)}>
                                     <div className="post-item__img">
                                         <Link to={location.pathname.split('/').filter(Boolean).length === 0 ? `${post?._id}` : `${location.pathname}/${post?._id}`}>
-                                            <img src={post?.artworks[0].url} alt="" className="post-item__img__thumbnail" />
+                                            <LazyLoadImage
+                                                src={post?.artworks[0].url}
+                                                alt=""
+                                                className="post-item__img__thumbnail"
+                                                effect="blur"
+                                            />
                                         </Link>
-                                        {isPostOwner && (
-                                            <span>
 
-                                            </span>
-                                        )}
                                         {allowEditDelete && isPostOwner && (
                                             <div className="post-item__img__crud-operation-container">
                                                 <Link to={location.pathname.split('/').filter(Boolean).length === 0 ? `${post?._id}` : `${location.pathname}/${post?._id}/update`} className="post-item__img__crud-operation-item">
@@ -279,7 +283,11 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                         isDisplayOwner && (
                                             <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="user sm hover-cursor-opacity">
                                                 <div className="user--left">
-                                                    <img src={resizeImageUrl(post?.talentId?.avatar, 50)} alt="" className="user__avatar" />
+                                                    <LazyLoadImage
+                                                        src={resizeImageUrl(post?.talentId?.avatar, 50)}
+                                                        className="user__avatar"
+                                                        effect="blur"
+                                                    />
                                                     <div className="user__name">
                                                         <div className="user__name__title fw-600">{post?.talentId?.fullName}</div>
                                                     </div>
@@ -299,8 +307,11 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                         })}
                     </Masonry >
                 ) : (
-                    <div>
-                        <h3 className="text-align-center w-100 mt-32">Hiện chưa có tác phẩm ...</h3>
+                    <div h3 className="text-align-center flex-align-center flex-justify-center">
+                        <ClipLoader className="clip-loader" size={40} color={"#123abc"} loading={true} />
+                        <h3 className="ml-12">
+                            Đang tải
+                        </h3>
                     </div>
                 )
             }

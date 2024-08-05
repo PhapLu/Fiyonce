@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Resources
 import Modal from "../../components/modal/Modal.jsx";
@@ -222,7 +223,7 @@ export default function ProfileCommissionServices() {
     if (isError) {
         return <span>Have an errors: {error.message}</span>
     }
-    
+
     return (
         <div className="profile-commission-services">
             <div className="profile-page__header">
@@ -302,8 +303,12 @@ export default function ProfileCommissionServices() {
                                             {service?.artworks.slice(0, 3).map((artwork, index) => {
                                                 if (index === 2 && service?.artworks.length > 3) {
                                                     return (
-                                                        <div className="image-item">
-                                                            <img key={index} src={artwork} className="" alt={`Artwork ${index + 1}`} />
+                                                        <div className="image-item" key={index}>
+                                                            <LazyLoadImage
+                                                                src={artwork}
+                                                                alt={`Artwork ${index + 1}`}
+                                                                effect="blur"
+                                                            />
                                                             <div className="image-item__overlay">
                                                                 +{service?.artworks?.length - 3}
                                                             </div>
@@ -311,8 +316,12 @@ export default function ProfileCommissionServices() {
                                                     );
                                                 }
                                                 return (
-                                                    <div className="image-item">
-                                                        <img key={index} src={artwork} alt={`Artwork ${index + 1}`} />
+                                                    <div className="image-item" key={index}>
+                                                        <LazyLoadImage
+                                                            src={artwork}
+                                                            alt={`Artwork ${index + 1}`}
+                                                            effect="blur"
+                                                        />
                                                     </div>
                                                 );
                                             })}

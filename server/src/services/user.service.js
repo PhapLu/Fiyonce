@@ -20,7 +20,7 @@ class UserService {
             profileId,
             { $set: body },
             { new: true }
-        ).populate("followers", "avatar");
+        ).populate("followers", "avatar").populate("following", "avatar fullName");
         return {
             user: updatedUser,
         };
@@ -28,7 +28,7 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName");
+        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
         if (!userProfile)
             throw new NotFoundError("User not found");
 
@@ -108,7 +108,7 @@ class UserService {
         if (!userId) throw new AuthFailureError("Invalid validation");
 
         // 3. Return user without password
-        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName");
+        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
         if (!user) throw new NotFoundError("User not found");
 
         // Fetch unseen conversations

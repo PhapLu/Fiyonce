@@ -2,10 +2,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
 import EmojiPicker from 'emoji-picker-react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Components
 import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
 import Follower from '../../components/follow/follower/Follower.jsx';
+import Following from '../../components/follow/following/Following.jsx';
+
 // Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useConversation } from '../../contexts/conversation/ConversationContext.jsx';
@@ -27,6 +30,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [croppedImage, setCroppedImage] = useState(null);
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showFollowers, setShowFollowers] = useState(false);
+    const [showFollowing, setShowFollowing] = useState(false);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const addEmoji = (emoji) => {
         setInputs({
@@ -316,10 +320,19 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     return (
         <div className="sidebar">
-            <img src={profileInfo.bg || "/uploads/pastal_system_default_background.png"} alt="" className="sidebar__bg desktop-hide" />
-
+            <LazyLoadImage
+                src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
+                alt=""
+                className="sidebar__bg desktop-hide"
+                effect="blur"
+            />
             <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
-                <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
+                <LazyLoadImage
+                    src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"}
+                    alt=""
+                    className="sidebar__avatar__img "
+                    effect="blur"
+                />
                 {
                     isProfileOwner && (<>
                         <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 sidebar__avatar__ic">
@@ -529,15 +542,20 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         <div className='flex-justify-center flex-align-center'>
                             <span className="sidebar__follow__follower hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowers(true) }}>{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
                             <span className="dot-delimiter sm ml-8 mr-8"></span>
-                            <span className="sidebar__follow__following hover-cursor-opacity hover-underline">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
+                            <span className="sidebar__follow__following hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowing(true) }}>{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                         </div>
-                        <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'margin-left': `${profileInfo?.followers?.length > 6 ? "72px" : profileInfo?.followers?.length * 12 + 'px'}` }}>
+                        <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'marginLeft': `${profileInfo?.followers?.length > 6 ? "72px" : profileInfo?.followers?.length * 12 + 'px'}` }}>
                             {
                                 profileInfo?.followers?.slice(0, 6)?.reverse().map((follower, index) => {
                                     if (index == 5) {
                                         return <div index={index} className="user xm sidebar__follow__follow-item">
                                             <div className="user--left">
-                                                <img src={resizeImageUrl(follower?.avatar, 50)} className="user__avatar" alt="Avatar" />
+                                                <LazyLoadImage
+                                                    src={resizeImageUrl(follower?.avatar, 100)}
+                                                    alt=""
+                                                    className="user__avatar "
+                                                    effect="blur"
+                                                />
                                                 <div className="overlay">
                                                     <span>{profileInfo?.followers.length - 4 > 0 ? "..." : ""}</span>
                                                 </div>
@@ -547,7 +565,12 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     return (
                                         <div index={index} className="user xm sidebar__follow__follow-item">
                                             <div className="user--left">
-                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                                <LazyLoadImage
+                                                    src={resizeImageUrl(follower?.avatar, 100)}
+                                                    alt=""
+                                                    className="user__avatar "
+                                                    effect="blur"
+                                                />
                                             </div>
                                         </div>
                                     )
@@ -623,6 +646,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             {overlayVisible &&
                 <div className="overlay">
                     {showFollowers && <Follower followers={profileInfo?.followers} setShowFollowers={setShowFollowers} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {showFollowing && <Following following={profileInfo?.following} setShowFollowing={setShowFollowing} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
                     {isCropping && (
                         <CropImage
                             imageSrc={selectedImage}

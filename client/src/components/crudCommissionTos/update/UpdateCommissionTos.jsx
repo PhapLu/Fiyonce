@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {
+    ClassicEditor, ImageInsert,
+    ImageResize,
+    ImageStyle,
+    ImageToolbar,
+    ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
+} from 'ckeditor5';
 import { useModal } from "../../../contexts/modal/ModalContext";
 
 // Utils
@@ -194,7 +202,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                             <div className="form-field">
                                 <label htmlFor="content" className="form-field__label">Nội dung</label>
                                 <span name="content" className="form-field__annotation">Điền nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                                <CKEditor
+                                {/* <CKEditor
                                     editor={ClassicEditor}
                                     data={inputs?.content}
                                     onChange={handleEditorChange}
@@ -202,7 +210,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                                         toolbar: ['bold', 'italic', 'underline', 'bulletedList', 'numberedList', 'emoji'],
                                         emoji: { toolbar: true, shortname: true }
                                     }}
-                                />
+                                /> */}
                                 {errors.content && <span className="form-field__error">{errors.content}</span>}
                             </div>
                             <div className="form-field">

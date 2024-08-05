@@ -7,6 +7,7 @@ import ProfileSidebar from "../profileSidebar/ProfileSidebar";
 import CropImage from '../../components/cropImage/CropImage.jsx';
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
 import "./ProfileLayout.scss";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function ProfileLayout() {
     const [profileBtnActive, setProfileNavActive] = useState(null);
@@ -111,10 +112,11 @@ export default function ProfileLayout() {
                 <div className="outlet-content">
                     <div className="profile">
                         <div className="profile__bg">
-                            <img
+                            <LazyLoadImage
                                 src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
                                 alt={`${profileInfo.fullName}'s cover photo`}
                                 className={`tablet-hide mobile-hide profile__bg__img ${loading ? "skeleton-img" : ""}`}
+                                effect="blur"
                             />
                             {isProfileOwner && (
                                 <>

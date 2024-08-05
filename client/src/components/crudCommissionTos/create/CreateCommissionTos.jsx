@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useModal } from "../../../contexts/modal/ModalContext";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Utils
 import { isFilled } from "../../../utils/validator.js";
@@ -200,11 +201,11 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                     <div className="form-field">
                         <label htmlFor="content" className="form-field__label">Nội dung</label>
                         <span name="content" className="form-field__annotation">Thêm nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                        <CKEditor
+                        {/* <CKEditor
                             editor={ClassicEditor}
                             data={inputs.content}
                             onChange={handleEditorChange}
-                        />
+                        /> */}
                         {errors.content && <span className="form-field__error">{errors.content}</span>}
                     </div>
                     <div className="form-field">

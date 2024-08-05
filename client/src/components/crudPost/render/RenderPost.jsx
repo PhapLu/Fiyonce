@@ -171,7 +171,11 @@ export default function RenderPost() {
                             >
                                 {post.artworks.map((artwork, index) => (
                                     <div key={index} className="render-commission-service__artwork-item">
-                                        <img src={artwork.url} alt={`Artwork ${index + 1}`} />
+                                        <LazyLoadImage
+                                            src={artwork.url}
+                                            alt={`Artwork ${index + 1}`}
+                                            effect="blur"
+                                        />
                                     </div>
                                 ))}
                             </Carousel>
@@ -184,7 +188,12 @@ export default function RenderPost() {
 
                         <div className="user md">
                             <Link to={`/users/${post?.talentId._id}/profile-posts`} className="user--left hover-cursor-opacity">
-                                <img src={resizeImageUrl(post?.talentId?.avatar, 100)} alt="" className="user__avatar" />
+                                <LazyLoadImage
+                                    src={resizeImageUrl(post?.talentId?.avatar, 100)}
+                                    alt={`Artwork ${index + 1}`}
+                                    className="user__avatar"
+                                    effect="blur"
+                                />
                                 <div className="user__name">
                                     <div className="user__name__title">{post?.talentId?.fullName}</div>
                                     <div className="user__name__sub-title">{post?.talentId?.stageName}</div>
