@@ -10,6 +10,7 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js";
+import { Console } from "console";
 
 class ConversationService {
     static createConversation = async (userId, req) => {
@@ -94,55 +95,62 @@ class ConversationService {
     };
 
     static readConversationWithOtherMember = async (userId, otherMemberId) => {
-        // 1. Check user and other member
-        const user = await User.findById(userId);
-        const otherMember = await User.findById(otherMemberId);
-        if (!user) throw new AuthFailureError("User not found");
-        if (!otherMember) throw new BadRequestError("Other member not found");
-
-        // 2. Read conversation
-        const conversation = await Conversation.findOne({
-            "members.user": {
-                $all: [userId, otherMemberId],
-            },
-        }).populate("members.user", "fullName avatar");
-
-        if (!conversation) throw new NotFoundError("Conversation not found");
-
-        // 3. Check if userId is already in the seenBy array
-        const userSeen = conversation.seenBy.some(
-            (seen) => seen.userId.toString() === userId
-        );
-
-        if (!userSeen) {
-            // Add userId to the seenBy array
-            conversation.seenBy.push({ userId });
-            await conversation.save();
+        try {
+            // 1. Check user and other member
+            const user = await User.findById(userId);
+            const otherMember = await User.findById(otherMemberId);
+            if (!user) throw new AuthFailureError("User not found");
+            if (!otherMember) throw new BadRequestError("Other member not found");
+    
+            // 2. Read conversation
+            const conversation = await Conversation.findOne({
+                "members.user": {
+                    $all: [userId, otherMemberId],
+                },
+            }).populate("members.user", "fullName avatar");
+    
+            if (!conversation) throw new NotFoundError("Conversation not found");
+    
+            // 3. Mark all messages from otherMember as seen
+            let updated = false;
+            conversation.messages.forEach(message => {
+                if (message.senderId.toString() !== userId && !message.isSeen) {
+                    message.isSeen = true;
+                    updated = true;
+                }
+            });
+    
+            if (updated) {
+                await conversation.save();
+            }
+    
+            // 4. Format conversation
+            const sortedMessages = conversation.messages
+                .sort((a, b) => b.createdAt - a.createdAt)
+                .slice(0, 12)
+                .reverse(); // Reverse to maintain ascending order
+    
+            const formattedConversation = {
+                _id: conversation._id,
+                messages: sortedMessages,
+                otherMember: {
+                    _id: otherMember._id,
+                    fullName: otherMember.fullName,
+                    avatar: otherMember.avatar,
+                },
+            };
+    
+            return {
+                conversation: formattedConversation,
+            };
+    
+        } catch (error) {
+            console.error("Error in readConversationWithOtherMember:", error);
+            throw new Error("Failed to read conversation");
         }
-
-        // 4. Format conversation
-
-        // Sort and limit the messages to the latest 12
-        const sortedMessages = conversation.messages
-            .sort((a, b) => b.createdAt - a.createdAt)
-            .slice(0, 12)
-            .reverse(); // Reverse to maintain ascending order
-
-        const formattedConversation = {
-            _id: conversation._id,
-            messages: sortedMessages,
-            otherMember: {
-                _id: otherMember._id,
-                fullName: otherMember.fullName,
-                avatar: otherMember.avatar,
-            },
-        };
-
-        return {
-            conversation: formattedConversation,
-        };
     };
-
+    
+    
     static readConversation = async (userId, conversationId) => {
         //1. Check conversation, user
         const user = await User.findById(userId);

@@ -28,10 +28,10 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar");
+        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName");
         if (!userProfile)
             throw new NotFoundError("User not found");
-        
+
         //2. Update views
         userProfile.views += 1;
         await userProfile.save();
@@ -108,14 +108,21 @@ class UserService {
         if (!userId) throw new AuthFailureError("Invalid validation");
 
         // 3. Return user without password
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName");
         if (!user) throw new NotFoundError("User not found");
 
         // Fetch unseen conversations
         const unSeenConversations = await Conversation.find({
-            members: { $elemMatch: { user: userId } },
-            "messages.createdAt": { $gt: user.lastViewConversations }
-        }).populate('members.user messages.senderId seenBy.userId');
+            members: { $elemMatch: { user: userId } }
+        })
+            .populate('members.user messages.senderId')
+            .exec();
+
+        // Filter unseen conversations based on the last message
+        const filteredUnSeenConversations = unSeenConversations.filter(conversation => {
+            const lastMessage = conversation.messages[conversation.messages.length - 1];
+            return lastMessage && !lastMessage.isSeen && lastMessage.senderId.toString() !== userId;
+        });
 
         // Fetch unseen notifications
         const unSeenNotifications = await Notification.find({
@@ -126,7 +133,7 @@ class UserService {
         // Create a plain JavaScript object with user data and add unSeenConversations
         const userData = {
             ...user.toObject(),
-            unSeenConversations: unSeenConversations,
+            unSeenConversations: filteredUnSeenConversations,
             unSeenNotifications: unSeenNotifications
         };
 

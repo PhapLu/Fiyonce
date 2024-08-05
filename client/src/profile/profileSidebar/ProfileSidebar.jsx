@@ -1,15 +1,16 @@
 // Imports
 import { useState, useEffect, useCallback } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
+import EmojiPicker from 'emoji-picker-react';
 
+// Components
+import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
+import Follower from '../../components/follow/follower/Follower.jsx';
 // Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useConversation } from '../../contexts/conversation/ConversationContext.jsx';
 import { useModal } from '../../contexts/modal/ModalContext.jsx';
 import CropImage from '../../components/cropImage/CropImage.jsx';
-
-// Resources
-import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
 
 // Utils
 import { apiUtils } from '../../utils/newRequest.js';
@@ -18,52 +19,21 @@ import { getSocialLinkIcon } from "../../utils/iconDisplayer.js"
 
 // Styling
 import "./ProfileSidebar.scss";
-
-async function getCroppedImg(imageSrc, pixelCrop) {
-    const image = await createImage(imageSrc);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = pixelCrop.width;
-    canvas.height = pixelCrop.height;
-
-    ctx.drawImage(
-        image,
-        pixelCrop.x,
-        pixelCrop.y,
-        pixelCrop.width,
-        pixelCrop.height,
-        0,
-        0,
-        pixelCrop.width,
-        pixelCrop.height
-    );
-
-    return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => {
-            if (blob) {
-                resolve(new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' }));
-            } else {
-                reject(new Error('Canvas is empty'));
-            }
-        }, 'image/jpeg');
-    });
-}
-
-function createImage(url) {
-    return new Promise((resolve, reject) => {
-        const image = new Image();
-        image.addEventListener('load', () => resolve(image));
-        image.addEventListener('error', (error) => reject(error));
-        image.setAttribute('crossOrigin', 'anonymous');
-        image.src = url;
-    });
-}
+import { resizeImageUrl } from '../../utils/imageDisplayer.js';
 
 export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [isCropping, setIsCropping] = useState(false);
     const [croppedImage, setCroppedImage] = useState(null);
+    const [overlayVisible, setOverlayVisible] = useState(false);
+    const [showFollowers, setShowFollowers] = useState(false);
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const addEmoji = (emoji) => {
+        setInputs({
+            ...inputs,
+            bio: inputs.bio + emoji.native
+        });
+    };
 
     const handleFileUpload = async (croppedFile) => {
         const formData = new FormData();
@@ -90,7 +60,10 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             const imageDataUrl = URL.createObjectURL(file);
             setSelectedImage(imageDataUrl);
             setIsCropping(true);
+            setOverlayVisible(true);
         }
+        // Reset the input value to allow re-selecting the same file
+        e.target.value = null;
     };
 
     const handleCropComplete = async (croppedFile) => {
@@ -102,21 +75,21 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
             if (response.data.metadata.image_url) {
                 setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+                setUserInfo({ ...userInfo, avatar: response.data.metadata.image_url })
             }
         } catch (error) {
             console.error('Error:', error);
         } finally {
             setIsCropping(false);
+            setOverlayVisible(false);
         }
     };
 
     const handleCancelCrop = () => {
         setIsCropping(false);
+        setOverlayVisible(false);
         setSelectedImage(null);
     };
-
-
-
 
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
@@ -244,9 +217,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         }
     };
 
-
-
-
     const [isSubmitFollowUserLoading, setIsSubmitFollowUserLoading] = useState();
     const [isSubmitUnFollowUserLoading, setIsSubmitUnFollowUserLoading] = useState();
 
@@ -358,20 +328,11 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
                     </>)
                 }
-                {isCropping && (
-                    <CropImage
-                        imageSrc={selectedImage}
-                        onCropComplete={handleCropComplete}
-                        onCancel={handleCancelCrop}
-                    />
-                )}
-                {croppedImage && <img src={croppedImage} alt="Cropped" />}
-
             </div>
 
             {openEditProfileForm ? (
                 <div className="form edit-profile-form">
-                    <div className="form-field">
+                    <div className="form-field required">
                         <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
                         <input type="text" id="fullName" name="fullName" value={inputs?.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
@@ -407,6 +368,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             <option value="">Không đề cập</option>
                             <option value="him">Nam | Anh ấy</option>
                             <option value="her">Nữ  | Cô ấy</option>
+                            <option value="her">Họ  | Họ</option>
                             <option value="custom">Custom</option>
                         </select>
                         {pronoun === "custom" && (
@@ -437,8 +399,23 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
-                        <textarea type="text" id="bio" name="bio" value={inputs?.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)" />
+                        <textarea
+                            type="text"
+                            id="bio"
+                            name="bio"
+                            value={inputs.bio}
+                            onChange={handleChange}
+                            className="form-field__input"
+                            placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)"
+                        />
                         {errors.bio && <span className="form-field__error">{errors.bio}</span>}
+                        <button type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+                            {showEmojiPicker ? 'Hide Emojis' : 'Show Emojis'}
+                        </button>
+                        {showEmojiPicker && (
+                            <EmojiPicker />
+                            // <EmojiPicker onEmojiClick={onEmojiClick} />
+                        )}
                     </div>
 
                     <div className="form-field">
@@ -495,7 +472,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 <>
                     <div className="sidebar__name">
                         <p className="sidebar__name__fullName">{profileInfo.fullName}</p>
-                        <span className="sidebar__name__email">{profileInfo.stageName}</span>
+                        <span className="sidebar__name__stageName">{profileInfo.stageName}</span>
                     </div>
                     <div>
                         {profileInfo?.role === "talent" && profileInfo.jobTitle && (
@@ -549,19 +526,18 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <br />
 
                     <div className="sidebar__follow">
-                        <div className="sidebar__follow__follow-container" style={{ 'width': `${profileInfo?.followers?.length >= 4 ? '100px' : profileInfo?.followers?.length == 3 ? '78px' : profileInfo?.followers?.length == 2 ? '58px' : profileInfo?.followers?.length == 1 ? '38px' : ''}` }}>
-                            {/* //  <img src="1.png" style="position:absolute; top:0px; left:10px; z-index:0" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:20px; z-index:1" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:30px; z-index:2" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:40px; z-index:3" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:50px; z-index:4" />
-                        */}
+                        <div className='flex-justify-center flex-align-center'>
+                            <span className="sidebar__follow__follower hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowers(true) }}>{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
+                            <span className="dot-delimiter sm ml-8 mr-8"></span>
+                            <span className="sidebar__follow__following hover-cursor-opacity hover-underline">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
+                        </div>
+                        <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'margin-left': `${profileInfo?.followers?.length > 6 ? "72px" : profileInfo?.followers?.length * 12 + 'px'}` }}>
                             {
-                                profileInfo?.followers?.slice(0, 4)?.reverse().map((follower, index) => {
-                                    if (index == 3) {
-                                        return <div index={index} className="user sm sidebar__follow__follow-item">
+                                profileInfo?.followers?.slice(0, 6)?.reverse().map((follower, index) => {
+                                    if (index == 5) {
+                                        return <div index={index} className="user xm sidebar__follow__follow-item">
                                             <div className="user--left">
-                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                                <img src={resizeImageUrl(follower?.avatar, 50)} className="user__avatar" alt="Avatar" />
                                                 <div className="overlay">
                                                     <span>{profileInfo?.followers.length - 4 > 0 ? "..." : ""}</span>
                                                 </div>
@@ -569,7 +545,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                         </div>
                                     }
                                     return (
-                                        <div index={index} className="user sm sidebar__follow__follow-item">
+                                        <div index={index} className="user xm sidebar__follow__follow-item">
                                             <div className="user--left">
                                                 <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
                                             </div>
@@ -578,10 +554,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                 })
                             }
                         </div>
-
-                        <span className="sidebar__follow__follower">{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
-                        &nbsp; - &nbsp;
-                        <span className="sidebar__follow__following">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                     </div>
 
                     {profileInfo.bio && (
@@ -648,6 +620,20 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             )
             }
             {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />}
+            {overlayVisible &&
+                <div className="overlay">
+                    {showFollowers && <Follower followers={profileInfo?.followers} setShowFollowers={setShowFollowers} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {isCropping && (
+                        <CropImage
+                            imageSrc={selectedImage}
+                            onCropComplete={handleCropComplete}
+                            onCancel={handleCancelCrop}
+                        />
+                    )}
+                    {croppedImage && <img src={croppedImage} alt="Cropped" />}
+                </div>
+            }
         </div >
+
     );
 }

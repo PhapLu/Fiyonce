@@ -1,67 +1,15 @@
-// Imports
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // import styles
-import 'quill-emoji/dist/quill-emoji.css'; // import emoji styles
-import { Quill } from 'react-quill';
-import 'quill-emoji';
-
-// Resouces
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useModal } from "../../../contexts/modal/ModalContext";
 
 // Utils
-import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
 import { isFilled } from "../../../utils/validator.js";
 
 // Styling
 import "./CreateCommissionTos.scss";
 import { apiUtils } from "../../../utils/newRequest.js";
-import Emoji from "quill-emoji";
-
-Quill.register('modules/emoji', Emoji);
-
-const modules = {
-    toolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['emoji'], // add emoji button to toolbar
-    ],
-    'emoji-toolbar': true,
-    'emoji-shortname': true,
-    keyboard: {
-        bindings: {
-            bold: {
-                key: 'B',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('bold', !context.format.bold);
-                }
-            },
-            italic: {
-                key: 'I',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('italic', !context.format.italic);
-                }
-            },
-            underline: {
-                key: 'U',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('underline', !context.format.underline);
-                }
-            },
-            strike: {
-                key: 'S',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('strike', !context.format.strike);
-                }
-            }
-        }
-    }
-};
 
 export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setShowCommissionTosView, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
@@ -93,7 +41,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
         const intervalId = setInterval(() => {
             setCurrentTime(new Date());
         }, 60000); // Update every minute
-        // return () => clearInterval(intervalId);
+        return () => clearInterval(intervalId);
     }, []);
 
     // Toggle display overlay box
@@ -133,10 +81,11 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
         return errors;
     };
 
-    const handleChange = (value, delta, source, editor) => {
+    const handleEditorChange = (event, editor) => {
+        const data = editor.getData();
         setInputs((prevState) => ({
             ...prevState,
-            content: editor.getHTML()
+            content: data
         }));
     };
 
@@ -197,7 +146,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
             }
         } catch (error) {
             setModalInfo({
-                status: "success",
+                status: "error",
                 message: error.response.data.message
             })
         } finally {
@@ -251,14 +200,18 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                     <div className="form-field">
                         <label htmlFor="content" className="form-field__label">Nội dung</label>
                         <span name="content" className="form-field__annotation">Thêm nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                        <ReactQuill theme="snow" value={inputs.content} onChange={handleChange} modules={modules} placeholder="Nhập nội dung điều khoản của bạn" />
+                        <CKEditor
+                            editor={ClassicEditor}
+                            data={inputs.content}
+                            onChange={handleEditorChange}
+                        />
                         {errors.content && <span className="form-field__error">{errors.content}</span>}
                     </div>
-                    <div class="form-field">
-                        <label class="form-field__label">
+                    <div className="form-field">
+                        <label className="form-field__label">
                             <input type="checkbox" name="isAgreeTerms" checked={inputs.isAgreeTerms || false}
                                 onChange={handleInputChange} />
-                            <span>Tôi đồng ý với các <a class="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của Pastal</span>
+                            <span>Tôi đồng ý với các <a className="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của Pastal</span>
                         </label>
                         {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                     </div>
