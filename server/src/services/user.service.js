@@ -21,7 +21,7 @@ class UserService {
             profileId,
             { $set: body },
             { new: true }
-        )
+        ).populate("followers", "avatar").populate("following", "avatar fullName");
         return {
             user: updatedUser,
         }
@@ -29,10 +29,10 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar")
+        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
         if (!userProfile)
-            throw new NotFoundError("User not found")
-        
+            throw new NotFoundError("User not found");
+
         //2. Update views
         userProfile.views += 1
         await userProfile.save()
@@ -122,14 +122,21 @@ class UserService {
         if (!userId) throw new AuthFailureError("Invalid validation")
 
         // 3. Return user without password
-        const user = await User.findById(userId).select("-password")
-        if (!user) throw new NotFoundError("User not found")
+        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
+        if (!user) throw new NotFoundError("User not found");
 
         // Fetch unseen conversations
         const unSeenConversations = await Conversation.find({
-            members: { $elemMatch: { user: userId } },
-            "messages.createdAt": { $gt: user.lastViewConversations }
-        }).populate('members.user messages.senderId seenBy.userId')
+            members: { $elemMatch: { user: userId } }
+        })
+            .populate('members.user messages.senderId')
+            .exec();
+
+        // Filter unseen conversations based on the last message
+        const filteredUnSeenConversations = unSeenConversations.filter(conversation => {
+            const lastMessage = conversation.messages[conversation.messages.length - 1];
+            return lastMessage && !lastMessage.isSeen && lastMessage.senderId.toString() !== userId;
+        });
 
         // Fetch unseen notifications
         const unSeenNotifications = await Notification.find({
@@ -140,14 +147,40 @@ class UserService {
         // Create a plain JavaScript object with user data and add unSeenConversations
         const userData = {
             ...user.toObject(),
-            unSeenConversations: unSeenConversations,
+            unSeenConversations: filteredUnSeenConversations,
             unSeenNotifications: unSeenNotifications
         }
 
         return {
             user: userData,
+        };
+    };
+
+    static updateProfileStatus = async (userId, profileStatus) => {
+        try {
+            // Validate inputs
+            if (!userId || !profileStatus) {
+                throw new Error('Invalid input data');
+            }
+
+            // Update the profile status field in the user's document
+            const user = await User.findByIdAndUpdate(
+                userId,
+                { $set: { profileStatus: profileStatus } },
+                { new: true } // Return the updated document
+            );
+
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            return { profileStatus: user.profileStatus };
+        } catch (error) {
+            // Handle errors (e.g., logging or rethrowing)
+            console.error('Error updating profile status:', error.message);
+            throw error;
         }
-    }
+    };
 }
 
 export default UserService

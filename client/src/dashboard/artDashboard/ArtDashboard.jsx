@@ -23,13 +23,13 @@ export default function ArtDashboard() {
         }
     };
 
-    const { data: movements, isError, error, isLoading } = useQuery('movements', fetchMovements);
+    const { data: movements, isError, error, isLoading } = useQuery('fetchMovements', fetchMovements);
 
     const createMovementMutation = useMutation(
         (newMovement) => apiUtils.post("/movement/createMovement", newMovement),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries('movements');
+                queryClient.invalidateQueries('fetchMovements');
                 setOverlayVisible(false);
                 setShowCreateMovementForm(false);
             }

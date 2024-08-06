@@ -1,0 +1,87 @@
+2024-08-03 12:18:36::info::/v1/api/news/readNewss::090b7dcf-d0e4-4256-a86c-eb43db6577a5::input-params ::GET::::{}
+2024-08-03 12:18:36::info::/v1/api/recommender/readPopularPosts::bda186f1-3b09-4891-b488-94673a145ce0::input-params ::GET::::{}
+2024-08-03 12:18:39::info::/v1/api/user/me::8b422344-a261-42c6-a7b0-050958a2a596::input-params ::GET::::{}
+2024-08-03 12:18:39::error::/v1/api/user/me::8b422344-a261-42c6-a7b0-050958a2a596::403 - 2ms - Response: {"status":403,"now":1722662319841}::{"message":"Access token missing"}
+2024-08-03 12:18:39::info::/v1/api/movement/readMovements::0bf10690-3003-4ddf-8ffa-a24c81cf69d7::input-params ::GET::::{}
+2024-08-03 12:18:39::info::/v1/api/news/readNewss::29cd67a9-def4-4aa5-aa42-ef4ec549b0a9::input-params ::GET::::{}
+2024-08-03 12:18:55::info::/v1/api/news/readNewss::863b2552-84e1-406c-b243-4622c34a6de5::input-params ::GET::::{}
+2024-08-03 12:18:55::info::/v1/api/news/readNews/66a8f46e143aa910a3d771f9::316a07d4-3071-446d-ae1a-900d88322f77::input-params ::GET::::{}
+2024-08-03 12:19:05::info::/v1/api/news/readNewss::f9e0d391-3865-4940-a74a-f3eed48b24a4::input-params ::GET::::{}
+2024-08-03 12:19:05::info::/v1/api/recommender/readPopularPosts::b444be21-2c47-4c1f-b3d7-e6bc1445059c::input-params ::GET::::{}
+2024-08-03 12:19:10::info::/v1/api/user/me::8f68d694-0d3b-410e-a28c-4bd597212ce7::input-params ::GET::::{}
+2024-08-03 12:19:10::error::/v1/api/user/me::8f68d694-0d3b-410e-a28c-4bd597212ce7::403 - 2ms - Response: {"status":403,"now":1722662350452}::{"message":"Access token missing"}
+2024-08-03 12:19:10::info::/v1/api/movement/readMovements::842ee94d-5914-4a0b-bbbd-a1c32b14507e::input-params ::GET::::{}
+2024-08-03 12:19:10::info::/v1/api/news/readNewss::e6491812-a98a-40e3-b823-ff4fca06d051::input-params ::GET::::{}
+2024-08-03 12:19:10::info::/v1/api/recommender/readPopularPosts::82fa77e8-6087-40c6-ae62-e47ae29f4313::input-params ::GET::::{}
+2024-08-03 12:19:37::info::/v1/api/user/me::da1ebcf6-8602-4c36-9835-d2c9703ee1cc::input-params ::GET::::{}
+2024-08-03 12:19:37::error::/v1/api/user/me::da1ebcf6-8602-4c36-9835-d2c9703ee1cc::403 - 1ms - Response: {"status":403,"now":1722662377111}::{"message":"Access token missing"}
+2024-08-03 12:19:37::info::/v1/api/movement/readMovements::7444d595-2b18-4e76-8458-977db663b525::input-params ::GET::::{}
+2024-08-03 12:19:39::info::/v1/api/news/readNewss::f8494347-485a-4cda-91ec-3f66363eb8e7::input-params ::GET::::{}
+2024-08-03 12:19:39::info::/v1/api/recommender/readPopularPosts::385fd1f5-43fb-42ed-8674-0411c18e03a7::input-params ::GET::::{}
+2024-08-03 12:19:47::info::/v1/api/user/readUserProfile/66a5d344e04363f345d52e5b::cba560b2-35b1-425d-97d6-32b51993bf60::input-params ::GET::::{}
+2024-08-03 12:19:47::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5d344e04363f345d52e5b::2fb160c8-e505-4a8f-9342-6358204813dc::input-params ::GET::::{}
+2024-08-03 12:20:03::info::/v1/api/user/me::aef2843d-4ccf-4a68-b186-e05e3ff06568::input-params ::GET::::{}
+2024-08-03 12:20:03::error::/v1/api/user/me::aef2843d-4ccf-4a68-b186-e05e3ff06568::403 - 0ms - Response: {"status":403,"now":1722662403051}::{"message":"Access token missing"}
+2024-08-03 12:20:03::info::/v1/api/movement/readMovements::2863fb28-8060-4ab3-b618-8f3cba688ec3::input-params ::GET::::{}
+2024-08-03 12:20:03::info::/v1/api/user/readUserProfile/66a5d344e04363f345d52e5b::4113e4c9-55ea-4ad7-889f-99eca84ce51e::input-params ::GET::::{}
+2024-08-03 12:20:03::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5d344e04363f345d52e5b::d980c31e-995b-40b3-a350-7d088614406d::input-params ::GET::::{}
+2024-08-03 12:20:05::info::/v1/api/order/readOrders::4fb46462-60f7-4688-b899-6637134d4734::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-08-03 12:20:34::info::/v1/api/user/readUserProfile/66a5d344e04363f345d52e5b::c9b1c3c9-f088-47ea-9c19-999e5ebcc91c::input-params ::GET::::{}
+2024-08-03 12:20:34::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5d344e04363f345d52e5b::795d9e2d-2ae7-42ae-ae73-4f4f9466c6f1::input-params ::GET::::{}
+2024-08-03 12:21:17::info::/v1/api/user/me::c175a2ae-fde1-4a86-b657-2bbe2597841a::input-params ::GET::::{}
+2024-08-03 12:21:17::error::/v1/api/user/me::c175a2ae-fde1-4a86-b657-2bbe2597841a::403 - 1ms - Response: {"status":403,"now":1722662477569}::{"message":"Access token missing"}
+2024-08-03 12:21:17::info::/v1/api/movement/readMovements::94044425-4bf5-424e-8af9-c6df92701efc::input-params ::GET::::{}
+2024-08-03 12:21:17::info::/v1/api/user/readUserProfile/66a5d344e04363f345d52e5b::870737a2-7d83-4a33-81ce-0db616af0065::input-params ::GET::::{}
+2024-08-03 12:21:17::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5d344e04363f345d52e5b::57308240-34b5-4dac-97f4-4ce7f544f6bb::input-params ::GET::::{}
+2024-08-03 12:21:27::info::/v1/api/user/me::3bb7f5e9-6d8d-491c-affc-23b7333ba3e4::input-params ::GET::::{}
+2024-08-03 12:21:27::error::/v1/api/user/me::3bb7f5e9-6d8d-491c-affc-23b7333ba3e4::403 - 0ms - Response: {"status":403,"now":1722662487620}::{"message":"Access token missing"}
+2024-08-03 12:21:27::info::/v1/api/movement/readMovements::9bae40fc-5d3d-4566-aa08-ecd5bf321f35::input-params ::GET::::{}
+2024-08-03 12:21:27::info::/v1/api/user/readUserProfile/66a5d344e04363f345d52e5b::7582f50f-fd68-434b-8e63-d699c7e7851b::input-params ::GET::::{}
+2024-08-03 12:21:27::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5d344e04363f345d52e5b::8bec87ca-fd33-4397-b741-c3582103ccb1::input-params ::GET::::{}
+2024-08-03 12:21:31::info::/v1/api/auth/users/login::1f038da5-d302-4bf8-9496-44988140c3c3::input-params ::POST::::{"email":"thaiha0308au@gmail.com","password":"Thaidefi397911$$$$$$"}
+2024-08-03 12:21:34::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::1d02f04e-76ba-4007-8bde-677cf0fc99ca::input-params ::GET::::{}
+2024-08-03 12:21:35::info::/v1/api/order/readTalentOrderHistory::fe6134d9-96dd-4806-bbe6-2389160e18bd::input-params ::GET::::{}
+2024-08-03 12:21:37::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::c59177d6-bbc4-4b95-981e-6c27ae926d98::input-params ::GET::::{}
+2024-08-03 12:21:39::info::/v1/api/termOfService/readTermOfServices::53a65b47-14a9-417d-a3e3-baee89a48f76::input-params ::GET::::{}
+2024-08-03 12:21:41::info::/v1/api/termOfService/readTermOfServices::c90d0c19-74ae-466d-8b2c-58daa7c6d6ad::input-params ::GET::::{}
+2024-08-03 12:21:45::info::/v1/api/termOfService/readTermOfServices::4b67dcf7-6058-46ee-989e-e83196d2a721::input-params ::GET::::{}
+2024-08-03 12:21:57::info::/v1/api/termOfService/createTermOfService::4349dab8-6819-4e81-b76f-9ed518a34a3b::input-params ::POST::::{"content":"<h3>Điều khoản chung</h3><p>...grgr</p><p><br /></p><h3>Điều khoản thanh toán</h3><p>...</p><p><br /></p><h3>Điều khoản sử dụng</h3><p>...</p><p><br /></p><h3>Thời hạn và vận chuyển</h3><p>...</p>","title":"efdegegwegwegwrgr","isAgreeTerms":true}
+2024-08-03 12:21:59::info::/v1/api/termOfService/readTermOfServices::68f36a07-d7bd-430b-b0bc-86bdf5e43ee1::input-params ::GET::::{}
+2024-08-03 12:21:59::info::/v1/api/termOfService/readTermOfServices::8bdce556-2141-48f4-82a2-28d71e2d3f34::input-params ::GET::::{}
+2024-08-03 12:22:00::info::/v1/api/termOfService/readTermOfServices::daa14650-1148-416c-bd44-c0c3ab637634::input-params ::GET::::{}
+2024-08-03 12:22:00::info::/v1/api/termOfService/readTermOfServices::4ef407c6-c363-4899-bb0e-6b6d133defce::input-params ::GET::::{}
+2024-08-03 12:22:42::info::/v1/api/movement/readMovements::e60b601f-d805-4f50-944e-49e95e2430a7::input-params ::GET::::{}
+2024-08-03 12:22:42::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::ee608a74-d054-4832-94ab-ed5e5c86ee2e::input-params ::GET::::{}
+2024-08-03 12:22:42::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::74248354-e1df-4dc5-b302-9620f842ae3b::input-params ::GET::::{}
+2024-08-03 12:22:42::info::/v1/api/termOfService/readTermOfServices::385ae78a-e3d7-4281-9ae9-f616b0c1ea1a::input-params ::GET::::{}
+2024-08-03 12:22:51::info::/v1/api/movement/readMovements::285beec8-538f-475d-9eba-b1b5f009a5a6::input-params ::GET::::{}
+2024-08-03 12:22:51::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::0f4ec26e-cffb-47db-8cec-c674b39271f3::input-params ::GET::::{}
+2024-08-03 12:22:51::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::422d4c8f-07b3-4ba1-a75e-31b9ea4a0e59::input-params ::GET::::{}
+2024-08-03 12:22:51::info::/v1/api/termOfService/readTermOfServices::90112978-7095-48ea-8dc3-c6abf44201fd::input-params ::GET::::{}
+2024-08-03 12:22:59::info::/v1/api/movement/readMovements::54e8201c-8ae6-4f15-a513-5a31b5d3265c::input-params ::GET::::{}
+2024-08-03 12:22:59::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::c7713714-deaf-40c1-a0df-788a1c1ef7cf::input-params ::GET::::{}
+2024-08-03 12:22:59::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::212b827c-d8cc-471b-9ddd-cc471af4b516::input-params ::GET::::{}
+2024-08-03 12:22:59::info::/v1/api/termOfService/readTermOfServices::a62783ca-4f0a-43b4-a3dd-4919766656e3::input-params ::GET::::{}
+2024-08-03 12:23:13::info::/v1/api/serviceCategory/createServiceCategory::d3d9ddab-1bf7-4263-8607-229a55b51537::input-params ::POST::::{"title":"Ve truyen than"}
+2024-08-03 12:23:13::info::/v1/api/commissionService/createCommissionService::dd7dc1c1-bde9-43a8-95f0-8319a46f649f::input-params ::POST::::{}
+2024-08-03 12:23:16::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::5a01b7e1-e941-472b-85b5-f101899486b0::input-params ::GET::::{}
+2024-08-03 12:23:58::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::5f5a12a5-8b61-41e9-bcac-51fb22ed1ffb::input-params ::GET::::{}
+2024-08-03 12:23:58::info::/v1/api/movement/readMovements::66833296-cc94-4802-9103-bc58e4ed0568::input-params ::GET::::{}
+2024-08-03 12:23:58::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::22588267-af20-48ef-9782-46c58977153d::input-params ::GET::::{}
+2024-08-03 12:23:58::info::/v1/api/user/me::1f86422b-fa1c-480a-8ece-d1bd3838e3d6::input-params ::GET::::{}
+2024-08-03 12:23:59::info::/v1/api/movement/readMovements::14a8bdcc-62e2-4e8e-a01b-f033f1c62a95::input-params ::GET::::{}
+2024-08-03 12:24:00::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::d218315a-820a-4535-ba95-b166b14b14c5::input-params ::GET::::{}
+2024-08-03 12:24:00::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::f9cf6679-2f50-42ee-b10c-fbe2955d0431::input-params ::GET::::{}
+2024-08-03 12:24:04::info::/v1/api/movement/readMovements::a981bd1f-01f0-4736-a114-d59e2d08a104::input-params ::GET::::{}
+2024-08-03 12:24:04::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::5e08d4f6-c5ce-4a95-a4f8-82e10c0b7689::input-params ::GET::::{}
+2024-08-03 12:24:04::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::d62e0ec2-d685-4969-bcdb-eec03c4c37d0::input-params ::GET::::{}
+2024-08-03 12:27:14::info::/v1/api/movement/readMovements::9606ec3b-614d-45a6-a114-fa6878c7086b::input-params ::GET::::{}
+2024-08-03 12:27:14::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::66db251c-8ee4-4d82-8cc1-729edd847338::input-params ::GET::::{}
+2024-08-03 12:27:14::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::02c7bf12-3299-4254-837d-01e3196552ae::input-params ::GET::::{}
+2024-08-03 12:41:59::info::/v1/api/user/me::989aa7c8-0011-48a5-bc99-4d739e81841b::input-params ::GET::::{}
+2024-08-03 12:42:01::info::/v1/api/movement/readMovements::ab5537e6-1d06-44a4-a1e2-9fb26b3323dc::input-params ::GET::::{}
+2024-08-03 12:42:01::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::f0508e53-5dab-4303-83d6-01038ed658fc::input-params ::GET::::{}
+2024-08-03 12:42:01::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::06f56066-a480-471b-8394-72101ac1ff49::input-params ::GET::::{}
+2024-08-03 12:42:05::info::/v1/api/movement/readMovements::d3de7df7-a0c1-4d90-b1bc-564db1c5546f::input-params ::GET::::{}
+2024-08-03 12:42:05::info::/v1/api/user/readUserProfile/66ac824ae3211f00a00e840e::0475abb8-2a18-44d9-92cf-1d0037a9ce0a::input-params ::GET::::{}
+2024-08-03 12:42:05::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66ac824ae3211f00a00e840e::0679b774-0576-46db-bd74-17d5be0be721::input-params ::GET::::{}

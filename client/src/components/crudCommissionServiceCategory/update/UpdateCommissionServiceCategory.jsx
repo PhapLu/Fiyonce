@@ -92,7 +92,7 @@ export default function UpdateCommissionServiceCategory({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <h2 className="form__title">Chỉnh sửa thể loại dịch vụ</h2>
-            <div className="form-field">
+            <div className="form-field required">
                 <label htmlFor="title" className="form-field__label">Tên thể loại</label>
                 <input type="title" id="title" name="title" value={inputs.title || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập thể loại" autoComplete="on" />
                 {errors.title && <span className="form-field__error">{errors.title}</span>}

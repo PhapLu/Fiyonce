@@ -5,7 +5,6 @@ import { useQuery } from "react-query";
 
 // Resources
 import Navbar from '../../components/navbar/Navbar.jsx';
-import News from "../../components/news/News.jsx";
 import BackToTop from '../../components/backToTop/BackToTop.jsx';
 
 // Utils

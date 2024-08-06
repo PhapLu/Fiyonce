@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import RenderConversation from "../../components/crudConversation/render/RenderConversation.jsx";
 import { createContext, useState, useContext, useEffect } from 'react';
 import { apiUtils } from "../../utils/newRequest.js";
@@ -12,7 +12,9 @@ export const useConversation = () => {
 export const ConversationProvider = ({ children }) => {
     const [otherMember, setOtherMember] = useState();
     const [showRenderConversation, setShowRenderConversation] = useState(false);
-
+    const [conversationFetched, setConversationFetched] = useState(false);
+    const queryClient = useQueryClient();
+    
     const fetchConversation = async (otherMember) => {
         try {
             console.log(otherMember)
@@ -31,20 +33,33 @@ export const ConversationProvider = ({ children }) => {
         }
     };
 
-
     const { data: conversation, error, isLoading } = useQuery(
         ['fetchConversation', otherMember],
         () => fetchConversation(otherMember),
         {
             enabled: !!otherMember, // Only run query if otherMember is set
+            onSuccess: () => {
+                setConversationFetched(true);
+            },
+            onError: () => {
+                setConversationFetched(false);
+            }
         }
     );
 
     useEffect(() => {
         if (otherMember) {
+            setShowRenderConversation(false);
+            setConversationFetched(false);
+            queryClient.invalidateQueries(['fetchConversation', otherMember]);
+        }
+    }, [otherMember, queryClient]);
+
+    useEffect(() => {
+        if (conversationFetched) {
             setShowRenderConversation(true);
         }
-    }, [otherMember]);
+    }, [conversationFetched]);
 
     const value = {
         otherMember,
