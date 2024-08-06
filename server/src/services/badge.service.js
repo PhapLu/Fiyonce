@@ -69,7 +69,9 @@ class BadgeService {
 
     static readBadges = async () => {
         const badges = await Badge.find()
-        return badges
+        return {
+            badges
+        }
     }
 
     static readBadge = async(badgeId) => {

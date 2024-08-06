@@ -43,6 +43,7 @@ const OrderSchema = new mongoose.Schema(
         references: [
             {
                 type: String,
+                default: [],
             },
         ],
         isTalentArchived: { type: Boolean, default: false },

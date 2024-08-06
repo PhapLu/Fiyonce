@@ -10,7 +10,7 @@ const SubmissionSchema = new mongoose.Schema(
         title: { type: String, required: true },
         artwork: { type: String, ref: 'Artwork', required: true },
         description: { type: String, default: '' },
-        votes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        votes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
     },{
         timestamps: true,
         collection: COLLECTION_NAME,

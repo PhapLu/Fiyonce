@@ -12,7 +12,7 @@ class SubmissionController {
     updateSubmission = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update talent request success!',
-            metadata: await SubmissionService.updateSubmission(req.userId, req.params.submissionId, req)
+            metadata: await SubmissionService.updateSubmission(req.userId, req.params.submissionId, req.body)
         }).send(res)
     }
 

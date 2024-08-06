@@ -13,7 +13,7 @@ const ChallengeSchema = new mongoose.Schema(
         prizes: { type: String, default: '' },
         rules: { type: String, default: '' },
         status: { type: String, enum: ['upcoming', 'ongoing', 'completed'], default: 'upcoming' },
-        participants: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
     },{
         timestamps: true,
         collection: COLLECTION_NAME,

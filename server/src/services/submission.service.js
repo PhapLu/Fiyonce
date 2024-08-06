@@ -22,7 +22,7 @@ class SubmissionService {
         if (!challenge) throw new NotFoundError("Challenge not found")
         if(challenge.participants.includes(userId)) 
             throw new BadRequestError("You have already submitted")
-
+        console.log(challenge);
         //2. Validate request body
         if (!req.body.title || !req.files.artworks || req.files.artworks.length == 0)
             throw new BadRequestError("Please provide required fields")
@@ -55,7 +55,7 @@ class SubmissionService {
         }
     }
 
-    static updateSubmission = async (userId, submissionId, req) => {
+    static updateSubmission = async (userId, submissionId, body) => {
         //1. Check user and submission
         const user = await User.findById(userId)
         const submission = await Submission.findById(submissionId)
@@ -63,33 +63,17 @@ class SubmissionService {
         if(!submission) throw new NotFoundError("Submission not found")
         if(submission.userId.toString() !== userId) throw new AuthFailureError("You are not authorized")
 
-        //2. Validate request body
-        if(req.body.votes) throw new BadRequestError("This field is not allowed")
-        //3. Upload artwork to cloudinary
-        // const submissionToDelete = submission.artwork
-        // let submissionUpdated
-        // if(req.files && req.files.artworks && req.files.artworks.length > 0){
-        //     const artworkUploadResult = await compressAndUploadImage({
-        //         buffer: req.files.artworks[0].buffer,
-        //         originalname: req.files.artworks[0].originalname,
-        //         folderName: `fiyonce/user/submissions`,
-        //         width: 1920,
-        //         height: 1080,
-        //     })
-        //     submissionUpdated = artworkUploadResult.secure_url
-            
-        //     //4. Delete old artwork
-        //     const publicId = extractPublicIdFromUrl(submissionToDelete)
-        //     await deleteFileByPublicId(publicId)
-        // }
+        //2. Validate request body is empty
+        if(!body) throw new BadRequestError("Please provide fields to update")
+        if(Object.keys(body).length === 0) throw new BadRequestError("Please provide fields to update")
+        if(body.votes) throw new BadRequestError("This field is not allowed")
 
-        //5. Update submission
+        //3. Update submission
         const updatedSubmission = await Submission.findByIdAndUpdate(
             submissionId,
             {
-                title: req.body.title || submission.title,
-                // artwork: submissionUpdated || submission.artwork,
-                description: req.body.description || submission.description,
+                title: body.title || submission.title,
+                description: body.description || submission.description,
             },
             { new: true }
         )

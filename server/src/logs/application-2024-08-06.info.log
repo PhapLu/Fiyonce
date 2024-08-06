@@ -195,3 +195,32 @@
 2024-08-06 12:09:57::error::/v1/api/user/followUser/66a5e617cb19b8a18494298c::7e029cc6-7b0f-4c96-93b9-889e67098e34::403 - 0ms - Response: {"status":403,"now":1722920997006}::{"message":"You already follow this user"}
 2024-08-06 12:10:00::info::/v1/api/user/unFollowUser/66a5e617cb19b8a18494298c::a4fd71be-3294-401a-9ff0-f6b6e3079d83::input-params ::PATCH::::{}
 2024-08-06 12:10:05::info::/v1/api/user/followUser/66a5e617cb19b8a18494298c::d50dddc3-a1a7-4519-8ded-261a9013924b::input-params ::PATCH::::{}
+2024-08-06 14:48:15::info::/v1/api/auth/users/login::8cc4b335-b3d2-4056-b9d1-f75e154e686f::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-08-06 14:48:21::info::/v1/api/challenge/readChallenge/66aaf9834348fc64f984ec13::de1d888e-1992-4a18-8c4d-baf214b48062::input-params ::GET::::{}
+2024-08-06 14:48:21::error::/v1/api/challenge/readChallenge/66aaf9834348fc64f984ec13::de1d888e-1992-4a18-8c4d-baf214b48062::404 - 1ms - Response: {"status":404,"now":1722930501346}::{"message":"Challenge not found"}
+2024-08-06 14:48:25::info::/v1/api/challenge/readChallenges::77ce168f-1063-4153-bc02-79970ff10d64::input-params ::GET::::{}
+2024-08-06 14:48:37::info::/v1/api/auth/users/login::e1abb342-fb94-4d24-89de-e6062f5a4c9d::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-06 14:48:57::info::/v1/api/challenge/createChallenge::5bdd8640-37a8-4c00-a720-39cd7e94ae35::input-params ::POST::::{}
+2024-08-06 14:49:30::info::/v1/api/submission/createSubmission/66ab001ae6ae6cd0fbdb4fa4::b89712e6-19bd-4fbb-99f6-37719b9db3ac::input-params ::POST::::{}
+2024-08-06 14:49:31::error::/v1/api/submission/createSubmission/66ab001ae6ae6cd0fbdb4fa4::b89712e6-19bd-4fbb-99f6-37719b9db3ac::404 - 1ms - Response: {"status":404,"now":1722930571108}::{"message":"Challenge not found"}
+2024-08-06 14:49:35::info::/v1/api/submission/createSubmission/66b1d56be9731f4e06c51766::0d3ec67c-b8ba-4170-8b26-ab3f45a2e550::input-params ::POST::::{}
+2024-08-06 14:49:36::error::/v1/api/submission/createSubmission/66b1d56be9731f4e06c51766::0d3ec67c-b8ba-4170-8b26-ab3f45a2e550::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'includes')"}
+2024-08-06 14:50:31::info::/v1/api/challenge/readChallenge/66b1d56be9731f4e06c51766::c573ebff-1d0e-4897-a18c-5459c3837d9e::input-params ::GET::::{}
+2024-08-06 14:50:39::info::/v1/api/challenge/deleteChallenge/66b1d56be9731f4e06c51766::71931ec8-5c62-416d-a72f-df138ffc2e53::input-params ::DELETE::::{}
+2024-08-06 14:50:44::info::/v1/api/challenge/createChallenge::5434f1db-7fc1-4592-a178-8df4d77e1e68::input-params ::POST::::{}
+2024-08-06 14:50:47::error::/v1/api/challenge/createChallenge::5434f1db-7fc1-4592-a178-8df4d77e1e68::undefined - NaNms - Response: {"errors":{"participants":{"stringValue":"\"[]\"","valueType":"Array","kind":"ObjectId","value":[],"path":"participants","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"[]\" (type Array) at path \"participants\" because of \"BSONError\""}},"_message":"Challenge validation failed","name":"ValidationError","message":"Challenge validation failed: participants: Cast to ObjectId failed for value \"[]\" (type Array) at path \"participants\" because of \"BSONError\""}::{"message":"Challenge validation failed: participants: Cast to ObjectId failed for value \"[]\" (type Array) at path \"participants\" because of \"BSONError\""}
+2024-08-06 14:52:55::info::/v1/api/challenge/createChallenge::4454cca6-d4d3-4f77-920d-77eb9492316e::input-params ::POST::::{}
+2024-08-06 14:53:16::info::/v1/api/submission/createSubmission/66b1d6591b1faaa2fe8917bb::bdde5baa-7d74-45cf-a92e-c238dcccc8ec::input-params ::POST::::{}
+2024-08-06 14:53:31::info::/v1/api/submission/readSubmissions::07558df5-b401-4eb3-9961-1c21fe667d45::input-params ::GET::::{}
+2024-08-06 14:53:40::info::/v1/api/submission/readSubmission/66b1d66e1b1faaa2fe8917c3::4f135c7a-1b3a-4c58-90c0-d4ae2dfb61b7::input-params ::GET::::{}
+2024-08-06 14:54:05::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::b60c57a8-eb3c-49b8-8cfa-38a1cbf5c0d0::input-params ::PATCH::::{}
+2024-08-06 14:55:28::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::2334c6a6-5332-4f20-b165-1eea621a982d::input-params ::PATCH::::{}
+2024-08-06 14:56:56::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::4144be89-3c13-44e7-9fdb-21ca4de139b3::input-params ::PATCH::::{}
+2024-08-06 14:57:15::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::fbd0ac23-f743-430d-8d40-623fd2a6a9c5::input-params ::PATCH::::{}
+2024-08-06 14:57:50::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::8b800d03-0e20-40b0-9e3b-6e0d53af7f02::input-params ::PATCH::::{}
+2024-08-06 14:57:50::error::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::8b800d03-0e20-40b0-9e3b-6e0d53af7f02::403 - 1ms - Response: {"status":403,"now":1722931070554}::{"message":"Please provide fields to update"}
+2024-08-06 14:58:34::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::e1dc85f7-e8aa-43f8-a2b5-10b8a00ad8cb::input-params ::PATCH::::{}
+2024-08-06 14:58:34::error::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::e1dc85f7-e8aa-43f8-a2b5-10b8a00ad8cb::403 - 0ms - Response: {"status":403,"now":1722931114178}::{"message":"Please provide fields to update"}
+2024-08-06 14:59:05::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::103b6386-2639-43f4-9703-f3bb2d6aab64::input-params ::PATCH::::{}
+2024-08-06 14:59:05::error::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::103b6386-2639-43f4-9703-f3bb2d6aab64::403 - 0ms - Response: {"status":403,"now":1722931145577}::{"message":"Please provide fields to update"}
+2024-08-06 14:59:33::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::fd75efa6-fba2-4b9a-a25e-ba051ddade63::input-params ::PATCH::::{"title":"Title Changed"}
