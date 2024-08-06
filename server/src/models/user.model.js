@@ -43,8 +43,7 @@ const UserSchema = new Schema(
         }],
         badgeProgress: [{
             badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
-            level: { type: Number, default: 1 },
-            progress: { type: Map, of: Number, default: {} }, // E.g., { "likes": 50, "shares": 5 }
+            progress: { type: Object, default: {} },  // Change Map to Object
             completed: { type: Boolean, default: false }
         }],
         referralCode: { type: String},

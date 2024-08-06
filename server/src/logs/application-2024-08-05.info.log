@@ -92,3 +92,44 @@
 2024-08-05 21:08:45::info::/v1/api/user/followUser/66a58ec99acbcdfb3d3f1692::cede8739-f77d-4092-8cda-628756d9f578::input-params ::PATCH::::{}
 2024-08-05 21:08:45::error::/v1/api/user/followUser/66a58ec99acbcdfb3d3f1692::cede8739-f77d-4092-8cda-628756d9f578::403 - 0ms - Response: {"status":403,"now":1722866925444}::{"message":"You already follow this user"}
 2024-08-05 21:09:17::info::/v1/api/user/followUser/66a70bf6b6441aa476576aa5::ecc22159-4e95-4cef-9e37-48f8d14ef850::input-params ::PATCH::::{}
+2024-08-05 21:23:10::info::/v1/api/badge/createBadge::c2e6c316-3dc8-43b0-99c9-8e8e689e02b2::input-params ::POST::::{}
+2024-08-05 21:23:20::info::/v1/api/auth/users/login::5350e055-fc5f-4181-bca8-6f7397402129::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-05 21:23:30::info::/v1/api/badge/createBadge::99c07b30-bace-4acc-b927-b761a2aac009::input-params ::POST::::{}
+2024-08-05 21:23:36::error::/v1/api/badge/createBadge::99c07b30-bace-4acc-b927-b761a2aac009::403 - 0ms - Response: {"status":403,"now":1722867816199}::{"message":"Error creating badge!"}
+2024-08-05 21:26:17::info::/v1/api/badge/createBadge::a4994805-9414-42c2-b7d2-0f0ff7247ace::input-params ::POST::::{}
+2024-08-05 21:26:20::error::/v1/api/badge/createBadge::a4994805-9414-42c2-b7d2-0f0ff7247ace::403 - 1ms - Response: {"status":403,"now":1722867980585}::{"message":"Error creating badge!"}
+2024-08-05 21:28:09::info::/v1/api/badge/createBadge::bb93baa1-8464-44e5-8cb9-4cc901def96d::input-params ::POST::::{}
+2024-08-05 21:28:12::error::/v1/api/badge/createBadge::bb93baa1-8464-44e5-8cb9-4cc901def96d::403 - 2ms - Response: {"status":403,"now":1722868092806}::{"message":"Error creating badge!"}
+2024-08-05 21:30:04::info::/v1/api/badge/createBadge::c0cf6f16-0042-40b1-ae76-317cf0a65811::input-params ::POST::::{}
+2024-08-05 21:30:07::error::/v1/api/badge/createBadge::c0cf6f16-0042-40b1-ae76-317cf0a65811::403 - 1ms - Response: {"status":403,"now":1722868207785}::{"message":"Error creating badge!"}
+2024-08-05 21:31:41::info::/v1/api/badge/createBadge::23d046d6-9c54-43f6-bab3-5df2ce80d40b::input-params ::POST::::{}
+2024-08-05 21:31:44::error::/v1/api/badge/createBadge::23d046d6-9c54-43f6-bab3-5df2ce80d40b::403 - 1ms - Response: {"status":403,"now":1722868304617}::{"message":"Error creating badge!"}
+2024-08-05 21:32:39::info::/v1/api/badge/createBadge::bfe73ce0-fee8-4681-8af4-202f95d6d453::input-params ::POST::::{}
+2024-08-05 21:35:05::info::/v1/api/user/followUser/66a70bf6b6441aa476576aa5::0813e2b5-cf5d-4ad7-9274-52a14f2fe078::input-params ::PATCH::::{}
+2024-08-05 21:35:05::error::/v1/api/user/followUser/66a70bf6b6441aa476576aa5::0813e2b5-cf5d-4ad7-9274-52a14f2fe078::403 - 1ms - Response: {"status":403,"now":1722868505666}::{"message":"Cannot read properties of undefined (reading 'find')"}
+2024-08-05 21:39:03::info::/v1/api/user/followUser/66a70bf6b6441aa476576aa5::f89a783b-83ba-4675-aa90-8a2bb7817e0a::input-params ::PATCH::::{}
+2024-08-05 21:39:03::error::/v1/api/user/followUser/66a70bf6b6441aa476576aa5::f89a783b-83ba-4675-aa90-8a2bb7817e0a::403 - 0ms - Response: {"status":403,"now":1722868743237}::{"message":"You already follow this user"}
+2024-08-05 21:39:16::info::/v1/api/user/followUser/66a5a40573370474cf4eabc3::0e2c1149-d9b5-43c7-899e-e5ab0316e10a::input-params ::PATCH::::{}
+2024-08-05 21:39:17::error::/v1/api/user/followUser/66a5a40573370474cf4eabc3::0e2c1149-d9b5-43c7-899e-e5ab0316e10a::403 - 2ms - Response: {"status":403,"now":1722868757468}::{"message":"Cannot read properties of undefined (reading 'entries')"}
+2024-08-05 21:44:29::info::/v1/api/user/followUser/66a5a40573370474cf4eabc3::72d5dbb4-92ba-4e08-8640-0eb73f1a0a4f::input-params ::PATCH::::{}
+2024-08-05 21:44:29::error::/v1/api/user/followUser/66a5a40573370474cf4eabc3::72d5dbb4-92ba-4e08-8640-0eb73f1a0a4f::403 - 0ms - Response: {"status":403,"now":1722869069495}::{"message":"You already follow this user"}
+2024-08-05 21:44:50::info::/v1/api/user/followUser/66a5df7bca70ea1c3ee0b795::94b6c7d1-09a4-414b-af4f-aba4452ceab9::input-params ::PATCH::::{}
+2024-08-05 21:50:11::info::/v1/api/user/followUser/66a5a70973370474cf4eae89::03755ab5-934f-4cfb-b88d-e6bc62ee7a7d::input-params ::PATCH::::{}
+2024-08-05 21:55:49::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::4823ab7a-1330-4ad2-9046-95f436c0a2c1::input-params ::GET::::{}
+2024-08-05 21:58:09::info::/v1/api/user/followUser/66a5aecc73370474cf4eb89c::33951d2c-edea-4e5b-ae8f-1831136c9e79::input-params ::PATCH::::{}
+2024-08-05 22:00:07::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::36cf21f3-f054-4c94-9312-2e935cddc6c2::input-params ::GET::::{}
+2024-08-05 22:00:33::info::/v1/api/user/readUserProfile/66a5d344e04363f345d52e5b::ecbdab9e-811b-495c-98c5-bd769902bf42::input-params ::GET::::{}
+2024-08-05 22:00:38::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::74a8c5d6-e526-4f0e-a06c-6ce7b9316773::input-params ::GET::::{}
+2024-08-05 22:00:45::info::/v1/api/user/followUser/66a5d344e04363f345d52e5b::9d8cf07a-de64-4600-a2b6-c802f67a238f::input-params ::PATCH::::{}
+2024-08-05 22:00:45::error::/v1/api/user/followUser/66a5d344e04363f345d52e5b::9d8cf07a-de64-4600-a2b6-c802f67a238f::403 - 1ms - Response: {"status":403,"now":1722870045812}::{"message":"You already follow this user"}
+2024-08-05 22:00:54::info::/v1/api/user/followUser/66a5df7bca70ea1c3ee0b795::18b1039b-73ea-4069-88ae-aa795474ffcd::input-params ::PATCH::::{}
+2024-08-05 22:00:54::error::/v1/api/user/followUser/66a5df7bca70ea1c3ee0b795::18b1039b-73ea-4069-88ae-aa795474ffcd::403 - 2ms - Response: {"status":403,"now":1722870054681}::{"message":"You already follow this user"}
+2024-08-05 22:01:09::info::/v1/api/user/followUser/66a5e617cb19b8a18494298c::da2d408b-2493-46a6-a133-e6b53961cd8e::input-params ::PATCH::::{}
+2024-08-05 22:01:41::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::0e4cd09e-9bcf-4a74-994b-704f7c386931::input-params ::GET::::{}
+2024-08-05 22:04:18::info::/v1/api/user/unFollowUser/66a59f2c73370474cf4eaada::ae4c60fe-3399-4924-b66a-446b24ec2fd1::input-params ::PATCH::::{}
+2024-08-05 22:04:19::error::/v1/api/user/unFollowUser/66a59f2c73370474cf4eaada::ae4c60fe-3399-4924-b66a-446b24ec2fd1::403 - 0ms - Response: {"status":403,"now":1722870259041}::{"message":"You do not follow this user"}
+2024-08-05 22:04:28::info::/v1/api/user/unFollowUser/66a5e617cb19b8a18494298c::e2c8b13a-f115-45cb-a866-03e4b852242a::input-params ::PATCH::::{}
+2024-08-05 22:04:33::info::/v1/api/user/followUser/66a5e617cb19b8a18494298c::bc26a28a-b189-4014-bcf3-a4ac3726c88b::input-params ::PATCH::::{}
+2024-08-05 22:05:41::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::3f7a854a-994c-4c10-bb9d-e6803de6aaf4::input-params ::GET::::{}
+2024-08-05 22:06:10::info::/v1/api/user/unFollowUser/66a5e617cb19b8a18494298c::7ff9a4fd-0fbe-4f8a-ae83-9ecc01854ed2::input-params ::PATCH::::{}
+2024-08-05 22:06:19::info::/v1/api/user/followUser/66a5e617cb19b8a18494298c::52f8ea20-fd08-4d84-9ca2-8eb96d73feb8::input-params ::PATCH::::{}

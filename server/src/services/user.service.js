@@ -72,10 +72,10 @@ class UserService {
         await followedUser.save()
 
         //3. Track the badge progress
-        await trackActivity(userId, 'follow')
+        const userAfterTracking = await trackActivity(userId, 'likes')
 
         return {
-            user: currentUser,
+            user: userAfterTracking,
         }
     }
 
