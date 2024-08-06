@@ -1,6 +1,6 @@
-import sharp from "sharp";
-import stream from "stream";
-import { v2 as cloudinary, v2 } from "cloudinary";
+import sharp from "sharp"
+import stream from "stream"
+import { v2 as cloudinary, v2 } from "cloudinary"
 
 export const compressAndUploadImage = async ({
     buffer,
@@ -11,15 +11,15 @@ export const compressAndUploadImage = async ({
 }) => {
     try {
         // Slice the originalname to just 30 characters and append the current time
-        const slicedOriginalName = originalname.slice(0, 30);
-        const currentTime = new Date().toISOString().replace(/:/g, "-"); // Replace colons to avoid issues with file names
-        const finalName = `${slicedOriginalName}_${currentTime}`;
+        const slicedOriginalName = originalname.slice(0, 30)
+        const currentTime = new Date().toISOString().replace(/:/g, "-") // Replace colons to avoid issues with file names
+        const finalName = `${slicedOriginalName}_${currentTime}`
 
         // Compress the image using sharp with specified width and height
         const compressedBuffer = await sharp(buffer)
             .resize(width, height, { fit: "inside" }) // Resize to fit within the specified dimensions
-            .jpeg({ quality: 80 }) // Compress to JPEG with 80% quality
-            .toBuffer();
+            .jpeg({ quality: 85 }) // Compress to JPEG with 80% quality
+            .toBuffer()
 
         // Function to upload image to Cloudinary
         const streamUpload = async (buffer) => {
@@ -32,51 +32,50 @@ export const compressAndUploadImage = async ({
                     },
                     (error, result) => {
                         if (error) {
-                            console.error("Cloudinary upload error:", error);
-                            reject(error);
+                            console.error("Cloudinary upload error:", error)
+                            reject(error)
                         } else {
-                            console.log("Cloudinary upload result:", result);
-                            resolve(result);
+                            resolve(result)
                         }
                     }
-                );
+                )
 
-                const bufferStream = new stream.PassThrough();
-                bufferStream.end(buffer);
-                bufferStream.pipe(uploadStream);
-            });
-        };
+                const bufferStream = new stream.PassThrough()
+                bufferStream.end(buffer)
+                bufferStream.pipe(uploadStream)
+            })
+        }
 
         // Perform the upload
-        const uploadResult = await streamUpload(compressedBuffer);
-        return uploadResult;
+        const uploadResult = await streamUpload(compressedBuffer)
+        return uploadResult
     } catch (error) {
-        console.error("Error in compressAndUploadImage:", error);
-        throw error;
+        console.error("Error in compressAndUploadImage:", error)
+        throw error
     }
-};
+}
 
 export const extractPublicIdFromUrl = (url) => {
-    const urlObj = new URL(url);
-    const pathParts = urlObj.pathname.split("/");
-    const versionIndex = pathParts.findIndex((part) => part.startsWith("v"));
+    const urlObj = new URL(url)
+    const pathParts = urlObj.pathname.split("/")
+    const versionIndex = pathParts.findIndex((part) => part.startsWith("v"))
     const publicIdParts = pathParts
         .slice(versionIndex + 1)
         .join("/")
-        .split(".");
-    publicIdParts.pop(); // Remove the file extension
-    return decodeURIComponent(publicIdParts.join("."));
-};
+        .split(".")
+    publicIdParts.pop() // Remove the file extension
+    return decodeURIComponent(publicIdParts.join("."))
+}
 
 export const deleteFileByPublicId = async (publicId) => {
     try {
-        const result = await cloudinary.uploader.destroy(publicId);
-        return result;
+        const result = await cloudinary.uploader.destroy(publicId)
+        return result
     } catch (error) {
-        console.error("Error deleting from Cloudinary:", error);
-        throw error;
+        console.error("Error deleting from Cloudinary:", error)
+        throw error
     }
-};
+}
 
 // export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
 //   const defaultTransformations = {
@@ -105,28 +104,28 @@ export const generateSignedUrl = async (publicId, options = {}) => {
                 sign_url: true,
                 secure: true,
                 ...options,
-            });
-            resolve(url);
+            })
+            resolve(url)
         } catch (error) {
-            reject(error);
+            reject(error)
         }
-    });
-};
+    })
+}
 
 export const generateOptimizedImageUrl = (publicId, transformations = {}) => {
     const defaultTransformations = {
         quality: "auto",
         fetch_format: "auto",
         ...transformations,
-    };
+    }
 
     // Generate the URL with transformations
     const optimizedUrl = cloudinary.url(publicId, {
         transformation: [defaultTransformations],
-    });
+    })
 
     // Debugging log
-    console.log("Generated Optimized URL:", optimizedUrl);
+    console.log("Generated Optimized URL:", optimizedUrl)
 
-    return optimizedUrl;
-};
+    return optimizedUrl
+}

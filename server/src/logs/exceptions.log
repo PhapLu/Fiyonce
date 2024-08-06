@@ -714,3 +714,111 @@ ReferenceError: passport is not defined
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-01 07:44:35::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:45:38::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:46:04::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:46:44::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:46:55::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:47:01::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:48:00::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:48:22::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:49:19::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:49:38::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:50:02::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:51:04::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 07:52:04::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 08:24:50::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 08:24:59::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:28:21::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:29:30::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:29:42::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:30:28::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:30:49::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-01 09:31:15::error::undefined::undefined::uncaughtException: Schema is not defined
+ReferenceError: Schema is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/submission.model.js:7:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 08:04:22::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/app.js:54:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 08:10:14::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/auth/index.js:19:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 08:10:49::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/auth/index.js:20:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 10:28:33::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/configs/passport.config.js:1:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-04 10:28:47::error::undefined::undefined::uncaughtException: passport is not defined
+ReferenceError: passport is not defined
+    at file:///D:/Adam/OnisonProject/server/src/configs/passport.config.js:1:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+2024-08-05 21:16:14::error::undefined::undefined::uncaughtException: time is not defined
+ReferenceError: time is not defined
+    at file:///D:/Adam/OnisonProject/server/src/models/badge.model.js:15:5
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined

@@ -31,7 +31,7 @@ import Glaze from "./statics/glaze/Glaze.jsx";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
-
+import LoginPage from "./pages/Login/LoginPage";
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";

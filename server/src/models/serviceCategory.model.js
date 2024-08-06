@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "ServiceCategory";
 const COLLECTION_NAME = "ServiceCategories";
 

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "PostCategory";
 const COLLECTION_NAME = "PostCategories";
 

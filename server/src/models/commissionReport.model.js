@@ -22,8 +22,7 @@ const CommissionReportSchema = new mongoose.Schema(
         },
         content: { type: String, required: true },
         evidences: [{ type: String, required: true }],
-    },
-    {
+    },{
         timestamps: true,
         collection: COLLECTION_NAME,
     }

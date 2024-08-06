@@ -1,4 +1,5 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "Order";
 const COLLECTION_NAME = "Orders";
 
@@ -42,6 +43,7 @@ const OrderSchema = new mongoose.Schema(
         references: [
             {
                 type: String,
+                default: [],
             },
         ],
         isTalentArchived: { type: Boolean, default: false },

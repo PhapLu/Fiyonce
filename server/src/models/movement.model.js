@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "Movement";
 const COLLECTION_NAME = "Movements";
 
