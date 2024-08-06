@@ -66,7 +66,7 @@ export default function Modal({ modalInfo }) {
     if (!modalInfo) return null;
     return (
         <div
-            className={`modal-form type-4 ${modalInfo?.status} ${hovered ? 'paused' : ''}`}
+            className={`type-4 ${modalInfo?.status} ${hovered ? 'paused' : ''}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >

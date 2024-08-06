@@ -53,6 +53,13 @@ class UserController {
             metadata: await UserService.recommendUsers(req.userId)
         }).send(res)
     }
+
+    updateProfileStatus = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Update profile status successfully!',
+            metadata: await UserService.updateProfileStatus(req.userId, req.body)
+        }).send(res)
+    }
 }
 
 export default new UserController()

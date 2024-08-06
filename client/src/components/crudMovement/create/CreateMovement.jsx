@@ -8,7 +8,7 @@ export default function CreateMovement({
 }) {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const [isSubmitCreateMovementLoading, setIsSubmitCreateCommissionServiceLoading] = useState(false);
+    const [isSubmitCreateMovementLoading, setIsSubmitCreateMovementLoading] = useState(false);
     const [thumbnail, setThumbnail] = useState(null);
 
     const createCommissionRef = useRef();
@@ -62,12 +62,12 @@ export default function CreateMovement({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitCreateCommissionServiceLoading(true);
+        setIsSubmitCreateMovementLoading(true);
 
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitCreateCommissionServiceLoading(false);
+            setIsSubmitCreateMovementLoading(false);
             return;
         }
 
@@ -87,7 +87,7 @@ export default function CreateMovement({
                 serverError: error.response.data.message
             }));
         } finally {
-            setIsSubmitCreateCommissionServiceLoading(false);
+            setIsSubmitCreateMovementLoading(false);
         }
     };
 

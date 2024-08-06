@@ -4,8 +4,10 @@ import { useParams, useLocation, Outlet, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
 import Navbar from "../../components/navbar/Navbar.jsx";
 import ProfileSidebar from "../profileSidebar/ProfileSidebar";
+import CropImage from '../../components/cropImage/CropImage.jsx';
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
 import "./ProfileLayout.scss";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function ProfileLayout() {
     const [profileBtnActive, setProfileNavActive] = useState(null);
@@ -15,34 +17,50 @@ export default function ProfileLayout() {
     const [profileInfo, setProfileInfo] = useState();
     const isProfileOwner = userInfo && userInfo?._id === userId;
 
+    const [selectedCoverImage, setSelectedCoverImage] = useState(null);
+    const [isCoverCropping, setIsCoverCropping] = useState(false);
+
     const handleCoverClick = () => {
         document.getElementById('coverPhoto').click();
     };
 
-    const handleCoverChange = async (e) => {
+    const handleCoverChange = (e) => {
         const file = e.target.files[0];
+        if (file) {
+            const imageDataUrl = URL.createObjectURL(file);
+            setSelectedCoverImage(imageDataUrl);
+            setIsCoverCropping(true);
+            console.log('Cover image selected for cropping:', imageDataUrl);
+        } else {
+            console.log('No file selected');
+        }
+    };
+
+    const handleCoverCropComplete = async (croppedFile) => {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', croppedFile);
         formData.append('type', "bg");
 
-        if (file) {
+        try {
             setLoading(true);
-            console.log(formData.get('file'));
-            console.log(userInfo?._id);
-
-            try {
-                const response = await apiUtils.post(`/upload/profile/avatarOrCover/${userInfo?._id}`, formData);
-                console.log(response);
-                if (response.data.metadata.image_url) {
-                    setProfileInfo((prev) => ({ ...prev, bg: response.data.metadata.image_url }));
-                    // setUserInfo({ ...userInfo, bg: response.data.metadata.image_url });
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            } finally {
-                setLoading(false);
+            console.log('Uploading cropped cover image...');
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${userInfo?._id}`, formData);
+            console.log('Upload response:', response);
+            if (response.data.metadata.image_url) {
+                setProfileInfo((prev) => ({ ...prev, bg: response.data.metadata.image_url }));
             }
+        } catch (error) {
+            console.error('Error uploading cropped cover image:', error);
+        } finally {
+            setLoading(false);
+            setIsCoverCropping(false);
         }
+    };
+
+    const handleCoverCancelCrop = () => {
+        setIsCoverCropping(false);
+        setSelectedCoverImage(null);
+        console.log('Cover image cropping canceled');
     };
 
     const location = useLocation();
@@ -50,10 +68,10 @@ export default function ProfileLayout() {
     const fetchProfileById = async () => {
         try {
             const response = await newRequest.get(`/user/readUserProfile/${userId}`);
-            console.log(response);
+            console.log('Profile fetched:', response);
             return response.data.metadata.user;
         } catch (error) {
-            console.error(error);
+            console.error('Error fetching profile:', error);
             return null;
         }
     };
@@ -65,7 +83,7 @@ export default function ProfileLayout() {
         onSuccess: (data) => {
             if (data) {
                 console.log('Fetched profile:', data);
-                setProfileInfo(data)
+                setProfileInfo(data);
             }
         },
     });
@@ -94,93 +112,92 @@ export default function ProfileLayout() {
                 <div className="outlet-content">
                     <div className="profile">
                         <div className="profile__bg">
-                            <img
+                            <LazyLoadImage
                                 src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
                                 alt={`${profileInfo.fullName}'s cover photo`}
-                                className={`profile__bg__img ${loading ? "skeleton-img" : ""}`}
+                                className={`tablet-hide mobile-hide profile__bg__img ${loading ? "skeleton-img" : ""}`}
+                                effect="blur"
                             />
-                            {
-                                isProfileOwner && (
-                                    <>
-                                        <button className="profile__bg__edit-btn btn btn-md" onClick={handleCoverClick}>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth="2.5"
-                                                stroke="currentColor"
-                                                className="size-6 profile__bg__ic"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                                                />
-                                            </svg>
-                                            Đổi ảnh nền
-                                        </button>
-                                        <input type="file" id="coverPhoto" style={{ display: 'none' }} onChange={handleCoverChange} />
-                                    </>
-                                )
-                            }
-
+                            {isProfileOwner && (
+                                <>
+                                    <button className="profile__bg__edit-btn btn btn-md" onClick={handleCoverClick}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="2.5"
+                                            stroke="currentColor"
+                                            className="size-6 profile__bg__ic"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                                            />
+                                        </svg>
+                                        Đổi ảnh nền
+                                    </button>
+                                    {isCoverCropping && (
+                                        <CropImage
+                                            imageSrc={selectedCoverImage}
+                                            onCropComplete={handleCoverCropComplete}
+                                            onCancel={handleCoverCancelCrop}
+                                        />
+                                    )}
+                                    <input type="file" id="coverPhoto" style={{ display: 'none' }} onChange={handleCoverChange} />
+                                </>
+                            )}
                         </div>
                         <div className="sub-nav-container">
                             <div className="sub-nav-container--left">
-                                {
-                                    isProfileOwner ? (userInfo?.role == "talent" && (
-                                        <>
-                                            <Link
-                                                to={`/users/${userId}/profile-commission-services`}
-                                                className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
-                                            >
-                                                <span>Dịch vụ</span>
-                                            </Link>
-                                            <Link
-                                                to={`/users/${userId}/profile-posts`}
-                                                className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
-                                            >
-                                                <span>Tác phẩm</span>
-                                            </Link>
-                                        </>
-                                    )) : (
-                                        <>
-                                            <Link
-                                                to={`/users/${userId}/profile-commission-services`}
-                                                className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
-                                            >
-                                                <span>Dịch vụ</span>
-                                            </Link>
-                                            <Link
-                                                to={`/users/${userId}/profile-posts`}
-                                                className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
-                                            >
-                                                <span>Tác phẩm</span>
-                                            </Link>
-                                        </>
-                                    )
-                                }
+                                {isProfileOwner ? (userInfo?.role === "talent" && (
+                                    <>
+                                        <Link
+                                            to={`/users/${userId}/profile-commission-services`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
+                                        >
+                                            Dịch vụ
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/profile-posts`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                        >
+                                            Tác phẩm
+                                        </Link>
+                                    </>
+                                )) : (
+                                    <>
+                                        <Link
+                                            to={`/users/${userId}/profile-commission-services`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
+                                        >
+                                            Dịch vụ
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/profile-posts`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                        >
+                                            Tác phẩm
+                                        </Link>
+                                    </>
+                                )}
 
-                                {
-                                    isProfileOwner &&
-                                    (
-                                        <>
-                                            <Link
-                                                to={`/users/${userId}/order-history`}
-                                                className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
-                                            >
-                                                <span>Đơn hàng</span>
-                                            </Link>
-
-                                            <Link
-                                                to={`/users/${userId}/basic-info`}
-                                                className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
-                                            >
-                                                <span>Thông tin cơ bản</span>
-                                            </Link>
-                                        </>
-                                    )
-                                }
+                                {isProfileOwner && (
+                                    <>
+                                        <Link
+                                            to={`/users/${userId}/order-history`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
+                                        >
+                                            Đơn hàng
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/basic-info`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
+                                        >
+                                            Thông tin cơ bản
+                                        </Link>
+                                    </>
+                                )}
                             </div>
 
                             <div className="sub-nav-container--right">

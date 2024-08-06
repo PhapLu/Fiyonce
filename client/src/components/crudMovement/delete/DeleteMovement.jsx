@@ -7,7 +7,7 @@ export default function DeleteMovement({
     setOverlayVisible,
     deleteMovementMutation,
 }) {
-    const [, setInputs] = useState(movement);
+    const [inputs , setInputs] = useState(movement);
     const [errors, setErrors] = useState({});
     const [isSubmitDeleteMovementLoading, setIsSubmitDeleteCommissionServiceLoading] = useState(false);
     const [thumbnail, setThumbnail] = useState(movement.thumbnail);

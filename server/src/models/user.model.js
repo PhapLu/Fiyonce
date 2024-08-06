@@ -35,7 +35,6 @@ const UserSchema = new Schema(
         profileStatus: {
             icon: { type: String, default: "" },
             title: { type: String, default: "" },
-            expireAt: { type: Date, default: null },
         },
         badges: [{ 
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },

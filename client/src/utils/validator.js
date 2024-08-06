@@ -48,3 +48,7 @@ export function hasDigit(val) {
 export function isValidPassword(password) {
     return minLength(password, 6) && hasDigit(password) && hasSymbol(password);
 }
+
+export function isInRange(number, min, max) {
+    return number >= min && number <= max;
+}

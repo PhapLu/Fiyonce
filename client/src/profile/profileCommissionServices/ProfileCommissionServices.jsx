@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Resources
 import Modal from "../../components/modal/Modal.jsx";
@@ -23,6 +24,7 @@ import { newRequest, apiUtils } from "../../utils/newRequest.js";
 
 // Styling
 import "./ProfileCommissionServices.scss";
+import { resizeImageUrl } from "../../utils/imageDisplayer.js";
 
 export default function ProfileCommissionServices() {
     const { userId } = useParams();
@@ -213,16 +215,16 @@ export default function ProfileCommissionServices() {
                 scrollContainerRef.current.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [commissionServiceCategories]);
+    }, []);
 
     if (isLoading) {
-        return <span>Đang tải...</span>
+        return;
     }
 
     if (isError) {
-        return <span>Have an errors: {error.message}</span>
+        return;
     }
-    
+
     return (
         <div className="profile-commission-services">
             <div className="profile-page__header">
@@ -302,8 +304,12 @@ export default function ProfileCommissionServices() {
                                             {service?.artworks.slice(0, 3).map((artwork, index) => {
                                                 if (index === 2 && service?.artworks.length > 3) {
                                                     return (
-                                                        <div className="image-item">
-                                                            <img key={index} src={artwork} className="" alt={`Artwork ${index + 1}`} />
+                                                        <div className="image-item" key={index}>
+                                                            <LazyLoadImage
+                                                                src={resizeImageUrl(artwork, 400)}
+                                                                alt={`Artwork ${index + 1}`}
+                                                                effect="blur"
+                                                            />
                                                             <div className="image-item__overlay">
                                                                 +{service?.artworks?.length - 3}
                                                             </div>
@@ -311,8 +317,12 @@ export default function ProfileCommissionServices() {
                                                     );
                                                 }
                                                 return (
-                                                    <div className="image-item">
-                                                        <img key={index} src={artwork} alt={`Artwork ${index + 1}`} />
+                                                    <div className="image-item" key={index}>
+                                                        <LazyLoadImage
+                                                            src={resizeImageUrl(artwork, 400)}
+                                                            alt={`Artwork ${index + 1}`}
+                                                            effect="blur"
+                                                        />
                                                     </div>
                                                 );
                                             })}
@@ -326,7 +336,7 @@ export default function ProfileCommissionServices() {
                                         } */}
                                         <div className="profile-commission-service__category-item__service-item--right">
                                             <h3>{service?.title}</h3>
-                                            <h4>Giá từ: <span className="highlight-text">{formatCurrency(service?.minPrice)} VND</span></h4>
+                                            <h4 className="fs-18">Giá từ: <span className="highlight-text">{formatCurrency(service?.minPrice)} VND</span></h4>
                                             <p className="profile-commission-service__category-item__service-item__deliverables">{limitString(service?.deliverables, 300)}</p>
                                             {service?.notes && (<p className="profile-commission-service__category-item__service-item__note">*Lưu ý: {service?.notes}</p>)}
                                             {isProfileOwner ? (

@@ -47,11 +47,13 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
             errors.movementId = "Vui lòng chọn trường phái nghệ thuật";
         }
 
-        if (!isFilled(inputs.newPostCategoryTitle) && !isFilled(inputs.postCategoryId)) {
+        if ((isCreateNewShowcasingPostCategory && !inputs.newPostCategoryTitle) || (!isCreateNewShowcasingPostCategory && !inputs.postCategoryId)) {
             errors.postCategoryId = "Vui lòng chọn thể loại dịch vụ của bạn";
         }
 
-        console.log(errors)
+        if (artworks?.filter(artwork => artwork != null).length < 1) {
+            errors.artworks = "Vui lòng chọn ít nhất 1 tranh";
+        }
 
         return errors;
     };
@@ -69,6 +71,8 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                 [name]: value
             }));
         }
+        // Update input value & clear error
+        setInputs((values) => ({ ...values, [name]: value }));
         setErrors((values) => ({ ...values, [name]: '' }));
     };
 
@@ -169,7 +173,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
             </svg>
 
             <h2 className="form__title">Thêm tác phẩm</h2>
-            <div className="form-field">
+            <div className="form-field required">
                 <label htmlFor="movementId" className="form-field__label">Trường phái</label>
                 <select
                     name="movementId"
@@ -184,7 +188,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                 </select>
                 {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
             </div>
-            <div className="form-field with-create-btn">
+            <div className="form-field with-create-btn required">
                 <label htmlFor="postCategoryId" className="form-field__label">Album</label>
                 {!isCreateNewShowcasingPostCategory ? (
                     <>
@@ -213,7 +217,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                         <button className="btn btn-4" onClick={() => setIsCreateNewShowcasingPostCategory(false)}>Hủy</button>
                     </>
                 )}
-                {errors.postCategory && <span className="form-field__error">{errors.postCategory}</span>}
+                {errors.postCategoryId && <span className="form-field__error">{errors.postCategoryId}</span>}
             </div>
 
             <div className="form-field">
@@ -229,7 +233,8 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                 {errors.description && <span className="form-field__error">{errors.description}</span>}
             </div>
 
-            <div className="form-field">
+            <div className="form-field required">
+                <label className="form-field__label">Tác phẩm</label>
                 {artworks.map((showcasingPost, index) => {
                     return (
                         showcasingPost && (
@@ -274,7 +279,6 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                         )
                     );
                 })}
-
                 <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -283,12 +287,16 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                     <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
                 </div>
 
-                {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
+                {errors?.artworks && <span className="form-field__error">{errors.artworks}</span>}
             </div>
+            {
+                errors.serverError && (
+                    <div className="form-field server-error-field">
+                        <span className="form-field__error">{errors.serverError}</span>
+                    </div>
+                )
+            }
 
-            <div className="form-field">
-                {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-            </div>
 
             <div className="form-field">
 

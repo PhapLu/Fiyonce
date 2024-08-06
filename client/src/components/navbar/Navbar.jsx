@@ -96,7 +96,7 @@ export default function Navbar() {
         setShowRenderConversations(true);
 
         try {
-            const response = await apiUtils.patch(`/user/updateUserProfile/${userInfo?._id}`, { lastViewConversations: Date.now() });
+            const response = await apiUtils.patch(`/user/updateProfile/${userInfo?._id}`, { lastViewConversations: Date.now() });
         } catch (error) {
             setModalInfo({
                 status: "error",
@@ -190,7 +190,7 @@ export default function Navbar() {
 
                     <Link to="/" className="flex-align-center">
                         {/* <img src={Logo} alt="Logo" className="navbar__brand-logo" /> */}
-                        <h3 className="navbar__brand-name">Pastal<span className="highlight-text">&#x2022;</span></h3>
+                        <h2 className="navbar__brand-name">Pastal<span className="highlight-text">&#x2022;</span></h2>
                     </Link>
 
                     <form className="navbar__search-field" onSubmit={handleSearch} ref={searchFieldRef}>

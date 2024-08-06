@@ -45,7 +45,6 @@ export default function ProfilePosts() {
         isLoading,
     } = useQuery("fetchPosts", fetchPosts);
 
-
     const createPostMutation = useMutation(
         async (formData) => {
             console.log(formData)
@@ -187,11 +186,11 @@ export default function ProfilePosts() {
     };
 
     if (isLoading) {
-        return <span>Đang tải...</span>;
+        return;
     }
 
     if (isError) {
-        return <span>Có lỗi xảy ra: {error.message}</span>;
+        return;
     }
 
     return (
@@ -199,30 +198,28 @@ export default function ProfilePosts() {
             <div className="profile-posts">
                 <div className="profile-page__header">
                     <div className="profile-page__header--left">
-                        <button
-                            className={`btn btn-3 btn-md ${postCategoryId === "all" ? "active" : ""}`}
-                            onClick={() => handleCategoryClick("all")}
-                        >
-                            Tất cả
-                        </button>
+                        {
+                            postsByCategories?.length > 0 &&
+                            (
+                                <button
+                                    className={`btn btn-3 btn-md ${postCategoryId === "all" ? "active" : ""}`}
+                                    onClick={() => handleCategoryClick("all")}
+                                >
+                                    Tất cả
+                                </button>
+                            )
+                        }
+
                         <div className="scroll">
                             <div className="scroll-container" ref={scrollContainerRef}>
                                 <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
-                                {postsByCategories && postsByCategories.map((collection, index) => (
-                                    // <div key={idx} className="explore__filter-item scroll-item flex-align-center">
-                                    //     <img src={collection.thumbnail} alt={collection.title} className="scroll-item__thumbnail" />
-                                    //     <div className="explore__filter-item__details">
-                                    //         <span className="explore__filter-item__details__title">{category.title}</span>
-                                    //         <span className="explore__fitler-item__details__count">{category.postCount > 1000 ? formatNumber(category.postCount, 1) : category.postCount}</span>
-                                    //     </div>
-                                    // </div>
-
+                                {postsByCategories?.map((collection, index) => (
                                     <button
-                                        className={`btn btn-3 btn-md explore__filter-item scroll-item flex-align-center ${postCategoryId === collection._id ? "active" : ""}`}
+                                        className={`btn btn-3 btn-md explore__filter-item scroll-item flex-align-center ${postCategoryId === collection?._id ? "active" : ""}`}
                                         key={index}
                                         onClick={() => handleCategoryClick(collection._id)}
                                     >
-                                        {collection.title}
+                                        {collection?.title}
                                     </button>
                                 ))}
                                 <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>&gt;</button>
@@ -241,15 +238,11 @@ export default function ProfilePosts() {
                     )}
                 </div>
 
-                {posts.length > 0 ? (
+                {posts?.length > 0 ? (
                     <RenderPosts isSorting={true} layout={4} posts={posts} isDisplayOwner={false} allowEditDelete={true} />
-                ) : (
-                    isProfileOwner ? (
-                        <p> Hiện chưa có tác phẩm nào.</p>
-                    ) : (
-                        <p>Hiện chưa có tác phẩm nào. <span className="highlight-text">Đăng tải</span> ngay</p>
-                    )
-                )}
+                ) :
+                    (<p>Hiện chưa có tác phẩm nào.</p>)
+                }
             </div >
 
             {overlayVisible && (

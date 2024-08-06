@@ -106,3 +106,6 @@ function extractUsernameFromUrl(url) {
         }
     }
 }
+
+// Helper function to convert code points to emojis
+export const codePointToEmoji = (code) => String.fromCodePoint(code);
