@@ -24,15 +24,10 @@ const ConversationSchema = new mongoose.Schema(
                 content: { type: String },
                 media: { type: [String] },
                 createdAt: { type: Date, default: Date.now },
-            },
-        ],
-        seenBy: [
-            {
-                userId: {
-                    type: mongoose.Types.ObjectId,
-                    ref: "User",
-                    required: true,
-                },
+                isSeen: {
+                    type: Boolean,
+                    default: false,
+                }
             },
         ],
     },

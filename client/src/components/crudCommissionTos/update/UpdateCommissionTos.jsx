@@ -1,10 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // import styles
-import 'quill-emoji/dist/quill-emoji.css'; // import emoji styles
-import { Quill } from 'react-quill';
-import 'quill-emoji';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import {
+    ClassicEditor, ImageInsert,
+    ImageResize,
+    ImageStyle,
+    ImageToolbar,
+    ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
+} from 'ckeditor5';
 import { useModal } from "../../../contexts/modal/ModalContext";
 
 // Utils
@@ -14,51 +19,6 @@ import { isFilled } from "../../../utils/validator.js";
 // Styling
 import "./UpdateCommissionTos.scss";
 import { apiUtils } from "../../../utils/newRequest.js";
-import Emoji from "quill-emoji";
-
-Quill.register('modules/emoji', Emoji);
-
-const modules = {
-    toolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['emoji'], // add emoji button to toolbar
-    ],
-    'emoji-toolbar': true,
-    'emoji-shortname': true,
-    keyboard: {
-        bindings: {
-            bold: {
-                key: 'B',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('bold', !context.format.bold);
-                }
-            },
-            italic: {
-                key: 'I',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('italic', !context.format.italic);
-                }
-            },
-            underline: {
-                key: 'U',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('underline', !context.format.underline);
-                }
-            },
-            strike: {
-                key: 'S',
-                shortKey: true,
-                handler: function (range, context) {
-                    this.quill.format('strike', !context.format.strike);
-                }
-            }
-        }
-    }
-};
 
 export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, setShowCommissionTosView, setOverlayVisible, commissionTos }) {
     // Initialize variables for inputs, errors, loading effect
@@ -66,7 +26,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
     const [errors, setErrors] = useState({});
     const [isSubmitUpdateCommissionTosLoading, setIsSubmitUpdateCommissionTosLoading] = useState(false);
     const [isSuccessUpdateCommissionTos, setIsSuccessUpdateCommissionTos] = useState(false);
-    const {setModalInfo } = useModal();
+    const { setModalInfo } = useModal();
 
     const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -84,7 +44,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
         const intervalId = setInterval(() => {
             setCurrentTime(new Date());
         }, 60000); // Update every minute
-        // return () => clearInterval(intervalId);
+        return () => clearInterval(intervalId);
     }, []);
 
     // Toggle display overlay box
@@ -126,13 +86,6 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
         return errors;
     };
 
-    const handleChange = (value, delta, source, editor) => {
-        setInputs((prevState) => ({
-            ...prevState,
-            content: editor.getHTML()
-        }));
-    };
-
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
@@ -158,6 +111,14 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
 
         // Update input value & clear error
         setErrors((values) => ({ ...values, [name]: '' }));
+    };
+
+    const handleEditorChange = (event, editor) => {
+        const data = editor.getData();
+        setInputs((prevState) => ({
+            ...prevState,
+            content: data
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -241,14 +202,22 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                             <div className="form-field">
                                 <label htmlFor="content" className="form-field__label">Nội dung</label>
                                 <span name="content" className="form-field__annotation">Điền nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                                <ReactQuill theme="snow" value={inputs?.content} onChange={handleChange} modules={modules} placeholder="Nhập nội dung điều khoản của bạn" />
+                                {/* <CKEditor
+                                    editor={ClassicEditor}
+                                    data={inputs?.content}
+                                    onChange={handleEditorChange}
+                                    config={{
+                                        toolbar: ['bold', 'italic', 'underline', 'bulletedList', 'numberedList', 'emoji'],
+                                        emoji: { toolbar: true, shortname: true }
+                                    }}
+                                /> */}
                                 {errors.content && <span className="form-field__error">{errors.content}</span>}
                             </div>
-                            <div class="form-field">
-                                <label class="form-field__label">
+                            <div className="form-field">
+                                <label className="form-field__label">
                                     <input type="checkbox" name="isAgreeTerms" checked={inputs?.isAgreeTerms || false}
                                         onChange={handleInputChange} />
-                                    <span>Tôi đồng ý với các <a class="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của Pastal</span>
+                                    <span>Tôi đồng ý với các <a className="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của Pastal</span>
                                 </label>
                                 {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                             </div>

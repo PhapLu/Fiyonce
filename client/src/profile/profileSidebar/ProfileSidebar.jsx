@@ -1,24 +1,101 @@
 // Imports
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
+import EmojiPicker from 'emoji-picker-react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+// Components
+import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
+import Follower from '../../components/follow/follower/Follower.jsx';
+import Following from '../../components/follow/following/Following.jsx';
+import ProfileStatus from '../../components/profileStatus/ProfileStatus.jsx';
 
 // Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useConversation } from '../../contexts/conversation/ConversationContext.jsx';
 import { useModal } from '../../contexts/modal/ModalContext.jsx';
-
-// Resources
-import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
+import CropImage from '../../components/cropImage/CropImage.jsx';
 
 // Utils
 import { apiUtils } from '../../utils/newRequest.js';
 import { isFilled, hasSymbol, maxLength } from "../../utils/validator.js"
-import { getSocialLinkIcon } from "../../utils/iconDisplayer.js"
+import { codePointToEmoji, getSocialLinkIcon } from "../../utils/iconDisplayer.js"
 
 // Styling
 import "./ProfileSidebar.scss";
+import { resizeImageUrl } from '../../utils/imageDisplayer.js';
 
 export default function Sidebar({ profileInfo, setProfileInfo }) {
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
+    const [croppedImage, setCroppedImage] = useState(null);
+    const [overlayVisible, setOverlayVisible] = useState(false);
+    const [showFollowers, setShowFollowers] = useState(false);
+    const [showFollowing, setShowFollowing] = useState(false);
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const addEmoji = (emoji) => {
+        setInputs({
+            ...inputs,
+            bio: inputs.bio + emoji.native
+        });
+    };
+
+    const handleFileUpload = async (croppedFile) => {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('type', "avatar");
+
+        try {
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
+            if (response.data.metadata.image_url) {
+                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleAvatarClick = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const imageDataUrl = URL.createObjectURL(file);
+            setSelectedImage(imageDataUrl);
+            setIsCropping(true);
+            setOverlayVisible(true);
+        }
+        // Reset the input value to allow re-selecting the same file
+        e.target.value = null;
+    };
+
+    const handleCropComplete = async (croppedFile) => {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('type', "avatar");
+
+        try {
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
+            if (response.data.metadata.image_url) {
+                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+                setUserInfo({ ...userInfo, avatar: response.data.metadata.image_url })
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setIsCropping(false);
+            setOverlayVisible(false);
+        }
+    };
+
+    const handleCancelCrop = () => {
+        setIsCropping(false);
+        setOverlayVisible(false);
+        setSelectedImage(null);
+    };
+
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
@@ -126,7 +203,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             const userId = profileInfo._id;
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
             const updatedData = { ...inputs, socialLinks: submittedSocialLinks };
-            const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, updatedData);
+            const response = await apiUtils.patch(`/user/updateProfile/${userId}`, updatedData);
             if (response) {
                 setModalInfo({
                     status: "success",
@@ -142,32 +219,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         } finally {
             // Clear the loading effect
             setIsSubmitSidebarInfoLoading(false);
-        }
-    };
-
-    const handleAvatarClick = () => {
-        document.getElementById('fileInput').click();
-    };
-
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('type', "avatar");
-
-        if (file) {
-            setUploadAvatarLoading(true);
-            try {
-                const response = await apiUtils.post(`upload/profile/avatarOrCover/${profileInfo._id}`, formData);
-                if (response.data.metadata.image_url) {
-                    setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                    setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            } finally {
-                setUploadAvatarLoading(false);
-            }
         }
     };
 
@@ -268,25 +319,62 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setCustomPronoun(e.target.value);
     };
 
+    const [showProfileStatus, setShowProfileStatus] = useState("profileStatus");
+
     return (
         <div className="sidebar">
-            <img src={profileInfo.bg || "/uploads/pastal_system_default_background.png"} alt="" className="sidebar__bg desktop-hide" />
+            <LazyLoadImage
+                src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
+                alt=""
+                className="sidebar__bg desktop-hide"
+                effect="blur"
+            />
+            <div className={'sidebar__avatar ' + (isProfileOwner && 'profile-owner') + (isUploadAvatarLoading ? " skeleton-img" : "")}>
+                <div className="sidebar__avatar__update-img">
+                    <LazyLoadImage
+                        onClick={handleAvatarClick}
+                        src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"}
+                        alt=""
+                        className="sidebar__avatar__img"
+                        effect="blur"
+                    />
 
-            <div className={'sidebar__avatar ' + (isUploadAvatarLoading ? " skeleton-img" : "")}>
-                <img src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"} alt="" className={'sidebar__avatar__img '} />
-                {
-                    isProfileOwner && (<>
-                        <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 sidebar__avatar__ic">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-                        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
-                    </>)
+                    {isProfileOwner &&
+                        <>
+
+                            <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__choose-avatar-ic">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                            </svg>
+
+                            <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+                        </>
+                    }
+                </div>
+                {isProfileOwner ? (
+                    <>
+                        <span onClick={() => { setShowProfileStatus(true); setOverlayVisible(true) }}>
+                            {
+                                userInfo?.profileStatus ?
+                                    (<span aria-label={userInfo?.profileStatus?.title} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'> {codePointToEmoji(userInfo?.profileStatus?.icon)}</span>)
+                                    :
+                                    (<span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__ic">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                                        </svg>
+                                    </span>)
+                            }
+                        </span>
+                    </>
+                ) : (
+                    userInfo?.profileStatus?.emoji && (<span className="size-6 sidebar__avatar__ic"> {codePointToEmoji(userInfo?.profileStatus?.icon)} </span>)
+                )
                 }
             </div>
 
             {openEditProfileForm ? (
                 <div className="form edit-profile-form">
-                    <div className="form-field">
+                    <div className="form-field required">
                         <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
                         <input type="text" id="fullName" name="fullName" value={inputs?.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" />
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
@@ -311,6 +399,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     }
 
 
+
                     <div className="form-field">
                         <label htmlFor="pronoun" className="form-field__label">Pronoun</label>
                         <select
@@ -322,6 +411,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             <option value="">Không đề cập</option>
                             <option value="him">Nam | Anh ấy</option>
                             <option value="her">Nữ  | Cô ấy</option>
+                            <option value="her">Họ  | Họ</option>
                             <option value="custom">Custom</option>
                         </select>
                         {pronoun === "custom" && (
@@ -352,8 +442,23 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
                     <div className="form-field">
                         <label htmlFor="bio" className="form-field__label">Bio</label>
-                        <textarea type="text" id="bio" name="bio" value={inputs?.bio || ""} onChange={handleChange} className="form-field__input" placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)" />
+                        <textarea
+                            type="text"
+                            id="bio"
+                            name="bio"
+                            value={inputs.bio}
+                            onChange={handleChange}
+                            className="form-field__input"
+                            placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)"
+                        />
                         {errors.bio && <span className="form-field__error">{errors.bio}</span>}
+                        <button type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+                            {showEmojiPicker ? 'Hide Emojis' : 'Show Emojis'}
+                        </button>
+                        {showEmojiPicker && (
+                            <EmojiPicker />
+                            // <EmojiPicker onEmojiClick={onEmojiClick} />
+                        )}
                     </div>
 
                     <div className="form-field">
@@ -410,7 +515,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 <>
                     <div className="sidebar__name">
                         <p className="sidebar__name__fullName">{profileInfo.fullName}</p>
-                        <span className="sidebar__name__email">{profileInfo.stageName}</span>
+                        <span className="sidebar__name__stageName">{profileInfo.stageName}</span>
                     </div>
                     <div>
                         {profileInfo?.role === "talent" && profileInfo.jobTitle && (
@@ -464,19 +569,23 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <br />
 
                     <div className="sidebar__follow">
-                        <div className="sidebar__follow__follow-container" style={{ 'width': `${profileInfo?.followers?.length >= 4 ? '100px' : profileInfo?.followers?.length == 3 ? '78px' : profileInfo?.followers?.length == 2 ? '58px' : profileInfo?.followers?.length == 1 ? '38px' : ''}` }}>
-                            {/* //  <img src="1.png" style="position:absolute; top:0px; left:10px; z-index:0" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:20px; z-index:1" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:30px; z-index:2" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:40px; z-index:3" />
-                                //  <img src="1.png" style="position:absolute; top:0px; left:50px; z-index:4" />
-                        */}
+                        <div className='flex-justify-center flex-align-center'>
+                            <span className="sidebar__follow__follower hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowers(true) }}>{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
+                            <span className="dot-delimiter sm ml-8 mr-8"></span>
+                            <span className="sidebar__follow__following hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowing(true) }}>{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
+                        </div>
+                        <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'marginLeft': `${profileInfo?.followers?.length > 6 ? "72px" : (profileInfo?.followers?.length - 1) * 10 + 'px'}` }}>
                             {
-                                profileInfo?.followers?.slice(0, 4)?.reverse().map((follower, index) => {
-                                    if (index == 3) {
-                                        return <div index={index} className="user sm sidebar__follow__follow-item">
+                                profileInfo?.followers?.slice(0, 6)?.reverse().map((follower, index) => {
+                                    if (index == 5) {
+                                        return <div index={index} className="user xs sidebar__follow__follow-item">
                                             <div className="user--left">
-                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                                <LazyLoadImage
+                                                    src={resizeImageUrl(follower?.avatar, 100)}
+                                                    alt=""
+                                                    className="user__avatar "
+                                                    effect="blur"
+                                                />
                                                 <div className="overlay">
                                                     <span>{profileInfo?.followers.length - 4 > 0 ? "..." : ""}</span>
                                                 </div>
@@ -484,19 +593,20 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                         </div>
                                     }
                                     return (
-                                        <div index={index} className="user sm sidebar__follow__follow-item">
+                                        <div index={index} className="user xs sidebar__follow__follow-item">
                                             <div className="user--left">
-                                                <img src={follower?.avatar} className="user__avatar" alt="Avatar" />
+                                                <LazyLoadImage
+                                                    src={resizeImageUrl(follower?.avatar, 100)}
+                                                    alt=""
+                                                    className="user__avatar "
+                                                    effect="blur"
+                                                />
                                             </div>
                                         </div>
                                     )
                                 })
                             }
                         </div>
-
-                        <span className="sidebar__follow__follower">{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
-                        &nbsp; - &nbsp;
-                        <span className="sidebar__follow__following">{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                     </div>
 
                     {profileInfo.bio && (
@@ -563,6 +673,22 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             )
             }
             {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />}
+            {overlayVisible &&
+                <div className="overlay">
+                    {showProfileStatus && <ProfileStatus profileInfo={profileInfo} setProfileInfo={setProfileInfo} setShowProfileStatus={setShowProfileStatus} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {showFollowers && <Follower followers={profileInfo?.followers} setShowFollowers={setShowFollowers} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {showFollowing && <Following following={profileInfo?.following} setShowFollowing={setShowFollowing} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {isCropping && (
+                        <CropImage
+                            imageSrc={selectedImage}
+                            onCropComplete={handleCropComplete}
+                            onCancel={handleCancelCrop}
+                        />
+                    )}
+                    {croppedImage && <LazyLoadImage src={croppedImage} alt="Cropped" effect="blur" />}
+                </div>
+            }
         </div >
+
     );
 }

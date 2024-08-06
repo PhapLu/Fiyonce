@@ -1,4 +1,3 @@
-import e from "express";
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
@@ -38,8 +37,8 @@ const ServiceSchema = new mongoose.Schema(
         ],
         notes: { type: String },
         isMedia: { type: Boolean, default: false },
-        status: { type: String, enum: ["open", "closed"], default: "open" },
-        artworks: [{ type: String }],
+        status: { type: String, enum: ["open", "closed", "waitList"], default: "open" },
+        artworks: [{ type: String, default:[]}],
     },
     {
         timestamps: true,

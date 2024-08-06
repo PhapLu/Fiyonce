@@ -1,181 +1,225 @@
 import { useState, useEffect, useRef } from "react";
 import { isFilled } from "../../../utils/validator.js";
+import "./CreateNews.scss"
 
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import {
+    ClassicEditor, ImageInsert,
+    ImageResize,
+    ImageStyle,
+    ImageToolbar,
+    ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
+} from 'ckeditor5';
+import 'ckeditor5/ckeditor5.css';
 export default function CreateNews({
-    setShowCreateNewsForm,
+    setShowCreateNews,
     setOverlayVisible,
     createNewsMutation,
 }) {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
-    const [isSubmitCreateNewsLoading, setIsSubmitCreateCommissionServiceLoading] = useState(false);
     const [thumbnail, setThumbnail] = useState(null);
-
     const createCommissionRef = useRef();
-    useEffect(() => {
-        const handler = (e) => {
-            if (createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
-                setShowCreateNewsForm(false);
-                setOverlayVisible(false);
-            }
-        };
-        document.addEventListener("mousedown", handler);
-        return () => {
-            document.removeEventListener("mousedown", handler);
-        };
-    }, []);
+    const [isSubmitCreateNewsLoading, setIsSubmitCreateNewsLoading] = useState();
+    const [editorData, setEditorData] = useState('');
+
+    const handleImageChange = (event) => {
+        const { name, value, files } = event.target;
+        setThumbnail(files[0]);
+        setErrors(prev => ({ ...prev, [name]: "" }));
+    };
+
+    const handleChange = (event) => {
+        const { name, value, files } = event.target;
+        setInputs(prev => ({ ...prev, [name]: value }));
+        setErrors(prev => ({ ...prev, [name]: "" }));
+    };
+
+    const handleEditorChange = (event, editor) => {
+        const data = editor.getData();
+        setEditorData(data);
+        setInputs(prev => ({ ...prev, content: data }));
+        setErrors(prev => ({ ...prev, content: "" }));
+    };
 
     const validateInputs = () => {
         let errors = {};
 
         if (!isFilled(inputs.title)) {
-            errors.title = "Vui lòng nhập tên trường phái";
+            errors.title = "Vui lòng nhập tên tiêu đề";
         }
 
-        if (!inputs.thumbnail) {
+        if (!isFilled(inputs.subTitle)) {
+            errors.subTitle = "Vui lòng nhập tên tiêu đề phụ";
+        }
+
+        if (!isFilled(inputs.content)) {
+            errors.content = "Vui lòng nhập nội dung";
+        }
+
+        if (!thumbnail) {
             errors.thumbnail = "Vui lòng chọn thumbnail";
         }
 
         return errors;
     };
 
-    const handleChange = (e) => {
-        const { name, type, files } = e.target;
-
-        if (type === "file") {
-            const file = files[0];
-            setInputs((prevState) => ({ ...prevState, [name]: file }));
-
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setThumbnail(reader.result);
-            };
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        } else {
-            setInputs((prevState) => ({ ...prevState, [name]: e.target.value }));
-        }
-
-        setErrors((values) => ({ ...values, [name]: '' }));
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitCreateCommissionServiceLoading(true);
+        setIsSubmitCreateNewsLoading(true);
 
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitCreateCommissionServiceLoading(false);
+            setIsSubmitCreateNewsLoading(false);
             return;
         }
 
-        const formData = new FormData();
+        const fd = new FormData();
+        inputs.isPrivate = inputs?.isPrivate === "true" ? true : false;
+        inputs.isPinned = inputs?.isPrivate === "true" ? true : false;
+
         for (const key in inputs) {
-            formData.append(key, inputs[key]);
+            fd.append(key, inputs[key]);
         }
+        fd.append('thumbnail', thumbnail);
 
         try {
-            console.log(formData)
-            const response = await createNewsMutation.mutateAsync(formData);
+            console.log(inputs)
+            console.log(thumbnail)
+
+            const response = await createNewsMutation.mutateAsync(fd);
             console.log(response);
+            setModalInfo({
+                status: "success",
+                message: "Thêm bản tin thành công"
+            })
         } catch (error) {
-            console.error("Failed to create new commission service:", error);
+            console.error("Failed to create new news:", error);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 serverError: error.response.data.message
             }));
         } finally {
-            setIsSubmitCreateCommissionServiceLoading(false);
+            setIsSubmitCreateNewsLoading(false);
         }
     };
 
     return (
-        <div className="create-commission-service modal-form type-3" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
+        <div className="create-commission-service modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateNewsForm(false);
+                setShowCreateNews(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
-            <h2 className="form__title">Thêm tin tức</h2>
-            {thumbnail && <div className="form-field">
-                <label htmlFor="thumbnail" className="form-field__label">Preview</label>
-                <div className="form-field__input img-preview">
-                    <div className="img-preview--left">
-                        <img src={thumbnail} alt="Thumbnail" className="img-preview__img" />
-                        <div className="img-preview__info">
-                            <span className="img-preview__name">{inputs?.title}</span>
-                        </div>
-                    </div>
+            <div className="modal-form--left">
+                <h2 className="form__title">Thêm tin tức</h2>
+                <div className="form-field">
+                    <label htmlFor="title" className="form-field__label">Tiêu đề</label>
+                    <input
+                        id="title"
+                        name="title"
+                        value={inputs?.title || ''}
+                        onChange={handleChange}
+                        className="form-field__input"
+                        placeholder="Nhập tiêu đề"
+                    />
+                    {errors.title && <span className="form-field__error">{errors.title}</span>}
                 </div>
-            </div>}
-            <div className="form-field">
-                <label htmlFor="title" className="form-field__label">Tiêu đề</label>
-                <input
-                    id="title"
-                    name="title"
-                    value={inputs?.title || ''}
-                    onChange={handleChange}
-                    className="form-field__input"
-                    placeholder="Nhập tiêu đề"
-                />
-                {errors.title && <span className="form-field__error">{errors.title}</span>}
-            </div>
 
-            <div className="form-field">
-                <label htmlFor="subTitle" className="form-field__label">Tiêu đề phụ</label>
-                <input
-                    id="subTitle"
-                    name="subTitle"
-                    value={inputs?.subTitle || ''}
-                    onChange={handleChange}
-                    className="form-field__input"
-                    placeholder="Nhập tiêu đề phụ"
-                />
-                {errors.subTitle && <span className="form-field__error">{errors.subTitle}</span>}
-            </div>
+                <div className="form-field">
+                    <label htmlFor="subTitle" className="form-field__label">Tiêu đề phụ</label>
+                    <input
+                        id="subTitle"
+                        name="subTitle"
+                        value={inputs?.subTitle || ''}
+                        onChange={handleChange}
+                        className="form-field__input"
+                        placeholder="Nhập tiêu đề phụ"
+                    />
+                    {errors.subTitle && <span className="form-field__error">{errors.subTitle}</span>}
+                </div>
 
-            <div className="form-field">
-                <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
-                <input type="file" className="form-field__input" name="thumbnail" id="fileInput" onChange={handleChange} />
-                {errors.thumbnail && <span className="form-field__error">{errors.thumbnail}</span>}
-            </div>
+                <div className="form-field">
+                    <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
+                    <input type="file" className="form-field__input" name="thumbnail" id="fileInput" onChange={handleImageChange} />
+                    {errors.thumbnail && <span className="form-field__error">{errors.thumbnail}</span>}
+                    {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
+                </div>
 
-            <div className="form-field">
-                <label htmlFor="isPrivate" className="form-field__label">Trạng thái</label>
-                <select className="form-field__input">
-                    <option value="true">Công khai</option>
-                    <option value="false">Riêng tư</option>
-                </select>
-                {errors.isPrivate && <span className="form-field__error">{errors.isPrivate}</span>}
-            </div>
+                <div className="form-field">
+                    <label htmlFor="isPrivate" className="form-field__label">Riêng tư?</label>
+                    <select className="form-field__input" name="isPrivate" value={inputs?.isPrivate || ''} onChange={handleChange}>
+                        <option value="false">Riêng tư</option>
+                        <option value="true">Công khai</option>
+                    </select>
+                    {errors.isPrivate && <span className="form-field__error">{errors.isPrivate}</span>}
+                </div>
 
-            <div className="form-field">
-                <label htmlFor="isPinned" className="form-field__label">Ghim?</label>
-                <select className="form-field__input">
-                    <option value="true">Có</option>
-                    <option value="false">Không</option>
-                </select>
-                {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
-            </div>
+                <div className="form-field">
+                    <label htmlFor="isPrivate" className="form-field__label">Ghim?</label>
+                    <select className="form-field__input" name="isPinned" value={inputs?.isPinned || ''} onChange={handleChange}>
+                        <option value="false">Không</option>
+                        <option value="true">Có</option>
+                    </select>
+                    {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
+                </div>
 
-            <div className="form-field">
-                <label htmlFor="content" className="form-field__label">Content</label>
-                <textarea name="content" onChange={handleChange}></textarea>
-                {errors.content && <span className="form-field__error">{errors.content}</span>}
+
+
+            </div>
+            <div className="modal-form--right">
+                <div className="form-field">
+                    <label htmlFor="content" className="form-field__label">Content</label>
+                    <CKEditor
+                        editor={ClassicEditor}
+                        data={editorData}
+                        onChange={handleEditorChange}
+                        config={{
+                            plugins: [Essentials, ImageInsert,
+                                ImageResize,
+                                ImageStyle,
+                                ImageToolbar,
+                                ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
+                            toolbar: {
+                                items: [
+                                    'sourceEditing', '|', 'bold', 'italic', '|',
+                                    'fontSize', 'fontFamily', 'fontColor', '|'
+                                ]
+                            },
+                            mention: {
+                                // Mention configuration
+                            },
+                            initialData: '<p>Hello from CKEditor 5 in React!</p>',
+                        }}
+                    />
+                    {/* <textarea name="content" value={inputs?.content || ''} onChange={handleChange} className="form-field__input"></textarea> */}
+
+                    {errors.content && <span className="form-field__error">{errors.content}</span>}
+                </div>
             </div>
 
             {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
 
-            <div className="form-field">
-                <button type="submit" className="form-field__input btn btn-2 btn-md" disabled={isSubmitCreateNewsLoading} onClick={handleSubmit}>
+            <div className="form__submit-btn-container">
+                <button type="submit" className="btn btn-2 btn-md form__submit-btn-item" disabled={isSubmitCreateNewsLoading} onClick={handleSubmit}>
                     {isSubmitCreateNewsLoading ? 'Đang thêm...' : 'Thêm mới'}
                 </button>
             </div>
 
+
+            {/* <div className="preview-section border-text">
+                {thumbnail && (
+                    <img src={URL.createObjectURL(thumbnail)} alt="Thumbnail" className="preview-section__thumbnail" />
+                )}
+
+                <h2 className='text-align-center'>{inputs?.title}</h2>
+                <h4 className='text-align-center'>{inputs?.subTitle}</h4>
+                <div dangerouslySetInnerHTML={{ __html: `${inputs?.content || ""}` }}></div>
+            </div> */}
         </div>
     );
 }

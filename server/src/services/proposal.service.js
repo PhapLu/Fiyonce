@@ -205,6 +205,7 @@ class ProposalService {
             paymentResponse = await axios(options);
         } catch (error) {
             console.log("Error generating payment URL: ", error);
+            throw new BadRequestError("Error generating payment URL");
         }
 
         //5. Update order with MoMo order id

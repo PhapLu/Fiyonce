@@ -1,8 +1,6 @@
 import UserService from '../services/user.service.js'
-import { CREATED, SuccessResponse } from "../core/success.response.js"
-import { ErrorResponse, BadRequestError } from '../core/error.response.js'
-import { User } from '../models/user.model.js'
-import KeyTokenService from '../services/keyToken.service.js'
+import { SuccessResponse } from "../core/success.response.js"
+import { BadRequestError } from '../core/error.response.js'
 
 class UserController {
     //CRUD
@@ -46,6 +44,20 @@ class UserController {
         new SuccessResponse({
             message: 'Me success!',
             metadata: await UserService.me(req.cookies.accessToken)
+        }).send(res)
+    }
+    
+    recommendUsers = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Recommend users success!',
+            metadata: await UserService.recommendUsers(req.userId)
+        }).send(res)
+    }
+
+    updateProfileStatus = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Update profile status successfully!',
+            metadata: await UserService.updateProfileStatus(req.userId, req.body)
         }).send(res)
     }
 }

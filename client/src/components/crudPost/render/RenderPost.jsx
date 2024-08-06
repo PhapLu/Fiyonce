@@ -1,6 +1,8 @@
+// Imports
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Utils
 import { apiUtils } from "../../../utils/newRequest";
@@ -171,7 +173,10 @@ export default function RenderPost() {
                             >
                                 {post.artworks.map((artwork, index) => (
                                     <div key={index} className="render-commission-service__artwork-item">
-                                        <img src={artwork.url} alt={`Artwork ${index + 1}`} />
+                                        <img
+                                            src={artwork.url}
+                                            alt={`Artwork ${index + 1}`}
+                                        />
                                     </div>
                                 ))}
                             </Carousel>
@@ -184,7 +189,10 @@ export default function RenderPost() {
 
                         <div className="user md">
                             <Link to={`/users/${post?.talentId._id}/profile-posts`} className="user--left hover-cursor-opacity">
-                                <img src={resizeImageUrl(post?.talentId?.avatar, 100)} alt="" className="user__avatar" />
+                                <img
+                                    src={resizeImageUrl(post?.talentId?.avatar, 100)}
+                                    className="user__avatar"
+                                />
                                 <div className="user__name">
                                     <div className="user__name__title">{post?.talentId?.fullName}</div>
                                     <div className="user__name__sub-title">{post?.talentId?.stageName}</div>
@@ -192,14 +200,14 @@ export default function RenderPost() {
                             </Link>
                         </div>
 
-                        <hr className="mb-16" />
+                        <hr className="mt-16 mb-16" />
                         {post?.movementId?.title && <button className="btn btn-4 br-16 mr-8">{post?.movementId?.title}</button>}
                         {post.postCategoryId?.title && <Link to={`/users/${post?.talentId._id}/profile-posts`} className="btn btn-4 br-16 mr-8">{post?.postCategoryId?.title}</Link>}
                         <p>{post.description}</p>
                         <br />
                         <span>Đăng tải vào {formatDate(post.createdAt)}</span>
                         <br />
-                        <hr className="mt-16" />
+                        <hr className="mb-16 mt-16" />
                         <div className="flex-align-center">
                             <div className="flex-align-center mr-8" onClick={handleLikePost}>
                                 <span className="mr-4">{likeCount}</span>

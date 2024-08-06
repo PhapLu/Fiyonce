@@ -1,0 +1,21 @@
+2024-08-06 09:09:10::error::/v1/api/notification/createNotification::4e0ad1d4-3da2-45e9-93b3-d6c539563950::undefined - NaNms - Response: {"errors":{"url":{"name":"ValidatorError","message":"Path `url` is required.","properties":{"message":"Path `url` is required.","type":"required","path":"url"},"kind":"required","path":"url"}},"_message":"Notification validation failed","name":"ValidationError","message":"Notification validation failed: url: Path `url` is required."}::{"message":"Notification validation failed: url: Path `url` is required."}
+2024-08-06 14:23:49::error::/v1/api/termOfService/readTermOfServices::245c79df-081b-4dc0-a483-5b25a1712ef1::undefined - NaNms - Response: {}::{"message":"mongoose is not defined"}
+2024-08-06 14:33:14::error::/v1/api/user/updateProfileStatus::5813f4bc-a914-4598-906a-de29ae019e23::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 14:33:32::error::/v1/api/user/updateProfileStatus::af1b4d49-4e8b-4952-9e0a-6ed9380d2cd6::undefined - NaNms - Response: {}::{"message":"Invalid input data"}
+2024-08-06 14:33:45::error::/v1/api/user/updateProfileStatus::19609bfa-4a4a-44df-b0ae-015c56c8a5da::undefined - NaNms - Response: {}::{"message":"Invalid input data"}
+2024-08-06 14:35:37::error::/v1/api/user/updateProfileStatus::025f0d36-e1d8-4897-8ceb-af03f45a760a::undefined - NaNms - Response: {}::{"message":"Invalid input data"}
+2024-08-06 14:36:54::error::/v1/api/user/updateProfileStatus::5c30e642-c291-4b21-b3b8-f3da232af5b1::undefined - NaNms - Response: {}::{"message":"Invalid input data"}
+2024-08-06 16:46:31::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::11532355-e80e-4803-b807-a16cc7c543e0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:03:09::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::7b7dae85-dd81-4d6f-9716-9e118f588346::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:03:16::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::226c363c-843c-4119-9490-9476626978dc::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:03:55::error::/v1/api/user/updateProfile/66a5a57173370474cf4eacca::e30104bd-c6f1-4cdf-994a-7593878637c0::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:03:55::error::/v1/api/user/updateProfile/66a5a57173370474cf4eacca::1151fb8e-97f3-4b44-902c-896d3df68793::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:04:01::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::2b4187a5-9506-4143-ac73-59643beb4edb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:04:06::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::27d32e44-37fb-4d1a-b48d-62d3ad3735fb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:59:05::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::dfa676b6-a3b7-4be1-9dff-055ab3c3777e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:59:16::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::879ee04c-e003-4f3b-872f-c4ec2b3f99ef::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:59:16::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::cbac85c2-75eb-4b83-9722-ee10612bd201::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:59:17::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::d4a5f8db-7df9-40d7-b54a-f47a03d29982::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 17:59:19::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::04db8425-a9e1-4297-81db-11cd077bc1f4::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 18:00:41::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::53ff7c0d-05f2-4b8d-8f06-2faca42dc623::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-06 18:00:45::error::/v1/api/user/updateUserProfile/66a5a57173370474cf4eacca::c042ce97-7756-47d6-809e-e5edc0340e23::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}

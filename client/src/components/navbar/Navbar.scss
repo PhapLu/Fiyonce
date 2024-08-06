@@ -1,5 +1,5 @@
 .navbar {
-    padding: 10px 3%;
+    padding: 12px 3%;
 
     /* padding: 10px 0; */
     z-index: 10;
@@ -39,6 +39,8 @@
         }
 
         .navbar__brand-name {
+            color: var(--black-color);
+            font-size: 2.2rem;
             display: inline-block;
             // margin: 0 12px;
         }
@@ -122,7 +124,7 @@
 
             .navbar-link-item {
                 padding: 10px 16px 10px;
-                font-size: 1.4rem;
+                font-size: 1.6rem;
                 font-weight: 600;
 
                 &.active {

@@ -158,7 +158,10 @@ class CommissionReportService {
             return {
                 commissionReport: updatedCommissionReport,
             };
-        } catch (error) { }
+        } catch (error) {
+            console.log("Error uploading images or saving order:", error);
+            throw new BadRequestError("File upload or database save failed");
+        }
     };
 
     static deleteCommissionReport = async (userId, commissionReportId) => {

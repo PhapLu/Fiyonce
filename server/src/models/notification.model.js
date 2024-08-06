@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "Notification";
 const COLLECTION_NAME = "Notifications";
 

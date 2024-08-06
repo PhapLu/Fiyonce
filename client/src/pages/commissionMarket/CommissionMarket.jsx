@@ -23,6 +23,7 @@ import { newRequest } from "../../utils/newRequest.js";
 import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
 import "./CommissionMarket.scss";
 import CreateProposal from "../../components/crudProposal/create/CreateProposal.jsx";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function CommissionMarket() {
     const breakpointColumnsObj = {
@@ -138,7 +139,7 @@ export default function CommissionMarket() {
                             Đăng yêu cầu</button>
                     </div>
                     <div className="commission-market__header--right">
-                        <img src={CommissionMarketBg} alt="" className="commission-market__bg" />
+                        <LazyLoadImage src={CommissionMarketBg} alt="" className="commission-market__bg" effect="blur" />
                     </div>
                 </section>
 
@@ -232,7 +233,7 @@ export default function CommissionMarket() {
 
                                             <div className="user md">
                                                 <div className="user--left">
-                                                    <img src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" />
+                                                    <LazyLoadImage src={indirectOrder?.memberId?.avatar} alt="" className="user__avatar" effect="blur" />
                                                     <div className="user__name">
                                                         <div className="user__name__title">{indirectOrder.memberId.fullName}</div>
                                                         <div className="user__name__subtitle fs-13 mt-4">
@@ -257,7 +258,7 @@ export default function CommissionMarket() {
                                                 if (index === 2 && indirectOrder?.references?.length > 3) {
                                                     return (
                                                         <div key={index} className="reference-item">
-                                                            <img src={resizeImageUrl(reference, 250)} alt="" /> {/* Use resizeImageUrl here */}
+                                                            <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur"/> {/* Use resizeImageUrl here */}
                                                             <div className="reference-item__overlay">
                                                                 +{indirectOrder?.references?.length - 3}
                                                             </div>
@@ -266,7 +267,7 @@ export default function CommissionMarket() {
                                                 }
                                                 return (
                                                     <div className="reference-item" key={index}>
-                                                        <img src={resizeImageUrl(reference, 250)} alt="" />
+                                                        <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur"/>
                                                     </div>
                                                 );
                                             })}

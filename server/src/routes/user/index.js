@@ -13,10 +13,13 @@ router.get('/me', asyncHandler(userController.me))
 router.use(verifyToken)
 
 //update Role
-router.patch('/updateUserProfile/:profileId', asyncHandler(userController.updateProfile))
+router.patch('/updateProfile/:profileId', asyncHandler(userController.updateProfile))
 router.patch('/followUser/:profileId', asyncHandler(userController.followUser))
 router.patch('/unFollowUser/:profileId', asyncHandler(userController.unFollowUser))
 router.patch('/bookmarkPost/:postId', asyncHandler(userController.bookmarkPost))
+router.patch('/recommendUsers', asyncHandler(userController.recommendUsers))
 router.delete('/delete/:profileId', asyncHandler(userController.deleteProfile))
+
+router.patch('/updateProfileStatus', asyncHandler(userController.updateProfileStatus))
 
 export default router

@@ -2,75 +2,20 @@ import { Link } from "react-router-dom";
 import "./RenderNewss.scss";
 import { useQuery } from 'react-query';
 import { useRef, useState, useEffect } from 'react';
+import { apiUtils } from "../../../utils/newRequest";
 
-export default function Newss() {
-    // Fetch news
+export default function RenderNewss() {
     const fetchNewss = async () => {
         try {
-            // Simulated data fetching
-            return [{
-                _id: "1",
-                title: "[Event tháng 07] Vì một Việt Nam xanh",
-                subTitle: "Vì một Việt Nam xanh hơn",
-                thumbnail: "https://i.pinimg.com/736x/9d/d6/89/9dd689ebb495fb0fcd44ead16efcef3b.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "2",
-                title: "[Tính năng mới] Dual challange",
-                subTitle: "Thử thách ghép cặp",
-                thumbnail: "https://i.pinimg.com/736x/8e/31/ea/8e31ea5c22f956db9bd5344f1c1ef600.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "3",
-                title: "[Bộ sưu tập mùa đông 2024] Tuyệt tác",
-                subTitle: "Tác phẩm mùa đông 2024",
-                thumbnail: "https://i.pinimg.com/564x/56/14/b9/5614b97d4e2189d3d9cb3dc2100b530c.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "4",
-                title: "[Event tháng 07] Vì một Việt Nam xanh",
-                subTitle: "Vì một Việt Nam xanh hơn",
-                thumbnail: "https://i.pinimg.com/564x/18/d3/dd/18d3ddcdd9d28dcc3e49e1813afe0986.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "5",
-                title: "[Event tháng 07] Vì một Việt Nam xanh",
-                subTitle: "Vì một Việt Nam xanh hơn",
-                thumbnail: "https://i.pinimg.com/736x/56/cb/ec/56cbec22e8e48a04e5c54f044e247b5e.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "6",
-                title: "[Event tháng 07] Vì một Việt Nam xanh",
-                subTitle: "Vì một Việt Nam xanh hơn",
-                thumbnail: "https://i.pinimg.com/564x/d8/cd/39/d8cd399120daa999dab1ac1592ddb320.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "7",
-                title: "[Event tháng 07] Vì một Việt Nam xanh",
-                subTitle: "Vì một Việt Nam xanh hơn",
-                thumbnail: "https://i.pinimg.com/564x/18/d3/dd/18d3ddcdd9d28dcc3e49e1813afe0986.jpg",
-                content: "ABC",
-            },
-            {
-                _id: "8",
-                title: "[Event tháng 07] Vì một Việt Nam xanh",
-                subTitle: "Vì một Việt Nam xanh hơn",
-                thumbnail: "https://i.pinimg.com/564x/50/ad/f2/50adf2009fce9b244bab84521b85aba9.jpg",
-                content: "ABC",
-            }];
+            const response = await apiUtils.get("/news/readNewss");
+            console.log(response)
+            return response.data.metadata.newss;
         } catch (error) {
-            console.error(error);
             return null;
         }
     };
 
-    const { data: news, error, isError, isLoading } = useQuery('fetchNewss', fetchNewss, {
+    const { data: newss, error, isError, isLoading } = useQuery('fetchNewss', fetchNewss, {
         onError: (error) => {
             console.error('Error fetching news:', error);
         },
@@ -116,13 +61,13 @@ export default function Newss() {
                 scrollContainerRef.current.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [news]);
+    }, [newss]);
 
     useEffect(() => {
-        if (news && news.length > 0) {
+        if (newss && newss.length > 0) {
             handleScroll();
         }
-    }, [news]);
+    }, [newss]);
 
     const handleScroll = () => {
         const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
@@ -151,15 +96,15 @@ export default function Newss() {
         <div className="explore-news scroll">
             <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
             <div className="news-container scroll-container" ref={scrollContainerRef}>
-                {news && news.map((newItem) => (
-                    <Link to={`/newss/${newItem._id}`} className="news-item scroll-item" key={newItem._id}>
+                {newss?.map((newItem) => {
+                    return <Link to={`/newss/${newItem._id}`} className="news-item scroll-item" key={newItem._id}>
                         <img src={newItem.thumbnail} alt={newItem.title} className="news-item__thumbnail" />
                         <div className="news-item__content">
                             <h4 className="news-item__title">{newItem.title}</h4>
                             <span className="news-item__sub-title">{newItem.subTitle}</span>
                         </div>
                     </Link>
-                ))}
+                })}
             </div>
             <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>&gt;</button>
         </div>

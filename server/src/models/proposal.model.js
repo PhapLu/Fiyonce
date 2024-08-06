@@ -34,6 +34,7 @@ const ProposalSchema = new mongoose.Schema(
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Artwork",
+                default: [],
             },
         ],
         price: {

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const DOCUMENT_NAME = "Report";
 const COLLECTION_NAME = "Reports";
 

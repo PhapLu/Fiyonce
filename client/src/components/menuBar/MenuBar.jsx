@@ -3,8 +3,9 @@ import { useAuth } from "../../contexts/auth/AuthContext";
 import { Link } from "react-router-dom";
 import { useSetting } from "../../contexts/setting/SettingContext";
 import "./MenuBar.scss";
+import { codePointToEmoji } from "../../utils/iconDisplayer";
 
-export default function MenuBar() {
+export default function MenuBar({ setShowMenu }) {
     const { userInfo, logout } = useAuth();
     const { theme, setTheme, language, setLanguage } = useSetting();
     const [openSubMenu, setOpenSubMenu] = useState('');
@@ -152,6 +153,8 @@ export default function MenuBar() {
                     <>
                         <div className="dropdown-menu-container__fullname">Hi, {userInfo.fullName}</div>
                         <div className="dropdown-menu-container__email">{userInfo.email}</div>
+                        {userInfo.profileStatus && <div className="ml-8 mt-12 fs-18">{codePointToEmoji(userInfo?.profileStatus?.icon)} <span>{userInfo?.profileStatus?.title}</span></div>}
+
                         <hr />
                         <Link to={'/users/' + userInfo._id + '/order-history'} className="dropdown-menu-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 mr-8">

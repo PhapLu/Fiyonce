@@ -1,5 +1,6 @@
 import TalentRequest from "../models/talentRequest.model.js";
 import { User } from "../models/user.model.js";
+import ReferralCode from "../models/referralCode.model.js";
 import {
     AuthFailureError,
     BadRequestError,
@@ -21,7 +22,7 @@ class TalentRequestService {
             throw new BadRequestError("User already a talent");
 
         // 2. Validate request body
-        const { stageName, jobTitle, portfolioLink } = req.body;
+        const { stageName, jobTitle, portfolioLink, referralCode } = req.body;
         if (!req.files || !req.files.files)
             throw new BadRequestError("Please provide artwork files");
         if (!userId || !stageName || !jobTitle || !portfolioLink)
@@ -66,6 +67,16 @@ class TalentRequestService {
             });
             await newTalentRequest.save();
 
+            // 6. Create referral code
+            if(referralCode) {
+                const talent = await User.findOne({referralCode});
+                const referralCode = new ReferralCode({
+                    code: referralCode,
+                    referrer: talent._id.toString(),
+                    referred: userId,
+                });
+            }
+            
             return {
                 talentRequest: newTalentRequest,
             };
@@ -121,11 +132,15 @@ class TalentRequestService {
             { $set: { role: "talent" } },
             { new: true }
         );
+        updatedUser.referralCode = crypto.randomBytes(8).toString("hex");
+        updatedUser.jobTitle = request.jobTitle;
+        updatedUser.stageName = request.stageName;
+        updatedUser.save()
 
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } =
             updatedUser;
-
+        
         // 7. Send email to user and delete images in cloudinary
         try {
             request.artworks.forEach(async (artwork) => {
@@ -150,7 +165,7 @@ class TalentRequestService {
             };
         } catch (error) {
             console.log("Failed:::", error);
-            throw new Error("Email service error or image deletion failed");
+            throw new BadRequestError("Email service error or image deletion failed");
         }
 
     };
@@ -236,6 +251,16 @@ class TalentRequestService {
             talentRequest,
         };
     };
+
+    static readReferralCodeOwner = async (referralCode) => {
+        //1. Find the user who owns the referral code
+        const user = await User.findOne({referralCode})
+        if (!user) throw new NotFoundError("User not found");
+
+        return {
+            user,
+        };
+    }
 }
 
 export default TalentRequestService;
