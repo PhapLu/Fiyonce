@@ -24,6 +24,11 @@ import NotFound from "./pages/notFound/NotFound";
 import CommissionServices from "./components/commissionServices/CommissionServices";
 import Layout from "./pages/layout/Layout.jsx";
 
+// Statics
+import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
+import Glaze from "./statics/glaze/Glaze.jsx";
+
+
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
 
@@ -50,6 +55,16 @@ const routes = [
   {
     path: "/terms-and-policies",
     element: <InDevelopment />,
+  },
+  {
+    path: "/statics",
+    element: <StaticLayout />,
+    children: [
+      {
+        path: "/statics/glaze",
+        element: <Glaze />,
+      },
+    ]
   },
   {
     path: "/users/:userId",
@@ -123,6 +138,7 @@ const routes = [
       },
     ],
   },
+
   {
     path: "/",
     element: <Layout />,

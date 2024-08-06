@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { useSetting } from "../../contexts/setting/SettingContext";
 import "./MenuBar.scss";
 import { codePointToEmoji } from "../../utils/iconDisplayer";
-
-export default function MenuBar({ setShowMenu }) {
-    const { userInfo, logout } = useAuth();
+import GlazeLogo from "/uploads/glaze_logo.png";
+export default function MenuBar() {
+    const { userInfo, logout, setShowMenu } = useAuth();
     const { theme, setTheme, language, setLanguage } = useSetting();
     const [openSubMenu, setOpenSubMenu] = useState('');
     const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -156,7 +156,12 @@ export default function MenuBar({ setShowMenu }) {
                         {userInfo.profileStatus && <div className="ml-8 mt-12 fs-18">{codePointToEmoji(userInfo?.profileStatus?.icon)} <span>{userInfo?.profileStatus?.title}</span></div>}
 
                         <hr />
-                        <Link to={'/users/' + userInfo._id + '/order-history'} className="dropdown-menu-item">
+                        <Link onClick={() => setShowMenu(false)} to={'/statics/glaze'} className="dropdown-menu-item">
+                            <img src={GlazeLogo} alt="Glaze logo" />
+                            <span className="dropdown-menu-item__title">Glaze</span>
+                        </Link>
+
+                        <Link onClick={() => setShowMenu(false)} to={'/users/' + userInfo._id + '/order-history'} className="dropdown-menu-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 mr-8">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>

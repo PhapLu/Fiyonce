@@ -148,7 +148,7 @@ body {
     font-weight: 500;
     background-color: var(--white-3-color);
     // transition: 0.2s linear;
-    color: var(--black-3-color);
+    color: var(--black-2-color);
 
     &:has(.modal-form) {
         overflow: hidden;
@@ -160,7 +160,7 @@ body {
 }
 
 .app {
-    margin: 72px 3% 50px !important;
+    margin: 72px 3% 50px;
 
     &.with-sidebar {
         display: flex;
@@ -329,8 +329,11 @@ img {
     }
 }
 
+.underlined-text {
+    text-decoration: underline;
+}
 .highlight-text {
-    color: var(--orange-2-color);
+    color: var(--orange-2-color) !important;
 
 
     &.with-hover-effect {

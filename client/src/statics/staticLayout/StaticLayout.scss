@@ -1,0 +1,20 @@
+.static-layout {
+    .static-outlet-content {
+        margin: 90px 20%;
+
+        h1,
+        h2,
+        h3,
+        h4,
+        strong {
+            color: var(--black-1-color);
+        }
+
+        span {
+            color: var(--black-3-color);
+            text-align: justify;
+            font-size: 1.6rem;
+            line-height: 2.6rem;
+        }
+    }
+}
