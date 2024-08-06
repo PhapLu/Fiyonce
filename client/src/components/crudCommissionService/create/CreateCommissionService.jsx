@@ -240,8 +240,8 @@ export default function CreateCommissionService({
                         : "Thể loại"}
                 </span>
                 <h3>{inputs?.title || "Tên dịch vụ"}</h3>
-                <span>Giá từ: <span className="highlight-text"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} VND</span></span>
-                <hr />
+                <h4>Giá từ: <span className="highlight-text fs-18"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} VND</span></h4>
+                <hr className="mb-16 mt-16" />
                 <div className="image-container images-layout-3">
                     {displayPortfolios.slice(0, 3).map((portfolio, index) => {
                         if (index === 2 && displayPortfolios.length > 3) {

@@ -96,7 +96,7 @@ export default function Navbar() {
         setShowRenderConversations(true);
 
         try {
-            const response = await apiUtils.patch(`/user/updateUserProfile/${userInfo?._id}`, { lastViewConversations: Date.now() });
+            const response = await apiUtils.patch(`/user/updateProfile/${userInfo?._id}`, { lastViewConversations: Date.now() });
         } catch (error) {
             setModalInfo({
                 status: "error",

@@ -14,7 +14,7 @@ import { ClipLoader } from 'react-spinners';
 export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete, posts, layout }) {
     const breakpointColumnsObj = {
         default: layout,
-        1200: 6,
+        1200: 5,
         1023: 4,
         739: 2
     };
@@ -281,10 +281,10 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                     </div>
                                     {
                                         isDisplayOwner && (
-                                            <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="user sm hover-cursor-opacity">
+                                            <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="user xs hover-cursor-opacity">
                                                 <div className="user--left">
                                                     <LazyLoadImage
-                                                        src={resizeImageUrl(post?.talentId?.avatar, 50)}
+                                                        src={resizeImageUrl(post?.talentId?.avatar, 40)}
                                                         className="user__avatar"
                                                         effect="blur"
                                                     />
@@ -307,8 +307,9 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                         })}
                     </Masonry >
                 ) : (
-                    <div h3 className="text-align-center flex-align-center flex-justify-center">
-                        <ClipLoader className="clip-loader" size={40} color={"#123abc"} loading={true} />
+                    <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                        <br />
+                        <ClipLoader className="clip-loader" size={40} loading={true} />
                         <h3 className="ml-12">
                             Đang tải
                         </h3>

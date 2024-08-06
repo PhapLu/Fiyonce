@@ -5,6 +5,7 @@ import {
     NotFoundError,
 } from "../core/error.response.js";
 import { User } from "../models/user.model.js";
+import mongoose from "mongoose";
 
 class TermOfServiceService {
     static createTermOfService = async (userId, body) => {
@@ -41,8 +42,18 @@ class TermOfServiceService {
     };
 
     static readTermOfServices = async (talentId) => {
-        //1. Check if termOfService exists
-        const termOfServices = await TermOfService.find({talentId: talentId});
+        // Use aggregation to fetch TermOfServices and the related CommissionServices
+        const termOfServices = await TermOfService.aggregate([
+            { $match: { talentId: new mongoose.Types.ObjectId(talentId) } },
+            {
+                $lookup: {
+                    from: "CommissionServices",
+                    localField: "_id",
+                    foreignField: "termOfServiceId",
+                    as: "commissionServices",
+                },
+            },
+        ]);
 
         return {
             termOfServices,

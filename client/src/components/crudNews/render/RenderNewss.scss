@@ -10,13 +10,14 @@
             margin-right: 16px;
             background: linear-gradient(to top, rgb(20 20 20 / 40%), rgb(0 0 0 / 0%));
             transition: 0.1s linear;
+            border-radius: 10px;
+            overflow: hidden;
 
             .news-item__thumbnail {
                 position: absolute;
                 height: 100%;
                 width: 100%;
                 object-fit: cover;
-                border-radius: 10px;
                 z-index: -1;
                 // filter: contrast(95%) saturate(95%);
             }

@@ -141,6 +141,32 @@ class UserService {
             user: userData,
         };
     };
+
+    static updateProfileStatus = async (userId, profileStatus) => {
+        try {
+            // Validate inputs
+            if (!userId || !profileStatus) {
+                throw new Error('Invalid input data');
+            }
+
+            // Update the profile status field in the user's document
+            const user = await User.findByIdAndUpdate(
+                userId,
+                { $set: { profileStatus: profileStatus } },
+                { new: true } // Return the updated document
+            );
+
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            return { profileStatus: user.profileStatus };
+        } catch (error) {
+            // Handle errors (e.g., logging or rethrowing)
+            console.error('Error updating profile status:', error.message);
+            throw error;
+        }
+    };
 }
 
 export default UserService;

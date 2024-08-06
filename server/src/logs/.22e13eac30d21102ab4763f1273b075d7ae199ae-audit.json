@@ -11,16 +11,6 @@
             "hash": "5d645e35fbb91ce6aae892e29a1dcd307dfe0a3547048d7296cada20c0539ca0"
         },
         {
-            "date": 1721605303448,
-            "name": "src\\logs\\application-2024-07-22.error.log",
-            "hash": "bb7ffedd45436531e883c5c371fc265c5a5df0961d752cd0a4aa8f5184f28a37"
-        },
-        {
-            "date": 1721692378347,
-            "name": "src\\logs\\application-2024-07-23.error.log",
-            "hash": "b01fac1a40b78700fea717a2e6214ae32b2d5bb52d84bf3096065aa334674297"
-        },
-        {
             "date": 1721790544384,
             "name": "src\\logs\\application-2024-07-24.error.log",
             "hash": "3724e270ca15347a4b68f3b7e798689a40078c0a7d11df67c0b74b4e0a3acf09"
@@ -99,6 +89,11 @@
             "date": 1722813400331,
             "name": "src\\logs\\application-2024-08-05.error.log",
             "hash": "a45971bba5c57913f65405a3b901d53c47fef11e05475b7593262f1966383b39"
+        },
+        {
+            "date": 1722906746589,
+            "name": "src\\logs\\application-2024-08-06.error.log",
+            "hash": "595cf26e07d53f5113d8d9a932d679b375fc8d489c6de96310944fdf47f96c6e"
         }
     ],
     "hashType": "sha256"

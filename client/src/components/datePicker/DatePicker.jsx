@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
-
+import "./DatePicker.scss"
 const DatePicker = ({ value, onChange }) => {
     const currentYear = new Date().getFullYear();
     const [selectedDate, setSelectedDate] = useState(null);

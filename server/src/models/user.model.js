@@ -35,7 +35,6 @@ const UserSchema = new Schema(
         profileStatus: {
             icon: { type: String, default: "" },
             title: { type: String, default: "" },
-            expireAt: { type: Date, default: null },
         },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },

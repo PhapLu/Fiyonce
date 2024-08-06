@@ -64,9 +64,7 @@ export default function ExplorePosts() {
 
     return (
         <>
-            {isFetchingPostsLoading && <p>Loading posts...</p>}
-            {isFetchingPostsError && <p>Error fetching posts.</p>}
-            <RenderPosts isDisplayOwner={true} layout={6} posts={filteredPosts} />
+            <RenderPosts isDisplayOwner={true} layout={5} posts={filteredPosts} />
             <Outlet />
         </>
     );

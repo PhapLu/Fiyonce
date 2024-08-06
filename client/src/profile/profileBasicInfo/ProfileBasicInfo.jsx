@@ -91,7 +91,7 @@ export default function ProfileBasicInfo() {
             }
 
             const userId = profileInfo._id;
-            const response = await apiUtils.patch(`/user/updateUserProfile/${userId}`, inputs);
+            const response = await apiUtils.patch(`/user/updateProfile/${userId}`, inputs);
             if (response) {
                 setModalInfo({
                     status: "success",
