@@ -224,3 +224,6 @@
 2024-08-06 14:59:05::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::103b6386-2639-43f4-9703-f3bb2d6aab64::input-params ::PATCH::::{}
 2024-08-06 14:59:05::error::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::103b6386-2639-43f4-9703-f3bb2d6aab64::403 - 0ms - Response: {"status":403,"now":1722931145577}::{"message":"Please provide fields to update"}
 2024-08-06 14:59:33::info::/v1/api/submission/updateSubmission/66b1d66e1b1faaa2fe8917c3::fd75efa6-fba2-4b9a-a25e-ba051ddade63::input-params ::PATCH::::{"title":"Title Changed"}
+2024-08-06 15:59:34::info::/v1/api/transactionDashboard/readTransactionOverview::fe4df989-991c-4f21-80f0-940914c0334a::input-params ::GET::::{}
+2024-08-06 16:02:12::info::/v1/api/transactionDashboard/readTransactionOverview::68ad28ff-ccda-4ec6-a5aa-33855268879b::input-params ::GET::::{}
+2024-08-06 17:54:34::info::/v1/api/transactionDashboard/readTransactionOverview::add2a82d-e0b0-4625-9223-5848742dccb0::input-params ::GET::::{}
