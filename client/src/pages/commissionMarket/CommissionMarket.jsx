@@ -258,7 +258,7 @@ export default function CommissionMarket() {
                                                 if (index === 2 && indirectOrder?.references?.length > 3) {
                                                     return (
                                                         <div key={index} className="reference-item">
-                                                            <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur"/> {/* Use resizeImageUrl here */}
+                                                            <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur" /> {/* Use resizeImageUrl here */}
                                                             <div className="reference-item__overlay">
                                                                 +{indirectOrder?.references?.length - 3}
                                                             </div>
@@ -267,7 +267,7 @@ export default function CommissionMarket() {
                                                 }
                                                 return (
                                                     <div className="reference-item" key={index}>
-                                                        <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur"/>
+                                                        <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur" />
                                                     </div>
                                                 );
                                             })}

@@ -1,0 +1,41 @@
+.zoomed-image-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    .zoom-image {
+        position: relative;
+
+        .close-ic {
+            position: absolute;
+            top: 0;
+            right: 0;
+            // right: -40px;
+            // top: calc(5vh);
+            // right: calc(15% - 40px);
+            padding: 4px;
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+        .zoom-image__img {
+            position: relative;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            // margin-left: 15%;
+            width: auto;
+            max-width: 70%;
+            margin-top: 5vh;
+            height: 90vh;
+            object-fit: cover;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+    }
+}

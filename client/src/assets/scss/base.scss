@@ -80,8 +80,8 @@ body.dark {
 
     --red-1-color: #ff6a6a;
     --color-scheme: dark;
-    --form-bg-1-color: #0e0e0e;
-    --form-bg-2-color: #161616;
+    --form-bg-1-color: #101010;
+    --form-bg-2-color: #191919;
     --form-bg-3-color: #272727;
 
     --pending-status-bg-color: #30241d;
@@ -332,6 +332,7 @@ img {
 .underlined-text {
     text-decoration: underline !important;
 }
+
 .highlight-text {
     color: var(--orange-2-color) !important;
 
@@ -1563,9 +1564,16 @@ table {
 
 .modal-form {
     .form__submit-btn-container {
+        position: absolute;
+        right: 0;
+        bottom: 0;
         display: flex;
         bottom: 12px;
         right: 20px;
+
+        .form__submit-btn-item {
+            margin-left: 12px;
+        }
 
         &.half-split {
             justify-content: space-between;
@@ -1589,6 +1597,7 @@ table {
     border-radius: 16px;
     padding: 42px 22px 58px;
     position: relative;
+    border: 1px solid var(--black-5-color);
 
     .form__close-ic {
         position: absolute;

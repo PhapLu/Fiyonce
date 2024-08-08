@@ -75,7 +75,7 @@ class UserService {
         await followedUser.save()
 
         return {
-            user: userAfterTracking,
+            user: currentUser,
         }
     }
 

@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 
 // Contexts
 import { useAuth } from "../../../contexts/auth/AuthContext";
+import ZoomImage from "../../zoomImage/ZoomImage";
 
 // Components
 import RenderProposals from "../../crudProposal/render/RenderProposals";
@@ -18,6 +19,9 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
         return;
     }
     const { userInfo } = useAuth();
+
+    const [showZoomImage, setShowZoomImage] = useState(false);
+    const [zoomedImageSrc, setZoomedImageSrc] = useState();
 
     const isOrderOwner = commissionOrder.memberId._id === userInfo._id;
     const isTalentChosen = commissionOrder.talentChosenId?._id === userInfo._id;
@@ -35,6 +39,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
             document.removeEventListener("mousedown", handler);
         };
     }, [setShowRenderCommissionOrder, setOverlayVisible]);
+
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
 
     return (
@@ -137,7 +142,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         {commissionOrder.references.map((reference, index) => {
                             return (
                                 <div className="reference-item" key={index}>
-                                    <img src={resizeImageUrl(reference, 350)} alt="" />
+                                    <img onClick={() => { setShowZoomImage(true); setZoomedImageSrc(reference) }} src={resizeImageUrl(reference, 350)} alt="" />
                                 </div>
                             );
                         })}
@@ -191,8 +196,9 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         )
                     }
                 </div>
-
             </div>
+            {showZoomImage && <ZoomImage src={zoomedImageSrc} setShowZoomImage={setShowZoomImage}/>}
         </div >
+
     )
 }

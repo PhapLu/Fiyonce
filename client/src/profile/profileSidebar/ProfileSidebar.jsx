@@ -313,7 +313,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setCustomPronoun(e.target.value);
     };
 
-    const [showProfileStatus, setShowProfileStatus] = useState("profileStatus");
+    const [showProfileStatus, setShowProfileStatus] = useState(false);
     const toggleEmojiPicker = () => setShowEmojiPicker(prev => !prev);
 
     return (
@@ -351,7 +351,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         <span onClick={() => { setShowProfileStatus(true); setOverlayVisible(true) }}>
                             {
                                 userInfo?.profileStatus?.icon ?
-                                    (<span aria-label={userInfo?.profileStatus?.title} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'>abc {codePointToEmoji(userInfo?.profileStatus?.icon)}</span>)
+                                    (<span aria-label={userInfo?.profileStatus?.title || ""} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'> {codePointToEmoji(userInfo?.profileStatus?.icon)}</span>)
                                     :
                                     (<span>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__ic">
