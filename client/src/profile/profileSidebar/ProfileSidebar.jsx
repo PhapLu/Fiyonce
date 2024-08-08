@@ -1,7 +1,7 @@
 // Imports
 import { useState, useEffect, useCallback } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPicker from '../../components/emojiPicker/EmojiPicker'; // Update the path as needed
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Components
@@ -33,12 +33,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [showFollowers, setShowFollowers] = useState(false);
     const [showFollowing, setShowFollowing] = useState(false);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-    const addEmoji = (emoji) => {
-        setInputs({
-            ...inputs,
-            bio: inputs.bio + emoji.native
-        });
-    };
 
     const handleFileUpload = async (croppedFile) => {
         const formData = new FormData();
@@ -202,7 +196,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         try {
             const userId = profileInfo._id;
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
-            const updatedData = { ...inputs, socialLinks: submittedSocialLinks };
+            const updatedData = { ...inputs, pronoun: pronoun, socialLinks: submittedSocialLinks };
             const response = await apiUtils.patch(`/user/updateProfile/${userId}`, updatedData);
             if (response) {
                 setModalInfo({
@@ -305,8 +299,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setShowRenderConversation(true)
     }
 
-    const [pronoun, setPronoun] = useState("");
-    const [customPronoun, setCustomPronoun] = useState("");
+    const [pronoun, setPronoun] = useState(inputs?.pronoun || "");
+    const [customPronoun, setCustomPronoun] = useState(inputs?.pronoun || "");
 
     const handlePronounChange = (e) => {
         setPronoun(e.target.value);
@@ -320,6 +314,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     };
 
     const [showProfileStatus, setShowProfileStatus] = useState("profileStatus");
+    const toggleEmojiPicker = () => setShowEmojiPicker(prev => !prev);
 
     return (
         <div className="sidebar">
@@ -355,8 +350,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <>
                         <span onClick={() => { setShowProfileStatus(true); setOverlayVisible(true) }}>
                             {
-                                userInfo?.profileStatus ?
-                                    (<span aria-label={userInfo?.profileStatus?.title} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'> {codePointToEmoji(userInfo?.profileStatus?.icon)}</span>)
+                                userInfo?.profileStatus?.icon ?
+                                    (<span aria-label={userInfo?.profileStatus?.title} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'>abc {codePointToEmoji(userInfo?.profileStatus?.icon)}</span>)
                                     :
                                     (<span>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__ic">
@@ -411,7 +406,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             <option value="">Không đề cập</option>
                             <option value="him">Nam | Anh ấy</option>
                             <option value="her">Nữ  | Cô ấy</option>
-                            <option value="her">Họ  | Họ</option>
+                            <option value="them">Họ  | Họ</option>
                             <option value="custom">Custom</option>
                         </select>
                         {pronoun === "custom" && (
@@ -438,27 +433,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             placeholder="Nhập địa chỉ"
                         />
                         {errors.address && <span className="form-field__error">{errors.address}</span>}
-                    </div>
-
-                    <div className="form-field">
-                        <label htmlFor="bio" className="form-field__label">Bio</label>
-                        <textarea
-                            type="text"
-                            id="bio"
-                            name="bio"
-                            value={inputs.bio}
-                            onChange={handleChange}
-                            className="form-field__input"
-                            placeholder="Giới thiệu ngắn gọn về bản thân (tối đa 150 kí tự)"
-                        />
-                        {errors.bio && <span className="form-field__error">{errors.bio}</span>}
-                        <button type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-                            {showEmojiPicker ? 'Hide Emojis' : 'Show Emojis'}
-                        </button>
-                        {showEmojiPicker && (
-                            <EmojiPicker />
-                            // <EmojiPicker onEmojiClick={onEmojiClick} />
-                        )}
                     </div>
 
                     <div className="form-field">
@@ -514,8 +488,17 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             ) : (
                 <>
                     <div className="sidebar__name">
-                        <p className="sidebar__name__fullName">{profileInfo.fullName}</p>
-                        <span className="sidebar__name__stageName">{profileInfo.stageName}</span>
+                        <p className="sidebar__name__fullName">{profileInfo?.fullName}</p>
+                        <div className="flex-justify-center flex-align-center">
+                            {profileInfo?.stageName && <span className="sidebar__name__stageName">{profileInfo?.stageName}</span>}
+                            {profileInfo?.pronoun && (
+                                <>
+                                    <span className="dot-delimiter sm ml-8 mr-8"></span>
+                                    <span className="sidebar__name__stageName">{profileInfo?.pronoun}</span>
+                                </>
+                            )}
+                        </div>
+
                     </div>
                     <div>
                         {profileInfo?.role === "talent" && profileInfo.jobTitle && (

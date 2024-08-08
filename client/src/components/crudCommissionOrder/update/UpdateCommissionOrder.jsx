@@ -251,7 +251,7 @@ export default function UpdateCommissionOrder({
                 e.stopPropagation();
             }}
         >
-            <Link to="/help_center" className="form__help" target="_blank">
+            <Link to="/help-center" className="form__help" target="_blank">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

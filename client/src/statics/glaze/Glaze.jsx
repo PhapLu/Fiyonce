@@ -6,12 +6,11 @@ export default function Glaze() {
     return (
         <div className="glaze">
             <h1 className="flex-align-center flex-justify-center"><img src={GlazeLogo} className="glaze-logo mr-16" alt="" />Bảo vệ tác phẩm nghệ thuật của bạn với Glaze</h1>
-            <span className="flex-align-center flex-justify-center"> bởi &nbsp; <span className="highlight-text">Pastal Team</span> <span className="dot-delimiter sm ml-8 mr-8"></span> Cập nhật gần nhất: 12/08/2024</span>
+            <span className="flex-align-center flex-justify-center"> bởi &nbsp; <Link to="/statics/about-team" className="highlight-text">Pastal Team</Link> <span className="dot-delimiter sm ml-8 mr-8"></span> Cập nhật gần nhất: 12/08/2024</span>
             <hr />
             <h3 className="">1. Glaze là gì?</h3>
             <span>
-                Đi cùng với sự phát triển đáng kinh ngạc của các mô hình trí tuệ nhân tạo là nỗi lo về quyền sáng tác và giá trị nghệ thuật do chúng tạo ra.
-                Với nỗ lực tạo ra một cộng đồng giữa những người yêu nghệ thuật, Pastal muốn giới thiệu đến mọi người Glaze. Ra mắt vào năm 2023, Glaze là một công cụ giúp bảo vệ tác phẩm nghệ thuật số khỏi bị sao chép trái phép bởi các mô hình AI.
+                Đi cùng với sự phát triển đáng kinh ngạc của các mô hình trí tuệ nhân tạo là nỗi lo về quyền sáng tác và giá trị nghệ thuật do chúng tạo ra. Với nỗ lực tạo ra một cộng đồng giữa những người yêu nghệ thuật sáng tạo, Pastal muốn giới thiệu đến mọi người Glaze - một công cụ bảo vệ họa sĩ và tác phẩm của họ khỏi sự sao chép trái phép của các mô hình AI.
             </span>
             <br />
             <br />
@@ -36,7 +35,7 @@ export default function Glaze() {
 
                 <h3 className="">3. Hướng dẫn sử dụng</h3>
                 <strong>1. Tải xuống và cài đặt Glaze:  </strong>
-                <span>Truy cập trang web chính thức của Glaze <Link to="https://glaze.cs.uchicago.edu/index.html" className="highlight-text underlined-text">tại đây</Link></span>
+                <span>Truy cập trang web chính thức của Glaze <Link target="_blank" to="https://glaze.cs.uchicago.edu/index.html" className="highlight-text underlined-text">tại đây</Link></span>
                 <br />
                 <br />
                 <strong>2. Mở tác phẩm nghệ thuật: </strong>
@@ -52,6 +51,9 @@ export default function Glaze() {
                 <span>Sau khi áp dụng plugin, hãy lưu lại tác phẩm đã được bảo vệ. </span>
                 <br />
                 <br />
+                <br />
+
+                <hr />
 
             </span>
         </div>

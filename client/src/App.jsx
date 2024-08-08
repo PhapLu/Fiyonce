@@ -27,6 +27,7 @@ import Layout from "./pages/layout/Layout.jsx";
 // Statics
 import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
 import Glaze from "./statics/glaze/Glaze.jsx";
+import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
 
 
 // Profiles
@@ -63,6 +64,10 @@ const routes = [
       {
         path: "/statics/glaze",
         element: <Glaze />,
+      },
+      {
+        path: "/statics/about-team",
+        element: <AboutTeam />,
       },
     ]
   },

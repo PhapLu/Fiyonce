@@ -330,7 +330,7 @@ img {
 }
 
 .underlined-text {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 .highlight-text {
     color: var(--orange-2-color) !important;

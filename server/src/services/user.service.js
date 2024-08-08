@@ -10,6 +10,8 @@ import { trackActivity } from '../utils/badgeTracking.util.js'
 class UserService {
     //-------------------CRUD----------------------------------------------------
     static updateProfile = async (userId, profileId, body) => {
+        console.log("UPDATEEE")
+        console.log(body.pronoun)
         //1. Check user
         const profile = await User.findById(profileId)
         if (!profile) throw new NotFoundError("User not found")
@@ -22,6 +24,7 @@ class UserService {
             { $set: body },
             { new: true }
         ).populate("followers", "avatar").populate("following", "avatar fullName");
+        console.log(updatedUser)
         return {
             user: updatedUser,
         }
@@ -99,14 +102,14 @@ class UserService {
         }
     }
 
-    static recommendUsers = async(userId) => {
+    static recommendUsers = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("User not found")
 
         //2. Get 10 talent users (stageName, avatar, fullName) each request
         const talentUsers = await User.find({ role: "talent" }).select("stageName avatar fullName").limit(10)
-        
+
         return {
             users: talentUsers
         }

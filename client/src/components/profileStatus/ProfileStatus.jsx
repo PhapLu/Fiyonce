@@ -51,13 +51,14 @@ export default function EditProfileStatus({ profileInfo, setProfileInfo, setShow
 
     const validateInputs = () => {
         let errors = {};
+        if (status.title || status.icon) {
+            if (!status.title) {
+                errors.title = "Bạn cảm thấy như thế nào?";
+            }
 
-        if (!status.title) {
-            errors.title = "Bạn cảm thấy như thế nào?";
-        }
-
-        if (!status.icon) {
-            errors.icon = "Hãy chọn một emoji";
+            if (!status.icon) {
+                errors.icon = "Hãy chọn một emoji";
+            }
         }
 
         return errors;

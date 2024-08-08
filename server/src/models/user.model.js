@@ -16,6 +16,7 @@ const UserSchema = new Schema(
             enum: ["member", "talent", "admin"],
             default: "member",
         },
+        gender: { type: String, enum: ["male", "female", "other"], trim: true },
         jobTitle: { type: String, trim: true },
         avatar: {
             type: String,
@@ -36,7 +37,7 @@ const UserSchema = new Schema(
             icon: { type: String, default: "" },
             title: { type: String, default: "" },
         },
-        badges: [{ 
+        badges: [{
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
             count: { type: Number, default: 0 }
         }],
@@ -45,7 +46,7 @@ const UserSchema = new Schema(
             progress: { type: Object, default: {} },  // Change Map to Object
             completed: { type: Boolean, default: false }
         }],
-        referralCode: { type: String},
+        referralCode: { type: String },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
@@ -63,7 +64,7 @@ const UserSchema = new Schema(
         qrCode: { type: String }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
-        timeZone: {type: String, default: ""},
+        timeZone: { type: String, default: "" },
     },
     {
         timestamps: true,
