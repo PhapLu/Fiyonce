@@ -10,6 +10,7 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
+import Submission from "../models/submission.model.js"
 
 class ChallengeService {
     static createChallenge = async (adminId, req) => {
@@ -58,6 +59,72 @@ class ChallengeService {
 
         return {
             challenge
+        }
+    }
+
+    static readChallengesWithInfo = async(adminId) => {
+        //1. Check admin
+        const admin = await User.findById(adminId)
+        if (!admin) throw new NotFoundError("Admin not found")
+        if(admin.role !== 'admin') throw new AuthFailureError("Admin not found")
+
+        //2. Read challenges with participants count and votes count
+        try {
+            const challenges = await Challenge.aggregate([
+                // Lookup to count the number of participants in each challenge
+                {
+                    $lookup: {
+                        from: 'Users', // Collection name for users
+                        localField: 'participants',
+                        foreignField: '_id',
+                        as: 'participantsInfo'
+                    }
+                },
+                {
+                    $addFields: {
+                        participantsCount: { $size: "$participantsInfo" }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'Submissions',
+                        localField: '_id',
+                        foreignField: 'challengeId',
+                        as: 'submissions'
+                    }
+                },
+                {
+                    $addFields: {
+                        votesCount: {
+                            $sum: {
+                                $map: {
+                                    input: '$submissions',
+                                    as: 'submission',
+                                    in: { $size: '$$submission.votes' }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        title: 1,
+                        participantsCount: 1,
+                        votesCount: 1,
+                        startDate: 1,
+                        endDate: 1,
+                        status: 1
+                    }
+                }
+            ])
+    
+            return {
+                challenges
+            }
+        } catch (error) {
+            console.error('Error reading challenges:', error)
+            throw error
         }
     }
 
