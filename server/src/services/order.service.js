@@ -32,7 +32,7 @@ class OrderService {
         if (isDirect == 'true') {
             //direct order
             talent = await User.findById(talentChosenId);
-            const service = await commissionService.findById(
+            const service = await CommissionService.findById(
                 commissionServiceId
             );
 
