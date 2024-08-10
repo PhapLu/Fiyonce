@@ -36,6 +36,7 @@
     --form-bg-1-color: #F7F7F7;
     --form-bg-2-color: white;
     --form-bg-3-color: #F7F7F7;
+    --form-bg-4-color: #ededed;
 
     --gradient-btn-bg-color: rgba(0, 0, 0, 0.6);
     --color-scheme: light;
@@ -83,6 +84,7 @@ body.dark {
     --form-bg-1-color: #101010;
     --form-bg-2-color: #191919;
     --form-bg-3-color: #272727;
+    --form-bg-4-color: #1b1b1b;
 
     --pending-status-bg-color: #30241d;
     --pending-status-color: #f68038;
@@ -255,6 +257,15 @@ img {
     height: 100%;
 }
 
+.tos-content {
+    color: var(--black-3-color);
+
+    p,
+    span {
+        color: var(--black-3-color) !important;
+    }
+}
+
 .fs-12 {
     font-size: 1.2rem !important;
 }
@@ -290,7 +301,6 @@ img {
 .fs-24 {
     font-size: 2.4rem;
 }
-
 
 .fw-400 {
     font-weight: 400;
@@ -443,7 +453,7 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
     padding-top: 16px;
 
     .sub-nav-item {
@@ -683,8 +693,9 @@ hr {
 
 
     &.vertical-hr {
-        height: 100%;
-        width: 2px;
+        // height: 100%;
+        // width: 2px;
+        transform: rotate(90deg);
     }
 }
 

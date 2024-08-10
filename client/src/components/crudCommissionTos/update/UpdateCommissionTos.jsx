@@ -202,15 +202,27 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                             <div className="form-field">
                                 <label htmlFor="content" className="form-field__label">Nội dung</label>
                                 <span name="content" className="form-field__annotation">Điền nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                                {/* <CKEditor
+                                <CKEditor
                                     editor={ClassicEditor}
                                     data={inputs?.content}
                                     onChange={handleEditorChange}
                                     config={{
-                                        toolbar: ['bold', 'italic', 'underline', 'bulletedList', 'numberedList', 'emoji'],
-                                        emoji: { toolbar: true, shortname: true }
+                                        plugins: [Essentials, ImageInsert,
+                                            ImageResize,
+                                            ImageStyle,
+                                            ImageToolbar,
+                                            ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
+                                        toolbar: {
+                                            items: [
+                                                'bold', 'italic', '|',
+                                                'fontSize', 'fontFamily', 'fontColor', '|'
+                                            ]
+                                        },
+                                        mention: {
+                                            // Mention configuration
+                                        },
                                     }}
-                                /> */}
+                                />
                                 {errors.content && <span className="form-field__error">{errors.content}</span>}
                             </div>
                             <div className="form-field">

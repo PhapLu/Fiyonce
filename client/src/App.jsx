@@ -23,6 +23,7 @@ import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
 import CommissionServices from "./components/commissionServices/CommissionServices";
 import Layout from "./pages/layout/Layout.jsx";
+import Challenge from "./pages/challenge/Challenge.jsx";
 
 // Statics
 import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
@@ -33,6 +34,7 @@ import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
 import LoginPage from "./pages/Login/LoginPage";
+
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
@@ -154,7 +156,7 @@ const routes = [
       },
       {
         path: "/challenges",
-        element: <InDevelopment />,
+        element: <Challenge />,
       },
       {
         path: "/newss/:newsId",

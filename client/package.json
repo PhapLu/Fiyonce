@@ -42,6 +42,7 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.23.1",
     "react-select": "^5.8.0",
+    "react-share": "^5.1.0",
     "react-share-social": "^0.1.60",
     "react-spinners": "^0.14.1",
     "reactstrap": "^9.2.2",

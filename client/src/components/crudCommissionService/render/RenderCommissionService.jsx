@@ -138,7 +138,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
 
                             <div className="modal-form--right">
                                 <span>{commissionService?.movementId?.title}</span>
-                                <h2>{commissionService?.serviceCategoryId?.title}</h2>
+                                <h2>{commissionService?.title}</h2>
                                 <h4>Giá từ: <span className="highlight-text">{formatCurrency(commissionService?.minPrice)} VND</span></h4>
                                 <hr />
                                 <div className="user md">
@@ -153,23 +153,20 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                 <p className="render-commission-service__owner-msg">
                                     Cảm ơn bạn đã ghé thăm dịch vụ của mình. Vui lòng đọc trước thông tin và điều khoản dịch vụ trước khi đặt comm giúp mình nhé.
                                 </p>
-                                <hr />
 
                                 <h4>
                                     <strong>
                                         Bạn sẽ nhận được gì?
                                     </strong>
                                 </h4>
-                                <p className="border-text">{commissionService?.deliverables}</p>
-                                <br />
-                                <hr />
+                                <p className="border-text mb-32">{commissionService?.deliverables}</p>
 
                                 <h4>
                                     <strong>
                                         Điều khoản dịch vụ
                                     </strong>
                                 </h4>
-                                <p className="border-text">
+                                <p className="border-text tos-content">
                                     {commissionService?.termOfServiceId?.content && (
                                         <div dangerouslySetInnerHTML={{ __html: commissionService.termOfServiceId.content }} />
                                     )}

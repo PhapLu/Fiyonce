@@ -1,0 +1,118 @@
+.challenge {
+    .challenge__landing {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        padding: 40px 6%;
+        background-color: var(--form-bg-4-color);
+        border-radius: 16px;
+
+        .challenge__landing--left {
+            width: 35%;
+
+            h1 {
+                font-size: 4rem;
+                font-weight: bold;
+                color: var(--black-3-color);
+                margin: 20px 0;
+            }
+
+            &>hr {
+                width: 40px;
+                margin: 0;
+                height: 8px;
+                border-radius: 8px;
+                background-color: var(--black-1-color);
+            }
+
+            h3 {
+                font-weight: 600;
+                font-size: 1.6rem;
+            }
+
+            .challenge__landing__statistic-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--form-bg-1-color);
+                padding: 20px 36px;
+                border-radius: 20px;
+                box-shadow: var(--box-shadow-1);
+                margin-top: 32px;
+
+                hr {
+                    width: 40px;
+                    background-color: var(--gray-2-color);
+                }
+
+                .challenge__landing__statistic-item {
+
+                    h2,
+                    h3 {
+                        margin: 2px 0;
+                    }
+                }
+            }
+        }
+
+
+        .challenge__landing--right {
+            width: 45%;
+
+            .challenge__landing__bg {
+                width: 100%;
+                border-radius: 20px;
+            }
+        }
+    }
+
+
+    section {
+        margin: 40px 15% 60px;
+
+        &>hr {
+            width: 40px;
+            // margin: 0;
+            height: 8px;
+            border-radius: 8px;
+            background-color: var(--black-1-color);
+        }
+
+        .challenge-container {
+            margin-top: 28px;
+
+            .challenge-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 0;
+                border-bottom: 2px solid var(--gray-1-color);
+
+                &:last-child {
+                    border-bottom: unset;
+                }
+
+                .challenge-item--left {
+                    width: 45%;
+                    height: 240px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 8px;
+                    }
+
+                }
+
+                .challenge-item--right {
+                    width: 45%;
+
+                    .challenge-item__title {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
