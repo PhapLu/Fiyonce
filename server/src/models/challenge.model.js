@@ -12,6 +12,7 @@ const ChallengeSchema = new mongoose.Schema(
         endDate: { type: Date},
         prizes: { type: String, default: '' },
         rules: { type: String, default: '' },
+        isPrivate: { type: Boolean, default: false },
         status: { type: String, enum: ['upcoming', 'ongoing', 'completed'], default: 'upcoming' },
         participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
     },{
