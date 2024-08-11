@@ -28,6 +28,8 @@ class ProposalService {
         //2. Check if user is a talent
         if (user.role !== "talent")
             throw new AuthFailureError("You are not a talent");
+        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check if user has already given proposal for the order
         const existingProposal = await Proposal.findOne({
@@ -114,6 +116,8 @@ class ProposalService {
         const proposal = await Proposal.findById(proposalId);
         if (!proposal) throw new NotFoundError("Proposal not found");
         if (!user) throw new NotFoundError("User not found");
+        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Check if user is authorized to update proposal
         if (proposal.talentId.toString() !== userId)
@@ -151,16 +155,14 @@ class ProposalService {
 
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
-            throw new AuthFailureError(
-                "You are not authorized to delete this proposal"
-            );
+            throw new AuthFailureError("You are not authorized to delete this proposal");
+        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check status of order
         const order = await Order.findById(proposal.orderId);
         if (order.status !== "pending" && order.status !== "approved")
-            throw new BadRequestError(
-                "You cannot update proposal on this stage"
-            );
+            throw new BadRequestError("You cannot update proposal on this stage");
 
         //4. Delete proposal
         await proposal.deleteOne();

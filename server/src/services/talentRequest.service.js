@@ -22,7 +22,7 @@ class TalentRequestService {
             throw new BadRequestError("User already a talent");
 
         // 2. Validate request body
-        const { stageName, jobTitle, portfolioLink, referralCode } = req.body;
+        const { stageName, jobTitle, portfolioLink, referralCode, taxCode } = req.body;
         if (!req.files || !req.files.files)
             throw new BadRequestError("Please provide artwork files");
         if (!userId || !stageName || !jobTitle || !portfolioLink)
@@ -64,6 +64,7 @@ class TalentRequestService {
                 jobTitle,
                 portfolioLink,
                 artworks,
+                taxCode,
             });
             await newTalentRequest.save();
 
@@ -135,11 +136,14 @@ class TalentRequestService {
         updatedUser.referralCode = crypto.randomBytes(8).toString("hex");
         updatedUser.jobTitle = request.jobTitle;
         updatedUser.stageName = request.stageName;
+        if(request.taxCode){
+            updatedUser.taxCode.code = request.taxCode
+            updatedUser.taxCode.isVerified = true
+        }
         updatedUser.save()
 
         // 6. Exclude password from user object
-        const { password: hiddenPassword, ...userWithoutPassword } =
-            updatedUser;
+        const { password: hiddenPassword, ...userWithoutPassword } = updatedUser;
         
         // 7. Send email to user and delete images in cloudinary
         try {
@@ -170,12 +174,14 @@ class TalentRequestService {
 
     };
 
-    static denyTalentRequest = async (adminId, requestId) => {
+    static denyTalentRequest = async (adminId, requestId, body) => {
         //1. Find and check request
         const request = await TalentRequest.findById(requestId);
         if (!request) throw new NotFoundError("Request not found");
         if (request.status === "rejected")
             throw new BadRequestError("Request already denied");
+        if(!body.rejectMessage || body.rejectMessage === '')
+            throw new BadRequestError("Please provide a reason for denying the request");
 
         //2. Find and check admin, user and user role
         const userId = request.userId;
@@ -201,7 +207,7 @@ class TalentRequestService {
             const subject = "";
             const subjectMessage = "";
             const verificationCode = '';
-            const message = "Your request has been denied";
+            const message = body.rejectMessage || "Your request has been denied";
             const template = 'announcementTemplate';
             await brevoSendEmail(
                 foundUser.email,
@@ -230,8 +236,8 @@ class TalentRequestService {
             throw new AuthFailureError("You do not have enough permission");
 
         //2. Find all talent requests
-        const talentRequests = await TalentRequest.find({
-        }).populate("userId", "email fullName");
+        const talentRequests = await TalentRequest.find({})
+            .populate("userId", "email fullName");
         return {
             talentRequests,
         };

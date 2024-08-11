@@ -59,6 +59,10 @@ const UserSchema = new Schema(
         },
         followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
         following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        taxCode:{
+            code: { type: String, default: "" },
+            isVerified: { type: Boolean, default: false },
+        },
         accessToken: { type: String },
         qrCode: { type: String }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
