@@ -62,6 +62,7 @@ const UserSchema = new Schema(
         taxCode:{
             code: { type: String, default: "" },
             isVerified: { type: Boolean, default: false },
+            message: { type: String, default: "" }
         },
         accessToken: { type: String },
         qrCode: { type: String }, //Base 64
