@@ -50,11 +50,8 @@ class AccountReportService {
             })
             await accountReport.save()
 
-            order.status = "under_processing"
-            await order.save()
-
             return {
-                accountReport,
+                accountReport
             }
         } catch (error) {
             console.log("Error uploading images or saving order:", error)
@@ -103,8 +100,10 @@ class AccountReportService {
             throw new AuthFailureError(
                 "You can only update your account report"
             )
-
+        
         //2. Handle file uploads if new files were uploaded
+        if(req.body.userIdReported)
+            throw new BadRequestError("Bạn không thể thay đổi trường thông tin này")
         try {
             //3. Upload files to Cloudinary if exists
             if (req.files && req.files.files && req.files.files.length > 0) {

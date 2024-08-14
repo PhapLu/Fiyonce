@@ -58,9 +58,7 @@ class BugReportService {
 
     static readBugReport = async (bugReportId) => {
         //1. Check bugReport
-        const bugReport = await BugReport.findById(
-            bugReportId
-        ).populate("userIdReported", "fullName avatar")
+        const bugReport = await BugReport.findById(bugReportId)
         if (!bugReport)
             throw new NotFoundError("Commission Report not found")
 
