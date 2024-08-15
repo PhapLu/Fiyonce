@@ -21,7 +21,6 @@ class CommissionReportService {
         //2. Validate request body
         const { orderId, proposalId, content } = req.body;
 
-
         if (!orderId || !proposalId || !content)
             throw new BadRequestError("Please provide all required fields");
 

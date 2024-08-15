@@ -25,7 +25,7 @@ class TalentRequestController {
     denyTalentRequest = async(req, res, next) => {
         new SuccessResponse({
             message: 'Deny talent request success!',
-            metadata: await TalentRequestService.denyTalentRequest(req.userId, req.params.requestId)
+            metadata: await TalentRequestService.denyTalentRequest(req.userId, req.params.requestId, req.body)
         }).send(res)
     }
     

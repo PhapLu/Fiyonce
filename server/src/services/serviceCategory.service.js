@@ -14,6 +14,8 @@ class ServiceCategoryService {
         if (!talent) throw new NotFoundError("Talent not found");
         if (talent.role !== "talent")
             throw new BadRequestError("He/She is not a talent");
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Create service
         const serviceCategory = new ServiceCategory({
@@ -81,11 +83,13 @@ class ServiceCategoryService {
         const serviceCategory = await ServiceCategory.findById(
             serviceCategoryId
         );
-
+        
         if (!talent) throw new NotFoundError("Talent not found");
         if (!serviceCategory) throw new NotFoundError("Service not found");
         if (serviceCategory.talentId.toString() !== talentId)
             throw new AuthFailureError("You can only update your service");
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Update Service
         const updatedServiceCategory = await ServiceCategory.findByIdAndUpdate(
@@ -110,6 +114,8 @@ class ServiceCategoryService {
         if (!serviceCategory) throw new NotFoundError("Service not found");
         if (serviceCategory.talentId.toString() !== talentId)
             throw new AuthFailureError("You can only delete your service");
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Delete service
         return await serviceCategory.deleteOne();

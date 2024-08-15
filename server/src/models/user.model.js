@@ -39,14 +39,20 @@ const UserSchema = new Schema(
         },
         badges: [{
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
-            count: { type: Number, default: 0 }
+            count: { type: Number, default: 0 },
+            progress: [{ 
+                criterion: { type: String, default: "" },
+                progress: {type: Number, default: 0},
+                isComplete: { type: Boolean, default: false }
+            }],
+            awardedAt: { type: Date, default: Date.now }
         }],
-        badgeProgress: [{
-            badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
-            progress: { type: Object, default: {} },  // Change Map to Object
-            completed: { type: Boolean, default: false }
-        }],
-        referralCode: { type: String },
+        // badgeProgress: [{
+        //     badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
+        //     progress: { type: Object, default: {} },  // Change Map to Object
+        //     completed: { type: Boolean, default: false }
+        // }],
+        referralCode: { type: String},
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
@@ -60,6 +66,15 @@ const UserSchema = new Schema(
         },
         followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
         following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        taxCode:{
+            code: { type: String, default: "" },
+            isVerified: { type: Boolean, default: false },
+            message: { type: String, default: "" }
+        },
+        cccd: {
+            type: String,
+            default: ''
+        },
         accessToken: { type: String },
         qrCode: { type: String }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
