@@ -7,6 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 // Components
 import CreateCommissionOrder from "../../crudCommissionOrder/create/CreateCommissionOrder";
+import ZoomImage from "../../zoomImage/ZoomImage";
 
 // Utils
 import { apiUtils } from "../../../utils/newRequest";
@@ -23,7 +24,8 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [showCreateCommissionOrder, setShowCreateCommissionOrder] = useState(false);
-
+    const [showZoomImage, setShowZoomImage] = useState(false);
+    const [imageSource, setImageSource] = useState();
     const agreeTermsRef = useRef(null);
 
     const handleInputChange = (e) => {
@@ -119,7 +121,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
 
-                            <div className="modal-form--left">
+                            <div className="modal-form--left flex-align-center">
                                 {commissionService?.artworks?.length > 0 && (
                                     <Carousel
                                         showArrows
@@ -127,8 +129,10 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                         showThumbs
                                         dynamicHeight
                                     >
+
+
                                         {commissionService.artworks.map((artwork, index) => (
-                                            <div key={index} className="render-commission-service__artwork-item">
+                                            <div key={index} className="render-commission-service__artwork-item" onClick={() => { setImageSource(artwork); setShowZoomImage(true) }}>
                                                 <img src={artwork} alt={`Artwork ${index + 1}`} />
                                             </div>
                                         ))}
@@ -141,7 +145,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                 <h2>{commissionService?.title}</h2>
                                 <h4>Giá từ: <span className="highlight-text">{formatCurrency(commissionService?.minPrice)} VND</span></h4>
                                 <hr />
-                                <div className="user md">
+                                <Link to={`/users/${commissionService?.talentId?._id}/profile-commission-services`} className="user md">
                                     <div className="user--left">
                                         <img src={commissionService?.talentId?.avatar} alt="" className="user__avatar" />
                                         <div className="user__name">
@@ -149,7 +153,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                             <div className="user__name__sub-title">{commissionService?.talentId?.stageName}</div>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                                 <p className="render-commission-service__owner-msg">
                                     Cảm ơn bạn đã ghé thăm dịch vụ của mình. Vui lòng đọc trước thông tin và điều khoản dịch vụ trước khi đặt comm giúp mình nhé.
                                 </p>
@@ -180,7 +184,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                             onChange={handleInputChange}
                                             required
                                         />
-                                        <span>Tôi đồng ý với các <a className="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của Pastal</span>
+                                        <span>Tôi đồng ý với các <a className="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của {commissionService?.talentId?.fullName}</span>
                                     </label>
                                     {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                                 </div>
@@ -194,7 +198,7 @@ export default function RenderComissionService({ commissionServiceId, setShowRen
                                     Đặt ngay
                                 </button>
                             </div>
-
+                            {showZoomImage && <ZoomImage src={imageSource} setShowZoomImage={setShowZoomImage} />}
                         </div>
                     )
                     : (

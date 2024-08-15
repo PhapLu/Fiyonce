@@ -1,14 +1,27 @@
+// Imports
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import RenderConversations from "../crudConversation/render/RenderConversations";
-import RenderNotifications from "../crudNotification/render/RenderNotifications";
+
+
+// Contexts
+import { useAuth } from "../../contexts/auth/AuthContext.jsx";
+import { useConversation } from "../../contexts/conversation/ConversationContext.jsx";
+
+// Components
 import Auth from "../auth/Auth";
-import Logo from "../../assets/img/logo.png";
-import './Navbar.scss';
-import { useConversation } from "../../contexts/conversation/ConversationContext";
-import { useAuth } from "../../contexts/auth/AuthContext";
+import CreateBugReport from "../crudBugReport/create/CreateBugReport.jsx"
+import RenderConversations from "../crudConversation/render/RenderConversations.jsx";
+import RenderNotifications from "../crudNotification/render/RenderNotifications.jsx";
+
+// Utils
 import { apiUtils } from "../../utils/newRequest";
 import { resizeImageUrl } from "../../utils/imageDisplayer";
+
+// Styling
+import Logo from "../../assets/img/logo.png";
+import './Navbar.scss';
+
+
 
 export default function Navbar() {
     const location = useLocation();
@@ -69,19 +82,14 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (
-                (messageButtonRef.current && !messageButtonRef.current.contains(event.target) &&
-                    conversationsRef.current && !conversationsRef.current.contains(event.target) &&
-                    !event.target.closest('.conversation-item')) ||
-                (notificationBtnRef.current && !notificationBtnRef.current.contains(event.target) &&
-                    !event.target.closest('.conversation-item'))
-            ) {
+            if (conversationsRef.current && !conversationsRef.current.contains(event.target) &&
+                messageButtonRef.current && !messageButtonRef.current.contains(event.target)) {
                 setShowRenderConversations(false);
-                setShowRenderNotifications(false);
             }
-            if (searchFieldRef.current && !searchFieldRef.current.contains(event.target) &&
-                !event.target.closest('.search-result-container')) {
-                setIsSearchFocused(false);
+
+            if (notificationBtnRef.current && !notificationBtnRef.current.contains(event.target) &&
+                !event.target.closest('.toggle-display-notifications-btn')) {
+                setShowRenderNotifications(false);
             }
         };
 
@@ -91,9 +99,13 @@ export default function Navbar() {
         };
     }, []);
 
+
     const handleViewConversations = async () => {
         setUnSeenConversations([]);
-        setShowRenderConversations(true);
+        if (!showRenderConversations) {
+            setShowRenderNotifications(false);
+        }
+        setShowRenderConversations(prevState => !prevState);
 
         try {
             const response = await apiUtils.patch(`/user/updateProfile/${userInfo?._id}`, { lastViewConversations: Date.now() });
@@ -143,11 +155,16 @@ export default function Navbar() {
 
     const handleViewNotifications = async () => {
         setUnSeenNotifications([]);
-        setShowRenderNotifications(true);
+        if (!showRenderNotifications) {
+            setShowRenderConversations(false);
+        }
+        setShowRenderNotifications(prevState => !prevState);
     }
 
     const [showHamburgerMenu, setShowHamburgerMenu] = useState();
 
+    const [overlayVisible, setOverlayVisible] = useState(false);
+    const [showCreateBugReport, setShowCreateBugReport] = useState(false);
 
     return (
         <>
@@ -255,7 +272,7 @@ export default function Navbar() {
                         <hr className="navbar__veritcal-hr tablet-hide" />
                         {userInfo && (
                             <>
-                                <div className="mr-8 toggle-display-conversations-btn" ref={messageButtonRef}>
+                                <div className="toggle-display-conversations-btn hover-display-label bottom mr-8" ref={messageButtonRef} aria-label="Tin nhắn">
                                     <div className="btn btn-3 icon-only" onClick={handleViewConversations}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
@@ -268,7 +285,7 @@ export default function Navbar() {
                                         </div>
                                     )}
                                 </div>
-                                <div className="icon-only toggle-display-notifications-btn mr-16" ref={notificationBtnRef}>
+                                <div className="icon-only toggle-display-notifications-btn hover-display-label bottom mr-8" ref={notificationBtnRef} aria-label="Thông báo">
                                     <div className="btn btn-3 icon-only" onClick={handleViewNotifications}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
@@ -281,12 +298,26 @@ export default function Navbar() {
                                         </div>
                                     )}
                                 </div>
+
+                                <div className="icon-only toggle-display-notifications-btn mr-16 hover-display-label bottom" ref={notificationBtnRef} aria-label="Báo cáo sự cố">
+                                    <div className="btn btn-3 icon-only" onClick={() => { setShowCreateBugReport(true), setOverlayVisible(true) }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                                        </svg>
+                                    </div>
+                                </div>
                             </>
                         )}
                         <Auth />
                     </ul>
                 </div>
             </div>
+
+            {overlayVisible &&
+                <div className="overlay">
+                    {showCreateBugReport && <CreateBugReport setShowCreateBugReport={setShowCreateBugReport} setOverlayVisible={setOverlayVisible} />}
+                </div>
+            }
         </>
     );
 }

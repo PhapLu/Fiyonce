@@ -14,6 +14,7 @@
     --gray-3-color: #4D4D4D;
     --gray-4-color: #d8d7d7;
     --gray-5-color: #bdbdbd;
+    --gray-6-color: #e3e3e3;
 
     --red-1-color: #ff3e3e;
     --red-2-color: #e45454;
@@ -33,7 +34,7 @@
     --box-shadow-4: rgb(79 127 249 / 20%) 0px 3px 5px;
 
     --form-border: unset;
-    --form-bg-1-color: #F7F7F7;
+    --form-bg-1-color: #f9f9f9;
     --form-bg-2-color: white;
     --form-bg-3-color: #F7F7F7;
     --form-bg-4-color: #ededed;
@@ -66,6 +67,7 @@ body.dark {
     --gray-3-color: #868181;
     --gray-4-color: #2d2d2d;
     --gray-5-color: #757575;
+    --gray-6-color: #3a3a3a;
 
     --orange-2-color: #ffa471;
     --orange-3-color: #6e4517;
@@ -104,8 +106,6 @@ body.dark {
     //     }
     // }
 }
-
-
 
 * {
     box-sizing: inherit;
@@ -339,6 +339,40 @@ img {
     }
 }
 
+.hover-display-label {
+    position: relative;
+
+    &::after {
+        content: attr(aria-label);
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        font-size: 1.2rem;
+        transform: translateX(-50%);
+        background-color: var(--black-5-color);
+        color: var(--white-4-color);
+        padding: 6px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out;
+        z-index: 1;
+    }
+
+    &.bottom {
+        &::after {
+            top: calc(100% + 4px);
+            bottom: unset;
+        }
+    }
+
+
+    &:hover::after {
+        opacity: 1;
+    }
+}
+
 .underlined-text {
     text-decoration: underline !important;
 }
@@ -409,6 +443,10 @@ img {
 
 .text-align-center {
     text-align: center;
+}
+
+.text-align-justify {
+    text-align: justify;
 }
 
 .status {
@@ -608,12 +646,13 @@ img {
     .emoji-container {
         position: absolute;
         left: 0;
-        top: calc(100% + 10px);
+        top: 100%;
         border-radius: 8px;
         border: 2px solid var(--gray-2-color);
         background-color: white;
         padding: 8px 12px;
         width: 300px;
+        z-index: 100;
 
         .emoji-category-container {
             display: flex;
@@ -685,17 +724,21 @@ img {
     opacity: 0;
 }
 
+.visibility-hidden {
+    visibility: hidden;
+}
+
 hr {
     border: none;
     height: 1px;
     width: 100%;
-    background-color: var(--gray-2-color);
-
+    background-color: var(--gray-6-color);
 
     &.vertical-hr {
-        // height: 100%;
-        // width: 2px;
+        height: 2px;
+        width: 2px;
         transform: rotate(90deg);
+        // transform: rotate(90deg);
     }
 }
 
@@ -1165,8 +1208,8 @@ table {
 
     &.xs {
         .user__avatar {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             border: 1px solid var(--white-2-color);
             box-shadow: unset;
         }
@@ -1557,7 +1600,7 @@ table {
             height: 24px;
             object-fit: cover;
             top: 28px;
-            right: 52px;
+            right: 28px;
         }
     }
 

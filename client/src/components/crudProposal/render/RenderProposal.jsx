@@ -24,6 +24,8 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
     if (!commissionOrder) {
         return;
     }
+
+    console.log(proposalId)
     const { setModalInfo } = useModal();
     const { userInfo, socket } = useAuth();
     const isOrderOwnerAsMember = userInfo?._id === commissionOrder?.memberId?._id;

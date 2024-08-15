@@ -141,6 +141,9 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         const value = e.target.value;
 
         // Update input value & clear error
+        if (name == "bio") {
+            setInputs((values) => ({ ...values, [name]: value.replace(/\n/g, "\n") }));
+        }
         setInputs((values) => ({ ...values, [name]: value }));
         setErrors((values) => ({ ...values, [name]: '' }));
     };
@@ -316,6 +319,25 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [showProfileStatus, setShowProfileStatus] = useState(false);
     const toggleEmojiPicker = () => setShowEmojiPicker(prev => !prev);
 
+    const handleEmojiClick = (emoji) => {
+        const emojiChar = codePointToEmoji(emoji); // Convert code point to emoji
+        setInputs((prevInputs) => ({
+            ...prevInputs,
+            bio: `${prevInputs.bio || ''}${emojiChar}` // Append the emoji character to the bio
+        }));
+        setShowEmojiPicker(false); // Hide the emoji picker after selection
+    };
+    const renderBioWithLineBreaks = (text) => {
+        return text.split('\n').map((line, index) => (
+            <span key={index}>
+                {line}
+                <br />
+            </span>
+        ));
+    };
+
+
+
     return (
         <div className="sidebar">
             <LazyLoadImage
@@ -325,7 +347,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 effect="blur"
             />
             <div className={'sidebar__avatar ' + (isProfileOwner && 'profile-owner') + (isUploadAvatarLoading ? " skeleton-img" : "")}>
-                <div className="sidebar__avatar__update-img">
+                <div className="sidebar__avatar__update-img" onClick={handleAvatarClick}>
                     <LazyLoadImage
                         onClick={handleAvatarClick}
                         src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"}
@@ -333,17 +355,16 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         className="sidebar__avatar__img"
                         effect="blur"
                     />
-
+                    
                     {isProfileOwner &&
-                        <>
-
+                        <div className='sidebar__avatar__choose-avatar'>
                             <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__choose-avatar-ic">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                             </svg>
 
                             <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
-                        </>
+                        </div>
                     }
                 </div>
                 {isProfileOwner ? (
@@ -419,6 +440,25 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             />
                         )}
                         {errors.pronoun && <span className="form-field__error">{errors.pronoun}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        <label htmlFor="bio" className="form-field__label">Bio</label>
+                        <div className="form-field with-icon">
+                            <textarea name="bio" className="form-field__input" onChange={handleChange} value={inputs?.bio || ""} placeholder="Mô tả về bản thân">
+                            </textarea>
+                            <div className='show-emoji-btn right-corner'>
+                                <button className="btn non-hover" type="button" onClick={toggleEmojiPicker}>
+                                    <span style={{ fontSize: '24px' }}>{status.icon ? codePointToEmoji(status.icon) : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                                    </svg>
+                                    }</span> {/* Display the selected emoji or a default one */}
+                                </button>
+                                {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} onClickOutside={() => setShowEmojiPicker(false)} />}
+                            </div>
+                        </div>
+
+                        {errors.bio && <span className="form-field__error">{errors.bio}</span>}
                     </div>
 
                     <div className="form-field">
@@ -596,7 +636,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         <div className="sidebar__section sidebar__bio">
                             <p className="sidebar__section__title">Bio</p>
                             <hr />
-                            <p>{profileInfo.bio}</p>
+                            <p>{renderBioWithLineBreaks(profileInfo.bio)}</p>
                         </div>
                     )}
 

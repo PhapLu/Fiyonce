@@ -5,11 +5,14 @@ import { useSetting } from "../../contexts/setting/SettingContext";
 import "./MenuBar.scss";
 import { codePointToEmoji } from "../../utils/iconDisplayer";
 import GlazeLogo from "/uploads/glaze_logo.png";
+import ProfileStatus from "../profileStatus/ProfileStatus.jsx";
 export default function MenuBar() {
     const { userInfo, logout, setShowMenu } = useAuth();
     const { theme, setTheme, language, setLanguage } = useSetting();
     const [openSubMenu, setOpenSubMenu] = useState('');
     const [showThemeMenu, setShowThemeMenu] = useState(false);
+    const [overlayVisible, setOverlayVisible] = useState(false);
+    const [showProfileStatus, setShowProfileStatus] = useState(false);
 
     return (
         <ul className="dropdown-menu-container">
@@ -71,6 +74,17 @@ export default function MenuBar() {
                                         )
                                     }
                                 </li>
+
+                                <li className="dropdown-menu-item" onClick={() => setTheme('orange')}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                                    </svg>
+                                    <span className="dropdown-menu-item__title">Đỏ (Coming soon)</span>
+                                </li>
+
+
+
 
                                 <li className="dropdown-menu-item" onClick={() => setTheme('orange')}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 mr-8">
@@ -153,7 +167,11 @@ export default function MenuBar() {
                     <>
                         <div className="dropdown-menu-container__fullname">Hi, {userInfo.fullName}</div>
                         <div className="dropdown-menu-container__email">{userInfo.email}</div>
-                        {userInfo?.profileStatus?.icon && userInfo?.profileStatus?.title && <div className="ml-8 mt-12 fs-18">{codePointToEmoji(userInfo?.profileStatus?.icon)} <span>{userInfo?.profileStatus?.title}</span></div>}
+                        {userInfo?.profileStatus?.icon && userInfo?.profileStatus?.title &&
+                            <div className="dropdown-menu-item mt-8" onClick={() => { setShowProfileStatus(true); setOverlayVisible(true) }}>
+                                <div className="fs-18">{codePointToEmoji(userInfo?.profileStatus?.icon)} <span>{userInfo?.profileStatus?.title}</span></div>
+                            </div>
+                        }
 
                         <hr />
                         <Link onClick={() => setShowMenu(false)} to={'/users/' + userInfo._id + '/order-history'} className="dropdown-menu-item">
@@ -189,6 +207,7 @@ export default function MenuBar() {
                             <img src={GlazeLogo} alt="Glaze logo" />
                             <span className="dropdown-menu-item__title">Glaze</span>
                         </Link>
+
                         <Link to="/help-center" className="dropdown-menu-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 mr-8">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -212,6 +231,12 @@ export default function MenuBar() {
                     </>
                 )
             }
+
+            {overlayVisible && (
+                <div className="overlay">
+                    {showProfileStatus && <ProfileStatus setShowProfileStatus={setShowProfileStatus} setOverlayVisible={setOverlayVisible} />}
+                </div>
+            )}
         </ul >
     )
 }

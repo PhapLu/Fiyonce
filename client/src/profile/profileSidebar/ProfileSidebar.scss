@@ -4,31 +4,28 @@
     padding: 40px 48px;
     box-shadow: var(--box-shadow-1);
 
-    .hover-display-label {
+    .form-field {
         position: relative;
+
+        .show-emoji-btn.right-corner {
+            position: absolute;
+            padding: 0 !important;
+
+            .emoji-container {
+                right: -10px;
+                left: unset;
+            }
+
+            svg {
+                margin-right: 0;
+            }
+
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
     }
 
-    .hover-display-label::after {
-        content: attr(aria-label);
-        position: absolute;
-        left: 50%;
-        bottom: 100%;
-        font-size: 1.2rem;
-        transform: translateX(-50%);
-        background-color: var(--black-5-color);
-        color: var(--white-4-color);
-        padding: 6px;
-        border-radius: 6px;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease-in-out;
-        z-index: 1;
-    }
-
-    .hover-display-label:hover::after {
-        opacity: 1;
-    }
 
 
     .reactEasyCrop_CropArea {
@@ -59,31 +56,44 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
-            &:hover {
-                opacity: 0.8;
-                cursor: pointer;
-            }
+            // &:hover {
+            //     opacity: 0.8;
+            //     cursor: pointer;
+            // }
         }
 
 
         .sidebar__avatar__update-img {
             width: 100%;
             height: 100%;
+            border-radius: 50%;
 
-            .sidebar__avatar__choose-avatar-ic {
+            .sidebar__avatar__choose-avatar {
+                width: 100%;
+                height: 100%;
                 position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                opacity: 0;
-                transition: 0.3s linear;
-                background-color: white;
-                width: 28px;
-                height: 28px;
-                padding: 4px;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
                 border-radius: 50%;
+
+                .sidebar__avatar__choose-avatar-ic {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    opacity: 0;
+                    transition: 0.3s linear;
+                    background-color: white;
+                    width: 28px;
+                    height: 28px;
+                    padding: 4px;
+                    border-radius: 50%;
+                }
             }
+
+
 
             .sidebar__avatar__img {
                 width: 100%;
@@ -92,25 +102,36 @@
                 border-radius: 50%;
                 border: 4px solid white;
                 box-shadow: rgba(51, 51, 51, 0.2) 0px 2px 8px;
-
-
-
-
-
             }
         }
 
-        &.profile-owner:hover {
-            .sidebar__avatar__choose-avatar-ic:not(.update-profile-status-ic) {
-                opacity: 1;
-                cursor: pointer;
-            }
-
-            .sidebar__avatar__img:not(.update-profile-status-ic) {
+        &.profile-owner {
+            .sidebar__avatar__update-img:hover {
                 opacity: 0.8;
                 cursor: pointer;
             }
+
+            .sidebar__avatar__choose-avatar:hover {
+                .sidebar__avatar__choose-avatar-ic {
+                    opacity: 1;
+                    cursor: pointer;
+                }
+            }
         }
+
+
+
+        // &.profile-owner:hover {
+        //     .sidebar__avatar__choose-avatar-ic:not(.update-profile-status-ic) {
+        //         opacity: 1;
+        //         cursor: pointer;
+        //     }
+
+        //     .sidebar__avatar__img:not(.update-profile-status-ic) {
+        //         opacity: 0.8;
+        //         cursor: pointer;
+        //     }
+        // }
 
         .sidebar__avatar__ic:hover {
             opacity: 1;

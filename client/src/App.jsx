@@ -21,7 +21,7 @@ import HelpCenter from "./pages/helpCenter/HelpCenter";
 import InMaintainance from "./pages/inMaintainance/InMaintainance";
 import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
-import CommissionServices from "./components/commissionServices/CommissionServices";
+import ExploreCommissionServices from "./explore/exploreCommissionServices/ExploreCommissionServices";
 import Layout from "./pages/layout/Layout.jsx";
 import Challenge from "./pages/challenge/Challenge.jsx";
 
@@ -33,7 +33,6 @@ import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
-import LoginPage from "./pages/Login/LoginPage";
 
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
@@ -126,22 +125,22 @@ const routes = [
     element: <ExploreLayout />,
     children: [
       {
-        path: "/",
-        element: <ExplorePosts showPosts={true} />,
-        children: [
-          {
-            path: "/:postId",
-            element: <RenderPost />,
-          },
-        ],
+        path: "/commission-services",
+        element: <ExploreCommissionServices showCommissionServices={true} />,
       },
       {
         path: "/talents",
         element: <Talents showTalents={true} />,
       },
       {
-        path: "/commissionServices",
-        element: <CommissionServices showCommissionServices={true} />,
+        path: "/",
+        element: <ExplorePosts showPosts={true} />,
+        children: [
+          {
+            path: "/posts/:postId",
+            element: <RenderPost />,
+          },
+        ],
       },
     ],
   },
@@ -166,7 +165,7 @@ const routes = [
   },
   {
     path: "/dashboard/",
-    element: <DashboardLayout />,
+    element: <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /></ProtectedRoute>,
     children: [
       {
         path: "/dashboard/overview",

@@ -59,6 +59,7 @@
         display: flex;
         align-items: center;
         padding: 8px;
+        transition: 0.1s;
 
         .dropdown-menu-item__ic {
             object-fit: cover;

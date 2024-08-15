@@ -74,7 +74,7 @@ export default function UpdateCommissionService({
         const blob = await response.blob();
         return new File([blob], filename, { type: mimeType });
     };
-    console.log(updateCommissionService.artworks)
+
     useEffect(() => {
         async function fetchArtworks() {
             if (updateCommissionService.artworks) {
@@ -105,8 +105,6 @@ export default function UpdateCommissionService({
         };
     }, []);
 
-
-
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
@@ -127,13 +125,12 @@ export default function UpdateCommissionService({
         const files = Array.from(e.target.files);
         const newArtworks = [...artworks];
         files.forEach((file) => {
-            if (file.size > 2000 * 1024) {
-                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 5MB." }));
             } else {
                 newArtworks.push(file);
             }
         });
-        console.log(newArtworks)
         setArtworks(newArtworks);
     };
 

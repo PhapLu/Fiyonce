@@ -25,7 +25,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
 
     const { setOtherMember } = useConversation();
 
-    const [proposal, setProposal] = useState();
+    const [proposalId, setProposalId] = useState();
     const [showRenderProposal, setShowRenderProposal] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(false);
 
@@ -111,7 +111,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
     }, [setShowRenderProposals, setOverlayVisible]);
 
     return (
-        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposal={proposal} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal} /> : (
+        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposalId={proposalId} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal} /> : (
             <div className="render-proposals modal-form type-2" ref={renderProposalsRef} onClick={(e) => { e.stopPropagation() }}>
                 <Link to="/help-center" className="form__help" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
@@ -230,7 +230,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                         })}
                                     </div>
                                     <div>
-                                        <button className="btn btn-2 btn-md" onClick={() => { setProposal(proposal); setShowRenderProposal(true) }}>
+                                        <button className="btn btn-2 btn-md" onClick={() => { setProposalId(proposal?._id); setShowRenderProposal(true) }}>
                                             Xem hợp đồng
                                         </button>
                                         <button className="btn btn-3 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>

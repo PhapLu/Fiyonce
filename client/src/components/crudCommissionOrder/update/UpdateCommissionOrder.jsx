@@ -32,14 +32,7 @@ export default function UpdateCommissionOrder({
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
     const { userId: talentChosenId } = useParams();
-
-    const [inputs, setInputs] = useState({
-        ...commissionOrder,
-        fileTypes: [],
-        title: commissionOrder
-            ? `Đặt dịch vụ ${commissionOrder.title}`
-            : "Đăng yêu cầu lên chợ commission",
-    });
+    const [inputs, setInputs] = useState(commissionOrder);
 
     const [errors, setErrors] = useState({});
     const [
@@ -49,9 +42,29 @@ export default function UpdateCommissionOrder({
     const [isSuccessUpdateOrderCommission, setIsSuccessUpdateCommissionOrder] =
         useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
-    const [references, setReferences] = useState(commissionOrder.references);
+    const [references, setReferences] = useState(Array(5).fill(null));
+
+    useEffect(() => {
+        async function fetchArtworks() {
+            if (commissionOrder.references) {
+                const files = await Promise.all(
+                    commissionOrder.references.map(async (artwork, index) => {
+                        const file = await urlToFile(artwork, `${index + Date.now()}.jpg`, 'image/jpeg');
+                        return file;
+                    })
+                );
+                setReferences(files);
+            }
+        }
+        fetchArtworks();
+    }, [commissionOrder.references]);
 
     const orderCommissionRef = useRef();
+    const urlToFile = async (url, filename, mimeType) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], filename, { type: mimeType });
+    };
     useEffect(() => {
         let handler = (e) => {
             if (
@@ -72,18 +85,13 @@ export default function UpdateCommissionOrder({
     const validateInputs = () => {
         let errors = {};
 
-        if (!inputs.title) {
-            errors.title = "Vui lòng nhập tên đơn hàng";
-        }
-
         if (!inputs.description) {
             errors.description = "Vui lòng nhập mô tả";
         }
 
-        if (references.length < 1) {
-            errors.references = "Vui lòng cung cấp ít nhất 1 ảnh tham khảo.";
-        } else if (references.length > 5) {
-            errors.references = "Vui lòng cung cấp tối đa 5 ảnh tham khảo.";
+        const filteredReferences = references.filter((reference) => reference !== null);
+        if (!filteredReferences || filteredReferences.length < 1 || filteredReferences.length > 5) {
+            errors.references = "Vui lòng chọn 1-5 tranh mẫu";
         }
 
         if (!inputs.minPrice) {
@@ -109,14 +117,13 @@ export default function UpdateCommissionOrder({
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-
         if (type === "checkbox") {
-            if (name === "fileTypes") {
+            if (name === "fileFormats") {
                 setInputs((prevState) => ({
                     ...prevState,
-                    fileTypes: checked
-                        ? [...prevState.fileTypes, value]
-                        : prevState.fileTypes.filter((type) => type !== value),
+                    fileFormats: checked
+                        ? [...prevState.fileFormats, value]  // add value to array
+                        : prevState.fileFormats.filter((type) => type !== value),  // remove value from array
                 }));
             } else {
                 setInputs((prevState) => ({
@@ -140,21 +147,11 @@ export default function UpdateCommissionOrder({
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         const newReferences = [...references];
-
         files.forEach((file) => {
-            if (file.size > 2 * 1024 * 1024) {
-                setErrors((values) => ({
-                    ...values,
-                    references: "Dung lượng ảnh không được vượt quá 2MB.",
-                }));
-            } else if (newReferences.length < 7) {
-                newReferences.push(file);
-                setErrors((values) => ({ ...values, references: "" }));
+            if (file.size > 2000 * 1024) {
+                setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 2MB." }));
             } else {
-                setErrors((values) => ({
-                    ...values,
-                    references: "Bạn có thể chọn tối đa 3 tác phẩm.",
-                }));
+                newReferences.push(file);
             }
         });
         setReferences(newReferences);
@@ -172,7 +169,6 @@ export default function UpdateCommissionOrder({
             `/order/updateOrder/${orderData.get("_id")}`,
             orderData
         );
-        console.log(response);
         return response.data;
     };
 
@@ -291,19 +287,41 @@ export default function UpdateCommissionOrder({
                 {commissionOrder && (
                     <>
                         <span>{commissionOrder.serviceCategoryId?.title}</span>
-                        <h3>{commissionOrder?.title || "Tên dịch vụ"}</h3>
-                        <span>
-                            Giá từ:{" "}
-                            <span className="highlight-text">
-                                {" "}
-                                {(commissionOrder?.minPrice &&
-                                    formatCurrency(
-                                        commissionOrder?.minPrice
-                                    )) ||
-                                    "x"}{" "}
-                                VND
-                            </span>
-                        </span>
+                        <h3>{commissionOrder?.isDirect == true ? commissionOrder?.commissionService?.title || "Tên dịch vụ" : "Đặt hàng trên chợ Commission"}</h3>
+                        {
+                            commissionOrder?.isDirect == true ? (
+                                <span>
+                                    Giá từ:{" "}
+                                    <span className="highlight-text">
+                                        {(commissionOrder?.minPrice &&
+                                            formatCurrency(
+                                                commissionOrder?.minPrice
+                                            )) ||
+                                            "x"}{" "}
+                                        VND
+                                    </span>
+                                </span>
+                            ) : (
+                                <span>
+                                    Giá:{" "}
+                                    <span className="highlight-text">
+                                        {(commissionOrder?.minPrice &&
+                                            formatCurrency(
+                                                commissionOrder?.minPrice
+                                            )) ||
+                                            "x"}{" "}
+                                        - {" "}
+                                        {(commissionOrder?.maxPrice &&
+                                            formatCurrency(
+                                                commissionOrder?.maxPrice
+                                            )) ||
+                                            "x"}{" "}
+                                        VND
+                                    </span>
+                                </span>
+                            )
+                        }
+
                         <br />
                         <br />
                     </>
@@ -417,28 +435,6 @@ export default function UpdateCommissionOrder({
                     <>
                         <div className="form-field">
                             <label
-                                htmlFor="title"
-                                className="form-field__label"
-                            >
-                                Tên đơn hàng
-                            </label>
-                            <input
-                                id="title"
-                                name="title"
-                                value={inputs.title || ""}
-                                onChange={handleChange}
-                                className="form-field__input"
-                                placeholder="Nhập tên đơn hàng để tiện ghi nhớ và theo dõi"
-                            />
-                            {errors.title && (
-                                <span className="form-field__error">
-                                    {errors.title}
-                                </span>
-                            )}
-                        </div>
-
-                        <div className="form-field">
-                            <label
                                 htmlFor="description"
                                 className="form-field__label"
                             >
@@ -452,7 +448,7 @@ export default function UpdateCommissionOrder({
                             <textarea
                                 id="description"
                                 name="description"
-                                value={inputs.description}
+                                value={inputs?.description}
                                 onChange={handleChange}
                                 className="form-field__input"
                                 placeholder="Mô tả chi tiết yêu cầu của bạn ..."
@@ -473,48 +469,50 @@ export default function UpdateCommissionOrder({
                                 chúng giúp họa sĩ hình dung ra yêu cầu của bạn
                                 tốt hơn (tối đa 5 ảnh).
                             </span>
-                            {references.map((reference, index) => (
-                                <div
-                                    key={index}
-                                    className="form-field__input img-preview"
-                                >
-                                    <div className="img-preview--left">
-                                        <img
-                                            src={
-                                                reference instanceof File
-                                                    ? URL.createObjectURL(
-                                                          reference
-                                                      )
-                                                    : reference
-                                            }
-                                            alt={`reference ${index + 1}`}
-                                            className="img-preview__img"
-                                        />
-                                        <div className="img-preview__info">
-                                            <span className="img-preview__name">
-                                                Tranh tham khảo
-                                            </span>
+                            {references?.map((reference, index) => {
+                                return (
+                                    reference && (
+                                        <div key={index} className="form-field__input img-preview">
+                                            <div className="img-preview--left">
+                                                <img
+                                                    src={
+                                                        reference instanceof File
+                                                            ? URL.createObjectURL(reference)
+                                                            : reference || placeholderImage
+                                                    }
+                                                    alt={`reference ${index + 1}`}
+                                                    className="img-preview__img"
+                                                />
+                                                <div className="img-preview__info">
+                                                    <span className="img-preview__name">
+                                                        {reference instanceof File
+                                                            ? limitString(reference.name, 15)
+                                                            : "Tranh mẫu"}
+                                                    </span>
+                                                    <span className="img-preview__size">
+                                                        {reference instanceof File
+                                                            ? formatFloat(bytesToKilobytes(reference.size), 1) + " KB"
+                                                            : ""}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="img-preview--right">
+                                                <svg
+                                                    onClick={() => removeImage(index)}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
+                                                    className="size-6 img-preview__close-ic"
+                                                >
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                </svg>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="img-preview--right">
-                                        <svg
-                                            onClick={() => removeImage(index)}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="size-6 img-preview__close-ic"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6 18 18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </div>
-                                </div>
-                            ))}
+                                    )
+                                );
+                            })}
                             {/* {displayPortfolios.slice(0, 3).map((portfolio, index) => (
                         <img
                             key={index}
@@ -528,7 +526,7 @@ export default function UpdateCommissionOrder({
                     ))} */}
 
                             <div
-                                className="form-field with-ic add-link-btn"
+                                className="form-field with-ic add-link-btn btn"
                                 onClick={triggerFileInput}
                             >
                                 <svg
@@ -574,9 +572,9 @@ export default function UpdateCommissionOrder({
                             <label className="form-field__label">
                                 <input
                                     type="radio"
-                                    name="usage"
+                                    name="purpose"
                                     value="personal"
-                                    checked={inputs.usage === "personal"}
+                                    checked={inputs.purpose === "personal"}
                                     onChange={handleChange}
                                 />{" "}
                                 Mục đích cá nhân
@@ -584,16 +582,16 @@ export default function UpdateCommissionOrder({
                             <label className="form-field__label">
                                 <input
                                     type="radio"
-                                    name="usage"
+                                    name="purpose"
                                     value="commercial"
-                                    checked={inputs.usage === "commercial"}
+                                    checked={inputs.purpose === "commercial"}
                                     onChange={handleChange}
                                 />{" "}
                                 Mục đích thương mại
                             </label>
-                            {errors.usage && (
+                            {errors.purpose && (
                                 <span className="form-field__error">
-                                    {errors.usage}
+                                    {errors.purpose}
                                 </span>
                             )}
                         </div>
@@ -610,7 +608,7 @@ export default function UpdateCommissionOrder({
                                     type="radio"
                                     name="isPrivate"
                                     value={"1"}
-                                    checked={inputs.isPrivate === "1"}
+                                    checked={[true, "0"].includes(inputs?.isPrivate)}
                                     onChange={handleChange}
                                 />{" "}
                                 Cho phép
@@ -620,7 +618,7 @@ export default function UpdateCommissionOrder({
                                     type="radio"
                                     name="isPrivate"
                                     value={"0"}
-                                    checked={inputs.isPrivate === "0"}
+                                    checked={[false, "0"].includes(inputs?.isPrivate)}
                                     onChange={handleChange}
                                 />{" "}
                                 Không cho phép
@@ -642,9 +640,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="png"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "png"
                                         )}
                                         onChange={handleChange}
@@ -654,9 +652,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="jpg"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "jpg"
                                         )}
                                         onChange={handleChange}
@@ -666,9 +664,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="jpeg"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "jpeg"
                                         )}
                                         onChange={handleChange}
@@ -678,9 +676,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="svg"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "svg"
                                         )}
                                         onChange={handleChange}
@@ -690,9 +688,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="tif"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "tif"
                                         )}
                                         onChange={handleChange}
@@ -702,9 +700,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="ai"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "ai"
                                         )}
                                         onChange={handleChange}
@@ -714,9 +712,9 @@ export default function UpdateCommissionOrder({
                                 <label className="form-field__label">
                                     <input
                                         type="checkbox"
-                                        name="fileTypes"
+                                        name="fileFormats"
                                         value="psd"
-                                        checked={inputs.fileTypes.includes(
+                                        checked={inputs?.fileFormats.includes(
                                             "psd"
                                         )}
                                         onChange={handleChange}
@@ -724,9 +722,9 @@ export default function UpdateCommissionOrder({
                                     psd
                                 </label>
                             </div>
-                            {errors.fileTypes && (
+                            {errors.fileFormats && (
                                 <span className="form-field__error">
-                                    {errors.fileTypes}
+                                    {errors.fileFormats}
                                 </span>
                             )}
                         </div>

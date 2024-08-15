@@ -36,7 +36,7 @@
     }
 
     .my-masonry-grid_column {
-        padding-left: 16px;
+        padding-left: 20px;
         /* gutter size */
         background-clip: padding-box;
     }
@@ -151,7 +151,7 @@
             left: 0;
             z-index: -1;
             min-height: 150px;
-            max-height: 360px;
+            max-height: 380px;
         }
 
         .post-item__img {
@@ -198,7 +198,7 @@
     }
 
     .post-item__img__thumbnail {
-        max-height: 250px;
+        max-height: 260px;
     }
 }
 

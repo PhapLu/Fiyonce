@@ -5,6 +5,7 @@ import EmojiPicker from '../emojiPicker/EmojiPicker'; // Update the path as need
 import { codePointToEmoji } from '../../utils/iconDisplayer';
 import { useModal } from '../../contexts/modal/ModalContext';
 import { apiUtils } from '../../utils/newRequest';
+import "./ProfileStatus.scss"
 
 export default function EditProfileStatus({ profileInfo, setProfileInfo, setShowProfileStatus, setOverlayVisible }) {
     const { userInfo, setUserInfo } = useAuth();
@@ -78,7 +79,7 @@ export default function EditProfileStatus({ profileInfo, setProfileInfo, setShow
             const response = await apiUtils.patch("/user/updateProfileStatus", status)
             if (response) {
                 setUserInfo({ ...userInfo, profileStatus: response.data.metadata.profileStatus })
-                setProfileInfo({ ...profileInfo, profileStatus: response.data.metadata.profileStatus })
+                // setProfileInfo({ ...profileInfo, profileStatus: response.data.metadata.profileStatus })
                 setShowEmojiPicker(false);
                 setOverlayVisible(false);
                 setModalInfo({
@@ -106,7 +107,7 @@ export default function EditProfileStatus({ profileInfo, setProfileInfo, setShow
     const toggleEmojiPicker = () => setShowEmojiPicker(prev => !prev);
 
     return (
-        <div className="modal-form type-3" ref={profileStatusRef} onClick={(e) => { e.stopPropagation() }}>
+        <div className="profile-status modal-form type-3" ref={profileStatusRef} onClick={(e) => { e.stopPropagation() }}>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowProfileStatus(false);

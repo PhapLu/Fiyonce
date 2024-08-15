@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 // Components
 import { useAuth } from "../../contexts/auth/AuthContext";
-
 // Utils
 import { isFilled, minLength, isValidEmail } from "../../utils/validator.js";
 
@@ -70,6 +69,10 @@ export default function Login() {
         // Handle login request
         await login(inputs.email, inputs.password);
         setIsSubmitLoginLoading(false);
+    };
+
+    const handleLogin = () => {
+        window.location.href = 'http://localhost:3000/v1/api/auth/google'; // Ensure this points to your back-end server
     };
 
     return (
@@ -140,22 +143,15 @@ export default function Login() {
                     setShowResetPasswordForm(true);
                 }}>Quên mật khẩu</span>
             </p>
-
             <br />
 
-            <Link to="/v1/api/auth/google">Login with GG</Link>
-
             {/* Other login options: Google or Facebook */}
-            {/* <ul className="login-option-container">
-                <li className="login-option-item">
-                    <img src={FacebookLogo} className="login-option-item__img" alt="Facebook logo" />
-                    Login with Facebook
-                </li>
-                <li className="login-option-item">
+            <ul className="login-option-container">
+                <li className="login-option-item btn btn-md btn-3" onClick={handleLogin}>
                     <img src={GoogleLogo} className="login-option-item__img" alt="Google logo" />
-                    Login with Google
+                    Đăng nhập với Google
                 </li>
-            </ul> */}
+            </ul>
         </>
     );
 }

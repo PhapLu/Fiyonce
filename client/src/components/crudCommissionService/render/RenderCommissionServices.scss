@@ -1,0 +1,51 @@
+.render-commission-services {
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -16px;
+        /* gutter size offset */
+        width: auto;
+    }
+
+    .my-masonry-grid_column {
+        padding-left: 20px;
+        /* gutter size */
+        background-clip: padding-box;
+    }
+
+    .images-layout-3 {
+        height: 220px;
+    }
+
+    .commission-service-container {
+        .commission-service-item {
+            margin-bottom: 28px;
+            padding: 12px;
+            border-radius: 8px;
+
+            .commission-service-item__image-container {
+                .image-item {
+                    width: 100%;
+
+                    .lazy-load-image-loaded {
+                        width: 100%;
+                    }
+
+                    &:nth-of-type(1) {
+                        // width: 100%;
+                        height: 220px;
+                    }
+
+                    &:nth-of-type(2),
+                    &:nth-of-type(3) {
+                        height: 108px;
+                    }
+
+                    img {
+                        width: 100%;
+                        // height: 100px !important;
+                    }
+                }
+            }
+        }
+    }
+}
