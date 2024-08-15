@@ -33,6 +33,12 @@ const TalentRequestSchema = new mongoose.Schema(
             default: "pending", // 'pending', 'approved', 'rejected'
             enum: ["pending", "approved", "rejected"],
         },
+        taxCode: {
+            type: String,
+        },
+        cccd: {
+            type: String,
+        },
         referralCode: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "ReferralCode",

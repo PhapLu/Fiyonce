@@ -20,7 +20,9 @@ class CommissionServiceService {
         const talent = await User.findById(talentId);
         if (!talent) throw new NotFoundError("Talent not found!");
         if (talent.role !== "talent")
-            throw new BadRequestError("User is not a talent!");
+            throw new AuthFailureError("User is not a talent!");
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         // 2. Validate request body
         const {
@@ -146,7 +148,8 @@ class CommissionServiceService {
         if (!service) throw new NotFoundError('Service not found');
         if (!service.movementId) throw new NotFoundError('Movement not found');
         if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
-
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
         const oldCategoryId = service.serviceCategoryId;
 
         try {
@@ -205,7 +208,9 @@ class CommissionServiceService {
         if (!service) throw new NotFoundError("Service not found");
         if (service.talentId.toString() !== talentId)
             throw new BadRequestError("You can only delete your service");
-
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+        
         // 2. Extract public IDs and delete files from Cloudinary
         const publicIds = service.artworks.map((artwork) =>
             extractPublicIdFromUrl(artwork)

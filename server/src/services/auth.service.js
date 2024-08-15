@@ -48,9 +48,9 @@ class AuthService {
     static signUp = async ({ fullName, email, password }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
-        // if (holderUser) {
-        //     throw new BadRequestError("Error: User already registered")
-        // }
+        if (holderUser) {
+            throw new BadRequestError("Error: User already registered")
+        }
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
