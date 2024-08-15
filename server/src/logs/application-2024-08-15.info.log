@@ -1,0 +1,25 @@
+2024-08-15 12:33:47::info::/v1/api/auth/users/signUp::b1a30e42-7c64-41d4-b363-8a07d111dd34::input-params ::POST::::{"fullName":"Quang Nguyen","email":"taichinhlcp@gmail.com","password":"123456789"}
+2024-08-15 12:34:13::info::/v1/api/auth/users/verifyOtp::2ea234ee-6f20-4167-aac1-c91a88af9da2::input-params ::POST::::{"email":"taichinhlcp@gmail.com","otp":"455630"}
+2024-08-15 12:34:13::error::/v1/api/auth/users/verifyOtp::2ea234ee-6f20-4167-aac1-c91a88af9da2::undefined - NaNms - Response: {"index":0,"code":11000,"keyPattern":{"email":1},"keyValue":{"email":"taichinhlcp@gmail.com"}}::{"message":"E11000 duplicate key error collection: Pastal_Phap.Users index: email_1 dup key: { email: \"taichinhlcp@gmail.com\" }"}
+2024-08-15 12:35:52::info::/v1/api/auth/users/signUp::1accee37-bda0-40aa-8431-e23698c3d268::input-params ::POST::::{"fullName":"Quang Nguyen","email":"taichinhlcp@gmail.com","password":"123456789"}
+2024-08-15 12:35:52::error::/v1/api/auth/users/signUp::1accee37-bda0-40aa-8431-e23698c3d268::403 - 1ms - Response: {"status":403,"now":1723700152961}::{"message":"Error: User already registered"}
+2024-08-15 12:40:01::info::/v1/api/auth/users/signUp::51cf9514-ef41-4a68-954e-329525fb702c::input-params ::POST::::{"fullName":"Phuc Nguyen","email":"dienmayphucnhat@gmail.com","password":"123456789"}
+2024-08-15 12:40:28::info::/v1/api/auth/users/verifyOtp::950a9f72-b42e-40ca-8986-df03b2e15d7b::input-params ::POST::::{"email":"dienmayphucnhat@gmail.com","otp":"358973"}
+2024-08-15 12:40:49::info::/v1/api/auth/users/login::69bc6b64-75af-4932-8b1a-7d2247dedcf7::input-params ::POST::::{"email":"dienmayphucnhat@gmail.com","password":"123456789"}
+2024-08-15 13:11:09::info::/v1/api/talentRequest/requestUpgradingToTalent::833141cd-9ce3-41ef-a01e-067e5f2f5d5c::input-params ::POST::::{}
+2024-08-15 13:11:10::error::/v1/api/talentRequest/requestUpgradingToTalent::833141cd-9ce3-41ef-a01e-067e5f2f5d5c::403 - 2ms - Response: {"status":403,"now":1723702270201}::{"message":"Please provide artwork files"}
+2024-08-15 13:11:25::info::/v1/api/talentRequest/requestUpgradingToTalent::36d20402-2058-480f-b5af-9ba588cb5586::input-params ::POST::::{}
+2024-08-15 13:15:10::info::/v1/api/talentRequest/requestUpgradingToTalent::51174d86-e8cf-4ec0-a6f1-d7d8a64f80c3::input-params ::POST::::{}
+2024-08-15 13:16:36::info::/v1/api/auth/users/login::4a37cfbd-1325-44cf-ac18-69458cdd1443::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-15 13:16:50::info::/v1/api/talentRequest/upgradeRoleToTalent/66bd9cf32d954f6442dd9088::0d9777ec-4589-4492-ab98-107dd85d66f8::input-params ::PATCH::::{}
+2024-08-15 13:16:51::error::/v1/api/talentRequest/upgradeRoleToTalent/66bd9cf32d954f6442dd9088::0d9777ec-4589-4492-ab98-107dd85d66f8::undefined - NaNms - Response: {}::{"message":"crypto is not defined"}
+2024-08-15 13:18:13::info::/v1/api/talentRequest/upgradeRoleToTalent/66bd9cf32d954f6442dd9088::c879f8ba-e89c-44ba-8ccf-bf7582b2e6dc::input-params ::PATCH::::{}
+2024-08-15 13:18:13::error::/v1/api/talentRequest/upgradeRoleToTalent/66bd9cf32d954f6442dd9088::c879f8ba-e89c-44ba-8ccf-bf7582b2e6dc::403 - 1ms - Response: {"status":403,"now":1723702693305}::{"message":"Request already approved"}
+2024-08-15 13:22:46::info::/v1/api/talentRequest/upgradeRoleToTalent/66bd9cf32d954f6442dd9088::23338a6f-820b-4983-aee1-05422c90dabb::input-params ::PATCH::::{}
+2024-08-15 13:24:56::info::/v1/api/talentRequest/requestUpgradingToTalent::4c0cb520-7221-4636-abd8-b00274acd5c3::input-params ::POST::::{}
+2024-08-15 13:25:37::info::/v1/api/auth/users/login::24dbada0-ec78-4e3b-baab-905f198ebb7f::input-params ::POST::::{"email":"dienmayphucnhat@gmail.com","password":"123456789"}
+2024-08-15 13:25:40::info::/v1/api/talentRequest/requestUpgradingToTalent::b3878709-8b84-4c37-b03d-d26718a09ba8::input-params ::POST::::{}
+2024-08-15 13:26:06::info::/v1/api/auth/users/login::f7cd6d18-3edb-474d-b986-302020c8c904::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-15 13:26:20::info::/v1/api/talentRequest/upgradeRoleToTalent/66bd9f6890f36fc54901a0c2::bdcffacf-c55e-4905-9c02-04a5a41ae41c::input-params ::PATCH::::{}
+2024-08-15 13:28:44::info::/v1/api/talentRequest/denyTalentRequest/66bd9f6890f36fc54901a0c2::abfa8396-90c1-4c06-84ad-43166b0d84ed::input-params ::PATCH::::{"rejectMessage":"Xin lui"}
+2024-08-15 13:33:00::info::/v1/api/talentRequest/denyTalentRequest/66bd9f6890f36fc54901a0c2::2a6607cb-65c1-41bb-b223-0524441a82a8::input-params ::PATCH::::{"rejectMessage":"Xin lui"}

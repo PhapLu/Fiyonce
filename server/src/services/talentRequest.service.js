@@ -1,4 +1,5 @@
 import TalentRequest from "../models/talentRequest.model.js"
+import crypto from 'crypto'
 import { User } from "../models/user.model.js"
 import ReferralCode from "../models/referralCode.model.js"
 import {
@@ -23,8 +24,12 @@ class TalentRequestService {
 
         // 2. Validate request body
         let taxCode = ''
+        let cccd = ''
         if(req.body.taxCode){
             taxCode = req.body.taxCode
+        }
+        if(req.body.cccd){
+            cccd = req.body.cccd
         }
         const { stageName, jobTitle, portfolioLink, referralCode } = req.body
         if (!req.files || !req.files.files)
@@ -69,6 +74,8 @@ class TalentRequestService {
                 portfolioLink,
                 artworks,
                 taxCode,
+                referralCode,
+                cccd
             })
             await newTalentRequest.save()
 
@@ -231,12 +238,12 @@ class TalentRequestService {
             return {
                 success: true,
                 message: "Request denied successfully",
+                user: foundUser
             }
         } catch (error) {
             console.log("Failed:::", error)
             throw new Error("Email service error or image deletion failed")
         }
-
     }
 
     static readTalentRequestsByStatus = async (adminId, status) => {

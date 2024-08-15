@@ -38,13 +38,19 @@ const UserSchema = new Schema(
         },
         badges: [{ 
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
-            count: { type: Number, default: 0 }
+            count: { type: Number, default: 0 },
+            progress: [{ 
+                criterion: { type: String, default: "" },
+                progress: {type: Number, default: 0},
+                isComplete: { type: Boolean, default: false }
+            }],
+            awardedAt: { type: Date, default: Date.now }
         }],
-        badgeProgress: [{
-            badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
-            progress: { type: Object, default: {} },  // Change Map to Object
-            completed: { type: Boolean, default: false }
-        }],
+        // badgeProgress: [{
+        //     badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
+        //     progress: { type: Object, default: {} },  // Change Map to Object
+        //     completed: { type: Boolean, default: false }
+        // }],
         referralCode: { type: String},
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },

@@ -10,10 +10,11 @@ const badgeSchema = new mongoose.Schema({
     level: { type: String, enum: ["easy", "medium", "hard"], required: true },
     type: {
         type: String,
-        enum: ["platform_contributor", "commission_count", "achievement"],
+        enum: ["platform_contributor", "commission_count", "other"],
+        default: "other",
         required: true,
     },
-    criteria: { type: Map, of: Number, required: true },
+    criteria: { type: String, required: true },
 },{
     collection: COLLECTION_NAME,
     timestamps: true
