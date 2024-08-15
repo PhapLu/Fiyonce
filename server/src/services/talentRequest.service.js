@@ -145,6 +145,9 @@ class TalentRequestService {
             updatedUser.taxCode.isVerified = true
             updatedUser.taxCode.message = 'Bạn đã xác minh mã số thuế'
         }
+        if(request.cccd){
+            updatedUser.cccd = request.cccd
+        }
         updatedUser.save()
 
         // 6. Exclude password from user object

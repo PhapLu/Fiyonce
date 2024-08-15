@@ -34,7 +34,10 @@ const TalentRequestSchema = new mongoose.Schema(
             enum: ["pending", "approved", "rejected"],
         },
         taxCode: {
-            type: String
+            type: String,
+        },
+        cccd: {
+            type: String,
         },
         referralCode: {
             type: mongoose.Schema.Types.ObjectId,

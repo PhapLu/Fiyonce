@@ -64,6 +64,10 @@ const UserSchema = new Schema(
             isVerified: { type: Boolean, default: false },
             message: { type: String, default: "" }
         },
+        cccd: {
+            type: String,
+            default: ''
+        },
         accessToken: { type: String },
         qrCode: { type: String }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
