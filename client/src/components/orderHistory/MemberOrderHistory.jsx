@@ -237,11 +237,10 @@ export default function MemberOrderHistory() {
                                     {order?.isDirect ? (
                                         <td>
                                             {`đ${formatCurrency(
-                                                order?.commissionServiceId
-                                                    ?.price
+                                                order?.minPrice
                                             )}` ||
                                                 `đ${formatCurrency(
-                                                    order?.price
+                                                    order?.maxPrice
                                                 )}` ||
                                                 "-"}
                                         </td>
@@ -253,7 +252,7 @@ export default function MemberOrderHistory() {
                                                 order?.maxPrice
                                             )}` ||
                                                 `đ${formatCurrency(
-                                                    order?.price
+                                                    order?.proposalId?.minPrice
                                                 )}` ||
                                                 "-"}
                                         </td>

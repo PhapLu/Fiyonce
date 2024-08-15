@@ -2,9 +2,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Contexts
 import { useAuth } from "../../../contexts/auth/AuthContext";
+import ZoomImage from "../../zoomImage/ZoomImage";
 
 // Components
 import RenderProposals from "../../crudProposal/render/RenderProposals";
@@ -18,6 +21,9 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
         return;
     }
     const { userInfo } = useAuth();
+
+    const [showZoomImage, setShowZoomImage] = useState(false);
+    const [zoomedImageSrc, setZoomedImageSrc] = useState();
 
     const isOrderOwner = commissionOrder.memberId._id === userInfo._id;
     const isTalentChosen = commissionOrder.talentChosenId?._id === userInfo._id;
@@ -35,11 +41,12 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
             document.removeEventListener("mousedown", handler);
         };
     }, [setShowRenderCommissionOrder, setOverlayVisible]);
+
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
 
     return (
         <div className="render-commission-order modal-form type-2" ref={renderCommissionServiceRef} onClick={(e) => { e.stopPropagation() }}>
-            <Link to="/help_center" className="form__help" target="_blank">
+            <Link to="/help-center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg> Trợ giúp
@@ -60,15 +67,34 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         </div>
                     </Link>
                 </div>
-                {commissionOrder?.talentChosenId ? (
-                    <div className="status approved mt-8 mb-8">
-                        <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>
-                    </div>
-                ) : (
-                    <div className="status pending mt-8 mb-8">
-                        <span className="highlight-text fs-12">&nbsp;{commissionOrder.talentsApprovedCount} họa sĩ đã ứng</span>
-                    </div>
-                )}
+                {commissionOrder?.status === "pending"
+                    ? (<div className="status pending mt-8 mb-8">
+                        <span className="highlight-text fs-12"> &nbsp;{commissionOrder.talentsApprovedCount || 0} họa sĩ đã ứng</span>
+                    </div>)
+                    : commissionOrder?.status === "approved"
+                        ? "Đang đợi bạn thanh toán"
+                        : commissionOrder?.status === "rejected"
+                            ? "Họa sĩ đã từ chối"
+                            : commissionOrder?.status === "confirmed"
+                                ? (<div className="status approved mt-8 mb-8">
+                                    <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                                </div>)
+                                : commissionOrder?.status === "canceled"
+                                    ? (<div className="status approved mt-8 mb-8">
+                                        <span className="fs-12"> &nbsp;Khách hàng đã hủy đơn</span>
+                                    </div>)
+                                    : commissionOrder?.status === "in_progress"
+                                        ? "Họa sĩ đang thực hiện"
+                                        : commissionOrder?.status === "finished"
+                                            ?
+                                            (
+                                                <div className="status approved mt-8 mb-8">
+                                                    <span className="fs-12"> &nbsp;Đã hoàn tất đơn hàng</span>
+                                                </div>
+                                            )
+                                            : commissionOrder?.status === "under_processing"
+                                                ? "Admin đang xử lí"
+                                                : ""}
                 {
                     commissionOrder.isDirect ? (
                         <>
@@ -123,7 +149,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         Vui lòng bật thông báo Gmail để cập nhật thông tin mới nhất về đơn hàng của bạn.
                     </p>
                 </div>
-            </div>
+            </div >
             <div className="modal-form--right">
                 <h2 className="form__title">Thông tin đơn hàng</h2>
                 <div className="form-field">
@@ -137,7 +163,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         {commissionOrder.references.map((reference, index) => {
                             return (
                                 <div className="reference-item" key={index}>
-                                    <img src={resizeImageUrl(reference, 350)} alt="" />
+                                    <LazyLoadImage onClick={() => { setShowZoomImage(true); setZoomedImageSrc(reference) }} src={resizeImageUrl(reference, 350)} alt="" effect="blur"/>
                                 </div>
                             );
                         })}
@@ -157,7 +183,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                 <div className="form-field">
                     <label htmlFor="fileFormats" className="form-field__label">Định dạng file</label>
                     <span>{commissionOrder.fileFormats?.length > 0 ? (
-                        commissionOrder.fileFormats.map((fileFormat, index) => { return (<span key={index}>{fileFormat}</span>) })
+                        commissionOrder.fileFormats.join(", ")
                     ) : (
                         "Không yêu cầu"
                     )}</span>
@@ -191,8 +217,9 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         )
                     }
                 </div>
-
             </div>
+            {showZoomImage && <ZoomImage src={zoomedImageSrc} setShowZoomImage={setShowZoomImage} />}
         </div >
+
     )
 }

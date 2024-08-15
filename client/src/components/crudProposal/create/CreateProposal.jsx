@@ -95,19 +95,16 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        if (type === 'checkbox') {
-            setInputs((prevState) => ({
-                ...prevState,
-                [name]: checked
-            }));
-        } else {
-            setInputs((prevState) => ({
-                ...prevState,
-                [name]: value
-            }));
-        }
+
+        setInputs((prevState) => ({
+            ...prevState,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+
+        // Reset error state for the field
         setErrors((values) => ({ ...values, [name]: '' }));
     };
+
 
     const fetchProfileArtworks = async () => {
         try {
@@ -146,7 +143,6 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
         };
     }, []);
 
-
     const validateInputs = () => {
         let errors = {};
 
@@ -183,7 +179,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             }
         }
 
-       
+
 
         return errors;
     }
@@ -279,7 +275,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                                         src={
                                             portfolio instanceof File
                                                 ? URL.createObjectURL(portfolio)
-                                                : portfolio.url
+                                                : portfolio.url || placeholderImage
                                         }
                                         alt={`portfolio ${index + 1}`}
                                     />
@@ -296,7 +292,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                                     src={
                                         portfolio instanceof File
                                             ? URL.createObjectURL(portfolio)
-                                            : portfolio
+                                            : portfolio.url || placeholderImage
                                     }
                                     alt={`portfolio ${index + 1}`}
                                 />
@@ -307,7 +303,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                 <br />
                 <h4>Phạm vi công việc: </h4>
                 <div>
-                    <span className="w-100">{inputs?.scope}</span>
+                    <span className="w-100">{inputs?.scope || "Mô tả phạm vi công việc"}</span>
                 </div>
             </div>
 
@@ -317,7 +313,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                 <div className="form-field">
                     <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
                     <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
-                    <textarea type="text" name="scope" value={inputs?.scope || "Nhập mô tả"} onChange={handleChange} className="form-field__input"></textarea>
+                    <textarea type="text" name="scope" value={inputs?.scope || ""} placeholder="Nhập mô tả" onChange={handleChange} className="form-field__input"></textarea>
                     {errors.scope && <span className="form-field__error">{errors.scope}</span>}
                 </div>
 
@@ -373,15 +369,25 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                                 {
                                     termOfServices?.map((termOfService, index) => {
                                         return (
-                                            <div className="mb-8 " key={index}>
+                                            <div className="mb-8" key={index}>
                                                 <label className="flex-align-center w-100">
-                                                    <input type="radio" name="termOfServiceId" value={termOfService._id} onChange={handleChange} />
+                                                    <input
+                                                        type="radio"
+                                                        name="termOfServiceId"
+                                                        value={termOfService._id}
+                                                        checked={inputs.termOfServiceId === termOfService._id}
+                                                        onChange={(e) => {
+                                                            handleChange(e);
+                                                            setSelectedTermOfService(termOfService); // Update the selected term of service
+                                                        }}
+                                                    />
                                                     {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
                                                 </label>
-                                            </div>)
-                                    }
-                                    )
+                                            </div>
+                                        );
+                                    })
                                 }
+
                                 {selectedTermOfService?.content &&
                                     <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
                                 }
@@ -390,6 +396,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                         </div>
                     )
                 }
+
             </div>
 
             <div className="form__submit-btn-container">

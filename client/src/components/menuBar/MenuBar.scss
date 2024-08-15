@@ -10,6 +10,12 @@
     background-color: var(--white-3-color);
     box-shadow: var(--box-shadow-2);
 
+    img {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
+
     .submenu {
         width: 100%;
 
@@ -53,6 +59,7 @@
         display: flex;
         align-items: center;
         padding: 8px;
+        transition: 0.1s;
 
         .dropdown-menu-item__ic {
             object-fit: cover;

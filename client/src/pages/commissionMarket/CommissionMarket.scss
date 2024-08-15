@@ -17,7 +17,7 @@
         }
 
         .commission-market__header--left {
-            width: 40%;
+            width: 45%;
         }
 
         .commission-market__header--right {
@@ -28,6 +28,19 @@
                 height: auto;
                 object-fit: cover;
             }
+        }
+    }
+
+    .create-commission-order {
+        font-size: 1.6rem;
+        font-weight: bold;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            color: white !important;
+            stroke: white !important;
+            fill: white !important;
         }
     }
 

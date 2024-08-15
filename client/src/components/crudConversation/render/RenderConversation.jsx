@@ -14,6 +14,7 @@ export default function RenderConversation() {
     }
     const { setModalInfo } = useModal();
     const [showMediaOptions, setShowMediaOptions] = useState(false);
+    const [isMessageSending, setIsMessageSending] = useState(true);
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [media, setMedia] = useState([]);
@@ -89,7 +90,8 @@ export default function RenderConversation() {
     const handleSendMessage = async () => {
         const fd = createFormData(inputs, "media", media);
         setIsSendMessageLoading(true);
-
+        setInputs({ content: '' });
+        setMedia([]);
 
         try {
             console.log("PASSED CONVERSATION DATA")
@@ -112,13 +114,13 @@ export default function RenderConversation() {
             setConversationId(response.data.metadata.conversation._id)
             // Add the new message immediately
 
-            socket.emit('sendMessage', 
-            {
-                ...newMessage,
-                senderId: userInfo?._id,
-                receiverId: conversation?.otherMember?._id
-            }
-                
+            socket.emit('sendMessage',
+                {
+                    ...newMessage,
+                    senderId: userInfo?._id,
+                    receiverId: conversation?.otherMember?._id
+                }
+
                 // media: newMessage.media
             );
         } catch (error) {
@@ -199,6 +201,16 @@ export default function RenderConversation() {
                     <div className="mt-32 text-align-center">Bắt đầu cuộc trò chuyện với {conversation?.otherMember?.fullName}.</div>
                 )}
                 <div ref={messagesEndRef} />
+                {isSendMessageLoading && (
+                    <div className="message-item right mt-8 mb-16">
+                        <div className="loading-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="send-message flex-justify-space-between flex-align-center">
                 <div className="send-message--left flex-align-center mr-8">

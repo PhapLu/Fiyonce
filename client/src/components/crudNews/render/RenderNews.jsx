@@ -36,7 +36,8 @@ export default function RenderNews() {
         error,
         isError,
         isLoading,
-    } = useQuery("fetchNewsById", fetchNewsById);
+    } = useQuery(["fetchNewsById", newsId], fetchNewsById);
+
 
     return (
         <>

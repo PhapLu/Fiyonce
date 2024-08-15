@@ -74,7 +74,7 @@ class ConversationService {
         //2. Read conversations
         const conversations = await Conversation.find({
             "members.user": userId,
-        }).populate("members.user", "fullName avatar");
+        }).populate("members.user", "fullName avatar").sort({ updatedAt: -1 });;
         const formattedConversations = conversations.map((conversation) => {
             let lastMessage =
                 conversation.messages[conversation.messages.length - 1];
@@ -101,16 +101,16 @@ class ConversationService {
             const otherMember = await User.findById(otherMemberId);
             if (!user) throw new AuthFailureError("User not found");
             if (!otherMember) throw new BadRequestError("Other member not found");
-    
+
             // 2. Read conversation
             const conversation = await Conversation.findOne({
                 "members.user": {
                     $all: [userId, otherMemberId],
                 },
             }).populate("members.user", "fullName avatar");
-    
+
             if (!conversation) throw new NotFoundError("Conversation not found");
-    
+
             // 3. Mark all messages from otherMember as seen
             let updated = false;
             conversation.messages.forEach(message => {
@@ -119,17 +119,17 @@ class ConversationService {
                     updated = true;
                 }
             });
-    
+
             if (updated) {
                 await conversation.save();
             }
-    
+
             // 4. Format conversation
             const sortedMessages = conversation.messages
                 .sort((a, b) => b.createdAt - a.createdAt)
-                .slice(0, 12)
+                .slice(0, 10)
                 .reverse(); // Reverse to maintain ascending order
-    
+
             const formattedConversation = {
                 _id: conversation._id,
                 messages: sortedMessages,
@@ -139,50 +139,54 @@ class ConversationService {
                     avatar: otherMember.avatar,
                 },
             };
-    
+
+            console.log("ABC")
+            console.log(formattedConversation)
+
             return {
                 conversation: formattedConversation,
             };
-    
+
         } catch (error) {
             console.error("Error in readConversationWithOtherMember:", error);
             throw new Error("Failed to read conversation");
         }
     };
-    
-    
-    static readConversation = async (userId, conversationId) => {
-        //1. Check conversation, user
-        const user = await User.findById(userId);
-        if (!user) throw new AuthFailureError("User not found");
 
-        const conversation = await Conversation.findById(conversationId)
-            .populate("members.user", "fullName avatar")
-            .populate("messages.senderId", "fullName avatar");
 
-        if (!conversation) throw new NotFoundError("Conversation not found");
+    // static readConversation = async (userId, conversationId) => {
 
-        // Sort and limit the messages to the latest 12
-        const sortedMessages = conversation.messages
-            .sort((a, b) => b.createdAt - a.createdAt)
-            .slice(0, 12)
-            .reverse(); // Reverse to maintain ascending order
+    //     //1. Check conversation, user
+    //     const user = await User.findById(userId);
+    //     if (!user) throw new AuthFailureError("User not found");
 
-        let formattedConversation;
-        const otherMember = conversation.members.find(
-            (member) => member.user._id.toString() !== userId
-        );
+    //     const conversation = await Conversation.findById(conversationId)
+    //         .populate("members.user", "fullName avatar")
+    //         .populate("messages.senderId", "fullName avatar");
 
-        formattedConversation = {
-            _id: conversation._id,
-            messages: sortedMessages,
-            otherMember: otherMember.user,
-        };
+    //     if (!conversation) throw new NotFoundError("Conversation not found");
 
-        return {
-            conversation: formattedConversation,
-        };
-    };
+    //     // Sort and limit the messages to the latest 12
+    //     const sortedMessages = conversation.messages
+    //         .sort((a, b) => b.createdAt - a.createdAt)
+    //         .slice(0, 12)
+    //         .reverse(); // Reverse to maintain ascending order
+
+    //     let formattedConversation;
+    //     const otherMember = conversation.members.find(
+    //         (member) => member.user._id.toString() !== userId
+    //     );
+
+    //     formattedConversation = {
+    //         _id: conversation._id,
+    //         messages: sortedMessages,
+    //         otherMember: otherMember.user,
+    //     };
+
+    //     return {
+    //         conversation: formattedConversation,
+    //     };
+    // };
 
     static sendMessage = async (userId, conversationId, req) => {
         try {
@@ -247,9 +251,9 @@ class ConversationService {
                 media,
             });
             await conversation.save();
-            
+
             //5. Update seenBy array
-            conversation.seenBy.concat({ userId })
+            // conversation.seenBy.concat({ userId })
 
             // 5. Format conversation
             const formattedConversation = {

@@ -202,8 +202,8 @@ export default function RenderPost() {
 
                         <hr className="mt-16 mb-16" />
                         {post?.movementId?.title && <button className="btn btn-4 br-16 mr-8">{post?.movementId?.title}</button>}
-                        {post.postCategoryId?.title && <Link to={`/users/${post?.talentId._id}/profile-posts`} className="btn btn-4 br-16 mr-8">{post?.postCategoryId?.title}</Link>}
-                        <p>{post.description}</p>
+                        {post?.postCategoryId?.title && <Link to={`/users/${post?.talentId._id}/profile-posts`} className="btn btn-4 br-16 mr-8">{post?.postCategoryId?.title}</Link>}
+                        <p>{post?.description}</p>
                         <br />
                         <span>Đăng tải vào {formatDate(post.createdAt)}</span>
                         <br />

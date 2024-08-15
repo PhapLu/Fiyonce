@@ -3,6 +3,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { User } from "../models/user.model.js";
 import axios from "axios";
 import { generateToken } from "../utils/token.util.js";
+import { access } from "fs";
 
 // Set axios timeout
 axios.defaults.timeout = 10000; // 10 seconds
@@ -15,9 +16,12 @@ passport.use(
             callbackURL: "http://localhost:3000/v1/api/auth/google/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
+            console.log("SDD")
+            console.log(accessToken)
+            console.log(profile)
             try {
                 // Find or create user in your database
-                let user = await User.findOne({ googleId: profile.id });
+                let user = await User.findOne({ email: profile.emails[0].value });
                 if (!user) {
                     user = new User({
                         googleId: profile.id,

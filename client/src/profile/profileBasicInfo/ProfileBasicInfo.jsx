@@ -69,6 +69,7 @@ export default function ProfileBasicInfo() {
             errors.fullName = 'Tên không được chứa kí tự đặc biệt';
         }
 
+
         return errors;
     };
 
@@ -84,11 +85,14 @@ export default function ProfileBasicInfo() {
             return;
         }
 
+
         try {
             // Convert the date format to yyyy-mm-dd for backend compatibility
             if (inputs.dob) {
                 inputs.dob = inputs.dob.split('/').reverse().join('-');
             }
+
+            console.log(inputs)
 
             const userId = profileInfo._id;
             const response = await apiUtils.patch(`/user/updateProfile/${userId}`, inputs);

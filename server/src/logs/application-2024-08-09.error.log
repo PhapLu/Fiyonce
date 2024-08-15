@@ -7,3 +7,11 @@
 2024-08-09 09:46:28::error::/v1/api/order/createOrder::3698ef5d-3fac-44c7-8964-b3615b804284::undefined - NaNms - Response: {}::{"message":"commissionService.findById is not a function"}
 2024-08-09 09:48:08::error::/v1/api/order/createOrder::39a2b6f3-de57-447d-806d-05f59be10dc2::undefined - NaNms - Response: {}::{"message":"commissionService.findById is not a function"}
 2024-08-09 09:49:06::error::/v1/api/post/readPost/report::6cedee2c-3907-40ff-bf1c-2cbdab36bcc4::403 - 1ms - Response: {"status":403,"now":1723171746654}::{"message":"Xem tác phẩm không thành công"}
+2024-08-09 08:24:48::error::/v1/api/user/me::a7ae8319-61df-437e-9248-f118fa54ad7f::403 - 1ms - Response: {"status":403,"now":1723166688550}::{"message":"Access token missing"}
+2024-08-09 08:25:02::error::/v1/api/auth/users/login::782d6130-cd9b-4ad7-a6e6-8fbc1df4f849::401 - 0ms - Response: {"status":401,"now":1723166702616}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-09 08:25:10::error::/v1/api/auth/users/login::713d4283-a635-4060-a13d-cdc581b33081::401 - 0ms - Response: {"status":401,"now":1723166710201}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-09 19:44:53::error::/v1/api/user/me::e0884b31-e775-485f-b904-f799bed84817::403 - 1ms - Response: {"status":403,"now":1723207493998}::{"message":"Access token missing"}
+2024-08-09 19:45:00::error::/v1/api/user/me::404cd5db-b19a-483e-8853-ed22a14d84ac::403 - 0ms - Response: {"status":403,"now":1723207500816}::{"message":"Access token missing"}
+2024-08-09 19:45:05::error::/v1/api/auth/users/login::3684cbbf-42fb-445e-9943-b5a3517d6dd7::403 - 1ms - Response: {"status":403,"now":1723207505876}::{"message":"Tài khoản chưa được đăng kí"}
+2024-08-09 19:45:08::error::/v1/api/auth/users/login::7a58f12e-1083-4b67-88b0-ade3457ba36f::401 - 0ms - Response: {"status":401,"now":1723207508510}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-09 20:38:08::error::/v1/api/user/readUserProfile/66a73d101c548b7a8f1efcd5::86275c62-ce96-47ad-a0f9-711765c476a0::404 - 0ms - Response: {"status":404,"now":1723210688423}::{"message":"User not found"}

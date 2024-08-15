@@ -161,7 +161,7 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
 
     return (
         <div className="update-commission-tos modal-form type-2" ref={updateCommissionRef} onClick={(e) => { e.stopPropagation() }}>
-            <Link to="/help_center" className="form__help" target="_blank">
+            <Link to="/help-center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg> Trợ giúp
@@ -202,15 +202,27 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                             <div className="form-field">
                                 <label htmlFor="content" className="form-field__label">Nội dung</label>
                                 <span name="content" className="form-field__annotation">Điền nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                                {/* <CKEditor
+                                <CKEditor
                                     editor={ClassicEditor}
                                     data={inputs?.content}
                                     onChange={handleEditorChange}
                                     config={{
-                                        toolbar: ['bold', 'italic', 'underline', 'bulletedList', 'numberedList', 'emoji'],
-                                        emoji: { toolbar: true, shortname: true }
+                                        plugins: [Essentials, ImageInsert,
+                                            ImageResize,
+                                            ImageStyle,
+                                            ImageToolbar,
+                                            ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
+                                        toolbar: {
+                                            items: [
+                                                'bold', 'italic', '|',
+                                                'fontSize', 'fontFamily', 'fontColor', '|'
+                                            ]
+                                        },
+                                        mention: {
+                                            // Mention configuration
+                                        },
                                     }}
-                                /> */}
+                                />
                                 {errors.content && <span className="form-field__error">{errors.content}</span>}
                             </div>
                             <div className="form-field">

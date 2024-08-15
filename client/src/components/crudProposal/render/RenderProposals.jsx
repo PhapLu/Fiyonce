@@ -23,9 +23,9 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
         return;
     }
 
-    const {setOtherMember} = useConversation();
+    const { setOtherMember } = useConversation();
 
-    const [proposal, setProposal] = useState();
+    const [proposalId, setProposalId] = useState();
     const [showRenderProposal, setShowRenderProposal] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(false);
 
@@ -111,9 +111,9 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
     }, [setShowRenderProposals, setOverlayVisible]);
 
     return (
-        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposal={proposal} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal} /> : (
+        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposalId={proposalId} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal} /> : (
             <div className="render-proposals modal-form type-2" ref={renderProposalsRef} onClick={(e) => { e.stopPropagation() }}>
-                <Link to="/help_center" className="form__help" target="_blank">
+                <Link to="/help-center" className="form__help" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                     </svg> Trợ giúp
@@ -140,7 +140,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                             <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
                         </div>
                     ) : (
-                        <div className="status pending">
+                        <div className="status pending mt-8">
                             <span className="highlight-text">&nbsp;{commissionOrder.talentsApprovedCount} họa sĩ đã ứng</span>
                         </div>
                     )}
@@ -230,10 +230,10 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                         })}
                                     </div>
                                     <div>
-                                        <button className="btn btn-2 btn-md" onClick={() => { setProposal(proposal); setShowRenderProposal(true) }}>
+                                        <button className="btn btn-2 btn-md" onClick={() => { setProposalId(proposal?._id); setShowRenderProposal(true) }}>
                                             Xem hợp đồng
                                         </button>
-                                        <button className="btn btn-3 btn-md" onClick={() => {setOtherMember(proposal?.talentId)}}>
+                                        <button className="btn btn-3 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>
                                             Liên hệ
                                         </button>
                                     </div>

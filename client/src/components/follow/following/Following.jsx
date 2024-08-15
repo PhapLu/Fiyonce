@@ -114,7 +114,7 @@ export default function Following({ following, setShowFollowing, setProfileInfo,
 
     return (
         <div className="modal-form type-3 following" ref={followingRef} onClick={(e) => { e.stopPropagation() }}>
-            <h3 className="form__title">Người theo dõi</h3>
+            <h3 className="form__title">Đang theo dõi</h3>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowFollowing(false);
                 setOverlayVisible(false);

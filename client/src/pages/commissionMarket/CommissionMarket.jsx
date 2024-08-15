@@ -7,7 +7,6 @@ import Masonry from 'react-masonry-css';
 import CreateOrder from "../../components/crudCommissionOrder/create/CreateCommissionOrder.jsx";
 import RenderCommissionOrder from "../../components/crudCommissionOrder/render/RenderCommissionOrder.jsx";
 import UpdateCommissionOrder from "../../components/crudCommissionOrder/update/UpdateCommissionOrder.jsx";
-
 import RenderProposals from "../../components/crudProposal/render/RenderProposals.jsx";
 
 // Contexts
@@ -24,6 +23,7 @@ import CommissionMarketBg from "../../assets/img/commission-market-bg.png"
 import "./CommissionMarket.scss";
 import CreateProposal from "../../components/crudProposal/create/CreateProposal.jsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+
 
 export default function CommissionMarket() {
     const breakpointColumnsObj = {
@@ -124,19 +124,17 @@ export default function CommissionMarket() {
                         <h1 className="page__title">Chợ commission</h1>
                         <br />
                         <hr />
-                        <h3>Fiyonce ở đây để kết nối ý tưởng của các bạn với hơn <span className="highlight-text">10.000+</span> họa sĩ tài năng trên cả nước, hỗ trợ thanh toán an toàn và vận chuyển thuận lợi, đảm bảo lợi ích giữa khách hàng và họa sĩ.</h3>
-                        <p>
-                            <span>#digital art</span>
-                            <span>#digital art</span>
-                            <span>#digital art</span>
-                            <span>#digital art</span>
+                        <h3 className="fs-20">Pastal ở đây để kết nối ý tưởng của các bạn với hơn <span className="highlight-text fs-20">1.000+</span> họa sĩ tài năng trên cả nước, hỗ trợ thanh toán an toàn và vận chuyển thuận lợi, đảm bảo lợi ích giữa khách hàng và họa sĩ.</h3>
+                        <p className="fs-18">
+                            #art_commission &nbsp;#digital_art &nbsp;#vẽ_tranh_theo_yêu_cầu
                         </p>
                         <br />
-                        <button className="btn btn-2 btn-lg" onClick={handleOpenCreateCommissionOrder}>
+                        <button className="btn btn-2 btn-lg create-commission-order" onClick={handleOpenCreateCommissionOrder}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
                                 <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
                             </svg>
-                            Đăng yêu cầu</button>
+                            Đăng yêu cầu
+                        </button>
                     </div>
                     <div className="commission-market__header--right">
                         <LazyLoadImage src={CommissionMarketBg} alt="" className="commission-market__bg" effect="blur" />
@@ -258,7 +256,7 @@ export default function CommissionMarket() {
                                                 if (index === 2 && indirectOrder?.references?.length > 3) {
                                                     return (
                                                         <div key={index} className="reference-item">
-                                                            <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur"/> {/* Use resizeImageUrl here */}
+                                                            <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur" /> {/* Use resizeImageUrl here */}
                                                             <div className="reference-item__overlay">
                                                                 +{indirectOrder?.references?.length - 3}
                                                             </div>
@@ -267,7 +265,7 @@ export default function CommissionMarket() {
                                                 }
                                                 return (
                                                     <div className="reference-item" key={index}>
-                                                        <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur"/>
+                                                        <LazyLoadImage src={resizeImageUrl(reference, 250)} alt="" effect="blur" />
                                                     </div>
                                                 );
                                             })}

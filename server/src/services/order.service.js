@@ -21,30 +21,34 @@ class OrderService {
     static createOrder = async (userId, req) => {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
+        const fileFormats = req.body.fileFormats.split(",");
+        req.body.fileFormats = fileFormats;
         const body = req.body;
-        const { isDirect, talentChosenId, commissionServiceId } = body;
+
+
+        const { isDirect, commissionServiceId } = body;
         const commissionService = await CommissionService.findById(
             commissionServiceId
         );
-        
-        //2. Check isDirect of order
+
         let talent = null;
+
+        //2. Check isDirect of order
         if (isDirect == 'true') {
             //direct order
-            talent = await User.findById(talentChosenId);
             const service = await CommissionService.findById(
                 commissionServiceId
             );
+            talent = await User.findById(service.talentId)
 
-            if (!talent) throw new BadRequestError("Talent not found!");
+            console.log("TALENT")
+            console.log(talent)
+
+
             if (!service)
                 throw new BadRequestError("commissionService not found!");
-            if (talent.role != "talent")
-                throw new AuthFailureError("He/She is not a talent!");
-            if (talent._id == userId)
-                throw new BadRequestError("You cannot choose yourself!");
             body.isDirect = true;
-            body.talentChosenId = talentChosenId;
+            body.talentChosenId = service.talentId;
             body.minPrice = commissionService.minPrice;
             body.commissionServiceId = commissionServiceId;
         } else {
@@ -78,9 +82,10 @@ class OrderService {
                 ...body,
             });
             await order.save();
+            console.log(order)
 
             //5. Send email to user
-            if(order.isDirect == true && talentChosenId !== null){
+            if (isDirect == 'true' && talent?.email) {
                 try {
                     const subject = "";
                     const subjectMessage = "";
@@ -96,6 +101,7 @@ class OrderService {
                         template
                     );
                 } catch (error) {
+                    console.log(error)
                     throw new BadRequestError("Email service error");
                 }
             }
@@ -160,6 +166,8 @@ class OrderService {
         if (oldOrder.memberId.toString() !== userId)
             throw new AuthFailureError("You can update only your order");
 
+        const fileFormats = req.body.fileFormats.split(",");
+        req.body.fileFormats = fileFormats;
         //2. Check order status
         if (oldOrder.status != "pending")
             throw new BadRequestError("You cannot update order on this stage!");
@@ -193,8 +201,8 @@ class OrderService {
 
             //4. Validate body and merge existing service fields with req.body to ensure fields not provided in req.body are retained
             const { memberId, talentChosenId, ...filteredBody } = req.body;
-            const updatedFields =  { ...oldOrder.toObject(), ...filteredBody };
-            
+            const updatedFields = { ...oldOrder.toObject(), ...filteredBody };
+
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
@@ -221,8 +229,9 @@ class OrderService {
         //2. Get orders
         let orders;
         try {
-            orders = await Order.find({ memberId: clientId })
+            orders = await Order.find({ memberId: clientId, isMemberArchived: false })
                 .populate("talentChosenId", "stageName avatar")
+                .populate("memberId", "fullName avatar")
                 .populate("commissionServiceId", "price title");
         } catch (error) {
             console.error("Error populating orders:", error);
@@ -390,8 +399,8 @@ class OrderService {
                 },
             ]);
 
-            return { 
-                talentOrderHistory: orders 
+            return {
+                talentOrderHistory: orders
             };
         } catch (error) {
             console.error("Error fetching orders by talent:", error);

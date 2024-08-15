@@ -1,0 +1,444 @@
+2024-08-12 07:45:21::error::/v1/api/post/readPost/google-test::9094d8aa-e418-458b-90ca-cd7d11512164::403 - 1ms - Response: {"status":403,"now":1723423521204}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 07:46:54::error::/favicon.ico::9d96da35-232f-47e1-945a-fe91b85de94e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-12 07:50:01::error::/v1/api/user/me::a223e096-5549-49e8-986d-6685bd0f671f::403 - 0ms - Response: {"status":403,"now":1723423801770}::{"message":"Access token missing"}
+2024-08-12 07:50:26::error::/v1/api/user/me::7411ff2d-1265-4014-aba9-92374fe1fe40::403 - 0ms - Response: {"status":403,"now":1723423826856}::{"message":"Access token missing"}
+2024-08-12 07:50:38::error::/v1/api/user/me::560a6e82-52c1-43ff-bba1-848c212184e2::403 - 0ms - Response: {"status":403,"now":1723423838720}::{"message":"Access token missing"}
+2024-08-12 07:51:25::error::/v1/api/user/me::6e27a8e3-2c38-4072-9694-046380ae1ac9::403 - 0ms - Response: {"status":403,"now":1723423885916}::{"message":"Access token missing"}
+2024-08-12 07:51:30::error::/v1/api/user/me::891c6559-ceb7-4f26-b5c4-5969c623ebbf::403 - 0ms - Response: {"status":403,"now":1723423890526}::{"message":"Access token missing"}
+2024-08-12 07:59:43::error::/v1/api/user/me::3e77f8e6-cdf0-4b54-ab28-e0eb8e3e32a5::403 - 0ms - Response: {"status":403,"now":1723424383244}::{"message":"Access token missing"}
+2024-08-12 08:05:21::error::/v1/api/user/me::fbb725db-5056-4864-9305-12b634bb63b7::403 - 0ms - Response: {"status":403,"now":1723424721893}::{"message":"Access token missing"}
+2024-08-12 08:59:55::error::/v1/api/user/me::1ba1e3bf-eccf-4cab-ad10-eb940c16832e::403 - 0ms - Response: {"status":403,"now":1723427995851}::{"message":"Access token missing"}
+2024-08-12 09:00:07::error::/v1/api/user/me::94a7a298-cb5f-4786-8da3-c0a86e29ebbd::403 - 0ms - Response: {"status":403,"now":1723428007383}::{"message":"Access token missing"}
+2024-08-12 09:00:08::error::/v1/api/user/me::45203581-0962-492c-b7f5-3b35a295d658::403 - 0ms - Response: {"status":403,"now":1723428008209}::{"message":"Access token missing"}
+2024-08-12 09:00:08::error::/v1/api/user/me::0be487eb-f3d4-4a33-b9fa-84a965c4d808::403 - 0ms - Response: {"status":403,"now":1723428008705}::{"message":"Access token missing"}
+2024-08-12 09:00:21::error::/v1/api/user/me::f2baf3a8-6544-4d43-8ec1-e4c1b6a3286e::403 - 0ms - Response: {"status":403,"now":1723428021017}::{"message":"Access token missing"}
+2024-08-12 09:00:21::error::/v1/api/user/me::86306ff9-fab3-4ec3-ae07-991080bc54e8::403 - 0ms - Response: {"status":403,"now":1723428021982}::{"message":"Access token missing"}
+2024-08-12 09:00:22::error::/v1/api/user/me::11fb1b1f-3c1f-4cf9-a3a0-8cc5c320904b::403 - 0ms - Response: {"status":403,"now":1723428022434}::{"message":"Access token missing"}
+2024-08-12 09:09:22::error::/v1/api/user/me::fcdb9f59-9466-459d-b42b-0c4f4990bfd5::403 - 0ms - Response: {"status":403,"now":1723428562021}::{"message":"Access token missing"}
+2024-08-12 09:09:32::error::/v1/api/user/me::244dc110-eef0-453a-8cb7-7bce29facd53::403 - 0ms - Response: {"status":403,"now":1723428572070}::{"message":"Access token missing"}
+2024-08-12 09:09:32::error::/v1/api/user/me::ea6d2352-e9a7-4159-8403-887efaf753b0::403 - 0ms - Response: {"status":403,"now":1723428572928}::{"message":"Access token missing"}
+2024-08-12 09:10:06::error::/v1/api/user/me::7623f171-b26d-4425-9131-032d617ae231::403 - 0ms - Response: {"status":403,"now":1723428606925}::{"message":"Access token missing"}
+2024-08-12 09:10:09::error::/v1/api/user/me::e743d57c-10a9-400b-8b37-2be00b9365a2::403 - 0ms - Response: {"status":403,"now":1723428609315}::{"message":"Access token missing"}
+2024-08-12 09:10:32::error::/v1/api/user/me::34fee4b0-80e1-4203-bb5a-e9d56095c898::403 - 0ms - Response: {"status":403,"now":1723428632871}::{"message":"Access token missing"}
+2024-08-12 09:10:33::error::/v1/api/user/me::1ecaeb22-c8b6-49da-bc72-0ed755986272::403 - 0ms - Response: {"status":403,"now":1723428633689}::{"message":"Access token missing"}
+2024-08-12 09:10:34::error::/v1/api/user/me::cf562cf2-7a32-4ade-a811-fa6b452e0af9::403 - 0ms - Response: {"status":403,"now":1723428634256}::{"message":"Access token missing"}
+2024-08-12 09:13:49::error::/v1/api/user/me::83858d37-1541-4c1b-9019-2da9bf181d3d::403 - 0ms - Response: {"status":403,"now":1723428829531}::{"message":"Access token missing"}
+2024-08-12 09:13:51::error::/v1/api/user/me::b095a1cd-6298-4416-9ed4-771daffaf024::403 - 0ms - Response: {"status":403,"now":1723428831256}::{"message":"Access token missing"}
+2024-08-12 09:14:06::error::/v1/api/user/me::07dc2368-e59f-4ce0-8cd8-2034a5ebf45f::403 - 0ms - Response: {"status":403,"now":1723428846257}::{"message":"Access token missing"}
+2024-08-12 09:15:05::error::/v1/api/user/me::f44b08d7-b84d-48c4-9468-684b69d3c5f9::403 - 0ms - Response: {"status":403,"now":1723428905183}::{"message":"Access token missing"}
+2024-08-12 09:15:39::error::/v1/api/user/me::06d8eb7f-cd87-4949-9b67-18c05d38bb84::403 - 0ms - Response: {"status":403,"now":1723428939847}::{"message":"Access token missing"}
+2024-08-12 09:16:03::error::/v1/api/user/me::c6336442-acfa-4108-8de7-57bad7a5c206::403 - 0ms - Response: {"status":403,"now":1723428963146}::{"message":"Access token missing"}
+2024-08-12 09:16:03::error::/v1/api/user/me::4e4c6129-8fcf-4f4c-a7b5-9c9595a222b8::403 - 0ms - Response: {"status":403,"now":1723428963357}::{"message":"Access token missing"}
+2024-08-12 09:18:30::error::/v1/api/user/me::bd568197-57bd-46a1-85e7-40cdb77706c1::403 - 0ms - Response: {"status":403,"now":1723429110355}::{"message":"Access token missing"}
+2024-08-12 09:19:30::error::/v1/api/user/me::3f2733af-a325-4304-855a-fa2f18ba41c1::403 - 0ms - Response: {"status":403,"now":1723429170587}::{"message":"Access token missing"}
+2024-08-12 09:20:29::error::/v1/api/user/me::fa1e7cce-9643-4928-8855-7c3454bd74e5::403 - 0ms - Response: {"status":403,"now":1723429229715}::{"message":"Access token missing"}
+2024-08-12 09:20:31::error::/v1/api/user/me::d39e1e74-99db-4220-9958-29f6f1560eee::403 - 0ms - Response: {"status":403,"now":1723429231362}::{"message":"Access token missing"}
+2024-08-12 09:21:29::error::/v1/api/user/me::6bee5d4f-f0c6-473e-87d4-02235c4e21a7::403 - 0ms - Response: {"status":403,"now":1723429289338}::{"message":"Access token missing"}
+2024-08-12 09:21:33::error::/v1/api/user/me::c63411a1-385d-4148-9f73-0e92522e21d4::403 - 1ms - Response: {"status":403,"now":1723429293809}::{"message":"Access token missing"}
+2024-08-12 09:29:44::error::/v1/api/user/me::d41b3512-1d10-4aee-8b82-d6612e240dcd::403 - 0ms - Response: {"status":403,"now":1723429784387}::{"message":"Access token missing"}
+2024-08-12 09:29:46::error::/v1/api/user/me::76a42cce-6b40-434b-acf1-9512a5220db0::403 - 0ms - Response: {"status":403,"now":1723429786128}::{"message":"Access token missing"}
+2024-08-12 09:29:58::error::/v1/api/user/me::ec646dc3-3570-4773-902d-20fe7f3cf1d1::403 - 0ms - Response: {"status":403,"now":1723429798477}::{"message":"Access token missing"}
+2024-08-12 09:30:06::error::/v1/api/user/me::7d709dad-de92-41cb-a8d1-32d66c644d58::403 - 0ms - Response: {"status":403,"now":1723429806134}::{"message":"Access token missing"}
+2024-08-12 09:30:07::error::/v1/api/user/me::cfcf5a90-8010-431a-b979-147f26e28248::403 - 0ms - Response: {"status":403,"now":1723429807895}::{"message":"Access token missing"}
+2024-08-12 09:30:08::error::/v1/api/user/me::f2dbd9cf-069f-479f-beb2-cc491b8e5df2::403 - 0ms - Response: {"status":403,"now":1723429808414}::{"message":"Access token missing"}
+2024-08-12 09:30:11::error::/v1/api/user/me::cd0a32c4-f994-4fff-bce7-43974875d3a4::403 - 1ms - Response: {"status":403,"now":1723429811803}::{"message":"Access token missing"}
+2024-08-12 09:30:18::error::/v1/api/user/me::ddb7c8ec-2883-4d1c-99f4-b7c915cdcf62::403 - 0ms - Response: {"status":403,"now":1723429818300}::{"message":"Access token missing"}
+2024-08-12 09:30:40::error::/v1/api/user/me::e679684f-9bc6-4a9f-b49a-49e158c98a86::403 - 0ms - Response: {"status":403,"now":1723429840770}::{"message":"Access token missing"}
+2024-08-12 09:30:41::error::/v1/api/user/me::52eb6c7e-b74e-4da2-9c35-40c93309c5b0::403 - 0ms - Response: {"status":403,"now":1723429841732}::{"message":"Access token missing"}
+2024-08-12 09:30:42::error::/v1/api/user/me::7b14d957-216b-416c-9f3a-0d45d4387ed8::403 - 0ms - Response: {"status":403,"now":1723429842299}::{"message":"Access token missing"}
+2024-08-12 09:30:48::error::/v1/api/user/me::e05b381f-c205-43a7-89d6-09a4bd86097f::403 - 0ms - Response: {"status":403,"now":1723429848839}::{"message":"Access token missing"}
+2024-08-12 09:30:50::error::/v1/api/user/me::6871cdcf-4769-42b7-b86b-fe73635c0c5b::403 - 0ms - Response: {"status":403,"now":1723429850181}::{"message":"Access token missing"}
+2024-08-12 09:30:56::error::/v1/api/user/me::4a75131b-7e7d-4572-a417-52c2110f9562::403 - 0ms - Response: {"status":403,"now":1723429856974}::{"message":"Access token missing"}
+2024-08-12 09:31:37::error::/v1/api/user/me::d0c25745-6f76-405f-bc1c-92398b274b37::403 - 0ms - Response: {"status":403,"now":1723429897993}::{"message":"Access token missing"}
+2024-08-12 09:32:07::error::/v1/api/user/me::2b16b2ee-9557-46ca-bfed-3d2fc3a833dc::403 - 0ms - Response: {"status":403,"now":1723429927394}::{"message":"Access token missing"}
+2024-08-12 09:32:09::error::/v1/api/user/me::c686aaa2-2de7-485c-988b-c22ab79523c5::403 - 0ms - Response: {"status":403,"now":1723429929836}::{"message":"Access token missing"}
+2024-08-12 09:32:10::error::/v1/api/user/me::84c02807-8d9f-4244-9dfc-7ac89492bf33::403 - 0ms - Response: {"status":403,"now":1723429930343}::{"message":"Access token missing"}
+2024-08-12 09:32:14::error::/v1/api/user/me::8e956a12-03b8-474a-968a-946bd3013a5a::403 - 0ms - Response: {"status":403,"now":1723429934840}::{"message":"Access token missing"}
+2024-08-12 09:33:10::error::/v1/api/user/me::43a07601-ddae-461b-be42-7b80344be5af::403 - 0ms - Response: {"status":403,"now":1723429990513}::{"message":"Access token missing"}
+2024-08-12 09:33:11::error::/v1/api/user/me::5b229a2c-d826-442c-b183-0fa00f540bb9::403 - 1ms - Response: {"status":403,"now":1723429991896}::{"message":"Access token missing"}
+2024-08-12 09:33:12::error::/v1/api/user/me::5637a77b-8c1a-4789-a43e-b90a66cf8472::403 - 0ms - Response: {"status":403,"now":1723429992519}::{"message":"Access token missing"}
+2024-08-12 09:33:15::error::/v1/api/user/me::40812dea-dfd8-48a3-917f-d6b1ae5ed83d::403 - 0ms - Response: {"status":403,"now":1723429995008}::{"message":"Access token missing"}
+2024-08-12 09:33:48::error::/v1/api/user/me::4c03621d-4c19-416c-87d7-43d40c717a85::403 - 0ms - Response: {"status":403,"now":1723430028674}::{"message":"Access token missing"}
+2024-08-12 09:33:49::error::/v1/api/user/me::7b352609-7ee0-47c2-923b-913643c7a044::403 - 0ms - Response: {"status":403,"now":1723430029769}::{"message":"Access token missing"}
+2024-08-12 09:33:50::error::/v1/api/user/me::f929e656-d721-4570-a358-19e768212b92::403 - 0ms - Response: {"status":403,"now":1723430030340}::{"message":"Access token missing"}
+2024-08-12 09:33:52::error::/v1/api/user/me::72572e2e-8bef-48ca-a6f5-babb9b1402ef::403 - 0ms - Response: {"status":403,"now":1723430032908}::{"message":"Access token missing"}
+2024-08-12 09:34:02::error::/v1/api/user/me::8bf9c944-5dd8-481b-81e2-12cc485efb52::403 - 0ms - Response: {"status":403,"now":1723430042484}::{"message":"Access token missing"}
+2024-08-12 09:34:11::error::/v1/api/user/me::de5f0c26-cde9-47bb-b620-ed9808f05f01::403 - 0ms - Response: {"status":403,"now":1723430051614}::{"message":"Access token missing"}
+2024-08-12 09:34:26::error::/v1/api/user/me::1ab80992-11cd-4363-b2f7-f9b89b072a8a::403 - 0ms - Response: {"status":403,"now":1723430066438}::{"message":"Access token missing"}
+2024-08-12 09:34:43::error::/v1/api/user/me::c64d572f-2ca1-4d2a-90e2-e909b0557214::403 - 0ms - Response: {"status":403,"now":1723430083473}::{"message":"Access token missing"}
+2024-08-12 09:35:05::error::/v1/api/user/me::ffc444d5-b9e3-411b-8d82-a462d4327146::403 - 0ms - Response: {"status":403,"now":1723430105750}::{"message":"Access token missing"}
+2024-08-12 09:35:14::error::/v1/api/user/me::a9adfb53-c483-4b20-8e72-99a18184ccd8::403 - 0ms - Response: {"status":403,"now":1723430114733}::{"message":"Access token missing"}
+2024-08-12 09:36:04::error::/v1/api/user/me::17437db6-fddd-4d86-a255-99a7ece98728::403 - 0ms - Response: {"status":403,"now":1723430164175}::{"message":"Access token missing"}
+2024-08-12 09:36:05::error::/v1/api/user/me::2fe3337a-310d-497d-a947-b66d1a1c406b::403 - 1ms - Response: {"status":403,"now":1723430165957}::{"message":"Access token missing"}
+2024-08-12 09:36:09::error::/v1/api/user/me::cde97035-d714-4543-abc3-84b3a21594ee::403 - 0ms - Response: {"status":403,"now":1723430169779}::{"message":"Access token missing"}
+2024-08-12 09:36:15::error::/v1/api/user/me::d75a5480-384c-4297-82de-405a31389c2a::403 - 0ms - Response: {"status":403,"now":1723430175240}::{"message":"Access token missing"}
+2024-08-12 09:36:18::error::/v1/api/user/me::fdd06b7c-12ac-4a00-86dc-f82c25aa1247::403 - 0ms - Response: {"status":403,"now":1723430178735}::{"message":"Access token missing"}
+2024-08-12 09:36:51::error::/v1/api/user/me::94238ced-a44f-4355-98ad-002235459060::403 - 0ms - Response: {"status":403,"now":1723430211458}::{"message":"Access token missing"}
+2024-08-12 09:37:31::error::/v1/api/user/me::34fd6e13-2e03-45bc-a132-b06bcddabc7e::403 - 0ms - Response: {"status":403,"now":1723430251000}::{"message":"Access token missing"}
+2024-08-12 09:37:33::error::/v1/api/user/me::430744f2-a539-47a6-95fb-1da6e01f2b03::403 - 0ms - Response: {"status":403,"now":1723430253726}::{"message":"Access token missing"}
+2024-08-12 09:37:43::error::/v1/api/user/me::58611e87-4b6b-467d-8585-df6fc5b86ac0::403 - 0ms - Response: {"status":403,"now":1723430263056}::{"message":"Access token missing"}
+2024-08-12 09:37:45::error::/v1/api/user/me::5ed464dc-b9bb-43f3-8f64-e91ee0c0bf5f::403 - 0ms - Response: {"status":403,"now":1723430265411}::{"message":"Access token missing"}
+2024-08-12 09:37:54::error::/v1/api/user/me::cc38b348-c194-4e0e-9a46-d1a8ba868470::403 - 0ms - Response: {"status":403,"now":1723430274378}::{"message":"Access token missing"}
+2024-08-12 09:37:59::error::/v1/api/user/me::e37c1172-96cf-4f90-afd0-47d7e3993853::403 - 0ms - Response: {"status":403,"now":1723430279691}::{"message":"Access token missing"}
+2024-08-12 09:38:11::error::/v1/api/user/me::ec0c4939-3490-4829-9280-3d3b7a8e11a1::403 - 0ms - Response: {"status":403,"now":1723430291190}::{"message":"Access token missing"}
+2024-08-12 09:38:29::error::/v1/api/user/me::3b07b6ec-e619-43e4-a535-898f0d8c3f09::403 - 0ms - Response: {"status":403,"now":1723430309981}::{"message":"Access token missing"}
+2024-08-12 09:38:32::error::/v1/api/user/me::028cb44b-7f2d-4b17-85da-722bd3c16f5b::403 - 0ms - Response: {"status":403,"now":1723430312312}::{"message":"Access token missing"}
+2024-08-12 09:38:47::error::/v1/api/user/me::ae95e360-5396-4c5f-8bb5-3ab7dcb32ff1::403 - 0ms - Response: {"status":403,"now":1723430327994}::{"message":"Access token missing"}
+2024-08-12 09:39:02::error::/v1/api/user/me::3d6c3286-357d-4280-b43c-ffcfd91dea99::403 - 0ms - Response: {"status":403,"now":1723430342544}::{"message":"Access token missing"}
+2024-08-12 09:39:04::error::/v1/api/user/me::86dfe91b-da57-4588-a48a-e30ce228c499::403 - 0ms - Response: {"status":403,"now":1723430344946}::{"message":"Access token missing"}
+2024-08-12 09:39:28::error::/v1/api/user/me::9b69e065-2b4d-45b3-9bd5-89d1a5c4fa8a::403 - 0ms - Response: {"status":403,"now":1723430368185}::{"message":"Access token missing"}
+2024-08-12 09:39:31::error::/v1/api/user/me::451b62ce-74d3-4ab3-b94d-97f63bfc12e9::403 - 0ms - Response: {"status":403,"now":1723430371367}::{"message":"Access token missing"}
+2024-08-12 09:39:43::error::/v1/api/user/me::a235e723-0725-4dcd-98f3-3e62bd639278::403 - 0ms - Response: {"status":403,"now":1723430383808}::{"message":"Access token missing"}
+2024-08-12 09:39:46::error::/v1/api/user/me::ec97db6a-70c0-4c7b-a283-5169db935cc7::403 - 0ms - Response: {"status":403,"now":1723430386498}::{"message":"Access token missing"}
+2024-08-12 09:40:12::error::/v1/api/user/me::89fbd631-6837-4718-8442-c053bf3073f0::403 - 0ms - Response: {"status":403,"now":1723430412568}::{"message":"Access token missing"}
+2024-08-12 09:40:22::error::/v1/api/user/me::9950e912-2607-4ec8-875f-5e0d511f7708::403 - 0ms - Response: {"status":403,"now":1723430422485}::{"message":"Access token missing"}
+2024-08-12 09:40:26::error::/v1/api/user/me::edf5b472-2914-4a1e-84e4-8cac1a545d3c::403 - 0ms - Response: {"status":403,"now":1723430426401}::{"message":"Access token missing"}
+2024-08-12 09:40:28::error::/v1/api/user/me::07d2fafb-f0c2-44c8-8d60-a59dff749964::403 - 0ms - Response: {"status":403,"now":1723430428744}::{"message":"Access token missing"}
+2024-08-12 09:40:34::error::/v1/api/user/me::13a31c82-ee56-4b86-822a-e3ea1eb33b31::403 - 0ms - Response: {"status":403,"now":1723430434295}::{"message":"Access token missing"}
+2024-08-12 09:40:38::error::/v1/api/user/me::1412bb54-a38f-4f1f-8477-22e76e4d9515::403 - 0ms - Response: {"status":403,"now":1723430438489}::{"message":"Access token missing"}
+2024-08-12 09:40:45::error::/v1/api/user/me::bd1843b9-96a6-4854-af38-9ccd2b41ed78::403 - 0ms - Response: {"status":403,"now":1723430445441}::{"message":"Access token missing"}
+2024-08-12 09:40:55::error::/v1/api/user/me::6e562373-bf86-4687-8337-b41c663c8b51::403 - 0ms - Response: {"status":403,"now":1723430455728}::{"message":"Access token missing"}
+2024-08-12 09:40:56::error::/v1/api/user/me::6a928268-d0e0-482c-9243-71156889c130::403 - 0ms - Response: {"status":403,"now":1723430456810}::{"message":"Access token missing"}
+2024-08-12 09:40:57::error::/v1/api/user/me::e8ec5a86-9812-4b9d-af44-731ef88be3cd::403 - 1ms - Response: {"status":403,"now":1723430457375}::{"message":"Access token missing"}
+2024-08-12 09:41:07::error::/v1/api/user/me::9b581916-e32f-442b-8d1b-147c3a80f28a::403 - 0ms - Response: {"status":403,"now":1723430467350}::{"message":"Access token missing"}
+2024-08-12 09:41:13::error::/v1/api/user/me::c1853b96-13f7-48fe-98a2-2c12346e9ce5::403 - 0ms - Response: {"status":403,"now":1723430473445}::{"message":"Access token missing"}
+2024-08-12 09:41:18::error::/v1/api/user/me::9a95bf06-4fa0-4ad6-9ff6-854b5d0d1b75::403 - 1ms - Response: {"status":403,"now":1723430478141}::{"message":"Access token missing"}
+2024-08-12 09:41:41::error::/v1/api/user/me::2edacb04-1123-471f-bcf6-38180e990de1::403 - 0ms - Response: {"status":403,"now":1723430501532}::{"message":"Access token missing"}
+2024-08-12 09:41:45::error::/v1/api/user/me::8cfdc697-e0a4-4013-815f-c5fff7cfe791::403 - 0ms - Response: {"status":403,"now":1723430505930}::{"message":"Access token missing"}
+2024-08-12 09:42:01::error::/v1/api/user/me::c669fae2-f46a-4e47-88d6-55ac3a1fe02d::403 - 1ms - Response: {"status":403,"now":1723430521274}::{"message":"Access token missing"}
+2024-08-12 09:42:01::error::/v1/api/user/me::2d5aa5dd-ff50-4ec4-8c09-da85c66428a8::403 - 0ms - Response: {"status":403,"now":1723430521619}::{"message":"Access token missing"}
+2024-08-12 09:42:07::error::/v1/api/user/me::5a721a1d-c661-4811-be33-93dfbffa5a32::403 - 1ms - Response: {"status":403,"now":1723430527474}::{"message":"Access token missing"}
+2024-08-12 09:42:13::error::/v1/api/user/me::0494f23c-ded2-48a5-b43d-c485e818dc82::403 - 0ms - Response: {"status":403,"now":1723430533959}::{"message":"Access token missing"}
+2024-08-12 09:42:22::error::/v1/api/user/me::8a9d5d1d-6f2f-4094-8d7b-83b850087000::403 - 0ms - Response: {"status":403,"now":1723430542770}::{"message":"Access token missing"}
+2024-08-12 09:42:28::error::/v1/api/user/me::0952b0ce-1d3c-4afc-ba75-9f83992bdbf7::403 - 0ms - Response: {"status":403,"now":1723430548617}::{"message":"Access token missing"}
+2024-08-12 09:42:43::error::/v1/api/user/me::69f60bce-305f-41be-83cd-9431d8a2ef67::403 - 0ms - Response: {"status":403,"now":1723430563493}::{"message":"Access token missing"}
+2024-08-12 09:47:34::error::/v1/api/user/me::72647669-8b4f-4b68-b4c5-ca58fb06b50b::403 - 0ms - Response: {"status":403,"now":1723430854164}::{"message":"Access token missing"}
+2024-08-12 09:47:35::error::/v1/api/user/me::7036d180-c751-4880-a300-438587abe060::403 - 0ms - Response: {"status":403,"now":1723430855722}::{"message":"Access token missing"}
+2024-08-12 09:47:44::error::/v1/api/user/me::9ff7d134-8a22-4e8a-ad10-238089fb69d6::403 - 0ms - Response: {"status":403,"now":1723430864444}::{"message":"Access token missing"}
+2024-08-12 09:48:20::error::/v1/api/user/me::7c6bfa94-56d8-49f7-b83f-32475f1ce925::403 - 0ms - Response: {"status":403,"now":1723430900375}::{"message":"Access token missing"}
+2024-08-12 09:48:34::error::/v1/api/user/me::04b073bc-e057-4a25-a9b4-ec70af542119::403 - 0ms - Response: {"status":403,"now":1723430914777}::{"message":"Access token missing"}
+2024-08-12 09:53:39::error::/v1/api/user/me::a244bda4-fe43-471c-b61e-32bf66887a4a::403 - 0ms - Response: {"status":403,"now":1723431219277}::{"message":"Access token missing"}
+2024-08-12 11:37:40::error::/v1/api/user/me::5d78d4ad-d2b1-427e-8424-8d91f22f8401::undefined - NaNms - Response: {"reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8si60b-shard-0","maxElectionId":"7fffffff0000000000000018","maxSetVersion":5,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}::{"message":"getaddrinfo ENOTFOUND ac-ohhtiix-shard-00-02.oedyizh.mongodb.net"}
+2024-08-12 11:38:14::error::/v1/api/user/me::69672ee3-86e8-4b3f-8bcd-728d8989751b::403 - 0ms - Response: {"status":403,"now":1723437494755}::{"message":"Access token missing"}
+2024-08-12 11:38:23::error::/v1/api/user/me::ffd3f9e2-4ab8-4b91-81c5-8269aaf169b6::403 - 0ms - Response: {"status":403,"now":1723437503692}::{"message":"Access token missing"}
+2024-08-12 11:38:25::error::/v1/api/user/me::5dd2383a-14bb-4487-9714-13ebad33d89f::403 - 1ms - Response: {"status":403,"now":1723437505640}::{"message":"Access token missing"}
+2024-08-12 11:38:27::error::/v1/api/user/me::0d038bd7-e36f-4e51-832a-14b43313b9eb::403 - 0ms - Response: {"status":403,"now":1723437507537}::{"message":"Access token missing"}
+2024-08-12 11:38:33::error::/v1/api/user/me::ed60f8c0-020b-4421-9955-451b927cbec5::403 - 0ms - Response: {"status":403,"now":1723437513664}::{"message":"Access token missing"}
+2024-08-12 11:38:33::error::/v1/api/user/me::af3bebd4-8847-4290-95af-a5e922c76593::403 - 0ms - Response: {"status":403,"now":1723437513786}::{"message":"Access token missing"}
+2024-08-12 11:38:37::error::/v1/api/user/me::c9aeb7a3-c9dd-49eb-aa41-02a7d183e2d0::403 - 0ms - Response: {"status":403,"now":1723437517260}::{"message":"Access token missing"}
+2024-08-12 11:38:49::error::/v1/api/user/me::6809c4eb-315f-4596-bc77-7d83b113efa7::403 - 0ms - Response: {"status":403,"now":1723437529473}::{"message":"Access token missing"}
+2024-08-12 11:38:51::error::/v1/api/user/me::02e130a3-a5cd-465b-ab93-ef9f49a82583::403 - 0ms - Response: {"status":403,"now":1723437531244}::{"message":"Access token missing"}
+2024-08-12 11:38:56::error::/v1/api/user/me::1aced7b8-b8a8-433d-8af5-34da453f0fd2::403 - 0ms - Response: {"status":403,"now":1723437536248}::{"message":"Access token missing"}
+2024-08-12 11:39:10::error::/v1/api/user/me::60a7560d-a9d5-4fce-88c7-f9a8ba2a8b1f::403 - 0ms - Response: {"status":403,"now":1723437550216}::{"message":"Access token missing"}
+2024-08-12 11:39:15::error::/v1/api/user/me::7263c7fc-cbcb-4ddd-aaef-94175eaa69b0::403 - 0ms - Response: {"status":403,"now":1723437555853}::{"message":"Access token missing"}
+2024-08-12 11:39:23::error::/v1/api/user/me::4e8f68bd-030b-481e-8b13-ba4ce7bc8fdf::403 - 0ms - Response: {"status":403,"now":1723437563374}::{"message":"Access token missing"}
+2024-08-12 11:39:34::error::/v1/api/user/me::30fdfd39-f4c0-40fa-bb80-db1f71d8a4be::403 - 0ms - Response: {"status":403,"now":1723437574076}::{"message":"Access token missing"}
+2024-08-12 11:39:42::error::/v1/api/user/me::8ab1f77c-2892-4332-a64b-4377e6ab0e74::403 - 0ms - Response: {"status":403,"now":1723437582953}::{"message":"Access token missing"}
+2024-08-12 11:39:45::error::/v1/api/user/me::6f7d3e5d-5775-4fed-9d95-355b8e8f23d6::403 - 0ms - Response: {"status":403,"now":1723437585910}::{"message":"Access token missing"}
+2024-08-12 11:39:56::error::/v1/api/user/me::c9bc2f73-1fcf-44e7-ab85-c7e138c48d67::403 - 0ms - Response: {"status":403,"now":1723437596162}::{"message":"Access token missing"}
+2024-08-12 11:40:11::error::/v1/api/user/me::c272710e-bdab-415c-8130-6b1153102eec::403 - 0ms - Response: {"status":403,"now":1723437611424}::{"message":"Access token missing"}
+2024-08-12 11:41:03::error::/v1/api/user/me::1223ea69-0d2f-4515-9f5d-b063f66b7fb3::403 - 0ms - Response: {"status":403,"now":1723437663266}::{"message":"Access token missing"}
+2024-08-12 11:45:24::error::/v1/api/user/me::19beede2-2d0e-464f-972a-4c3eeb521660::403 - 0ms - Response: {"status":403,"now":1723437924722}::{"message":"Access token missing"}
+2024-08-12 11:45:47::error::/v1/api/user/me::5bb96250-c80d-4c7b-9785-eda9658b30d3::403 - 0ms - Response: {"status":403,"now":1723437947362}::{"message":"Access token missing"}
+2024-08-12 11:46:00::error::/v1/api/user/me::8612f5fa-c700-4c2a-a5e7-7456ddc94cb2::403 - 0ms - Response: {"status":403,"now":1723437960050}::{"message":"Access token missing"}
+2024-08-12 11:46:28::error::/v1/api/user/me::5cac60e3-9c08-4a9a-acdd-0c52b8c2e7b2::403 - 0ms - Response: {"status":403,"now":1723437988542}::{"message":"Access token missing"}
+2024-08-12 11:47:00::error::/v1/api/user/me::c0588e44-cac3-4db5-92c7-fb60ea7ced6b::403 - 0ms - Response: {"status":403,"now":1723438020797}::{"message":"Access token missing"}
+2024-08-12 11:47:29::error::/v1/api/user/me::71da29b7-2c00-4713-9408-76ede77c08c8::403 - 0ms - Response: {"status":403,"now":1723438049104}::{"message":"Access token missing"}
+2024-08-12 11:47:34::error::/v1/api/user/me::0a1bd12d-1958-4393-bd5e-b54f2b73223c::403 - 0ms - Response: {"status":403,"now":1723438054691}::{"message":"Access token missing"}
+2024-08-12 11:47:50::error::/v1/api/user/me::a376cdb8-a3c6-4a72-9e90-0eabb678d269::403 - 1ms - Response: {"status":403,"now":1723438070844}::{"message":"Access token missing"}
+2024-08-12 11:49:26::error::/v1/api/user/me::230977e9-bd27-4b3a-b52d-bf3896c8cfd9::403 - 0ms - Response: {"status":403,"now":1723438166308}::{"message":"Access token missing"}
+2024-08-12 11:49:29::error::/v1/api/user/me::abf01719-ffd4-4c2b-abe3-56c70a28ae6e::403 - 0ms - Response: {"status":403,"now":1723438169376}::{"message":"Access token missing"}
+2024-08-12 11:50:11::error::/v1/api/user/me::ed0c13cc-46bc-4de4-919a-92c78dc2fd23::403 - 0ms - Response: {"status":403,"now":1723438211546}::{"message":"Access token missing"}
+2024-08-12 11:50:41::error::/v1/api/user/me::221cf088-2392-4401-84dd-296c8b4770b4::403 - 0ms - Response: {"status":403,"now":1723438241606}::{"message":"Access token missing"}
+2024-08-12 11:50:57::error::/v1/api/user/me::cf723820-789a-49f8-b384-4f772b6bdba0::403 - 0ms - Response: {"status":403,"now":1723438257748}::{"message":"Access token missing"}
+2024-08-12 11:50:59::error::/v1/api/user/me::8e94f47f-16a7-415d-b169-f9707cd8dfd9::403 - 0ms - Response: {"status":403,"now":1723438259972}::{"message":"Access token missing"}
+2024-08-12 11:51:01::error::/v1/api/user/me::19e41d04-427a-48d9-b1a8-31fe544ed8a3::403 - 0ms - Response: {"status":403,"now":1723438261184}::{"message":"Access token missing"}
+2024-08-12 11:51:09::error::/v1/api/user/me::2e7e8c7d-8028-4b76-baa3-1edae2c20561::403 - 0ms - Response: {"status":403,"now":1723438269285}::{"message":"Access token missing"}
+2024-08-12 11:51:26::error::/v1/api/user/me::a89fc72c-7edf-4676-a417-5cc158894987::403 - 0ms - Response: {"status":403,"now":1723438286109}::{"message":"Access token missing"}
+2024-08-12 11:53:33::error::/v1/api/user/me::72486a11-c92d-4501-8fe4-9961cb1217f6::403 - 0ms - Response: {"status":403,"now":1723438413462}::{"message":"Access token missing"}
+2024-08-12 11:53:57::error::/v1/api/user/me::50a3dad6-564b-4798-a648-81b5e69cda1a::403 - 0ms - Response: {"status":403,"now":1723438437532}::{"message":"Access token missing"}
+2024-08-12 11:54:02::error::/v1/api/user/me::044fdc0e-6bba-4333-9443-2480bf6fa9d5::403 - 0ms - Response: {"status":403,"now":1723438442657}::{"message":"Access token missing"}
+2024-08-12 11:54:47::error::/v1/api/user/me::fce43ce7-835b-4f1a-b3f7-e1018b77e85d::403 - 0ms - Response: {"status":403,"now":1723438487853}::{"message":"Access token missing"}
+2024-08-12 11:54:52::error::/v1/api/user/me::2efd183b-7015-4b32-b448-aca6dac2b809::403 - 0ms - Response: {"status":403,"now":1723438492044}::{"message":"Access token missing"}
+2024-08-12 11:54:54::error::/v1/api/user/me::9e9180de-75b4-4912-a696-ed083c86ca06::403 - 0ms - Response: {"status":403,"now":1723438494850}::{"message":"Access token missing"}
+2024-08-12 11:55:05::error::/v1/api/user/me::dac9b6b5-c0b0-4c0c-9f22-7fb82f3abef0::403 - 0ms - Response: {"status":403,"now":1723438505668}::{"message":"Access token missing"}
+2024-08-12 11:55:07::error::/v1/api/user/me::02aa3c04-4b34-44d9-911a-9f39652de71e::403 - 0ms - Response: {"status":403,"now":1723438507010}::{"message":"Access token missing"}
+2024-08-12 11:55:13::error::/v1/api/user/me::62023fc1-d8bf-4828-99f9-e98277f83f95::403 - 0ms - Response: {"status":403,"now":1723438513875}::{"message":"Access token missing"}
+2024-08-12 11:56:13::error::/v1/api/user/me::4cfec067-cc17-4600-a9f3-c96afc070d8a::403 - 0ms - Response: {"status":403,"now":1723438573071}::{"message":"Access token missing"}
+2024-08-12 11:56:15::error::/v1/api/user/me::c07e7ac3-7064-4168-a496-5060c8d44ea5::403 - 0ms - Response: {"status":403,"now":1723438575197}::{"message":"Access token missing"}
+2024-08-12 11:56:18::error::/v1/api/user/me::1a9977a7-532b-4ffc-bc81-2aaa76a33d25::403 - 0ms - Response: {"status":403,"now":1723438578815}::{"message":"Access token missing"}
+2024-08-12 11:56:26::error::/v1/api/user/me::58a9e0e6-4c12-4795-b7d3-96f660a147e8::403 - 0ms - Response: {"status":403,"now":1723438586703}::{"message":"Access token missing"}
+2024-08-12 11:56:32::error::/v1/api/user/me::97cf7570-8f1b-4abb-822b-b4f1862c6a6b::403 - 0ms - Response: {"status":403,"now":1723438592741}::{"message":"Access token missing"}
+2024-08-12 11:56:35::error::/v1/api/user/me::f0e7925a-2c94-4b6e-b16d-f31bc08d64f3::403 - 0ms - Response: {"status":403,"now":1723438595768}::{"message":"Access token missing"}
+2024-08-12 11:56:54::error::/v1/api/user/me::3ba057ef-e228-4db8-afc1-2990e249a210::403 - 0ms - Response: {"status":403,"now":1723438614971}::{"message":"Access token missing"}
+2024-08-12 11:57:03::error::/v1/api/user/me::b3e4d5b0-74b6-4485-b70b-41b1799d2b14::403 - 0ms - Response: {"status":403,"now":1723438623485}::{"message":"Access token missing"}
+2024-08-12 11:59:18::error::/v1/api/user/me::44d5c357-4e27-44d9-b51e-247a99a550fa::403 - 0ms - Response: {"status":403,"now":1723438758697}::{"message":"Access token missing"}
+2024-08-12 11:59:20::error::/v1/api/user/me::320a8796-c24c-4d96-8543-36c7d5d2de51::403 - 0ms - Response: {"status":403,"now":1723438760332}::{"message":"Access token missing"}
+2024-08-12 11:59:21::error::/v1/api/user/me::e4216969-57f6-4240-aa29-ee3f10467af8::403 - 1ms - Response: {"status":403,"now":1723438761267}::{"message":"Access token missing"}
+2024-08-12 11:59:27::error::/v1/api/user/me::94963cfc-e2f7-41d4-ab46-1ddccccb451d::403 - 0ms - Response: {"status":403,"now":1723438767279}::{"message":"Access token missing"}
+2024-08-12 11:59:50::error::/v1/api/user/me::3898c78b-5e36-455d-b5c7-92ad583dcda4::403 - 0ms - Response: {"status":403,"now":1723438790669}::{"message":"Access token missing"}
+2024-08-12 12:00:00::error::/v1/api/user/me::91525463-ebf8-4930-b320-20ff60fda95e::403 - 0ms - Response: {"status":403,"now":1723438800163}::{"message":"Access token missing"}
+2024-08-12 12:00:02::error::/v1/api/user/me::df16f15e-0b73-46e3-a54d-d3de2e6a16a1::403 - 1ms - Response: {"status":403,"now":1723438802001}::{"message":"Access token missing"}
+2024-08-12 12:00:08::error::/v1/api/user/me::496cb154-aa21-452f-b63b-4235d29807a8::403 - 0ms - Response: {"status":403,"now":1723438808305}::{"message":"Access token missing"}
+2024-08-12 12:00:29::error::/v1/api/user/me::9cef951c-b596-4039-9d1a-2a9a120ea498::403 - 0ms - Response: {"status":403,"now":1723438829039}::{"message":"Access token missing"}
+2024-08-12 12:00:40::error::/v1/api/user/me::74d01b4b-7716-4610-aa5b-5fcc3b811f26::403 - 0ms - Response: {"status":403,"now":1723438840621}::{"message":"Access token missing"}
+2024-08-12 12:00:49::error::/v1/api/user/me::6f69067d-bbf7-4477-a695-4af5110228d7::403 - 0ms - Response: {"status":403,"now":1723438849928}::{"message":"Access token missing"}
+2024-08-12 12:00:52::error::/v1/api/user/me::d77278de-ac52-428d-8259-5bc1eb59e555::403 - 0ms - Response: {"status":403,"now":1723438852146}::{"message":"Access token missing"}
+2024-08-12 12:01:03::error::/v1/api/user/me::775d7c00-679d-431f-9b2b-eb9ee816381f::403 - 0ms - Response: {"status":403,"now":1723438863446}::{"message":"Access token missing"}
+2024-08-12 12:01:06::error::/v1/api/user/me::e7a7f6cf-c658-4cf5-9dfc-c7f04a86ad5e::403 - 0ms - Response: {"status":403,"now":1723438866063}::{"message":"Access token missing"}
+2024-08-12 12:01:22::error::/v1/api/user/me::4be26a79-a079-49aa-9c77-8a85aacd13c4::403 - 0ms - Response: {"status":403,"now":1723438882151}::{"message":"Access token missing"}
+2024-08-12 12:01:34::error::/v1/api/user/me::bef75070-0238-46d7-abe0-19ecf0f6c557::403 - 0ms - Response: {"status":403,"now":1723438894977}::{"message":"Access token missing"}
+2024-08-12 12:02:02::error::/v1/api/user/me::254e1960-e5a1-404d-a876-8f6d00fb606a::403 - 0ms - Response: {"status":403,"now":1723438922643}::{"message":"Access token missing"}
+2024-08-12 12:02:25::error::/v1/api/user/me::9d43e4ab-b04a-4bce-a375-c5f9bc6e2430::403 - 0ms - Response: {"status":403,"now":1723438945904}::{"message":"Access token missing"}
+2024-08-12 12:02:37::error::/v1/api/user/me::91f4c6fc-09e2-4c3d-b8bb-8b53f81eeb1b::403 - 0ms - Response: {"status":403,"now":1723438957231}::{"message":"Access token missing"}
+2024-08-12 12:03:28::error::/v1/api/user/me::b71cdec9-87e5-4943-8434-239b38f33928::403 - 0ms - Response: {"status":403,"now":1723439008968}::{"message":"Access token missing"}
+2024-08-12 12:03:32::error::/v1/api/user/me::27f025f5-7119-45ad-93ef-731972e341c1::403 - 0ms - Response: {"status":403,"now":1723439012323}::{"message":"Access token missing"}
+2024-08-12 12:03:56::error::/v1/api/user/me::88defa6f-8287-4cfb-8d9f-156341884480::403 - 0ms - Response: {"status":403,"now":1723439036445}::{"message":"Access token missing"}
+2024-08-12 12:04:02::error::/v1/api/user/me::0f0f980c-b90a-433b-99ed-e8160a8dd8be::403 - 0ms - Response: {"status":403,"now":1723439042400}::{"message":"Access token missing"}
+2024-08-12 12:04:06::error::/v1/api/user/me::40e5766d-9298-4b31-a5e5-a8a7f3ac606c::403 - 0ms - Response: {"status":403,"now":1723439046455}::{"message":"Access token missing"}
+2024-08-12 12:04:28::error::/v1/api/user/me::14ce7c70-29c9-436a-bfc2-a10b31b49339::403 - 0ms - Response: {"status":403,"now":1723439068611}::{"message":"Access token missing"}
+2024-08-12 12:04:30::error::/v1/api/user/me::8b72d7bb-0fee-4a90-9e3a-8fcaba7506ab::403 - 0ms - Response: {"status":403,"now":1723439070612}::{"message":"Access token missing"}
+2024-08-12 12:04:38::error::/v1/api/user/me::f43d4c0c-6bd3-4460-a7b4-149785b1a757::403 - 0ms - Response: {"status":403,"now":1723439078079}::{"message":"Access token missing"}
+2024-08-12 12:04:50::error::/v1/api/user/me::84141374-0311-45c7-8bb5-e20b0612dc18::403 - 0ms - Response: {"status":403,"now":1723439090389}::{"message":"Access token missing"}
+2024-08-12 12:04:57::error::/v1/api/user/me::55173622-3a6c-4593-9d6a-0449b81ff6de::403 - 0ms - Response: {"status":403,"now":1723439097902}::{"message":"Access token missing"}
+2024-08-12 12:05:27::error::/v1/api/user/me::15e6287f-2ff8-467e-a9c8-00c29ad451c1::403 - 0ms - Response: {"status":403,"now":1723439127880}::{"message":"Access token missing"}
+2024-08-12 12:05:29::error::/v1/api/user/me::7fb6ce30-d8f1-41c9-a660-b4d4fad5baf4::403 - 0ms - Response: {"status":403,"now":1723439129720}::{"message":"Access token missing"}
+2024-08-12 12:14:53::error::/v1/api/user/me::a3978465-3b0c-4667-b227-313ffd62fa42::403 - 0ms - Response: {"status":403,"now":1723439693104}::{"message":"Access token missing"}
+2024-08-12 12:35:55::error::/v1/api/user/me::85d6150f-9f74-4f4d-bb07-cf3d7743edc8::403 - 0ms - Response: {"status":403,"now":1723440955294}::{"message":"Access token missing"}
+2024-08-12 12:36:25::error::/v1/api/user/me::bef423b8-0df5-4b68-af87-2d4d294d725a::403 - 0ms - Response: {"status":403,"now":1723440985621}::{"message":"Access token missing"}
+2024-08-12 12:36:27::error::/v1/api/user/me::e2402ffc-cb49-4f6c-9150-a0e46eccb174::403 - 0ms - Response: {"status":403,"now":1723440987961}::{"message":"Access token missing"}
+2024-08-12 12:36:30::error::/v1/api/user/me::241c59ef-3ba4-4c94-8a3f-ef500e231b15::403 - 0ms - Response: {"status":403,"now":1723440990677}::{"message":"Access token missing"}
+2024-08-12 12:36:38::error::/v1/api/user/me::d123964e-b3ec-48f5-9fd8-833e41ca62ef::403 - 0ms - Response: {"status":403,"now":1723440998909}::{"message":"Access token missing"}
+2024-08-12 12:36:44::error::/v1/api/user/me::5cc1f05e-781b-4a02-9b2c-7148c436445c::403 - 0ms - Response: {"status":403,"now":1723441004656}::{"message":"Access token missing"}
+2024-08-12 12:36:48::error::/v1/api/user/me::44de9120-e9e3-438f-a7f2-4116e203f00f::403 - 0ms - Response: {"status":403,"now":1723441008693}::{"message":"Access token missing"}
+2024-08-12 12:37:03::error::/v1/api/user/me::4c4a8e0f-1ad2-4f05-827e-66fd8fffc140::403 - 0ms - Response: {"status":403,"now":1723441023982}::{"message":"Access token missing"}
+2024-08-12 12:37:19::error::/v1/api/user/me::c384d240-d005-4231-bf3e-3395fecf9dea::403 - 0ms - Response: {"status":403,"now":1723441039038}::{"message":"Access token missing"}
+2024-08-12 12:38:17::error::/v1/api/user/me::adc50c4c-194b-42ba-94bd-424d88040d2b::403 - 0ms - Response: {"status":403,"now":1723441097771}::{"message":"Access token missing"}
+2024-08-12 12:38:27::error::/v1/api/user/me::d51117be-2668-497d-a73e-38c77a368ef2::403 - 0ms - Response: {"status":403,"now":1723441107625}::{"message":"Access token missing"}
+2024-08-12 12:38:30::error::/v1/api/user/me::565cff3b-cea5-427d-8c42-5697bf7309b7::403 - 0ms - Response: {"status":403,"now":1723441110370}::{"message":"Access token missing"}
+2024-08-12 12:38:41::error::/v1/api/user/me::19b26fdb-f722-4708-b9e0-4401ced915ee::403 - 0ms - Response: {"status":403,"now":1723441121819}::{"message":"Access token missing"}
+2024-08-12 12:38:51::error::/v1/api/user/me::ab9dcd88-719e-4836-8f63-4aeb1ed3b09e::403 - 0ms - Response: {"status":403,"now":1723441131189}::{"message":"Access token missing"}
+2024-08-12 12:38:56::error::/v1/api/user/me::8bf4c7db-7625-4d83-bd57-3838ac22ee1c::403 - 0ms - Response: {"status":403,"now":1723441136795}::{"message":"Access token missing"}
+2024-08-12 12:39:03::error::/v1/api/user/me::4c6b701b-6726-406c-9d6d-1d159b2f5909::403 - 0ms - Response: {"status":403,"now":1723441143645}::{"message":"Access token missing"}
+2024-08-12 12:39:18::error::/v1/api/user/me::d0695983-3b19-4110-8e17-36320d202f05::403 - 0ms - Response: {"status":403,"now":1723441158939}::{"message":"Access token missing"}
+2024-08-12 12:39:22::error::/v1/api/user/me::64eaa574-81e7-4ef1-a2fc-d53d4710bd50::403 - 0ms - Response: {"status":403,"now":1723441162864}::{"message":"Access token missing"}
+2024-08-12 12:39:25::error::/v1/api/user/me::39a4ed69-34ad-4727-9c22-3da01a9ed35f::403 - 0ms - Response: {"status":403,"now":1723441165825}::{"message":"Access token missing"}
+2024-08-12 12:39:25::error::/v1/api/user/me::439e4fd8-fbe9-48fa-a139-fbd4a7ede962::403 - 1ms - Response: {"status":403,"now":1723441165945}::{"message":"Access token missing"}
+2024-08-12 12:39:27::error::/v1/api/user/me::81a67b09-ef05-4f65-aec1-8888fa90323a::403 - 0ms - Response: {"status":403,"now":1723441167130}::{"message":"Access token missing"}
+2024-08-12 12:39:31::error::/v1/api/user/me::8eb6d2d0-e44c-4ccc-bc0d-40df96e2fa8a::403 - 0ms - Response: {"status":403,"now":1723441171423}::{"message":"Access token missing"}
+2024-08-12 12:39:42::error::/v1/api/user/me::69354a09-b5c2-4271-84fa-4be3664f2f51::403 - 1ms - Response: {"status":403,"now":1723441182137}::{"message":"Access token missing"}
+2024-08-12 12:39:43::error::/v1/api/user/me::ca07ff49-3861-4b06-87a2-ec2e4fd75b93::403 - 0ms - Response: {"status":403,"now":1723441183102}::{"message":"Access token missing"}
+2024-08-12 12:39:45::error::/v1/api/user/me::51127ec4-9ed8-41fe-801c-df60b7e59e19::403 - 0ms - Response: {"status":403,"now":1723441185438}::{"message":"Access token missing"}
+2024-08-12 12:39:53::error::/v1/api/user/me::40d505c9-4909-4f02-b51f-693827a25608::403 - 0ms - Response: {"status":403,"now":1723441193356}::{"message":"Access token missing"}
+2024-08-12 12:39:57::error::/v1/api/user/me::a14f8580-bd2c-48eb-adac-2bbf9aeb9442::403 - 0ms - Response: {"status":403,"now":1723441197652}::{"message":"Access token missing"}
+2024-08-12 12:39:59::error::/v1/api/user/me::c1a2be12-72fe-42a3-a22d-c304dc409be4::403 - 0ms - Response: {"status":403,"now":1723441199403}::{"message":"Access token missing"}
+2024-08-12 12:40:07::error::/v1/api/user/me::6666bf2f-02a7-4e6c-ba19-ad036427fdf0::403 - 1ms - Response: {"status":403,"now":1723441207447}::{"message":"Access token missing"}
+2024-08-12 12:40:11::error::/v1/api/user/me::db38078a-3079-4ea5-9c6d-7b9c305b7da1::403 - 0ms - Response: {"status":403,"now":1723441211977}::{"message":"Access token missing"}
+2024-08-12 12:40:21::error::/v1/api/user/me::0f3accb0-1f37-44bc-95be-b00aab816902::403 - 0ms - Response: {"status":403,"now":1723441221834}::{"message":"Access token missing"}
+2024-08-12 12:40:53::error::/v1/api/user/me::891c21ea-a81b-4434-88d3-c05acda5c6de::403 - 0ms - Response: {"status":403,"now":1723441253110}::{"message":"Access token missing"}
+2024-08-12 12:41:01::error::/v1/api/user/me::da28713b-ec33-4794-9fd4-db34571e44d4::403 - 0ms - Response: {"status":403,"now":1723441261203}::{"message":"Access token missing"}
+2024-08-12 12:41:31::error::/v1/api/user/me::aab1ed5f-a4d6-40ba-bf12-621bd447caf4::403 - 0ms - Response: {"status":403,"now":1723441291112}::{"message":"Access token missing"}
+2024-08-12 12:41:56::error::/v1/api/user/me::21112a25-fbf5-4444-b1fb-3897943ac716::403 - 0ms - Response: {"status":403,"now":1723441316300}::{"message":"Access token missing"}
+2024-08-12 12:42:20::error::/v1/api/post/readPost/commissionServices::6b31dbef-fb90-4786-b824-718c6ceb3122::403 - 0ms - Response: {"status":403,"now":1723441340746}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:42:37::error::/v1/api/post/readPost/commissionServices::3475d46b-076d-441e-b2b1-0d2554476e33::403 - 0ms - Response: {"status":403,"now":1723441357749}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:42:37::error::/v1/api/post/readPost/commissionServices::6f4c7e49-30f0-4990-84ed-fe728d453ffa::403 - 1ms - Response: {"status":403,"now":1723441357854}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:42:37::error::/v1/api/user/me::7a11811b-99cd-4e8d-8de0-e6c2941951ec::403 - 0ms - Response: {"status":403,"now":1723441357858}::{"message":"Access token missing"}
+2024-08-12 12:42:40::error::/v1/api/user/me::34809f82-c8c0-41bd-a730-859f5075e567::403 - 0ms - Response: {"status":403,"now":1723441360516}::{"message":"Access token missing"}
+2024-08-12 12:42:41::error::/v1/api/post/readPost/commisison-services::83539dac-7725-411d-a9f9-f60938b35524::403 - 0ms - Response: {"status":403,"now":1723441361375}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:42:58::error::/v1/api/user/me::871818c7-06dc-4f52-a90b-f77115fea9ef::403 - 0ms - Response: {"status":403,"now":1723441378997}::{"message":"Access token missing"}
+2024-08-12 12:43:24::error::/v1/api/user/me::cc1f19d5-9145-4eeb-b3a5-e0b4106b2ad4::403 - 0ms - Response: {"status":403,"now":1723441404641}::{"message":"Access token missing"}
+2024-08-12 12:43:25::error::/v1/api/user/me::542b1008-c243-4a18-8554-3febb078b022::403 - 0ms - Response: {"status":403,"now":1723441405822}::{"message":"Access token missing"}
+2024-08-12 12:43:26::error::/v1/api/post/readPost/commisison-services::76675c28-7bf7-4307-a197-fd4b59984100::403 - 0ms - Response: {"status":403,"now":1723441406072}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:43:44::error::/v1/api/user/me::b7f3e3d9-544d-4eb0-808f-d773d655457a::403 - 0ms - Response: {"status":403,"now":1723441424169}::{"message":"Access token missing"}
+2024-08-12 12:43:49::error::/v1/api/user/me::ef43c2ac-edf8-429a-b4ad-2bfe611cae6c::403 - 0ms - Response: {"status":403,"now":1723441429390}::{"message":"Access token missing"}
+2024-08-12 12:43:49::error::/v1/api/user/me::fed01031-d00f-41de-bebe-396fd54a6e21::403 - 0ms - Response: {"status":403,"now":1723441429896}::{"message":"Access token missing"}
+2024-08-12 12:43:52::error::/v1/api/post/readPost/commisison-services::76321d93-b77d-4a53-ae5d-2f48899990bb::403 - 0ms - Response: {"status":403,"now":1723441432218}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:44:10::error::/v1/api/user/me::9f16b44d-2e94-4ec8-9c09-dad9f4c6cf6b::403 - 0ms - Response: {"status":403,"now":1723441450354}::{"message":"Access token missing"}
+2024-08-12 12:44:12::error::/v1/api/user/me::e277e36f-e2cc-4809-bc50-c2e0229d4a83::403 - 0ms - Response: {"status":403,"now":1723441452105}::{"message":"Access token missing"}
+2024-08-12 12:44:12::error::/v1/api/post/readPost/commisison-services::8d2a5ff7-f86a-4b8e-907d-7f464a242c09::403 - 1ms - Response: {"status":403,"now":1723441452227}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:45:20::error::/v1/api/post/readPost/commisison-services::67731a4c-eed5-406f-a224-2eafd79d59b9::403 - 0ms - Response: {"status":403,"now":1723441520809}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:45:20::error::/v1/api/user/me::c065d8b4-20b7-423b-82c4-82d0a42d4dc1::403 - 1ms - Response: {"status":403,"now":1723441520811}::{"message":"Access token missing"}
+2024-08-12 12:45:21::error::/v1/api/user/me::89f8fade-f8f1-47ed-9b8d-4403ee756644::403 - 0ms - Response: {"status":403,"now":1723441521382}::{"message":"Access token missing"}
+2024-08-12 12:45:21::error::/v1/api/post/readPost/commisison-services::37b68a54-e73f-4b8e-8855-2a8f865f9a67::403 - 1ms - Response: {"status":403,"now":1723441521695}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 12:46:22::error::/v1/api/user/me::d5434883-9aa5-45cf-8c92-b53b5179c291::403 - 0ms - Response: {"status":403,"now":1723441582006}::{"message":"Access token missing"}
+2024-08-12 12:46:23::error::/v1/api/user/me::aa5e21bc-d97f-44b4-8e31-dcd6877185bf::403 - 0ms - Response: {"status":403,"now":1723441583282}::{"message":"Access token missing"}
+2024-08-12 12:46:23::error::/v1/api/user/me::876d6c5b-7398-40a3-945b-37319ecb3601::403 - 1ms - Response: {"status":403,"now":1723441583833}::{"message":"Access token missing"}
+2024-08-12 12:46:24::error::/v1/api/post/readPost/commisison-services::96fe3b1e-0eb8-47a6-8343-e95fa185c139::403 - 0ms - Response: {"status":403,"now":1723441584084}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:39:48::error::/v1/api/user/me::6d6a345a-7dd3-4054-a3b9-abf6a02f96b6::403 - 0ms - Response: {"status":403,"now":1723444788440}::{"message":"Access token missing"}
+2024-08-12 13:39:50::error::/v1/api/post/readPost/commisison-services::5d767e02-780e-4910-9f79-3e519146ea23::403 - 0ms - Response: {"status":403,"now":1723444790046}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:40:03::error::/v1/api/user/me::ef74adcb-9710-42c1-930f-23e3991947b4::403 - 0ms - Response: {"status":403,"now":1723444803951}::{"message":"Access token missing"}
+2024-08-12 13:40:06::error::/v1/api/user/me::71a630e8-757b-4e6a-b33c-51f495861def::403 - 0ms - Response: {"status":403,"now":1723444806206}::{"message":"Access token missing"}
+2024-08-12 13:40:06::error::/v1/api/user/me::17e2d4f1-7ff4-43d5-bf20-9588b5a184f7::403 - 0ms - Response: {"status":403,"now":1723444806886}::{"message":"Access token missing"}
+2024-08-12 13:40:13::error::/v1/api/user/me::02d42ff0-b9c9-43a8-ae64-77a3eea2a699::403 - 0ms - Response: {"status":403,"now":1723444813960}::{"message":"Access token missing"}
+2024-08-12 13:40:31::error::/v1/api/user/me::9ea482ef-950f-4146-8ea8-d39b475769f7::403 - 0ms - Response: {"status":403,"now":1723444831897}::{"message":"Access token missing"}
+2024-08-12 13:40:33::error::/v1/api/user/me::7ba4514f-292b-415c-86fc-f56a49ac1a64::403 - 0ms - Response: {"status":403,"now":1723444833457}::{"message":"Access token missing"}
+2024-08-12 13:40:33::error::/v1/api/post/readPost/commisison-services::1bf16f35-fac2-4a96-9c25-de160db7613f::403 - 0ms - Response: {"status":403,"now":1723444833749}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:41:05::error::/v1/api/user/me::46532c7c-1044-4acf-899f-4db95ea52ea5::403 - 0ms - Response: {"status":403,"now":1723444865297}::{"message":"Access token missing"}
+2024-08-12 13:41:07::error::/v1/api/user/me::784da2da-754a-4f19-85d2-5515c85abd4e::403 - 1ms - Response: {"status":403,"now":1723444867028}::{"message":"Access token missing"}
+2024-08-12 13:41:13::error::/v1/api/user/me::2daa7e6d-e5d4-4607-9ccc-fa558b630923::403 - 0ms - Response: {"status":403,"now":1723444873449}::{"message":"Access token missing"}
+2024-08-12 13:41:13::error::/v1/api/post/readPost/commisison-services::f94a473b-8269-4c2b-9529-14a2e07671d4::403 - 0ms - Response: {"status":403,"now":1723444873454}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:41:15::error::/v1/api/user/me::f28a243d-169c-4012-9a1d-0777166fefaf::403 - 0ms - Response: {"status":403,"now":1723444875927}::{"message":"Access token missing"}
+2024-08-12 13:42:07::error::/v1/api/user/me::380ee802-05cb-47d9-9002-0d975c239a28::403 - 0ms - Response: {"status":403,"now":1723444927239}::{"message":"Access token missing"}
+2024-08-12 13:42:07::error::/v1/api/post/readPost/commisison-services::76d1e4ba-d2d6-4131-8245-fc776a0c5c1f::403 - 0ms - Response: {"status":403,"now":1723444927246}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:42:09::error::/v1/api/user/me::5b3c566f-c6fc-404d-bc8c-9b461c2b530b::403 - 0ms - Response: {"status":403,"now":1723444929008}::{"message":"Access token missing"}
+2024-08-12 13:42:10::error::/v1/api/user/me::2fcff687-e2f0-4b0a-8186-db159715197b::403 - 0ms - Response: {"status":403,"now":1723444930966}::{"message":"Access token missing"}
+2024-08-12 13:42:11::error::/v1/api/user/me::1fc26e71-f28b-4bef-b704-fc44b074613e::403 - 0ms - Response: {"status":403,"now":1723444931471}::{"message":"Access token missing"}
+2024-08-12 13:42:15::error::/v1/api/user/me::1fb18a22-b051-46d7-a98a-619758557167::403 - 0ms - Response: {"status":403,"now":1723444935909}::{"message":"Access token missing"}
+2024-08-12 13:42:16::error::/v1/api/user/me::64e0864a-6960-444f-b126-34f46f0bb295::403 - 0ms - Response: {"status":403,"now":1723444936062}::{"message":"Access token missing"}
+2024-08-12 13:42:24::error::/v1/api/post/readPost/commisison-services::c94027f0-07c7-4176-9dff-447163d6c04e::403 - 0ms - Response: {"status":403,"now":1723444944747}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:42:58::error::/v1/api/post/readPost/commisison-services::7192cfe1-09c9-4300-ab45-ee0ff3a54a4d::403 - 0ms - Response: {"status":403,"now":1723444978763}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:43:16::error::/v1/api/post/readPost/commisison-services::d0a87025-a4bf-42f1-b770-828f261d6d94::403 - 0ms - Response: {"status":403,"now":1723444996751}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:43:17::error::/v1/api/user/me::af2c87b5-c5ab-4bbb-98f6-16a933ec56fe::403 - 0ms - Response: {"status":403,"now":1723444997896}::{"message":"Access token missing"}
+2024-08-12 13:43:19::error::/v1/api/user/me::2fb64c73-df29-4f46-ad90-f40d98ff84c7::403 - 0ms - Response: {"status":403,"now":1723444999574}::{"message":"Access token missing"}
+2024-08-12 13:43:19::error::/v1/api/post/readPost/commisison-services::96c1a531-9a2c-4ec7-9e23-f52ff491fb56::403 - 0ms - Response: {"status":403,"now":1723444999817}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 13:43:35::error::/v1/api/user/me::1fafaf79-696a-406d-87dd-7672f4aedf8b::403 - 0ms - Response: {"status":403,"now":1723445015398}::{"message":"Access token missing"}
+2024-08-12 13:43:39::error::/v1/api/user/me::96a9516c-94b9-4a2c-a839-d4e8f9185ca6::403 - 0ms - Response: {"status":403,"now":1723445019017}::{"message":"Access token missing"}
+2024-08-12 13:44:03::error::/v1/api/user/me::49f7b307-dd59-44ed-b76f-b9d884c28ef6::403 - 0ms - Response: {"status":403,"now":1723445043570}::{"message":"Access token missing"}
+2024-08-12 13:44:05::error::/v1/api/user/me::11b32dca-bab0-446e-849d-85121fd961aa::403 - 0ms - Response: {"status":403,"now":1723445045728}::{"message":"Access token missing"}
+2024-08-12 13:44:07::error::/v1/api/user/me::c820795a-240f-4ea1-91f8-2f89a20ca49b::403 - 0ms - Response: {"status":403,"now":1723445047942}::{"message":"Access token missing"}
+2024-08-12 13:44:12::error::/v1/api/user/me::485883f2-9ff6-4e24-90cd-74f6fac71a3e::403 - 0ms - Response: {"status":403,"now":1723445052348}::{"message":"Access token missing"}
+2024-08-12 13:44:46::error::/v1/api/user/me::250f37cb-f4e8-4cf3-9769-1a869dcfdfde::403 - 0ms - Response: {"status":403,"now":1723445086259}::{"message":"Access token missing"}
+2024-08-12 13:44:57::error::/v1/api/user/me::e2a495f3-7c85-49f1-832e-9852bbb80d4d::403 - 0ms - Response: {"status":403,"now":1723445097872}::{"message":"Access token missing"}
+2024-08-12 13:45:05::error::/v1/api/user/me::63aaeb60-9e7b-40bc-b0b9-3361ff27880b::403 - 0ms - Response: {"status":403,"now":1723445105606}::{"message":"Access token missing"}
+2024-08-12 13:45:10::error::/v1/api/user/me::595b6508-2a39-4c61-b865-e4543c847249::403 - 0ms - Response: {"status":403,"now":1723445110684}::{"message":"Access token missing"}
+2024-08-12 13:45:11::error::/v1/api/user/me::f80da15b-f670-4b38-97d4-a37c366c396e::403 - 0ms - Response: {"status":403,"now":1723445111867}::{"message":"Access token missing"}
+2024-08-12 13:45:18::error::/v1/api/user/me::4780202e-1bfd-4451-93ce-0bb491022719::403 - 0ms - Response: {"status":403,"now":1723445118173}::{"message":"Access token missing"}
+2024-08-12 13:45:25::error::/v1/api/user/me::2ffff85c-ad1c-4168-8608-277fcf8fc442::403 - 0ms - Response: {"status":403,"now":1723445125169}::{"message":"Access token missing"}
+2024-08-12 13:45:36::error::/v1/api/user/me::2ea8ca89-3e63-4604-a2f4-a7ec77bc7c30::403 - 0ms - Response: {"status":403,"now":1723445136426}::{"message":"Access token missing"}
+2024-08-12 13:45:59::error::/v1/api/user/me::e5b076eb-5c54-474a-ab0a-4f8708cb6484::403 - 0ms - Response: {"status":403,"now":1723445159283}::{"message":"Access token missing"}
+2024-08-12 13:46:16::error::/v1/api/user/me::333909d0-d7b8-4b9b-ae67-357d81dc3927::403 - 0ms - Response: {"status":403,"now":1723445176904}::{"message":"Access token missing"}
+2024-08-12 13:46:47::error::/v1/api/user/me::99ead900-79be-420d-8e03-1fb66badcbb7::403 - 0ms - Response: {"status":403,"now":1723445207290}::{"message":"Access token missing"}
+2024-08-12 13:46:56::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::796cc4eb-2038-4378-9ada-794a8e39725d::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:46:58::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::b5cd453e-68e4-4f16-9b8f-a1743f1e92f5::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:53:14::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::785a16b4-eb9d-41ad-a88a-2c73f9f0270a::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:55:23::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::95058a97-9fed-44eb-b48d-999f2a6f8ecf::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:55:24::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::f08cff76-3197-453c-bd8f-640859228cfe::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:55:33::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::96376e3a-58ff-4996-8f9a-fdb3236e6136::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:55:40::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::3635c211-4dec-4c03-b345-aede43d6532e::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:55:50::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::84990d5e-389c-4d16-8a09-4766775aa25c::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:57:35::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::e03de447-14a3-4d52-a3db-d825dd04b330::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 13:58:31::error::/v1/api/conversation/readConversationWithOtherMember/66a5f1b254ac59de697b59f9::f36ba037-ba96-4f21-8da1-7a118bf9710a::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-08-12 14:09:55::error::/v1/api/order/createOrder::2c0677d6-8efc-4122-b845-55777dbc3449::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 14:13:32::error::/v1/api/order/createOrder::1a14cc44-3373-45cb-9d38-79d2903dba42::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 14:14:04::error::/v1/api/order/createOrder::bbaa96ce-7640-45f1-9358-b269cdf31b24::undefined - NaNms - Response: {}::{"message":"commissionService.findById is not a function"}
+2024-08-12 14:24:03::error::/v1/api/post/readPost/66a5c7ffdea404a988c917ac::f072435e-3bcf-4fee-be1f-2b0f48e554cc::403 - 0ms - Response: {"status":403,"now":1723447443213}::{"message":"Xem tác phẩm không thành công"}
+2024-08-12 14:26:41::error::/v1/api/user/me::77976f10-0d54-40ef-914c-67b78f8cafae::403 - 0ms - Response: {"status":403,"now":1723447601808}::{"message":"Access token missing"}
+2024-08-12 14:26:49::error::/v1/api/user/me::2dfba0c2-b659-49ed-891d-61630ad29cac::403 - 0ms - Response: {"status":403,"now":1723447609492}::{"message":"Access token missing"}
+2024-08-12 14:26:54::error::/v1/api/user/me::922711c5-1722-4301-a05b-1075ebeab6cc::403 - 0ms - Response: {"status":403,"now":1723447614604}::{"message":"Access token missing"}
+2024-08-12 14:27:27::error::/v1/api/user/me::60b3aad6-5d98-47a0-8bba-6f80b7c4dcaa::403 - 0ms - Response: {"status":403,"now":1723447647883}::{"message":"Access token missing"}
+2024-08-12 14:28:46::error::/v1/api/user/me::9afe7a8f-cbf3-426e-9ef2-55527f2bff64::403 - 0ms - Response: {"status":403,"now":1723447726765}::{"message":"Access token missing"}
+2024-08-12 14:30:27::error::/v1/api/user/me::ebfd91f5-feeb-4c7b-ad29-0af9c3e037f5::403 - 0ms - Response: {"status":403,"now":1723447827736}::{"message":"Access token missing"}
+2024-08-12 14:30:29::error::/v1/api/user/me::08c12299-f67f-4c41-87a3-59b28d4f006b::403 - 0ms - Response: {"status":403,"now":1723447829107}::{"message":"Access token missing"}
+2024-08-12 14:30:43::error::/v1/api/user/me::40c4effb-79cc-491d-80a1-d51fbf6de3bf::403 - 0ms - Response: {"status":403,"now":1723447843296}::{"message":"Access token missing"}
+2024-08-12 14:31:02::error::/v1/api/user/me::feaa6b3b-6404-4d3c-acf8-4cf368fe0f03::403 - 0ms - Response: {"status":403,"now":1723447862192}::{"message":"Access token missing"}
+2024-08-12 14:31:03::error::/v1/api/user/me::36d880f5-55d3-44f7-8473-97f530d567ee::403 - 0ms - Response: {"status":403,"now":1723447863754}::{"message":"Access token missing"}
+2024-08-12 14:31:12::error::/v1/api/user/me::689cfb7d-01cc-4174-b520-2c63cd1a473d::403 - 0ms - Response: {"status":403,"now":1723447872809}::{"message":"Access token missing"}
+2024-08-12 14:31:12::error::/v1/api/user/me::73210188-22dc-4710-af0a-92d13e62be48::403 - 0ms - Response: {"status":403,"now":1723447872935}::{"message":"Access token missing"}
+2024-08-12 14:31:21::error::/v1/api/user/me::f6a9cce2-2cff-4d78-9481-80b170a17a06::403 - 0ms - Response: {"status":403,"now":1723447881739}::{"message":"Access token missing"}
+2024-08-12 14:31:33::error::/v1/api/user/me::5638aa11-d9a4-4946-a882-aa76f050213c::403 - 0ms - Response: {"status":403,"now":1723447893994}::{"message":"Access token missing"}
+2024-08-12 14:31:41::error::/v1/api/user/me::ee6662a4-09f2-4d9c-91bf-91b264cab203::403 - 0ms - Response: {"status":403,"now":1723447901591}::{"message":"Access token missing"}
+2024-08-12 14:31:47::error::/v1/api/user/me::4958ae2d-f5dc-43e0-b8f9-18b6b16324c3::403 - 0ms - Response: {"status":403,"now":1723447907210}::{"message":"Access token missing"}
+2024-08-12 14:31:49::error::/v1/api/user/me::ff45cbcf-d520-4810-9c40-503c9498b288::403 - 0ms - Response: {"status":403,"now":1723447909115}::{"message":"Access token missing"}
+2024-08-12 14:31:54::error::/v1/api/user/me::2fb75a6b-4c2c-4684-9cbd-5bfa4783bdf3::403 - 0ms - Response: {"status":403,"now":1723447914687}::{"message":"Access token missing"}
+2024-08-12 14:32:01::error::/v1/api/user/me::628b4d82-59b4-4ea0-afc2-e4f8f66617fc::403 - 0ms - Response: {"status":403,"now":1723447921515}::{"message":"Access token missing"}
+2024-08-12 14:32:08::error::/v1/api/user/me::18ce19cc-0d2d-401f-a8fb-d757ddc09835::403 - 0ms - Response: {"status":403,"now":1723447928768}::{"message":"Access token missing"}
+2024-08-12 14:32:08::error::/v1/api/user/me::0ad96e64-febd-4d75-ab56-01fde4cc5bf5::403 - 0ms - Response: {"status":403,"now":1723447928784}::{"message":"Access token missing"}
+2024-08-12 14:32:10::error::/v1/api/user/me::14c06dd1-6cc5-4498-bb8a-4b61da1edf66::403 - 1ms - Response: {"status":403,"now":1723447930000}::{"message":"Access token missing"}
+2024-08-12 14:32:11::error::/v1/api/user/me::755a834f-5f6c-4e84-a2f5-f66d515bd308::403 - 0ms - Response: {"status":403,"now":1723447931869}::{"message":"Access token missing"}
+2024-08-12 14:32:12::error::/v1/api/user/me::f8cf30fa-1915-4cc2-a102-0e6dac3c05cc::403 - 0ms - Response: {"status":403,"now":1723447932922}::{"message":"Access token missing"}
+2024-08-12 14:32:23::error::/v1/api/user/me::fec34da5-4381-4ac5-b8a8-8db018388c77::403 - 0ms - Response: {"status":403,"now":1723447943676}::{"message":"Access token missing"}
+2024-08-12 14:32:25::error::/v1/api/user/me::19fe521d-fc34-462f-a0ff-3110ed8ea158::403 - 0ms - Response: {"status":403,"now":1723447945133}::{"message":"Access token missing"}
+2024-08-12 14:32:28::error::/v1/api/user/me::cdba2ff6-6a71-45a8-9040-918095e8dabb::403 - 0ms - Response: {"status":403,"now":1723447948313}::{"message":"Access token missing"}
+2024-08-12 14:32:28::error::/v1/api/user/me::5d3b004d-f0f6-44bc-8951-bc2833a82d54::403 - 0ms - Response: {"status":403,"now":1723447948580}::{"message":"Access token missing"}
+2024-08-12 14:33:30::error::/v1/api/user/me::f5530066-98af-41c4-831c-caf33b244743::403 - 0ms - Response: {"status":403,"now":1723448010119}::{"message":"Access token missing"}
+2024-08-12 14:33:47::error::/v1/api/user/me::baff93a1-d0ef-4387-85f2-41f003ba2da1::403 - 0ms - Response: {"status":403,"now":1723448027048}::{"message":"Access token missing"}
+2024-08-12 14:33:58::error::/v1/api/user/me::85b1aa3d-5459-46ee-af07-709c4c0e8cf9::403 - 1ms - Response: {"status":403,"now":1723448038375}::{"message":"Access token missing"}
+2024-08-12 14:33:59::error::/v1/api/user/me::0b25cad9-7070-4b5b-b1ea-6dd6d5fdfffd::403 - 1ms - Response: {"status":403,"now":1723448039830}::{"message":"Access token missing"}
+2024-08-12 14:34:08::error::/v1/api/user/me::f6999544-f2ed-46e8-90f0-b583bfb57a69::403 - 0ms - Response: {"status":403,"now":1723448048566}::{"message":"Access token missing"}
+2024-08-12 14:34:23::error::/v1/api/user/me::8d74fba5-332e-4794-8ad0-2be25921da3c::403 - 0ms - Response: {"status":403,"now":1723448063671}::{"message":"Access token missing"}
+2024-08-12 14:34:32::error::/v1/api/user/me::41f419c3-c130-41f4-898a-b3f0abd7cbbd::403 - 1ms - Response: {"status":403,"now":1723448072247}::{"message":"Access token missing"}
+2024-08-12 14:34:37::error::/v1/api/user/me::9db134cc-ce14-410f-8735-ddc69cff0d99::403 - 0ms - Response: {"status":403,"now":1723448077882}::{"message":"Access token missing"}
+2024-08-12 14:34:44::error::/v1/api/user/me::d5508999-edc2-424e-a656-0ca47061fb27::403 - 0ms - Response: {"status":403,"now":1723448084274}::{"message":"Access token missing"}
+2024-08-12 14:34:52::error::/v1/api/user/me::e551411c-499a-48b1-9acf-e7ce104923b9::403 - 0ms - Response: {"status":403,"now":1723448092508}::{"message":"Access token missing"}
+2024-08-12 14:35:14::error::/v1/api/user/me::05cd2e63-2e97-4b17-bec6-f9430a287a5b::403 - 0ms - Response: {"status":403,"now":1723448114145}::{"message":"Access token missing"}
+2024-08-12 14:35:16::error::/v1/api/user/me::20a62398-9b3c-4cc9-9a65-6c69ce945e44::403 - 1ms - Response: {"status":403,"now":1723448116439}::{"message":"Access token missing"}
+2024-08-12 14:35:18::error::/v1/api/user/me::57d96783-0e4c-425c-882c-f4f6ce0ce212::403 - 1ms - Response: {"status":403,"now":1723448118529}::{"message":"Access token missing"}
+2024-08-12 16:50:08::error::/v1/api/user/me::4ca49026-6454-4480-9155-741d9b232e7a::403 - 0ms - Response: {"status":403,"now":1723456208916}::{"message":"Access token missing"}
+2024-08-12 16:50:23::error::/v1/api/user/me::bae80e91-2511-4494-b8f1-3294e7c10e68::403 - 0ms - Response: {"status":403,"now":1723456223310}::{"message":"Access token missing"}
+2024-08-12 16:50:34::error::/v1/api/order/createOrder::93e95240-5867-4532-bcc8-3f36da9ac6be::401 - 1ms - Response: {"status":401,"now":1723456234514}::{"message":"You are not authenticated!"}
+2024-08-12 16:51:01::error::/v1/api/order/createOrder::4028cd58-84a5-4925-8fef-f32334068160::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 16:51:45::error::/v1/api/order/createOrder::d63eb81e-f29f-4724-abcf-5ffcd3f3e992::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 16:52:29::error::/v1/api/order/createOrder::36c2b17c-f2fa-4b43-8234-a0d5b85342e7::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 16:53:17::error::/v1/api/order/createOrder::aeb1572f-9a16-4f86-b9d9-73e6e7c21955::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 16:53:34::error::/v1/api/order/createOrder::fd6beaa7-d34a-4d5f-ae8a-395b7f8a9b3f::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 17:03:57::error::/v1/api/order/createOrder::61e7e6d9-7ae1-47a0-bb9f-d327127a29c9::403 - 1ms - Response: {"status":403,"now":1723457037939}::{"message":"File upload or database save failed"}
+2024-08-12 17:04:47::error::/v1/api/order/createOrder::e9b9ab44-cf87-48b3-a1a4-44aa30bb94d2::403 - 1ms - Response: {"status":403,"now":1723457087897}::{"message":"File upload or database save failed"}
+2024-08-12 17:05:32::error::/v1/api/order/createOrder::fb6fb81c-d671-427b-a891-701a537ac3e1::403 - 2ms - Response: {"status":403,"now":1723457132416}::{"message":"File upload or database save failed"}
+2024-08-12 17:14:21::error::/v1/api/user/readUserProfile/undefined::2cfa2697-87bd-4f0e-bd75-cfcb8a1ae40b::undefined - NaNms - Response: {"stringValue":"\"undefined\"","valueType":"string","kind":"ObjectId","value":"undefined","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 17:28:55::error::/v1/api/user/readUserProfile/[object%20Object]::64d77121-cadf-4016-8c6c-34bceb4e30ac::undefined - NaNms - Response: {"stringValue":"\"[object Object]\"","valueType":"string","kind":"ObjectId","value":"[object Object]","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 17:29:03::error::/v1/api/user/readUserProfile/[object%20Object]::4b87c321-fe8b-4544-a53a-08f1648378c3::undefined - NaNms - Response: {"stringValue":"\"[object Object]\"","valueType":"string","kind":"ObjectId","value":"[object Object]","path":"_id","reason":{},"name":"CastError","message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"_id\" for model \"User\""}::{"message":"Cast to ObjectId failed for value \"[object Object]\" (type string) at path \"_id\" for model \"User\""}
+2024-08-12 17:30:16::error::/v1/api/user/me::3dafbfe9-f48a-4da8-9cb7-14115bee8e45::403 - 0ms - Response: {"status":403,"now":1723458616861}::{"message":"Access token missing"}
+2024-08-12 17:30:23::error::/v1/api/user/me::ea5d2f02-e770-4b5b-9479-11292a93bdb4::403 - 0ms - Response: {"status":403,"now":1723458623016}::{"message":"Access token missing"}
+2024-08-12 17:30:33::error::/v1/api/user/me::7f91366d-44e9-45a7-9f38-810f8d0fdc81::403 - 0ms - Response: {"status":403,"now":1723458633283}::{"message":"Access token missing"}
+2024-08-12 17:30:36::error::/v1/api/user/me::624ec2ca-b2d6-49f7-8a2a-9600dea4553f::403 - 0ms - Response: {"status":403,"now":1723458636011}::{"message":"Access token missing"}
+2024-08-12 17:30:36::error::/v1/api/user/me::bfe64120-0100-44ed-ab5d-aa1117d249cd::403 - 0ms - Response: {"status":403,"now":1723458636296}::{"message":"Access token missing"}
+2024-08-12 17:30:46::error::/v1/api/user/me::a0f60240-650d-4520-a9df-0dc0691558ad::403 - 0ms - Response: {"status":403,"now":1723458646940}::{"message":"Access token missing"}
+2024-08-12 17:30:47::error::/v1/api/user/me::c420e335-5111-413f-aaf6-86b8d48fb9bd::403 - 0ms - Response: {"status":403,"now":1723458647083}::{"message":"Access token missing"}
+2024-08-12 17:30:49::error::/v1/api/user/me::d623db13-22ff-4266-8567-18dee17f86ee::403 - 0ms - Response: {"status":403,"now":1723458649254}::{"message":"Access token missing"}
+2024-08-12 17:30:49::error::/v1/api/user/me::e49674c0-9936-4e9a-85bc-3f2f490341ea::403 - 0ms - Response: {"status":403,"now":1723458649419}::{"message":"Access token missing"}
+2024-08-12 17:31:13::error::/v1/api/user/me::8c165bc0-e902-49b3-a18d-7261d1d60c70::403 - 0ms - Response: {"status":403,"now":1723458673456}::{"message":"Access token missing"}
+2024-08-12 17:31:45::error::/v1/api/user/me::e652f896-bed1-4060-8416-1f951a1154ab::403 - 1ms - Response: {"status":403,"now":1723458705459}::{"message":"Access token missing"}
+2024-08-12 17:31:49::error::/v1/api/user/me::749199e1-d4d9-43f9-8882-7ac7f5a28ea2::403 - 1ms - Response: {"status":403,"now":1723458709078}::{"message":"Access token missing"}
+2024-08-12 17:32:00::error::/v1/api/user/me::d206e483-7ffd-48b2-9d49-5189702d54f8::403 - 0ms - Response: {"status":403,"now":1723458720365}::{"message":"Access token missing"}
+2024-08-12 17:32:01::error::/v1/api/user/me::c932b587-56d9-4450-9436-a732c6f1720c::403 - 0ms - Response: {"status":403,"now":1723458721030}::{"message":"Access token missing"}
+2024-08-12 17:32:24::error::/v1/api/user/me::37d0529a-5379-4597-a4e9-b647098e34e8::403 - 0ms - Response: {"status":403,"now":1723458744937}::{"message":"Access token missing"}
+2024-08-12 17:32:25::error::/v1/api/user/me::e32bc13b-84cc-47f0-9ee1-7294a77f8fca::403 - 0ms - Response: {"status":403,"now":1723458745253}::{"message":"Access token missing"}
+2024-08-12 17:32:37::error::/v1/api/user/me::7410b169-cf40-46a6-b964-91ec3fbb472a::403 - 0ms - Response: {"status":403,"now":1723458757178}::{"message":"Access token missing"}
+2024-08-12 17:32:46::error::/v1/api/user/me::3159e9c6-e735-464e-9680-81540b22f98a::403 - 0ms - Response: {"status":403,"now":1723458766580}::{"message":"Access token missing"}
+2024-08-12 17:33:17::error::/v1/api/user/me::2a675aa2-352b-47ba-ae86-f3484d27fd86::403 - 0ms - Response: {"status":403,"now":1723458797256}::{"message":"Access token missing"}
+2024-08-12 17:33:24::error::/v1/api/user/me::f954b94b-544d-4818-9110-4794f103e7af::403 - 1ms - Response: {"status":403,"now":1723458804073}::{"message":"Access token missing"}
+2024-08-12 17:33:25::error::/v1/api/user/me::114297d2-4676-48d5-ba13-328e31906306::403 - 0ms - Response: {"status":403,"now":1723458805805}::{"message":"Access token missing"}
+2024-08-12 17:33:26::error::/v1/api/user/me::d352c298-6644-4770-83dd-c0ef2fa696f0::403 - 1ms - Response: {"status":403,"now":1723458806119}::{"message":"Access token missing"}
+2024-08-12 17:33:54::error::/v1/api/user/me::c90bc733-3f86-4e85-ad82-ff01a1facf86::403 - 1ms - Response: {"status":403,"now":1723458834938}::{"message":"Access token missing"}
+2024-08-12 17:33:57::error::/v1/api/user/me::cae56832-72d5-47ea-ba56-4e19aacecfe9::403 - 0ms - Response: {"status":403,"now":1723458837315}::{"message":"Access token missing"}
+2024-08-12 17:34:00::error::/v1/api/user/me::f1724ecd-3296-4939-8054-f6b8ead4e7e3::403 - 0ms - Response: {"status":403,"now":1723458840404}::{"message":"Access token missing"}
+2024-08-12 17:34:09::error::/v1/api/user/me::af906d76-b57f-4037-ba7e-b0d10fed6c82::403 - 0ms - Response: {"status":403,"now":1723458849322}::{"message":"Access token missing"}
+2024-08-12 17:34:42::error::/v1/api/user/me::cc53ee32-85d3-4f50-b36a-feaf30456500::403 - 0ms - Response: {"status":403,"now":1723458882117}::{"message":"Access token missing"}
+2024-08-12 17:34:46::error::/v1/api/user/me::9aa4ccbf-861b-48f3-8589-27406440360d::403 - 0ms - Response: {"status":403,"now":1723458886904}::{"message":"Access token missing"}
+2024-08-12 17:34:47::error::/v1/api/user/me::615cf081-800b-41a5-95e3-926cc39d6c12::403 - 0ms - Response: {"status":403,"now":1723458887280}::{"message":"Access token missing"}
+2024-08-12 17:35:52::error::/v1/api/user/me::c0ca3cc4-8841-4d5b-84a3-9f2e87dbebf0::403 - 0ms - Response: {"status":403,"now":1723458952410}::{"message":"Access token missing"}
+2024-08-12 17:35:57::error::/v1/api/user/me::7127cdb1-b786-405a-b7f1-adf7eb288b93::403 - 0ms - Response: {"status":403,"now":1723458957747}::{"message":"Access token missing"}
+2024-08-12 17:36:12::error::/v1/api/user/me::60323f14-d2f7-4564-8c1f-1fb92a687111::403 - 0ms - Response: {"status":403,"now":1723458972974}::{"message":"Access token missing"}
+2024-08-12 17:38:00::error::/v1/api/user/me::b228806e-9ea4-4d89-8f45-9ffb87cf8ea5::403 - 0ms - Response: {"status":403,"now":1723459080306}::{"message":"Access token missing"}
+2024-08-12 17:38:06::error::/v1/api/user/me::70566978-8b8b-4423-8bf0-b0140a4a9053::403 - 0ms - Response: {"status":403,"now":1723459086485}::{"message":"Access token missing"}
+2024-08-12 17:38:25::error::/v1/api/user/me::be5fde31-df38-4dc5-aa04-d023028d9953::403 - 0ms - Response: {"status":403,"now":1723459105988}::{"message":"Access token missing"}
+2024-08-12 17:38:27::error::/v1/api/user/me::d2615718-0995-4611-9ad1-8d3fc7399b36::403 - 0ms - Response: {"status":403,"now":1723459107920}::{"message":"Access token missing"}
+2024-08-12 17:38:30::error::/v1/api/user/me::aa70a194-b601-4fa9-a3a4-6fc46fb4a499::403 - 0ms - Response: {"status":403,"now":1723459110737}::{"message":"Access token missing"}
+2024-08-12 17:38:32::error::/v1/api/user/me::fcdea32a-2d51-4299-abb5-6873c9720578::403 - 0ms - Response: {"status":403,"now":1723459112040}::{"message":"Access token missing"}
+2024-08-12 17:54:11::error::/v1/api/user/me::2a33fa7f-18d5-430d-812e-14a8bdf66545::403 - 0ms - Response: {"status":403,"now":1723460051827}::{"message":"Access token missing"}
+2024-08-12 17:57:12::error::/v1/api/user/me::7e382a61-0fbe-4e2e-ba3b-f3477b7acc79::403 - 0ms - Response: {"status":403,"now":1723460232346}::{"message":"Access token missing"}
+2024-08-12 17:57:23::error::/v1/api/user/me::15b69a43-bde6-4ec0-88e8-0f6f826cb769::403 - 1ms - Response: {"status":403,"now":1723460243169}::{"message":"Access token missing"}
+2024-08-12 17:57:23::error::/v1/api/user/me::9e440572-ea16-469c-ba80-45ef627a1ed7::403 - 0ms - Response: {"status":403,"now":1723460243814}::{"message":"Access token missing"}
+2024-08-12 17:57:29::error::/v1/api/user/me::3a86b863-1ae3-4868-a89a-15d2cc8a8471::403 - 0ms - Response: {"status":403,"now":1723460249844}::{"message":"Access token missing"}
+2024-08-12 17:57:46::error::/v1/api/user/me::d0e2c7f4-d310-41c3-bf30-40c95118f348::403 - 0ms - Response: {"status":403,"now":1723460266545}::{"message":"Access token missing"}
+2024-08-12 17:57:47::error::/v1/api/user/me::e85d91a7-acdb-44cd-bda6-312a10b3b576::403 - 0ms - Response: {"status":403,"now":1723460267536}::{"message":"Access token missing"}
+2024-08-12 17:57:49::error::/v1/api/user/me::95b92b24-35f4-4608-af8b-bfddb3d499fe::403 - 0ms - Response: {"status":403,"now":1723460269250}::{"message":"Access token missing"}
+2024-08-12 17:57:55::error::/v1/api/user/me::af32a9a8-245b-4da8-b1c8-31fbe651ab1a::403 - 0ms - Response: {"status":403,"now":1723460275501}::{"message":"Access token missing"}
+2024-08-12 17:57:56::error::/v1/api/user/me::10c9bb22-b0eb-4d0e-88f6-4a92df2b38b4::403 - 0ms - Response: {"status":403,"now":1723460276279}::{"message":"Access token missing"}
+2024-08-12 17:58:06::error::/v1/api/user/me::c66f7271-ae87-4793-bd3d-2b16cb24a42b::403 - 0ms - Response: {"status":403,"now":1723460286063}::{"message":"Access token missing"}
+2024-08-12 17:58:06::error::/v1/api/user/me::7743506d-7f5a-47f1-9b0b-0d3c2c3caeca::403 - 0ms - Response: {"status":403,"now":1723460286865}::{"message":"Access token missing"}
+2024-08-12 17:58:18::error::/v1/api/user/me::4cf06e77-4d2f-4d15-b58b-fa4919b28847::403 - 0ms - Response: {"status":403,"now":1723460298136}::{"message":"Access token missing"}
+2024-08-12 17:58:18::error::/v1/api/user/me::a33e3f36-49b3-4ee2-abcf-4bd1d2f8d10a::403 - 0ms - Response: {"status":403,"now":1723460298923}::{"message":"Access token missing"}
+2024-08-12 18:00:45::error::/v1/api/user/me::ba9f9eb9-67f5-4053-aad3-04febc3f3d1d::403 - 0ms - Response: {"status":403,"now":1723460445310}::{"message":"Access token missing"}
+2024-08-12 18:00:45::error::/v1/api/user/me::f5a0dd30-e5a6-47a0-8302-b3f47211d76a::403 - 0ms - Response: {"status":403,"now":1723460445935}::{"message":"Access token missing"}
+2024-08-12 18:00:46::error::/v1/api/user/me::27162950-6708-45c3-9cb0-f1ff4ee9cc6f::403 - 0ms - Response: {"status":403,"now":1723460446361}::{"message":"Access token missing"}
+2024-08-12 18:00:46::error::/v1/api/user/me::f9b100ca-81a2-4225-8330-79a7e045c2bf::403 - 0ms - Response: {"status":403,"now":1723460446836}::{"message":"Access token missing"}
+2024-08-12 18:00:51::error::/v1/api/user/me::54847a41-d202-498c-80af-0ffc1efdc3db::403 - 1ms - Response: {"status":403,"now":1723460451045}::{"message":"Access token missing"}
+2024-08-12 18:00:55::error::/v1/api/user/me::7ffa2734-5dce-472c-a499-220129e8c5d7::403 - 0ms - Response: {"status":403,"now":1723460455351}::{"message":"Access token missing"}
+2024-08-12 18:01:01::error::/v1/api/user/me::1d1cc99a-f594-4c6a-a8a9-73848dcdb06c::403 - 0ms - Response: {"status":403,"now":1723460461461}::{"message":"Access token missing"}
+2024-08-12 18:01:16::error::/v1/api/user/me::8b14ce17-261a-4790-92dc-8cf10ee8ddcc::403 - 0ms - Response: {"status":403,"now":1723460476872}::{"message":"Access token missing"}
+2024-08-12 20:55:10::error::/v1/api/bugReport/createBugReport::ca9ec0d4-06b4-493e-a34e-8a9e1445bad8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-12 20:55:10::error::/v1/api/bugReport/createBugReport::d44ffb43-39d4-4a01-8dd7-22e7c58e8735::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-12 21:03:41::error::/v1/api/bugReport/createBugReport::abeb234a-c8e1-48e3-901d-e2447b1f1220::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-12 21:03:41::error::/v1/api/bugReport/createBugReport::9f6a8d6a-e370-4066-921f-b93759462969::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-08-12 22:34:03::error::/v1/api/post/readPost/help_center::27573459-0660-44ef-9b43-b7d87d44dc7d::403 - 1ms - Response: {"status":403,"now":1723476843292}::{"message":"Xem tác phẩm không thành công"}

@@ -21,12 +21,19 @@ import HelpCenter from "./pages/helpCenter/HelpCenter";
 import InMaintainance from "./pages/inMaintainance/InMaintainance";
 import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
-import CommissionServices from "./components/commissionServices/CommissionServices";
+import ExploreCommissionServices from "./explore/exploreCommissionServices/ExploreCommissionServices";
 import Layout from "./pages/layout/Layout.jsx";
+import Challenge from "./pages/challenge/Challenge.jsx";
+
+// Statics
+import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
+import Glaze from "./statics/glaze/Glaze.jsx";
+import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
+
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
-import LoginPage from "./pages/Login/LoginPage";
+
 // Dashboard
 import DashboardLayout from "./dashboard/dashboardLayout/DashboardLayout";
 import OverviewDashboard from "./dashboard/overviewDashboard/OverviewDashboard";
@@ -52,8 +59,18 @@ const routes = [
     element: <InDevelopment />,
   },
   {
-    path:'/login-test',
-    element:<LoginPage />
+    path: "/statics",
+    element: <StaticLayout />,
+    children: [
+      {
+        path: "/statics/glaze",
+        element: <Glaze />,
+      },
+      {
+        path: "/statics/about-team",
+        element: <AboutTeam />,
+      },
+    ]
   },
   {
     path: "/users/:userId",
@@ -108,25 +125,26 @@ const routes = [
     element: <ExploreLayout />,
     children: [
       {
-        path: "/",
-        element: <ExplorePosts showPosts={true} />,
-        children: [
-          {
-            path: "/:postId",
-            element: <RenderPost />,
-          },
-        ],
+        path: "/commission-services",
+        element: <ExploreCommissionServices showCommissionServices={true} />,
       },
       {
         path: "/talents",
         element: <Talents showTalents={true} />,
       },
       {
-        path: "/commissionServices",
-        element: <CommissionServices showCommissionServices={true} />,
+        path: "/",
+        element: <ExplorePosts showPosts={true} />,
+        children: [
+          {
+            path: "/posts/:postId",
+            element: <RenderPost />,
+          },
+        ],
       },
     ],
   },
+
   {
     path: "/",
     element: <Layout />,
@@ -137,7 +155,7 @@ const routes = [
       },
       {
         path: "/challenges",
-        element: <InDevelopment />,
+        element: <Challenge />,
       },
       {
         path: "/newss/:newsId",
@@ -147,7 +165,7 @@ const routes = [
   },
   {
     path: "/dashboard/",
-    element: <DashboardLayout />,
+    element: <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /></ProtectedRoute>,
     children: [
       {
         path: "/dashboard/overview",

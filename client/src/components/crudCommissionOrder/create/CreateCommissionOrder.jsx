@@ -23,10 +23,9 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const { setModalInfo } = useModal();
     const { socket, userInfo } = useAuth();
-    const { userId: talentChosenId } = useParams();
 
     const [inputs, setInputs] = useState({
-        fileTypes: [],
+        fileFormats: [],
     });
 
     const [errors, setErrors] = useState({});
@@ -85,30 +84,29 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-
-        if (type === 'checkbox') {
-            if (name === 'fileTypes') {
-                setInputs(prevState => ({
+        if (type === "checkbox") {
+            if (name === "fileFormats") {
+                setInputs((prevState) => ({
                     ...prevState,
-                    fileTypes: checked
-                        ? [...prevState.fileTypes, value]
-                        : prevState.fileTypes.filter(type => type !== value)
+                    fileFormats: checked
+                        ? [...prevState.fileFormats, value]  // add value to array
+                        : prevState.fileFormats.filter((type) => type !== value),  // remove value from array
                 }));
             } else {
-                setInputs(prevState => ({
+                setInputs((prevState) => ({
                     ...prevState,
-                    [name]: checked
+                    [name]: checked,
                 }));
             }
-        } else if (type === 'radio') {
-            setInputs(prevState => ({
+        } else if (type === "radio") {
+            setInputs((prevState) => ({
                 ...prevState,
-                [name]: value
+                [name]: value,
             }));
         } else {
-            setInputs(prevState => ({
+            setInputs((prevState) => ({
                 ...prevState,
-                [name]: value
+                [name]: value,
             }));
         }
     };
@@ -175,7 +173,6 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
         if (isDirect) {
             inputs.isDirect = true;
-            inputs.talentChosenId = talentChosenId;
             inputs.commissionServiceId = commissionService._id;
         } else {
             inputs.isDirect = false;
@@ -196,6 +193,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                 setIsSuccessCreateCommissionOrder(true);
 
                 if (isDirect) {
+                    const talentChosenId = commissionService?.talentId;
                     const inputs = { receiverId: talentChosenId, type: "orderCommission", url: `/users/${talentChosenId}/order-history` }
 
                     const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
@@ -221,7 +219,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
     return (
         <div className="order-commission modal-form type-2" ref={orderCommissionRef} onClick={(e) => { e.stopPropagation() }}>
-            <Link to="/help_center" className="form__help" target="_blank">
+            <Link to="/help-center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg> Trợ giúp
@@ -311,7 +309,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 <textarea
                                     id="description"
                                     name="description"
-                                    value={inputs.description}
+                                    value={inputs?.description}
                                     onChange={handleChange}
                                     className="form-field__input"
                                     placeholder="Mô tả chi tiết yêu cầu của bạn ..."
@@ -356,22 +354,22 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 <label className="form-field__label">
                                     <input
                                         type="radio"
-                                        name="usage"
+                                        name="purpose"
                                         value="personal"
-                                        checked={inputs.usage === 'personal'}
+                                        checked={inputs.purpose === 'personal'}
                                         onChange={handleChange}
                                     /> Mục đích cá nhân
                                 </label>
                                 <label className="form-field__label">
                                     <input
                                         type="radio"
-                                        name="usage"
+                                        name="purpose"
                                         value="commercial"
-                                        checked={inputs.usage === 'commercial'}
+                                        checked={inputs.purpose === 'commercial'}
                                         onChange={handleChange}
                                     /> Mục đích thương mại
                                 </label>
-                                {errors.usage && <span className="form-field__error">{errors.usage}</span>}
+                                {errors.purpose && <span className="form-field__error">{errors.purpose}</span>}
                             </div>
                             <div className="form-field">
                                 <label className="form-field__label">Riêng tư</label>
@@ -403,68 +401,68 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="png"
-                                            checked={inputs.fileTypes.includes('png')}
+                                            checked={inputs.fileFormats.includes('png')}
                                             onChange={handleChange}
                                         /> png
                                     </label>
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="jpg"
-                                            checked={inputs.fileTypes.includes('jpg')}
+                                            checked={inputs.fileFormats.includes('jpg')}
                                             onChange={handleChange}
                                         /> jpg
                                     </label>
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="jpeg"
-                                            checked={inputs.fileTypes.includes('jpeg')}
+                                            checked={inputs.fileFormats.includes('jpeg')}
                                             onChange={handleChange}
                                         /> jpeg
                                     </label>
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="svg"
-                                            checked={inputs.fileTypes.includes('svg')}
+                                            checked={inputs.fileFormats.includes('svg')}
                                             onChange={handleChange}
                                         /> svg
                                     </label>
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="tif"
-                                            checked={inputs.fileTypes.includes('tif')}
+                                            checked={inputs.fileFormats.includes('tif')}
                                             onChange={handleChange}
                                         /> tif
                                     </label>
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="ai"
-                                            checked={inputs.fileTypes.includes('ai')}
+                                            checked={inputs.fileFormats.includes('ai')}
                                             onChange={handleChange}
                                         /> ai
                                     </label>
                                     <label className="form-field__label">
                                         <input
                                             type="checkbox"
-                                            name="fileTypes"
+                                            name="fileFormats"
                                             value="psd"
-                                            checked={inputs.fileTypes.includes('psd')}
+                                            checked={inputs.fileFormats.includes('psd')}
                                             onChange={handleChange}
                                         /> psd
                                     </label>
                                 </div>
-                                {errors.fileTypes && <span className="form-field__error">{errors.fileTypes}</span>}
+                                {errors.fileFormats && <span className="form-field__error">{errors.fileFormats}</span>}
                             </div>
                             <div className="form-field">
                                 <label className="form-field__label">Giá cả</label>

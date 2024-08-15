@@ -15,6 +15,7 @@ import { useSetting } from "../../contexts/setting/SettingContext.jsx";
 export default function Auth() {
     const { userInfo, showMenu, setShowMenu, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, showRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
     const { theme, setTheme } = useSetting();
+    
     // Toggle display menu
     const menuRef = useRef();
 

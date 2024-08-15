@@ -59,6 +59,51 @@
             "date": 1723535192192,
             "name": "src\\logs\\application-2024-08-13.info.log",
             "hash": "aa14ebdffc7c7f31bee4992fee54348bba5de77429a691accbe80dfc7ca90b7e"
+        },
+        {
+            "date": 1722991949672,
+            "name": "src\\logs\\application-2024-08-07.info.log",
+            "hash": "9f091efd69237d0d4b9552c007ecb0841878c25f4673484a12c71bc3f0aef6de"
+        },
+        {
+            "date": 1723098151358,
+            "name": "src\\logs\\application-2024-08-08.info.log",
+            "hash": "465b569aa27691168550c4ac905ae8df15ef2ad104632628abf7564919a36915"
+        },
+        {
+            "date": 1723160296668,
+            "name": "src\\logs\\application-2024-08-09.info.log",
+            "hash": "f136d1d21c756121801bc236053cc7cd3b499a8d7934981d057ef14425214a6f"
+        },
+        {
+            "date": 1723256807686,
+            "name": "src\\logs\\application-2024-08-10.info.log",
+            "hash": "8fefd9fa5dc56520e63e1202f50c810ee41afcf730c4a82e6305d1fa44b3fee6"
+        },
+        {
+            "date": 1723345152939,
+            "name": "src\\logs\\application-2024-08-11.info.log",
+            "hash": "e349f321df9077a7a3d1588df847134f268fe1c3c5278ef9c3ac3fe78bf1d7f8"
+        },
+        {
+            "date": 1723423499778,
+            "name": "src\\logs\\application-2024-08-12.info.log",
+            "hash": "733a4d7084e81c55cadff487a7c1f7799ac2f11598c1489519c0826009ac08ca"
+        },
+        {
+            "date": 1723531053242,
+            "name": "src\\logs\\application-2024-08-13.info.log",
+            "hash": "0bfd242db9e32a3d1ba40892f60fb9f6c9bfaeea38e18b3207f9fd8c9f1083aa"
+        },
+        {
+            "date": 1723599753930,
+            "name": "src\\logs\\application-2024-08-14.info.log",
+            "hash": "376f59fde1935b4dd0e942fe2f5c67f4fc05eb8cf0f49eabacb22a7fcbf820e0"
+        },
+        {
+            "date": 1723689240833,
+            "name": "src\\logs\\application-2024-08-15.info.log",
+            "hash": "7cfd829e21e37de43e491e8a5cfbf91a74fbd06f4f323a7b88848156e9a1a095"
         }
     ],
     "hashType": "sha256"

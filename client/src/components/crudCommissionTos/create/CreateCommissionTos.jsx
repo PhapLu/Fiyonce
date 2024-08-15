@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import {
+    ClassicEditor, ImageInsert,
+    ImageResize,
+    ImageStyle,
+    ImageToolbar,
+    ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
+} from 'ckeditor5';
+import 'ckeditor5/ckeditor5.css';
+
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -15,10 +24,30 @@ import { apiUtils } from "../../../utils/newRequest.js";
 export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setShowCommissionTosView, setOverlayVisible }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
-        content: `<h3>Điều khoản chung</h3>...
-        <h3>Điều khoản thanh toán</h3>...
-        <h3>Điều khoản sử dụng</h3>...
-        <h3>Thời hạn và vận chuyển</h3>...
+        content: `<p>
+        <strong>1. Điều khoản chung:</strong>
+    </p>
+    <p>
+        ...
+    </p>
+    <p>
+        <strong>2. Điều khoản thanh toán:</strong>
+    </p>
+    <p>
+        ...
+    </p>
+    <p>
+        <strong>3. Điều khoản sử dụng:</strong>
+    </p>
+    <p>
+        ...
+    </p>
+    <p>
+        <strong>4. Thời hạn và vận chuyển:</strong>
+    </p>
+    <p>
+        ...
+    </p>
         `
     });
     const [errors, setErrors] = useState({});
@@ -159,7 +188,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
 
     return (
         <div className="create-commission-tos modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation() }}>
-            <Link to="/help_center" className="form__help" target="_blank">
+            <Link to="/help-center" className="form__help" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg> Trợ giúp
@@ -184,7 +213,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
 
                     <p><strong>*Lưu ý:</strong>
                         <br />
-                        Điều khoản dịch vụ giúp bạn bảo vệ quyền lợi pháp lí của mình khi thực hiện công việc trên Pastal, đồng thời thể hiện sự chuyên nghiệp và cam kết giữa dịch vụ của bạn và khách hàng.
+                        Điều khoản dịch vụ thể hiện sự chuyên nghiệp của dịch vụ, đồng thời giúp bạn bảo vệ quyền lợi pháp lí của mình khi làm việc trên Pastal.
                     </p>
                 </div>
             </div>
@@ -201,11 +230,27 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                     <div className="form-field">
                         <label htmlFor="content" className="form-field__label">Nội dung</label>
                         <span name="content" className="form-field__annotation">Thêm nội dung chi tiết điều khoản dịch vụ của bạn</span>
-                        {/* <CKEditor
+                        <CKEditor
                             editor={ClassicEditor}
-                            data={inputs.content}
+                            data={inputs?.content}
                             onChange={handleEditorChange}
-                        /> */}
+                            config={{
+                                plugins: [Essentials, ImageInsert,
+                                    ImageResize,
+                                    ImageStyle,
+                                    ImageToolbar,
+                                    ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
+                                toolbar: {
+                                    items: [
+                                        'bold', 'italic', '|',
+                                        'fontSize', 'fontFamily', 'fontColor', '|'
+                                    ]
+                                },
+                                mention: {
+                                    // Mention configuration
+                                },
+                            }}
+                        />
                         {errors.content && <span className="form-field__error">{errors.content}</span>}
                     </div>
                     <div className="form-field">
@@ -216,8 +261,8 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                         </label>
                         {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                     </div>
-                    <div className="form__button">
-                        <button type="submit" className={`form-field__input btn btn-2 btn-md ${isSubmitCreateCommissionTosLoading ? 'loading' : ''}`} onClick={handleSubmit}>
+                    <div className="form__submit-btn-container">
+                        <button type="submit" className={`form__submit-btn-tem btn btn-2 btn-md ${isSubmitCreateCommissionTosLoading ? 'loading' : ''}`} onClick={handleSubmit}>
                             {isSubmitCreateCommissionTosLoading ? 'Đang xử lí...' : 'Xác nhận'}
                         </button>
                         {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}

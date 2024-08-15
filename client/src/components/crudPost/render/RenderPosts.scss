@@ -36,7 +36,7 @@
     }
 
     .my-masonry-grid_column {
-        padding-left: 16px;
+        padding-left: 20px;
         /* gutter size */
         background-clip: padding-box;
     }
@@ -67,6 +67,7 @@
                 border-radius: 50%;
                 width: 32px;
                 height: 32px;
+                position: relative;
 
                 svg {
                     cursor: pointer;
@@ -75,6 +76,8 @@
                     margin-left: 50%;
                     transform: translate(-50%, -50%);
                 }
+
+
             }
         }
 
@@ -93,7 +96,35 @@
                 width: 32px;
                 height: 32px;
 
-                svg {
+                .show-more-actions {
+                    border-radius: 12px;
+                    padding: 16px 20px;
+                    position: absolute;
+                    background-color: white;
+                    border-radius: 8px;
+                    bottom: 40px;
+                    right: 0;
+                    z-index: 10000;
+                    width: 240px;
+                    box-shadow: var(--box-shadow-2);
+
+                    .share-to-socials-container {
+                        display: flex;
+                        align-items: center;
+
+                        .share-to-socials-item {
+                            padding: 0;
+                            text-align: start;
+                            width: 100% !important;
+                        }
+                    }
+                }
+
+                &.active {
+                    display: block
+                }
+
+                &>svg {
                     cursor: pointer;
                     stroke: var(--black-5-color);
                     margin-top: 50%;
@@ -120,7 +151,7 @@
             left: 0;
             z-index: -1;
             min-height: 150px;
-            max-height: 360px;
+            max-height: 380px;
         }
 
         .post-item__img {
@@ -130,12 +161,13 @@
                 .post-item__img__crud-operation-item {
                     display: block !important;
                 }
-    
+
                 .post-item__img__react-operation-item {
                     display: block !important;
                 }
             }
         }
+
 
 
 
@@ -150,6 +182,8 @@
             }
         }
     }
+
+
 }
 
 @media (max-width: 1200px) {
@@ -164,7 +198,7 @@
     }
 
     .post-item__img__thumbnail {
-        max-height: 250px;
+        max-height: 260px;
     }
 }
 
