@@ -13,6 +13,7 @@ import { useModal } from "../../contexts/modal/ModalContext.jsx";
 
 // Utils
 import { apiUtils } from '../../utils/newRequest';
+import { formatDatetime } from '../../utils/formatter.js';
 
 // Styling
 import "./ChallengeDashboard.scss";
@@ -33,7 +34,7 @@ export default function ChallengeDashboard() {
     const fetchChallenges = async () => {
         try {
             const response = await apiUtils.get("/challenge/readChallenges");
-            console.log(response);
+            console.log(response.data.metadata.challenges);
             return response.data.metadata.challenges;
         } catch (error) {
             return null;
@@ -222,6 +223,9 @@ export default function ChallengeDashboard() {
                                 <th></th>
                                 <th>STT</th>
                                 <th>Tiêu đề</th>
+                                <th>Riêng tư</th>
+                                <th>Nội dung</th>
+                                <th>Thời gian</th>
                                 <th>Lượt xem</th>
                                 <th>Cập nhật lúc</th>
                                 <th>Thao tác</th>
@@ -234,10 +238,12 @@ export default function ChallengeDashboard() {
                                         <tr key={challenge._id}>
                                             <td><img src={challenge.thumbnail} alt="" /></td>
                                             <td>{index + 1}</td>
-                                            <td><span className='fw-bold'>{challenge.title}</span>
-                                                <br />{limitString(challenge.subTitle, 50)} </td>
+                                            <td><span className='fw-bold'>{challenge.title}</span></td>
+                                            <td>{challenge.isPrivate == true ? "Có" : "Không"}</td>
+                                            <td dangerouslySetInnerHTML={{ __html: challenge.description }}></td>
+                                            <td>{formatDatetime(challenge.startDate)} - {formatDatetime(challenge.endDate)}</td>
                                             <td>{challenge.views}</td>
-                                            <td>{challenge.updatedAt}</td>
+                                            <td>{challenge?.updatedAt}</td>
                                             <td>
                                                 <button className="btn btn-2" onClick={() => { setChallenge(challenge); setOverlayVisible(true); setShowUpdateChallenge(true) }}>Chỉnh sửa</button>
                                                 <button className="btn btn-3" onClick={() => { setChallenge(challenge); setOverlayVisible(true); setShowDeleteChallenge(true) }}>Xóa</button>
@@ -260,7 +266,8 @@ export default function ChallengeDashboard() {
                     {/* {showUpdateChallenge && <UpdateChallenge challenge={challenge} setShowUpdateChallenge={setShowUpdateChallenge} setOverlayVisible={setOverlayVisible} updateChallengeMutation={updateChallengeMutation} />}
                     {showDeleteChallenge && <DeleteChallenge challenge={challenge} setShowDeleteChallenge={setShowDeleteChallenge} setOverlayVisible={setOverlayVisible} deleteChallengeMutation={deleteChallengeMutation} />} */}
                 </div>
-            )}
+            )
+            }
 
         </>
     );

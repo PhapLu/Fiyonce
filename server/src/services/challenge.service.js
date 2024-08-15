@@ -33,11 +33,13 @@ class ChallengeService {
         })
         const thumbnail = thumbnailUploadResult.secure_url
 
+
         //4. Create challenge
         const challenge = new Challenge({
             thumbnail,
             ...req.body
         })
+        console.log(challenge.isPrivate)
         await challenge.save()
 
         return {

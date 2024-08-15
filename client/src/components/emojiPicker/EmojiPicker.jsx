@@ -41,7 +41,6 @@ const emojiCategories = {
             '0x1F496',
             '129505',
             '0x1F49B',
-
             '0x1F49C',
             '0x1F499',
             '0x1FA75',

@@ -831,3 +831,15 @@ Error: listen EADDRINUSE: address already in use :::3000
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-15 21:06:55::error::undefined::undefined::uncaughtException: Datetime is not defined
+ReferenceError: Datetime is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/models/challenge.model.js:13:26
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-15 21:06:59::error::undefined::undefined::uncaughtException: Datetime is not defined
+ReferenceError: Datetime is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/models/challenge.model.js:12:28
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
