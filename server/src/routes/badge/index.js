@@ -17,4 +17,7 @@ router.post('/createBadge', uploadFields, accessService.grantAccess('createAny',
 router.patch('/updateBadge/:badgeId', uploadFields, accessService.grantAccess('updateAny', 'profile'), asyncHandler(badgeController.updateBadge))
 router.delete('/deleteBadge/:badgeId', accessService.grantAccess('deleteAny', 'profile'), asyncHandler(badgeController.deleteBadge))
 
+//Award badge
+router.patch('/awardEarlyBirdBadge/:userId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(badgeController.awardEarlyBirdBadge))
+
 export default router

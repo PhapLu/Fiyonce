@@ -20,7 +20,7 @@ class PostController{
     readPostsOfTalent = async(req, res, next) => {
         new SuccessResponse({
             message: 'Xem tác phẩm thành công',
-            metadata: await PostService.readPostsOfTalent(req.params.talentId)
+            metadata: await PostService.readPosts(req.params.talentId)
         }).send(res)
     }
     

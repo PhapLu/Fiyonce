@@ -17,6 +17,7 @@ const ChallengeSchema = new mongoose.Schema(
             title: { type: String, default: '' },
             logo: { type: String, default: '' },
             level: { type: String, enum:['diamond', 'gold', 'silver', 'bronze']},
+            default: []
         }],
     },{
         timestamps: true,

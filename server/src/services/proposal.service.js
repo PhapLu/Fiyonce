@@ -228,6 +228,7 @@ class ProposalService {
             await order.save();
         }
 
+        //Send email to talent, user
         return {
             order,
             body,
