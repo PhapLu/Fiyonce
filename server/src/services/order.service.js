@@ -604,6 +604,29 @@ class OrderService {
             order: deniedOrder,
         };
     };
+    static startWorkInProgress = async (userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId);
+        const order = await Order.findById(orderId);
+        if (!user) throw new NotFoundError("User not found");
+        if (!order) throw new NotFoundError("Order not found");
+        if(order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet");
+        if(order.talentChosenId.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order");
+
+        //2. Start work
+        order.status = "inProgress";
+        order.save();
+
+        //3. Show order
+        const inProgressOrder = order
+        .populate("talentChosenId", "stageName avatar")
+        .populate("memberId", "fullName avatar")
+        .populate("commissionServiceId", "title");
+
+        return {
+            order: inProgressOrder,
+        };
+    }
 }
 
 export default OrderService;
