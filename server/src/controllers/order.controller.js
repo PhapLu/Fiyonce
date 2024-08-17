@@ -89,6 +89,13 @@ class OrderController{
             metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
+    
+    startWipCommissionOrder = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Start WIP commission order success!',
+            metadata: await OrderService.startWipCommissionOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
 }
 
 export default new OrderController()

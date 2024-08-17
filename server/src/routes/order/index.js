@@ -27,5 +27,6 @@ router.get('/readArchivedOrderHistory', asyncHandler(orderController.readArchive
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 router.patch('/cancelOrder/:orderId', asyncHandler(orderController.cancelOrder))
 router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
+router.patch('/startWipCommissionOrder/:orderId', asyncHandler(orderController.startWipCommissionOrder))
 
 export default router

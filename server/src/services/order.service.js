@@ -25,7 +25,6 @@ class OrderService {
         req.body.fileFormats = fileFormats;
         const body = req.body;
 
-
         const { isDirect, commissionServiceId } = body;
         const commissionService = await CommissionService.findById(
             commissionServiceId
@@ -40,10 +39,6 @@ class OrderService {
                 commissionServiceId
             );
             talent = await User.findById(service.talentId)
-
-            console.log("TALENT")
-            console.log(talent)
-
 
             if (!service)
                 throw new BadRequestError("commissionService not found!");
@@ -82,7 +77,6 @@ class OrderService {
                 ...body,
             });
             await order.save();
-            console.log(order)
 
             //5. Send email to user
             if (isDirect == 'true' && talent?.email) {
@@ -604,7 +598,8 @@ class OrderService {
             order: deniedOrder,
         };
     };
-    static startWorkInProgress = async (userId, orderId) => {
+    
+    static startWipCommissionOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId);
