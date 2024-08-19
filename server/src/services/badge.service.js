@@ -153,6 +153,44 @@ class BadgeService {
             message: "Badge deleted successfully!"
         }
     }
+
+    static awardEarlyBirdBadge = async (adminId, userId) => {
+        // 1. Check admin, user, badge
+        const admin = await User.findById(adminId)
+        const user = await User.findById(userId)
+        const badge = await Badge.findOne({ title: 'earlyBird' })
+    
+        if (!admin || !user)
+            throw new NotFoundError('User not found')
+        if (admin.role !== 'admin')
+            throw new BadRequestError('Only an admin can award a badge')
+        if (!badge)
+            throw new NotFoundError('Badge not found')
+    
+        // 2. Check if badge is already awarded
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+    
+        if (badgeIndex !== -1) 
+            throw new BadRequestError('Badge already awarded to this user')
+    
+        // 3. Award the badge
+        user.badges.push({
+            badgeId: badge._id,
+            count: 1,
+            progress: [{
+                criterion: badge.criteria,  // Use the string directly
+                progress: 0,
+                isComplete: false,
+            }],
+            awardedAt: new Date(),
+        })
+        
+        await user.save()
+    
+        return {
+            user
+        }
+    } 
 }
 
 export default BadgeService
