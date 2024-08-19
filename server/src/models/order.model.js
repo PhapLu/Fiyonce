@@ -62,8 +62,8 @@ const OrderSchema = new mongoose.Schema(
             comment: { type: String },
         },
         momoOrderId: { type: String },
-    },
-    {
+        deliverables: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artwork" }],
+    },{
         timestamps: true,
         collection: COLLECTION_NAME,
     }
