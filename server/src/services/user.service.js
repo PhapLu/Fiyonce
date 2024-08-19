@@ -23,7 +23,7 @@ class UserService {
             profileId,
             { $set: body },
             { new: true }
-        ).populate("followers", "avatar").populate("following", "avatar fullName");
+        ).populate("followers", "avatar").populate("following", "avatar fullName")
         console.log(updatedUser)
         return {
             user: updatedUser,
@@ -32,9 +32,9 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
+        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName")
         if (!userProfile)
-            throw new NotFoundError("User not found");
+            throw new NotFoundError("User not found")
 
         //2. Update views
         userProfile.views += 1
@@ -125,23 +125,23 @@ class UserService {
         if (!userId) throw new AuthFailureError("Invalid validation")
 
         // 3. Return user without password
-        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
-        if (!user) throw new NotFoundError("User not found");
+        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName")
+        if (!user) throw new NotFoundError("User not found")
 
         // Fetch unseen conversations
         const unSeenConversations = await Conversation.find({
             members: { $elemMatch: { user: userId } }
         })
             .populate('members.user messages.senderId')
-            .exec();
+            .exec()
 
         // Filter unseen conversations based on the last message
         const filteredUnSeenConversations = unSeenConversations.filter(conversation => {
-            const lastMessage = conversation.messages[conversation.messages.length - 1];
+            const lastMessage = conversation.messages[conversation.messages.length - 1]
             console.log(lastMessage.senderId.toString() !== userId)
             console.log(lastMessage.senderId._id)
-            return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId;
-        });
+            return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId
+        })
 
         console.log("DEF")
         console.log(filteredUnSeenConversations)
@@ -161,14 +161,14 @@ class UserService {
 
         return {
             user: userData,
-        };
-    };
+        }
+    }
 
     static updateProfileStatus = async (userId, profileStatus) => {
         try {
             // Validate inputs
             if (!userId || !profileStatus) {
-                throw new Error('Invalid input data');
+                throw new Error('Invalid input data')
             }
 
             // Update the profile status field in the user's document
@@ -176,19 +176,19 @@ class UserService {
                 userId,
                 { $set: { profileStatus: profileStatus } },
                 { new: true } // Return the updated document
-            );
+            )
 
             if (!user) {
-                throw new Error('User not found');
+                throw new Error('User not found')
             }
 
-            return { profileStatus: user.profileStatus };
+            return { profileStatus: user.profileStatus }
         } catch (error) {
             // Handle errors (e.g., logging or rethrowing)
-            console.error('Error updating profile status:', error.message);
-            throw error;
+            console.error('Error updating profile status:', error.message)
+            throw error
         }
-    };
+    }
 }
 
 export default UserService

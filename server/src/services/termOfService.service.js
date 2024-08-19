@@ -3,9 +3,9 @@ import {
     AuthFailureError,
     BadRequestError,
     NotFoundError,
-} from "../core/error.response.js";
-import { User } from "../models/user.model.js";
-import mongoose from "mongoose";
+} from "../core/error.response.js"
+import { User } from "../models/user.model.js"
+import mongoose from "mongoose"
 
 class TermOfServiceService {
     static createTermOfService = async (userId, body) => {
@@ -53,7 +53,7 @@ class TermOfServiceService {
                     as: "commissionServices",
                 },
             },
-        ]);
+        ])
 
         return {
             termOfServices,

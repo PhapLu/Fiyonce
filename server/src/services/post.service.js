@@ -151,8 +151,6 @@ class PostService {
         }
     }
 
-
-
     static likePost = async (userId, postId) => {
         // Find user
         const user = await User.findById(userId)

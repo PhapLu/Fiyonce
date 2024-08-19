@@ -22,7 +22,7 @@ class SubmissionService {
         if (!challenge) throw new NotFoundError("Challenge not found")
         if(challenge.participants.includes(userId)) 
             throw new BadRequestError("You have already submitted")
-        console.log(challenge);
+
         //2. Validate request body
         if (!req.body.title || !req.files.artworks || req.files.artworks.length == 0)
             throw new BadRequestError("Please provide required fields")
@@ -37,6 +37,7 @@ class SubmissionService {
             height: 1080,
         })
         const artwork = artworkUploadResult.secure_url
+        
         //4. Create submission
         const submission = new Submission({
             challengeId,
