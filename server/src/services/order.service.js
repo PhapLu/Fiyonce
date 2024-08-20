@@ -1,61 +1,61 @@
-import Order from "../models/order.model.js";
-import Artwork from "../models/artwork.model.js";
-import Proposal from "../models/proposal.model.js";
-import CommissionService from "../models/commissionService.model.js";
-import { User } from "../models/user.model.js";
+import Order from "../models/order.model.js"
+import Artwork from "../models/artwork.model.js"
+import Proposal from "../models/proposal.model.js"
+import CommissionService from "../models/commissionService.model.js"
+import { User } from "../models/user.model.js"
 import {
     AuthFailureError,
     BadRequestError,
     NotFoundError,
-} from "../core/error.response.js";
+} from "../core/error.response.js"
 import {
     compressAndUploadImage,
     extractPublicIdFromUrl,
     deleteFileByPublicId,
-} from "../utils/cloud.util.js";
-import brevoSendEmail from "../configs/brevo.email.config.js";
-import mongoose from "mongoose";
+} from "../utils/cloud.util.js"
+import brevoSendEmail from "../configs/brevo.email.config.js"
+import mongoose from "mongoose"
 
 class OrderService {
     //Order CRUD
     static createOrder = async (userId, req) => {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
-        const body = req.body;
-        const { isDirect, talentChosenId, commissionServiceId } = body;
+        const body = req.body
+        const { isDirect, talentChosenId, commissionServiceId, isWaitList} = body
         const commissionService = await CommissionService.findById(
             commissionServiceId
-        );
+        )
         
         //2. Check isDirect of order
-        let talent = null;
+        let talent = null
         if (isDirect == 'true') {
             //direct order
-            talent = await User.findById(talentChosenId);
+            talent = await User.findById(talentChosenId)
             const service = await CommissionService.findById(
                 commissionServiceId
-            );
+            )
 
-            if (!talent) throw new BadRequestError("Talent not found!");
+            if (!talent) throw new BadRequestError("Talent not found!")
             if (!service)
-                throw new BadRequestError("commissionService not found!");
+                throw new BadRequestError("commissionService not found!")
             if (talent.role != "talent")
-                throw new AuthFailureError("He/She is not a talent!");
+                throw new AuthFailureError("He/She is not a talent!")
             if (talent._id == userId)
-                throw new BadRequestError("You cannot choose yourself!");
-            body.isDirect = true;
-            body.talentChosenId = talentChosenId;
-            body.minPrice = commissionService.minPrice;
-            body.commissionServiceId = commissionServiceId;
+                throw new BadRequestError("You cannot choose yourself!")
+            body.isDirect = true
+            body.talentChosenId = talentChosenId
+            body.minPrice = commissionService.minPrice
+            body.commissionServiceId = commissionServiceId
         } else {
             //inDirect order
-            body.isDirect = false;
-            body.talentChosenId = null;
+            body.isDirect = false
+            body.talentChosenId = null
         }
 
         //3. Upload req.files.files to cloudinary
         try {
-            let references = [];
+            let references = []
 
             if (req.files && req.files.files && req.files.files.length > 0) {
                 const uploadPromises = req.files.files.map((file) =>
@@ -66,25 +66,33 @@ class OrderService {
                         width: 1920,
                         height: 1080,
                     })
-                );
-                const uploadResults = await Promise.all(uploadPromises);
-                references = uploadResults.map((result) => result.secure_url);
+                )
+                const uploadResults = await Promise.all(uploadPromises)
+                references = uploadResults.map((result) => result.secure_url)
             }
 
             //4. Create order
+            if(isWaitList == 'true'){
+                if(commissionService.status !== 'waitList')
+                    throw new BadRequestError('Dịch vụ này đang mở')
+                body.status = "waitlist"
+            } else {
+                body.status = "pending"
+            }
+
             const order = new Order({
                 memberId: userId,
                 references,
                 ...body,
-            });
-            await order.save();
+            })
+            await order.save()
 
             //5. Send email to user
             if(order.isDirect == true && talentChosenId !== null){
                 try {
-                    const subject = "";
-                    const subjectMessage = "";
-                    const verificationCode = "";
+                    const subject = ""
+                    const subjectMessage = ""
+                    const verificationCode = ""
                     const message = `You have a new order from ${user.fullName}. Please check the order details and accept or reject the order.`
                     const template = "announcementTemplate"
                     await brevoSendEmail(
@@ -94,75 +102,75 @@ class OrderService {
                         verificationCode,
                         message,
                         template
-                    );
+                    )
                 } catch (error) {
-                    throw new BadRequestError("Email service error");
+                    throw new BadRequestError("Email service error")
                 }
             }
 
             return {
                 order,
-            };
+            }
         } catch (error) {
-            console.log("Error uploading images or saving order:", error);
-            throw new BadRequestError("File upload or database save failed");
+            console.log("Error uploading images or saving order:", error)
+            throw new BadRequestError("File upload or database save failed")
         }
-    };
+    }
 
     static readOrder = async (orderId) => {
         const order = await Order.findById(orderId).populate(
             "talentChosenId",
             "stageName avatar"
-        );
-        if (!order) throw new NotFoundError("Order not found!");
+        )
+        if (!order) throw new NotFoundError("Order not found!")
 
         return {
             order,
-        };
-    };
+        }
+    }
 
     //Client read approved indirect orders in commission market
     static readOrders = async (req) => {
-        const q = req.query;
+        const q = req.query
         const filters = {
             isMemberArchived: false,
             ...(q.isDirect !== undefined && { isDirect: q.isDirect === 'true' }),
-        };
+        }
 
         //1. Get all orders
         const orders = await Order.find(filters)
             .sort({ createdAt: -1 }) // Sort orders by createdAt in descending order
             .populate("talentChosenId", "fullName avatar")
-            .populate("memberId", "fullName avatar");
+            .populate("memberId", "fullName avatar")
 
         //2. Iterate over each order to add talentsApprovedCount
         const ordersWithCounts = await Promise.all(
             orders.map(async (order) => {
                 const talentsApprovedCount = await Proposal.find({
                     orderId: order._id,
-                }).countDocuments();
-                order._doc.talentsApprovedCount = talentsApprovedCount; // Add the count to the order
-                return order;
+                }).countDocuments()
+                order._doc.talentsApprovedCount = talentsApprovedCount // Add the count to the order
+                return order
             })
-        );
+        )
 
         return {
             orders: ordersWithCounts,
-        };
-    };
+        }
+    }
 
     static updateOrder = async (userId, orderId, req) => {
         //1. check order and user
-        const oldOrder = await Order.findById(orderId);
-        const foundUser = await User.findById(userId);
-        if (!foundUser) throw new NotFoundError("User not found!");
-        if (!oldOrder) throw new NotFoundError("Order not found!");
+        const oldOrder = await Order.findById(orderId)
+        const foundUser = await User.findById(userId)
+        if (!foundUser) throw new NotFoundError("User not found!")
+        if (!oldOrder) throw new NotFoundError("Order not found!")
         if (oldOrder.memberId.toString() !== userId)
-            throw new AuthFailureError("You can update only your order");
+            throw new AuthFailureError("You can update only your order")
 
         //2. Check order status
         if (oldOrder.status != "pending")
-            throw new BadRequestError("You cannot update order on this stage!");
+            throw new BadRequestError("You cannot update order on this stage!")
         try {
             //3. Handle file uploads if new files were uploaded
             if (req.files && req.files.files && req.files.files.length > 0) {
@@ -175,72 +183,72 @@ class OrderService {
                         width: 1920,
                         height: 1080,
                     })
-                );
-                const uploadResults = await Promise.all(uploadPromises);
+                )
+                const uploadResults = await Promise.all(uploadPromises)
                 const references = uploadResults.map(
                     (result) => result.secure_url
-                );
-                req.body.references = references;
+                )
+                req.body.references = references
 
                 //Delete old images from cloudinary
                 const publicIds = oldOrder.references.map((reference) =>
                     extractPublicIdFromUrl(reference)
-                );
+                )
                 await Promise.all(
                     publicIds.map((publicId) => deleteFileByPublicId(publicId))
-                );
+                )
             }
 
             //4. Validate body and merge existing service fields with req.body to ensure fields not provided in req.body are retained
-            const { memberId, talentChosenId, ...filteredBody } = req.body;
-            const updatedFields =  { ...oldOrder.toObject(), ...filteredBody };
+            const { memberId, talentChosenId, ...filteredBody } = req.body
+            const updatedFields =  { ...oldOrder.toObject(), ...filteredBody }
             
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
                 updatedFields,
                 { new: true }
-            );
+            )
 
             return {
                 order: updatedOrder,
-            };
+            }
         } catch (error) {
-            console.log("Error in updating commission service:", error);
-            throw new Error("Service update failed");
+            console.log("Error in updating commission service:", error)
+            throw new Error("Service update failed")
         }
-    };
+    }
 
     //End Order CRUD
 
     static readMemberOrderHistory = async (clientId) => {
         //1. Check user
-        const foundUser = await User.findById(clientId);
-        if (!foundUser) throw new NotFoundError("User not found!");
+        const foundUser = await User.findById(clientId)
+        if (!foundUser) throw new NotFoundError("User not found!")
 
         //2. Get orders
-        let orders;
+        let orders
         try {
             orders = await Order.find({ memberId: clientId })
                 .populate("talentChosenId", "stageName avatar")
-                .populate("commissionServiceId", "price title");
+                .populate("commissionServiceId", "price title")
         } catch (error) {
-            console.error("Error populating orders:", error);
-            throw new Error("Failed to fetch orders");
+            console.error("Error populating orders:", error)
+            throw new Error("Failed to fetch orders")
         }
 
         return {
             memberOrderHistory: orders,
-        };
-    };
+        }
+    }
 
 
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
-        const foundTalent = await User.findById(talentId);
-        if (!foundTalent) throw new NotFoundError("Talent not found!");
+        const foundTalent = await User.findById(talentId)
+        if (!foundTalent) throw new NotFoundError("Talent not found!")
         if (foundTalent.role !== "talent")
-            throw new BadRequestError("You are not a talent!");
+            throw new BadRequestError("You are not a talent!")
 
         try {
             // 2. Aggregate to get all orders involving the talent
@@ -388,16 +396,16 @@ class OrderService {
                         review: 1,
                     },
                 },
-            ]);
+            ])
 
             return { 
                 talentOrderHistory: orders 
-            };
+            }
         } catch (error) {
-            console.error("Error fetching orders by talent:", error);
-            throw error;
+            console.error("Error fetching orders by talent:", error)
+            throw error
         }
-    };
+    }
 
     static readArchivedOrderHistory = async (userId) => {
         try {
@@ -495,87 +503,87 @@ class OrderService {
                         review: 1,
                     },
                 },
-            ]);
+            ])
 
-            return { archivedOrderHistory: orders };
+            return { archivedOrderHistory: orders }
         } catch (error) {
-            console.error("Error fetching archived orders:", error);
-            throw error;
+            console.error("Error fetching archived orders:", error)
+            throw error
         }
-    };
+    }
 
     static archiveOrder = async (userId, orderId) => {
         //1. Check if user, order exists
-        const user = await User.findById(userId);
-        const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError("User not found")
+        if (!order) throw new NotFoundError("Order not found")
 
         if (userId == order.memberId.toString()) {
-            order.isMemberArchived = true;
+            order.isMemberArchived = true
         } else {
-            order.isTalentArchived = true;
+            order.isTalentArchived = true
         }
 
-        order.save();
+        order.save()
 
         return {
             order,
-        };
-    };
+        }
+    }
     static unarchiveOrder = async (userId, orderId) => {
         //1. Check if user, order exists
-        const user = await User.findById(userId);
-        const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError("User not found")
+        if (!order) throw new NotFoundError("Order not found")
 
         if (userId == order.memberId.toString()) {
-            order.isMemberArchived = false;
+            order.isMemberArchived = false
         } else {
-            order.isTalentArchived = false;
+            order.isTalentArchived = false
         }
 
-        order.save();
+        order.save()
 
         return {
             order,
-        };
-    };
+        }
+    }
 
     static rejectOrder = async (userId, orderId) => {
         //1. Check if user, order exists
-        const user = await User.findById(userId);
-        const order = await Order.findById(orderId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError("User not found")
+        if (!order) throw new NotFoundError("Order not found")
 
         //2. Check if user is authorized to deny order
         if (user.role !== "talent")
             throw new AuthFailureError(
                 "You are not authorized to deny this order"
-            );
+            )
 
         //3. Check if order status is pending
         if (order.status !== "pending")
-            throw new BadRequestError("You cannot deny this order");
+            throw new BadRequestError("You cannot deny this order")
 
         //4. Deny order
-        order.status = "rejected";
-        order.save();
+        order.status = "rejected"
+        order.save()
 
         //5. Show order
         const deniedOrder = order.populate(
             "talentChosenId",
             "stageName avatar"
-        );
+        )
 
         //6. Send email to user
-        const member = await User.findById(order.memberId);
+        const member = await User.findById(order.memberId)
         try {
-            const subject = "";
-            const subjectMessage = "";
-            const verificationCode = "";
+            const subject = ""
+            const subjectMessage = ""
+            const verificationCode = ""
             const message = 'Your order has been denied by the talent you chose. Please check the order details and try again with another talent.'
             const template = "announcementTemplate"
             await brevoSendEmail(
@@ -585,16 +593,16 @@ class OrderService {
                 verificationCode,
                 message,
                 template
-            );
+            )
         } catch (error) {
-            console.error("Error sending email:", error);
-            throw new BadRequestError("Email service error");
+            console.error("Error sending email:", error)
+            throw new BadRequestError("Email service error")
         }
 
         return {
             order: deniedOrder,
-        };
-    };
+        }
+    }
 }
 
-export default OrderService;
+export default OrderService

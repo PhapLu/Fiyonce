@@ -235,6 +235,7 @@ class CommissionServiceService {
             message: "Service and possibly empty category deleted successfully",
         };
     };
+
 }
 
 export default CommissionServiceService;

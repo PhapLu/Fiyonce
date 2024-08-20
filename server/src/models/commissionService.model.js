@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+import mongoose from "mongoose"
+const Schema = mongoose.Schema
 
-const DOCUMENT_NAME = "CommissionService";
-const COLLECTION_NAME = "CommissionServices";
+const DOCUMENT_NAME = "CommissionService"
+const COLLECTION_NAME = "CommissionServices"
 
 const ServiceSchema = new mongoose.Schema(
     {
@@ -44,8 +44,8 @@ const ServiceSchema = new mongoose.Schema(
         timestamps: true,
         collection: COLLECTION_NAME,
     }
-);
+)
 
-const Service = mongoose.model(DOCUMENT_NAME, ServiceSchema);
+const Service = mongoose.model(DOCUMENT_NAME, ServiceSchema)
 
-export default Service;
+export default Service
