@@ -1,0 +1,28 @@
+2024-08-21 10:49:55::info::/v1/api/auth/users/login::dfe9f383-de22-4775-a1f1-a80ca68e9ce5::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-21 10:49:55::error::/v1/api/auth/users/login::dfe9f383-de22-4775-a1f1-a80ca68e9ce5::401 - 1ms - Response: {"status":401,"now":1724212195285}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-21 10:49:59::info::/v1/api/auth/users/login::225d90ef-5119-4242-aa0c-1dfa3f9d4a3b::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-08-21 10:50:44::info::/v1/api/post/createPost::fbcfa67d-01d4-4916-968e-214653726095::input-params ::POST::::{}
+2024-08-21 10:50:47::error::/v1/api/post/createPost::fbcfa67d-01d4-4916-968e-214653726095::403 - 2ms - Response: {"status":403,"now":1724212247127}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 10:51:29::info::/v1/api/post/createPost::2b5e9e73-fb45-4bc4-913d-6665ccaf2880::input-params ::POST::::{}
+2024-08-21 10:51:32::error::/v1/api/post/createPost::2b5e9e73-fb45-4bc4-913d-6665ccaf2880::403 - 2ms - Response: {"status":403,"now":1724212292371}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 10:51:59::info::/v1/api/post/createPost::2dd1f447-4ddb-4adc-84b0-96b412f8e266::input-params ::POST::::{}
+2024-08-21 10:52:02::error::/v1/api/post/createPost::2dd1f447-4ddb-4adc-84b0-96b412f8e266::403 - 1ms - Response: {"status":403,"now":1724212322268}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 10:52:24::info::/v1/api/auth/users/login::3d598344-2e1d-4797-918b-cca5c7759102::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-21 10:58:20::info::/v1/api/badge/createBadge::8d753cfc-9796-4a72-9cea-cbdee850300b::input-params ::POST::::{}
+2024-08-21 10:58:23::error::/v1/api/badge/createBadge::8d753cfc-9796-4a72-9cea-cbdee850300b::403 - 1ms - Response: {"status":403,"now":1724212703733}::{"message":"Error creating badge!"}
+2024-08-21 10:58:53::info::/v1/api/badge/createBadge::19ce6968-ca44-4716-ba12-ad8250567ac2::input-params ::POST::::{}
+2024-08-21 10:58:56::error::/v1/api/badge/createBadge::19ce6968-ca44-4716-ba12-ad8250567ac2::403 - 3ms - Response: {"status":403,"now":1724212736327}::{"message":"Error creating badge!"}
+2024-08-21 11:00:38::info::/v1/api/badge/createBadge::4b4a66b2-6546-4dd0-bbe2-3c5f485bf74a::input-params ::POST::::{}
+2024-08-21 11:00:53::info::/v1/api/badge/readBadges::c4401084-7262-477d-8527-86eea57a2068::input-params ::GET::::{}
+2024-08-21 11:01:07::info::/v1/api/post/createPost::ab2f9604-61f4-40b3-93dc-19bc6e54c1e5::input-params ::POST::::{}
+2024-08-21 11:01:07::error::/v1/api/post/createPost::ab2f9604-61f4-40b3-93dc-19bc6e54c1e5::403 - 1ms - Response: {"status":403,"now":1724212867750}::{"message":"Bạn không phải là họa sĩ"}
+2024-08-21 11:01:19::info::/v1/api/auth/users/login::cf39d989-6568-43ad-8050-c69c05a65c42::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-08-21 11:01:22::info::/v1/api/post/createPost::6cfc0f10-6ae6-4427-9279-ed1294a82447::input-params ::POST::::{}
+2024-08-21 11:03:27::info::/v1/api/post/createPost::25b914d9-1a48-4844-8ef5-34cba01ce4f0::input-params ::POST::::{}
+2024-08-21 11:04:49::info::/v1/api/post/createPost::b795db51-7a91-4afd-a381-209566fc0ad5::input-params ::POST::::{}
+2024-08-21 11:06:59::info::/v1/api/post/createPost::dc3f73f3-3aa8-45dc-85d2-3daaf7b71497::input-params ::POST::::{}
+2024-08-21 11:24:35::info::/v1/api/post/createPost::af1af9ae-03f1-4390-8b8d-0d137aa88f97::input-params ::POST::::{}
+2024-08-21 11:28:18::info::/v1/api/post/createPost::75d4bf56-7770-4b3e-a0bd-7f9e050fd4a3::input-params ::POST::::{}
+2024-08-21 11:30:33::info::/v1/api/post/createPost::35c374ac-dd18-4345-8b34-038770f98acc::input-params ::POST::::{}
+2024-08-21 11:30:36::error::/v1/api/post/createPost::35c374ac-dd18-4345-8b34-038770f98acc::403 - 1ms - Response: {"status":403,"now":1724214636854}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 11:31:10::info::/v1/api/post/createPost::beb6a3d6-ed92-4517-87b2-d6abf2bb47b6::input-params ::POST::::{}

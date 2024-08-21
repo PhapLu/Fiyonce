@@ -6,6 +6,7 @@ import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } 
 import PostCategory from "../models/postCategory.model.js"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
+import { trackTrustedArtistBadge } from "../utils/badgeTracking.util.js"
 
 class PostService {
     static createPost = async (userId, req) => {
@@ -66,6 +67,9 @@ class PostService {
                     })
                 })
             )
+
+            //Track post creation
+            await trackTrustedArtistBadge(userId, 'createPost')
 
             return {
                 artwork: newPost,

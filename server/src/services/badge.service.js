@@ -14,15 +14,15 @@ import {
 class BadgeService {
     static createBadge = async (adminId, req) => {
         // 1. Check if the user is an admin
-        const admin = await User.findById(adminId)
-        if (!admin) throw new NotFoundError("Admin not found!")
-        if (admin.role !== "admin") throw new AuthFailureError("You are not an admin!")
+        const admin = await User.findById(adminId);
+        if (!admin) throw new NotFoundError("Admin not found!");
+        if (admin.role !== "admin") throw new AuthFailureError("You are not an admin!");
     
         // 2. Validate request body
-        const { title, description } = req.body
-        if (!title || !description) throw new BadRequestError("Missing required fields!")
+        const { title, description } = req.body;
+        if (!title || !description) throw new BadRequestError("Missing required fields!");
         if (req.files && !req.files.thumbnail)
-            throw new BadRequestError("Please provide a thumbnail!")
+            throw new BadRequestError("Please provide a thumbnail!");
     
         try {
             // 3. Compress and upload the image to Cloudinary
@@ -32,17 +32,23 @@ class BadgeService {
                 folderName: `fiyonce/admin/badges`,
                 width: 1920,
                 height: 1080
-            })
-            const icon = thumbnailUploadResult.secure_url
+            });
+            const icon = thumbnailUploadResult.secure_url;
     
             // 4. Parse the criteria field
-            let parsedCriteria
+            let criteriaString = "";
             if (req.body.criteria) {
                 try {
-                    parsedCriteria = JSON.parse(req.body.criteria)
+                    // Ensure req.body.criteria is a valid JSON object
+                    const parsedCriteria = JSON.parse(req.body.criteria);
+                    if (typeof parsedCriteria !== 'object' || Array.isArray(parsedCriteria)) {
+                        throw new BadRequestError("Invalid criteria format");
+                    }
+                    // Convert the object to a JSON string
+                    criteriaString = JSON.stringify(parsedCriteria);
                 } catch (parseError) {
-                    console.error("Criteria parsing error:", parseError)
-                    throw new BadRequestError("Invalid criteria format")
+                    console.error("Criteria parsing error:", parseError);
+                    throw new BadRequestError("Invalid criteria format");
                 }
             }
     
@@ -51,21 +57,21 @@ class BadgeService {
                 icon,
                 title,
                 description,
-                criteria: parsedCriteria, // explicitly assign the parsed criteria
+                criteria: criteriaString, // Store the criteria as a JSON string
                 level: req.body.level,
                 type: req.body.type,
-            })
+            });
     
-            await badge.save()
+            await badge.save();
     
             return {
                 badge
-            }
+            };
         } catch (error) {
-            console.error(`Error uploading or saving data ${error}`)
-            throw new BadRequestError("Error creating badge!")
+            console.error(`Error uploading or saving data ${error}`);
+            throw new BadRequestError("Error creating badge!");
         }
-    }    
+    };
 
     static readBadges = async () => {
         const badges = await Badge.find()

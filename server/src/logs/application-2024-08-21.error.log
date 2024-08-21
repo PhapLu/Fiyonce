@@ -1,0 +1,8 @@
+2024-08-21 10:49:55::error::/v1/api/auth/users/login::dfe9f383-de22-4775-a1f1-a80ca68e9ce5::401 - 1ms - Response: {"status":401,"now":1724212195285}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-21 10:50:47::error::/v1/api/post/createPost::fbcfa67d-01d4-4916-968e-214653726095::403 - 2ms - Response: {"status":403,"now":1724212247127}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 10:51:32::error::/v1/api/post/createPost::2b5e9e73-fb45-4bc4-913d-6665ccaf2880::403 - 2ms - Response: {"status":403,"now":1724212292371}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 10:52:02::error::/v1/api/post/createPost::2dd1f447-4ddb-4adc-84b0-96b412f8e266::403 - 1ms - Response: {"status":403,"now":1724212322268}::{"message":"Tạo tác phẩm không thành công"}
+2024-08-21 10:58:23::error::/v1/api/badge/createBadge::8d753cfc-9796-4a72-9cea-cbdee850300b::403 - 1ms - Response: {"status":403,"now":1724212703733}::{"message":"Error creating badge!"}
+2024-08-21 10:58:56::error::/v1/api/badge/createBadge::19ce6968-ca44-4716-ba12-ad8250567ac2::403 - 3ms - Response: {"status":403,"now":1724212736327}::{"message":"Error creating badge!"}
+2024-08-21 11:01:07::error::/v1/api/post/createPost::ab2f9604-61f4-40b3-93dc-19bc6e54c1e5::403 - 1ms - Response: {"status":403,"now":1724212867750}::{"message":"Bạn không phải là họa sĩ"}
+2024-08-21 11:30:36::error::/v1/api/post/createPost::35c374ac-dd18-4345-8b34-038770f98acc::403 - 1ms - Response: {"status":403,"now":1724214636854}::{"message":"Tạo tác phẩm không thành công"}
