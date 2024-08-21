@@ -78,8 +78,7 @@ const UserSchema = new Schema(
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: {type: String, default: ""},
-    },
-    {
+    },{
         timestamps: true,
         collection: COLLECTION_NAME,
     }

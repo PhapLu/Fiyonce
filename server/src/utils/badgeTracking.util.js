@@ -85,21 +85,18 @@ async function trackActivity(userId, activityType, increment = 1) {
 
 async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) {
     try {
-        console.log('Track stage 2')
         // Fetch the user and badge
         const user = await User.findById(userId);
         const badge = await Badge.findById(badgeId);
 
         // Convert badge.criteria to an object
         const badgeCriteria = JSON.parse(badge.criteria);
-        console.log("Badge criteria:", badgeCriteria);
 
         // Find the badge in the user's badges array
         let userBadge = user.badges.find(badge => badge.badgeId.toString() === badgeId.toString());
         
         // If the badge doesn't exist, add it with default values
         if (!userBadge) {
-            console.log('Badge does not exist')
             userBadge = {
                 badgeId: badge._id,
                 count: 0,
@@ -116,14 +113,12 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
                     isComplete: false
                 });
             }
-            console.log(userBadge)
 
             user.badges.push(userBadge);
         }
 
         // Initialize progress for the criterion if it doesn't exist
         if (!userBadge.progress.has(criterionKey)) {
-            console.log('Criterion does not exist')
             userBadge.progress.set(criterionKey, {
                 currentProgress: 0,
                 totalCriteria: badgeCriteria[criterionKey] || 0,
@@ -132,25 +127,19 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
         }
 
         const criterion = userBadge.progress.get(criterionKey);
-        console.log(criterionKey)
-        console.log(criterion)
 
         // Increment progress
         criterion.currentProgress += increment;
-        console.log(criterion.currentProgress)
 
         // Check if the criterion is complete
         if (criterion.currentProgress >= criterion.totalCriteria) {
-            console.log('Completed')
             criterion.isComplete = true;
             criterion.currentProgress = criterion.totalCriteria; // Cap progress at totalCriteria
-            console.log(criterion);
         }
 
         // Check if all criteria are complete
         const allCriteriaComplete = Array.from(userBadge.progress.values()).every(c => c.isComplete);
         if (allCriteriaComplete) {
-            console.log('All criteria complete')
             userBadge.isComplete = true;
             userBadge.awardedAt = new Date();
             userBadge.count += 1; // Increment count to reflect that the badge is awarded
@@ -172,7 +161,6 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
 
 async function trackTrustedArtistBadge(userId, activityType, increment = 1) {
     try {
-        console.log('Start tracking')
         // Define the badge ID for "Trusted Artist" badge
         const user = await User.findById(userId)
         const badge = await Badge.findOne({ title: "trustedArtist" });

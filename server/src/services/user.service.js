@@ -5,7 +5,7 @@ import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.
 import Conversation from '../models/conversation.model.js'
 import Notification from '../models/notification.model.js'
 import mongoose from 'mongoose'
-import { trackActivity } from '../utils/badgeTracking.util.js'
+import { trackActivity, trackTrustedArtistBadge } from '../utils/badgeTracking.util.js'
 
 class UserService {
     //-------------------CRUD----------------------------------------------------
@@ -22,6 +22,18 @@ class UserService {
             { $set: body },
             { new: true }
         ).populate("followers", "avatar").populate("following", "avatar fullName");
+
+        //3. Track TrustedArtistBadge criteria
+        if(updatedUser.bio !== '' && 
+            updatedUser.taxCode !== '' && 
+            updatedUser.taxCode.isVerified == true && 
+            updatedUser.cccd !== '' && 
+            !updatedUser.avatar.includes('pastal_system_default') && 
+            !updatedUser.bg.includes('pastal_system_default'))
+        {
+            await trackTrustedArtistBadge(userId, 'updateProfile')
+        }
+
         return {
             user: updatedUser,
         }
