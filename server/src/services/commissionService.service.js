@@ -240,6 +240,44 @@ class CommissionServiceService {
         };
     };
 
+    static bookmarkCommissionService = async (userId, commissionServiceId) => {
+        // Find user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
+
+        // Find commissionService
+        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
+        if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
+
+        const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
+        const commissionServiceBookmarkIndex = commissionService.bookmarks.findIndex(bookmark => bookmark.user.toString() === userId)
+
+        // Let action to know if the user commissionServiceBookmark/undo their interactions
+        let action = "bookmark"
+
+        if (userCommissionServiceBookmarkIndex === -1) {
+            user.commissionServiceBookmarks.push(commissionServiceId)
+            commissionService.bookmarks.push({ user: new mongoose.Types.ObjectId(userId) })
+
+            // Check if user is commissionService owner
+            if (userId !== commissionService.talentId) {
+                commissionService.views.concat({ user: new mongoose.Types.ObjectId(userId) })
+            }
+        } else {
+            // Remove commissionServiceBookmark
+            user.commissionServiceBookmarks.splice(userCommissionServiceBookmarkIndex, 1)
+            commissionService.bookmarks.splice(commissionServiceBookmarkIndex, 1)
+            action = "unbookmark"
+        }
+        
+        await user.save()
+        await commissionService.save()
+
+        return {
+            commissionService,
+            action
+        }
+    }
 }
 
 export default CommissionServiceService;

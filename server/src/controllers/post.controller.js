@@ -81,6 +81,12 @@ class PostController{
             metadata: await PostService.findPost()
         }).send(res)
     }
+    readBookmarkedPosts = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Xem tác phẩm đã lưu thành công',
+            metadata: await PostService.readBookmarkedPosts(req.params.userId)
+        }).send(res)
+    }
 }
 
 export default new PostController()

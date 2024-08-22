@@ -169,7 +169,7 @@ class BadgeService {
         if (!admin || !user)
             throw new NotFoundError('User not found')
         if (admin.role !== 'admin')
-            throw new BadRequestError('Only an admin can award a badge')
+            throw new BadRequestError('Only an admin can perform this action')
         if (!badge)
             throw new NotFoundError('Badge not found')
     

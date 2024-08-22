@@ -215,6 +215,24 @@ class PostService {
         }
     }
 
+    static readBookmarkedPosts = async(userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
+
+        //2. Fetch all bookmarked posts
+        const bookmarkedPosts = await Post.find({ _id: { $in: user.postBookmarks } })
+            .populate('talentId', 'stageName avatar')
+            .populate('postCategoryId', 'title')
+            .populate('movementId', 'title')
+            .populate('artworks', 'url')
+            .exec()
+        
+        return {
+            posts: bookmarkedPosts
+        }
+    }
+
     static readPostCategoriesWithPosts = async (talentId) => {
         try {
             // Fetch all post categories
