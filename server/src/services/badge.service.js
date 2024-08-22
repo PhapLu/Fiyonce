@@ -162,41 +162,50 @@ class BadgeService {
 
     static awardEarlyBirdBadge = async (adminId, userId) => {
         // 1. Check admin, user, badge
-        const admin = await User.findById(adminId)
-        const user = await User.findById(userId)
-        const badge = await Badge.findOne({ title: 'earlyBird' })
+        const admin = await User.findById(adminId);
+        const user = await User.findById(userId);
+        const badge = await Badge.findOne({ title: 'earlyBird' });
     
         if (!admin || !user)
-            throw new NotFoundError('User not found')
+            throw new NotFoundError('User not found');
         if (admin.role !== 'admin')
-            throw new BadRequestError('Only an admin can perform this action')
+            throw new BadRequestError('Only an admin can perform this action');
         if (!badge)
-            throw new NotFoundError('Badge not found')
+            throw new NotFoundError('Badge not found');
     
         // 2. Check if badge is already awarded
-        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString());
     
         if (badgeIndex !== -1) 
-            throw new BadRequestError('Badge already awarded to this user')
+            throw new BadRequestError('Badge already awarded to this user');
     
         // 3. Award the badge
+        const progressMap = new Map();
+    
+        // Assuming badge.criteria is a string representing JSON object like {"createPost": 1, "createService": 1}
+        const criteria = JSON.parse(badge.criteria);
+        for (const [criterion, totalCriteria] of Object.entries(criteria)) {
+            progressMap.set(criterion, {
+                currentProgress: totalCriteria,
+                totalCriteria,
+                isComplete: false
+            });
+        }
+    
         user.badges.push({
             badgeId: badge._id,
             count: 1,
-            progress: [{
-                criterion: badge.criteria,  // Use the string directly
-                progress: 0,
-                isComplete: false,
-            }],
+            progress: progressMap,
+            isComplete: true,
             awardedAt: new Date(),
-        })
+        });
         
-        await user.save()
+        await user.save();
     
         return {
             user
-        }
-    } 
+        };
+    }    
 }
 
 export default BadgeService
