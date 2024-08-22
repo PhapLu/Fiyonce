@@ -86,14 +86,14 @@ async function trackActivity(userId, activityType, increment = 1) {
 async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) {
     try {
         // Fetch the user and badge
-        const user = await User.findById(userId);
-        const badge = await Badge.findById(badgeId);
+        const user = await User.findById(userId)
+        const badge = await Badge.findById(badgeId)
 
         // Convert badge.criteria to an object
-        const badgeCriteria = JSON.parse(badge.criteria);
+        const badgeCriteria = JSON.parse(badge.criteria)
 
         // Find the badge in the user's badges array
-        let userBadge = user.badges.find(badge => badge.badgeId.toString() === badgeId.toString());
+        let userBadge = user.badges.find(badge => badge.badgeId.toString() === badgeId.toString())
         
         // If the badge doesn't exist, add it with default values
         if (!userBadge) {
@@ -103,7 +103,7 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
                 progress: new Map(),
                 isComplete: false,
                 awardedAt: null
-            };
+            }
 
             // Initialize progress based on badge criteria
             for (const [criterion, totalCriteria] of Object.entries(badgeCriteria)) {
@@ -111,10 +111,10 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
                     currentProgress: 0,
                     totalCriteria: parseInt(totalCriteria, 10),
                     isComplete: false
-                });
+                })
             }
 
-            user.badges.push(userBadge);
+            user.badges.push(userBadge)
         }
 
         // Initialize progress for the criterion if it doesn't exist
@@ -123,39 +123,39 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
                 currentProgress: 0,
                 totalCriteria: badgeCriteria[criterionKey] || 0,
                 isComplete: false
-            });
+            })
         }
 
-        const criterion = userBadge.progress.get(criterionKey);
+        const criterion = userBadge.progress.get(criterionKey)
 
         // Increment progress
-        criterion.currentProgress += increment;
+        criterion.currentProgress += increment
 
         // Check if the criterion is complete
         if (criterion.currentProgress >= criterion.totalCriteria) {
-            criterion.isComplete = true;
-            criterion.currentProgress = criterion.totalCriteria; // Cap progress at totalCriteria
+            criterion.isComplete = true
+            criterion.currentProgress = criterion.totalCriteria // Cap progress at totalCriteria
         }
 
         // Check if all criteria are complete
-        const allCriteriaComplete = Array.from(userBadge.progress.values()).every(c => c.isComplete);
+        const allCriteriaComplete = Array.from(userBadge.progress.values()).every(c => c.isComplete)
         if (allCriteriaComplete) {
-            userBadge.isComplete = true;
-            userBadge.awardedAt = new Date();
-            userBadge.count += 1; // Increment count to reflect that the badge is awarded
+            userBadge.isComplete = true
+            userBadge.awardedAt = new Date()
+            userBadge.count += 1 // Increment count to reflect that the badge is awarded
         }
 
         // Assign updated progress to userBadge
         user.badges = user.badges.map(badge =>
             badge.badgeId.toString() === badgeId.toString() ? { ...badge, progress: userBadge.progress, isComplete: userBadge.isComplete, awardedAt: userBadge.awardedAt } : badge
-        );
+        )
 
-        await user.save();
+        await user.save()
 
-        return userBadge;
+        return userBadge
     } catch (error) {
-        console.error("Error tracking badge progress:", error);
-        throw error;
+        console.error("Error tracking badge progress:", error)
+        throw error
     }
 }
 
@@ -163,16 +163,16 @@ async function trackTrustedArtistBadge(userId, activityType, increment = 1) {
     try {
         // Define the badge ID for "Trusted Artist" badge
         const user = await User.findById(userId)
-        const badge = await Badge.findOne({ title: "trustedArtist" });
-        if(!user) throw new NotFoundError("User not found!");
-        if(!badge) throw new NotFoundError("Badge not found!");
+        const badge = await Badge.findOne({ title: "trustedArtist" })
+        if(!user) throw new NotFoundError("User not found!")
+        if(!badge) throw new NotFoundError("Badge not found!")
 
-        const updatedBadge = await trackBadgeProgress(userId, badge._id.toString(), activityType, increment);
+        const updatedBadge = await trackBadgeProgress(userId, badge._id.toString(), activityType, increment)
 
-        return updatedBadge;
+        return updatedBadge
     } catch (error) {
-        console.error("Error tracking Trusted Artist badge:", error);
-        throw error;
+        console.error("Error tracking Trusted Artist badge:", error)
+        throw error
     }
 }
 

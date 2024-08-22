@@ -14,15 +14,15 @@ import {
 class BadgeService {
     static createBadge = async (adminId, req) => {
         // 1. Check if the user is an admin
-        const admin = await User.findById(adminId);
-        if (!admin) throw new NotFoundError("Admin not found!");
-        if (admin.role !== "admin") throw new AuthFailureError("You are not an admin!");
+        const admin = await User.findById(adminId)
+        if (!admin) throw new NotFoundError("Admin not found!")
+        if (admin.role !== "admin") throw new AuthFailureError("You are not an admin!")
     
         // 2. Validate request body
-        const { title, description } = req.body;
-        if (!title || !description) throw new BadRequestError("Missing required fields!");
+        const { title, description } = req.body
+        if (!title || !description) throw new BadRequestError("Missing required fields!")
         if (req.files && !req.files.thumbnail)
-            throw new BadRequestError("Please provide a thumbnail!");
+            throw new BadRequestError("Please provide a thumbnail!")
     
         try {
             // 3. Compress and upload the image to Cloudinary
@@ -32,23 +32,23 @@ class BadgeService {
                 folderName: `fiyonce/admin/badges`,
                 width: 1920,
                 height: 1080
-            });
-            const icon = thumbnailUploadResult.secure_url;
+            })
+            const icon = thumbnailUploadResult.secure_url
     
             // 4. Parse the criteria field
-            let criteriaString = "";
+            let criteriaString = ""
             if (req.body.criteria) {
                 try {
                     // Ensure req.body.criteria is a valid JSON object
-                    const parsedCriteria = JSON.parse(req.body.criteria);
+                    const parsedCriteria = JSON.parse(req.body.criteria)
                     if (typeof parsedCriteria !== 'object' || Array.isArray(parsedCriteria)) {
-                        throw new BadRequestError("Invalid criteria format");
+                        throw new BadRequestError("Invalid criteria format")
                     }
                     // Convert the object to a JSON string
-                    criteriaString = JSON.stringify(parsedCriteria);
+                    criteriaString = JSON.stringify(parsedCriteria)
                 } catch (parseError) {
-                    console.error("Criteria parsing error:", parseError);
-                    throw new BadRequestError("Invalid criteria format");
+                    console.error("Criteria parsing error:", parseError)
+                    throw new BadRequestError("Invalid criteria format")
                 }
             }
     
@@ -60,18 +60,18 @@ class BadgeService {
                 criteria: criteriaString, // Store the criteria as a JSON string
                 level: req.body.level,
                 type: req.body.type,
-            });
+            })
     
-            await badge.save();
+            await badge.save()
     
             return {
                 badge
-            };
+            }
         } catch (error) {
-            console.error(`Error uploading or saving data ${error}`);
-            throw new BadRequestError("Error creating badge!");
+            console.error(`Error uploading or saving data ${error}`)
+            throw new BadRequestError("Error creating badge!")
         }
-    };
+    }
 
     static readBadges = async () => {
         const badges = await Badge.find()
@@ -162,34 +162,34 @@ class BadgeService {
 
     static awardEarlyBirdBadge = async (adminId, userId) => {
         // 1. Check admin, user, badge
-        const admin = await User.findById(adminId);
-        const user = await User.findById(userId);
-        const badge = await Badge.findOne({ title: 'earlyBird' });
+        const admin = await User.findById(adminId)
+        const user = await User.findById(userId)
+        const badge = await Badge.findOne({ title: 'earlyBird' })
     
         if (!admin || !user)
-            throw new NotFoundError('User not found');
+            throw new NotFoundError('User not found')
         if (admin.role !== 'admin')
-            throw new BadRequestError('Only an admin can perform this action');
+            throw new BadRequestError('Only an admin can perform this action')
         if (!badge)
-            throw new NotFoundError('Badge not found');
+            throw new NotFoundError('Badge not found')
     
         // 2. Check if badge is already awarded
-        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString());
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
     
         if (badgeIndex !== -1) 
-            throw new BadRequestError('Badge already awarded to this user');
+            throw new BadRequestError('Badge already awarded to this user')
     
         // 3. Award the badge
-        const progressMap = new Map();
+        const progressMap = new Map()
     
         // Assuming badge.criteria is a string representing JSON object like {"createPost": 1, "createService": 1}
-        const criteria = JSON.parse(badge.criteria);
+        const criteria = JSON.parse(badge.criteria)
         for (const [criterion, totalCriteria] of Object.entries(criteria)) {
             progressMap.set(criterion, {
                 currentProgress: totalCriteria,
                 totalCriteria,
                 isComplete: false
-            });
+            })
         }
     
         user.badges.push({
@@ -198,13 +198,13 @@ class BadgeService {
             progress: progressMap,
             isComplete: true,
             awardedAt: new Date(),
-        });
+        })
         
-        await user.save();
+        await user.save()
     
         return {
             user
-        };
+        }
     }    
 }
 
