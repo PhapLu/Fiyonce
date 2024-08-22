@@ -7,3 +7,13 @@
 2024-08-22 08:59:16::info::/v1/api/commissionService/bookmarkCommissionService/66a5addc73370474cf4eb5fd::5800d052-2178-4540-9706-473bd51a8e8d::input-params ::PATCH::::{}
 2024-08-22 08:59:16::error::/v1/api/commissionService/bookmarkCommissionService/66a5addc73370474cf4eb5fd::5800d052-2178-4540-9706-473bd51a8e8d::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'findIndex')"}
 2024-08-22 09:01:15::info::/v1/api/commissionService/bookmarkCommissionService/66a5addc73370474cf4eb5fd::d43e954f-cf27-43bf-b245-eea44148ae85::input-params ::PATCH::::{}
+2024-08-22 12:29:52::info::/v1/api/recommender/readPopularPosts::cd09a928-6499-4830-8100-128d6865cf3a::input-params ::GET::::{}
+2024-08-22 12:30:03::info::/v1/api/recommender/readPopularPosts::5092628f-f894-4463-adb3-858c748479cd::input-params ::GET::::{}
+2024-08-22 12:30:38::info::/v1/api/movement/readMovements::0b127354-2eaf-4356-bb2c-124e7b053dd9::input-params ::GET::::{}
+2024-08-22 12:30:53::info::/v1/api/recommender/readPopularPosts::b7917bd8-cc56-471e-b7ee-4fa3cacb16e0::input-params ::GET::::{"movementId":"66a5a19f73370474cf4eab16"}
+2024-08-22 12:31:18::info::/v1/api/recommender/readLatestPosts::e51544f2-dacd-4e4b-9ff5-575ee6044805::input-params ::GET::::{}
+2024-08-22 12:31:18::error::/v1/api/recommender/readLatestPosts::e51544f2-dacd-4e4b-9ff5-575ee6044805::undefined - NaNms - Response: {}::{"message":"req is not defined"}
+2024-08-22 12:32:05::info::/v1/api/recommender/readLatestPosts::f0f78955-ec26-426a-b4fc-8e13f3d425ae::input-params ::GET::::{}
+2024-08-22 12:32:05::error::/v1/api/recommender/readLatestPosts::f0f78955-ec26-426a-b4fc-8e13f3d425ae::undefined - NaNms - Response: {}::{"message":"req is not defined"}
+2024-08-22 12:32:10::info::/v1/api/recommender/readLatestPosts::97648e32-c190-43b5-a9c0-f6bc4cfd1508::input-params ::GET::::{}
+2024-08-22 12:32:10::error::/v1/api/recommender/readLatestPosts::97648e32-c190-43b5-a9c0-f6bc4cfd1508::undefined - NaNms - Response: {}::{"message":"req is not defined"}

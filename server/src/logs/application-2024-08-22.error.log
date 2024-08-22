@@ -2,3 +2,6 @@
 2024-08-22 08:55:51::error::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::bb2f7149-9f6a-4df6-841b-20f6bb854d9a::404 - 0ms - Response: {"status":404,"now":1724291751345}::{"message":"Service not found"}
 2024-08-22 08:56:03::error::/v1/api/commissionService/createCommissionService::bf722c7a-98d7-433b-a51c-3a157fbe4bfe::403 - 0ms - Response: {"status":403,"now":1724291763593}::{"message":"Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này"}
 2024-08-22 08:59:16::error::/v1/api/commissionService/bookmarkCommissionService/66a5addc73370474cf4eb5fd::5800d052-2178-4540-9706-473bd51a8e8d::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'findIndex')"}
+2024-08-22 12:31:18::error::/v1/api/recommender/readLatestPosts::e51544f2-dacd-4e4b-9ff5-575ee6044805::undefined - NaNms - Response: {}::{"message":"req is not defined"}
+2024-08-22 12:32:05::error::/v1/api/recommender/readLatestPosts::f0f78955-ec26-426a-b4fc-8e13f3d425ae::undefined - NaNms - Response: {}::{"message":"req is not defined"}
+2024-08-22 12:32:10::error::/v1/api/recommender/readLatestPosts::97648e32-c190-43b5-a9c0-f6bc4cfd1508::undefined - NaNms - Response: {}::{"message":"req is not defined"}

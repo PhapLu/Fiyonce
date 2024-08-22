@@ -7,6 +7,7 @@ import PostCategory from "../models/postCategory.model.js"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
 import { trackTrustedArtistBadge } from "../utils/badgeTracking.util.js"
+import Movement from "../models/movement.model.js"
 
 class PostService {
     static createPost = async (userId, req) => {
@@ -200,18 +201,16 @@ class PostService {
         }
     }
 
-    static readPosts = async (talentId) => {
-        //1. Check talent
-        const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Họa sĩ không tồn tại")
-        if (talent.role !== "talent")
-            throw new BadRequestError("Người này không phải là họa sĩ")
+    static readPostsByMovement = async (movementId) => {
+        //1. Check movement
+        const movement = await Movement.findById(movementId)
+        if (!movement) throw new NotFoundError("Movement not found")
 
-        //2. Find artworks
-        const artworks = await Post.find({ talentId }).sort({ createdAt: -1 })
+        //2. Read posts
+        const posts = await Post.find({ movementId }).sort({ createdAt: -1 })
 
         return {
-            artworks,
+            posts,
         }
     }
 
