@@ -22,6 +22,12 @@ const ServiceSchema = new mongoose.Schema(
             ref: "Movement",
             required: true,
         },
+        bookmarks: {
+            type: [{
+                user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+            }],
+            default: []
+        },
         title: { type: String, required: true },
         views: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         orderCount: { type: Number, default: 0 },

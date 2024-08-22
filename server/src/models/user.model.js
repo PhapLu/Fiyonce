@@ -56,7 +56,7 @@ const UserSchema = new Schema(
         socialLinks: [{ type: String, required: true }],
         views: { type: Number, default: 0 },
         postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-        serviceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
+        commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
         isPublicArchived: { type: Boolean, default: true },
         jobTitle: { type: String, default: "" },
         status: {

@@ -1,0 +1,4 @@
+2024-08-22 08:55:44::error::/v1/api/commissionService/readCommissionService/667c18113bf313a148ba35c4::21a6e8d2-0410-423e-9e81-22fe8a459ee2::404 - 0ms - Response: {"status":404,"now":1724291744169}::{"message":"Service not found"}
+2024-08-22 08:55:51::error::/v1/api/commissionService/updateCommissionService/66742d4af3390f5f176aea6c::bb2f7149-9f6a-4df6-841b-20f6bb854d9a::404 - 0ms - Response: {"status":404,"now":1724291751345}::{"message":"Service not found"}
+2024-08-22 08:56:03::error::/v1/api/commissionService/createCommissionService::bf722c7a-98d7-433b-a51c-3a157fbe4bfe::403 - 0ms - Response: {"status":403,"now":1724291763593}::{"message":"Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này"}
+2024-08-22 08:59:16::error::/v1/api/commissionService/bookmarkCommissionService/66a5addc73370474cf4eb5fd::5800d052-2178-4540-9706-473bd51a8e8d::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'findIndex')"}
