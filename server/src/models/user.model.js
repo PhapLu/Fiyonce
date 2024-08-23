@@ -40,25 +40,28 @@ const UserSchema = new Schema(
         badges: [{
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
             count: { type: Number, default: 0 },
-            progress: [{ 
-                criterion: { type: String, default: "" },
-                progress: {type: Number, default: 0},
-                isComplete: { type: Boolean, default: false }
-            }],
-            awardedAt: { type: Date, default: Date.now }
+            progress: {
+                type: Map,
+                of: new Schema({
+                    currentProgress: { type: Number, default: 0 },
+                    totalCriteria: { type: Number, required: true },
+                    isComplete: { type: Boolean, default: false }
+                })
+            },
+            isComplete: { type: Boolean, default: false },
+            awardedAt: { type: Date, default: null }
         }],
-        // badgeProgress: [{
-        //     badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
-        //     progress: { type: Object, default: {} },  // Change Map to Object
-        //     completed: { type: Boolean, default: false }
-        // }],
-        referralCode: { type: String},
+        referral: { 
+            code: { type: String, default: "" },
+            referred: { type: Schema.Types.ObjectId, ref: "User" }
+        },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
         views: { type: Number, default: 0 },
         postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
         commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
+        isPublicArchived: { type: Boolean, default: true },
         jobTitle: { type: String, default: "" },
         status: {
             type: String,

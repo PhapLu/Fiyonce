@@ -6,6 +6,8 @@ import { compressAndUploadImage, deleteFileByPublicId, extractPublicIdFromUrl } 
 import PostCategory from "../models/postCategory.model.js"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
+import { trackTrustedArtistBadge } from "../utils/badgeTracking.util.js"
+import Movement from "../models/movement.model.js"
 
 class PostService {
     static createPost = async (userId, req) => {
@@ -66,6 +68,9 @@ class PostService {
                     })
                 })
             )
+
+            //Track post creation
+            await trackTrustedArtistBadge(userId, 'createPost')
 
             return {
                 artwork: newPost,
@@ -211,6 +216,37 @@ class PostService {
         return {
             post,
             action
+        }
+    }
+
+    static readPostsByMovement = async (movementId) => {
+        //1. Check movement
+        const movement = await Movement.findById(movementId)
+        if (!movement) throw new NotFoundError("Movement not found")
+
+        //2. Read posts
+        const posts = await Post.find({ movementId }).sort({ createdAt: -1 })
+
+        return {
+            posts,
+        }
+    }
+
+    static readBookmarkedPosts = async(userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
+
+        //2. Fetch all bookmarked posts
+        const bookmarkedPosts = await Post.find({ _id: { $in: user.postBookmarks } })
+            .populate('talentId', 'stageName avatar')
+            .populate('postCategoryId', 'title')
+            .populate('movementId', 'title')
+            .populate('artworks', 'url')
+            .exec()
+        
+        return {
+            posts: bookmarkedPosts
         }
     }
 
