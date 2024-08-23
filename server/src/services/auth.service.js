@@ -37,15 +37,6 @@ class AuthService {
         foundUser.accessToken = token;
         await foundUser.save();
 
-        //4. Create QRCode
-        
-        //Create qrCode
-        if(foundUser.qrCode == ''){
-            const qrCode = await createUserQRCode(foundUser._id.toString());
-            foundUser.qrCode = qrCode;
-            await foundUser.save();
-        }
-
         const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
         return {
             code: 200,

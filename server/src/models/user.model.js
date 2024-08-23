@@ -80,7 +80,7 @@ const UserSchema = new Schema(
             default: ''
         },
         accessToken: { type: String },
-        qrCode: { type: String }, //Base 64
+        qrCode: { type: String, default: '' }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: { type: String, default: "" },
