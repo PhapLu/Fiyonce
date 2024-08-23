@@ -54,7 +54,7 @@ class AuthService {
         };
     };
 
-    static signUp = async ({ fullName, email, password }) => {
+    static signUp = async ({ fullName, email, password, referralCode }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
         if (holderUser) {
@@ -125,6 +125,7 @@ class AuthService {
                 expiredAt: new Date(Date.now() + 30 * 60 * 1000), // OTP expires in 30 minutes
                 requestCount: 1,
                 lastRequestDate: new Date(),
+                referralCode: referralCode,
             });
             await otpVerification.save();
         }
@@ -178,15 +179,27 @@ class AuthService {
             role: "member", // Use the string directly
         });
 
-        //Create qrCode
+        //5.Create qrCode and referralCode
+        let referral
         const qrCode = await createUserQRCode(newUser._id.toString());
+        const referralCode = crypto.randomBytes(6).toString("hex").toUpperCase();
+        referral.code = referralCode;
+        referral.referred = [];
         newUser.qrCode = qrCode;
+        newUser.referral = referral
         await newUser.save();
 
-        // 5. Delete the OTP record
+        //6. Check who is the referrer
+        let referrer
+        if(otpRecord.referralCode){
+            referrer = await User.findOne({ "referral.code": otpRecord.referralCode }).lean();
+            referrer.referral.referred.push(newUser._id)
+        }
+
+        //7. Delete the OTP record
         await UserOTPVerification.deleteOne({ email });
 
-        // 6. Create token
+        //8. Create token
         const token = jwt.sign(
             {
                 id: newUser._id,

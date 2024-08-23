@@ -22,6 +22,13 @@ passport.use(
             try {
                 // Find or create user in your database
                 let user = await User.findOne({ email: profile.emails[0].value });
+                
+                //Create referral code
+                let referral
+                const referralCode = crypto.randomBytes(6).toString("hex").toUpperCase();
+                referral.code = referralCode;
+                referral.referred = [];
+
                 if (!user) {
                     user = new User({
                         googleId: profile.id,
@@ -29,6 +36,7 @@ passport.use(
                         email: profile.emails[0].value,
                         password: "",
                         accessToken: accessToken,
+                        referral: referral
                     });
                 }
                 const jwtToken = generateToken(user)
