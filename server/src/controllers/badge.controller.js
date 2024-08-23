@@ -29,6 +29,13 @@ class BadgeController{
             metadata: await BadgeService.deleteBadge(req.userId, req.params.badgeId)
         }).send(res)
     }
+
+    awardEarlyBirdBadge = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Award early bird badge success!',
+            metadata: await BadgeService.awardEarlyBirdBadge(req.userId, req.params.userId)
+        }).send(res)
+    }
 }
 
 export default new BadgeController()

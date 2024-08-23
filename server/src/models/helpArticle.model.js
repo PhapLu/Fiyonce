@@ -12,8 +12,8 @@ const HelpArticleSchema = new mongoose.Schema(
             ref: "HelpTopic",
             required: true,
         },
-    },
-    {
+        views: { type: Number, default: 0 },
+    },{
         timestamps: true,
         collection: COLLECTION_NAME,
     }

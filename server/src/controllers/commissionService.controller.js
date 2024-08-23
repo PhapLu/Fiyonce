@@ -48,10 +48,11 @@ class ServiceController{
 
     bookmarkCommissionService = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Delete service success!',
+            message: 'Bookmark service success!',
             metadata: await CommissionServiceService.bookmarkCommissionService(req.userId, req.params.commissionServiceId)
         }).send(res)
     }
+
 }
 
 export default new ServiceController()

@@ -7,7 +7,7 @@ import { uploadFields } from '../../configs/multer.config.js'
 const router = express.Router()
 
 router.get('/readPost/:postId', asyncHandler(postController.readPost))
-router.get('/readPostsOfTalent/:talentId', asyncHandler(postController.readPostsOfTalent))
+router.get('/readPostsByMovement/:movementId', asyncHandler(postController.readPostsByMovement))
 router.get('/readPostCategoriesWithPosts/:talentId', asyncHandler(postController.readPostCategoriesWithPosts))
 router.get('/readArtworks/:talentId', asyncHandler(postController.readArtworks))
 router.get('/readBookmarkedPosts/:userId', asyncHandler(postController.readBookmarkedPosts))
@@ -18,8 +18,7 @@ router.post('/createPost', uploadFields, asyncHandler(postController.createPost)
 router.patch('/updatePost/:postId', uploadFields, asyncHandler(postController.updatePost))
 router.delete('/deletePost/:postId', asyncHandler(postController.deletePost))
 
-router.patch('/likePost/:postId', uploadFields, asyncHandler(postController.likePost))
-router.patch('/bookmarkPost/:postId', uploadFields, asyncHandler(postController.bookmarkPost))
-
+router.patch('/likePost/:postId', asyncHandler(postController.likePost))
+router.patch('/bookmarkPost/:postId', asyncHandler(postController.bookmarkPost))
 
 export default router

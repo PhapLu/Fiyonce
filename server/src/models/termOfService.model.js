@@ -7,7 +7,6 @@ const TermOfServiceSchema = new mongoose.Schema(
     {
         title: { type: String, required: true },
         talentId: { type: mongoose.Schema.Types.ObjectId, required: true },
-        title: { type: String, required: true },
         content: { type: String, required: true },
     },
     {

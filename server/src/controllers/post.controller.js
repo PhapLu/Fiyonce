@@ -17,10 +17,10 @@ class PostController {
         }).send(res)
     }
 
-    readPostsOfTalent = async (req, res, next) => {
+    readPostsByMovement = async(req, res, next) => {
         new SuccessResponse({
             message: 'Xem tác phẩm thành công',
-            metadata: await PostService.readPostsOfTalent(req.params.talentId)
+            metadata: await PostService.readPostsByMovement(req.params.movementId)
         }).send(res)
     }
 
@@ -87,6 +87,12 @@ class PostController {
         new SuccessResponse({
             message: 'Tìm tác phẩm thành công',
             metadata: await PostService.findPost()
+        }).send(res)
+    }
+    readBookmarkedPosts = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Xem tác phẩm đã lưu thành công',
+            metadata: await PostService.readBookmarkedPosts(req.params.userId)
         }).send(res)
     }
 }

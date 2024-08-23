@@ -12,7 +12,7 @@ class RecommenderController {
   readPopularPosts = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Posts success!',
-      metadata: await RecommenderService.readPopularPosts()
+      metadata: await RecommenderService.readPopularPosts(req)
     }).send(res)
   }
 
@@ -26,14 +26,14 @@ class RecommenderController {
   readLatestPosts = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Latest Posts success!',
-      metadata: await RecommenderService.readLatestPosts()
+      metadata: await RecommenderService.readLatestPosts(req)
     }).send(res)
   }
 
   readPopularCommissionServices = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Services success!',
-      metadata: await RecommenderService.readPopularCommissionServices()
+      metadata: await RecommenderService.readPopularCommissionServices(req)
     }).send(res)
   }
 
@@ -47,7 +47,7 @@ class RecommenderController {
   readLatestCommissionServices = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Services success!',
-      metadata: await RecommenderService.readLatestCommissionServices()
+      metadata: await RecommenderService.readLatestCommissionServices(req)
     }).send(res)
   }
 }

@@ -17,6 +17,6 @@ router.use(verifyToken)
 router.post('/createCommissionService', uploadFields, asyncHandler(commissionServiceController.createCommissionService))
 router.patch('/updateCommissionService/:commissionServiceId', uploadFields, asyncHandler(commissionServiceController.updateCommissionService))
 router.delete('/deleteCommissionService/:commissionServiceId', asyncHandler(commissionServiceController.deleteCommissionService))
-router.patch('/bookmarkCommissionService/:commissionServiceId', uploadFields, asyncHandler(commissionServiceController.bookmarkCommissionService))
+router.patch('/bookmarkCommissionService/:commissionServiceId', asyncHandler(commissionServiceController.bookmarkCommissionService))
 
 export default router
