@@ -1,183 +1,189 @@
-import { User } from "../models/user.model.js";
+import { User } from "../models/user.model.js"
 import {
     AuthFailureError,
     BadRequestError,
     NotFoundError,
-} from "../core/error.response.js";
-import HelpTopic from "../models/helpTopic.model.js";
-import HelpArticle from "../models/helpArticle.model.js";
+} from "../core/error.response.js"
+import HelpTopic from "../models/helpTopic.model.js"
+import HelpArticle from "../models/helpArticle.model.js"
 
 class HelpService {
     static createHelpTopic = async (adminId, body) => {
         //1. Check admin
-        const admin = await User.findById(adminId);
-        if (!admin) throw new AuthFailureError("Admin not found");
+        const admin = await User.findById(adminId)
+        if (!admin) throw new AuthFailureError("Admin not found")
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("You are not an admin")
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Title cannot be empty")
         if(body.theme === '')
-            throw new BadRequestError("Theme cannot be empty");
+            throw new BadRequestError("Theme cannot be empty")
 
         //3. Create help topic
-        const helpTopic = await HelpTopic.create(body);
+        const helpTopic = await HelpTopic.create(body)
 
         return {
             helpTopic,
-        };
-    };
+        }
+    }
 
     static createHelpArticle = async (adminId, body) => {
         //1. Check admin
-        const admin = await User.findById(adminId);
-        if (!admin) throw new AuthFailureError("Admin not found");
+        const admin = await User.findById(adminId)
+        if (!admin) throw new AuthFailureError("Admin not found")
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("You are not an admin")
 
         //2. Validate the body
-        const { helpTopicId } = body;
-        const helpTopic = await HelpTopic.findById(helpTopicId);
+        const { helpTopicId } = body
+        const helpTopic = await HelpTopic.findById(helpTopicId)
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
-        if (!helpTopic) throw new BadRequestError("Help topic not found");
+            throw new BadRequestError("Title cannot be empty")
+        if (!helpTopic) throw new BadRequestError("Help topic not found")
 
         //3. Create help article
-        const helpArticle = await HelpArticle.create(body);
+        const helpArticle = await HelpArticle.create(body)
 
         return {
             helpArticle,
-        };
-    };
+        }
+    }
 
     static readHelpTopic = async (helpTopicId) => {
         //1. Check help topic
-        const helpTopic = await HelpTopic.findById(helpTopicId);
-        if (!helpTopic) throw new NotFoundError("Help topic not found");
+        const helpTopic = await HelpTopic.findById(helpTopicId)
+        if (!helpTopic) throw new NotFoundError("Help topic not found")
 
         return {
             helpTopic,
-        };
-    };
+        }
+    }
 
     static readHelpArticle = async (helpArticleId) => {
         //1. Check help article
-        const helpArticle = await HelpArticle.findById(helpArticleId);
-        if (!helpArticle) throw new NotFoundError("Help article not found");
+        const helpArticle = await HelpArticle.findById(helpArticleId)
+        if (!helpArticle) throw new NotFoundError("Help article not found")
+        helpArticle,views += 1
+        await helpArticle.save()
 
         return {
             helpArticle,
-        };
-    };
+        }
+    }
 
     static readHelpTopics = async () => {
         //1. Get help topics
-        const helpTopics = await HelpTopic.find();
-
+        const helpTopics = await HelpTopic.find()
+    
         return {
             helpTopics,
-        };
-    };
+        }
+    }
 
     static readHelpArticles = async () => {
         //1. Get help articles
-        const helpArticles = await HelpArticle.find();
+        const helpArticles = await HelpArticle.find()
+        helpArticles.forEach(async (article) => {
+            article.views += 1
+            await article.save()
+        })
 
         return {
             helpArticles,
-        };
-    };
+        }
+    }
 
     static updateHelpTopic = async (adminId, helpTopicId, body) => {
         //1. Check admin, helpTopic
-        const admin = await User.findById(adminId);
-        const helpTopic = await HelpTopic.findById(helpTopicId);
+        const admin = await User.findById(adminId)
+        const helpTopic = await HelpTopic.findById(helpTopicId)
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpTopic) throw new NotFoundError("Help topic not found");
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (!helpTopic) throw new NotFoundError("Help topic not found")
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("You are not an admin")
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Title cannot be empty")
 
         //3. Update help topic
         const updatedHelpTopic = await HelpTopic.findByIdAndUpdate(
             helpTopicId,
             body,
             { new: true, runValidators: true }
-        );
+        )
 
         return {
             helpTopic: updatedHelpTopic,
-        };
-    };
+        }
+    }
 
     static updateHelpArticle = async (adminId, helpArticleId, body) => {
         //1. Check admin, helpArticle
-        const admin = await User.findById(adminId);
-        const helpArticle = await HelpArticle.findById(helpArticleId);
+        const admin = await User.findById(adminId)
+        const helpArticle = await HelpArticle.findById(helpArticleId)
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpArticle) throw new NotFoundError("Help article not found");
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (!helpArticle) throw new NotFoundError("Help article not found")
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("You are not an admin")
 
         //2. Validate the body
         if (body.title === "")
-            throw new BadRequestError("Title cannot be empty");
+            throw new BadRequestError("Title cannot be empty")
         if (body.content === "")
-            throw new BadRequestError("Content cannot be empty");
+            throw new BadRequestError("Content cannot be empty")
 
         //3. Update help article
         const updatedHelpArticle = await HelpArticle.findByIdAndUpdate(
             helpArticleId,
             body,
             { new: true, runValidators: true }
-        );
+        )
 
         return {
             helpArticle: updatedHelpArticle,
-        };
-    };
+        }
+    }
 
     static deleteHelpTopic = async (adminId, helpTopicId) => {
         //1. Check admin, helpTopic
-        const admin = await User.findById(adminId);
-        const helpTopic = await HelpTopic.findById(helpTopicId);
+        const admin = await User.findById(adminId)
+        const helpTopic = await HelpTopic.findById(helpTopicId)
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpTopic) throw new NotFoundError("Help topic not found");
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (!helpTopic) throw new NotFoundError("Help topic not found")
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("You are not an admin")
 
         //2. Delete help topic
-        await HelpTopic.findByIdAndDelete(helpTopicId);
+        await HelpTopic.findByIdAndDelete(helpTopicId)
 
         return {
             message: "Help topic deleted successfully",
-        };
-    };
+        }
+    }
 
     static deleteHelpArticle = async (adminId, helpArticleId) => {
         //1. Check admin, helpArticle
-        const admin = await User.findById(adminId);
-        const helpArticle = await HelpArticle.findById(helpArticleId);
+        const admin = await User.findById(adminId)
+        const helpArticle = await HelpArticle.findById(helpArticleId)
 
-        if (!admin) throw new AuthFailureError("Admin not found");
-        if (!helpArticle) throw new NotFoundError("Help article not found");
+        if (!admin) throw new AuthFailureError("Admin not found")
+        if (!helpArticle) throw new NotFoundError("Help article not found")
         if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin");
+            throw new AuthFailureError("You are not an admin")
 
         //2. Delete help article
-        await HelpArticle.findByIdAndDelete(helpArticleId);
+        await HelpArticle.findByIdAndDelete(helpArticleId)
 
         return {
             message: "Help article deleted successfully",
-        };
-    };
+        }
+    }
 }
 
-export default HelpService;
+export default HelpService
