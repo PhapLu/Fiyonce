@@ -50,7 +50,10 @@ const UserSchema = new Schema(
             isComplete: { type: Boolean, default: false },
             awardedAt: { type: Date, default: null }
         }],
-        referralCode: { type: String},
+        referral: { 
+            code: { type: String, default: "" },
+            referred: { type: Schema.Types.ObjectId, ref: "User" }
+        },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true }],
