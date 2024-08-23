@@ -232,7 +232,8 @@ class OrderService {
             orders = await Order.find({ memberId: clientId, isMemberArchived: false })
                 .populate("talentChosenId", "stageName avatar")
                 .populate("memberId", "fullName avatar")
-                .populate("commissionServiceId", "price title");
+                .populate("commissionServiceId", "price title")
+                .sort({ createdAt: -1 });
         } catch (error) {
             console.error("Error populating orders:", error);
             throw new Error("Failed to fetch orders");
@@ -325,12 +326,6 @@ class OrderService {
                                     0,
                                 ],
                             },
-                            title: {
-                                $arrayElemAt: [
-                                    "$commissionServiceDetails.price",
-                                    0,
-                                ],
-                            },
                         },
                         memberId: {
                             _id: { $arrayElemAt: ["$memberDetails._id", 0] },
@@ -398,6 +393,8 @@ class OrderService {
                     },
                 },
             ]);
+
+            console.log(orders)
 
             return {
                 talentOrderHistory: orders
@@ -604,6 +601,27 @@ class OrderService {
             order: deniedOrder,
         };
     };
+
+    static startWipOrder = async (userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId);
+        const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
+            .populate("memberId", "fullName avatar")
+            .populate("commissionServiceId", "title");;
+        if (!user) throw new NotFoundError("User not found");
+        if (!order) throw new NotFoundError("Order not found");
+        if (order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet");
+        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order");
+
+        //2. Start work
+        order.status = "in_progress";
+        order.save();
+
+
+        return {
+            order,
+        };
+    }
 }
 
 export default OrderService;

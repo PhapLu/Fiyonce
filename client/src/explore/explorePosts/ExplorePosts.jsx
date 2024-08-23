@@ -34,6 +34,7 @@ export default function ExplorePosts() {
 
             return posts;
         } catch (error) {
+            
             console.log(error);
             return null;
         }

@@ -25,7 +25,6 @@ export default function ProfilePosts() {
 
     const { postId } = useParams();
     const profileInfo = useOutletContext();
-    // alert(profileInfo)
 
     const fetchPosts = async () => {
         try {

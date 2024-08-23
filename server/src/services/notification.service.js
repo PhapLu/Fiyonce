@@ -11,9 +11,13 @@ class NotificationService {
         //1. Check user
         const user = await User.findById(senderId);
         if (!user) throw new NotFoundError("User not found!");
+        console.log("PPP")
+        console.log(senderId)
 
         //2. Validate request body
         const { receiverId, type, url } = body;
+        console.log(receiverId)
+
         const receiver = await User.findById(receiverId);
         if (!receiverId) {
             throw new BadRequestError("Please provide all required fields");
@@ -21,16 +25,7 @@ class NotificationService {
         if (!receiver) throw new NotFoundError("Receiver not found!");
 
         if (senderId === receiverId) return;
-        if (
-            type !== "like" &&
-            type !== "share" &&
-            type !== "bookmark" &&
-            type !== "follow" &&
-            type !== "orderCommission" &&
-            type !== "updateOrderStatus"
-        ) {
-            throw new BadRequestError("Invalid type");
-        }
+
 
         //3. Assign content based on type of notification
         let content;
@@ -52,14 +47,36 @@ class NotificationService {
                 content = `${user.fullName} đã theo dõi bạn`;
                 notificationType = "interaction";
                 break;
-            case "orderCommission":
+            case "createCommissionOrder":
                 content = `${user.fullName} đã đặt commission của bạn`;
                 notificationType = "order";
                 break;
-            case "updateOrderStatus":
-                content = `${user.fullName} đã cập nhật trạng thái đơn hàng`;
+            case "updateCommissionOrder":
+                content = `${user.fullName} đã cập nhật thông tin đơn hàng`;
                 notificationType = "order";
                 break;
+            case "approveCommissionOrder":
+                content = `${user.fullName} đã xác nhận đơn hàng và gửi proposal cho bạn`;
+                notificationType = "order";
+                break;
+            case "confirmCommissionOrder":
+                content = `${user.fullName} đã thanh toán đơn hàng`;
+                notificationType = "order";
+                break;
+            case "rejectCommissionOrder":
+                content = `${user.fullName} đã từ chối commission của bạn`;
+                notificationType = "order";
+                break;
+            case "startWipCommissionOrder":
+                content = `${user.fullName} đã từ chối commission của bạn`;
+                notificationType = "order";
+                break;
+            case "reportCommissionOrder":
+                content = `${user.fullName} đã từ chối commission của bạn`;
+                notificationType = "order";
+                break;
+            default:
+                throw new BadRequestError("Invalid type");
         }
 
         //3. Create and save notification
@@ -71,6 +88,7 @@ class NotificationService {
             url,
         });
         await notification.save();
+        console.log(notification)
 
         return {
             notification

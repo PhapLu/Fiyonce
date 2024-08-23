@@ -9,6 +9,7 @@ import Talents from "./components/talents/Talents";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
 import RenderNews from "./components/crudNews/render/RenderNews";
+import RenderCommissionService from "./components/crudCommissionService/render/RenderCommissionService.jsx";
 
 // Pages
 import ProfileLayout from "./profile/profileLayout/ProfileLayout";
@@ -46,6 +47,7 @@ import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 import CreatePost from "./components/crudPost/create/CreatePost";
 import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
+import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +81,12 @@ const routes = [
       {
         path: "/users/:userId/profile-commission-services",
         element: <ProfileCommissionServices />,
+        children: [
+          {
+            path: "/users/:userId/profile-commission-services/:commissionServiceId",
+            element: <RenderCommissionService />,
+          },
+        ]
       },
       {
         path: "/users/:userId/profile-posts",
@@ -118,6 +126,10 @@ const routes = [
         path: "/users/:userId/basic-info",
         element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
       },
+      {
+        path: "/users/:userId/archive",
+        element: <ProtectedRoute><ProfileArchive /></ProtectedRoute>,
+      },
     ],
   },
   {
@@ -127,11 +139,17 @@ const routes = [
       {
         path: "/commission-services",
         element: <ExploreCommissionServices showCommissionServices={true} />,
+        children: [
+          {
+            path: "/commission-services/:commissionServiceId",
+            element: <RenderCommissionService />,
+          },
+        ]
       },
-      {
-        path: "/talents",
-        element: <Talents showTalents={true} />,
-      },
+      // {
+      //   path: "/talents",
+      //   element: <Talents showTalents={true} />,
+      // },
       {
         path: "/",
         element: <ExplorePosts showPosts={true} />,

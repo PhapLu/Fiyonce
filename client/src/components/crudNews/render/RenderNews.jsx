@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ShareSocial } from 'react-share-social'
 
-
 // Components
 import RenderNewss from "./RenderNewss.jsx";
 import Footer from "../../footer/Footer.jsx";
@@ -59,8 +58,15 @@ export default function RenderNews() {
                 <div className="flex-align-center">
                     <h4>Chia sẻ</h4>
                     <ShareSocial
+                        url={window.location.href}  // Pass the current URL
+                        media={window.location.href}  // Pass the current URL
                         socialTypes={['facebook', 'twitter', 'reddit', 'linkedin', 'pinterest', 'telegram']}
+                        title={title}  // Pass the title of the news article
+                        // Optionally, you can add more props like description, hashtags, etc.
+                        description={news?.subTitle}
+                        hashtags={['Pastal', 'News']}
                     />
+
                 </div>
 
                 <br />

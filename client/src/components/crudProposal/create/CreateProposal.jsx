@@ -20,8 +20,9 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
     const [isSubmitCreateProposalLoading, setIsSubmitCreateProposalLoading] = useState(false);
     const { setModalInfo } = useModal();
     const [selectedArtworks, setSelectedArtworks] = useState([]);
-    const { userInfo } = useAuth();
+    const { userInfo, socket} = useAuth();
 
+    console.log(commissionOrder)
     const createProposalMutation = useMutation(
         async ({ orderId, inputs }) => {
             const response = await apiUtils.post(`/proposal/sendProposal/${orderId}`, inputs);
@@ -79,6 +80,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             }
         });
         setSelectedArtworks(newArtworks);
+        setErrors((values) => ({...values, artworks: '' }));
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
@@ -164,7 +166,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
 
         if (commissionOrder?.isDirect == false) {
             if (selectedArtworks?.length < 3 || selectedArtworks?.length > 5) {
-                errors.artworks = "Vui lòng chọn 3-5 tranh mẫu";
+                errors.artworks = "Vui lòng chọn 3 - 5 tranh mẫu";
             }
             if (!isFilled(inputs.termOfServiceId)) {
                 errors.termOfServiceId = "Vui lòng chọn 1 điều khoản dịch vụ";
@@ -179,8 +181,6 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             }
         }
 
-
-
         return errors;
     }
 
@@ -191,8 +191,10 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             setIsSubmitCreateProposalLoading(false);
+            console.log(validationErrors)
             return;
         }
+
 
         inputs.artworks = selectedArtworks.map((artwork) => artwork._id);
 
@@ -205,17 +207,24 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                 })
                 setShowCreateProposal(false);
                 setOverlayVisible(false);
+
+                const senderId = userInfo._id;
+                const receiverId = commissionOrder.memberId._id;
+                const inputs2 = { receiverId, type: "approveCommissionOrder", url: `/users/${commissionOrder.memberId._id}/order-history` }
+                const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+                const notificationData = response2.data.metadata.notification;
+                socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
             }
         } catch (error) {
             console.log(error)
-            // setErrors((prevErrors) => ({
-            //     ...prevErrors,
-            //     serverError: error.response.data.message
-            // }));
-            // setModalInfo({
-            //     status: "error",
-            //     message: error.response.data.message
-            // })
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                serverError: error.response.data.message
+            }));
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
         } finally {
             setIsSubmitCreateProposalLoading(false);
         }
@@ -230,6 +239,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             }
             return prevSelectedArtworks;
         });
+        setErrors((values) => ({...values, artworks: '' }));
     };
 
     const displayedSelectedArtworks = selectedArtworks.filter((selectedArtwork) => selectedArtwork !== null).slice(0, 5);
@@ -254,56 +264,69 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             </svg>
 
             <div className="modal-form--left">
-                <span>{!commissionOrder?.isDirect && commissionOrder?.commissionServiceId?.title}</span>
-                <div className="user sm mb-8">
-                    <div className="user--left">
-                        <img src={commissionOrder?.memberId.avatar} alt="" className="user__avatar" />
-                        <div className="user__name">
-                            <div className="user__name__title">{commissionOrder?.memberId.fullName}</div>
-                        </div>
-                    </div>
-                </div>
-                <span>Giá: <span className="highlight-text"> {inputs?.price ? formatCurrency(inputs?.price) : "x"} VND</span></span>
-                <hr />
-                <div className="image-container images-layout-3">
-                    {displayedSelectedArtworks.slice(0, 3).map((portfolio, index) => {
-                        if (index === 2 && displayedSelectedArtworks.length > 3) {
-                            return (
-                                <div className="image-item">
-                                    <img
-                                        key={index}
-                                        src={
-                                            portfolio instanceof File
-                                                ? URL.createObjectURL(portfolio)
-                                                : portfolio.url || placeholderImage
-                                        }
-                                        alt={`portfolio ${index + 1}`}
-                                    />
-                                    <div className="image-item__overlay">
-                                        +{displayedSelectedArtworks?.length - 3}
+                {commissionOrder?.isDirect == true ? (
+                    <>
+                        <h3 className="mt-0 mb-8">{commissionOrder?.commissionServiceId?.title}</h3>
+                        <span>Giá tiền:
+                            <br />
+                            Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
+                            <br />
+                            Do bạn đề xuất: <span className="highlight-text">{formatCurrency(inputs?.price) || "x"} VND</span>
+                        </span>
+                        <hr />
+                    </>
+                ) : (
+                    <>
+                        <h3 className="mt-0 mb-8">Ứng đơn hàng trên Chợ Commission</h3>
+                        <span>Giá tiền:
+                            <br />
+                            Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
+                            <br />
+                            Do bạn đề xuất: <span className="highlight-text">{formatCurrency(inputs?.price) || "x"} VND</span>
+                        </span>
+                        <hr />
+                        <div className="image-container images-layout-3">
+                            {displayedSelectedArtworks.slice(0, 3).map((portfolio, index) => {
+                                if (index === 2 && displayedSelectedArtworks.length > 3) {
+                                    return (
+                                        <div className="image-item">
+                                            <img
+                                                key={index}
+                                                src={
+                                                    portfolio instanceof File
+                                                        ? URL.createObjectURL(portfolio)
+                                                        : portfolio.url || placeholderImage
+                                                }
+                                                alt={`portfolio ${index + 1}`}
+                                            />
+                                            <div className="image-item__overlay">
+                                                +{displayedSelectedArtworks?.length - 3}
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                                return (
+                                    <div className="image-item">
+                                        <img
+                                            key={index}
+                                            src={
+                                                portfolio instanceof File
+                                                    ? URL.createObjectURL(portfolio)
+                                                    : portfolio.url || placeholderImage
+                                            }
+                                            alt={`portfolio ${index + 1}`}
+                                        />
                                     </div>
-                                </div>
-                            );
-                        }
-                        return (
-                            <div className="image-item">
-                                <img
-                                    key={index}
-                                    src={
-                                        portfolio instanceof File
-                                            ? URL.createObjectURL(portfolio)
-                                            : portfolio.url || placeholderImage
-                                    }
-                                    alt={`portfolio ${index + 1}`}
-                                />
-                            </div>
-                        );
-                    })}
-                </div>
+                                );
+                            })}
+                        </div>
+                    </>
+                )}
+
                 <br />
                 <h4>Phạm vi công việc: </h4>
                 <div>
-                    <span className="w-100">{inputs?.scope || "Mô tả phạm vi công việc"}</span>
+                    <span className="w-100">{inputs?.scope ? limitString(inputs?.scope, 150) : "Mô tả phạm vi công việc"}</span>
                 </div>
             </div>
 
@@ -320,7 +343,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                 {commissionOrder?.isDirect == false && (
                     <div className="form-field">
                         <label className="form-field__label">Tranh mẫu</label>
-                        <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
+                        <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (3 - 5 tác phẩm).</span>
                         <div className="img-preview-container border-text">
                             {artworks?.length > 0 && artworks?.map((artwork, index) => {
                                 return (

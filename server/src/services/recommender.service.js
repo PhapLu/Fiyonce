@@ -312,7 +312,7 @@ class RecommenderService {
                     };
                 })
             );
-
+           
 
             // Sort posts by score
             scoredPosts.sort((a, b) => b.score - a.score);
@@ -328,7 +328,6 @@ class RecommenderService {
 
             // Combine top 20 scored posts with 30 random posts
             const finalPosts = [...top20Posts, ...random30Posts];
-
             return {
                 posts: finalPosts,
             };

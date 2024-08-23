@@ -31,8 +31,9 @@ export default function UpdateCommissionOrder({
 
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
-    const { userId: talentChosenId } = useParams();
-    const [inputs, setInputs] = useState(commissionOrder);
+    // const { userId: talentChosenId } = useParams();
+    const { commissionServiceId, memberId, talentChosenId, ...UpdatedCommissionOrderData } = commissionOrder;
+    const [inputs, setInputs] = useState(UpdatedCommissionOrderData);
 
     const [errors, setErrors] = useState({});
     const [
@@ -180,6 +181,8 @@ export default function UpdateCommissionOrder({
             onSuccess: () => {
                 // Invalidate the fetchIndirectOrders query to refetch the data
                 queryClient.invalidateQueries(["fetchIndirectOrders"]);
+                queryClient.invalidateQueries(["fetchMemberOrderHistory"]);
+                queryClient.invalidateQueries(["fetchTalentOrderHistory"]);
             },
             onError: (error) => {
                 console.error("Error creating order:", error);
@@ -212,6 +215,7 @@ export default function UpdateCommissionOrder({
         // }
 
         const fd = createFormData(inputs, "files", references);
+        console.log(inputs)
 
         // Handle order creation
         updateOrder(fd, {
@@ -287,15 +291,15 @@ export default function UpdateCommissionOrder({
                 {commissionOrder && (
                     <>
                         <span>{commissionOrder.serviceCategoryId?.title}</span>
-                        <h3>{commissionOrder?.isDirect == true ? commissionOrder?.commissionService?.title || "Tên dịch vụ" : "Đặt hàng trên chợ Commission"}</h3>
+                        <h3>{commissionOrder?.isDirect == true ? (commissionOrder?.commissionServiceId?.title || "Tên dịch vụ") : "Đặt hàng trên chợ Commission"}</h3>
                         {
                             commissionOrder?.isDirect == true ? (
                                 <span>
                                     Giá từ:{" "}
                                     <span className="highlight-text">
-                                        {(commissionOrder?.minPrice &&
+                                        {(inputs?.minPrice &&
                                             formatCurrency(
-                                                commissionOrder?.minPrice
+                                                inputs?.minPrice
                                             )) ||
                                             "x"}{" "}
                                         VND
@@ -305,15 +309,15 @@ export default function UpdateCommissionOrder({
                                 <span>
                                     Giá:{" "}
                                     <span className="highlight-text">
-                                        {(commissionOrder?.minPrice &&
+                                        {(inputs?.minPrice &&
                                             formatCurrency(
-                                                commissionOrder?.minPrice
+                                                inputs?.minPrice
                                             )) ||
                                             "x"}{" "}
                                         - {" "}
-                                        {(commissionOrder?.maxPrice &&
+                                        {(inputs?.maxPrice &&
                                             formatCurrency(
-                                                commissionOrder?.maxPrice
+                                                inputs?.maxPrice
                                             )) ||
                                             "x"}{" "}
                                         VND
@@ -335,7 +339,7 @@ export default function UpdateCommissionOrder({
                             }}
                             className="flex-space-between flex-align-center"
                         >
-                            Thủ tục đặt tranh
+                            Thủ tục đặt commission
                             {isProcedureVisible ? (
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

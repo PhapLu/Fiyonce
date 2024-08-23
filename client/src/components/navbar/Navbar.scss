@@ -12,6 +12,15 @@
     background-color: var(--white-3-color);
     transition: 0.2s linear;
 
+    .navbar__blur {
+        opacity: 0;
+        transition: 0.15s linear;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
     &.with-shadow {
         box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
     }
@@ -259,7 +268,7 @@
         background-color: var(--white-3-color);
         z-index: 100;
         transition: 0.3s linear;
-        padding: 28px 2.5%;
+        padding: 28px 2%;
 
         &.active {
             left: 0;
@@ -268,7 +277,7 @@
         .hamburger-menu-item {
             display: block;
             width: 100%;
-            padding: 16px 8px ;
+            padding: 16px 8px;
             border-radius: 8px;
             font-size: 1.5rem;
 
@@ -285,8 +294,34 @@
 /* Tablet styles (740px to 1023px) */
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
     .navbar {
-        padding: 8px 2.5%;
+        padding: 8px 2%;
+        position: fixed;
+        z-index: 100;
 
+        .navbar__blur {
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            &::after {
+                z-index: -1;
+                content: "";
+                position: absolute;
+                filter: blur(10px);
+                top: -25px;
+                left: -25px;
+                right: -25px;
+                bottom: -25px;
+                background-color: #181818;
+            }
+        }
+
+        .navbar--left .navbar__search-field {
+            min-width: 280px;
+        }
 
         .navbar-link-item {
             display: none;
@@ -299,6 +334,16 @@
 /* Mobile styles (<= 739px) */
 @media only screen and (max-width: 739px) {
     body {}
+
+    .navbar {
+        .navbar--left .navbar__search-field {
+            min-width: 100px;
+        }
+
+        .navbar-link-item {
+            display: none;
+        }
+    }
 
     /* Add your mobile-specific styles here */
 }

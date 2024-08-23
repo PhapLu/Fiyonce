@@ -156,6 +156,24 @@ class PostService {
         }
     }
 
+    static readBookmarkedPosts = async (userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
+
+        //2. Fetch all bookmarked posts
+        const bookmarkedPosts = await Post.find({ _id: { $in: user.postBookmarks } })
+            .populate('talentId', 'stageName avatar')
+            .populate('postCategoryId', 'title')
+            .populate('movementId', 'title')
+            .populate('artworks', 'url')
+            .exec()
+
+        return {
+            posts: bookmarkedPosts
+        }
+    }
+
     //-------------------END CRUD----------------------------------------------------
     static bookmarkPost = async (userId, postId) => {
         // Find user
@@ -186,28 +204,13 @@ class PostService {
             post.bookmarks.splice(postBookmarkIndex, 1)
             action = "unbookmark"
         }
-        
+
         await user.save()
         await post.save()
 
         return {
             post,
             action
-        }
-    }
-
-    static readPosts = async (talentId) => {
-        //1. Check talent
-        const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Họa sĩ không tồn tại")
-        if (talent.role !== "talent")
-            throw new BadRequestError("Người này không phải là họa sĩ")
-
-        //2. Find artworks
-        const artworks = await Post.find({ talentId }).sort({ createdAt: -1 })
-
-        return {
-            artworks,
         }
     }
 
@@ -223,6 +226,7 @@ class PostService {
                         postCategoryId: category._id,
                     })
                         .populate("artworks", "url")
+                        .populate("talentId", "stageName fullName avatar")
                         .exec()
 
                     return {

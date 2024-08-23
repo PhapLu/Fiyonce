@@ -109,6 +109,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                 [name]: value,
             }));
         }
+        setErrors((values) => ({ ...values, [name]: '' }));
     };
 
     const handleImageChange = (e) => {
@@ -116,8 +117,8 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         const newReferences = [...references];
 
         files.forEach((file) => {
-            if (file.size > 2 * 1024 * 1024) {
-                setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 2MB." }));
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 5MB." }));
             } else if (newReferences.length < 7) {
                 newReferences.push(file);
                 setErrors((values) => ({ ...values, references: "" }));
@@ -193,8 +194,8 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                 setIsSuccessCreateCommissionOrder(true);
 
                 if (isDirect) {
-                    const talentChosenId = commissionService?.talentId;
-                    const inputs = { receiverId: talentChosenId, type: "orderCommission", url: `/users/${talentChosenId}/order-history` }
+                    const talentChosenId = commissionService?.talentId?._id;
+                    const inputs = { receiverId: talentChosenId, type: "createCommissionOrder", url: `/users/${talentChosenId}/order-history` }
 
                     const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
                     const notificationData = response2.data.metadata.notification;
@@ -240,8 +241,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 {commissionService?.serviceCategoryId?.title}
                             </span>
                             <h3>{commissionService?.title || "Tên dịch vụ"}</h3>
-                            <span>Giá từ: <span className="highlight-text"> {(commissionService?.minPrice && formatCurrency(commissionService?.minPrice)) || "x"} VND</span></span>
-                            <br />
+                            <h4>Giá từ: <span className="highlight-text fs-16"> {(commissionService?.minPrice && formatCurrency(commissionService?.minPrice)) || "x"} VND</span></h4>
                             <br />
                         </>
                     )
@@ -250,16 +250,16 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                 {
                     isDirect ? (
                         <>
-                            <h4 onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center">
-                                Thủ tục đặt tranh
-                                {isProcedureVisible ? (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                </svg>
-                                ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                )}</h4>
+                            <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity">
+                                {
+                                    isProcedureVisible ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                                        </svg> : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                                            </svg>
+                                        )} <span className="ml-8 fs-16">Thủ tục đặt tranh</span></strong>
                             <hr />
                             {
                                 isProcedureVisible && (
@@ -267,8 +267,8 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                         <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
                                         <li className="step-item">Họa sĩ xác nhận và gửi proposal</li>
                                         <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                                        <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
-                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
+                                        <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
                                     </ul>
                                 )
                             }
@@ -281,8 +281,8 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
                                 <li className="step-item">Các họa sĩ gửi proposal</li>
                                 <li className="step-item">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
-                                <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
-                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
+                                <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
                             </ul>
                         </>
                     )
@@ -300,12 +300,11 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             <div className="modal-form--right">
                 <h2 className="form__title">Mô tả yêu cầu</h2>
                 {!isSuccessOrderCommission ?
-
                     (
                         <>
-                            <div className="form-field">
+                            <div className="form-field required">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
-                                <span className="form-field__annotation">Ở phần này, vui lòng miêu tả yêu cầu của bạn về sản phẩm mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết qua tin nhắn.</span>
+                                <span className="form-field__annotation">Ở phần này, mô tả yêu cầu và chất lượng sản phẩm mà bạn mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết hơn qua tin nhắn.</span>
                                 <textarea
                                     id="description"
                                     name="description"
@@ -317,9 +316,9 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 {errors.description && <span className="form-field__error">{errors.description}</span>}
                             </div>
 
-                            <div className="form-field">
+                            <div className="form-field required">
                                 <label className="form-field__label">Nguồn tham khảo</label>
-                                <span className="form-field__annotation">Cung cấp tranh tham khảo hoặc đường dẫn đến chúng giúp họa sĩ hình dung ra yêu cầu của bạn tốt hơn (tối đa 5 ảnh).</span>
+                                <span className="form-field__annotation">Cung cấp tranh tham khảo hoặc đường dẫn đến chúng giúp họa sĩ hình dung ra yêu cầu của bạn tốt hơn (1-5 ảnh).</span>
                                 {references.map((reference, index) => (
                                     <div key={index} className="form-field__input img-preview">
                                         <div className="img-preview--left">
@@ -347,6 +346,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 </div>
 
                                 {errors.references && <span className="form-field__error">{errors.references}</span>}
+
                             </div>
                             <div className="form-field">
                                 <label className="form-field__label">Nhu cầu sử dụng</label>
@@ -464,9 +464,9 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 </div>
                                 {errors.fileFormats && <span className="form-field__error">{errors.fileFormats}</span>}
                             </div>
-                            <div className="form-field">
+                            <div className="form-field required">
                                 <label className="form-field__label">Giá cả</label>
-                                <span className="form-field__annotation">Cung cấp giá tiền tối thiểu và tối đa mà bạn có thể chi trả cho họa sĩ để hoàn thành tác phẩm theo yêu cầu của mình.</span>
+                                <span className="form-field__annotation">Cung cấp mức giá tối thiểu và tối đa mà bạn có thể chi trả cho họa sĩ để hoàn thành tác phẩm theo yêu cầu của mình.</span>
                                 <div className="form-field half-split">
                                     <input
                                         type="number"
@@ -528,12 +528,11 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 Kiểm tra thông tin đơn hàng <Link to={`/users/${userInfo._id}/order-history`} className="highlight-text">tại đây</Link>.
                             </p>
 
-                            <p>
+                            <p className="border-text mt-32">
                                 <strong>Lưu ý: </strong>
                                 <br />
-                                - Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài nền tảng.
-                                <br />
-                                -Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng tôi qua <Link to="/report" className="highlight-text">Trung tâm trợ giúp</Link>.
+                                Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài nền tảng.
+                                Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng mình qua <Link to="/report" className="highlight-text">Trung tâm trợ giúp</Link>.
                             </p>
                         </>
                     )}

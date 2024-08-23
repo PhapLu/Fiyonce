@@ -18,7 +18,7 @@ const NotificationSchema = new mongoose.Schema(
         isSeen: { type: Boolean, default: false },
         content: { type: String, required: true },
         senderAvatar: { type: String, required: true },
-        url: { type: String, required: true },
+        url: { type: String},
     },
     {
         timestamps: true,

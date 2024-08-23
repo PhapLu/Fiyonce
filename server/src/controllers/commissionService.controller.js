@@ -23,6 +23,15 @@ class ServiceController{
         }).send(res)
     }
 
+    readBookmarkedServices = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Read services success!',
+            metadata: await CommissionServiceService.readBookmarkedServices(req.params.userId)
+        }).send(res)
+    }
+
+    
+
     updateCommissionService = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update service success!',
@@ -37,6 +46,12 @@ class ServiceController{
         }).send(res)
     }
 
+    bookmarkCommissionService = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Delete service success!',
+            metadata: await CommissionServiceService.bookmarkCommissionService(req.userId, req.params.commissionServiceId)
+        }).send(res)
+    }
 }
 
 export default new ServiceController()

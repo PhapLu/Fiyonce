@@ -38,7 +38,13 @@ const ServiceSchema = new mongoose.Schema(
         notes: { type: String },
         isMedia: { type: Boolean, default: false },
         status: { type: String, enum: ["open", "closed", "waitList"], default: "open" },
-        artworks: [{ type: String, default:[]}],
+        artworks: [{ type: String, default: [] }],
+        bookmarks: {
+            type: [{
+                user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+            }],
+            default: []
+        },
     },
     {
         timestamps: true,

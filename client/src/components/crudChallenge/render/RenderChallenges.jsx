@@ -101,7 +101,7 @@ export default function RenderChallenges() {
                                     <div className="challenge-item--right">
                                         <h3 className="challenge-item__title">{challenge?.title}</h3>
                                         <br />
-                                        <span>{formatDate(challenge.startAt)} - {formatDate(challenge.endAt)}</span>
+                                        <span>{formatDatetime(challenge.startAt)} - {formatDatetime(challenge.endAt)}</span>
                                         <br />
                                         <br />
                                         <span>{limitString(challenge.description, 150)}</span>

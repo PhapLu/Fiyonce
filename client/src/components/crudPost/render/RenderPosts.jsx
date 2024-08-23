@@ -40,10 +40,11 @@ import {
 export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete, posts, layout }) {
     const breakpointColumnsObj = {
         default: layout,
-        1200: 5,
+        739: 2,
         1023: 4,
-        739: 2
+        1200: 5,
     };
+    console.log(posts)
 
     const { setModalInfo } = useModal();
     const location = useLocation();
@@ -110,6 +111,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                 if (action === "like" && userInfo?._id !== postAuthorId) {
                     const inputs = { receiverId: postAuthorId, type: "like", url: `/users/${postAuthorId}/profile-posts/${selectedPostId}` }
 
+                    console.log(postAuthorId)
                     const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
                     const notificationData = response2.data.metadata.notification;
 
@@ -150,10 +152,10 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                 });
 
                 if (action == "bookmark" && userInfo?._id !== postAuthorId) {
-                    const response2 = await apiUtils.post(`/notification/createNotification`, { receiverId: postAuthorId, type: "bookmark" });
+                    const response2 = await apiUtils.post(`/notification/createNotification`, { receiverId: postAuthorId, type: "bookmark", url: `/users/${postAuthorId}/profile-posts/${selectedPostId}` });
                     const notificationData = response2.data.metadata.notification;
 
-                    socket.emit('sendNotification', { senderId: userInfo?._id, receiverId: postAuthorId, notification: notificationData });
+                    socket.emit('sendNotification', { senderId: userInfo?._id, receiverId: postAuthorId, notification: notificationData, url: notificationData.url });
                 }
             }
 
@@ -216,8 +218,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
 
         switch (platform) {
             case 'copy':
-                navigator.clipboard.writeText(`${url}${itemId}`);
-                alert('URL copied to clipboard!');
+                navigator.clipboard.writeText(`${url}/${itemId}`);
                 break;
             case 'x':
                 window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}/${itemId}`);
@@ -228,11 +229,6 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
             case 'facebook':
                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}/${itemId}`);
                 break;
-            case 'instagram':
-                // Instagram does not have a direct sharing URL. You can guide users to copy the URL.
-                navigator.clipboard.writeText(url);
-                alert('Instagram does not support direct sharing. URL copied to clipboard!');
-                break;
             default:
                 break;
         }
@@ -241,7 +237,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
 
     return (
         <div className="posts">
-            <div className={`${!postId ? "opacity-0" : ""}`}>
+            <div className={`${!(postId && !location.pathname.includes("/update") && !location.pathname.includes("/delete")) ? "opacity-0" : ""}`}>
                 <div className="prev-btn hover-cursor-opacity" onClick={() => handlePrevNext("prev")}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="size-6 prev-btn__ic">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -376,8 +372,8 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                     {
                                         isDisplayOwner && (
                                             <span>
-                                                <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="user xs hover-cursor-opacity">
-                                                    <div className="user--left mt-8">
+                                                <div className="user xs">
+                                                    <Link to={`/users/${post?.talentId._id}/profile-commission-services`} className="user--left mt-8 hover-cursor-opacity">
                                                         <LazyLoadImage
                                                             src={resizeImageUrl(post?.talentId?.avatar, 40)}
                                                             className="user__avatar"
@@ -386,7 +382,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                                         <div className="user__name">
                                                             <div className="user__name__title fw-600">{post?.talentId?.fullName}</div>
                                                         </div>
-                                                    </div>
+                                                    </Link>
                                                     {/* <div className="user--right flex-align-center">
                                     <span className="mr-4">{post?.views?.length}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="size-6 sm">
@@ -394,7 +390,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                     </svg>
                                 </div> */}
-                                                </Link>
+                                                </div>
                                             </span>
                                         )
                                     }
@@ -403,13 +399,16 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                         })}
                     </Masonry >
                 ) : (
-                    <div className="text-align-center flex-align-center flex-justify-center mt-40">
-                        <br />
-                        <ClipLoader className="clip-loader" size={40} loading={true} />
-                        <h3 className="ml-12">
-                            Đang tải
-                        </h3>
-                    </div>
+                    <>
+                        <br /><br /><br /><br />
+                        <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                            <ClipLoader className="clip-loader" size={40} loading={true} />
+                            <h3 className="ml-12">
+                                Đang tải
+                            </h3>
+                        </div>
+                    </>
+
                 )
             }
         </div >

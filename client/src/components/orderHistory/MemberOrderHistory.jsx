@@ -203,26 +203,30 @@ export default function MemberOrderHistory() {
                                         setOverlayVisible(true);
                                     }}
                                 >
-                                    <td>
-                                        <span className={`status ${order?.status}`}>
-                                            {order?.status === "pending"
-                                                ? "Đang đợi họa sĩ xác nhận"
-                                                : order?.status === "approved"
-                                                    ? "Đang đợi bạn thanh toán"
-                                                    : order?.status === "rejected"
-                                                        ? "Họa sĩ đã từ chối"
-                                                        : order?.status === "confirmed"
-                                                            ? "Đã thanh toán cọc"
-                                                            : order?.status === "canceled"
-                                                                ? "Bạn đã hủy đơn"
-                                                                : order?.status === "in_progress"
-                                                                    ? "Họa sĩ đang thực hiện"
-                                                                    : order?.status === "finished"
-                                                                        ? "Hoàn tất"
-                                                                        : order?.status === "under_processing"
-                                                                            ? "Admin đang xử lí"
-                                                                            : ""}
-                                        </span>
+                                    <td >
+                                        <div className="status-cell">
+                                            <div className={`status-cell__bg ${order?.status}`}>
+                                            </div>
+                                            <div className="status-cell__title">
+                                                {order?.status === "pending"
+                                                    ? "Đang đợi họa sĩ xác nhận"
+                                                    : order?.status === "approved"
+                                                        ? "Đang đợi bạn thanh toán"
+                                                        : order?.status === "rejected"
+                                                            ? "Họa sĩ đã từ chối"
+                                                            : order?.status === "confirmed"
+                                                                ? "Đã thanh toán cọc"
+                                                                : order?.status === "canceled"
+                                                                    ? "Bạn đã hủy đơn"
+                                                                    : order?.status === "in_progress"
+                                                                        ? "Họa sĩ đang thực hiện"
+                                                                        : order?.status === "finished"
+                                                                            ? "Hoàn tất"
+                                                                            : order?.status === "under_processing"
+                                                                                ? "Admin đang xử lí"
+                                                                                : ""}
+                                            </div>
+                                        </div>
                                     </td>
 
                                     {order?.isDirect ? (
@@ -234,29 +238,13 @@ export default function MemberOrderHistory() {
                                             {"Đặt hàng trên Chợ Commission"}
                                         </td>
                                     )}
-                                    {order?.isDirect ? (
-                                        <td>
-                                            {`đ${formatCurrency(
-                                                order?.minPrice
-                                            )}` ||
-                                                `đ${formatCurrency(
-                                                    order?.maxPrice
-                                                )}` ||
-                                                "-"}
-                                        </td>
-                                    ) : (
-                                        <td>
-                                            {`đ${formatCurrency(
-                                                order?.minPrice
-                                            )} - đ${formatCurrency(
-                                                order?.maxPrice
-                                            )}` ||
-                                                `đ${formatCurrency(
-                                                    order?.proposalId?.minPrice
-                                                )}` ||
-                                                "-"}
-                                        </td>
-                                    )}
+                                    <td className="">
+                                        {`${formatCurrency(
+                                            order?.minPrice
+                                        )} - ${formatCurrency(
+                                            order?.maxPrice
+                                        )} VND`}
+                                    </td>
                                     <td>{order?.deadline || "-"}</td>
                                     <td className="flex-align-center">
                                         <>
@@ -267,7 +255,7 @@ export default function MemberOrderHistory() {
                                                         setCommissionOrder(
                                                             order
                                                         );
-                                                        setShowRenderProposal(
+                                                        setShowRenderProposals(
                                                             true
                                                         );
                                                         setOverlayVisible(true);
@@ -405,6 +393,7 @@ export default function MemberOrderHistory() {
                             setShowRenderCommissionOrder={
                                 setShowRenderCommissionOrder
                             }
+                            setShowUpdateCommissionOrder={setShowUpdateCommissionOrder}
                             setShowRenderProposals={setShowRenderProposals}
                             setOverlayVisible={setOverlayVisible}
                         />
@@ -462,6 +451,12 @@ export default function MemberOrderHistory() {
                             setOverlayVisible={setOverlayVisible}
                         />
                     )}
+
+                    {/* {
+                        showRenderProposal && (
+
+                        )
+                    } */}
                 </div>
             )}
         </>

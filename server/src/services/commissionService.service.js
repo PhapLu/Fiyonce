@@ -13,6 +13,7 @@ import {
 } from "../utils/cloud.util.js";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken'
+import Service from "../models/commissionService.model.js";
 
 class CommissionServiceService {
     static createCommissionService = async (talentId, req) => {
@@ -21,7 +22,7 @@ class CommissionServiceService {
         if (!talent) throw new NotFoundError("Talent not found!");
         if (talent.role !== "talent")
             throw new AuthFailureError("User is not a talent!");
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if (!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false)
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         // 2. Validate request body
@@ -140,6 +141,68 @@ class CommissionServiceService {
         };
     };
 
+
+    static readBookmarkedServices = async (userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found")
+
+        console.log("PPP")
+
+        //2. Fetch all bookmarked services
+        const bookmarkedServices = await Service.find({ _id: { $in: user.commissionServiceBookmarks } })
+            .populate('talentId', 'stageName avatar')
+            .populate('serviceCategoryId', 'title')
+            .populate('movementId', 'title')
+            .populate('artworks', 'url')
+            .exec()
+
+        console.log(bookmarkedServices)
+
+        return {
+            services: bookmarkedServices
+        }
+    }
+
+    static bookmarkCommissionService = async (userId, commissionServiceId) => {
+        // Find user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
+
+        // Find commissionService
+        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
+        if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
+
+        const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
+        const commissionServiceBookmarkIndex = commissionService.bookmarks.findIndex(bookmark => bookmark.user.toString() === userId)
+
+        // Let action to know if the user commissionServiceBookmark/undo their interactions
+        let action = "bookmark"
+
+        if (userCommissionServiceBookmarkIndex === -1) {
+            user.commissionServiceBookmarks.push(commissionServiceId)
+            commissionService.bookmarks.push({ user: new mongoose.Types.ObjectId(userId) })
+
+            // Check if user is commissionService owner
+            if (userId !== commissionService.talentId) {
+                commissionService.views.concat({ user: new mongoose.Types.ObjectId(userId) })
+            }
+        } else {
+            // Remove commissionServiceBookmark
+            user.commissionServiceBookmarks.splice(userCommissionServiceBookmarkIndex, 1)
+            commissionService.bookmarks.splice(commissionServiceBookmarkIndex, 1)
+            action = "unbookmark"
+        }
+
+        await user.save()
+        await commissionService.save()
+
+        return {
+            commissionService,
+            action
+        }
+    }
+
     static updateCommissionService = async (talentId, commissionServiceId, req) => {
         const talent = await User.findById(talentId);
         const service = await CommissionService.findById(commissionServiceId);
@@ -148,7 +211,7 @@ class CommissionServiceService {
         if (!service) throw new NotFoundError('Service not found');
         if (!service.movementId) throw new NotFoundError('Movement not found');
         if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service');
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if (!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false)
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
         const oldCategoryId = service.serviceCategoryId;
 
@@ -208,9 +271,9 @@ class CommissionServiceService {
         if (!service) throw new NotFoundError("Service not found");
         if (service.talentId.toString() !== talentId)
             throw new BadRequestError("You can only delete your service");
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if (!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false)
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
-        
+
         // 2. Extract public IDs and delete files from Cloudinary
         const publicIds = service.artworks.map((artwork) =>
             extractPublicIdFromUrl(artwork)

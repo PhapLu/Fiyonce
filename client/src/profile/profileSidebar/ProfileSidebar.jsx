@@ -1,5 +1,5 @@
 // Imports
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useOutletContext, useParams } from "react-router-dom";
 import EmojiPicker from '../../components/emojiPicker/EmojiPicker'; // Update the path as needed
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -9,12 +9,13 @@ import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
 import Follower from '../../components/follow/follower/Follower.jsx';
 import Following from '../../components/follow/following/Following.jsx';
 import ProfileStatus from '../../components/profileStatus/ProfileStatus.jsx';
+import FileInput from '../../components/cropImage/FileInput.jsx';
+import CropImage from '../../components/cropImage/CropImage.jsx';
 
 // Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useConversation } from '../../contexts/conversation/ConversationContext.jsx';
 import { useModal } from '../../contexts/modal/ModalContext.jsx';
-import CropImage from '../../components/cropImage/CropImage.jsx';
 
 // Utils
 import { apiUtils } from '../../utils/newRequest.js';
@@ -28,67 +29,10 @@ import { resizeImageUrl } from '../../utils/imageDisplayer.js';
 export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [isCropping, setIsCropping] = useState(false);
-    const [croppedImage, setCroppedImage] = useState(null);
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showFollowers, setShowFollowers] = useState(false);
     const [showFollowing, setShowFollowing] = useState(false);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
-    const handleFileUpload = async (croppedFile) => {
-        const formData = new FormData();
-        formData.append('file', croppedFile);
-        formData.append('type', "avatar");
-
-        try {
-            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
-            if (response.data.metadata.image_url) {
-                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    const handleAvatarClick = () => {
-        document.getElementById('fileInput').click();
-    };
-
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageDataUrl = URL.createObjectURL(file);
-            setSelectedImage(imageDataUrl);
-            setIsCropping(true);
-            setOverlayVisible(true);
-        }
-        // Reset the input value to allow re-selecting the same file
-        e.target.value = null;
-    };
-
-    const handleCropComplete = async (croppedFile) => {
-        const formData = new FormData();
-        formData.append('file', croppedFile);
-        formData.append('type', "avatar");
-
-        try {
-            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
-            if (response.data.metadata.image_url) {
-                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
-                setUserInfo({ ...userInfo, avatar: response.data.metadata.image_url })
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            setIsCropping(false);
-            setOverlayVisible(false);
-        }
-    };
-
-    const handleCancelCrop = () => {
-        setIsCropping(false);
-        setOverlayVisible(false);
-        setSelectedImage(null);
-    };
 
     // Resources from AuthContext
     const { userInfo, setUserInfo } = useAuth();
@@ -116,8 +60,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [profileFollowers, setProfileFollowers] = useState(profileInfo?.followers || [])
     const [userFollowing, setUserFollowing] = useState(userInfo?.following || [])
 
-
-
     const handleShowAllLinks = () => {
         setShowAllSocialLinks(!showAllSocialLinks);
     };
@@ -136,6 +78,24 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     // }, [userId]);
 
 
+    const handleFileUpload = async (croppedFile) => {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('type', "avatar");
+        setUploadAvatarLoading(true);
+
+        try {
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
+            if (response.data.metadata.image_url) {
+                setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+                setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        setUploadAvatarLoading(false);
+    };
+
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -151,7 +111,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const handleLinkChange = (event, index) => {
         const { value } = event.target;
         const updatedLinks = socialLinks.map((link, i) => (i === index ? value : link));
-        setSocialLinks(updatedLinks);
+        setSocialLinks(updatedLinks.filter(link => link.trim() != ""));
     };
 
     const addLinkInput = () => {
@@ -200,6 +160,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             const userId = profileInfo._id;
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
             const updatedData = { ...inputs, pronoun: pronoun, socialLinks: submittedSocialLinks };
+            console.log(updatedData)
             const response = await apiUtils.patch(`/user/updateProfile/${userId}`, updatedData);
             if (response) {
                 setModalInfo({
@@ -209,6 +170,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 setUserInfo(response.data.metadata.user);
                 setProfileInfo(response.data.metadata.user);
                 setOpenEditProfileForm(false);
+                setSocialLinks(submittedSocialLinks);
             }
         } catch (error) {
             console.error("Failed to update basic info:", error);
@@ -336,34 +298,118 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         ));
     };
 
+    const [image, setImage] = useState("");
 
+    // Callback function when an image is selected
+    const onImageSelected = (selectedImg) => {
+        setImage(selectedImg);
+    };
+
+    // Callback function when cropping is done
+    const onCropDone = (imgCroppedArea) => {
+        // Create a canvas element to crop the image
+        const canvasEle = document.createElement("canvas");
+        canvasEle.width = imgCroppedArea.width;
+        canvasEle.height = imgCroppedArea.height;
+
+        const context = canvasEle.getContext("2d");
+
+        // Load the selected image
+        let imageObj1 = new Image();
+        imageObj1.src = image; // Assuming 'image' is a URL or a data URI
+        imageObj1.onload = function () {
+            // Draw the cropped portion of the image onto the canvas
+            context.drawImage(
+                imageObj1,
+                imgCroppedArea.x,
+                imgCroppedArea.y,
+                imgCroppedArea.width,
+                imgCroppedArea.height,
+                0,
+                0,
+                imgCroppedArea.width,
+                imgCroppedArea.height
+            );
+
+            // Convert the canvas content to a Blob (JPEG format)
+            canvasEle.toBlob((blob) => {
+                if (blob) {
+                    // Optionally convert the Blob to a File object
+                    const croppedFile = new File([blob], "cropped-image.jpg", { type: "image/jpeg" });
+
+                    // Now you can pass croppedFile to handleFileUpload
+                    handleFileUpload(croppedFile);
+
+                    // Optionally, you can also create a data URL if you still need it
+                    setIsCropping(false);
+                    setOverlayVisible(false);
+                    setSelectedImage(null);
+                }
+            }, "image/jpeg");
+        };
+    };
+
+    // Callback function when cropping is canceled
+    const onCropCancel = () => {
+        setImage("");
+        setIsCropping(false);
+        setOverlayVisible(false);
+        setSelectedImage(null);
+    };
+
+    const inputRef = useRef();
+
+    // Handle the change event when a file is selected
+    const handleOnChange = (event) => {
+        if (event.target.files && event.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]);
+            reader.onload = function (e) {
+                onImageSelected(reader.result);
+                setSelectedImage(reader.result);
+                console.log(reader.result);
+            };
+        }
+    };
+
+    const onChooseImg = () => {
+        inputRef.current.click();
+        setIsCropping(true);
+        setOverlayVisible(true);
+    };
 
     return (
+
         <div className="sidebar">
             <LazyLoadImage
                 src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
                 alt=""
-                className="sidebar__bg desktop-hide"
+                className="sidebar__bg tablet-hide desktop-hide"
                 effect="blur"
             />
-            <div className={'sidebar__avatar ' + (isProfileOwner && 'profile-owner') + (isUploadAvatarLoading ? " skeleton-img" : "")}>
-                <div className="sidebar__avatar__update-img" onClick={handleAvatarClick}>
+            <div className={'sidebar__avatar mb-12 ' + (isProfileOwner && 'profile-owner') + (isUploadAvatarLoading ? " skeleton-img" : "")}>
+                <div className="sidebar__avatar__update-img" onClick={onChooseImg}>
                     <LazyLoadImage
-                        onClick={handleAvatarClick}
                         src={profileInfo.avatar || "/uploads/pastal_system_default_avatar.png"}
                         alt=""
                         className="sidebar__avatar__img"
                         effect="blur"
                     />
-                    
                     {isProfileOwner &&
                         <div className='sidebar__avatar__choose-avatar'>
-                            <svg onClick={handleAvatarClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__choose-avatar-ic">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__choose-avatar-ic">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                             </svg>
 
-                            <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+                            {/* <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} /> */}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                ref={inputRef}
+                                onChange={handleOnChange}
+                                style={{ display: "none" }}
+                            />
                         </div>
                     }
                 </div>
@@ -698,17 +744,17 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />}
             {overlayVisible &&
                 <div className="overlay">
-                    {showProfileStatus && <ProfileStatus profileInfo={profileInfo} setProfileInfo={setProfileInfo} setShowProfileStatus={setShowProfileStatus} setOverlayVisible={setOverlayVisible}/>}
+                    {showProfileStatus && <ProfileStatus profileInfo={profileInfo} setProfileInfo={setProfileInfo} setShowProfileStatus={setShowProfileStatus} setOverlayVisible={setOverlayVisible} />}
                     {showFollowers && <Follower followers={profileInfo?.followers} setShowFollowers={setShowFollowers} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
                     {showFollowing && <Following following={profileInfo?.following} setShowFollowing={setShowFollowing} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
-                    {isCropping && (
+                    {isCropping && selectedImage && (
                         <CropImage
-                            imageSrc={selectedImage}
-                            onCropComplete={handleCropComplete}
-                            onCancel={handleCancelCrop}
+                            image={selectedImage}
+                            onCropDone={onCropDone}
+                            onCropCancel={onCropCancel}
                         />
                     )}
-                    {croppedImage && <LazyLoadImage src={croppedImage} alt="Cropped" effect="blur" />}
+                    {/* {croppedImage && <LazyLoadImage src={croppedImage} alt="Cropped" effect="blur" />} */}
                 </div>
             }
         </div >

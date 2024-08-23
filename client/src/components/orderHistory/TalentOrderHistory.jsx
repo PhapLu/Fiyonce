@@ -12,6 +12,7 @@ import UpdateCommissionOrder from "../crudCommissionOrder/update/UpdateCommissio
 import ArchiveCommissionOrder from "../crudCommissionOrder/archive/ArchiveCommissionOrder";
 import UnarchiveCommissionOrder from "../crudCommissionOrder/archive/UnarchiveCommissionOrder";
 import ReportCommissionOrder from "../crudCommissionOrder/report/ReportCommissionOrder";
+import StartWipCommissionOrder from "../crudCommissionOrder/startWip/StartWipCommissionOrder";
 
 import RenderProposals from "../crudProposal/render/RenderProposals";
 import CreateProposal from "../crudProposal/create/CreateProposal";
@@ -48,6 +49,7 @@ export default function TalentOrderHistory() {
     const [showRenderProposal, setShowRenderProposal] = useState(false);
 
     const [showRejectCommissionOrder, setShowRejectCommissionOrder] = useState(false);
+    const [showStartWipCommissionOrder, setShowStartWipCommissionOrder] = useState(false);
 
     const [showArchiveCommissionOrder, setShowArchiveCommissionOrder] = useState(false);
     const [showUnarchiveCommissionOrder, setShowUnarchiveCommissionOrder] = useState(false);
@@ -130,6 +132,22 @@ export default function TalentOrderHistory() {
         }
     );
 
+    const startWipCommissionOrderMutation = useMutation(
+        async ({ orderId }) => {
+            const response = await apiUtils.patch(`/order/startWipOrder/${orderId}`);
+            console.log(response)
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchTalentOrderHistory');
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
+
     const unarchiveCommissionOrderMutation = useMutation(
         async (orderId) => {
             const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
@@ -191,16 +209,29 @@ export default function TalentOrderHistory() {
                             return (
                                 <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
                                     <td >
-                                        <span className={`status ${order.status}`}>
-                                            {order.status === "pending" && "Đang đợi bạn xác nhận"}
-                                            {order.status === "approved" && "Đang đợi khách hàng thanh toán"}
-                                            {order.status === "rejected" && "Bạn đã từ chối"}
-                                            {order.status === "confirmed" && "Khách đã thanh toán cọc"}
-                                            {order.status === "canceled" && "Đã hủy"}
-                                            {order.status === "in_progress" && "Đang thực hiện đơn"}
-                                            {order.status === "finished" && "Hoàn tất"}
-                                            {order.status === "under_processing" && "Admin đang xử lí"}
-                                        </span>
+                                        <div className="status-cell">
+                                            <div className={`status-cell__bg ${order?.status}`}>
+                                            </div>
+                                            <div className="status-cell__title">
+                                                {order?.status === "pending"
+                                                    ? "Đang đợi bạn xác nhận"
+                                                    : order?.status === "approved"
+                                                        ? "Đang đợi khách hàng thanh toán"
+                                                        : order?.status === "rejected"
+                                                            ? "Bạn đã từ chối"
+                                                            : order?.status === "confirmed"
+                                                                ? "Khách đã thanh toán cọc"
+                                                                : order?.status === "canceled"
+                                                                    ? "Đã hủy"
+                                                                    : order?.status === "in_progress"
+                                                                        ? "Đang thực hiện đơn"
+                                                                        : order?.status === "finished"
+                                                                            ? "Hoàn tất"
+                                                                            : order?.status === "under_processing"
+                                                                                ? "Admin đang xử lí"
+                                                                                : ""}
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <Link to={`/users/${order?.memberId._id}`} className="user sm hover-cursor-opacity">
@@ -227,6 +258,12 @@ export default function TalentOrderHistory() {
                                             }
                                             {order.status === "approved" && (
                                                 <button onClick={(e) => { e.stopPropagation(); setProposalId(order?.proposalId); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
+                                            )}
+                                            {order.status === "confirmed" && (
+                                                <button aria-label="Bắt đầu thực hiện đơn hàng" onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowStartWipCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3 hover-display-label">WIP</button>
+                                            )}
+                                            {order.status === "in_progress" && (
+                                                <button aria-label="Bắt đầu thực hiện đơn hàng" onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowStartWipCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3 hover-display-label">Hoàn tất</button>
                                             )}
                                         </>
                                         <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
@@ -289,6 +326,8 @@ export default function TalentOrderHistory() {
 
                         {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
                         {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
+
+                        {showStartWipCommissionOrder && <StartWipCommissionOrder commissionOrder={commissionOrder} setShowStartWipCommissionOrder={setShowStartWipCommissionOrder} setOverlayVisible={setOverlayVisible} startWipCommissionOrderMutation={startWipCommissionOrderMutation} />}
 
                         {/* Commission TOS */}
                         {showCommissionTosView &&
