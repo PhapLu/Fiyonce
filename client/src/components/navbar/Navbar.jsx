@@ -21,8 +21,6 @@ import { resizeImageUrl } from "../../utils/imageDisplayer";
 import Logo from "../../assets/img/logo.png";
 import './Navbar.scss';
 
-
-
 export default function Navbar() {
     const location = useLocation();
     const { userInfo, socket } = useAuth();

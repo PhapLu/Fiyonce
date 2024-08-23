@@ -1,17 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { isFilled } from "../../../utils/validator.js";
-import "./CreateHelpTopic.scss"
+import "./UpdateHelpTopic.scss"
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 
-export default function CreateHelpTopic({
-    setShowCreateHelpTopic,
+export default function UpdateHelpTopic({
+    helpTopic,
+    setShowUpdateHelpTopic,
     setOverlayVisible,
-    createHelpTopicMutation,
+    updateHelpTopicMutation,
 }) {
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState(helpTopic);
     const [errors, setErrors] = useState({});
-    const createCommissionRef = useRef();
-    const [isSubmitCreateHelpTopicLoading, setIsSubmitCreateHelpTopicLoading] = useState();
+    const updateCommissionRef = useRef();
+    const [isSubmitUpdateHelpTopicLoading, setIsSubmitUpdateHelpTopicLoading] = useState();
     const { setModalInfo } = useModal();
 
     const handleChange = (event) => {
@@ -38,44 +39,44 @@ export default function CreateHelpTopic({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitCreateHelpTopicLoading(true);
+        setIsSubmitUpdateHelpTopicLoading(true);
 
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitCreateHelpTopicLoading(false);
+            setIsSubmitUpdateHelpTopicLoading(false);
             return;
         }
 
         try {
             console.log(inputs)
-            const response = await createHelpTopicMutation.mutateAsync(inputs);
+            const response = await updateHelpTopicMutation.mutateAsync(inputs);
             console.log(response);
             setModalInfo({
                 status: "success",
-                message: "Thêm chủ đề thành công"
+                message: "Cập nhật chủ đề thành công"
             })
         } catch (error) {
-            console.error("Failed to create new title:", error);
+            console.error("Failed to update new title:", error);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 serverError: error.response.data.message
             }));
         } finally {
-            setIsSubmitCreateHelpTopicLoading(false);
+            setIsSubmitUpdateHelpTopicLoading(false);
         }
     };
 
     return (
-        <div className="create-commission-service modal-form type-3" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
+        <div className="update-commission-service modal-form type-3" ref={updateCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateHelpTopic(false);
+                setShowUpdateHelpTopic(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
-            <h2 className="form__title">Thêm chủ đề</h2>
+            <h2 className="form__title">Cập nhật chủ đề</h2>
             <div className="form-field">
                 <label htmlFor="theme" className="form-field__label">Theme</label>
                 <select name="theme" id="" className="form-field__input" onChange={handleChange}>
@@ -102,8 +103,8 @@ export default function CreateHelpTopic({
             </div>
 
             <div className="form-field">
-                <button type="submit" className="btn btn-2 btn-md form-field__input" disabled={isSubmitCreateHelpTopicLoading} onClick={handleSubmit}>
-                    {isSubmitCreateHelpTopicLoading ? 'Đang thêm...' : 'Thêm mới'}
+                <button type="submit" className="btn btn-2 btn-md form-field__input" disabled={isSubmitUpdateHelpTopicLoading} onClick={handleSubmit}>
+                    {isSubmitUpdateHelpTopicLoading ? 'Đang cập nhật...' : 'Cập nhật'}
                 </button>
             </div>
         </div>

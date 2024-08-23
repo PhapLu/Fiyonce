@@ -18,7 +18,6 @@ import ProfileBasicInfo from "./profile/profileBasicInfo/ProfileBasicInfo.jsx";
 import ExploreLayout from "./explore/exploreLayout/ExploreLayout.jsx";
 import ExplorePosts from "./explore/explorePosts/ExplorePosts.jsx";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
-import HelpCenter from "./pages/helpCenter/HelpCenter";
 import InMaintainance from "./pages/inMaintainance/InMaintainance";
 import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
@@ -48,13 +47,14 @@ import CreatePost from "./components/crudPost/create/CreatePost";
 import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
 import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
+import HelpCenter from "./help/center/HelpCenter.jsx";
 
 const queryClient = new QueryClient();
 
 const routes = [
   {
     path: "/help-center",
-    element: <InDevelopment />,
+    element: <HelpCenter />,
   },
   {
     path: "/terms-and-policies",

@@ -1,0 +1,34 @@
+.help-center {
+    margin: 100px 5% 40px;
+
+    .navbar {
+        .navbar--left {}
+
+        .navbar--right {}
+    }
+
+    .faq-container {
+        // display: flex;
+        // justify-content: space-between;
+
+        // .faq--left {}
+
+        // .faq--right {
+
+        // }
+        text-align: center;
+        margin: 20px 30% 40px;
+
+        .faq-item {
+            font-size: 1.7rem;
+            padding: 12px 0;
+            border-bottom: 2px solid var(--gray-1-color);
+
+            color: var(--orange-1-color);
+
+            &:last-child {
+                border-bottom: unset;
+            }
+        }
+    }
+}

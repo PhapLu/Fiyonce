@@ -2,13 +2,6 @@ import { SuccessResponse } from "../core/success.response.js"
 import HelpService from "../services/help.service.js"
 
 class HelpController{
-    createHelpTheme = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Create HelpTheme success!',
-            metadata: await HelpService.createHelpTheme(req.userId, req.body)
-        }).send(res)
-    }
-
     createHelpTopic = async(req, res, next) => {
         new SuccessResponse({
             message: 'Create HelpTheme success!',
@@ -20,13 +13,6 @@ class HelpController{
         new SuccessResponse({
             message: 'Create HelpTheme success!',
             metadata: await HelpService.createHelpArticle(req.userId, req.body)
-        }).send(res)
-    }
-
-    readHelpTheme = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Read HelpTheme success!',
-            metadata: await HelpService.readHelpTheme(req.params.helpThemeId)
         }).send(res)
     }
 
@@ -44,13 +30,6 @@ class HelpController{
         }).send(res)
     }
 
-    readHelpThemes = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Read HelpThemes success!',
-            metadata: await HelpService.readHelpThemes()
-        }).send(res)
-    }
-
     readHelpTopics = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read HelpTopics success!',
@@ -65,13 +44,6 @@ class HelpController{
         }).send(res)
     }
 
-    updateHelpTheme = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Update HelpTheme success!',
-            metadata: await HelpService.updateHelpTheme(req.userId, req.params.helpThemeId, req.body)
-        }).send(res)
-    }
-
     updateHelpTopic = async(req, res, next) => {
         new SuccessResponse({
             message: 'Update HelpTopic success!',
@@ -83,13 +55,6 @@ class HelpController{
         new SuccessResponse({
             message: 'Update HelpArticle success!',
             metadata: await HelpService.updateHelpArticle(req.userId, req.params.helpArticleId, req.body)
-        }).send(res)
-    }
-
-    deleteHelpTheme = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Delete HelpTheme success!',
-            metadata: await HelpService.deleteHelpTheme(req.userId, req.params.helpThemeId)
         }).send(res)
     }
 

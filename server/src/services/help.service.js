@@ -18,7 +18,7 @@ class HelpService {
         //2. Validate the body
         if (body.title === "")
             throw new BadRequestError("Title cannot be empty")
-        if(body.theme === '')
+        if (body.theme === '')
             throw new BadRequestError("Theme cannot be empty")
 
         //3. Create help topic
@@ -30,6 +30,9 @@ class HelpService {
     }
 
     static createHelpArticle = async (adminId, body) => {
+        console.log("DDDD")
+        console.log(body)
+
         //1. Check admin
         const admin = await User.findById(adminId)
         if (!admin) throw new AuthFailureError("Admin not found")
@@ -65,7 +68,7 @@ class HelpService {
         //1. Check help article
         const helpArticle = await HelpArticle.findById(helpArticleId).populate('helpTopicId')
         if (!helpArticle) throw new NotFoundError("Help article not found")
-        helpArticle,views += 1
+        helpArticle.views += 1
         await helpArticle.save()
 
         return {
@@ -76,7 +79,7 @@ class HelpService {
     static readHelpTopics = async () => {
         //1. Get help topics
         const helpTopics = await HelpTopic.find()
-    
+
         return {
             helpTopics,
         }
@@ -85,11 +88,6 @@ class HelpService {
     static readHelpArticles = async () => {
         //1. Get help articles
         const helpArticles = await HelpArticle.find().populate('helpTopicId')
-        helpArticles.forEach(async (article) => {
-            article.views += 1
-            await article.save()
-        })
-
         return {
             helpArticles,
         }
@@ -159,8 +157,11 @@ class HelpService {
         if (admin.role !== "admin")
             throw new AuthFailureError("You are not an admin")
 
-        //2. Delete help topic
-        await HelpTopic.findByIdAndDelete(helpTopicId)
+        // 2. Delete all help articles associated with the helpTopicId
+        await HelpArticle.deleteMany({ helpTopicId: helpTopicId });
+
+        // 3. Delete help topic
+        await HelpTopic.findByIdAndDelete(helpTopicId);
 
         return {
             message: "Help topic deleted successfully",

@@ -20,6 +20,11 @@ import "./NewsDashboard.scss";
 import { isFilled } from '../../utils/validator';
 import { limitString } from '../../utils/formatter.js';
 import CreateHelpTopic from '../../help/topic/create/CreateHelpTopic.jsx';
+import CreateHelpArticle from '../../help/article/create/CreateHelpArticle.jsx';
+import UpdateHelpTopic from '../../help/topic/update/UpdateHelpTopic.jsx';
+import DeleteHelpTopic from '../../help/topic/delete/DeleteHelpTopic.jsx';
+import UpdateHelpArticle from '../../help/article/update/UpdateHelpArticle.jsx';
+import DeleteHelpArticle from '../../help/article/delete/DeleteHelpArticle.jsx';
 
 export default function NewsDashboard() {
     const [overlayVisible, setOverlayVisible] = useState(false);
@@ -99,7 +104,7 @@ export default function NewsDashboard() {
 
     const fetchHelpTopics = async () => {
         try {
-            const response = await apiUtils.get("/helpTopic/readHelpTopics");
+            const response = await apiUtils.get("/help/readHelpTopics");
             console.log(response);
             return response.data.metadata.helpTopics;
         } catch (error) {
@@ -109,10 +114,11 @@ export default function NewsDashboard() {
 
     const { data: helpTopics, isFetchingHelpTopicsError, fetchingTopicErrors, isFetchingHelpTopicsLoading } = useQuery('fetchHelpTopics', fetchHelpTopics);
     const createHelpTopicMutation = useMutation(
-        (newHelpTopic) => apiUtils.post("/helpTopic/createHelpTopic", newHelpTopic),
+        (newHelpTopic) => apiUtils.post("/help/createHelpTopic", newHelpTopic),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries('fetchHelpTopic');
+                queryClient.invalidateQueries('fetchHelpTopics');
+                queryClient.invalidateQueries('fetchHelpArticles');
                 setOverlayVisible(false);
                 setShowCreateHelpTopic(false);
                 setModalInfo({
@@ -124,10 +130,11 @@ export default function NewsDashboard() {
     );
 
     const updateHelpTopicMutation = useMutation(
-        (updatedHelpTopic) => apiUtils.patch(`/helpTopic/updateHelpTopic/${updatedHelpTopic.get("_id")}`, updatedHelpTopic),
+        (updatedHelpTopic) => apiUtils.patch(`/help/updateHelpTopic/${updatedHelpTopic._id}`, updatedHelpTopic),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('fetchHelpTopics');
+                queryClient.invalidateQueries('fetchHelpArticles');
                 setOverlayVisible(false);
                 setShowUpdateHelpTopic(false);
                 setModalInfo({
@@ -139,10 +146,11 @@ export default function NewsDashboard() {
     );
 
     const deleteHelpTopicMutation = useMutation(
-        (newsId) => apiUtils.delete(`/helpTopic/deleteHelpTopic/${newsId}`),
+        (newsId) => apiUtils.delete(`/help/deleteHelpTopic/${newsId}`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('fetchHelpTopics');
+                queryClient.invalidateQueries('fetchHelpArticles');
                 setOverlayVisible(false);
                 setShowDeleteHelpTopic(false);
                 setModalInfo({
@@ -155,9 +163,14 @@ export default function NewsDashboard() {
 
 
     // Help articles
+    const [showCreateHelpArticle, setShowCreateHelpArticle] = useState(false);
+    const [showUpdateHelpArticle, setShowUpdateHelpArticle] = useState(false);
+    const [showDeleteHelpArticle, setShowDeleteHelpArticle] = useState(false);
+    const [helpArticle, setHelpArticle] = useState(null);
+
     const fetchHelpArticles = async () => {
         try {
-            const response = await apiUtils.get("/helpArticle/readHelpArticles");
+            const response = await apiUtils.get("/help/readHelpArticles");
             console.log(response);
             return response.data.metadata.helpArticles;
         } catch (error) {
@@ -167,10 +180,10 @@ export default function NewsDashboard() {
 
     const { data: helpArticles, isFetchingHelpArticlesError, fetchingHelpArticlesErrors, isFetchingHelpArticlesLoading } = useQuery('fetchHelpArticles', fetchHelpArticles);
     const createHelpArticleMutation = useMutation(
-        (newHelpArticle) => apiUtils.post("/helpArticle/createHelpArticle", newHelpArticle),
+        (newHelpArticle) => apiUtils.post("/help/createHelpArticle", newHelpArticle),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries('fetchHelpArticle');
+                queryClient.invalidateQueries('fetchHelpArticles');
                 setOverlayVisible(false);
                 setShowCreateHelpArticle(false);
                 setModalInfo({
@@ -182,7 +195,7 @@ export default function NewsDashboard() {
     );
 
     const updateHelpArticleMutation = useMutation(
-        (updatedHelpArticle) => apiUtils.patch(`/helpArticle/updateHelpArticle/${updatedHelpArticle.get("_id")}`, updatedHelpArticle),
+        (updatedHelpArticle) => apiUtils.patch(`/help/updateHelpArticle/${updatedHelpArticle._id}`, updatedHelpArticle),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('fetchHelpArticles');
@@ -197,7 +210,7 @@ export default function NewsDashboard() {
     );
 
     const deleteHelpArticleMutation = useMutation(
-        (helpArticleId) => apiUtils.delete(`/helpArticle/deleteHelpArticle/${helpArticleId}`),
+        (helpArticleId) => apiUtils.delete(`/help/deleteHelpArticle/${helpArticleId}`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('fetchHelpArticles');
@@ -317,9 +330,9 @@ export default function NewsDashboard() {
                 </section >
 
 
-                {/* <div className='flex-align-center'>
-                    <h4 className='mr-8'>Bài viết ({helpTopics?.length})</h4>
-                    <svg onClick={() => { setOverlayVisible(true); setShowCreateNews(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 btn add-btn">
+                <div className='flex-align-center'>
+                    <h4 className='mr-8'>Bài viết ({helpArticles?.length})</h4>
+                    <svg onClick={() => { setOverlayVisible(true); setShowCreateHelpArticle(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 btn add-btn">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                 </div>
@@ -336,16 +349,16 @@ export default function NewsDashboard() {
                     </thead>
                     <tbody>
                         {
-                            helpTopics?.length > 0 ? (
-                                helpTopics.map((helpTopic, index) => (
-                                    <tr key={helpTopic.index}>
+                            helpArticles?.length > 0 ? (
+                                helpArticles.map((helpArticle, index) => (
+                                    <tr key={helpArticle.index}>
                                         <td>{index + 1}</td>
-                                        <td>{helpTopic.theme}</td>
-                                        <td>{helpTopic.title}</td>
-                                        <td>{helpTopic.updatedAt}</td>
+                                        <td>{helpArticle.helpTopicId.theme}</td>
+                                        <td>{helpArticle.helpTopicId.title}</td>
+                                        <td>{helpArticle.updatedAt}</td>
                                         <td>
-                                            <button className="btn btn-2" onClick={() => { setNews(helpTopic); setOverlayVisible(true); setShowUpdateNews(true) }}>Chỉnh sửa</button>
-                                            <button className="btn btn-3" onClick={() => { setNews(helpTopic); setOverlayVisible(true); setShowDeleteNews(true) }}>Xóa</button>
+                                            <button className="btn btn-2" onClick={() => { setHelpArticle(helpArticle); setOverlayVisible(true); setShowUpdateHelpArticle(true) }}>Chỉnh sửa</button>
+                                            <button className="btn btn-3" onClick={() => { setHelpArticle(helpArticle); setOverlayVisible(true); setShowDeleteHelpArticle(true) }}>Xóa</button>
                                         </td>
                                     </tr>
                                 ))
@@ -356,17 +369,21 @@ export default function NewsDashboard() {
                             )
                         }
                     </tbody>
-                </table> */}
+                </table>
             </div >
             {overlayVisible && (
                 <div className="overlay">
-                    {showCreateNews && <CreateNews news={news} setShowCreateNews={setShowCreateNews} setOverlayVisible={setOverlayVisible} createNewsMutation={createNewsMutation} />}
+                    {showCreateNews && <CreateNews setShowCreateNews={setShowCreateNews} setOverlayVisible={setOverlayVisible} createNewsMutation={createNewsMutation} />}
                     {showUpdateNews && <UpdateNews news={news} setShowUpdateNews={setShowUpdateNews} setOverlayVisible={setOverlayVisible} updateNewsMutation={updateNewsMutation} />}
                     {showDeleteNews && <DeleteNews news={news} setShowDeleteNews={setShowDeleteNews} setOverlayVisible={setOverlayVisible} deleteNewsMutation={deleteNewsMutation} />}
 
-                    {showCreateHelpTopic && <CreateHelpTopic news={news} setShowCreateHelpTopic={setShowCreateHelpTopic} setOverlayVisible={setOverlayVisible} createHelpTopicMutation={createHelpTopicMutation} />}
-                    {/* {showUpdateHelpTopic && <UpdateHelpTopic news={news} setShowUpdateHelpTopic={setShowUpdateHelpTopic} setOverlayVisible={setOverlayVisible} updateHelpTopicMutation={updateHelpTopicMutation} />} */}
-                    {/* {showDeleteHelpTopic && <DeleteHelpTopic news={news} setShowDeleteHelpTopic={setShowDeleteHelpTopic} setOverlayVisible={setOverlayVisible} deleteHelpTopicMutation={deleteHelpTopicMutation} />} */}
+                    {showCreateHelpTopic && <CreateHelpTopic setShowCreateHelpTopic={setShowCreateHelpTopic} setOverlayVisible={setOverlayVisible} createHelpTopicMutation={createHelpTopicMutation} />}
+                    {showUpdateHelpTopic && <UpdateHelpTopic helpTopic={helpTopic} setShowUpdateHelpTopic={setShowUpdateHelpTopic} setOverlayVisible={setOverlayVisible} updateHelpTopicMutation={updateHelpTopicMutation} />}
+                    {showDeleteHelpTopic && <DeleteHelpTopic helpTopic={helpTopic} setShowDeleteHelpTopic={setShowDeleteHelpTopic} setOverlayVisible={setOverlayVisible} deleteHelpTopicMutation={deleteHelpTopicMutation} />}
+
+                    {showCreateHelpArticle && <CreateHelpArticle helpTopics={helpTopics} setShowCreateHelpArticle={setShowCreateHelpArticle} setOverlayVisible={setOverlayVisible} createHelpArticleMutation={createHelpArticleMutation} />}
+                    {showUpdateHelpArticle && <UpdateHelpArticle helpTopics={helpTopics} helpArticle={helpArticle} setShowUpdateHelpArticle={setShowUpdateHelpArticle} setOverlayVisible={setOverlayVisible} updateHelpArticleMutation={updateHelpArticleMutation} />}
+                    {showDeleteHelpArticle && <DeleteHelpArticle helpTopics={helpTopics} helpArticle={helpArticle} setShowDeleteHelpArticle={setShowDeleteHelpArticle} setOverlayVisible={setOverlayVisible} deleteHelpArticleMutation={deleteHelpArticleMutation} />}
                 </div>
             )}
 
