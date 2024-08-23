@@ -52,7 +52,8 @@ export default function CreateHelpTopic({
         }
 
         try {
-            const response = await createHelpTopicMutation.mutateAsync(fd);
+            console.log(inputs)
+            const response = await createHelpTopicMutation.mutateAsync(inputs);
             console.log(response);
             setModalInfo({
                 status: "success",
