@@ -8,6 +8,7 @@ import { User } from "../models/user.model.js";
 import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { createUserQRCode } from "../utils/qrcode.util.js";
 import brevoSendEmail from "../configs/brevo.email.config.js";
+import { trackPlatformAmbassadorBadge } from "../utils/badgeTracking.util.js";
 
 class AuthService {
     static login = async ({ email, password }) => {
@@ -185,6 +186,7 @@ class AuthService {
         const referralCode = crypto.randomBytes(6).toString("hex").toUpperCase();
         referral.code = referralCode;
         referral.referred = [];
+
         newUser.qrCode = qrCode;
         newUser.referral = referral
         await newUser.save();
@@ -192,8 +194,11 @@ class AuthService {
         //6. Check who is the referrer
         let referrer
         if(otpRecord.referralCode){
-            referrer = await User.findOne({ "referral.code": otpRecord.referralCode }).lean();
+            referrer = await User.findOne({ "referral.code": otpRecord.referralCode });
             referrer.referral.referred.push(newUser._id)
+            // Track the referrer Badge
+            trackPlatformAmbassadorBadge(referrer._id, "reference")
+            await referrer.save()
         }
 
         //7. Delete the OTP record
