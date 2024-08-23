@@ -5,7 +5,7 @@ const COLLECTION_NAME = "HelpTopics";
 
 const HelpTopicSchema = new mongoose.Schema(
     {
-        theme: { type: String, enum:['for_artist', 'for_client', 'about'], required: true },
+        theme: { type: String, enum:['for_artists', 'for_clients', 'about'], required: true },
         title: { type: String, required: true },
     },{
         timestamps: true,

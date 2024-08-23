@@ -63,7 +63,7 @@ class HelpService {
 
     static readHelpArticle = async (helpArticleId) => {
         //1. Check help article
-        const helpArticle = await HelpArticle.findById(helpArticleId)
+        const helpArticle = await HelpArticle.findById(helpArticleId).populate('helpTopicId')
         if (!helpArticle) throw new NotFoundError("Help article not found")
         helpArticle,views += 1
         await helpArticle.save()
@@ -84,7 +84,7 @@ class HelpService {
 
     static readHelpArticles = async () => {
         //1. Get help articles
-        const helpArticles = await HelpArticle.find()
+        const helpArticles = await HelpArticle.find().populate('helpTopicId')
         helpArticles.forEach(async (article) => {
             article.views += 1
             await article.save()
