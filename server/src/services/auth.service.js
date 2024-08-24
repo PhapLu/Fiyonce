@@ -8,6 +8,7 @@ import { User } from "../models/user.model.js";
 import { AuthFailureError, BadRequestError } from "../core/error.response.js";
 import { createUserQRCode } from "../utils/qrcode.util.js";
 import brevoSendEmail from "../configs/brevo.email.config.js";
+import { trackPlatformAmbassadorBadge } from "../utils/badgeTracking.util.js";
 
 class AuthService {
     static login = async ({ email, password }) => {
@@ -36,15 +37,6 @@ class AuthService {
         foundUser.accessToken = token;
         await foundUser.save();
 
-        //4. Create QRCode
-        
-        //Create qrCode
-        if(foundUser.qrCode == ''){
-            const qrCode = await createUserQRCode(foundUser._id.toString());
-            foundUser.qrCode = qrCode;
-            await foundUser.save();
-        }
-
         const { password: hiddenPassword, ...userWithoutPassword } = foundUser;
         return {
             code: 200,
@@ -54,12 +46,10 @@ class AuthService {
         };
     };
 
-    static signUp = async ({ fullName, email, password }) => {
+    static signUp = async ({ fullName, email, password, referralCode }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
-        if (holderUser) {
-            throw new BadRequestError("Error: User already registered")
-        }
+        if (holderUser) throw new BadRequestError("Error: User already registered")
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -125,6 +115,7 @@ class AuthService {
                 expiredAt: new Date(Date.now() + 30 * 60 * 1000), // OTP expires in 30 minutes
                 requestCount: 1,
                 lastRequestDate: new Date(),
+                referralCode: referralCode,
             });
             await otpVerification.save();
         }
@@ -170,7 +161,7 @@ class AuthService {
             throw new BadRequestError("Mã OTP đã hết hạn");
         }
 
-        //4. Create user by otpVerification
+        // 4. Create user by otpVerification
         const newUser = await User.create({
             fullName: otpRecord.fullName,
             email: otpRecord.email,
@@ -178,15 +169,31 @@ class AuthService {
             role: "member", // Use the string directly
         });
 
-        //Create qrCode
+        // 5. Create qrCode and referralCode
+        let referral = {}
         const qrCode = await createUserQRCode(newUser._id.toString());
+        const referralCode = crypto.randomBytes(6).toString("hex");
+        referral.code = referralCode;
+        referral.referred = [];
+
         newUser.qrCode = qrCode;
+        newUser.referral = referral
         await newUser.save();
 
-        // 5. Delete the OTP record
+        // 6. Check who is the referrer
+        let referrer
+        if(otpRecord.referralCode){
+            referrer = await User.findOne({ "referral.code": otpRecord.referralCode });
+            referrer.referral.referred.push(newUser._id)
+            // Track the referrer Badge
+            //trackPlatformAmbassadorBadge(referrer._id, "reference")
+            await referrer.save()
+        }
+
+        //7. Delete the OTP record
         await UserOTPVerification.deleteOne({ email });
 
-        // 6. Create token
+        //8. Create token
         const token = jwt.sign(
             {
                 id: newUser._id,

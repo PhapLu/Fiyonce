@@ -4,14 +4,14 @@ import HelpService from "../services/help.service.js"
 class HelpController{
     createHelpTopic = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Create HelpTheme success!',
+            message: 'Create HelpTopic success!',
             metadata: await HelpService.createHelpTopic(req.userId, req.body)
         }).send(res)
     }
 
     createHelpArticle = async(req, res, next) => {
         new SuccessResponse({
-            message: 'Create HelpTheme success!',
+            message: 'Create HelpArticle success!',
             metadata: await HelpService.createHelpArticle(req.userId, req.body)
         }).send(res)
     }

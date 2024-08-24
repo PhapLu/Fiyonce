@@ -8,6 +8,7 @@ const router = express.Router()
 
 router.get('/readUserProfile/:profileId', asyncHandler(userController.readUserProfile))
 router.get('/me', asyncHandler(userController.me))
+router.get('/getUserByReferralCode/:referralCode', asyncHandler(userController.getUserByReferralCode))
 
 //authentication
 router.use(verifyToken)

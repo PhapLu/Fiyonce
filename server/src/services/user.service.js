@@ -201,6 +201,16 @@ class UserService {
             throw error;
         }
     };
+
+    getUserByReferralCode = async (referralCode) => {
+        //1. Check referrer
+        const referrer = await User.findOne({'referral.code': referralCode})
+        if (!referrer) throw new NotFoundError("Referrer not found")
+
+        return {
+            user: referrer
+        }
+    }
 }
 
 export default UserService

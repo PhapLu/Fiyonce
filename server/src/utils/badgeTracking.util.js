@@ -176,4 +176,21 @@ async function trackTrustedArtistBadge(userId, activityType, increment = 1) {
     }
 }
 
-export { trackActivity, trackTrustedArtistBadge }
+async function trackPlatformAmbassadorBadge(userId, activityType, increment = 1) {
+    try {
+        // Define the badge ID for "Platform Ambassador" badge
+        const user = await User.findById(userId)
+        const badge = await Badge.findOne({ title: 'platformAmbassador' })
+        if(!user) throw new NotFoundError("User not found!")
+        if(!badge) throw new NotFoundError("Badge not found!")
+
+        const updatedBadge = await trackBadgeProgress(userId, badge._id.toString(), activityType, increment)
+
+        return updatedBadge
+    }catch{
+        console.error("Error tracking Platform Ambassador badge:", error)
+        throw error
+    }
+}
+
+export { trackActivity, trackTrustedArtistBadge, trackPlatformAmbassadorBadge }
