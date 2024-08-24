@@ -53,7 +53,7 @@ const UserSchema = new Schema(
         }],
         referral: { 
             code: { type: String, default: "" },
-            referred: { type: Schema.Types.ObjectId, ref: "User" }
+            referred: [{ type: Schema.Types.ObjectId, ref: "User" }]
         },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },

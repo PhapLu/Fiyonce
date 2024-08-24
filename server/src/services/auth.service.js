@@ -49,9 +49,7 @@ class AuthService {
     static signUp = async ({ fullName, email, password, referralCode }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean();
-        if (holderUser) {
-            throw new BadRequestError("Error: User already registered")
-        }
+        if (holderUser) throw new BadRequestError("Error: User already registered")
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -163,7 +161,7 @@ class AuthService {
             throw new BadRequestError("Mã OTP đã hết hạn");
         }
 
-        //4. Create user by otpVerification
+        // 4. Create user by otpVerification
         const newUser = await User.create({
             fullName: otpRecord.fullName,
             email: otpRecord.email,
@@ -171,10 +169,10 @@ class AuthService {
             role: "member", // Use the string directly
         });
 
-        //5.Create qrCode and referralCode
-        let referral
+        // 5. Create qrCode and referralCode
+        let referral = {}
         const qrCode = await createUserQRCode(newUser._id.toString());
-        const referralCode = crypto.randomBytes(6).toString("hex").toUpperCase();
+        const referralCode = crypto.randomBytes(6).toString("hex");
         referral.code = referralCode;
         referral.referred = [];
 
@@ -182,13 +180,13 @@ class AuthService {
         newUser.referral = referral
         await newUser.save();
 
-        //6. Check who is the referrer
+        // 6. Check who is the referrer
         let referrer
         if(otpRecord.referralCode){
             referrer = await User.findOne({ "referral.code": otpRecord.referralCode });
             referrer.referral.referred.push(newUser._id)
             // Track the referrer Badge
-            trackPlatformAmbassadorBadge(referrer._id, "reference")
+            //trackPlatformAmbassadorBadge(referrer._id, "reference")
             await referrer.save()
         }
 

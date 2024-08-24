@@ -873,3 +873,7 @@ ReferenceError: readBookmarkedPosts is not defined
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-24 09:38:54::error::undefined::undefined::uncaughtException: error is not defined
+ReferenceError: error is not defined
+    at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:191:68)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
