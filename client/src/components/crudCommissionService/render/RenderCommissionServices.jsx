@@ -214,7 +214,7 @@ export default function RenderCommissionServices({ isSorting, isDisplayOwner, al
                     sortedCommissionServices?.length > 0 ? (
                         <Masonry
                             breakpointCols={breakpointColumnsObj}
-                            className="my-masonry-grid"
+                            className={`my-masonry-grid layout-${layout}`}
                             columnClassName="my-masonry-grid_column"
                         >
 

@@ -1,16 +1,25 @@
 .render-commission-services {
-    .my-masonry-grid {
-        display: flex;
-        margin-left: -16px;
-        /* gutter size offset */
-        width: auto;
-    }
-
     .my-masonry-grid_column {
         padding-left: 20px;
         /* gutter size */
         background-clip: padding-box;
     }
+
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -16px;
+        /* gutter size offset */
+        width: auto;
+
+        &.layout-4 {
+            .my-masonry-grid_column {
+
+                padding-left: 0;
+            }
+        }
+    }
+
+
 
     .images-layout-3 {
         height: 220px;

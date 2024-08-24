@@ -48,6 +48,8 @@ import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
 import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
 import HelpCenter from "./help/center/HelpCenter.jsx";
+import UpgradeAccount from "./components/upgradeAccount/UpgradeAccount.jsx";
+import MyProfile from "./profile/myProfile/MyProfile.jsx";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +80,18 @@ const routes = [
     path: "/users/:userId",
     element: <ProfileLayout />,
     children: [
+      {
+        path: "/users/:userId",
+        element: (
+          <MyProfile />
+        ),
+      },
+      {
+        path: "/users/:userId/upgrade-account",
+        element: (
+          <UpgradeAccount />
+        ),
+      },
       {
         path: "/users/:userId/profile-commission-services",
         element: <ProfileCommissionServices />,

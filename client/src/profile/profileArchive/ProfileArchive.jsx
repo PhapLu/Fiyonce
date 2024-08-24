@@ -84,17 +84,29 @@ export default function ProfileArchive() {
 
 
 
+
+
             {
                 archiveType == "post" && (
-                    <RenderPosts posts={posts} layout={4} />
-                    // Render posts archived by user with _id is the profileInfo._id
+                    posts?.length > 0 ? (
+                        <RenderPosts isDisplayOwner={false} posts={posts} layout={4} />
+                    ) : (
+                        <p>
+                            Hiện chưa có tranh để hiển thị
+                        </p>
+                    )
                 )
             }
 
             {
                 archiveType == "service" && (
-                    <RenderCommissionServices commissionServices={services} layout={4} />
-                    // Render posts archived by user with _id is the profileInfo._id
+                    services?.length > 0 ? (
+                        <RenderCommissionServices commissionServices={services} layout={4} />
+                    ) : (
+                        <p>
+                            Hiện chưa có dịch vụ để hiển thị
+                        </p>
+                    )
                 )
             }
         </div>

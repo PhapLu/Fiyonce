@@ -117,7 +117,7 @@ export default function Register() {
 
                         <div className="form-field">
                             <label htmlFor="email" className="form-field__label">Email</label>
-
+                            <span className="form-field__annotation">Pastal sẽ gửi mã xác nhận đến email đăng kí</span>
                             <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
                             {errors.email && <span className="form-field__error">{errors.email}</span>}
                         </div>

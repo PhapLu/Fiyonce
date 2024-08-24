@@ -13,18 +13,26 @@ import { io } from 'socket.io-client';
 import { useModal } from '../../contexts/modal/ModalContext.jsx';
 const SOCKET_SERVER_URL = "http://localhost:8900"; // Update this with your server URL
 
-const UpgradeAccount = ({ closeModal }) => {
+import { useNavigate } from 'react-router-dom';
+const UpgradeAccount = () => {
+    const navigate = useNavigate();
+
     const { setModalInfo } = useModal();
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [artworks, setArtworks] = useState([]);
     const [isSubmitUpgradeAccountLoading, setIsSubmitUpgradeAccountLoading] = useState(false);
+    const closeModal = () => {
+        const currentPath = window.location.pathname;
+        const newPath = currentPath.replace('/upgrade-account', '');
+        navigate(newPath);
+    };
 
     const fetchTalentRequest = async () => {
         try {
-            const response = await apiUtils.get(`/talentRequest/readTalentRequest`);
-            console.log(response)
-            return response.data.metadata.talentRequest;
+            const response = await apiUtils.get(`/talentRequest/readMyTalentRequest`);
+            console.log(response.data.metadata.myTalentRequest)
+            return response.data.metadata.myTalentRequest;
         } catch (error) {
             console.log(error);
             return null;
@@ -55,7 +63,7 @@ const UpgradeAccount = ({ closeModal }) => {
 
         files.forEach((file) => {
             if (file.size > 20000 * 1024) {
-                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 2MB." }));
+                setErrors((values) => ({ ...values, artworks: "Dung lượng ảnh không được vượt quá 5MB." }));
             } else if (newArtworks.length < 5) {
                 newArtworks.push(file);
                 setErrors((values) => ({ ...values, artworks: "" }));
@@ -82,6 +90,13 @@ const UpgradeAccount = ({ closeModal }) => {
             errors.jobTitle = 'Vui lòng nhập đường dẫn đến hồ sơ của bạn';
         }
 
+        if (isFilled(inputs.cccd)) {
+            console.log(inputs.cccd)
+            console.log(inputs.cccd.length)
+            if (!(inputs.cccd.length == 9 || inputs.cccd.length == 12)) {
+                errors.cccd = 'CMND hoặc CCCD không hợp lệ';
+            }
+        }
 
         if (artworks.length < 3) {
             errors.artworks = "Vui lòng cung cấp tối thiểu 3 tranh.";
@@ -162,7 +177,7 @@ const UpgradeAccount = ({ closeModal }) => {
                             (
                                 <div className="form-field">
                                     <p className="text-align-center">Admin đang xử lí yêu cầu nâng cấp tài khoản của bạn. <br />Trong thời gian đó, bạn có thể tham khảo cẩm nang họa sĩ <Link to="" className="highlight-text underlined-text">tại đây</Link>.</p>
-                                    <button className="form-field__input btn btn-2 btn-md mt-8" onClick={closeModal}>Tôi hiểu</button>
+                                    <button className="btn btn-2 btn-md mt-8 w-100" onClick={closeModal}>Tôi hiểu</button>
                                 </div>
                             )
                         }
@@ -229,13 +244,15 @@ const UpgradeAccount = ({ closeModal }) => {
                             <p className='form__note text-align-justify mt-32'>
                                 Các họa sĩ thân mến,
                                 <br />
-                                Bạn vẫn có thể trải nghiệm các tính năng của tài khoản họa sĩ mà không cần cung cấp CCCD và mã số thuế cá nhân. Tuy nhiên, điều này là bắt buộc để tiến hành nhận đơn hàng và giao dịch trên Pastal.
+                                Bạn vẫn có thể nộp yêu cầu để trải nghiệm các tính năng của tài khoản họa sĩ mà không cần cung cấp CMND/CCCD và mã số thuế cá nhân. Tuy nhiên, điều này là bắt buộc để có thể nhận đơn hàng và thực hiện giao dịch trên Pastal.
                                 Đây là các thông tin bắt buộc mà các sàn thương mại điện tử trong nước đều phải cung cấp theo quy định của pháp luật hiện hành. Rất mong nhận được sự hợp tác từ các bạn.
                                 <br />
                                 Trân trọng,
                                 <br />
                                 Pastal Team.
                             </p>
+
+                            <p>Hướng dẫn tra cứu MST: <Link to="" className="highlight-text underlined-text">tại đây</Link></p>
 
                         </div>
 
@@ -262,14 +279,14 @@ const UpgradeAccount = ({ closeModal }) => {
 
                                     <div className="form-field required">
                                         <label htmlFor="jobTitle" className="form-field__label">Vị trí công việc</label>
-                                        <span className="form-field__annotation">Bạn muốn được gọi với vai trò gì?</span>
+                                        <span className="form-field__annotation">Bạn muốn được gọi với vai trò gì? (vd: Họa sĩ minh họa, ...)</span>
                                         <input type="text" id="jobTitle" name="jobTitle" value={inputs.jobTitle || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
                                         {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
                                     </div>
 
                                     <div className="form-field required">
                                         <label className="form-field__label">Tác phẩm</label>
-                                        <span className="form-field__annotation">Cung cấp 3 - 5 tác phẩm có chữ kí của bạn</span>
+                                        <span className="form-field__annotation">Cung cấp 3 - 5 tác phẩm có chữ kí của bạn (ảnh không vượt quá 5MB)</span>
                                         <div className="form-field">
                                             {artworks.map((artwork, index) => (
                                                 <div key={index} className="form-field__input img-preview">
@@ -302,8 +319,8 @@ const UpgradeAccount = ({ closeModal }) => {
                                     </div>
 
                                     <div className="form-field">
-                                        <label htmlFor="cccd" className="form-field__label">CCCD</label>
-                                        <span className="form-field__annotation">CCCD bao gồm 12 số</span>
+                                        <label htmlFor="cccd" className="form-field__label">CMND/CCCD</label>
+                                        <span className="form-field__annotation">CMND bao gồm 9 số hoặc CCCD bao gồm 12 số</span>
                                         <input type="text" id="cccd" name="cccd" value={inputs.cccd || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
                                         {errors.cccd && <span className="form-field__error">{errors.cccd}</span>}
                                     </div>

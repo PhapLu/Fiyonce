@@ -25,10 +25,10 @@ class TalentRequestService {
         // 2. Validate request body
         let taxCode = ''
         let cccd = ''
-        if(req.body.taxCode){
+        if (req.body.taxCode) {
             taxCode = req.body.taxCode
         }
-        if(req.body.cccd){
+        if (req.body.cccd) {
             cccd = req.body.cccd
         }
         const { stageName, jobTitle, portfolioLink, referralCode } = req.body
@@ -80,15 +80,15 @@ class TalentRequestService {
             await newTalentRequest.save()
 
             // 6. Create referral code
-            if(referralCode) {
-                const talent = await User.findOne({referralCode})
+            if (referralCode) {
+                const talent = await User.findOne({ referralCode })
                 const referralCode = new ReferralCode({
                     code: referralCode,
                     referrer: talent._id.toString(),
                     referred: userId,
                 })
             }
-            
+
             return {
                 talentRequest: newTalentRequest,
             }
@@ -98,7 +98,7 @@ class TalentRequestService {
         }
     }
 
-    static readTalentRequestStatus = async (userId) => {
+    static readMyTalentRequest = async (userId) => {
         // 1. Check user exists
         const currentUser = await User.findById(userId)
         if (!currentUser) throw new NotFoundError("User not found")
@@ -110,7 +110,7 @@ class TalentRequestService {
         }
 
         return {
-            talentRequestStatus: talentRequest.status,
+            myTalentRequest: talentRequest.status,
         }
     }
 
@@ -147,19 +147,19 @@ class TalentRequestService {
         updatedUser.referralCode = crypto.randomBytes(8).toString("hex")
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
-        if(request.taxCode){
+        if (request.taxCode) {
             updatedUser.taxCode.code = request.taxCode
             updatedUser.taxCode.isVerified = true
             updatedUser.taxCode.message = 'Bạn đã xác minh mã số thuế'
         }
-        if(request.cccd){
+        if (request.cccd) {
             updatedUser.cccd = request.cccd
         }
         updatedUser.save()
 
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser
-        
+
         // 7. Send email to user and delete images in cloudinary
         try {
             // request.artworks.forEach(async (artwork) => {
@@ -194,7 +194,7 @@ class TalentRequestService {
         if (!request) throw new NotFoundError("Request not found")
         if (request.status === "rejected")
             throw new BadRequestError("Request already denied")
-        if(!body.rejectMessage || body.rejectMessage === '')
+        if (!body.rejectMessage || body.rejectMessage === '')
             throw new BadRequestError("Please provide a reason for denying the request")
 
         //2. Find and check admin, user and user role
@@ -209,7 +209,7 @@ class TalentRequestService {
             throw new BadRequestError("User already a talent")
 
         //3. Mark request as denied
-        if(request.taxCode){
+        if (request.taxCode) {
             foundUser.taxCode.message = body.rejectMessage
             foundUser.taxCode.isVerified = false
         }
@@ -278,7 +278,7 @@ class TalentRequestService {
 
     static readReferralCodeOwner = async (referralCode) => {
         //1. Find the user who owns the referral code
-        const user = await User.findOne({referralCode})
+        const user = await User.findOne({ referralCode })
         if (!user) throw new NotFoundError("User not found")
 
         return {

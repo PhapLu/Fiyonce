@@ -153,7 +153,7 @@ class CommissionServiceService {
         console.log("PPP")
 
         //2. Fetch all bookmarked services
-        const bookmarkedServices = await Service.find({ _id: { $in: user.commissionServiceBookmarks } })
+        const bookmarkedServices = await CommissionService.find({ _id: { $in: user.commissionServiceBookmarks } })
             .populate('talentId', 'stageName avatar')
             .populate('serviceCategoryId', 'title')
             .populate('movementId', 'title')
@@ -215,7 +215,7 @@ class CommissionServiceService {
         console.log("PPP")
 
         //2. Fetch all bookmarked services
-        const bookmarkedServices = await Service.find({ _id: { $in: user.commissionServiceBookmarks } })
+        const bookmarkedServices = await CommissionService.find({ _id: { $in: user.commissionServiceBookmarks } })
             .populate('talentId', 'stageName avatar')
             .populate('serviceCategoryId', 'title')
             .populate('movementId', 'title')

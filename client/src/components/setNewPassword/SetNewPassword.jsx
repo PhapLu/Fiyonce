@@ -88,6 +88,7 @@ export default function SetNewPassword({ resetPasswordEmail }) {
                 <p>Đặt lại mật khẩu cho <span className="highlight-text">{resetPasswordEmail}</span></p>
                 <div className="form-field">
                     <label htmlFor="password" className="form-field__label">Mật khẩu mới</label>
+                    <span className="form-field__annotation">Mật khẩu phải chứa ít nhất 6 kí tự, 1 số và 1 kí tự đặc biệt</span>
                     <div className="form-field with-ic flex-justify-space-between">
                         <input type={isPasswordVisible ? "text" : "password"} id="password" name="password" value={inputs.password || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mật khẩu mới" autoComplete="on" />
 

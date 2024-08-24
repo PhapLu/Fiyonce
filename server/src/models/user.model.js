@@ -57,10 +57,10 @@ const UserSchema = new Schema(
         },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
-        socialLinks: [{ type: String, required: true }],
+        socialLinks: [{ type: String, required: true, default: []}],
         views: { type: Number, default: 0 },
-        postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-        commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
+        postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post", default: [] }],
+        commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service", default: [] }],
         isPublicArchived: { type: Boolean, default: true },
         jobTitle: { type: String, default: "" },
         status: {
@@ -68,8 +68,8 @@ const UserSchema = new Schema(
             default: "pending",
             enum: ["pending", "active", "block"],
         },
-        followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-        following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        followers: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+        following: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         taxCode:{
             code: { type: String, default: "" },
             isVerified: { type: Boolean, default: false },
@@ -79,7 +79,7 @@ const UserSchema = new Schema(
             type: String,
             default: ''
         },
-        accessToken: { type: String },
+        accessToken: { type: String, default: '' },
         qrCode: { type: String, default: '' }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },

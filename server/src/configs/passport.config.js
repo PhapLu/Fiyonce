@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import axios from "axios";
 import { generateToken } from "../utils/token.util.js";
 import { access } from "fs";
+import crypto from "crypto";
 
 // Set axios timeout
 axios.defaults.timeout = 10000; // 10 seconds
@@ -24,7 +25,7 @@ passport.use(
                 let user = await User.findOne({ email: profile.emails[0].value });
                 
                 //Create referral code
-                let referral
+                let referral = {};
                 const referralCode = crypto.randomBytes(6).toString("hex").toUpperCase();
                 referral.code = referralCode;
                 referral.referred = [];

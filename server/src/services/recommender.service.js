@@ -2,6 +2,7 @@ import Post from "../models/post.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError } from "../core/error.response.js"
+import { CLIENT_RENEG_LIMIT } from "tls"
 
 class RecommenderService {
     static search = async (query) => {
@@ -100,7 +101,7 @@ class RecommenderService {
             const scoredPosts = await Promise.all(
                 posts.map(async (post) => {
                     const talent = await User.findById(post.talentId)
-
+                    console.log(talent.followers)
                     // Compute scaled values
                     const likesScaled =
                         (post.likes.length - minLikesCount) /

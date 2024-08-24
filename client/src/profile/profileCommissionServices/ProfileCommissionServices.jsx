@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -31,8 +31,11 @@ export default function ProfileCommissionServices() {
     const { userInfo } = useAuth();
     const { profileInfo } = useOutletContext();
     const queryClient = useQueryClient();
+    const location = useLocation();
 
     const isProfileOwner = userInfo?._id === userId;
+
+
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showCreateCommissionServiceForm, setShowCreateCommissionServiceForm] = useState(false);
@@ -134,8 +137,6 @@ export default function ProfileCommissionServices() {
             },
         }
     );
-
-
 
     // Commission Service Category
     const updateCommissionServiceCategoryMutation = useMutation(
@@ -299,7 +300,7 @@ export default function ProfileCommissionServices() {
                             <br />
                             <div className="profile-commission-service__category-item__service-container">
                                 {category.commissionServices?.map((service, serviceIndex) => (
-                                    <div key={serviceIndex} className="profile-commission-service__category-item__service-item">
+                                    <Link to={`${location.pathname + "/" + service?._id}`} key={serviceIndex} className="profile-commission-service__category-item__service-item">
                                         <div className="profile-commission-service__category-item__service-item--left image-container images-layout-3">
                                             {service?.artworks.slice(0, 3).map((artwork, index) => {
                                                 if (index === 2 && service?.artworks.length > 3) {
@@ -351,7 +352,7 @@ export default function ProfileCommissionServices() {
                                                 </>
                                             )}
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </div>
                         </div>

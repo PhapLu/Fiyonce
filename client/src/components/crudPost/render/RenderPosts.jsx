@@ -408,7 +408,6 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                             </h3>
                         </div>
                     </>
-
                 )
             }
         </div >

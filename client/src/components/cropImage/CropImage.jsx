@@ -92,7 +92,7 @@ function CropImage({ image, onCropDone, onCropCancel, ratio}) {
     return (
         <div className="cropper modal-form type-3">
             <h2 className="form__title">Cắt ảnh</h2>
-            <div style={{ "width": "100%", "height": "400px", "position": "relative", "border-radius": "12px", "overflow": "hidden" }}>
+            <div className="mb-32" style={{ "width": "100%", "height": "400px", "position": "relative", "border-radius": "12px", "overflow": "hidden" }}>
 
                 {/* Image Cropper component */}
                 <Cropper
@@ -106,10 +106,9 @@ function CropImage({ image, onCropDone, onCropCancel, ratio}) {
                 />
             </div>
 
-            <div className="mt-16 flex-align-center">
-
-                <button className="btn btn-md btn-4 mr-16" onClick={onCropCancel}>Hủy</button>
-                <button className="btn btn-md btn-2" onClick={() => {
+            <div className="mt-16 form__submit-btn-container">
+                <button className="form__submit-btn-item btn btn-md btn-4 mr-16" onClick={onCropCancel}>Hủy</button>
+                <button className="form__submit-btn-item btn btn-md btn-2" onClick={() => {
                     onCropDone(croppedArea);
                 }}>Xác nhận</button>
 
