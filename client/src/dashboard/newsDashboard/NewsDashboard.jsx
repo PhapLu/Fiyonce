@@ -25,6 +25,7 @@ import UpdateHelpTopic from '../../help/topic/update/UpdateHelpTopic.jsx';
 import DeleteHelpTopic from '../../help/topic/delete/DeleteHelpTopic.jsx';
 import UpdateHelpArticle from '../../help/article/update/UpdateHelpArticle.jsx';
 import DeleteHelpArticle from '../../help/article/delete/DeleteHelpArticle.jsx';
+import { resizeImageUrl } from '../../utils/imageDisplayer.js';
 
 export default function NewsDashboard() {
     const [overlayVisible, setOverlayVisible] = useState(false);
@@ -256,7 +257,7 @@ export default function NewsDashboard() {
                                 newss?.length > 0 ? (
                                     newss.map((news, index) => (
                                         <tr key={news._id}>
-                                            <td><img src={news.thumbnail} alt="" /></td>
+                                            <td><img src={resizeImageUrl(news.thumbnail, 80)} alt="" /></td>
                                             <td>{index + 1}</td>
                                             <td><span className='fw-bold'>{news.title}</span>
                                                 <br />{limitString(news.subTitle, 50)} </td>
@@ -355,6 +356,7 @@ export default function NewsDashboard() {
                                         <td>{index + 1}</td>
                                         <td>{helpArticle.helpTopicId.theme}</td>
                                         <td>{helpArticle.helpTopicId.title}</td>
+                                        <td>{helpArticle.views}</td>
                                         <td>{helpArticle.updatedAt}</td>
                                         <td>
                                             <button className="btn btn-2" onClick={() => { setHelpArticle(helpArticle); setOverlayVisible(true); setShowUpdateHelpArticle(true) }}>Chỉnh sửa</button>

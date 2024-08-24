@@ -49,4 +49,24 @@
             font-size: 3.2rem;
         }
     }
+
+    .image {
+        width: unset !important;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: unset !important;
+        height: unset !important;
+
+        img {
+            width: 100%;
+        }
+
+        figcaption {
+            font-style: italic;
+            margin-top: 12px;
+            width: 100%;
+            text-align: center;
+        }
+    }
 }

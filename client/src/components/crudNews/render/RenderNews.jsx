@@ -19,7 +19,7 @@ export default function RenderNews() {
     const { newsId } = useParams();
 
     const url = "http://localhost:5173/newss/66a8f46e143aa910a3d771f9";
-    const title = "Cara news";
+    const title = "";
     const fetchNewsById = async () => {
         try {
             const response = await apiUtils.get(`/news/readNews/${newsId}`);
