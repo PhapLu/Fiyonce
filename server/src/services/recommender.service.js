@@ -10,6 +10,7 @@ class RecommenderService {
         const userResults = await User.find({
             $or: [
                 { fullName: { $regex: searchRegex } },
+                { stageName: { $regex: searchRegex } },
                 { email: { $regex: searchRegex } },
                 { bio: { $regex: searchRegex } },
             ]

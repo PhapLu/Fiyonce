@@ -10,8 +10,6 @@ import { trackActivity, trackTrustedArtistBadge } from '../utils/badgeTracking.u
 class UserService {
     //-------------------CRUD----------------------------------------------------
     static updateProfile = async (userId, profileId, body) => {
-        console.log("UPDATEEE")
-        console.log(body.pronoun)
         //1. Check user
         const profile = await User.findById(profileId)
         if (!profile) throw new NotFoundError("User not found")
@@ -24,7 +22,6 @@ class UserService {
             { $set: body },
             { new: true }
         ).populate("followers", "avatar").populate("following", "avatar fullName");
-        console.log(updatedUser)
 
         //3. Track TrustedArtistBadge criteria
         if(updatedUser.bio !== '' && 
@@ -155,9 +152,6 @@ class UserService {
             return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId;
         });
 
-        console.log("DEF")
-        console.log(filteredUnSeenConversations)
-
         // Fetch unseen notifications
         const unSeenNotifications = await Notification.find({
             receiverId: new mongoose.Types.ObjectId(userId),
@@ -202,9 +196,9 @@ class UserService {
         }
     };
 
-    getUserByReferralCode = async (referralCode) => {
+    static getUserByReferralCode = async (referralCode) => {
         //1. Check referrer
-        const referrer = await User.findOne({'referral.code': referralCode})
+        const referrer = await User.findOne({'referral.code': referralCode}).select("fullName avatar")
         if (!referrer) throw new NotFoundError("Referrer not found")
 
         return {

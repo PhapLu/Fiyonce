@@ -1,3 +1,4 @@
+import brevoSendEmail from "../configs/brevo.email.config.js"
 import { BadRequestError, NotFoundError } from "../core/error.response.js"
 import Badge from "../models/badge.model.js"
 import { User } from "../models/user.model.js"
@@ -143,6 +144,25 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
             userBadge.isComplete = true
             userBadge.awardedAt = new Date()
             userBadge.count += 1 // Increment count to reflect that the badge is awarded
+            //Send email to user
+            try {
+                const subject = "Badge Awarded";
+                const subjectMessage = `Congratulations! You have been awarded the ${badge.title} badge!`;
+                const verificationCode = '';
+                const message = '';
+                const template = "announcementTemplate";
+                await brevoSendEmail(
+                    user.email,
+                    subject,
+                    subjectMessage,
+                    verificationCode,
+                    message,
+                    template
+                );
+            } catch (error) {
+                console.error(error);
+                throw new BadRequestError("Gửi email không thành công");
+            }
         }
 
         // Assign updated progress to userBadge
@@ -179,17 +199,20 @@ async function trackTrustedArtistBadge(userId, activityType, increment = 1) {
 async function trackPlatformAmbassadorBadge(userId, activityType, increment = 1) {
     try {
         // Define the badge ID for "Platform Ambassador" badge
-        const user = await User.findById(userId)
-        const badge = await Badge.findOne({ title: 'platformAmbassador' })
-        if(!user) throw new NotFoundError("User not found!")
-        if(!badge) throw new NotFoundError("Badge not found!")
+        const user = await User.findById(userId);
+        const badge = await Badge.findOne({ title: 'platformAmbassador' });
+        
+        console.log('Badge:', badge);
 
-        const updatedBadge = await trackBadgeProgress(userId, badge._id.toString(), activityType, increment)
+        if (!user) throw new NotFoundError("User not found!");
+        if (!badge) throw new NotFoundError("Badge not found!");
 
-        return updatedBadge
-    }catch{
-        console.error("Error tracking Platform Ambassador badge:", error)
-        throw error
+        const updatedBadge = await trackBadgeProgress(userId, badge._id.toString(), activityType, increment);
+
+        return updatedBadge;
+    } catch (error) {
+        console.error("Error tracking Platform Ambassador badge:", error);
+        throw new BadRequestError(error.message);
     }
 }
 

@@ -1,0 +1,12 @@
+2024-08-25 09:02:36::info::/v1/api/auth/users/login::69aad959-2ea3-469a-ab04-677ddfe99f41::input-params ::POST::::{"email":"Q.huy1qaaqwssw2@gmail.com","password":"123456789"}
+2024-08-25 09:02:54::info::/v1/api/talentRequest/requestUpgradingToTalent::c2b0a46d-82e9-445f-8285-e10560d5e05b::input-params ::POST::::{}
+2024-08-25 09:02:54::error::/v1/api/talentRequest/requestUpgradingToTalent::c2b0a46d-82e9-445f-8285-e10560d5e05b::403 - 1ms - Response: {"status":403,"now":1724551374716}::{"message":"Please provide artwork files"}
+2024-08-25 09:03:10::info::/v1/api/talentRequest/requestUpgradingToTalent::ed258f2d-2578-47b3-acea-55a06f893db9::input-params ::POST::::{}
+2024-08-25 09:05:08::info::/v1/api/auth/users/login::730f3d52-c548-457c-85b8-2c2959ba1fd8::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ!@"}
+2024-08-25 09:05:08::error::/v1/api/auth/users/login::730f3d52-c548-457c-85b8-2c2959ba1fd8::401 - 0ms - Response: {"status":401,"now":1724551508732}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-25 09:05:15::info::/v1/api/auth/users/login::7e6c4273-0fd4-4f08-813c-c8742ab2ee6e::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-25 09:05:30::info::/v1/api/talentRequest/denyTalentRequest/66ca90e17dce5ce973540055::0a239c3a-6135-43fa-83e1-5728f13586d9::input-params ::PATCH::::{"rejectMessage":"Xin lui"}
+2024-08-25 11:24:27::info::/v1/api/auth/users/login::5c32ff16-715a-4fb5-b7f2-ee1ada6dc11a::input-params ::POST::::{"email":"dienmayphucnhat@gmail.com","password":"123456789"}
+2024-08-25 11:24:35::info::/v1/api/talentRequest/requestUpgradingToTalent::6749cd85-1ee8-4c4b-b9af-e558b0e4ceff::input-params ::POST::::{}
+2024-08-25 11:24:54::info::/v1/api/auth/users/login::d3be4dcd-a22c-4585-925d-6ecb32647d1a::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-08-25 11:25:03::info::/v1/api/talentRequest/denyTalentRequest/66cab2077dce5ce973540064::bff59ac9-cd1e-4364-943e-4d6694c5b3f3::input-params ::PATCH::::{"rejectMessage":"Xin lui"}

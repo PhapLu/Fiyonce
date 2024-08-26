@@ -42,6 +42,10 @@ const TalentRequestSchema = new mongoose.Schema(
         referralCode: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "ReferralCode",
+        },
+        rejectMessage: {
+            type: String,
+            default: ''
         }
     },
     {

@@ -186,8 +186,9 @@ class AuthService {
             referrer = await User.findOne({ "referral.code": otpRecord.referralCode });
             referrer.referral.referred.push(newUser._id)
             // Track the referrer Badge
-            //trackPlatformAmbassadorBadge(referrer._id, "reference")
+            trackPlatformAmbassadorBadge(referrer._id.toString(), "reference")
             await referrer.save()
+            console.log(referrer);
         }
 
         //7. Delete the OTP record
