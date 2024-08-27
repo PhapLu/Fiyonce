@@ -147,8 +147,6 @@ class UserService {
         // Filter unseen conversations based on the last message
         const filteredUnSeenConversations = unSeenConversations.filter(conversation => {
             const lastMessage = conversation.messages[conversation.messages.length - 1]
-            console.log(lastMessage.senderId.toString() !== userId)
-            console.log(lastMessage.senderId._id)
             return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId;
         });
 

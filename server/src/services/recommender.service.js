@@ -524,8 +524,6 @@ class RecommenderService {
         }
     }
 
-
-
     static readPopularCommissionServices = async (req) => {
         const q = req.query
         const filters = {
