@@ -1,4 +1,4 @@
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 import { BadRequestError, NotFoundError } from "../core/error.response.js"
 import Badge from "../models/badge.model.js"
 import { User } from "../models/user.model.js"
@@ -146,19 +146,12 @@ async function trackBadgeProgress(userId, badgeId, criterionKey, increment = 1) 
             userBadge.count += 1 // Increment count to reflect that the badge is awarded
             //Send email to user
             try {
-                const subject = "Badge Awarded";
-                const subjectMessage = `Congratulations! You have been awarded the ${badge.title} badge!`;
-                const verificationCode = '';
-                const message = '';
-                const template = "announcementTemplate";
-                await brevoSendEmail(
+                sendAnnouncementEmail(
                     user.email,
-                    subject,
-                    subjectMessage,
-                    verificationCode,
-                    message,
-                    template
-                );
+                    "Congratulations! You have earned a new badge!",
+                    `You have earned the ${badge.displayTitle} badge!`,
+                    ''
+                )
             } catch (error) {
                 console.error(error);
                 throw new BadRequestError("Gửi email không thành công");

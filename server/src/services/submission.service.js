@@ -10,7 +10,6 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
 import Challenge from "../models/challenge.model.js"
 
 class SubmissionService {
@@ -22,7 +21,7 @@ class SubmissionService {
         if (!challenge) throw new NotFoundError("Challenge not found")
         if(challenge.participants.includes(userId)) 
             throw new BadRequestError("You have already submitted")
-        console.log(challenge);
+
         //2. Validate request body
         if (!req.body.title || !req.files.artworks || req.files.artworks.length == 0)
             throw new BadRequestError("Please provide required fields")

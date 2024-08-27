@@ -1,4 +1,4 @@
-const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
+const otpTemplate = (toEmail, message, verificationCode) => {
     return `
         <!DOCTYPE html>
         <html>
@@ -78,7 +78,7 @@ const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
                 <div class="content">
                     <div class="content_container">
                         <p class="content_head">Chào ${toEmail},</p>
-                        <p>${subjectMessage}</p>
+                        <p>${message}</p>
                         <div class="verification-code">${verificationCode}</div>
                         <p class="content_note">*Mã có hiệu lực trong vòng 30 phút.</p>
                     </div>
@@ -101,7 +101,7 @@ const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
     `;
 };
 
-const announcementTemplate = (toEmail, message) => {
+const announcementTemplate = (toEmail, message, reason) => {
     return `
     <!DOCTYPE html>
     <html>
@@ -180,6 +180,7 @@ const announcementTemplate = (toEmail, message) => {
                 <div class="content_container">
                     <p class="content_head">Chào ${toEmail},</p>
                     <div class="content_message">${message}</div>
+                    <p> class="content_message">Lý do: ${reason}</p>
                 </div>
             </div>
             <hr class="horizontal_line">

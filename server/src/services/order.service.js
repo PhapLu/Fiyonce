@@ -13,7 +13,7 @@ import {
     extractPublicIdFromUrl,
     deleteFileByPublicId,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
 
 class OrderService {
@@ -21,11 +21,11 @@ class OrderService {
     static createOrder = async (userId, req) => {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found!")
+        
         const fileFormats = req.body.fileFormats.split(",");
         req.body.fileFormats = fileFormats;
         const body = req.body
-
-
         const { isDirect, commissionServiceId, isWaitList} = body
         const commissionService = await CommissionService.findById(
             commissionServiceId
@@ -94,19 +94,10 @@ class OrderService {
             //5. Send email to user
             if (isDirect == 'true' && talent?.email) {
                 try {
-                    const subject = ""
-                    const subjectMessage = ""
-                    const verificationCode = ""
-                    const message = `You have a new order from ${user.fullName}. Please check the order details and accept or reject the order.`
-                    const template = "announcementTemplate"
-                    await brevoSendEmail(
-                        talent.email,
-                        subject,
-                        subjectMessage,
-                        verificationCode,
-                        message,
-                        template
-                    )
+                    const subject = "Bạn có đơn hàng mới"
+                    const message = "You have a new order to review"
+                    const reason = ""
+                    await sendAnnouncementEmail(talent.email, subject, message, reason)
                 } catch (error) {
                     console.log(error)
                     throw new BadRequestError("Email service error");
@@ -401,8 +392,6 @@ class OrderService {
                 },
             ])
 
-            console.log(orders)
-
             return { 
                 talentOrderHistory: orders 
             }
@@ -586,19 +575,10 @@ class OrderService {
         //6. Send email to user
         const member = await User.findById(order.memberId)
         try {
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ""
-            const message = 'Your order has been denied by the talent you chose. Please check the order details and try again with another talent.'
-            const template = "announcementTemplate"
-            await brevoSendEmail(
-                member.email,
-                subject,
-                subjectMessage,
-                verificationCode,
-                message,
-                template
-            )
+            const subject = "Đơn hàng bị từ chối"
+            const message = "Đơn hàng của bạn đã bị từ chối"
+            const reason = ''
+            await sendAnnouncementEmail(member.email, subject, message, reason)
         } catch (error) {
             console.error("Error sending email:", error)
             throw new BadRequestError("Email service error")
@@ -623,7 +603,6 @@ class OrderService {
         //2. Start work
         order.status = "in_progress";
         order.save();
-
 
         return {
             order,

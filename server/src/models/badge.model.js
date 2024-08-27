@@ -5,6 +5,7 @@ const COLLECTION_NAME = "Badges"
 
 const badgeSchema = new mongoose.Schema({
     title: { type: String, unique: true, required: true },
+    displayTitle: { type: String, required: true },
     description: { type: String, required: true },
     icon: { type: String, required: true },
     level: { type: String, enum: ["easy", "medium", "hard"], required: true },
