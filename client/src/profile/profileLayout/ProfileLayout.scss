@@ -46,6 +46,42 @@
     }
 }
 
+.sub-nav-container {
+    .sub-nav-container--left {}
+
+    .sub-nav-container--right {
+        position: relative;
+
+        .show-more-profile-actions-btn {}
+
+        .more-profile-action-container {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 220px;
+            display: flex;
+            flex-direction: column;
+            padding: 6px 8px;
+            border-radius: 8px;
+            z-index: 100;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow-2);
+            border: 1px solid var(--gray-1-color);
+            background-color: var(--white-3-color);
+        }
+
+        .more-profile-action-item {
+            padding: 6px 8px;
+            border-radius: 8px;
+            text-align: start;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+
+}
+
 
 .form-field.with-ic {
     position: relative;
@@ -95,7 +131,7 @@
             min-width: unset !important;
             display: inline-block;
             white-space: nowrap;
-            padding: 8px 20px !important;
+            padding: 8px 20px;
             font-size: 1.3rem;
         }
 
@@ -105,12 +141,15 @@
     }
 
     .profile-page__header--right {
-
         .btn {
             min-width: 120px;
             margin-left: 12px;
         }
+
+
     }
+
+
 }
 
 
@@ -122,53 +161,53 @@
 }
 
 @media only screen and (max-width: 1023px) {
-    .navbar {
-        background-color: unset;
+    // .navbar {
 
-        .navbar__search-field {}
-    }
+    //     .navbar__search-field {}
+    // }
 
-    .app.with-sidebar {
-        margin: 0 !important;
+    // .app.with-sidebar {
+    //     margin: 0 !important;
 
-        .sidebar {
-            margin: 0 !important;
-        }
-    }
+    //     .sidebar {
+    //         margin: 0 !important;
+    //     }
+    // }
 }
 
 /* Tablet styles (740px to 1023px) */
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
     .app.with-sidebar {
-        height: 200vh;
-
-        // display: unset;
         .sidebar {
-            margin-top: 20px;
-            width: 100%;
-            border: 1px solid var(--gray-1-color);
-            border-radius: 12px;
-            padding: 40px 48px;
-            box-shadow: var(--box-shadow-1);
+            width: 36%;
+        }
 
-            .sidebar__avatar__bg {
-                width: 100%;
-                ;
-            }
+        .outlet-content {
+            width: 60%;
 
-            .sidebar__btn {
-                width: unset;
+            .profile .profile__bg .profile__bg__img {
+                height: 150px;
+
             }
         }
     }
 
+    .profile-page__header .profile-page__header--left {
 
-    /* Add your tablet-specific styles here */
+        .view-review-btn {}
+
+        .btn {
+            min-width: 100px;
+            padding: 6px 12px;
+        }
+    }
+
+    .profile-page__header {
+        margin: 12px 0;
+    }
 }
 
 /* Mobile styles (<= 739px) */
 @media only screen and (max-width: 739px) {
-    body {}
-
-    /* Add your mobile-specific styles here */
+    // body {}
 }

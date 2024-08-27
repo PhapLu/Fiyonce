@@ -4,30 +4,10 @@ import {
     BadRequestError,
     NotFoundError,
 } from "../core/error.response.js"
-import HelpTheme from "../models/helpTheme.model.js"
 import HelpTopic from "../models/helpTopic.model.js"
 import HelpArticle from "../models/helpArticle.model.js"
 
 class HelpService {
-    static createHelpTheme = async (adminId, body) => {
-        //1. Check admin
-        const admin = await User.findById(adminId)
-        if (!admin) throw new AuthFailureError("Admin not found")
-        if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin")
-
-        //2. Validate the body
-        if (body.title === "")
-            throw new BadRequestError("Title cannot be empty")
-
-        //3. Create help theme
-        const helpTheme = await HelpTheme.create(body)
-
-        return {
-            helpTheme,
-        }
-    }
-
     static createHelpTopic = async (adminId, body) => {
         //1. Check admin
         const admin = await User.findById(adminId)
@@ -36,11 +16,10 @@ class HelpService {
             throw new AuthFailureError("You are not an admin")
 
         //2. Validate the body
-        const { helpThemeId } = body
-        const helpTheme = await HelpTheme.findById(helpThemeId)
         if (body.title === "")
             throw new BadRequestError("Title cannot be empty")
-        if (!helpTheme) throw new BadRequestError("Help theme not found")
+        if (body.theme === '')
+            throw new BadRequestError("Theme cannot be empty")
 
         //3. Create help topic
         const helpTopic = await HelpTopic.create(body)
@@ -51,6 +30,9 @@ class HelpService {
     }
 
     static createHelpArticle = async (adminId, body) => {
+        console.log("DDDD")
+        console.log(body)
+
         //1. Check admin
         const admin = await User.findById(adminId)
         if (!admin) throw new AuthFailureError("Admin not found")
@@ -72,16 +54,6 @@ class HelpService {
         }
     }
 
-    static readHelpTheme = async (helpThemeId) => {
-        //1. Check help theme
-        const helpTheme = await HelpTheme.findById(helpThemeId)
-        if (!helpTheme) throw new NotFoundError("Help theme not found")
-
-        return {
-            helpTheme,
-        }
-    }
-
     static readHelpTopic = async (helpTopicId) => {
         //1. Check help topic
         const helpTopic = await HelpTopic.findById(helpTopicId)
@@ -94,20 +66,13 @@ class HelpService {
 
     static readHelpArticle = async (helpArticleId) => {
         //1. Check help article
-        const helpArticle = await HelpArticle.findById(helpArticleId)
+        const helpArticle = await HelpArticle.findById(helpArticleId).populate('helpTopicId')
         if (!helpArticle) throw new NotFoundError("Help article not found")
+        helpArticle.views += 1
+        await helpArticle.save()
 
         return {
             helpArticle,
-        }
-    }
-
-    static readHelpThemes = async () => {
-        //1. Get help themes
-        const helpThemes = await HelpTheme.find()
-
-        return {
-            helpThemes,
         }
     }
 
@@ -122,36 +87,9 @@ class HelpService {
 
     static readHelpArticles = async () => {
         //1. Get help articles
-        const helpArticles = await HelpArticle.find()
-
+        const helpArticles = await HelpArticle.find().populate('helpTopicId')
         return {
             helpArticles,
-        }
-    }
-
-    static updateHelpTheme = async (adminId, helpThemeId, body) => {
-        //1. Check admin, helpTheme
-        const admin = await User.findById(adminId)
-        const helpTheme = await HelpTheme.findById(helpThemeId)
-
-        if (!admin) throw new AuthFailureError("Admin not found")
-        if (!helpTheme) throw new NotFoundError("Help theme not found")
-        if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin")
-
-        //2. Validate the body
-        if (body.title === "")
-            throw new BadRequestError("Title cannot be empty")
-
-        //3. Update help theme
-        const updatedHelpTheme = await HelpTheme.findByIdAndUpdate(
-            helpThemeId,
-            body,
-            { new: true, runValidators: true }
-        )
-
-        return {
-            helpTheme: updatedHelpTheme,
         }
     }
 
@@ -209,24 +147,6 @@ class HelpService {
         }
     }
 
-    static deleteHelpTheme = async (adminId, helpThemeId) => {
-        //1. Check admin, helpTheme
-        const admin = await User.findById(adminId)
-        const helpTheme = await HelpTheme.findById(helpThemeId)
-
-        if (!admin) throw new AuthFailureError("Admin not found")
-        if (!helpTheme) throw new NotFoundError("Help theme not found")
-        if (admin.role !== "admin")
-            throw new AuthFailureError("You are not an admin")
-
-        //2. Delete help theme
-        await HelpTheme.findByIdAndDelete(helpThemeId)
-
-        return {
-            message: "Help theme deleted successfully",
-        }
-    }
-
     static deleteHelpTopic = async (adminId, helpTopicId) => {
         //1. Check admin, helpTopic
         const admin = await User.findById(adminId)
@@ -237,8 +157,11 @@ class HelpService {
         if (admin.role !== "admin")
             throw new AuthFailureError("You are not an admin")
 
-        //2. Delete help topic
-        await HelpTopic.findByIdAndDelete(helpTopicId)
+        // 2. Delete all help articles associated with the helpTopicId
+        await HelpArticle.deleteMany({ helpTopicId: helpTopicId });
+
+        // 3. Delete help topic
+        await HelpTopic.findByIdAndDelete(helpTopicId);
 
         return {
             message: "Help topic deleted successfully",

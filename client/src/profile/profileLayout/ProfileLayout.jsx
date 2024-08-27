@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery } from 'react-query';
 import { useParams, useLocation, Outlet, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth/AuthContext.jsx";
@@ -6,62 +6,26 @@ import Navbar from "../../components/navbar/Navbar.jsx";
 import ProfileSidebar from "../profileSidebar/ProfileSidebar";
 import CropImage from '../../components/cropImage/CropImage.jsx';
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
-import "./ProfileLayout.scss";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ShareProfile from "../../components/shareProfile/ShareProfile.jsx";
+import RenderBadges from "../../components/crudBadge/render/RenderBadges.jsx";
+import "./ProfileLayout.scss";
 
 export default function ProfileLayout() {
     const [profileBtnActive, setProfileNavActive] = useState(null);
+    const [uploadBgLoading, setUploadBgLoading] = useState();
     const { userInfo, setUserInfo } = useAuth();
-    const [loading, setLoading] = useState(false);
     const { userId } = useParams();
     const [profileInfo, setProfileInfo] = useState();
     const isProfileOwner = userInfo && userInfo?._id === userId;
 
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
     const [isCoverCropping, setIsCoverCropping] = useState(false);
+    const [overlayVisible, setOverlayVisible] = useState(null);
+    const [showMoreProfileActions, setShowMoreProfileActions] = useState(null);
+    const [showRenderBadges, setShowRenderBadges] = useState(false);
 
-    const handleCoverClick = () => {
-        document.getElementById('coverPhoto').click();
-    };
 
-    const handleCoverChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageDataUrl = URL.createObjectURL(file);
-            setSelectedCoverImage(imageDataUrl);
-            setIsCoverCropping(true);
-            console.log('Cover image selected for cropping:', imageDataUrl);
-        } else {
-            console.log('No file selected');
-        }
-    };
-
-    const handleCoverCropComplete = async (croppedFile) => {
-        const formData = new FormData();
-        formData.append('file', croppedFile);
-        formData.append('type', "bg");
-
-        try {
-            setLoading(true);
-            console.log('Uploading cropped cover image...');
-            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${userInfo?._id}`, formData);
-            console.log('Upload response:', response);
-            if (response.data.metadata.image_url) {
-                setProfileInfo((prev) => ({ ...prev, bg: response.data.metadata.image_url }));
-            }
-        } catch (error) {
-            console.error('Error uploading cropped cover image:', error);
-        } finally {
-            setLoading(false);
-            setIsCoverCropping(false);
-        }
-    };
-
-    const handleCoverCancelCrop = () => {
-        setIsCoverCropping(false);
-        setSelectedCoverImage(null);
-        console.log('Cover image cropping canceled');
-    };
 
     const location = useLocation();
 
@@ -88,9 +52,115 @@ export default function ProfileLayout() {
         },
     });
 
-    useEffect(() => {
-        setProfileInfo(data);
-    }, [data, userId]);
+    // useEffect(() => {
+    //     setProfileInfo(data);
+    // }, [data, userId]);
+
+
+
+    const handleCoverClick = () => {
+        document.getElementById('coverPhoto').click();
+    };
+
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
+    const handleFileUpload = async (croppedFile) => {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('type', "bg");
+        setUploadBgLoading(true);
+
+        try {
+            const response = await apiUtils.post(`/upload/profile/avatarOrCover/${profileInfo._id}`, formData);
+            if (response.data.metadata.image_url) {
+                setUserInfo({ ...profileInfo, bg: response.data.metadata.image_url });
+                setProfileInfo({ ...profileInfo, bg: response.data.metadata.image_url });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        setUploadBgLoading(false);
+    };
+
+
+    const [image, setImage] = useState("");
+
+    // Callback function when an image is selected
+    const onImageSelected = (selectedImg) => {
+        setImage(selectedImg);
+    };
+
+    // Callback function when cropping is done
+    const onCropDone = (imgCroppedArea) => {
+        // Create a canvas element to crop the image
+        const canvasEle = document.createElement("canvas");
+        canvasEle.width = imgCroppedArea.width;
+        canvasEle.height = imgCroppedArea.height;
+
+        const context = canvasEle.getContext("2d");
+
+        // Load the selected image
+        let imageObj1 = new Image();
+        imageObj1.src = image; // Assuming 'image' is a URL or a data URI
+        imageObj1.onload = function () {
+            // Draw the cropped portion of the image onto the canvas
+            context.drawImage(
+                imageObj1,
+                imgCroppedArea.x,
+                imgCroppedArea.y,
+                imgCroppedArea.width,
+                imgCroppedArea.height,
+                0,
+                0,
+                imgCroppedArea.width,
+                imgCroppedArea.height
+            );
+
+            // Convert the canvas content to a Blob (JPEG format)
+            canvasEle.toBlob((blob) => {
+                if (blob) {
+                    // Optionally convert the Blob to a File object
+                    const croppedFile = new File([blob], "cropped-image.jpg", { type: "image/jpeg" });
+
+                    // Now you can pass croppedFile to handleFileUpload
+                    handleFileUpload(croppedFile);
+
+                    // Optionally, you can also create a data URL if you still need it
+                    setIsCropping(false);
+                    setOverlayVisible(false);
+                }
+            }, "image/jpeg");
+        };
+    };
+
+
+    // Callback function when cropping is canceled
+    const onCropCancel = () => {
+        setImage("");
+        setIsCropping(false);
+        setOverlayVisible(false);
+    };
+
+    const inputRef = useRef();
+
+    // Handle the change event when a file is selected
+    const handleOnChange = (event) => {
+        if (event.target.files && event.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]);
+            reader.onload = function (e) {
+                onImageSelected(reader.result);
+                setSelectedImage(reader.result);
+                console.log(reader.result);
+            };
+        }
+    };
+
+    const onChooseImg = () => {
+        inputRef.current.click();
+        setIsCropping(true);
+        setOverlayVisible(true);
+    };
 
     if (isLoading) {
         return <span>Đang tải...</span>;
@@ -104,23 +174,26 @@ export default function ProfileLayout() {
         return <span>No profile information available.</span>;
     }
 
+
     return (
         <>
             <Navbar />
+
             <div className='app with-sidebar'>
                 <ProfileSidebar profileInfo={profileInfo} setProfileInfo={setProfileInfo} />
+
                 <div className="outlet-content">
                     <div className="profile">
                         <div className="profile__bg">
                             <LazyLoadImage
                                 src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
                                 alt={`${profileInfo.fullName}'s cover photo`}
-                                className={`tablet-hide mobile-hide profile__bg__img ${loading ? "skeleton-img" : ""}`}
+                                className={`mobile-hide profile__bg__img ${uploadBgLoading ? "skeleton-img" : ""}`}
                                 effect="blur"
                             />
                             {isProfileOwner && (
                                 <>
-                                    <button className="profile__bg__edit-btn btn btn-md" onClick={handleCoverClick}>
+                                    <button className="profile__bg__edit-btn btn btn-md" onClick={onChooseImg}>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
@@ -137,17 +210,26 @@ export default function ProfileLayout() {
                                         </svg>
                                         Đổi ảnh nền
                                     </button>
-                                    {isCoverCropping && (
+                                    {/* {isCoverCropping && (
                                         <CropImage
                                             imageSrc={selectedCoverImage}
                                             onCropComplete={handleCoverCropComplete}
                                             onCancel={handleCoverCancelCrop}
                                         />
-                                    )}
-                                    <input type="file" id="coverPhoto" style={{ display: 'none' }} onChange={handleCoverChange} />
+                                    )} */}
+
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={inputRef}
+                                        onChange={handleOnChange}
+                                        style={{ display: "none" }}
+                                    />
                                 </>
                             )}
                         </div>
+                        <button className="btn btn-1 btn-md" onClick={() => { setOverlayVisible(true); setShowRenderBadges(true) }}>Show badges</button>
+
                         <div className="sub-nav-container">
                             <div className="sub-nav-container--left">
                                 {isProfileOwner ? (userInfo?.role === "talent" && (
@@ -198,16 +280,82 @@ export default function ProfileLayout() {
                                         </Link>
                                     </>
                                 )}
+
+                                {
+                                    !isProfileOwner?.isPublicArchive && (
+                                        <Link
+                                            to={`/users/${userId}/archive`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
+                                        >
+                                            Lưu trữ
+                                        </Link>
+                                    )
+                                }
                             </div>
 
                             <div className="sub-nav-container--right">
+                                <button className="btn non-hover btn-3 icon-only show-more-profile-actions-btn" onClick={() => { setShowMoreProfileActions(!showMoreProfileActions) }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                    </svg>
+                                </button>
+                                {
+                                    showMoreProfileActions && (
+                                        !["share-profile", "block-profile", "report-profile"].includes(showMoreProfileActions) && (
+                                            <div className="more-profile-action-container">
+                                                <div className="more-profile-action-item gray-bg-hover" onClick={() => { setOverlayVisible(true); setShowMoreProfileActions("share-profile") }}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                                    </svg>
+                                                    <span>
+                                                        Chia sẻ trang cá nhân
+                                                    </span>
+                                                </div>
+                                                <div className="more-profile-action-item gray-bg-hover">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                                                    </svg>
+                                                    <span>
+                                                        Chặn tài khoản
+                                                    </span>
+                                                </div>
+                                                <div className="more-profile-action-item gray-bg-hover">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                                    </svg>
+
+                                                    <span>
+                                                        Báo cáo tài khoản
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )
+                                    )
+                                }
                             </div>
                         </div>
                         <hr />
-                    </div>
+                    </div >
+                    {overlayVisible && (
+                        <div className="overlay">
+                            {showMoreProfileActions == "share-profile" && <ShareProfile profileInfo={profileInfo} setShowMoreProfileActions={setShowMoreProfileActions} setOverlayVisible={setOverlayVisible} />}
+                            {showMoreProfileActions == "block-profile" && <ShareProfile />}
+                            {showMoreProfileActions == "report-profile" && <ShareProfile />}
+                            {isCropping && (
+                                <CropImage
+                                    image={selectedImage}
+                                    onCropDone={onCropDone}
+                                    onCropCancel={onCropCancel}
+                                    ratio={990 / 220}
+                                />
+                            )}
+                            {showRenderBadges && <RenderBadges setShowRenderBadges={setShowRenderBadges} setOverlayVisible={setOverlayVisible} />}
+                        </div>
+                    )}
+
                     <Outlet context={{ profileInfo, setProfileInfo }} />
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     );
 }

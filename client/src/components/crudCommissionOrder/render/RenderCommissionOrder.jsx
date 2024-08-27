@@ -15,6 +15,7 @@ import RenderProposals from "../../crudProposal/render/RenderProposals";
 // Styling
 import "./RenderCommissionOrder.scss";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
+import { formatCurrency } from "../../../utils/formatter";
 
 export default function RenderCommissionOrder({ commissionOrder, setShowCreateProposal, setShowRenderCommissionOrder, setShowRenderProposals, setShowUpdateCommissionOrder, setOverlayVisible }) {
     if (!commissionOrder) {
@@ -59,83 +60,128 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="modal-form--left">
-                <div className="user md">
-                    <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
-                        <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
-                        <div className="user__name">
-                            <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
-                        </div>
-                    </Link>
-                </div>
-                {commissionOrder?.status === "pending"
-                    ? (<div className="status pending mt-8 mb-8">
-                        <span className="highlight-text fs-12"> &nbsp;{commissionOrder.talentsApprovedCount || 0} họa sĩ đã ứng</span>
-                    </div>)
-                    : commissionOrder?.status === "approved"
-                        ? "Đang đợi bạn thanh toán"
-                        : commissionOrder?.status === "rejected"
-                            ? "Họa sĩ đã từ chối"
-                            : commissionOrder?.status === "confirmed"
-                                ? (<div className="status approved mt-8 mb-8">
-                                    <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>
-                                </div>)
-                                : commissionOrder?.status === "canceled"
-                                    ? (<div className="status approved mt-8 mb-8">
-                                        <span className="fs-12"> &nbsp;Khách hàng đã hủy đơn</span>
-                                    </div>)
-                                    : commissionOrder?.status === "in_progress"
-                                        ? "Họa sĩ đang thực hiện"
-                                        : commissionOrder?.status === "finished"
-                                            ?
-                                            (
-                                                <div className="status approved mt-8 mb-8">
-                                                    <span className="fs-12"> &nbsp;Đã hoàn tất đơn hàng</span>
-                                                </div>
-                                            )
-                                            : commissionOrder?.status === "under_processing"
-                                                ? "Admin đang xử lí"
-                                                : ""}
+
                 {
                     commissionOrder.isDirect ? (
                         <>
-                            <h4 onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center">
-                                Thủ tục đặt tranh
-                                {isProcedureVisible ? (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                </svg>
-                                ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                )}</h4>
+                            {commissionOrder?.status === "pending"
+                                ? (<div className="status pending">
+                                    <span className="highlight-text fs-12"> Đang đợi họa sĩ xác nhận</span>
+                                </div>)
+                                : commissionOrder?.status === "approved"
+                                    ? "Đang đợi bạn thanh toán"
+                                    : commissionOrder?.status === "rejected"
+                                        ? "Họa sĩ đã từ chối"
+                                        : commissionOrder?.status === "confirmed"
+                                            ? (<div className="status approved">
+                                                <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                                            </div>)
+                                            : commissionOrder?.status === "canceled"
+                                                ? (<div className="status approved">
+                                                    <span className="fs-12"> &nbsp;Khách hàng đã hủy đơn</span>
+                                                </div>)
+                                                : commissionOrder?.status === "in_progress"
+                                                    ? "Họa sĩ đang thực hiện"
+                                                    : commissionOrder?.status === "finished"
+                                                        ?
+                                                        (
+                                                            <div className="status approved">
+                                                                <span className="fs-12"> &nbsp;Đã hoàn tất đơn hàng</span>
+                                                            </div>
+                                                        )
+                                                        : commissionOrder?.status === "under_processing"
+                                                            ? "Admin đang xử lí"
+                                                            : ""}
+
+                            <h4>{commissionOrder?.commissionServiceId?.title || "Tên dịch vụ"}</h4>
+                            <h4>Giá từ: <span className="highlight-text fs-16"> {(commissionOrder?.commissionServiceId?.minPrice && formatCurrency(commissionOrder?.commissionServiceId?.minPrice)) || "x"} VND</span></h4>
+
+                            <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity mt-32">
+                                {
+                                    isProcedureVisible ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                                        </svg> : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                                            </svg>
+                                        )} <span className="ml-8 fs-16">Thủ tục đặt tranh</span></strong>
                             <hr />
                             {
                                 isProcedureVisible && (
                                     <ul className="step-container">
                                         <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                        <li className={`step-item ${["approved"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ xác nhận và gửi proposal</li>
-                                        <li className={`step-item ${["approved", "confirmed"].includes(commissionOrder.status) && "checked"}`}>Khách hàng thanh toán đặt cọc</li>
-                                        {commissionOrder.status === "under_processing" ? <li className="step-item checked">Admin đang xử lí</li> : (
-                                            <>
-                                                <li className={`step-item ${["in_progress"].includes(commissionOrder.status) && "checked"}`}>Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                                <li className={`step-item ${["finished"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
-                                            </>
-                                        )}
+                                        <li className="step-item">Họa sĩ xác nhận và gửi proposal</li>
+                                        <li className="step-item">Khách hàng thanh toán đặt cọc</li>
+                                        <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
                                     </ul>
                                 )
                             }
                         </>
                     ) : (
                         <>
-                            <h3>Thủ tục đăng yêu cầu tìm họa sĩ</h3>
+                            {commissionOrder?.status === "pending"
+                                ? (<div className="status pending">
+                                    <span className="highlight-text fs-12"> &nbsp;{commissionOrder.talentsApprovedCount || 0} họa sĩ đã ứng</span>
+                                </div>)
+                                : commissionOrder?.status === "approved"
+                                    ? "Đang đợi bạn thanh toán"
+                                    : commissionOrder?.status === "rejected"
+                                        ? "Họa sĩ đã từ chối"
+                                        : commissionOrder?.status === "confirmed"
+                                            ? (<div className="status approved">
+                                                <span className="fs-12"> &nbsp;Đã chọn họa sĩ và thanh toán</span>
+                                            </div>)
+                                            : commissionOrder?.status === "canceled"
+                                                ? (<div className="status approved">
+                                                    <span className="fs-12"> &nbsp;Khách hàng đã hủy đơn</span>
+                                                </div>)
+                                                : commissionOrder?.status === "in_progress"
+                                                    ? "Họa sĩ đang thực hiện"
+                                                    : commissionOrder?.status === "finished"
+                                                        ?
+                                                        (
+                                                            <div className="status approved">
+                                                                <span className="fs-12"> &nbsp;Đã hoàn tất đơn hàng</span>
+                                                            </div>
+                                                        )
+                                                        : commissionOrder?.status === "under_processing"
+                                                            ? "Admin đang xử lí"
+                                                            : ""}
+                            <h4>Đặt hàng trên Chợ Commission</h4>
+
+                            <div className="user md">
+                                <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
+                                    <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
+                                    <div className="user__name">
+                                        <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
+                                    </div>
+                                </Link>
+                            </div>
+
+                            <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity mt-32">
+                                {
+                                    isProcedureVisible ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                                        </svg> : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                                            </svg>
+                                        )} <span className="ml-8 fs-16">Thủ tục đăng yêu cầu tìm họa sĩ</span></strong>
                             <hr />
-                            <ul className="step-container">
-                                <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                <li className="step-item checked">Các họa sĩ gửi proposal và khách hàng chọn ra họa sĩ phù hợp nhất</li>
-                                <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                                <li className="step-item">Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
-                            </ul>
+                            {
+                                isProcedureVisible && (
+                                    <ul className="step-container">
+                                        <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
+                                        <li className="step-item checked">Các họa sĩ gửi proposal</li>
+                                        <li className="step-item checked">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
+                                        <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
+                                    </ul>
+                                )
+                            }
                         </>
                     )
                 }
@@ -163,7 +209,7 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                         {commissionOrder.references.map((reference, index) => {
                             return (
                                 <div className="reference-item" key={index}>
-                                    <LazyLoadImage onClick={() => { setShowZoomImage(true); setZoomedImageSrc(reference) }} src={resizeImageUrl(reference, 350)} alt="" effect="blur"/>
+                                    <LazyLoadImage onClick={() => { setShowZoomImage(true); setZoomedImageSrc(reference) }} src={resizeImageUrl(reference, 350)} alt="" effect="blur" />
                                 </div>
                             );
                         })}
@@ -190,10 +236,9 @@ export default function RenderCommissionOrder({ commissionOrder, setShowCreatePr
                 </div>
 
                 <div className="form-field">
-                    <label htmlFor="fileFormats" className="form-field__label">Mức giá dự kiến</label>
+                    <label htmlFor="fileFormats" className="form-field__label">Mức giá bạn đề xuất</label>
                     <div>
-                        {commissionOrder.minPrice && <span>đ{commissionOrder.minPrice}</span>}
-                        {commissionOrder.maxPrice && <span> - đ{commissionOrder.maxPrice}</span>}
+                        <span className="highlight-text">{formatCurrency(commissionOrder.minPrice)} - {formatCurrency(commissionOrder.maxPrice)} VND</span>
                     </div>
                 </div>
 

@@ -60,6 +60,13 @@ class UserController {
             metadata: await UserService.updateProfileStatus(req.userId, req.body)
         }).send(res)
     }
+
+    getUserByReferralCode = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Get user by referral code success!',
+            metadata: await UserService.getUserByReferralCode(req.params.referralCode)
+        }).send(res)
+    }
 }
 
 export default new UserController()

@@ -17,6 +17,7 @@
             }
 
             svg {
+                stroke: var(--black-2-color);
                 margin-right: 0;
             }
 
@@ -305,6 +306,8 @@
     .sidebar {
         margin-top: 0;
         position: relative;
+        padding: 20px;
+
 
         .sidebar__bg {
             position: absolute;
@@ -316,7 +319,9 @@
         }
 
         .sidebar__avatar {
-            margin-top: 100px;
+            width: 110px;
+            height: 110px;
+            border: 2px solid white;
         }
     }
 }

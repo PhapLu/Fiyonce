@@ -7,7 +7,8 @@ import UserOTPVerification from "../models/userOTPVerification.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError } from "../core/error.response.js"
 import { createUserQRCode } from "../utils/qrcode.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendOtpEmail} from "../configs/brevo.email.config.js"
+import { trackPlatformAmbassadorBadge } from "../utils/badgeTracking.util.js"
 
 class AuthService {
     static login = async ({ email, password }) => {
@@ -45,12 +46,10 @@ class AuthService {
         }
     }
 
-    static signUp = async ({ fullName, email, password }) => {
+    static signUp = async ({ fullName, email, password, referralCode }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean()
-        if (holderUser) {
-            throw new BadRequestError("Error: User already registered")
-        }
+        if (holderUser) throw new BadRequestError("Error: User already registered")
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -116,6 +115,7 @@ class AuthService {
                 expiredAt: new Date(Date.now() + 30 * 60 * 1000), // OTP expires in 30 minutes
                 requestCount: 1,
                 lastRequestDate: new Date(),
+                referralCode: referralCode,
             })
             await otpVerification.save()
         }
@@ -123,18 +123,9 @@ class AuthService {
         // 4. Send OTP email
         try {
             const subject = "[Pastal] OTP đăng kí tài khoản"
-            const subjectMessage = `Mã xác thực đăng kí tài khoản của bạn là:`
+            const message = `Mã xác thực đăng kí tài khoản của bạn là:`
             const verificationCode = otp
-            const message = ''
-            const template = "otpTemplate"
-            await brevoSendEmail(
-                email,
-                subject,
-                subjectMessage,
-                verificationCode,
-                message,
-                template
-            )
+            await sendOtpEmail(email, subject, message, verificationCode)
         } catch (error) {
             console.log("Error sending email:", error)
             throw new BadRequestError("Gửi email không thành công")
@@ -161,7 +152,7 @@ class AuthService {
             throw new BadRequestError("Mã OTP đã hết hạn")
         }
 
-        //4. Create user by otpVerification
+        // 4. Create user by otpVerification
         const newUser = await User.create({
             fullName: otpRecord.fullName,
             email: otpRecord.email,
@@ -169,15 +160,33 @@ class AuthService {
             role: "member", // Use the string directly
         })
 
-        //Create qrCode
+        // 5. Create qrCode and referralCode
+        let referral = {}
         const qrCode = await createUserQRCode(newUser._id.toString())
+        const referralCode = crypto.randomBytes(4).toString("hex") // Generates 8 characters
+        referral.code = referralCode
+        referral.referred = []
+
         newUser.qrCode = qrCode
+        newUser.referral = referral
         await newUser.save()
 
-        // 5. Delete the OTP record
+
+        // 6. Check who is the referrer
+        let referrer
+        if(otpRecord.referralCode){
+            referrer = await User.findOne({ "referral.code": otpRecord.referralCode })
+            referrer.referral.referred.push(newUser._id)
+            // Track the referrer Badge
+            trackPlatformAmbassadorBadge(referrer._id.toString(), "reference")
+            await referrer.save()
+            console.log(referrer)
+        }
+
+        //7. Delete the OTP record
         await UserOTPVerification.deleteOne({ email })
 
-        // 6. Create token
+        //8. Create token
         const token = jwt.sign(
             {
                 id: newUser._id,
@@ -269,18 +278,9 @@ class AuthService {
         // 3. Send OTP email
         try {
             const subject = "[Pastal] OTP thay đổi mật khẩu"
-            const subjectMessage = "Mã xác thực thay đổi mật khẩu của bạn là: "
+            const message = "Mã xác thực thay đổi mật khẩu của bạn là: "
             const verificationCode = otp
-            const message = ''
-            const template = "otpTemplate"
-            await brevoSendEmail(
-                email,
-                subject,
-                subjectMessage,
-                verificationCode,
-                message,
-                template
-            )
+            await sendOtpEmail(email,subject,message,verificationCode)
         } catch (error) {
             console.error(error)
             throw new BadRequestError("Gửi email không thành công")

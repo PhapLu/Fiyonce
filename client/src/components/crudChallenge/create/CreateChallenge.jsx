@@ -38,8 +38,8 @@ export default function CreateChallenge({
     const handleEditorChange = (event, editor) => {
         const data = editor.getData();
         setEditorData(data);
-        setInputs(prev => ({ ...prev, content: data }));
-        setErrors(prev => ({ ...prev, content: "" }));
+        setInputs(prev => ({ ...prev, description: data }));
+        setErrors(prev => ({ ...prev, description: "" }));
     };
 
     const validateInputs = () => {
@@ -49,12 +49,25 @@ export default function CreateChallenge({
             errors.title = "Vui lòng nhập tên tiêu đề";
         }
 
-        if (!isFilled(inputs.subTitle)) {
-            errors.subTitle = "Vui lòng nhập tên tiêu đề phụ";
+        if (!isFilled(inputs.description)) {
+            errors.description = "Vui lòng nhập nội dung";
         }
 
-        if (!isFilled(inputs.content)) {
-            errors.content = "Vui lòng nhập nội dung";
+        
+        if (!isFilled(inputs.shortDescription)) {
+            errors.shortDescription = "Vui lòng nhập mô tả ngắn gọn";
+        }
+
+        if (!isFilled(inputs.startDate)) {
+            errors.startDate = "Vui lòng chọn ngày bắt đầu";
+        }
+
+        if (!isFilled(inputs.endDate)) {
+            errors.endDate = "Vui lòng chọn ngày kết thúc";
+        }
+
+        if (!isFilled(inputs.endDate)) {
+            errors.endDate = "Vui lòng chọn ngày kết thúc";
         }
 
         if (!thumbnail) {
@@ -78,7 +91,6 @@ export default function CreateChallenge({
 
         const fd = new FormData();
         inputs.isPrivate = inputs?.isPrivate === "true" ? true : false;
-        inputs.isPinned = inputs?.isPrivate === "true" ? true : false;
 
         for (const key in inputs) {
             fd.append(key, inputs[key]);
@@ -91,6 +103,7 @@ export default function CreateChallenge({
 
             const response = await createChallengeMutation.mutateAsync(fd);
             console.log(response);
+
             setModalInfo({
                 status: "success",
                 message: "Thêm bản tin thành công"
@@ -132,16 +145,24 @@ export default function CreateChallenge({
 
                 <div className="form-field">
                     <label htmlFor="shortDescription" className="form-field__label">Mô tả ngắn gọn</label>
-                    <input type="text" name="shortDescription" className="form-field__input" placeholder="Nhập mô tả ngắn gọn" />
+                    <input type="text" name="shortDescription" className="form-field__input" placeholder="Nhập mô tả ngắn gọn" onChange={handleChange}/>
                     {errors.shortDescription && <span className="form-field__error">{errors.shortDescription}</span>}
                 </div>
 
                 <div className="form-field">
+                    <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
+                    <input type="file" className="form-field__input" name="thumbnail" id="fileInput" onChange={handleImageChange} />
+                    {errors.thumbnail && <span className="form-field__error">{errors.thumbnail}</span>}
+                    {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
+                </div>
+
+
+                <div className="form-field">
                     <div className="form-field half-split">
                         <label htmlFor="startDate" className="form-field__label">Bắt đầu - Kết thúc</label>
-                        <input type="datetime-local" name="startDate" className="form-field__input" />
+                        <input type="datetime-local" name="startDate" className="form-field__input" onChange={handleChange} />
                         {errors.startDate && <span className="form-field__error">{errors.startDate}</span>}
-                        <input type="datetime-local" name="endDate" className="form-field__input" />
+                        <input type="datetime-local" name="endDate" className="form-field__input"  onChange={handleChange}/>
                         {errors.endDate && <span className="form-field__error">{errors.endDate}</span>}
                     </div>
                 </div>
@@ -157,15 +178,6 @@ export default function CreateChallenge({
                     {errors.isPrivate && <span className="form-field__error">{errors.isPrivate}</span>}
                 </div>
 
-
-                <div className="form-field">
-                    <label htmlFor="isPrivate" className="form-field__label">Ghim?</label>
-                    <select className="form-field__input" name="isPinned" value={inputs?.isPinned || ''} onChange={handleChange}>
-                        <option value="false">Không</option>
-                        <option value="true">Có</option>
-                    </select>
-                    {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
-                </div>
             </div>
 
             <div className="modal-form--right">
@@ -215,7 +227,7 @@ export default function CreateChallenge({
 
                 <h2 className='text-align-center'>{inputs?.title}</h2>
                 <h4 className='text-align-center'>{inputs?.subTitle}</h4>
-                <div dangerouslySetInnerHTML={{ __html: `${inputs?.content || ""}` }}></div>
+                <div dangerouslySetInnerHTML={{ __html: `${inputs?.description || ""}` }}></div>
             </div> */}
         </div>
     );

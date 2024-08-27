@@ -1,20 +1,17 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+import mongoose from "mongoose"
+const Schema = mongoose.Schema
 
-const DOCUMENT_NAME = "CommissionService";
-const COLLECTION_NAME = "CommissionServices";
+const DOCUMENT_NAME = "CommissionService"
+const COLLECTION_NAME = "CommissionServices"
 
 const ServiceSchema = new mongoose.Schema(
     {
         talentId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-        title: { type: String, required: true },
         serviceCategoryId: {
             type: mongoose.Types.ObjectId,
             ref: "ServiceCategory",
             required: true,
         },
-        views: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
-        orderCount: { type: Number, default: 0 },
         termOfServiceId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "TermOfService",
@@ -25,6 +22,15 @@ const ServiceSchema = new mongoose.Schema(
             ref: "Movement",
             required: true,
         },
+        bookmarks: {
+            type: [{
+                user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+            }],
+            default: []
+        },
+        title: { type: String, required: true },
+        views: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+        orderCount: { type: Number, default: 0 },
         minPrice: { type: Number, required: true },
         deliverables: [{ type: String, required: true }],
         addOns: [
@@ -44,8 +50,8 @@ const ServiceSchema = new mongoose.Schema(
         timestamps: true,
         collection: COLLECTION_NAME,
     }
-);
+)
 
-const Service = mongoose.model(DOCUMENT_NAME, ServiceSchema);
+const Service = mongoose.model(DOCUMENT_NAME, ServiceSchema)
 
-export default Service;
+export default Service

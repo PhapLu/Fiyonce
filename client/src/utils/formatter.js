@@ -54,6 +54,24 @@ export function formatDate(val) {
     return `${day}/${month}/${year}`;
 }
 
+export function formatDatetime(dateString) {
+    const date = new Date(dateString);
+
+    // Extract the components
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+    const year = date.getUTCFullYear();
+
+    // Determine AM/PM
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
+
+    // Format the date as "HH:MM PM/AM, DD/MM/YYYY"
+    return `${formattedHours}:${minutes} ${period}, ${day}/${month}/${year}`;
+}
+
 export function formatTimeAgo(date) {
     const distance = formatDistanceToNow(new Date(date), { addSuffix: true, locale: vi });
     return distance.replace('khoảng ', '').replace('dưới ', '').replace('trước', '').trim(); // Remove the "khoảng" prefix

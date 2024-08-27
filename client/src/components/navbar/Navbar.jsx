@@ -21,8 +21,6 @@ import { resizeImageUrl } from "../../utils/imageDisplayer";
 import Logo from "../../assets/img/logo.png";
 import './Navbar.scss';
 
-
-
 export default function Navbar() {
     const location = useLocation();
     const { userInfo, socket } = useAuth();
@@ -161,7 +159,7 @@ export default function Navbar() {
         setShowRenderNotifications(prevState => !prevState);
     }
 
-    const [showHamburgerMenu, setShowHamburgerMenu] = useState();
+    const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showCreateBugReport, setShowCreateBugReport] = useState(false);
@@ -169,6 +167,7 @@ export default function Navbar() {
     return (
         <>
             <div className={`navbar ${shadow ? 'with-shadow' : ''}`}>
+                <div className={`navbar__blur desktop-hide ${shadow ? 'active' : ''}`}></div>
                 <div className="navbar--left">
                     <svg onClick={() => { setShowHamburgerMenu(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 lg mr-12 desktop-hide hover-cursor-opacity">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -260,16 +259,16 @@ export default function Navbar() {
 
                 <div className="navbar--right">
                     <ul className="navbar-link-container">
-                        <li className={`navbar-link-item ` + (location.pathname.split('/').filter(Boolean).length === 0 || location.pathname.includes('/talents') || location.pathname.includes('/commission-services') ? "active" : "")}>
+                        <li className={`navbar-link-item tablet-hide mobile-hide ` + (location.pathname.split('/').filter(Boolean).length === 0 || location.pathname.includes('/talents') || location.pathname.includes('/commission-services') ? "active" : "")}>
                             <Link to="/">Khám phá</Link>
                         </li>
-                        <li className={`navbar-link-item ` + (location.pathname.includes('/commission-market') ? "active" : "")}>
+                        <li className={`navbar-link-item tablet-hide mobile-hide ` + (location.pathname.includes('/commission-market') ? "active" : "")}>
                             <Link to="/commission-market">Chợ Commission</Link>
                         </li>
-                        <li className={`navbar-link-item ` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                        <li className={`navbar-link-item tablet-hide mobile-hide ` + (location.pathname.includes('/challenges') ? "active" : "")}>
                             <Link to="/challenges">Thử thách</Link>
                         </li>
-                        <hr className="navbar__veritcal-hr tablet-hide" />
+                        <hr className="navbar__veritcal-hr tablet-hide mobile-hide" />
                         {userInfo && (
                             <>
                                 <div className="toggle-display-conversations-btn hover-display-label bottom mr-8" ref={messageButtonRef} aria-label="Tin nhắn">
@@ -299,7 +298,7 @@ export default function Navbar() {
                                     )}
                                 </div>
 
-                                <div className="icon-only toggle-display-notifications-btn mr-16 hover-display-label bottom" ref={notificationBtnRef} aria-label="Báo cáo sự cố">
+                                <div className="icon-only toggle-display-notifications-btn mr-16 hover-display-label bottom mobile-hide" ref={notificationBtnRef} aria-label="Báo cáo sự cố">
                                     <div className="btn btn-3 icon-only" onClick={() => { setShowCreateBugReport(true), setOverlayVisible(true) }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />

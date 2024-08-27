@@ -10,6 +10,7 @@ class RecommenderService {
         const userResults = await User.find({
             $or: [
                 { fullName: { $regex: searchRegex } },
+                { stageName: { $regex: searchRegex } },
                 { email: { $regex: searchRegex } },
                 { bio: { $regex: searchRegex } },
             ]
@@ -21,9 +22,13 @@ class RecommenderService {
         }
     }
 
-    static readPopularPosts = async () => {
+    static readPopularPosts = async (req) => {
+        const q = req.query
+        const filters = {
+            ...(q.movementId !== undefined && { movementId: q.movementId }),
+        }
         try {
-            const posts = await Post.find()
+            const posts = await Post.find(filters)
                 .populate("talentId")
                 .populate("artworks")
                 .populate("movementId")
@@ -171,13 +176,17 @@ class RecommenderService {
             }
         } catch (error) {
             console.error("Error in readPopularPosts:", error)
-            throw new Error("Failed to read popular posts")
+            throw new BadRequestError("Failed to read popular posts")
         }
     }
 
-    static readLatestPosts = async () => {
+    static readLatestPosts = async (req) => {
+        const q = req.query
+        const filters = {
+            ...(q.movementId !== undefined && { movementId: q.movementId }),
+        }
         try {
-            const posts = await Post.find()
+            const posts = await Post.find(filters)
                 .populate("talentId")
                 .populate("artworks")
                 .populate("movementId")
@@ -517,9 +526,13 @@ class RecommenderService {
 
 
 
-    static readPopularCommissionServices = async () => {
+    static readPopularCommissionServices = async (req) => {
+        const q = req.query
+        const filters = {
+            ...(q.movementId !== undefined && { movementId: q.movementId }),
+        }
         try {
-            const services = await CommissionService.find()
+            const services = await CommissionService.find(filters)
                 .populate("talentId")
                 .populate("serviceCategoryId")
                 .populate("termOfServiceId")
@@ -692,9 +705,13 @@ class RecommenderService {
         }
     }
 
-    static readLatestCommissionServices = async () => {
+    static readLatestCommissionServices = async (req) => {
+        const q = req.query
+        const filters = {
+            ...(q.movementId !== undefined && { movementId: q.movementId }),
+        }
         try {
-            const commissionServices = await CommissionService.find()
+            const commissionServices = await CommissionService.find(filters)
                 .populate("talentId")
                 .populate("movementId")
                 .populate("serviceCategoryId")

@@ -1,0 +1,2 @@
+2024-08-25 09:02:54::error::/v1/api/talentRequest/requestUpgradingToTalent::c2b0a46d-82e9-445f-8285-e10560d5e05b::403 - 1ms - Response: {"status":403,"now":1724551374716}::{"message":"Please provide artwork files"}
+2024-08-25 09:05:08::error::/v1/api/auth/users/login::730f3d52-c548-457c-85b8-2c2959ba1fd8::401 - 0ms - Response: {"status":401,"now":1724551508732}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}

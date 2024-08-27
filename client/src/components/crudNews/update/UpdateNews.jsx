@@ -1,18 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { isFilled } from "../../../utils/validator.js";
 import { useQuery } from "react-query";
-
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import {
-    ClassicEditor, ImageInsert,
-    Highlight,
-    ImageResize,
-    ImageStyle,
-    ImageToolbar,
-    ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
-} from 'ckeditor5';
-import 'ckeditor5/ckeditor5.css';
 import { apiUtils } from "../../../utils/newRequest.js";
+import RichTextEditor from "../../richTextEditor/RichTextEditor.jsx";
 
 export default function UpdateNews({
     news,
@@ -53,9 +43,27 @@ export default function UpdateNews({
         }
     }, []);
 
+    const urlToFile = async (url, filename, mimeType) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], filename, { type: mimeType });
+    };
+
+    useEffect(() => {
+        async function convertThumbnailUrlToFile() {
+            if (news.thumbnail) {
+                const file = await urlToFile(news.thumbnail, `${Date.now()}.jpg`, 'image/jpeg');
+                setThumbnail(file);
+                console.log(file)
+            }
+        }
+        convertThumbnailUrlToFile();
+    }, [news.thumbnail]);
+
     const handleImageChange = (event) => {
         const { name, value, files } = event.target;
         setThumbnail(files[0]);
+        console.log(files[0])
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
@@ -113,15 +121,16 @@ export default function UpdateNews({
         for (const key in inputs) {
             fd.append(key, inputs[key]);
         }
-        fd.append('thumbnail', thumbnail);
+        fd.set('thumbnail', thumbnail);
 
         try {
             console.log(inputs)
             console.log(thumbnail)
+            console.log(fd.get("thumbnail"))
 
             const response = await updateNewsMutation.mutateAsync(fd);
             console.log(response);
-        
+
         } catch (error) {
             console.error("Failed to update new news:", error);
             // setErrors((prevErrors) => ({
@@ -172,7 +181,7 @@ export default function UpdateNews({
 
                 <div className="form-field">
                     <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
-                    
+
                     <div className="form-field__input img-preview">
                         <div className="img-preview--left">
                             <img src={thumbnail instanceof File ? URL.createObjectURL(thumbnail) : thumbnail} alt="Artwork 1" className="img-preview__img" />
@@ -202,36 +211,12 @@ export default function UpdateNews({
                     </select>
                     {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
                 </div>
-
-
-
             </div>
             <div className="modal-form--right">
                 <div className="form-field">
                     <label htmlFor="content" className="form-field__label">Content</label>
-                    <CKEditor
-                        editor={ClassicEditor}
-                        data={editorData}
-                        onChange={handleEditorChange}
-                        config={{
-                            plugins: [Essentials, ImageInsert,
-                                ImageResize,
-                                Highlight,
-                                ImageStyle,
-                                ImageToolbar,
-                                ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
-                            toolbar: {
-                                items: [
-                                    'sourceEditing', '|', 'bold', 'italic', '|',
-                                    'fontSize', 'highlight', 'fontColor', '|'
-                                ]
-                            },
-                            mention: {
-                                // Mention configuration
-                            },
-                            initialData: '<p>Hello from CKEditor 5 in React!</p>',
-                        }}
-                    />
+                     <RichTextEditor editorData={editorData} handleEditorChange={handleEditorChange}/>
+                   
                     {/* <textarea name="content" value={inputs?.content || ''} onChange={handleChange} className="form-field__input"></textarea> */}
 
                     {errors.content && <span className="form-field__error">{errors.content}</span>}

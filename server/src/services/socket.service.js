@@ -15,8 +15,8 @@ const getUser = (userId) => {
 
 class SocketServices {
     connection(socket) {
-        console.log("User connected with id:", socket.id)
-
+        console.log("User connected with id:", socket.id);
+        console.log(users)
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id)
             global._io.emit("getUsers", users)
@@ -52,7 +52,12 @@ class SocketServices {
         })
 
         socket.on("sendNotification", ({ senderId, receiverId, notification }) => {
+            console.log("DDD")
+            console.log(receiverId)
             const user = getUser(receiverId)
+            console.log(users)
+            console.log(user)
+            console.log(notification)
             global._io.to(user?.socketId).emit("getNotification",
                 notification,
             )

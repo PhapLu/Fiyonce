@@ -10,7 +10,7 @@ export default function Glaze() {
             <hr />
             <h3 className="">1. Glaze là gì?</h3>
             <span>
-                Đi cùng với sự phát triển đáng kinh ngạc của các mô hình trí tuệ nhân tạo là nỗi lo về quyền sáng tác và giá trị nghệ thuật do chúng tạo ra. Với nỗ lực tạo ra một cộng đồng giữa những người yêu nghệ thuật sáng tạo, Pastal muốn giới thiệu đến mọi người Glaze - một công cụ bảo vệ họa sĩ và tác phẩm của họ khỏi sự sao chép trái phép của các mô hình AI.
+                Đi cùng với sự phát triển đáng kinh ngạc của các mô hình trí tuệ nhân tạo là nỗi lo về bản quyền sáng tác và giá trị nghệ thuật do chúng tạo ra. Với nỗ lực tạo ra một cộng đồng giữa những người yêu nghệ thuật chân chính, Pastal muốn giới thiệu đến mọi người Glaze - một công cụ dùng để bảo vệ tác phẩm của bạn khỏi sự sao chép trái phép của các mô hình AI.
             </span>
             <br />
             <br />
@@ -20,7 +20,7 @@ export default function Glaze() {
 
                 <span>
                     <strong>1. Phân tích tác phẩm: </strong>
-                    Khi bạn tải một tác phẩm lên nền tảng Glaze, công cụ này sẽ tiến hành phân tích các đặc điểm độc đáo của tác phẩm đó, từ màu sắc, bố cục cho đến phong cách nghệ thuật.
+                    Khi bạn tải một tác phẩm lên Glaze, công cụ này sẽ tiến hành phân tích các đặc điểm như màu sắc, bố cục cho đến phong cách nghệ thuật.
                     <br />
                     <br />
                     <strong>2. Tạo dấu vân tay kỹ thuật số: </strong>
@@ -28,7 +28,7 @@ export default function Glaze() {
                     <br />
                     <br />
                     <strong>3. Bảo vệ tác phẩm: </strong>
-                    Dấu vân tay kỹ thuật số này hoạt động như một hàng rào bảo vệ, ngăn cản các mô hình AI sao chép chính xác tác phẩm của bạn. Ngay cả khi một AI cố gắng học hỏi và tái tạo tác phẩm, kết quả thu được sẽ không bao giờ giống hoàn toàn với bản gốc.
+                    Dấu vân tay kỹ thuật số này hoạt động như một hàng rào bảo vệ, ngăn cản các mô hình AI sao chép chính xác tác phẩm của bạn. Ngay cả khi một mô hình AI cố gắng học hỏi và tái tạo lại tác phẩm, kết quả thu được sẽ không bao giờ giống hoàn toàn với bản gốc.
                 </span>
                 <br />
                 <br />

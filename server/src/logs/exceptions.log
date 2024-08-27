@@ -831,6 +831,7 @@ Error: listen EADDRINUSE: address already in use :::3000
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+<<<<<<< HEAD
 2024-08-17 14:21:42::error::undefined::undefined::uncaughtException: listen EADDRINUSE: address already in use :::3000
 Error: listen EADDRINUSE: address already in use :::3000
     at Server.setupListenHandle [as _listen2] (node:net:1817:16)
@@ -838,3 +839,67 @@ Error: listen EADDRINUSE: address already in use :::3000
     at Server.listen (node:net:1953:7)
     at file:///D:/Adam/OnisonProject/server/server.js:4:8
     at ModuleJob.run (node:internal/modules/esm/module_job:194:25)::undefined
+=======
+2024-08-15 21:06:55::error::undefined::undefined::uncaughtException: Datetime is not defined
+ReferenceError: Datetime is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/models/challenge.model.js:13:26
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-15 21:06:59::error::undefined::undefined::uncaughtException: Datetime is not defined
+ReferenceError: Datetime is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/models/challenge.model.js:12:28
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-17 14:02:55::error::undefined::undefined::uncaughtException: Order validation failed: status: `inProgress` is not a valid enum value for path `status`.
+ValidationError: Order validation failed: status: `inProgress` is not a valid enum value for path `status`.
+    at Document.invalidate (E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\document.js:3197:32)
+    at E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\document.js:2990:17
+    at E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-08-17 14:05:11::error::undefined::undefined::uncaughtException: Order validation failed: status: `inProgress` is not a valid enum value for path `status`.
+ValidationError: Order validation failed: status: `inProgress` is not a valid enum value for path `status`.
+    at Document.invalidate (E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\document.js:3197:32)
+    at E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\document.js:2990:17
+    at E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-08-22 08:36:25::error::undefined::undefined::uncaughtException: readBookmarkedPosts is not defined
+ReferenceError: readBookmarkedPosts is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/routes/post/index.js:22:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-22 08:36:32::error::undefined::undefined::uncaughtException: readBookmarkedPosts is not defined
+ReferenceError: readBookmarkedPosts is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/routes/post/index.js:22:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-22 08:36:33::error::undefined::undefined::uncaughtException: readBookmarkedPosts is not defined
+ReferenceError: readBookmarkedPosts is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/routes/post/index.js:23:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-24 09:38:54::error::undefined::undefined::uncaughtException: error is not defined
+ReferenceError: error is not defined
+    at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:191:68)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+2024-08-26 11:08:11::error::undefined::undefined::uncaughtException: error is not defined
+ReferenceError: error is not defined
+    at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:191:68)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+2024-08-26 11:15:07::error::undefined::undefined::uncaughtException: error is not defined
+ReferenceError: error is not defined
+    at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:191:68)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+2024-08-26 11:21:13::error::undefined::undefined::uncaughtException: error is not defined
+ReferenceError: error is not defined
+    at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:192:68)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+2024-08-26 11:23:29::error::undefined::undefined::uncaughtException: Badge not found!
+Error: Badge not found!
+    at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:188:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+>>>>>>> phap_dev

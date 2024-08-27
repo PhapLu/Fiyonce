@@ -5,13 +5,11 @@ import { AuthFailureError, BadRequestError, NotFoundError } from '../core/error.
 import Conversation from '../models/conversation.model.js'
 import Notification from '../models/notification.model.js'
 import mongoose from 'mongoose'
-import { trackActivity } from '../utils/badgeTracking.util.js'
+import { trackActivity, trackTrustedArtistBadge } from '../utils/badgeTracking.util.js'
 
 class UserService {
     //-------------------CRUD----------------------------------------------------
     static updateProfile = async (userId, profileId, body) => {
-        console.log("UPDATEEE")
-        console.log(body.pronoun)
         //1. Check user
         const profile = await User.findById(profileId)
         if (!profile) throw new NotFoundError("User not found")
@@ -23,8 +21,19 @@ class UserService {
             profileId,
             { $set: body },
             { new: true }
-        ).populate("followers", "avatar").populate("following", "avatar fullName")
-        console.log(updatedUser)
+        ).populate("followers", "avatar").populate("following", "avatar fullName");
+
+        //3. Track TrustedArtistBadge criteria
+        if(updatedUser.bio !== '' && 
+            updatedUser.taxCode !== '' && 
+            updatedUser.taxCode.isVerified == true && 
+            updatedUser.cccd !== '' && 
+            !updatedUser.avatar.includes('pastal_system_default') && 
+            !updatedUser.bg.includes('pastal_system_default'))
+        {
+            await trackTrustedArtistBadge(userId, 'updateProfile')
+        }
+
         return {
             user: updatedUser,
         }
@@ -140,11 +149,8 @@ class UserService {
             const lastMessage = conversation.messages[conversation.messages.length - 1]
             console.log(lastMessage.senderId.toString() !== userId)
             console.log(lastMessage.senderId._id)
-            return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId
-        })
-
-        console.log("DEF")
-        console.log(filteredUnSeenConversations)
+            return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId;
+        });
 
         // Fetch unseen notifications
         const unSeenNotifications = await Notification.find({
@@ -187,6 +193,16 @@ class UserService {
             // Handle errors (e.g., logging or rethrowing)
             console.error('Error updating profile status:', error.message)
             throw error
+        }
+    };
+
+    static getUserByReferralCode = async (referralCode) => {
+        //1. Check referrer
+        const referrer = await User.findOne({'referral.code': referralCode}).select("fullName avatar")
+        if (!referrer) throw new NotFoundError("Referrer not found")
+
+        return {
+            user: referrer
         }
     }
 }

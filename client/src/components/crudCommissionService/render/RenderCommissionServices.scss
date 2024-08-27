@@ -21,6 +21,8 @@
             margin-bottom: 28px;
             padding: 12px;
             border-radius: 8px;
+            display: block;
+            position: relative;
 
             .commission-service-item__image-container {
                 .image-item {
@@ -45,6 +47,45 @@
                         // height: 100px !important;
                     }
                 }
+            }
+
+            .commission-service-item__status {
+                position: absolute;
+                padding: 6px 12px;
+                border-radius: 12px;
+                z-index: 1;
+                top: 20px;
+                left: 20px;
+
+                &.open {
+                    background-image: linear-gradient(45deg, #00a1e1, #12bf4c);
+                    color: white;
+                    box-shadow: rgb(113 208 255 / 80%) 0px 1px 10px;
+                }
+
+                &.closed {}
+
+                &.open {
+                    background-image: linear-gradient(45deg, #0083e9, #fb76eb);
+                    color: white;
+                    box-shadow: rgb(113 116 255 / 80%) 0px 1px 10px;
+                }
+            }
+
+            .commission-service-item__bookmark-btn {
+                position: absolute;
+                top: 12px;
+                right: 24px;
+                background-color: white;
+                z-index: 1;
+                padding: 24px 8px 4px 8px;
+                border-radius: 0 0 16px 16px;
+                box-shadow: var(--box-shadow-1);
+
+                &.active {
+                    background-image: linear-gradient(124deg, #7b60e5, #d57af3);
+                }
+
             }
         }
     }

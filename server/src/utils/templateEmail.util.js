@@ -1,4 +1,4 @@
-const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
+const otpTemplate = (toEmail, message, verificationCode) => {
     return `
         <!DOCTYPE html>
         <html>
@@ -78,15 +78,15 @@ const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
                 <div class="content">
                     <div class="content_container">
                         <p class="content_head">Chào ${toEmail},</p>
-                        <p>${subjectMessage}</p>
+                        <p>${message}</p>
                         <div class="verification-code">${verificationCode}</div>
                         <p class="content_note">*Mã có hiệu lực trong vòng 30 phút.</p>
                     </div>
                 </div>
                 <div style='font-size: 15px;' class="footer">
-                    <p>Fiyonce là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
-                    <span>Hiện tại Fiyonce vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
-                    <p class="footer_final_p">Hẹn gặp lại trên Fiyonce.</p>
+                    <p>Pastal là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
+                    <span>Hiện tại Pastal vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
+                    <p class="footer_final_p">Hẹn gặp lại trên Pastal.</p>
                     <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
                     <div class="social-icons">
                         <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718068817/fiyonce/system/facebook_icon_sk9jnu.png" style="object-fit: cover; border-radius:0px;display:block" class="CToWUd" data-bit="iit" /></a>
@@ -101,7 +101,7 @@ const otpTemplate = (toEmail, subjectMessage, verificationCode) => {
     `;
 };
 
-const announcementTemplate = (toEmail, message) => {
+const announcementTemplate = (toEmail, message, reason) => {
     return `
     <!DOCTYPE html>
     <html>
@@ -145,7 +145,7 @@ const announcementTemplate = (toEmail, message) => {
                 font-weight: bold;
             }
             .content_message{
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 500;
             }
             .footer {
@@ -180,13 +180,14 @@ const announcementTemplate = (toEmail, message) => {
                 <div class="content_container">
                     <p class="content_head">Chào ${toEmail},</p>
                     <div class="content_message">${message}</div>
+                    <p> class="content_message">Lý do: ${reason}</p>
                 </div>
             </div>
             <hr class="horizontal_line">
             <div style='font-size: 15px;' class="footer">
-                <p>Fiyonce là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
-                <span>Hiện tại Fiyonce vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
-                <p class="footer_final_p">Hẹn gặp lại trên Fiyonce.</p>
+                <p>Pastal là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
+                <span>Hiện tại Pastal vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
+                <p class="footer_final_p">Hẹn gặp lại trên Pastal.</p>
                 <p>Mọi thắc mắc và đóng góp xin vui lòng liên hệ <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@fiyonce.com">help@fiyonce.com</a></p>
                 <div class="social-icons">
                     <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718068817/fiyonce/system/facebook_icon_sk9jnu.png" style="object-fit: cover; border-radius:0px;display:block" class="CToWUd" data-bit="iit" /></a>

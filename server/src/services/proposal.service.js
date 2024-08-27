@@ -27,9 +27,9 @@ class ProposalService {
 
         //2. Check if user is a talent
         if (user.role !== "talent")
-            throw new AuthFailureError("You are not a talent")
-        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
+            throw new AuthFailureError("You are not a talent");
+        // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+        //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check if user has already given proposal for the order
         const existingProposal = await Proposal.findOne({
@@ -87,9 +87,10 @@ class ProposalService {
         const proposal = await Proposal.findById(proposalId)
             .populate("termOfServiceId")
             .populate("artworks", "url")
-        const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!proposal) throw new NotFoundError("Proposal not found")
+            .populate("talentId", "stageName fullName avatar");
+        const user = await User.findById(userId);
+        if (!user) throw new NotFoundError("User not found");
+        if (!proposal) throw new NotFoundError("Proposal not found");
 
         return {
             proposal,
@@ -112,12 +113,12 @@ class ProposalService {
     }
     static updateProposal = async (userId, proposalId, body) => {
         //1. Check if proposal, user exists
-        const user = await User.findById(userId)
-        const proposal = await Proposal.findById(proposalId)
-        if (!proposal) throw new NotFoundError("Proposal not found")
-        if (!user) throw new NotFoundError("User not found")
-        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
+        const user = await User.findById(userId);
+        const proposal = await Proposal.findById(proposalId);
+        if (!proposal) throw new NotFoundError("Proposal not found");
+        if (!user) throw new NotFoundError("User not found");
+        // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+        //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Check if user is authorized to update proposal
         if (proposal.talentId.toString() !== userId)
@@ -155,9 +156,9 @@ class ProposalService {
 
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
-            throw new AuthFailureError("You are not authorized to delete this proposal")
-        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
+            throw new AuthFailureError("You are not authorized to delete this proposal");
+        // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+        //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check status of order
         const order = await Order.findById(proposal.orderId)

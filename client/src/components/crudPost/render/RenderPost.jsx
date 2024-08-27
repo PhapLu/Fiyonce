@@ -98,6 +98,7 @@ export default function RenderPost() {
                 setLiked(!liked);
 
                 const postAuthorId = post?.talentId?._id;
+                console.log(postAuthorId)
 
                 if (action === "like" && userInfo?._id !== postAuthorId) {
                     const inputs = { receiverId: postAuthorId, type: "like", url: `/users/${postAuthorId}/profile-posts/${postId}` }

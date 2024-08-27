@@ -40,32 +40,36 @@ const UserSchema = new Schema(
         badges: [{
             badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
             count: { type: Number, default: 0 },
-            progress: [{ 
-                criterion: { type: String, default: "" },
-                progress: {type: Number, default: 0},
-                isComplete: { type: Boolean, default: false }
-            }],
-            awardedAt: { type: Date, default: Date.now }
+            progress: {
+                type: Map,
+                of: new Schema({
+                    currentProgress: { type: Number, default: 0 },
+                    totalCriteria: { type: Number, required: true },
+                    isComplete: { type: Boolean, default: false }
+                })
+            },
+            isComplete: { type: Boolean, default: false },
+            awardedAt: { type: Date, default: null }
         }],
-        // badgeProgress: [{
-        //     badgeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Badge' },
-        //     progress: { type: Object, default: {} },  // Change Map to Object
-        //     completed: { type: Boolean, default: false }
-        // }],
-        referralCode: { type: String},
+        referral: { 
+            code: { type: String, default: "" },
+            referred: [{ type: Schema.Types.ObjectId, ref: "User" }]
+        },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
-        socialLinks: [{ type: String, required: true }],
+        socialLinks: [{ type: String, required: true, default: [] }],
         views: { type: Number, default: 0 },
         postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+        commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
+        isPublicArchived: { type: Boolean, default: true },
         jobTitle: { type: String, default: "" },
         status: {
             type: String,
             default: "pending",
             enum: ["pending", "active", "block"],
         },
-        followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-        following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        followers: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
+        following: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
         taxCode:{
             code: { type: String, default: "" },
             isVerified: { type: Boolean, default: false },
@@ -76,7 +80,7 @@ const UserSchema = new Schema(
             default: ''
         },
         accessToken: { type: String },
-        qrCode: { type: String }, //Base 64
+        qrCode: { type: String, default: '' }, //Base 64
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: { type: String, default: "" },

@@ -10,7 +10,6 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
 import Challenge from "../models/challenge.model.js"
 
 class SubmissionService {

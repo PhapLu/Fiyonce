@@ -20,6 +20,7 @@ const OrderSchema = new mongoose.Schema(
         status: {
             type: String,
             enum: [
+                "waitlist",
                 "pending",
                 "approved",
                 "rejected",

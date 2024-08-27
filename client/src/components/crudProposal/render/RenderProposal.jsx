@@ -24,8 +24,8 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
     if (!commissionOrder) {
         return;
     }
+    // alert("abc")
 
-    console.log(proposalId)
     const { setModalInfo } = useModal();
     const { userInfo, socket } = useAuth();
     const isOrderOwnerAsMember = userInfo?._id === commissionOrder?.memberId?._id;
@@ -107,6 +107,14 @@ export default function RenderProposal({ proposalId, commissionOrder, setShowRen
                     message: "Thanh toán thành công"
                 })
             }
+
+
+            const senderId = userInfo?._id;
+            const receiverId = proposal?.talentId?._id;
+            const inputs2 = { receiverId, type: "confirmCommissionOrder", url: `/users/${receiverId}/order-history` }
+            const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+            const notificationData = response2.data.metadata.notification;
+            socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
             // const paymentResponse = response1.data.metadata.paymentResponse;
             // console.log(response1.data.metadata.paymentResponse);
             // window.open(paymentResponse.payUrl)

@@ -173,6 +173,7 @@ export default function Register() {
 
                         <div className="form-field">
                             <button
+                                type="submit"
                                 className="form-field__input btn btn-2 btn-md"
                                 disabled={isSubmitRegisterLoading}
                                 onClick={handleSubmit}

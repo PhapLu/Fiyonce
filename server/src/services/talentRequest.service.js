@@ -1,7 +1,6 @@
 import TalentRequest from "../models/talentRequest.model.js"
 import crypto from 'crypto'
 import { User } from "../models/user.model.js"
-import ReferralCode from "../models/referralCode.model.js"
 import {
     AuthFailureError,
     BadRequestError,
@@ -12,7 +11,7 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 
 class TalentRequestService {
     static requestUpgradingToTalent = async (userId, req) => {
@@ -31,7 +30,7 @@ class TalentRequestService {
         if(req.body.cccd){
             cccd = req.body.cccd
         }
-        const { stageName, jobTitle, portfolioLink, referralCode } = req.body
+        const { stageName, jobTitle, portfolioLink } = req.body
         if (!req.files || !req.files.files)
             throw new BadRequestError("Please provide artwork files")
         if (!userId || !stageName || !jobTitle || !portfolioLink)
@@ -74,20 +73,9 @@ class TalentRequestService {
                 portfolioLink,
                 artworks,
                 taxCode,
-                referralCode,
                 cccd
             })
             await newTalentRequest.save()
-
-            // 6. Create referral code
-            if(referralCode) {
-                const talent = await User.findOne({referralCode})
-                const referralCode = new ReferralCode({
-                    code: referralCode,
-                    referrer: talent._id.toString(),
-                    referred: userId,
-                })
-            }
             
             return {
                 talentRequest: newTalentRequest,
@@ -144,7 +132,6 @@ class TalentRequestService {
             { $set: { role: "talent" } },
             { new: true }
         )
-        updatedUser.referralCode = crypto.randomBytes(8).toString("hex")
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
         if(request.taxCode){
@@ -166,18 +153,14 @@ class TalentRequestService {
             //     const publicId = extractPublicIdFromUrl(artwork)
             //     await deleteFileByPublicId(publicId)
             // })
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ''
-            const message = "Your role has been updated to talent"
-            const template = 'announcementTemplate'
-            await brevoSendEmail(
-                foundUser.email,
+            const subject =  'Nâng cấp tài khoản thành công'
+            const message = 'Chúc mừng! yêu cầu nâng cấp tài khoản họa sĩ của bạn đã chấp thuận'
+            const reason = ''
+            sendAnnouncementEmail(
+                userWithoutPassword.email,
                 subject,
-                subjectMessage,
-                verificationCode,
                 message,
-                template
+                reason
             )
             return {
                 user: userWithoutPassword._doc,
@@ -222,18 +205,14 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork)
                 await deleteFileByPublicId(publicId)
             })
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ''
-            const message = body.rejectMessage || "Your request has been denied"
-            const template = 'announcementTemplate'
-            await brevoSendEmail(
+            const subject = 'Nâng cấp tài khoản không thành công'
+            const message = 'Yêu cầu nâng cấp tài khoản họa sĩ của bạn đã bị từ chối'
+            const reason = 'Lí do: ' + body.rejectMessage
+            sendAnnouncementEmail(
                 foundUser.email,
                 subject,
-                subjectMessage,
-                verificationCode,
                 message,
-                template
+                reason
             )
             return {
                 success: true,
@@ -273,16 +252,6 @@ class TalentRequestService {
         if (!talentRequest) throw new NotFoundError("Talent request not found")
         return {
             talentRequest,
-        }
-    }
-
-    static readReferralCodeOwner = async (referralCode) => {
-        //1. Find the user who owns the referral code
-        const user = await User.findOne({referralCode})
-        if (!user) throw new NotFoundError("User not found")
-
-        return {
-            user,
         }
     }
 }

@@ -1,71 +1,65 @@
-.crop-container {}
-
-.modal-form.type-3 {
-    width: 40%;
-    // height: 40vh;
-
-
-    .crop-container {
-        .btn-container {
-            // position: absolute;
-            // right: 0;
-        }
-    }
-
-    .reactEasyCrop_Container {
-        position: unset !important;
-        // overflow: unset;
-        // background-color: var(--white-3-color);
-    }
-
-    .reactEasyCrop_Contain {
-        position: unset !important;
-        // width: 100%;
-        // height: 100%;
-        // position: relative;
-        // max-width: unset !important;
-        // max-height: unset !important;
-        /* max-width: 100%; */
-        /* max-height: 100%; */
-        // margin: auto;
-        // position: absolute;
-        // top: 0;
-        // bottom: 0;
-        // left: 0;
-        // right: 0;
-        // width: 100%;
-        // height: 100%;
-    }
-
-    .reactEasyCrop_Image.reactEasyCrop_Contain {
-        // transform: unset;
-        // max-width: unset;
-        // max-height: unset;
-        // width: 100%;
-        // height: 100%;
-    }
-
-    .crop-container {
-        // position: absolute;
-        // max-width: 140px;
-        // max-height: 200px;
-        // height: auto;
-        // max-width: 200px;
-        // max-height: 200px;
-        // overflow: hidden;
-        // top: 50%;
-        // left: 50%;
-        // right: 0;
-        // bottom: 0;
-        // transform: translate(-50%, -50%)
-    }
-
-
-
-
-    .reactEasyCrop_CropArea.reactEasyCrop_CropAreaGrid {
-        // width: 100% !important;
-        // height: 100% !important;
-        // border: 4px solid var(--white-1-color);
-    }
+.modal-form.type-3.cropper {
+    width: 50% !important;
+    /* box-shadow: 0px 10px 9px 0px rgba(0, 0, 0, 0.09); */
 }
+
+.reactEasyCrop_Contain {
+
+}
+
+.reactEasyCrop_Container {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+// input[type='radio'] {
+//     accent-color: #1895B0;
+// }
+
+// .btn {
+//     font-size: 1rem;
+//     font-weight: 500;
+//     color: #ffffff;
+//     background: #1895B0;
+//     padding: 0.5rem 1.5rem;
+//     border-radius: 0.2rem;
+//     border: 2px solid #1895B0;
+//     cursor: pointer;
+//     margin: 1rem;
+// }
+
+// .btn-outline {
+//     background: #ffffff;
+//     color: #1895B0;
+//     border: 2px solid #1895B0;
+// }
+
+// .action-btns {
+//     padding-bottom: 1rem;
+// }
+
+// .btn-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .cropped-img {
+//     width: 300px;
+//     height: 300px;
+//     object-fit: contain;
+// }
+
+// .aspect-ratios {
+//     display: flex;
+//     align-items: center;
+//     gap: 0.5rem;
+//     font-size: 1rem;
+//     font-weight: 500;
+// }
+
+// .cropper {
+
+// }

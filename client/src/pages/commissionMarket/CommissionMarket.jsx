@@ -33,7 +33,7 @@ export default function CommissionMarket() {
         600: 1
     };
 
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({status: "*"});
     const [commissionOrder, setCommissionOrder] = useState();
 
     const [showCreateComissionOrder, setShowCreateCommissionOrder] = useState(false);
@@ -82,9 +82,12 @@ export default function CommissionMarket() {
                     ? (order.description.toLowerCase().includes(inputs.fullName.toLowerCase()) ||
                         order.memberId.fullName.toLowerCase().includes(inputs.fullName.toLowerCase()))
                     : true;
-                const matchesStatus = inputs.status && inputs.status !== '*'
-                    ? order.status === inputs.status
-                    : true;
+
+                const matchesStatus = inputs.status == '*'
+                    ? true
+                    : inputs.status == 'pending'
+                        ? (order.status == 'pending' || order.status == 'approved')
+                        : order.status == inputs.status;
                 const matchesMinPrice = inputs.minPrice
                     ? order.minPrice >= parseFloat(inputs.minPrice)
                     : true;

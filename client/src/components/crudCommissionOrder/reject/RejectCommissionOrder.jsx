@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { isFilled } from "../../../utils/validator";
 import { apiUtils } from "../../../utils/newRequest";
+import { useAuth } from "../../../contexts/auth/AuthContext";
 
 // Styling
 
@@ -13,7 +14,7 @@ export default function RejectCommissionOrder({ commissionOrder, setShowRejectCo
     if (!commissionOrder) {
         return null;
     }
-
+    const { userInfo, socket } = useAuth();
     const { setModalInfo } = useModal();
 
     const [errors, setErrors] = useState({});
@@ -65,7 +66,7 @@ export default function RejectCommissionOrder({ commissionOrder, setShowRejectCo
             console.log(commissionOrder._id)
             console.log(fd.get("rejectMessage"))
             // const response = await apiUtils.patch(`/order/rejectOrder/${commissionOrder.orderId}`, fd);
-            const response = await rejectCommissionOrderMutation.mutateAsync({orderId: commissionOrder._id, fd});
+            const response = await rejectCommissionOrderMutation.mutateAsync({ orderId: commissionOrder._id, fd });
             if (response) {
                 setModalInfo({
                     status: "success",
@@ -74,6 +75,15 @@ export default function RejectCommissionOrder({ commissionOrder, setShowRejectCo
                 setShowRejectCommissionOrder(false);
                 setOverlayVisible(false);
             }
+
+
+            const senderId =  userInfo._id;
+            const receiverId = commissionOrder.memberId._id;
+            const inputs2 = { receiverId, type: "rejectCommissionOrder", url: `/users/${commissionOrder.memberId._id}/order-history` }
+            const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+            const notificationData = response2.data.metadata.notification;
+            socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
+
         } catch (error) {
             console.error("Failed to submit:", error);
             setErrors((prevErrors) => ({

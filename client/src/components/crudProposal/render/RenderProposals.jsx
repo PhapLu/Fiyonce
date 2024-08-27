@@ -16,6 +16,8 @@ import "./RenderProposals.scss"
 import { apiUtils } from "../../../utils/newRequest";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 import { useConversation } from "../../../contexts/conversation/ConversationContext";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import ZoomImage from "../../zoomImage/ZoomImage";
 
 
 export default function RenderProposals({ commissionOrder, setShowRenderProposals, setOverlayVisible }) {
@@ -28,6 +30,8 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
     const [proposalId, setProposalId] = useState();
     const [showRenderProposal, setShowRenderProposal] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(false);
+    const [imageSrc, setImageSrc] = useState();
+    const [showZoomImage, setShowZoomImage] = useState(false);
 
     const fetchProposals = async () => {
         try {
@@ -162,29 +166,38 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                     isProcedureVisible && (
                                         <ul className="step-container">
                                             <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                            <li className={`step-item ${["approved"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ xác nhận và gửi proposal</li>
-                                            <li className={`step-item ${["approved", "confirmed"].includes(commissionOrder.status) && "checked"}`}>Khách hàng thanh toán đặt cọc</li>
-                                            {commissionOrder.status === "under_processing" ? <li className="step-item checked">Admin đang xử lí</li> : (
-                                                <>
-                                                    <li className={`step-item ${["approved", "confirmed", "in_progress"].includes(commissionOrder.status) && "checked"}`}>Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                                    <li className={`step-item ${["approved", "confirmed", "finished"].includes(commissionOrder.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
-                                                </>
-                                            )}
+                                            <li className="step-item">Họa sĩ xác nhận và gửi proposal</li>
+                                            <li className="step-item">Khách hàng thanh toán đặt cọc</li>
+                                            <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                            <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
                                         </ul>
                                     )
                                 }
                             </>
                         ) : (
                             <>
-                                <h3>Thủ tục đăng yêu cầu tìm họa sĩ</h3>
+                                <h4 onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center">
+                                    Thủ tục đăng yêu cầu tìm họa sĩ
+                                    {isProcedureVisible ? (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                                    </svg>
+                                    ) : (
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    )}</h4>
                                 <hr />
-                                <ul className="step-container">
-                                    <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                    <li className="step-item checked">Các họa sĩ gửi proposal và khách hàng chọn ra họa sĩ phù hợp nhất</li>
-                                    <li className="step-item">Khách hàng thanh toán đặt cọc</li>
-                                    <li className="step-item">Hai bên tiến hành trao đổi thêm. Họa sĩ cập nhật tiến độ và bản thảo</li>
-                                    <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng thanh toán phần còn lại và đánh giá</li>
-                                </ul>
+                                {
+                                    isProcedureVisible && (
+                                        <ul className="step-container">
+                                            <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
+                                            <li className="step-item checked">Các họa sĩ gửi proposal</li>
+                                            <li className="step-item checked">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
+                                            <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                            <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
+                                        </ul>
+                                    )
+                                }
                             </>
                         )
                     }
@@ -209,7 +222,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                             return (
                                 <div className="proposal-item" key={index}>
                                     <div className="user md">
-                                        <img src={proposal.talentId.avatar} alt={proposal.talentId.fullName} className="user__avatar" />
+                                        <LazyLoadImage effect="blur" src={proposal.talentId.avatar} alt={proposal.talentId.fullName} className="user__avatar" />
                                         <div className="user__name">
                                             <div className="user__name__title">{proposal.talentId.fullName}</div>
                                             <div className="user__name__subtitle">
@@ -220,11 +233,11 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
 
                                     <p>Giá thỏa thuận: <span className="highlight-text">{formatCurrency(proposal.price)} VND</span></p>
                                     <p>{limitString(proposal.scope, 250)}</p>
-                                    <div className="reference-container">
+                                    <div className="reference-container mb-8">
                                         {proposal.artworks.map((artwork, index) => {
                                             return (
-                                                <div key={index} className="reference-item">
-                                                    <img src={artwork.url} alt="" />
+                                                <div key={index} className="reference-item" onClick={() => {setImageSrc(artwork?.url); setShowZoomImage(true)}}>
+                                                    <LazyLoadImage effect="blur" src={artwork?.url} alt="" />
                                                 </div>
                                             )
                                         })}
@@ -243,9 +256,10 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                             <p className="text-align-center">Tạm thời chưa có họa sĩ ứng đơn hàng của bạn.</p>
                         )
                     }
-
                     </div>
                 </div>
+
+                {showZoomImage && <ZoomImage src={imageSrc} setShowZoomImage={setShowZoomImage} />}
             </div>
         ))
 }

@@ -13,7 +13,7 @@ import {
     extractPublicIdFromUrl,
     deleteFileByPublicId,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
 
 class OrderService {
@@ -21,29 +21,34 @@ class OrderService {
     static createOrder = async (userId, req) => {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
-        const fileFormats = req.body.fileFormats.split(",")
-        req.body.fileFormats = fileFormats
+        if (!user) throw new NotFoundError("User not found!")
+        
+        const fileFormats = req.body.fileFormats.split(",");
+        req.body.fileFormats = fileFormats;
         const body = req.body
-
-        const { isDirect, commissionServiceId } = body
+        const { isDirect, commissionServiceId, isWaitList} = body
         const commissionService = await CommissionService.findById(
             commissionServiceId
         )
-
-        let talent = null
-
+        
         //2. Check isDirect of order
+        let talent = null
         if (isDirect == 'true') {
             //direct order
+            talent = await User.findById(talentChosenId)
             const service = await CommissionService.findById(
                 commissionServiceId
             )
-            talent = await User.findById(service.talentId)
 
+            if (!talent) throw new BadRequestError("Talent not found!")
             if (!service)
                 throw new BadRequestError("commissionService not found!")
+            if (talent.role != "talent")
+                throw new AuthFailureError("He/She is not a talent!")
+            if (talent._id == userId)
+                throw new BadRequestError("You cannot choose yourself!")
             body.isDirect = true
-            body.talentChosenId = service.talentId
+            body.talentChosenId = talentChosenId
             body.minPrice = commissionService.minPrice
             body.commissionServiceId = commissionServiceId
         } else {
@@ -71,6 +76,14 @@ class OrderService {
             }
 
             //4. Create order
+            if(isWaitList == 'true'){
+                if(commissionService.status !== 'waitList')
+                    throw new BadRequestError('Dịch vụ này đang mở')
+                body.status = "waitlist"
+            } else {
+                body.status = "pending"
+            }
+
             const order = new Order({
                 memberId: userId,
                 references,
@@ -81,19 +94,10 @@ class OrderService {
             //5. Send email to user
             if (isDirect == 'true' && talent?.email) {
                 try {
-                    const subject = ""
-                    const subjectMessage = ""
-                    const verificationCode = ""
-                    const message = `You have a new order from ${user.fullName}. Please check the order details and accept or reject the order.`
-                    const template = "announcementTemplate"
-                    await brevoSendEmail(
-                        talent.email,
-                        subject,
-                        subjectMessage,
-                        verificationCode,
-                        message,
-                        template
-                    )
+                    const subject = "Bạn có đơn hàng mới"
+                    const message = "You have a new order to review"
+                    const reason = ""
+                    await sendAnnouncementEmail(talent.email, subject, message, reason)
                 } catch (error) {
                     console.log(error)
                     throw new BadRequestError("Email service error")
@@ -195,8 +199,8 @@ class OrderService {
 
             //4. Validate body and merge existing service fields with req.body to ensure fields not provided in req.body are retained
             const { memberId, talentChosenId, ...filteredBody } = req.body
-            const updatedFields = { ...oldOrder.toObject(), ...filteredBody }
-
+            const updatedFields =  { ...oldOrder.toObject(), ...filteredBody }
+            
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
@@ -227,6 +231,7 @@ class OrderService {
                 .populate("talentChosenId", "stageName avatar")
                 .populate("memberId", "fullName avatar")
                 .populate("commissionServiceId", "price title")
+                .sort({ createdAt: -1 });
         } catch (error) {
             console.error("Error populating orders:", error)
             throw new Error("Failed to fetch orders")
@@ -319,12 +324,6 @@ class OrderService {
                                     0,
                                 ],
                             },
-                            title: {
-                                $arrayElemAt: [
-                                    "$commissionServiceDetails.price",
-                                    0,
-                                ],
-                            },
                         },
                         memberId: {
                             _id: { $arrayElemAt: ["$memberDetails._id", 0] },
@@ -393,8 +392,8 @@ class OrderService {
                 },
             ])
 
-            return {
-                talentOrderHistory: orders
+            return { 
+                talentOrderHistory: orders 
             }
         } catch (error) {
             console.error("Error fetching orders by talent:", error)
@@ -576,19 +575,10 @@ class OrderService {
         //6. Send email to user
         const member = await User.findById(order.memberId)
         try {
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ""
-            const message = 'Your order has been denied by the talent you chose. Please check the order details and try again with another talent.'
-            const template = "announcementTemplate"
-            await brevoSendEmail(
-                member.email,
-                subject,
-                subjectMessage,
-                verificationCode,
-                message,
-                template
-            )
+            const subject = "Đơn hàng bị từ chối"
+            const message = "Đơn hàng của bạn đã bị từ chối"
+            const reason = ''
+            await sendAnnouncementEmail(member.email, subject, message, reason)
         } catch (error) {
             console.error("Error sending email:", error)
             throw new BadRequestError("Email service error")
@@ -596,31 +586,27 @@ class OrderService {
 
         return {
             order: deniedOrder,
-        }
-    }
-    
-    static startWipCommissionOrder = async (userId, orderId) => {
+        };
+    };
+
+    static startWipOrder = async (userId, orderId) => {
         //1. Check if user, order exists
-        const user = await User.findById(userId)
-        const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
-        if(order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet")
-        if(order.talentChosenId.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order")
+        const user = await User.findById(userId);
+        const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
+            .populate("memberId", "fullName avatar")
+            .populate("commissionServiceId", "title");;
+        if (!user) throw new NotFoundError("User not found");
+        if (!order) throw new NotFoundError("Order not found");
+        if (order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet");
+        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order");
 
         //2. Start work
-        order.status = "inProgress"
-        order.save()
-
-        //3. Show order
-        const inProgressOrder = order
-        .populate("talentChosenId", "stageName avatar")
-        .populate("memberId", "fullName avatar")
-        .populate("commissionServiceId", "title")
+        order.status = "in_progress";
+        order.save();
 
         return {
-            order: inProgressOrder,
-        }
+            order,
+        };
     }
 }
 

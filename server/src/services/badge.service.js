@@ -35,12 +35,29 @@ class BadgeService {
             })
             const icon = thumbnailUploadResult.secure_url
     
+            // 4. Parse the criteria field
+            let criteriaString = ""
+            if (req.body.criteria) {
+                try {
+                    // Ensure req.body.criteria is a valid JSON object
+                    const parsedCriteria = JSON.parse(req.body.criteria)
+                    if (typeof parsedCriteria !== 'object' || Array.isArray(parsedCriteria)) {
+                        throw new BadRequestError("Invalid criteria format")
+                    }
+                    // Convert the object to a JSON string
+                    criteriaString = JSON.stringify(parsedCriteria)
+                } catch (parseError) {
+                    console.error("Criteria parsing error:", parseError)
+                    throw new BadRequestError("Invalid criteria format")
+                }
+            }
+    
             // 5. Create the badge
             const badge = new Badge({
                 icon,
                 title,
                 description,
-                criteria: req.body.criteria, // explicitly assign the parsed criteria
+                criteria: criteriaString, // Store the criteria as a JSON string
                 level: req.body.level,
                 type: req.body.type,
             })
@@ -54,7 +71,7 @@ class BadgeService {
             console.error(`Error uploading or saving data ${error}`)
             throw new BadRequestError("Error creating badge!")
         }
-    }    
+    }
 
     static readBadges = async () => {
         const badges = await Badge.find()
@@ -152,7 +169,7 @@ class BadgeService {
         if (!admin || !user)
             throw new NotFoundError('User not found')
         if (admin.role !== 'admin')
-            throw new BadRequestError('Only an admin can award a badge')
+            throw new BadRequestError('Only an admin can perform this action')
         if (!badge)
             throw new NotFoundError('Badge not found')
     
@@ -163,14 +180,23 @@ class BadgeService {
             throw new BadRequestError('Badge already awarded to this user')
     
         // 3. Award the badge
+        const progressMap = new Map()
+    
+        // Assuming badge.criteria is a string representing JSON object like {"createPost": 1, "createService": 1}
+        const criteria = JSON.parse(badge.criteria)
+        for (const [criterion, totalCriteria] of Object.entries(criteria)) {
+            progressMap.set(criterion, {
+                currentProgress: totalCriteria,
+                totalCriteria,
+                isComplete: false
+            })
+        }
+    
         user.badges.push({
             badgeId: badge._id,
             count: 1,
-            progress: [{
-                criterion: badge.criteria,  // Use the string directly
-                progress: 0,
-                isComplete: false,
-            }],
+            progress: progressMap,
+            isComplete: true,
             awardedAt: new Date(),
         })
         

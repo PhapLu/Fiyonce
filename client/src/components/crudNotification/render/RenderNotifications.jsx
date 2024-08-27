@@ -65,11 +65,11 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                 <h2>Thông báo</h2>
                 <hr />
                 <div className="notification-container">
-                    {!(displayedOrderNotifications?.length > 0 || displayedInteractionNotifications?.length > 0) && 
+                    {!(displayedOrderNotifications?.length > 0 || displayedInteractionNotifications?.length > 0) &&
                         <p>Hiện chưa có thông báo nào</p>
                     }
                     {displayedOrderNotifications?.length > 0 && (
-                        <>
+                        <div className="mb-12">
                             <h4>Đơn hàng</h4>
                             {
                                 displayedOrderNotifications?.map((notification, index) => {
@@ -88,7 +88,7 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                                     </span>
                                                 </div>
                                                 <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
-                                                    <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.updatedAt)}</span>
+                                                    <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,11 +101,11 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                     </Link>)
                                 })
                             }
-                        </>
+                        </div>
                     )}
 
                     {displayedInteractionNotifications?.length > 0 && (
-                        <>
+                        <div>
                             <h4>Tương tác</h4>
                             {
                                 displayedInteractionNotifications?.map((notification, index) => {
@@ -137,7 +137,7 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
                                     </Link>)
                                 })
                             }
-                        </>
+                        </div>
                     )}
                 </div>
             </div>

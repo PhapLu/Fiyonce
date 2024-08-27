@@ -9,6 +9,7 @@ import Talents from "./components/talents/Talents";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
 import RenderNews from "./components/crudNews/render/RenderNews";
+import RenderCommissionService from "./components/crudCommissionService/render/RenderCommissionService.jsx";
 
 // Pages
 import ProfileLayout from "./profile/profileLayout/ProfileLayout";
@@ -17,7 +18,6 @@ import ProfileBasicInfo from "./profile/profileBasicInfo/ProfileBasicInfo.jsx";
 import ExploreLayout from "./explore/exploreLayout/ExploreLayout.jsx";
 import ExplorePosts from "./explore/explorePosts/ExplorePosts.jsx";
 import CommissionMarket from "./pages/commissionMarket/CommissionMarket";
-import HelpCenter from "./pages/helpCenter/HelpCenter";
 import InMaintainance from "./pages/inMaintainance/InMaintainance";
 import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
@@ -46,13 +46,15 @@ import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 import CreatePost from "./components/crudPost/create/CreatePost";
 import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
+import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
+import HelpCenter from "./help/center/HelpCenter.jsx";
 
 const queryClient = new QueryClient();
 
 const routes = [
   {
     path: "/help-center",
-    element: <InDevelopment />,
+    element: <HelpCenter />,
   },
   {
     path: "/terms-and-policies",
@@ -79,6 +81,12 @@ const routes = [
       {
         path: "/users/:userId/profile-commission-services",
         element: <ProfileCommissionServices />,
+        children: [
+          {
+            path: "/users/:userId/profile-commission-services/:commissionServiceId",
+            element: <RenderCommissionService />,
+          },
+        ]
       },
       {
         path: "/users/:userId/profile-posts",
@@ -118,6 +126,10 @@ const routes = [
         path: "/users/:userId/basic-info",
         element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
       },
+      {
+        path: "/users/:userId/archive",
+        element: <ProtectedRoute><ProfileArchive /></ProtectedRoute>,
+      },
     ],
   },
   {
@@ -127,11 +139,17 @@ const routes = [
       {
         path: "/commission-services",
         element: <ExploreCommissionServices showCommissionServices={true} />,
+        children: [
+          {
+            path: "/commission-services/:commissionServiceId",
+            element: <RenderCommissionService />,
+          },
+        ]
       },
-      {
-        path: "/talents",
-        element: <Talents showTalents={true} />,
-      },
+      // {
+      //   path: "/talents",
+      //   element: <Talents showTalents={true} />,
+      // },
       {
         path: "/",
         element: <ExplorePosts showPosts={true} />,
