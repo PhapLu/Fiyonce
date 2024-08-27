@@ -170,15 +170,16 @@ class AuthService {
         });
 
         // 5. Create qrCode and referralCode
-        let referral = {}
+        let referral = {};
         const qrCode = await createUserQRCode(newUser._id.toString());
-        const referralCode = crypto.randomBytes(6).toString("hex");
+        const referralCode = crypto.randomBytes(4).toString("hex"); // Generates 8 characters
         referral.code = referralCode;
         referral.referred = [];
 
         newUser.qrCode = qrCode;
-        newUser.referral = referral
+        newUser.referral = referral;
         await newUser.save();
+
 
         // 6. Check who is the referrer
         let referrer
