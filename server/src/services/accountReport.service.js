@@ -16,12 +16,12 @@ class AccountReportService {
     static createAccountReport = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Validate request body
         const { userIdReported, content } = req.body
         const userReported = await User.findById(userIdReported)
-        if (!userReported) throw new NotFoundError("User reported not found")
+        if (!userReported) throw new NotFoundError("Không tìm thấy báo cáo")
 
         //3. Upload files to Cloudinary if exists
         try {
@@ -65,7 +65,7 @@ class AccountReportService {
             accountReportId
         ).populate("userIdReported", "fullName avatar")
         if (!accountReport)
-            throw new NotFoundError("Commission Report not found")
+            throw new NotFoundError("Không tìm thấy báo cáo")
 
         //2. Return accountReport
         return {
@@ -76,9 +76,9 @@ class AccountReportService {
     static readAccountReports = async (userId) => {
         //1. Check user as an admin
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (user.role !== "admin")
-            throw new AuthFailureError("User not authorized")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Get all accountReports
         const accountReports = await AccountReport.find()
@@ -93,12 +93,12 @@ class AccountReportService {
         const user = await User.findById(userId)
         const accountReport = await AccountReport.findById(accountReportId)
 
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!accountReport)
-            throw new NotFoundError("Commission Report not found")
+            throw new NotFoundError("Không tìm thấy báo cáo")
         if (accountReport.userId.toString() !== userId)
             throw new AuthFailureError(
-                "You can only update your account report"
+                "Bạn không có quyền thực hiện thao tác này"
             )
         
         //2. Handle file uploads if new files were uploaded
@@ -158,12 +158,12 @@ class AccountReportService {
         //1. Check user and accountReport
         const user = await User.findById(userId)
         const accountReport = await AccountReport.findById(accountReportId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!accountReport)
-            throw new NotFoundError("Commission Report not found")
+            throw new NotFoundError("Không tìm thấy báo cáo")
         if (accountReport.userId.toString() !== userId)
             throw new AuthFailureError(
-                "You can only delete your account report"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         // 2. Extract public IDs and delete files from Cloudinary
@@ -178,7 +178,7 @@ class AccountReportService {
         await accountReport.deleteOne()
 
         return {
-            message: "Commission Report deleted successfully",
+            message: "Xóa báo cáo thành công",
         }
     }
 }

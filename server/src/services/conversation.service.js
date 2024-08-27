@@ -15,14 +15,14 @@ class ConversationService {
     static createConversation = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new AuthFailureError("User not found")
+        if (!user) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Validate request body
         const { otherMemberId, content } = req.body
         if (!otherMemberId)
-            throw new BadRequestError("Please provide all required fields")
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
         if (!content && (!req.files.media || req.file.media.length == 0))
-            throw new BadRequestError("Please provide content or media")
+            throw new BadRequestError("Hãy gửi tin nhắn hoặc ảnh")
 
         //3. Upload media
         try {
@@ -68,7 +68,7 @@ class ConversationService {
     static readConversations = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new AuthFailureError("User not found")
+        if (!user) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Read conversations
         const conversations = await Conversation.find({
@@ -98,8 +98,8 @@ class ConversationService {
             // 1. Check user and other member
             const user = await User.findById(userId)
             const otherMember = await User.findById(otherMemberId)
-            if (!user) throw new AuthFailureError("User not found")
-            if (!otherMember) throw new BadRequestError("Other member not found")
+            if (!user) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này")
+            if (!otherMember) throw new BadRequestError("Có lỗi xảy ra")
 
             // 2. Read conversation
             const conversation = await Conversation.findOne({
@@ -108,7 +108,7 @@ class ConversationService {
                 },
             }).populate("members.user", "fullName avatar")
 
-            if (!conversation) throw new NotFoundError("Conversation not found")
+            if (!conversation) throw new NotFoundError("Không tìm thấy đoạn hội thoại")
 
             // 3. Mark all messages from otherMember as seen
             let updated = false
@@ -154,13 +154,13 @@ class ConversationService {
 
     //     //1. Check conversation, user
     //     const user = await User.findById(userId)
-    //     if (!user) throw new AuthFailureError("User not found")
+    //     if (!user) throw new AuthFailureError("Bạn cần đăng nhập để thực hiện thao tác này")
 
     //     const conversation = await Conversation.findById(conversationId)
     //         .populate("members.user", "fullName avatar")
     //         .populate("messages.senderId", "fullName avatar")
 
-    //     if (!conversation) throw new NotFoundError("Conversation not found")
+    //     if (!conversation) throw new NotFoundError("Không tìm thấy đoạn hội thoại")
 
     //     // Sort and limit the messages to the latest 12
     //     const sortedMessages = conversation.messages
@@ -192,13 +192,13 @@ class ConversationService {
                 // If conversationId is provided, find the existing conversation
                 conversation = await Conversation.findById(conversationId)
                 if (!conversation)
-                    throw new NotFoundError("Conversation not found")
+                    throw new NotFoundError("Không tìm thấy đoạn hội thoại")
             } else {
                 // If conversationId is not provided, create a new conversation
                 const otherUserId = req.body.otherMemberId
                 const otherUser = await User.findById(otherUserId)
                 if (!otherUser) {
-                    throw new NotFoundError("Other user not found")
+                    throw new NotFoundError("Có lỗi xảy ra")
                 }
 
                 // Create a new conversation
@@ -215,7 +215,7 @@ class ConversationService {
                 !content &&
                 (!req.files.media || req.files.media.length === 0)
             ) {
-                throw new BadRequestError("Please provide content or media")
+                throw new BadRequestError("Hãy gửi tin nhắn hoặc ảnh")
             }
 
             // 3. Upload media if exists

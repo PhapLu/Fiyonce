@@ -10,9 +10,9 @@ class AccountDashboardService {
     static readAccountOverview = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (user.role !== "admin")
-            throw new AuthFailureError("You are not the admin")
+            throw new AuthFailureError("Bạn không phải là admin")
 
         //2. Get counts
         const userCount = await User.countDocuments()

@@ -17,15 +17,15 @@ class SubmissionService {
         //1. Check user and challenge
         const user = await User.findById(userId)
         const challenge = await Challenge.findById(challengeId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!challenge) throw new NotFoundError("Challenge not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!challenge) throw new NotFoundError("Không tìm thấy thử thách")
         if(challenge.participants.includes(userId)) 
-            throw new BadRequestError("You have already submitted")
+            throw new BadRequestError("Bạn đã nộp đơn dự thi cho thử thách này rồi")
 
         //2. Validate request body
         if (!req.body.title || !req.files.artworks || req.files.artworks.length == 0)
-            throw new BadRequestError("Please provide required fields")
-        if(req.body.votes) throw new BadRequestError("This field is not allowed")
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
+        if(req.body.votes) throw new BadRequestError("Có lỗi xảy ra")
 
         //3. Upload artwork to cloudinary
         const artworkUploadResult = await compressAndUploadImage({
@@ -59,14 +59,14 @@ class SubmissionService {
         //1. Check user and submission
         const user = await User.findById(userId)
         const submission = await Submission.findById(submissionId)
-        if (!user) throw new NotFoundError("User not found")
-        if(!submission) throw new NotFoundError("Submission not found")
-        if(submission.userId.toString() !== userId) throw new AuthFailureError("You are not authorized")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if(!submission) throw new NotFoundError("Không tìm thấy đơn dự thi")
+        if(submission.userId.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Validate request body is empty
-        if(!body) throw new BadRequestError("Please provide fields to update")
-        if(Object.keys(body).length === 0) throw new BadRequestError("Please provide fields to update")
-        if(body.votes) throw new BadRequestError("This field is not allowed")
+        if(!body) throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
+        if(Object.keys(body).length === 0) throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
+        if(body.votes) throw new BadRequestError("Có lỗi xảy ra")
 
         //3. Update submission
         const updatedSubmission = await Submission.findByIdAndUpdate(
@@ -87,12 +87,12 @@ class SubmissionService {
         //1. Check user and submission
         const user = await User.findById(userId)
         const submission = await Submission.findById(submissionId)
-        if(!user) throw new NotFoundError("User not found")
-        if(!submission) throw new NotFoundError("Submission not found")
+        if(!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if(!submission) throw new NotFoundError("Không tìm thấy đơn dự thi")
 
         //2. Check if user has already voted
         if(submission.votes.includes(userId)) 
-            throw new BadRequestError("You have already voted")
+            throw new BadRequestError("Bạn đã vote cho bài thi này rồi")
 
         //3. Vote submission
         submission.votes.push(userId)
@@ -115,7 +115,7 @@ class SubmissionService {
     static readSubmission = async (submissionId) => {
         //1. Check submission
         const submission = await Submission.findById(submissionId)
-        if(!submission) throw new NotFoundError("Submission not found")
+        if(!submission) throw new NotFoundError("Không tìm thấy đơn dự thi")
 
         return {
             submission

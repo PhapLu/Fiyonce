@@ -15,7 +15,6 @@ const getUser = (userId) => {
 
 class SocketServices {
     connection(socket) {
-        console.log("User connected with id:", socket.id);
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id)
             global._io.emit("getUsers", users)

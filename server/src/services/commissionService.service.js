@@ -19,9 +19,9 @@ class CommissionServiceService {
     static createCommissionService = async (talentId, req) => {
         // 1. Check talent exists
         const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Talent not found!")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new AuthFailureError("User is not a talent!")
+            throw new AuthFailureError("Bạn không có quyền thưc hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
@@ -35,7 +35,7 @@ class CommissionServiceService {
             deliverables,
         } = req.body
         if (!req.files || !req.files.files) {
-            throw new BadRequestError("Please provide artwork files")
+            throw new BadRequestError("Hãy cung cấp tranh của bạn")
         }
         if (
             !title ||
@@ -45,7 +45,7 @@ class CommissionServiceService {
             !termOfServiceId ||
             !movementId
         ) {
-            throw new BadRequestError("Please provide all required fields")
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
         }
 
         // 3. Upload files to Cloudinary (compressed) and get their URLs
@@ -98,7 +98,7 @@ class CommissionServiceService {
             .populate("talentId", "fullName stageName avatar")
             .populate("termOfServiceId")
 
-        if (!service) throw new NotFoundError("Service not found")
+        if (!service) throw new NotFoundError("Không tìm thấy dịch vụ")
 
         const token = req.cookies.accessToken
 
@@ -130,9 +130,9 @@ class CommissionServiceService {
     static readCommissionServices = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Talent not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Find services
         const services = await CommissionService.find({
@@ -144,49 +144,11 @@ class CommissionServiceService {
         };
     };
 
-    static bookmarkCommissionService = async (userId, commissionServiceId) => {
-        // Find user
-        const user = await User.findById(userId)
-        if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
-
-        // Find commissionService
-        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
-        if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
-
-        const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
-        const commissionServiceBookmarkIndex = commissionService.bookmarks.findIndex(bookmark => bookmark.user.toString() === userId)
-
-        // Let action to know if the user commissionServiceBookmark/undo their interactions
-        let action = "bookmark"
-
-        if (userCommissionServiceBookmarkIndex === -1) {
-            user.commissionServiceBookmarks.push(commissionServiceId)
-            commissionService.bookmarks.push({ user: new mongoose.Types.ObjectId(userId) })
-
-            // Check if user is commissionService owner
-            if (userId !== commissionService.talentId) {
-                commissionService.views.concat({ user: new mongoose.Types.ObjectId(userId) })
-            }
-        } else {
-            // Remove commissionServiceBookmark
-            user.commissionServiceBookmarks.splice(userCommissionServiceBookmarkIndex, 1)
-            commissionService.bookmarks.splice(commissionServiceBookmarkIndex, 1)
-            action = "unbookmark"
-        }
-
-        await user.save()
-        await commissionService.save()
-
-        return {
-            commissionService,
-            action
-        }
-    }
 
     static readBookmarkedServices = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Fetch all bookmarked services
         const bookmarkedServices = await Service.find({ _id: { $in: user.commissionServiceBookmarks } })
@@ -240,14 +202,53 @@ class CommissionServiceService {
         }
     }
 
+    static bookmarkCommissionService = async (userId, commissionServiceId) => {
+        // Find user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
+
+        // Find commissionService
+        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
+        if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
+
+        const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
+        const commissionServiceBookmarkIndex = commissionService.bookmarks.findIndex(bookmark => bookmark.user.toString() === userId)
+
+        // Let action to know if the user commissionServiceBookmark/undo their interactions
+        let action = "bookmark"
+
+        if (userCommissionServiceBookmarkIndex === -1) {
+            user.commissionServiceBookmarks.push(commissionServiceId)
+            commissionService.bookmarks.push({ user: new mongoose.Types.ObjectId(userId) })
+
+            // Check if user is commissionService owner
+            if (userId !== commissionService.talentId) {
+                commissionService.views.concat({ user: new mongoose.Types.ObjectId(userId) })
+            }
+        } else {
+            // Remove commissionServiceBookmark
+            user.commissionServiceBookmarks.splice(userCommissionServiceBookmarkIndex, 1)
+            commissionService.bookmarks.splice(commissionServiceBookmarkIndex, 1)
+            action = "unbookmark"
+        }
+
+        await user.save()
+        await commissionService.save()
+
+        return {
+            commissionService,
+            action
+        }
+    }
+
     static updateCommissionService = async (talentId, commissionServiceId, req) => {
         const talent = await User.findById(talentId)
         const service = await CommissionService.findById(commissionServiceId)
 
-        if (!talent) throw new NotFoundError('Talent not found')
-        if (!service) throw new NotFoundError('Service not found')
-        if (!service.movementId) throw new NotFoundError('Movement not found')
-        if (service.talentId.toString() !== talentId) throw new BadRequestError('You can only update your service')
+        if (!talent) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
+        if (!service) throw new NotFoundError('Không tìm thấy dịch vụ')
+        if (!service.movementId) throw new NotFoundError('Không tìm thấy trường phái')
+        if (service.talentId.toString() !== talentId) throw new BadRequestError('Bạn không có quyền thực hiện thao tác này')
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
         const oldCategoryId = service.serviceCategoryId
@@ -304,10 +305,10 @@ class CommissionServiceService {
         const talent = await User.findById(talentId)
         const service = await CommissionService.findById(commissionServiceId)
 
-        if (!talent) throw new NotFoundError("Talent not found")
-        if (!service) throw new NotFoundError("Service not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!service) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (service.talentId.toString() !== talentId)
-            throw new BadRequestError("You can only delete your service")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
         
@@ -332,7 +333,7 @@ class CommissionServiceService {
         }
 
         return {
-            message: "Service and possibly empty category deleted successfully",
+            message: "Xóa dịch vụ và những thể loại liên quan thành công",
         }
     }
 

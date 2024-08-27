@@ -21,7 +21,7 @@ class OrderService {
     static createOrder = async (userId, req) => {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found!")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         
         const fileFormats = req.body.fileFormats.split(",");
         req.body.fileFormats = fileFormats;
@@ -40,13 +40,13 @@ class OrderService {
                 commissionServiceId
             )
 
-            if (!talent) throw new BadRequestError("Talent not found!")
+            if (!talent) throw new BadRequestError("Không tìm thấy họa sĩ")
             if (!service)
-                throw new BadRequestError("commissionService not found!")
+                throw new BadRequestError("Không tìm thấy dịch vụ")
             if (talent.role != "talent")
-                throw new AuthFailureError("He/She is not a talent!")
+                throw new AuthFailureError("Người này không phải họa sĩ")
             if (talent._id == userId)
-                throw new BadRequestError("You cannot choose yourself!")
+                throw new BadRequestError("Bạn không thể lựa chọn chính bản thân")
             body.isDirect = true
             body.talentChosenId = talentChosenId
             body.minPrice = commissionService.minPrice
@@ -95,7 +95,7 @@ class OrderService {
             if (isDirect == 'true' && talent?.email) {
                 try {
                     const subject = "Bạn có đơn hàng mới"
-                    const message = "You have a new order to review"
+                    const message = `Bạn có một đơn hàng mới từ ${user.fullName}`
                     const reason = ""
                     await sendAnnouncementEmail(talent.email, subject, message, reason)
                 } catch (error) {
@@ -118,7 +118,7 @@ class OrderService {
             "talentChosenId",
             "stageName avatar"
         )
-        if (!order) throw new NotFoundError("Order not found!")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         return {
             order,
@@ -159,16 +159,16 @@ class OrderService {
         //1. check order and user
         const oldOrder = await Order.findById(orderId)
         const foundUser = await User.findById(userId)
-        if (!foundUser) throw new NotFoundError("User not found!")
-        if (!oldOrder) throw new NotFoundError("Order not found!")
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!oldOrder) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (oldOrder.memberId.toString() !== userId)
-            throw new AuthFailureError("You can update only your order")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         const fileFormats = req.body.fileFormats.split(",")
         req.body.fileFormats = fileFormats
         //2. Check order status
         if (oldOrder.status != "pending")
-            throw new BadRequestError("You cannot update order on this stage!")
+            throw new BadRequestError("Bạn không thể cập nhật đơn hàng ở bước này")
         try {
             //3. Handle file uploads if new files were uploaded
             if (req.files && req.files.files && req.files.files.length > 0) {
@@ -222,7 +222,7 @@ class OrderService {
     static readMemberOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId)
-        if (!foundUser) throw new NotFoundError("User not found!")
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Get orders
         let orders
@@ -246,9 +246,9 @@ class OrderService {
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
         const foundTalent = await User.findById(talentId)
-        if (!foundTalent) throw new NotFoundError("Talent not found!")
+        if (!foundTalent) throw new NotFoundError("Không tìm thấy họa sĩ")
         if (foundTalent.role !== "talent")
-            throw new BadRequestError("You are not a talent!")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
 
         try {
             // 2. Aggregate to get all orders involving the talent
@@ -510,8 +510,8 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         if (userId == order.memberId.toString()) {
             order.isMemberArchived = true
@@ -529,8 +529,8 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         if (userId == order.memberId.toString()) {
             order.isMemberArchived = false
@@ -549,18 +549,18 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         //2. Check if user is authorized to deny order
         if (user.role !== "talent")
             throw new AuthFailureError(
-                "You are not authorized to deny this order"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //3. Check if order status is pending
         if (order.status !== "pending")
-            throw new BadRequestError("You cannot deny this order")
+            throw new BadRequestError("Bạn không thể từ chối đơn hàng ở bước này")
 
         //4. Deny order
         order.status = "rejected"
@@ -595,10 +595,10 @@ class OrderService {
         const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
             .populate("memberId", "fullName avatar")
             .populate("commissionServiceId", "title");;
-        if (!user) throw new NotFoundError("User not found");
-        if (!order) throw new NotFoundError("Order not found");
-        if (order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet");
-        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
+        if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
+        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Start work
         order.status = "in_progress";

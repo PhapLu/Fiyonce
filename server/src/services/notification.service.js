@@ -10,15 +10,15 @@ class NotificationService {
     static createNotification = async (senderId, body) => {
         //1. Check user
         const user = await User.findById(senderId)
-        if (!user) throw new NotFoundError("User not found!")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Validate request body
         const { receiverId, type, url } = body
         const receiver = await User.findById(receiverId)
         if (!receiverId) {
-            throw new BadRequestError("Please provide all required fields")
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
         }
-        if (!receiver) throw new NotFoundError("Receiver not found!")
+        if (!receiver) throw new NotFoundError("Không tìm thấy người nhận")
 
         if (senderId === receiverId) return
         if (
@@ -80,7 +80,7 @@ class NotificationService {
     static async readNotification(userId, body) {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found!")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         // Mark a single notification as seen
         const notification = await Notification.findByIdAndUpdate(
@@ -93,7 +93,7 @@ class NotificationService {
         )
 
         if (!notification) {
-            throw new NotFoundError('Notification not found')
+            throw new NotFoundError('Không tìm thấy thông báo')
         }
 
         return { notification }
