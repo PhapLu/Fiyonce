@@ -30,9 +30,6 @@ class HelpService {
     }
 
     static createHelpArticle = async (adminId, body) => {
-        console.log("DDDD")
-        console.log(body)
-
         //1. Check admin
         const admin = await User.findById(adminId)
         if (!admin) throw new AuthFailureError("Admin not found")

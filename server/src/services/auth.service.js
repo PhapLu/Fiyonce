@@ -180,7 +180,6 @@ class AuthService {
             // Track the referrer Badge
             trackPlatformAmbassadorBadge(referrer._id.toString(), "reference")
             await referrer.save()
-            console.log(referrer)
         }
 
         //7. Delete the OTP record

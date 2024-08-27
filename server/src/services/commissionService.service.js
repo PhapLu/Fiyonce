@@ -150,8 +150,6 @@ class CommissionServiceService {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("User not found")
 
-        console.log("PPP")
-
         //2. Fetch all bookmarked services
         const bookmarkedServices = await Service.find({ _id: { $in: user.commissionServiceBookmarks } })
             .populate('talentId', 'stageName avatar')
@@ -159,8 +157,6 @@ class CommissionServiceService {
             .populate('movementId', 'title')
             .populate('artworks', 'url')
             .exec()
-
-        console.log(bookmarkedServices)
 
         return {
             services: bookmarkedServices
@@ -203,29 +199,6 @@ class CommissionServiceService {
         return {
             commissionService,
             action
-        }
-    }
-
-
-    static readBookmarkedServices = async (userId) => {
-        //1. Check user
-        const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
-
-        console.log("PPP")
-
-        //2. Fetch all bookmarked services
-        const bookmarkedServices = await Service.find({ _id: { $in: user.commissionServiceBookmarks } })
-            .populate('talentId', 'stageName avatar')
-            .populate('serviceCategoryId', 'title')
-            .populate('movementId', 'title')
-            .populate('artworks', 'url')
-            .exec()
-
-        console.log(bookmarkedServices)
-
-        return {
-            services: bookmarkedServices
         }
     }
 

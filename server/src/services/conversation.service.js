@@ -10,7 +10,6 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import { Console } from "console"
 
 class ConversationService {
     static createConversation = async (userId, req) => {
@@ -139,9 +138,6 @@ class ConversationService {
                     avatar: otherMember.avatar,
                 },
             }
-
-            console.log("ABC")
-            console.log(formattedConversation)
 
             return {
                 conversation: formattedConversation,

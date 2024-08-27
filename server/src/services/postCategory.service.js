@@ -12,7 +12,6 @@ class PostCategoryService {
     static createPostCategory = async (talentId, body) => {
         try {
             //1. Check talent
-            console.log(talentId, body)
             const talent = await User.findById(talentId)
             if (!talent) throw new NotFoundError("Talent not found")
             if (talent.role !== "talent")
@@ -26,7 +25,6 @@ class PostCategoryService {
                 title: body.title,
                 talentId,
             })
-            console.log(postCategory)
             await postCategory.save()
             return {
                 postCategory,
