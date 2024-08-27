@@ -22,12 +22,12 @@ class ProposalService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy dịch vụ")
 
         //2. Check if user is a talent
         if (user.role !== "talent")
-            throw new AuthFailureError("You are not a talent");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
         // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
         //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
@@ -38,12 +38,12 @@ class ProposalService {
         })
         if (existingProposal)
             throw new BadRequestError(
-                "You have already given proposal for this order"
+                "Bạn đã gửi đơn ứng cho đơn hàng này rồi"
             )
 
         //5.Check if price is valid
         if (body.price < 0)
-            throw new BadRequestError("Price must be greater than 0")
+            throw new BadRequestError("Giá trị đơn hàng phải lớn hơn 0")
 
 
         let proposal
@@ -59,7 +59,7 @@ class ProposalService {
                 ...body,
             })
         } else {
-            if (body.artworks.length === 0) throw new BadRequestError("Artworks are required")
+            if (body.artworks.length === 0) throw new BadRequestError("Hãy cung cấp tranh")
 
             proposal = new Proposal({
                 orderId,
@@ -89,8 +89,8 @@ class ProposalService {
             .populate("artworks", "url")
             .populate("talentId", "stageName fullName avatar");
         const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found");
-        if (!proposal) throw new NotFoundError("Proposal not found");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng");
 
         return {
             proposal,
@@ -99,7 +99,7 @@ class ProposalService {
     static readProposals = async (orderId) => {
         //1. Check if order exists
         const order = await Order.findById(orderId)
-        if (!order) throw new NotFoundError("Order not found")
+        if (!order) throw new NotFoundError("Không tìm thấy dịch vụ")
 
         //2. Read all proposals of a order
         const proposals = await Proposal.find({ orderId: orderId }).populate(
@@ -115,22 +115,22 @@ class ProposalService {
         //1. Check if proposal, user exists
         const user = await User.findById(userId);
         const proposal = await Proposal.findById(proposalId);
-        if (!proposal) throw new NotFoundError("Proposal not found");
-        if (!user) throw new NotFoundError("User not found");
+        if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
         //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Check if user is authorized to update proposal
         if (proposal.talentId.toString() !== userId)
             throw new AuthFailureError(
-                "You are not authorized to update this proposal"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //3. Check order status
         const order = await Order.findById(proposal.orderId)
         if (order.status !== "pending" && order.status !== "approved")
             throw new BadRequestError(
-                "You cannot update proposal on this stage"
+                "Bạn không thể cập nhật hợp đồng ở bước này"
             )
 
         //4. Update proposal
@@ -151,19 +151,19 @@ class ProposalService {
         //1. Check proposal, user exists
         const proposal = await Proposal.findById(proposalId)
         const user = await User.findById(userId)
-        if (!proposal) throw new NotFoundError("Proposal not found")
-        if (!user) throw new NotFoundError("User not found")
+        if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
-            throw new AuthFailureError("You are not authorized to delete this proposal");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
         // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
         //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check status of order
         const order = await Order.findById(proposal.orderId)
         if (order.status !== "pending" && order.status !== "approved")
-            throw new BadRequestError("You cannot update proposal on this stage")
+            throw new BadRequestError("Bạn không thể cập nhật hợp đồng ở bước này")
 
         //4. Delete proposal
         await proposal.deleteOne()
@@ -176,15 +176,15 @@ class ProposalService {
     static generatePaymentUrl = async (userId, proposalId) => {
         //1. Check if user exists
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Check if proposal exists
         const proposal = await Proposal.findById(proposalId)
-        if (!proposal) throw new NotFoundError("Proposal not found")
+        if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng")
 
         //3. Check if order exists and is approved
         const order = await Order.findById(proposal.orderId)
-        if (!order) throw new NotFoundError("Order not found")
+        if (!order) throw new NotFoundError("Không tìm thấy dịch vụ")
         // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
 
         //4. Create payment with MoMo
@@ -276,11 +276,11 @@ class ProposalService {
     static confirmProposal = async (userId, proposalId) => {
         // 1. Check if user exists
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError('User not found')
+        if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
 
         // 2. Check if proposal exists
         const proposal = await Proposal.findById(proposalId)
-        // if (!proposal) throw new NotFoundError('Proposal not found')
+        // if (!proposal) throw new NotFoundError('Không tìm thấy hợp đồng')
 
         // 3. Check if talent exists
         const talent = await User.findById(proposal.talentId)
@@ -288,7 +288,7 @@ class ProposalService {
 
         // 4. Check if order exists and is approved
         const order = await Order.findById(proposal.orderId)
-        // if (!order) throw new NotFoundError('Order not found')
+        // if (!order) throw new NotFoundError('Không tìm thấy dịch vụ')
         // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
 
         // 5. Create payment with MoMo

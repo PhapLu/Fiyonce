@@ -11,9 +11,9 @@ class ServiceCategoryService {
     static createServiceCategory = async (talentId, body) => {
         //1. Check talent
         const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Talent not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
@@ -31,9 +31,9 @@ class ServiceCategoryService {
     static readServiceCategories = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Talent not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Find services
         const serviceCategories = await ServiceCategory.find({
@@ -84,10 +84,10 @@ class ServiceCategoryService {
             serviceCategoryId
         )
         
-        if (!talent) throw new NotFoundError("Talent not found")
-        if (!serviceCategory) throw new NotFoundError("Service not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!serviceCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (serviceCategory.talentId.toString() !== talentId)
-            throw new AuthFailureError("You can only update your service")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
@@ -110,10 +110,10 @@ class ServiceCategoryService {
             serviceCategoryId
         )
 
-        if (!talent) throw new NotFoundError("Talent not found")
-        if (!serviceCategory) throw new NotFoundError("Service not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!serviceCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (serviceCategory.talentId.toString() !== talentId)
-            throw new AuthFailureError("You can only delete your service")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 

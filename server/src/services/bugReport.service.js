@@ -16,7 +16,7 @@ class BugReportService {
     static createBugReport = async (userId, req) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Validate request body
         const { content } = req.body
@@ -52,7 +52,7 @@ class BugReportService {
             }
         } catch (error) {
             console.log("Error uploading images or saving order:", error)
-            throw new BadRequestError("File upload or database save failed")
+            throw new BadRequestError("Tạo báo cáo không thành công")
         }
     }
 
@@ -60,7 +60,7 @@ class BugReportService {
         //1. Check bugReport
         const bugReport = await BugReport.findById(bugReportId)
         if (!bugReport)
-            throw new NotFoundError("Commission Report not found")
+            throw new NotFoundError("Không tìm thấy báo cáo")
 
         //2. Return bugReport
         return {
@@ -71,9 +71,9 @@ class BugReportService {
     static readBugReports = async (userId) => {
         //1. Check user as an admin
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (user.role !== "admin")
-            throw new AuthFailureError("User not authorized")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Get all bugReports
         const bugReports = await BugReport.find()
@@ -88,12 +88,12 @@ class BugReportService {
         const user = await User.findById(userId)
         const bugReport = await BugReport.findById(bugReportId)
 
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!bugReport)
-            throw new NotFoundError("Commission Report not found")
+            throw new NotFoundError("Không tìm thấy báo cáo")
         if (bugReport.userId.toString() !== userId)
             throw new AuthFailureError(
-                "You can only update your account report"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //2. Handle file uploads if new files were uploaded
@@ -143,7 +143,7 @@ class BugReportService {
             }
         } catch (error) {
             console.log("Error uploading images or saving order:", error)
-            throw new BadRequestError("File upload or database save failed")
+            throw new BadRequestError("Cập nhật báo cáo không thành công")
         }
     }
 
@@ -151,12 +151,12 @@ class BugReportService {
         //1. Check user and bugReport
         const user = await User.findById(userId)
         const bugReport = await BugReport.findById(bugReportId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!bugReport)
-            throw new NotFoundError("Commission Report not found")
+            throw new NotFoundError("Không tìm thấy báo cáo")
         if (bugReport.userId.toString() !== userId)
             throw new AuthFailureError(
-                "You can only delete your account report"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         // 2. Extract public IDs and delete files from Cloudinary
@@ -171,7 +171,7 @@ class BugReportService {
         await bugReport.deleteOne()
 
         return {
-            message: "Commission Report deleted successfully",
+            message: "Xóa báo cáo thành công",
         }
     }
 }

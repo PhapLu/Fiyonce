@@ -13,12 +13,12 @@ class PostCategoryService {
         try {
             //1. Check talent
             const talent = await User.findById(talentId)
-            if (!talent) throw new NotFoundError("Talent not found")
+            if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
             if (talent.role !== "talent")
-                throw new BadRequestError("He/She is not a talent")
+                throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
     
             //2. Validate body
-            if (!body.title) throw new BadRequestError("Title is required")
+            if (!body.title) throw new BadRequestError("Mục tiêu đề là bắt buộc")
     
             //3. Create service
             const postCategory = new PostCategory({
@@ -38,9 +38,9 @@ class PostCategoryService {
     static readPostCategories = async (talentId) => {
         //1. Check talent
         const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Talent not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Find services
         const postCategories = await PostCategory.find({
@@ -57,13 +57,13 @@ class PostCategoryService {
         const talent = await User.findById(talentId)
         const postCategory = await PostCategory.findById(postCategoryId)
 
-        if (!talent) throw new NotFoundError("Talent not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!postCategory) throw new NotFoundError("Service not found")
         if (postCategory.talentId.toString() !== talentId)
-            throw new AuthFailureError("You can only update your service")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Validate body
-        if (!body.title) throw new BadRequestError("Title is required")
+        if (!body.title) throw new BadRequestError("Mục tiêu đề là bắt buộc")
 
         //3. Update Service
         const updatedPostCategory = await PostCategory.findByIdAndUpdate(
@@ -82,10 +82,10 @@ class PostCategoryService {
         const talent = await User.findById(talentId)
         const postCategory = await PostCategory.findById(postCategoryId)
 
-        if (!talent) throw new NotFoundError("Talent not found")
-        if (!postCategory) throw new NotFoundError("Service not found")
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!postCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (postCategory.talentId.toString() !== talentId)
-            throw new AuthFailureError("You can only delete your postCategory")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Check posts using postCategory before deleting it
         const posts = await Post.find({ postCategoryId: postCategoryId })

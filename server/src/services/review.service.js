@@ -11,11 +11,11 @@ class ReviewService {
         //1. Check user, order
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (order.memberId.toString() !== userId)
             throw new AuthFailureError(
-                "You are not authorized to create this review"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //2. Create review
@@ -43,7 +43,7 @@ class ReviewService {
             "review.userId",
             "stageName avatar"
         )
-        if (!order) throw new NotFoundError("Order not found")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         // 2. Return review
         return {
@@ -79,11 +79,11 @@ class ReviewService {
         //1. Check order, user
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (order.memberId.toString() !== userId)
             throw new AuthFailureError(
-                "You are not authorized to update this review"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //2. Update review (Update order)
@@ -103,11 +103,11 @@ class ReviewService {
         //1. Check order, user
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (order.memberId.toString() !== userId)
             throw new AuthFailureError(
-                "You are not authorized to delete this review"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //2. Delete review (Update order)

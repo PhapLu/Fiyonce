@@ -49,7 +49,7 @@ class AuthService {
     static signUp = async ({ fullName, email, password, referralCode }) => {
         // 1. Check if email exists
         const holderUser = await User.findOne({ email }).lean()
-        if (holderUser) throw new BadRequestError("Error: User already registered")
+        if (holderUser) throw new BadRequestError("Tài khoản đã tồn tại")
 
         // 2. Hash password
         const hashedPassword = await bcrypt.hash(password, 10)
