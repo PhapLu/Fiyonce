@@ -47,7 +47,6 @@ class BugReportService {
                 evidences,
             })
             await bugReport.save()
-            await trackEarlyBirdBadge(userId, "createBugReport")
             return {
                 bugReport,
             }

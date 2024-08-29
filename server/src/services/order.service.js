@@ -35,18 +35,19 @@ class OrderService {
         let talent = null
         if (isDirect == 'true') {
             //direct order
-            talent = await User.findById(talentChosenId)
             const service = await CommissionService.findById(
                 commissionServiceId
             )
+            const talentChosenId = service.talentId;
+            talent = await User.findById(talentChosenId)
 
-            if (!talent) throw new BadRequestError("Không tìm thấy họa sĩ")
+            if (!talent) throw new BadRequestError("Talent not found!")
             if (!service)
-                throw new BadRequestError("Không tìm thấy dịch vụ")
+                throw new BadRequestError("commissionService not found!")
             if (talent.role != "talent")
-                throw new AuthFailureError("Người này không phải họa sĩ")
+                throw new AuthFailureError("He/She is not a talent!")
             if (talent._id == userId)
-                throw new BadRequestError("Bạn không thể lựa chọn chính bản thân")
+                throw new BadRequestError("You cannot choose yourself!")
             body.isDirect = true
             body.talentChosenId = talentChosenId
             body.minPrice = commissionService.minPrice
