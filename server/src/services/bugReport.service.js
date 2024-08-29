@@ -11,6 +11,7 @@ import {
     deleteFileByPublicId,
 } from "../utils/cloud.util.js"
 import Order from "../models/order.model.js"
+import { trackEarlyBirdBadge } from "../utils/badgeTracking.util.js"
 
 class BugReportService {
     static createBugReport = async (userId, req) => {
@@ -46,7 +47,7 @@ class BugReportService {
                 evidences,
             })
             await bugReport.save()
-
+            await trackEarlyBirdBadge(userId, "createBugReport")
             return {
                 bugReport,
             }

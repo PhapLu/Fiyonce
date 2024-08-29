@@ -195,8 +195,6 @@ async function trackPlatformAmbassadorBadge(userId, activityType, increment = 1)
         const user = await User.findById(userId);
         const badge = await Badge.findOne({ title: 'platformAmbassador' });
         
-        console.log('Badge:', badge);
-
         if (!user) throw new NotFoundError("User not found!");
         if (!badge) throw new NotFoundError("Badge not found!");
 
@@ -209,4 +207,19 @@ async function trackPlatformAmbassadorBadge(userId, activityType, increment = 1)
     }
 }
 
-export { trackActivity, trackTrustedArtistBadge, trackPlatformAmbassadorBadge }
+async function trackEarlyBirdBadge(userId, activityType, increment = 1) {
+    try {
+        const user = await User.findById(userId)
+        const badge = await Badge.findOne({ title: 'earlyBird' })
+        if(!user) throw new NotFoundError("User not found!")
+        if(!badge) throw new NotFoundError("Badge not found!")
+
+        const updatedBadge = await trackBadgeProgress(userId, badge._id.toString(), activityType, increment)
+        return updatedBadge
+    } catch (error) {
+        console.error("Error tracking Early Bird badge:", error);
+        throw new BadRequestError(error.message);
+    }
+}
+
+export { trackActivity, trackTrustedArtistBadge, trackPlatformAmbassadorBadge, trackEarlyBirdBadge }
