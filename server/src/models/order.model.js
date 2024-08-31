@@ -52,11 +52,6 @@ const OrderSchema = new mongoose.Schema(
         isPrivate: { type: Boolean },
         deadline: { type: Date },
         fileFormats: { type: [String], default: [] },
-        review: {
-            userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-            rating: { type: Number },
-            comment: { type: String },
-        },
         momoOrderId: { type: String },
         deliverables: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artwork" }],
     },{
