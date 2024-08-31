@@ -23,8 +23,10 @@ class OrderService {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         
-        const fileFormats = req.body.fileFormats.split(",");
-        req.body.fileFormats = fileFormats;
+        if(req.body.fileFormats){
+            const fileFormats = req.body.fileFormats.split(",")
+            req.body.fileFormats = fileFormats
+        }
         const body = req.body
         const { isDirect, commissionServiceId, isWaitList} = body
         const commissionService = await CommissionService.findById(
@@ -166,8 +168,10 @@ class OrderService {
         if (oldOrder.memberId.toString() !== userId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
-        const fileFormats = req.body.fileFormats.split(",")
-        req.body.fileFormats = fileFormats
+        if(req.body.fileFormats){
+            const fileFormats = req.body.fileFormats.split(",")
+            req.body.fileFormats = fileFormats
+        }
         //2. Check order status
         if (oldOrder.status != "pending")
             throw new BadRequestError("Bạn không thể cập nhật đơn hàng ở bước này")

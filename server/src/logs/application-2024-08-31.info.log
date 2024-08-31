@@ -19,3 +19,18 @@
 2024-08-31 16:14:06::info::/v1/api/talentRequest/upgradeRoleToTalent/66a5acc973370474cf4eb46f::6fd37b27-e4d1-4bb9-9edd-ea26ac94aa09::input-params ::PATCH::::{}
 2024-08-31 16:14:43::info::/v1/api/talentRequest/upgradeRoleToTalent/66a5acc973370474cf4eb46f::7df19a0a-d887-4691-b843-6089edd78bb1::input-params ::PATCH::::{}
 2024-08-31 16:15:42::info::/v1/api/talentRequest/upgradeRoleToTalent/66a5acc973370474cf4eb46f::a34c2533-f4eb-4639-a784-c213d32bbc48::input-params ::PATCH::::{}
+2024-08-31 16:31:45::info::/v1/api/order/createOrder::3dd3c7d5-d4e3-4a6e-bbbb-b4cc6aa66160::input-params ::POST::::{}
+2024-08-31 16:31:45::error::/v1/api/order/createOrder::3dd3c7d5-d4e3-4a6e-bbbb-b4cc6aa66160::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'split')"}
+2024-08-31 16:31:57::info::/v1/api/order/createOrder::ef6f9773-a1bb-4c3e-b6e5-4ac9e770642b::input-params ::POST::::{}
+2024-08-31 16:31:57::error::/v1/api/order/createOrder::ef6f9773-a1bb-4c3e-b6e5-4ac9e770642b::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'split')"}
+2024-08-31 16:32:18::info::/v1/api/order/createOrder::7114faf3-5433-41d7-ac90-9c5aa7867849::input-params ::POST::::{}
+2024-08-31 16:35:41::info::/v1/api/order/createOrder::15bd7061-3b62-487a-b4e1-e14f103dcd1f::input-params ::POST::::{}
+2024-08-31 16:43:03::info::/v1/api/order/createOrder::a46871f5-8060-447b-adde-034330ef2ed5::input-params ::POST::::{}
+2024-08-31 19:37:26::info::/v1/api/order/createOrder::8b91f722-9586-4e58-9a28-38ac27cbade4::input-params ::POST::::{}
+2024-08-31 19:42:57::info::/v1/api/order/createOrder::d30959d3-3701-4c04-a549-965e40d3cc4a::input-params ::POST::::{}
+2024-08-31 19:46:28::info::/v1/api/order/createOrder::e65d2018-d426-4cee-8af3-edac38fa2526::input-params ::POST::::{}
+2024-08-31 19:53:59::info::/v1/api/order/createOrder::c058408b-e14b-40ce-b118-d1ab12a469b6::input-params ::POST::::{}
+2024-08-31 19:59:55::info::/v1/api/order/createOrder::aa8f6b63-f872-4612-a1d7-4d4c1cd7d782::input-params ::POST::::{}
+2024-08-31 20:00:39::info::/v1/api/order/createOrder::bd250272-fef8-4f0c-8d36-67e3f7cad572::input-params ::POST::::{}
+2024-08-31 20:02:01::info::/v1/api/order/createOrder::47ea26ec-a421-4dc1-919f-bd068537c1fe::input-params ::POST::::{}
+2024-08-31 20:02:51::info::/v1/api/order/createOrder::d21cf7da-9100-46c6-888f-b4db16396d12::input-params ::POST::::{}
