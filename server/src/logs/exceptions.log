@@ -903,3 +903,39 @@ Error: Badge not found!
     at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:188:27)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
 >>>>>>> phap_dev
+2024-08-31 15:57:00::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:38:24)
+    at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:159:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined
+2024-08-31 16:11:25::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:38:24)
+    at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:160:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined
+2024-08-31 16:12:34::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:38:24)
+    at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:161:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined
+2024-08-31 16:13:21::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:39:24)
+    at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:161:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined
+2024-08-31 16:13:38::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:39:24)
+    at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:161:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined
+2024-08-31 16:14:06::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:40:24)
+    at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:161:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined

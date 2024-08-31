@@ -101,7 +101,7 @@ const otpTemplate = (toEmail, message, verificationCode) => {
     `;
 };
 
-const announcementTemplate = (toEmail, message, reason) => {
+const announcementTemplate = (toEmail, message, orderCode, reason) => {
     return `
     <!DOCTYPE html>
     <html>
@@ -180,7 +180,8 @@ const announcementTemplate = (toEmail, message, reason) => {
                 <div class="content_container">
                     <p class="content_head">Chào ${toEmail},</p>
                     <div class="content_message">${message}</div>
-                    <p> class="content_message">Lý do: ${reason}</p>
+                    <p class="content_message">${orderCode}</p>
+                    <p class="content_message">${reason}</p>
                 </div>
             </div>
             <hr class="horizontal_line">

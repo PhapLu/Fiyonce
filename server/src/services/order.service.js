@@ -1,5 +1,4 @@
 import Order from "../models/order.model.js"
-import Artwork from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
@@ -15,6 +14,7 @@ import {
 } from "../utils/cloud.util.js"
 import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
+import { formatDate } from "../utils/index.js"
 
 class OrderService {
     //Order CRUD
@@ -92,13 +92,14 @@ class OrderService {
             })
             await order.save()
 
-            //5. Send email to user
+            //5. Send email to talent
             if (isDirect == 'true' && talent?.email) {
                 try {
-                    const subject = "Bạn có đơn hàng mới"
-                    const message = `Bạn có một đơn hàng mới từ ${user.fullName}`
+                    const subject = `[PASTAL] - Yêu cầu đặt hàng (${formatDate()})`
+                    const message = `Khách hàng ${user.fullName} đã đặt commission ${commissionService.title} của bạn`
+                    const orderCode = `Mã đơn hàng: ${order._id.toString()}`
                     const reason = ""
-                    await sendAnnouncementEmail(talent.email, subject, message, reason)
+                    await sendAnnouncementEmail(talent.email, subject, message, orderCode, reason)
                 } catch (error) {
                     console.log(error)
                     throw new BadRequestError("Email service error")
@@ -576,10 +577,11 @@ class OrderService {
         //6. Send email to user
         const member = await User.findById(order.memberId)
         try {
-            const subject = "Đơn hàng bị từ chối"
-            const message = "Đơn hàng của bạn đã bị từ chối"
+            const subject = `[PASTAL] - Đơn hàng đã bị từ chối (${formatDate()})`
+            const message = `Họa sĩ ${user.fullName} đã từ chối đơn đặt hang của bạn`
+            const orderCode = `Mã đơn hàng: ${order._id.toString()}`
             const reason = ''
-            await sendAnnouncementEmail(member.email, subject, message, reason)
+            await sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
         } catch (error) {
             console.error("Error sending email:", error)
             throw new BadRequestError("Email service error")
@@ -595,7 +597,7 @@ class OrderService {
         const user = await User.findById(userId);
         const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
             .populate("memberId", "fullName avatar")
-            .populate("commissionServiceId", "title");;
+            .populate("commissionServiceId", "title");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
         if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
@@ -605,6 +607,13 @@ class OrderService {
         order.status = "in_progress";
         order.save();
 
+        //3. Send email to user
+        const subject = `[PASTAL] - Đơn hàng đang được thực hiện (${formatDate()})`
+        const message = `Họa sĩ ${user.fullName} đã tiến hành thực hiện yêu cầu cho đơn hàng của bạn. Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
+        const orderCode = `Mã đơn hàng: ${order._id.toString()}`
+        const reason = ''
+        sendAnnouncementEmail(order.memberId.email, subject, message, orderCode, reason);
+        
         return {
             order,
         };

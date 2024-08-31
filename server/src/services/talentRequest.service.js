@@ -107,8 +107,8 @@ class TalentRequestService {
         // 1. Find and check request
         const request = await TalentRequest.findById(requestId)
         if (!request) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
-        if (request.status === "approved")
-            throw new BadRequestError("Yêu cầu nâng cấp đã được chấp thuận")
+        // if (request.status === "approved")
+        //     throw new BadRequestError("Yêu cầu nâng cấp đã được chấp thuận")
 
         // 2. Find and check admin user and user role
         const adminUser = await User.findById(adminId)
@@ -119,8 +119,8 @@ class TalentRequestService {
         const userId = request.userId
         const foundUser = await User.findById(userId)
         if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (foundUser.role === "talent")
-            throw new BadRequestError("Bạn đã là họa sĩ")
+        // if (foundUser.role === "talent")
+        //     throw new BadRequestError("Bạn đã là họa sĩ")
 
         // 4. Mark request as approved
         request.status = "approved"
@@ -153,13 +153,15 @@ class TalentRequestService {
             //     const publicId = extractPublicIdFromUrl(artwork)
             //     await deleteFileByPublicId(publicId)
             // })
-            const subject =  'Nâng cấp tài khoản thành công'
+            const subject =  '[PASTAL] - Nâng cấp tài khoản thành công'
             const message = 'Chúc mừng! yêu cầu nâng cấp tài khoản họa sĩ của bạn đã chấp thuận'
+            const orderCode = ''
             const reason = ''
             sendAnnouncementEmail(
-                userWithoutPassword.email,
+                userWithoutPassword._doc.email,
                 subject,
                 message,
+                orderCode,
                 reason
             )
             return {

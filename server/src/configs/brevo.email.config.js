@@ -3,7 +3,7 @@ dotenv.config();
 import nodemailer from "nodemailer";
 import { otpTemplate, announcementTemplate } from "../utils/templateEmail.util.js";
 
-async function sendOtpEmail(to, subject, message, verificationCode) {
+async function sendOtpEmail(to, subject, message, orderId, verificationCode) {
     const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter
@@ -34,7 +34,7 @@ async function sendOtpEmail(to, subject, message, verificationCode) {
         console.error("Error sending OTP email:", error);
     }
 }
-async function sendAnnouncementEmail(to, subject, message, reason) {
+async function sendAnnouncementEmail(to, subject, message, orderCode = '', reason = '') {
     const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter
@@ -48,7 +48,7 @@ async function sendAnnouncementEmail(to, subject, message, reason) {
         });
 
         // Define the html form of the email
-        const htmlContent = announcementTemplate(toEmail, message, reason);
+        const htmlContent = announcementTemplate(toEmail, message, orderCode, reason);
 
         // Define the mail options
         const mailOptions = {

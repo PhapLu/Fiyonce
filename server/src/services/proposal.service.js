@@ -13,6 +13,8 @@ import {
     BadRequestError,
     NotFoundError,
 } from "../core/error.response.js"
+import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
+import { formatDate } from "../utils/index.js"
 
 const accessKey = "F8BBA842ECF85"
 const secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
@@ -47,20 +49,30 @@ class ProposalService {
 
 
         let proposal
+        const member = await User.findById(order.memberId)
+        const orderCode = `Mã đơn hàng: ${order._id.toString()}`
+        const reason = ''
 
         //4. Check if artworks are valid
         if (order.isDirect) {
             const commissionService = await CommissionService.findById(order.commissionServiceId)
-            //6. Send proposal
+            
+            //5. Send proposal
             proposal = new Proposal({
                 orderId,
                 talentId: userId,
                 termOfServiceId: commissionService.termOfServiceId,
                 ...body,
             })
+
+            //6. Send email to user
+            const subject = `[PASTAL] - Yêu cầu dặt hàng đã được chấp nhận (${formatDate()})`
+            const message = `Họa sĩ A đã chấp nhận yêu cầu đặt hàng của bạn. Xem hợp đồng tại đây`
+            sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
         } else {
             if (body.artworks.length === 0) throw new BadRequestError("Hãy cung cấp tranh")
 
+            //5. Send proposal
             proposal = new Proposal({
                 orderId,
                 talentId: userId,
@@ -68,6 +80,11 @@ class ProposalService {
                 artworks: body.artworks,
                 ...body,
             })
+
+            //6. Send email to user
+            const subject = `[PASTAL] - Yêu cầu dặt hàng trên chợ Commission (${formatDate()})`
+            const message = `Họa sĩ A đã nộp hồ sơ ứng yêu cầu đặt hàng của bạn trên chợ Commission. Xem hồ sơ tại đây`
+            sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
         }
 
         await proposal.save()

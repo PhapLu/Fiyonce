@@ -35,11 +35,6 @@ const OrderSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
-        // character: {
-        //     photo: { type: String },
-        //     name: { type: String },
-        //     description: { type: String }
-        // },
         isDirect: { type: Boolean, required: true },
         references: [
             {

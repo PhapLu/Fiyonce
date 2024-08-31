@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import mongoose, { mongo } from 'mongoose'
+import mongoose from 'mongoose'
 import { countConnect } from '../helpers/check.connect.js'
 const connectString = process.env.NODE_ENV=='production' ? process.env.MONGODB_CONNECTION_STRING : process.env.MONGODB_LOCAL_CONNECTION_STRING
 
@@ -23,15 +23,6 @@ class Database {
             console.error('Error connecting to MongoDB Atlas:', err);
         });
     }
-    
-    // connect = async () =>{
-    //     try {
-    //         await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
-    //         console.log('Successful connection')
-    //     } catch (error) {
-    //         console.log('Failed to connect to MongoDB')
-    //     }
-    // }
 
     static getInstance() {
         if (!Database.instance) {

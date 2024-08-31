@@ -192,6 +192,30 @@ class CommissionReportService {
             message: "Xóa báo cáo thành công",
         }
     }
+
+    static adminReceiveOrder = async (userId, commissionReportId) => {
+        //1. Check if user, commissionReport exists
+        const user = await User.findById(userId);
+        const commissionReport = await CommissionReport.findById(commissionReportId)
+        const order = await Order.findById(commissionReport.orderId)
+        .populate("memberId", "email")
+        .populate("talentChosenId", "email")
+
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (user.role !== "admin") throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
+        if (!commissionReport) throw new NotFoundError("Không tìm thấy đơn hàng");
+
+        //2. Send email to user
+        const subject = `[PASTAL] - Báo cáo vi phạm (${formatDate()})`
+        const message = `Admin đã tiếp nhận yêu cầu xử lí vi phạm`
+        const orderCode = `Mã đơn hàng: ${order._id.toString()}`
+        const reason = `Nội dung vi phạm: ${commissionReport.content}`
+        sendAnnouncementEmail(order.memberId.email, subject, message, orderCode, reason);
+
+        return {
+            commissionReport,
+        };
+    }
 }
 
 export default CommissionReportService
