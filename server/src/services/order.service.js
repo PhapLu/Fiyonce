@@ -582,7 +582,7 @@ class OrderService {
         const member = await User.findById(order.memberId)
         try {
             const subject = `[PASTAL] - Đơn hàng đã bị từ chối (${formatDate()})`
-            const message = `Họa sĩ ${user.fullName} đã từ chối đơn đặt hang của bạn`
+            const message = `Họa sĩ ${user.fullName} đã từ chối đơn đặt hàng của bạn`
             const orderCode = `Mã đơn hàng: ${order._id.toString()}`
             const reason = ''
             await sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
@@ -596,11 +596,11 @@ class OrderService {
         };
     };
 
-    static startWipOrder = async (userId, orderId) => {
+    static startWipCommissionOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId);
         const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
-            .populate("memberId", "fullName avatar")
+            .populate("memberId", "fullName avatar email")
             .populate("commissionServiceId", "title");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");

@@ -1,0 +1,21 @@
+2024-09-01 09:19:33::info::/v1/api/order/createOrder::7dfee260-6ec4-49e0-b2c6-c6d97b57e377::input-params ::POST::::{}
+2024-09-01 09:21:42::info::/v1/api/auth/users/login::e92c3989-16ef-4797-8370-8dc700f08464::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ"}
+2024-09-01 09:21:43::error::/v1/api/auth/users/login::e92c3989-16ef-4797-8370-8dc700f08464::401 - 2ms - Response: {"status":401,"now":1725157303233}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-09-01 09:21:48::info::/v1/api/auth/users/login::158aa9e9-df2d-4efd-baa4-5d1a2cf62baf::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ!"}
+2024-09-01 09:21:48::error::/v1/api/auth/users/login::158aa9e9-df2d-4efd-baa4-5d1a2cf62baf::401 - 3ms - Response: {"status":401,"now":1725157308294}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-09-01 09:21:51::info::/v1/api/auth/users/login::6a0d930f-272e-49ee-ad1a-d700bfd15aad::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:22:18::info::/v1/api/order/rejectOrder/66d3cf388393cc8b4eca8f23::d6393688-323f-45b5-ad60-6b746628c2d5::input-params ::PATCH::::{}
+2024-09-01 09:22:47::info::/v1/api/auth/users/login::c117b666-a17e-4939-a38c-344f7b931520::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:23:01::info::/v1/api/order/createOrder::9a48d352-2c5e-492d-98c5-bc17b4bc0652::input-params ::POST::::{}
+2024-09-01 09:25:08::info::/v1/api/auth/users/login::9a602661-eb36-4d21-84cd-c81d72956a58::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:25:20::info::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::82e2174b-042a-42d8-ae9c-8ff3e932425e::input-params ::PATCH::::{}
+2024-09-01 09:26:32::info::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::94edd2f4-1249-4cb7-90a2-c97a5e915e64::input-params ::PATCH::::{}
+2024-09-01 09:26:32::error::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::94edd2f4-1249-4cb7-90a2-c97a5e915e64::403 - 2ms - Response: {"status":403,"now":1725157592872}::{"message":"Bạn không thể từ chối đơn hàng ở bước này"}
+2024-09-01 09:26:46::info::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::6b748175-fced-4def-bec8-3f8feb4936ff::input-params ::PATCH::::{}
+2024-09-01 09:37:09::info::/v1/api/auth/users/login::ad657c7d-898f-4d18-ba87-2879a212c82a::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:37:30::info::/v1/api/termOfService/readTermOfServices::3a5372ed-7a21-4b26-b8f7-26ddc3a7ec9c::input-params ::GET::::{}
+2024-09-01 09:40:27::info::/v1/api/proposal/sendProposal/66d3d0088393cc8b4eca8f36::f647cd26-578d-4233-8405-f7c92d9d9745::input-params ::POST::::{"title":"France's order","scope":"You will get a jpg file","startAt":"","deadline":"","price":800000,"termOfServiceId":"66a5c899dea404a988c9197c"}
+2024-09-01 09:47:44::info::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::420f38ff-7b9e-4d80-a583-d3d64afe0f2a::input-params ::PATCH::::{}
+2024-09-01 09:47:45::error::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::420f38ff-7b9e-4d80-a583-d3d64afe0f2a::403 - 1ms - Response: {"status":403,"now":1725158865037}::{"message":"Đơn hàng chưa được xác nhận ở hiện tại"}
+2024-09-01 09:47:59::info::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::6b138362-1230-4489-a37f-f6928083baba::input-params ::PATCH::::{}
+2024-09-01 09:51:32::info::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::8b3ba729-6d15-41a9-9910-3ba0ad72598b::input-params ::PATCH::::{}

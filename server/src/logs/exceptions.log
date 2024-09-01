@@ -939,3 +939,9 @@ TypeError: Cannot read properties of undefined (reading 'replace')
     at TalentRequestService.upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/services/talentRequest.service.js:161:13)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async upgradeRoleToTalent (file:///D:/Adam/OnisonProject/server/src/controllers/talentRequest.controller.js:21:23)::undefined
+2024-09-01 09:47:59::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'replace')
+TypeError: Cannot read properties of undefined (reading 'replace')
+    at sendAnnouncementEmail (file:///D:/Adam/OnisonProject/server/src/configs/brevo.email.config.js:38:24)
+    at OrderService.startWipCommissionOrder (file:///D:/Adam/OnisonProject/server/src/services/order.service.js:619:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async startWipCommissionOrder (file:///D:/Adam/OnisonProject/server/src/controllers/order.controller.js:96:23)::undefined

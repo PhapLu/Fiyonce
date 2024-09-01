@@ -30,8 +30,8 @@ class ProposalService {
         //2. Check if user is a talent
         if (user.role !== "talent")
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
-        // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
-        //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check if user has already given proposal for the order
         const existingProposal = await Proposal.findOne({
@@ -67,7 +67,7 @@ class ProposalService {
 
             //6. Send email to user
             const subject = `[PASTAL] - Yêu cầu dặt hàng đã được chấp nhận (${formatDate()})`
-            const message = `Họa sĩ A đã chấp nhận yêu cầu đặt hàng của bạn. Xem hợp đồng tại đây`
+            const message = `Họa sĩ A đã chấp nhận yêu cầu đặt hàng của bạn. Xem hợp đồng <a href="https://www.facebook.com/">tại đây</a>`
             sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
         } else {
             if (body.artworks.length === 0) throw new BadRequestError("Hãy cung cấp tranh")
@@ -83,7 +83,7 @@ class ProposalService {
 
             //6. Send email to user
             const subject = `[PASTAL] - Yêu cầu dặt hàng trên chợ Commission (${formatDate()})`
-            const message = `Họa sĩ A đã nộp hồ sơ ứng yêu cầu đặt hàng của bạn trên chợ Commission. Xem hồ sơ tại đây`
+            const message = `Họa sĩ A đã nộp hồ sơ ứng yêu cầu đặt hàng của bạn trên chợ Commission. Xem hồ sơ <a href="https://www.facebook.com/">tại đây</a>`
             sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
         }
 
