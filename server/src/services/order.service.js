@@ -353,7 +353,6 @@ class OrderService {
                         isPrivate: 1,
                         deadline: 1,
                         fileFormats: 1,
-                        review: 1,
                         proposalId: {
                             $arrayElemAt: [
                                 {
@@ -393,7 +392,6 @@ class OrderService {
                         isPrivate: 1,
                         deadline: 1,
                         fileFormats: 1,
-                        review: 1,
                     },
                 },
             ])
@@ -500,7 +498,6 @@ class OrderService {
                         isPrivate: 1,
                         deadline: 1,
                         fileFormats: 1,
-                        review: 1,
                     },
                 },
             ])
