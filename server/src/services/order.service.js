@@ -659,7 +659,7 @@ class OrderService {
         // Validate input
         if(!req.files && !body?.url) 
             throw new BadRequestError("No files or url provided for delivery")
-        
+
         // Upload new files to Cloudinary using uploadFinalProduct function
         if(req.files && req.files.files && req.files.files.length > 0) {
             const uploadPromises = req.files.files.map((file) =>
@@ -675,7 +675,7 @@ class OrderService {
         }
         order.finalDelivery.url = body?.url
         order.finalDelivery.note = body?.note
-        order.finalDelivery.deliveryAt = new Date.now()
+        order.finalDelivery.deliveryAt = new Date()
         order.status = "delivered"
         order.save()
 

@@ -9,3 +9,6 @@
 2024-09-01 10:55:49::error::/v1/api/order/startWipOrder/66bf3431d042e7986d79f53e::66c6b653-0430-4e85-a61e-161d7cde24e8::403 - 1ms - Response: {"status":403,"now":1725162949956}::{"message":"Order is not confirmed yet"}
 2024-09-01 10:59:23::error::/v1/api/order/startWipOrder/66bf3431d042e7986d79f53e::94df55b4-90e7-4914-8273-685f3b5c6fae::403 - 1ms - Response: {"status":403,"now":1725163163502}::{"message":"Order is not confirmed yet"}
 2024-09-01 11:00:09::error::/v1/api/order/startWipOrder/66bf3431d042e7986d79f53e::85bd8c83-4acd-46a3-a4cf-1833720c0105::403 - 0ms - Response: {"status":403,"now":1725163209060}::{"message":"Order is not confirmed yet"}
+2024-09-01 12:12:37::error::/v1/api/order/deliverOrder/66d3d0088393cc8b4eca8f36::432ea5e7-69fc-4076-bac0-b6957182a59e::undefined - NaNms - Response: {}::{"message":"Date.now is not a constructor"}
+2024-09-01 12:16:46::error::/v1/api/order/deliverOrder/66d3d0088393cc8b4eca8f36::f20ded1e-28ad-48ed-9837-13f95867e8c7::403 - 1ms - Response: {"status":403,"now":1725167806505}::{"message":"Order is not in progress"}
+2024-09-01 12:19:02::error::/v1/api/order/finishOrder/66d3d0088393cc8b4eca8f36::7e434abf-a843-4735-aa25-567dc7b4758d::401 - 1ms - Response: {"status":401,"now":1725167942110}::{"message":"You are not authorized to finish this order"}
