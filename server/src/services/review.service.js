@@ -14,18 +14,25 @@ class ReviewService {
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        if (order.memberId.toString() !== userId && order.status !== "completed")
-            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Validate body
         if (!body.rating)
             throw new BadRequestError("Vui lòng nhập đủ thông tin")
 
-        //3. Create review
+        //3. Check who is the reviewer
+        let reviewedUserId
+        if(userId === memberId) {
+            reviewedUserId = order.talentChosenId
+        } else if(userId === talentChosenId) {
+            reviewedUserId = order.memberId
+        }else{
+            throw new BadRequestError("Bạn không thể review đơn hàng này")
+        }
+
         const review = await Review.create({
             orderId,
             reviewerId: userId,
-            reviewedUserId: order.talentChosenId,
+            reviewedUserId,
             content: body?.content,
             rating: body?.rating,
         })
