@@ -182,11 +182,11 @@ class AuthService {
 
         // 6. Check who is the referrer
         let referrer
-        if(otpRecord.referralCode){
+        if (otpRecord.referralCode) {
             referrer = await User.findOne({ "referral.code": otpRecord.referralCode });
             referrer.referral.referred.push(newUser._id)
             // Track the referrer Badge
-            //trackPlatformAmbassadorBadge(referrer._id, "reference")
+            trackPlatformAmbassadorBadge(referrer._id, "reference")
             await referrer.save()
         }
 

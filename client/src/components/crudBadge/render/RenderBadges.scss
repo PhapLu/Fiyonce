@@ -1,5 +1,4 @@
 .render-badges.modal-form.type-3 {
-    width: 28% !important;
     min-width: unset;
     height: 60vh;
     overflow-y: scroll;
@@ -9,20 +8,26 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 16px;
+            padding: 10px 12px;
             border-radius: 8px;
             margin-bottom: 12px;
 
             .badge-item__thumbnail {
-                width: 75px;
-                height: 75px;
+                width: 60px;
+                height: 60px;
                 border-radius: 8px;
                 transition: 0.05s linear;
             }
 
             .badge-item--right {
-                width: calc(100% - 90px);
+                width: calc(100% - 70px);
+
+                .complete-badge-ic {
+                    stroke: hsl(104, 53.2%, 40.2%);
+                    fill: #ffffff;
+                }
             }
+
 
 
         }

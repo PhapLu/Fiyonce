@@ -1,3 +1,0 @@
-2024-08-18 14:23:32::error::/v1/api/user/me::63769e02-ce9f-495a-8d68-fac2f870c992::403 - 1ms - Response: {"status":403,"now":1723965812821}::{"message":"Access token missing"}
-2024-08-18 14:23:37::error::/v1/api/user/me::3a4789f4-b3d8-4480-9100-85a67a394b82::403 - 0ms - Response: {"status":403,"now":1723965817388}::{"message":"Access token missing"}
-2024-08-18 14:23:38::error::/v1/api/user/me::eff7dc98-7a55-4761-b424-8c1a767e78cd::403 - 0ms - Response: {"status":403,"now":1723965818455}::{"message":"Access token missing"}

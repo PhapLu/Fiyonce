@@ -202,7 +202,9 @@ class UserService {
         }
     };
 
-    getUserByReferralCode = async (referralCode) => {
+    static getUserByReferralCode = async (referralCode) => {
+        console.log("ppp")
+        console.log(referralCode)
         //1. Check referrer
         const referrer = await User.findOne({'referral.code': referralCode})
         if (!referrer) throw new NotFoundError("Referrer not found")

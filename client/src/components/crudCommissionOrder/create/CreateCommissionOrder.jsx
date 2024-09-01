@@ -16,6 +16,7 @@ import { isFilled, minValue } from "../../../utils/validator"
 import "./CreateCommissionOrder.scss";
 import { apiUtils, createFormData } from "../../../utils/newRequest";
 
+
 export default function CreateCommissionOrder({ isDirect, commissionService, setShowCreateCommissionOrder, setOverlayVisible }) {
     if (isDirect && !commissionService) {
         return;
@@ -55,9 +56,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             errors.description = 'Vui lòng nhập mô tả';
         }
 
-        if (references.length < 1) {
-            errors.references = "Vui lòng cung cấp ít nhất 1 ảnh tham khảo.";
-        } else if (references.length > 5) {
+        if (references.length > 5) {
             errors.references = "Vui lòng cung cấp tối đa 5 ảnh tham khảo.";
         }
 
@@ -119,11 +118,11 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
         files.forEach((file) => {
             if (file.size > 5 * 1024 * 1024) {
                 setErrors((values) => ({ ...values, references: "Dung lượng ảnh không được vượt quá 5MB." }));
-            } else if (newReferences.length < 7) {
+            } else if (newReferences.length < 5) {
                 newReferences.push(file);
                 setErrors((values) => ({ ...values, references: "" }));
             } else {
-                setErrors((values) => ({ ...values, references: "Bạn có thể chọn tối đa 3 tác phẩm." }));
+                setErrors((values) => ({ ...values, references: "Bạn có thể chọn tối đa 5 ảnh tham khảo." }));
             }
         });
         setReferences(newReferences);
@@ -195,7 +194,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
                 if (isDirect) {
                     const talentChosenId = commissionService?.talentId?._id;
-                    const inputs = { receiverId: talentChosenId, type: "createCommissionOrder", url: `/users/${talentChosenId}/order-history` }
+                    const inputs = { receiverId: talentChosenId, type: "createCommissionOrder", url: `/order-history` }
 
                     const response2 = await apiUtils.post(`/notification/createNotification`, inputs);
                     const notificationData = response2.data.metadata.notification;
@@ -235,7 +234,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
             </svg>
             <div className="modal-form--left">
                 {
-                    commissionService && (
+                    isDirect ? (
                         <>
                             <span>
                                 {commissionService?.serviceCategoryId?.title}
@@ -243,13 +242,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                             <h3>{commissionService?.title || "Tên dịch vụ"}</h3>
                             <h4>Giá từ: <span className="highlight-text fs-16"> {(commissionService?.minPrice && formatCurrency(commissionService?.minPrice)) || "x"} VND</span></h4>
                             <br />
-                        </>
-                    )
-                }
 
-                {
-                    isDirect ? (
-                        <>
                             <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity">
                                 {
                                     isProcedureVisible ?
@@ -259,13 +252,13 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
                                             </svg>
-                                        )} <span className="ml-8 fs-16">Thủ tục đặt tranh</span></strong>
+                                        )} <span className="ml-8 fs-16">Thủ tục đặt tranh với họa sĩ</span></strong>
                             <hr />
                             {
                                 isProcedureVisible && (
                                     <ul className="step-container">
                                         <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                        <li className="step-item">Họa sĩ xác nhận và gửi proposal</li>
+                                        <li className="step-item">Họa sĩ xác nhận và gửi hợp đồng</li>
                                         <li className="step-item">Khách hàng thanh toán đặt cọc</li>
                                         <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
                                         <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
@@ -275,15 +268,33 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                         </>
                     ) : (
                         <>
-                            <h3>Thủ tục đăng yêu cầu tìm họa sĩ</h3>
+                            <h3>Đăng yêu cầu tìm họa sĩ</h3>
+                            <h4>Khoảng giá: <span className="highlight-text fs-16"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} - {(inputs?.maxPrice && formatCurrency(inputs?.maxPrice)) || "x"} VND</span></h4>
+                            <br />
+
+                            <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity">
+                                {
+                                    isProcedureVisible ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                                        </svg> : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                                            </svg>
+                                        )} <span className="ml-8 fs-16">Thủ tục đăng yêu cầu tìm họa sĩ</span></strong>
                             <hr />
-                            <ul className="step-container">
-                                <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
-                                <li className="step-item">Các họa sĩ gửi proposal</li>
-                                <li className="step-item">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
-                                <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
-                                <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
-                            </ul>
+                            {
+                                isProcedureVisible && (
+                                    <ul className="step-container">
+                                        <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
+                                        <li className="step-item">Các họa sĩ gửi hợp đồng</li>
+                                        <li className="step-item">Khách hàng chọn ra họa sĩ phù hợp nhất và thanh toán đặt cọc</li>
+                                        <li className="step-item">Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn</li>
+                                        <li className="step-item">Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng dịch vụ</li>
+                                    </ul>
+                                )
+                            }
+
                         </>
                     )
                 }
@@ -304,7 +315,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                         <>
                             <div className="form-field required">
                                 <label htmlFor="description" className="form-field__label">Mô tả</label>
-                                <span className="form-field__annotation">Ở phần này, mô tả yêu cầu và chất lượng sản phẩm mà bạn mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết hơn qua tin nhắn.</span>
+                                <span className="form-field__annotation">Ở phần này, hãy mô tả yêu cầu và chất lượng sản phẩm mà bạn mong muốn. Bạn và họa sĩ có thể trao đổi chi tiết hơn qua tin nhắn.</span>
                                 <textarea
                                     id="description"
                                     name="description"
@@ -316,9 +327,9 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                 {errors.description && <span className="form-field__error">{errors.description}</span>}
                             </div>
 
-                            <div className="form-field required">
+                            <div className="form-field">
                                 <label className="form-field__label">Nguồn tham khảo</label>
-                                <span className="form-field__annotation">Cung cấp tranh tham khảo hoặc đường dẫn đến chúng giúp họa sĩ hình dung ra yêu cầu của bạn tốt hơn (1-5 ảnh).</span>
+                                <span className="form-field__annotation">Cung cấp tranh tham khảo giúp họa sĩ hình dung ra yêu cầu của bạn tốt hơn (tối đa 5 ảnh).</span>
                                 {references.map((reference, index) => (
                                     <div key={index} className="form-field__input img-preview">
                                         <div className="img-preview--left">
@@ -511,7 +522,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                     onClick={handleSubmit}
                                     disabled={isSubmitOrderCommissionLoading}>
                                     {isSubmitOrderCommissionLoading ? (
-                                        <span className="btn-spinner"></span>
+                                        <><span className="btn-spinner mr-8"></span> Đang tải</>
                                     ) : (
                                         "Gửi yêu cầu"
                                     )}
@@ -521,18 +532,28 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                     ) : (
                         <>
                             <p className="text-align-center">
-                                Đặt hàng thành công!
+                                {
+                                    isDirect ?
+                                        <>
+                                            <span>Đặt hàng thành công!</span>
+                                            <br />
+                                            <span>Họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.</span>
+                                        </>
+                                        :
+                                        <>
+                                            <span>Đăng yêu cầu lên chợ Commission thành công!</span>
+                                            <br />
+                                            <span>Các họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.</span></>
+                                }
                                 <br />
-                                {isDirect ? "Họa sĩ" : "Các họa sĩ"} sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.
-                                <br />
-                                Kiểm tra thông tin đơn hàng <Link to={`/users/${userInfo._id}/order-history`} className="highlight-text">tại đây</Link>.
+                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text">tại đây</Link>.
                             </p>
 
                             <p className="border-text mt-32">
                                 <strong>Lưu ý: </strong>
                                 <br />
                                 Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài nền tảng.
-                                Nếu họa sĩ có hành động không trung thực, báo cáo cho chúng mình qua <Link to="/report" className="highlight-text">Trung tâm trợ giúp</Link>.
+                                Nếu họa sĩ có hành động không trung thực, hãy báo cáo cho chúng mình qua <Link to="/help-center" className="highlight-text">Trung tâm trợ giúp</Link>.
                             </p>
                         </>
                     )}

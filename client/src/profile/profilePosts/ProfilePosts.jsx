@@ -198,15 +198,17 @@ export default function ProfilePosts() {
                 <div className="profile-page__header">
                     <div className="profile-page__header--left">
                         {
-                            postsByCategories?.length > 0 &&
-                            (
-                                <button
-                                    className={`btn btn-3 btn-md ${postCategoryId === "all" ? "active" : ""}`}
-                                    onClick={() => handleCategoryClick("all")}
-                                >
-                                    Tất cả
-                                </button>
-                            )
+                            postsByCategories?.length > 0 ?
+                                (
+                                    <button
+                                        className={`btn btn-3 btn-md ${postCategoryId === "all" ? "active" : ""}`}
+                                        onClick={() => handleCategoryClick("all")}
+                                    >
+                                        Tất cả
+                                    </button>
+                                ) : (
+                                    <p>{isProfileOwner ? "Bạn" : `${profileInfo?.fullName}`} hiện chưa có tác phẩm nào.</p>
+                                )
                         }
 
                         <div className="scroll">
@@ -237,11 +239,9 @@ export default function ProfilePosts() {
                     )}
                 </div>
 
-                {posts?.length > 0 ? (
+                {posts?.length > 0 && (
                     <RenderPosts isSorting={true} layout={4} posts={posts} isDisplayOwner={false} allowEditDelete={true} />
-                ) :
-                    (<p>Hiện chưa có tác phẩm nào.</p>)
-                }
+                )}
             </div >
 
             {overlayVisible && (

@@ -37,10 +37,14 @@ export default function RenderPost() {
         }, 500); // Simulating a 500ms loading delay
     }, []);
 
+    const closeRenderPostView = () => {
+        navigate(userId ? `/users/${userId}/profile-posts` : `/`);
+    }
+
     useEffect(() => {
         const handler = (e) => {
             if (renderPostRef.current && !renderPostRef.current.contains(e.target)) {
-                navigate(userId ? `/users/${userId}/profile-posts` : `/`);
+                closeRenderPostView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -184,7 +188,7 @@ export default function RenderPost() {
                         )}
                     </div>
                     <div className="modal-form--right">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => navigate(-1)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={closeRenderPostView}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
 
@@ -210,23 +214,23 @@ export default function RenderPost() {
                         <br />
                         <hr className="mb-16 mt-16" />
                         <div className="flex-align-center">
-                            <div className="flex-align-center mr-8" onClick={handleLikePost}>
+                            <div className="flex-align-center mr-8 hover-cursor-opacity" onClick={handleLikePost}>
                                 <span className="mr-4">{likeCount}</span>
                                 {liked ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 liked-ic hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 liked-ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25a5.973 5.973 0 0 0-1.753-4.247A5.971 5.971 0 0 0 15 2.25a5.973 5.973 0 0 0-4.247 1.753l-.253.253-.253-.253A5.973 5.973 0 0 0 6 2.25a5.973 5.973 0 0 0-4.247 1.753A5.973 5.973 0 0 0 0 8.25c0 1.613.626 3.127 1.753 4.247l8.974 8.974a.75.75 0 0 0 1.06 0l8.974-8.974A5.973 5.973 0 0 0 21 8.25Z" />
                                     </svg>
                                 ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25a5.973 5.973 0 0 0-1.753-4.247A5.971 5.971 0 0 0 15 2.25a5.973 5.973 0 0 0-4.247 1.753l-.253.253-.253-.253A5.973 5.973 0 0 0 6 2.25a5.973 5.973 0 0 0-4.247 1.753A5.973 5.973 0 0 0 0 8.25c0 1.613.626 3.127 1.753 4.247l8.974 8.974a.75.75 0 0 0 1.06 0l8.974-8.974A5.973 5.973 0 0 0 21 8.25Z" />
                                     </svg>
                                 )}
                             </div>
 
-                            <div className="flex-align-center mr-8" onClick={handleBookmarkPost}>
+                            <div className="flex-align-center mr-8 hover-cursor-opacity" onClick={handleBookmarkPost}>
                                 <span className="mr-4">{bookmarkCount}</span>
                                 {bookmarked ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 bookmarked-ic hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 bookmarked-ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                     </svg>
                                 ) : (

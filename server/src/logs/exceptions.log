@@ -877,3 +877,19 @@ ReferenceError: readBookmarkedPosts is not defined
 ReferenceError: error is not defined
     at trackPlatformAmbassadorBadge (file:///D:/Adam/OnisonProject/server/src/utils/badgeTracking.util.js:191:68)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+2024-08-26 11:58:27::error::undefined::undefined::uncaughtException: error is not defined
+ReferenceError: error is not defined
+    at trackPlatformAmbassadorBadge (file:///E:/Pastal/Fiyonce/server/src/utils/badgeTracking.util.js:191:68)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)::undefined
+2024-08-26 12:39:17::error::undefined::undefined::uncaughtException: readSearchResults is not defined
+ReferenceError: readSearchResults is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/routes/recommender/index.js:10:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-08-31 12:44:38::error::undefined::undefined::uncaughtException: readOrder is not defined
+ReferenceError: readOrder is not defined
+    at file:///E:/Pastal/Fiyonce/server/src/routes/order/index.js:21:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined

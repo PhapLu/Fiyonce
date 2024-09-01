@@ -9,6 +9,13 @@ class RecommenderController {
     }).send(res);
   }
 
+  readSearchResults = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get search results success!',
+      metadata: await RecommenderService.readSearchResults(req.query)
+    }).send(res)
+  }
+
   readPopularPosts = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Posts success!',

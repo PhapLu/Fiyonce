@@ -94,8 +94,24 @@ class OrderController {
     startWipOrder = async (req, res, next) => {
         console.log(req.body)
         new SuccessResponse({
-            message: 'Deny the order success!',
+            message: 'Start wip the order success!',
             metadata: await OrderService.startWipOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    deliverOrder = async (req, res, next) => {
+        console.log(req.body)
+        new SuccessResponse({
+            message: 'Deliver the order success!',
+            metadata: await OrderService.deliverOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    completeOrder = async (req, res, next) => {
+        console.log(req.body)
+        new SuccessResponse({
+            message: 'Deliver the order success!',
+            metadata: await OrderService.completeOrder(req.userId, req.params.orderId)
         }).send(res)
     }
 }

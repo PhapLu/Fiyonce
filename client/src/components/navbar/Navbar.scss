@@ -2,7 +2,7 @@
     padding: 12px 3%;
 
     /* padding: 10px 0; */
-    z-index: 10;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,7 +105,7 @@
                 left: 0;
                 right: 0;
                 width: 100%;
-                min-height: 200px;
+                // min-height: 100px;
                 padding: 6px;
 
                 h4 {
@@ -135,6 +135,11 @@
                 padding: 10px 16px 10px;
                 font-size: 1.6rem;
                 font-weight: 600;
+
+                &:hover {
+                    cursor: pointer;
+                    opacity: 0.8;
+                }
 
                 &.active {
                     position: relative;
@@ -296,7 +301,7 @@
     .navbar {
         padding: 8px 2%;
         position: fixed;
-        z-index: 100;
+        z-index: 1000;
 
         .navbar__blur {
             position: absolute;
@@ -325,6 +330,8 @@
 
         .navbar-link-item {
             display: none;
+
+
         }
     }
 

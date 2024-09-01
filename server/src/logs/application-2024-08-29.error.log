@@ -1,0 +1,38 @@
+2024-08-29 07:52:52::error::/v1/api/user/me::76b09eef-f0e1-4cc2-bfd4-fa5361edb189::403 - 0ms - Response: {"status":403,"now":1724892772293}::{"message":"Access token missing"}
+2024-08-29 07:57:24::error::/v1/api/order/createOrder::4eca0da6-c0e7-4ea2-abf5-bbc0f5a417b2::undefined - NaNms - Response: {}::{"message":"talentChosenId is not defined"}
+2024-08-29 07:57:43::error::/v1/api/order/createOrder::f64f951f-d3ba-4a3d-98af-689d9872e3e1::undefined - NaNms - Response: {}::{"message":"talentChosenId is not defined"}
+2024-08-29 07:58:49::error::/v1/api/order/createOrder::e53bc1e2-d050-4b2b-a3a0-34ea68954de9::undefined - NaNms - Response: {}::{"message":"talentChosenId is not defined"}
+2024-08-29 08:00:49::error::/v1/api/order/createOrder::a287f35b-a08d-48cb-9d48-f8ab343591d1::undefined - NaNms - Response: {}::{"message":"talentChosenId is not defined"}
+2024-08-29 08:01:22::error::/v1/api/order/createOrder::42ca8cbe-a473-49c2-8ec8-54cc8531eb2e::undefined - NaNms - Response: {}::{"message":"talentChosenId is not defined"}
+2024-08-29 09:31:52::error::/v1/api/user/me::8bbb9216-9d98-425f-9501-1bc0a219bc07::403 - 1ms - Response: {"status":403,"now":1724898712873}::{"message":"Access token missing"}
+2024-08-29 09:31:57::error::/v1/api/user/me::84003b70-3dad-464e-90d6-a74fbc9ca313::403 - 0ms - Response: {"status":403,"now":1724898717167}::{"message":"Access token missing"}
+2024-08-29 09:31:59::error::/v1/api/user/me::5bb7ab2f-d994-4e56-b60a-3f4194388f1b::403 - 0ms - Response: {"status":403,"now":1724898719195}::{"message":"Access token missing"}
+2024-08-29 09:32:34::error::/v1/api/user/me::e911d44c-2c48-4db4-9f17-27fdf66d8ebd::403 - 1ms - Response: {"status":403,"now":1724898754019}::{"message":"Access token missing"}
+2024-08-29 09:32:39::error::/v1/api/user/me::abb3088b-45fd-4b12-986b-98da81848309::403 - 0ms - Response: {"status":403,"now":1724898759610}::{"message":"Access token missing"}
+2024-08-29 09:32:43::error::/v1/api/user/me::1c235d8e-66db-4db9-9523-8312a3f0e74d::403 - 0ms - Response: {"status":403,"now":1724898763430}::{"message":"Access token missing"}
+2024-08-29 09:33:03::error::/v1/api/talentRequest/readMyTalentRequest::4cb7e7f2-4fa4-4c31-b3fc-58921c809d4d::404 - 1ms - Response: {"status":404,"now":1724898783333}::{"message":"Talent request not found"}
+2024-08-29 09:33:07::error::/v1/api/talentRequest/readMyTalentRequest::b8166467-6a75-4e54-9e45-b916ed0cd477::404 - 1ms - Response: {"status":404,"now":1724898787148}::{"message":"Talent request not found"}
+2024-08-29 09:33:12::error::/v1/api/talentRequest/readMyTalentRequest::03111072-394d-47a8-b20b-88ba55c8c03f::404 - 0ms - Response: {"status":404,"now":1724898792605}::{"message":"Talent request not found"}
+2024-08-29 09:33:15::error::/v1/api/talentRequest/readMyTalentRequest::14003dc4-9a75-4d9b-867a-885a7de9cf1a::404 - 0ms - Response: {"status":404,"now":1724898795288}::{"message":"Talent request not found"}
+2024-08-29 09:33:46::error::/v1/api/talentRequest/readMyTalentRequest::f25b5dea-ba3f-48dc-a78d-c4533f7a59a9::404 - 0ms - Response: {"status":404,"now":1724898826940}::{"message":"Talent request not found"}
+2024-08-29 09:40:24::error::/v1/api/talentRequest/readMyTalentRequest::294aca85-1c6d-4ca8-921b-992a813afb8e::404 - 0ms - Response: {"status":404,"now":1724899224232}::{"message":"Talent request not found"}
+2024-08-29 09:49:40::error::/v1/api/talentRequest/readMyTalentRequest::9f716ca0-6f1c-4363-944e-1aa3e5a8963e::404 - 0ms - Response: {"status":404,"now":1724899780932}::{"message":"Talent request not found"}
+2024-08-29 09:50:56::error::/v1/api/talentRequest/readMyTalentRequest::57f21b19-c86b-443d-8ddb-3b993e9e8b42::404 - 0ms - Response: {"status":404,"now":1724899856312}::{"message":"Talent request not found"}
+2024-08-29 09:50:57::error::/v1/api/talentRequest/readMyTalentRequest::34f0e206-0b2c-466c-b695-944d24b31ba8::404 - 0ms - Response: {"status":404,"now":1724899857213}::{"message":"Talent request not found"}
+2024-08-29 09:51:07::error::/v1/api/talentRequest/readMyTalentRequest::b1941a6c-0f19-4011-8a1e-7d6850842011::404 - 0ms - Response: {"status":404,"now":1724899867305}::{"message":"Talent request not found"}
+2024-08-29 09:51:08::error::/v1/api/talentRequest/readMyTalentRequest::9dde1e96-7c0d-4319-a175-2689287911cb::404 - 0ms - Response: {"status":404,"now":1724899868631}::{"message":"Talent request not found"}
+2024-08-29 09:52:16::error::/v1/api/talentRequest/readMyTalentRequest::2d6ddb67-b7ef-4aef-9afb-15384c7542f1::404 - 0ms - Response: {"status":404,"now":1724899936524}::{"message":"Talent request not found"}
+2024-08-29 09:52:51::error::/v1/api/talentRequest/readMyTalentRequest::bba1db8d-5d42-4bc1-9a81-f63bab3eb119::404 - 0ms - Response: {"status":404,"now":1724899971446}::{"message":"Talent request not found"}
+2024-08-29 09:54:06::error::/v1/api/talentRequest/readMyTalentRequest::6b13055e-d5b3-4269-acdd-523fe99a32e5::404 - 1ms - Response: {"status":404,"now":1724900046536}::{"message":"Talent request not found"}
+2024-08-29 09:55:12::error::/v1/api/talentRequest/readMyTalentRequest::b96a0688-c28f-430a-ab40-d2727397afa1::404 - 0ms - Response: {"status":404,"now":1724900112549}::{"message":"Talent request not found"}
+2024-08-29 09:55:16::error::/v1/api/talentRequest/readMyTalentRequest::097f8f86-7875-4fc0-9ee5-9df4bae266d9::404 - 0ms - Response: {"status":404,"now":1724900116415}::{"message":"Talent request not found"}
+2024-08-29 09:55:26::error::/v1/api/talentRequest/readMyTalentRequest::4e581a76-0b0a-47e9-b66d-c05ec979fbea::404 - 0ms - Response: {"status":404,"now":1724900126378}::{"message":"Talent request not found"}
+2024-08-29 09:55:27::error::/v1/api/talentRequest/readMyTalentRequest::bbdc6470-5fe5-4cba-a6e6-6b8b431ce312::404 - 0ms - Response: {"status":404,"now":1724900127682}::{"message":"Talent request not found"}
+2024-08-29 09:55:38::error::/v1/api/talentRequest/readMyTalentRequest::173acff7-b80f-4a72-94e8-be9975226108::404 - 0ms - Response: {"status":404,"now":1724900138693}::{"message":"Talent request not found"}
+2024-08-29 09:55:39::error::/v1/api/talentRequest/readMyTalentRequest::839e0386-413a-4ef3-b3b5-ac6305420a04::404 - 0ms - Response: {"status":404,"now":1724900139380}::{"message":"Talent request not found"}
+2024-08-29 09:55:45::error::/v1/api/talentRequest/readMyTalentRequest::9cb35644-6609-4551-9195-3e3f3a16e390::404 - 0ms - Response: {"status":404,"now":1724900145101}::{"message":"Talent request not found"}
+2024-08-29 09:56:14::error::/v1/api/talentRequest/readMyTalentRequest::564123a6-52a7-4385-819b-64b0ed5be9e7::404 - 0ms - Response: {"status":404,"now":1724900174299}::{"message":"Talent request not found"}
+2024-08-29 09:56:14::error::/v1/api/talentRequest/readMyTalentRequest::9e164502-7b8d-4b09-b9b7-644d6316e946::404 - 0ms - Response: {"status":404,"now":1724900174684}::{"message":"Talent request not found"}
+2024-08-29 09:56:18::error::/v1/api/talentRequest/readMyTalentRequest::5bfa6ca0-9e37-440a-ae13-3ea45a5dfa88::404 - 0ms - Response: {"status":404,"now":1724900178487}::{"message":"Talent request not found"}
+2024-08-29 09:56:31::error::/v1/api/talentRequest/readMyTalentRequest::fe1a4377-7dc5-4dec-bf92-f0e9e9782939::404 - 0ms - Response: {"status":404,"now":1724900191104}::{"message":"Talent request not found"}
+2024-08-29 09:56:46::error::/v1/api/talentRequest/readMyTalentRequest::f317f759-24d6-4933-965c-a48975abd2eb::404 - 0ms - Response: {"status":404,"now":1724900206416}::{"message":"Talent request not found"}

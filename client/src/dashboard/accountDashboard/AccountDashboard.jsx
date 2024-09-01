@@ -4,6 +4,10 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { apiUtils } from '../../utils/newRequest';
 import ConfirmTalentRequest from '../../components/crudTalentRequest/confirm/ConfirmTalentRequest';
 import { useModal } from '../../contexts/modal/ModalContext';
+import DenyTalentRequest from '../../components/crudTalentRequest/deny/DenyTalentRequest';
+import { resizeImageUrl } from '../../utils/imageDisplayer';
+import ZoomImage from '../../components/zoomImage/ZoomImage';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function AccountDashboard() {
     const { userInfo, socket } = useAuth()
@@ -14,6 +18,8 @@ export default function AccountDashboard() {
     const [talentRequest, setTalentRequest] = useState();
     const [showConfirmTalentRequest, setShowConfirmTalentRequest] = useState();
     const [showDenyTalentRequest, setShowDenyTalentRequest] = useState();
+    const [showZoomImage, setShowZoomImage] = useState();
+    const [imageSrc, setImageSrc] = useState();
     const [overlayVisible, setOverlayVisible] = useState(false);
 
     // Fetch existing talent requests from the API
@@ -39,13 +45,13 @@ export default function AccountDashboard() {
             });
         });
 
-        socket.on('disconnect', () => {
-            console.log('Disconnected from socket server');
-        });
+        // socket.on('disconnect', () => {
+        //     console.log('Disconnected from socket server');
+        // });
 
-        return () => {
-            socket.disconnect();
-        };
+        // return () => {
+        //     socket.disconnect();
+        // };
     }, []);
 
     // Mutation hook for upgrading talent request
@@ -71,7 +77,7 @@ export default function AccountDashboard() {
 
     // Mutation hook for denying talent request
     const denyTalentRequestMutation = useMutation(
-        (requestId) => apiUtils.patch(`/talentRequest/denyTalentRequest/${requestId}`),
+        ({ talentRequestId, inputs }) => apiUtils.patch(`/talentRequest/denyTalentRequest/${talentRequestId}`, inputs),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('talentRequests');
@@ -164,7 +170,7 @@ export default function AccountDashboard() {
                                     <td >{talentRequest?.taxCode}</td>
                                     <td className='flex-align-center'>
                                         {talentRequest.artworks.map((artwork, index) => (
-                                            <img key={index} src={artwork} alt={`artwork-${index}`} />
+                                            <LazyLoadImage key={index} src={resizeImageUrl(artwork, 80)} alt={`artwork-${index}`} effect='blur' onClick={() => {setImageSrc(artwork); setShowZoomImage(true)}}/>
                                         ))}
                                     </td>
                                     <td>
@@ -185,12 +191,12 @@ export default function AccountDashboard() {
                     </tbody>
                 </table>
             </section>
-
+            {showZoomImage && <ZoomImage src={imageSrc} setShowZoomImage={setShowZoomImage}/>}
             {
                 overlayVisible && (
                     <div className="overlay">
                         {showConfirmTalentRequest && <ConfirmTalentRequest talentRequest={talentRequest} confirmTalentRequestMutation={confirmTalentRequestMutation} setShowConfirmTalentRequest={setShowConfirmTalentRequest} setOverlayVisible={setOverlayVisible} />}
-                        {/* {showDenyTalentRequest && <DenyTalentRequest talentRequest={talentRequest} setShowDenyTalentRequest={setShowDenyTalentRequest} setOverlayVisible={setOverlayVisible} />} */}
+                        {showDenyTalentRequest && <DenyTalentRequest talentRequest={talentRequest} denyTalentRequestMutation={denyTalentRequestMutation} setShowDenyTalentRequest={setShowDenyTalentRequest} setOverlayVisible={setOverlayVisible} />}
                     </div>
                 )
             }

@@ -190,6 +190,9 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
             </div>
             <div className="form-field with-create-btn required">
                 <label htmlFor="postCategoryId" className="form-field__label">Album</label>
+                {
+                    !postCategories?.length > 0 && <span className="form-field__annotation">Bạn hiện chưa có album tranh nào, vui lòng chọn "Thêm album"</span>
+                }
                 {!isCreateNewShowcasingPostCategory ? (
                     <>
                         <select
@@ -228,7 +231,7 @@ export default function CreatePost({ postCategories, setShowCreatePostForm, setO
                     value={inputs?.description}
                     onChange={handleChange}
                     className="form-field__input"
-                    placeholder="Nói gì đó về tác phẩm của bạn ..."
+                    placeholder="Chia sẻ về tác phẩm của bạn ..."
                 />
                 {errors.description && <span className="form-field__error">{errors.description}</span>}
             </div>

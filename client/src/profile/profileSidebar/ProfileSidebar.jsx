@@ -43,7 +43,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const isProfileOwner = userInfo?._id === userId;
 
     // Initialize variables for inputs, errors, loading effect
-    const [inputs, setInputs] = useState(profileInfo);
+    const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [isSubmitSidebarInfoLoading, setIsSubmitSidebarInfoLoading] = useState(false);
     const [isUploadAvatarLoading, setUploadAvatarLoading] = useState(false);
@@ -89,6 +89,11 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             if (response.data.metadata.image_url) {
                 setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
                 setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật ảnh đại diện thành công"
+                })
             }
         } catch (error) {
             console.error('Error:', error);
@@ -134,8 +139,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         // Validate fullname
         if (!isFilled(inputs?.fullName)) {
             errors.fullName = 'Vui lòng nhập họ và tên';
-        } else if (hasSymbol(inputs?.fullName)) {
-            errors.fullName = 'Tên không được chứa kí tự đặc biệt';
         }
 
         return errors;
@@ -161,7 +164,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
             const updatedData = { ...inputs, pronoun: customPronoun !== "" ? customPronoun : inputs.pronoun, socialLinks: submittedSocialLinks };
 
-            console.log(updatedData)
             const response = await apiUtils.patch(`/user/updateProfile/${userId}`, updatedData);
             if (response) {
                 setModalInfo({
@@ -199,7 +201,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setIsSubmitFollowUserLoading(true);
         try {
             const response = await apiUtils.patch(`/user/followUser/${profileInfo._id}`)
-            console.log(response);
             // setProfileFollowers([...profileFollowers, response.data.metadata.user.followers]);
             setUserFollowing(response.data.metadata.user.following)
 
@@ -232,7 +233,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setIsSubmitUnFollowUserLoading(true);
         try {
             const response = await apiUtils.patch(`/user/unFollowUser/${profileInfo._id}`)
-            console.log(response);
             setProfileFollowers(profileFollowers.filter(user => user._id !== profileInfo._id));
             setUserFollowing(response.data.metadata.user.following)
 
@@ -241,7 +241,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 message: "Đã hủy theo dõi"
             })
         } catch (error) {
-            console.log(error);
             setModalInfo({
                 status: "error",
                 message: error.response.data.message
@@ -250,6 +249,14 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             setIsSubmitUnFollowUserLoading(true);
         }
     }
+
+    useEffect(() => {
+        if (profileInfo) {
+            // Only set inputs if they are not already filled
+            setInputs(profileInfo);
+            setSocialLinks((prevSocialLinks) => prevSocialLinks.length === 0 ? profileInfo.socialLinks || [] : prevSocialLinks);
+        }
+    }, [profileInfo]);
 
     const handleOpenConversation = async (e) => {
         e.preventDefault();
@@ -360,7 +367,10 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     const inputRef = useRef();
 
-    // Handle the change event when a file is selected
+    const onChooseImg = () => {
+        inputRef.current.click();
+    };
+
     const handleOnChange = (event) => {
         if (event.target.files && event.target.files.length > 0) {
             const reader = new FileReader();
@@ -368,15 +378,15 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             reader.onload = function (e) {
                 onImageSelected(reader.result);
                 setSelectedImage(reader.result);
-                console.log(reader.result);
+                setIsCropping(true); // Set isCropping after the image is selected
+                setOverlayVisible(true); // Set overlayVisible after the image is selected
             };
+        } else {
+            // Reset states if no image is selected or the user cancels the file dialog
+            setIsCropping(false);
+            setOverlayVisible(false);
+            setSelectedImage(null);
         }
-    };
-
-    const onChooseImg = () => {
-        inputRef.current.click();
-        setIsCropping(true);
-        setOverlayVisible(true);
     };
 
     const displayPronoun = (pronoun) => {

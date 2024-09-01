@@ -803,7 +803,7 @@ export default function UpdateCommissionOrder({
                             <br />
                             Kiểm tra thông tin đơn hàng{" "}
                             <Link
-                                to={`/users/${userInfo._id}/order-history`}
+                                to={`/order-history`}
                                 className="highlight-text"
                             >
                                 tại đây

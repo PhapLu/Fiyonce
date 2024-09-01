@@ -26,19 +26,20 @@ class OrderService {
         const body = req.body
 
 
-        const { isDirect, commissionServiceId, isWaitList} = body
+        const { isDirect, commissionServiceId, isWaitList } = body
         const commissionService = await CommissionService.findById(
             commissionServiceId
         )
-        
+
         //2. Check isDirect of order
-        let talent = null
+        let talent = null;
         if (isDirect == 'true') {
             //direct order
-            talent = await User.findById(talentChosenId)
             const service = await CommissionService.findById(
                 commissionServiceId
             )
+            const talentChosenId = service.talentId;
+            talent = await User.findById(talentChosenId)
 
             if (!talent) throw new BadRequestError("Talent not found!")
             if (!service)
@@ -76,8 +77,8 @@ class OrderService {
             }
 
             //4. Create order
-            if(isWaitList == 'true'){
-                if(commissionService.status !== 'waitList')
+            if (isWaitList == 'true') {
+                if (commissionService.status !== 'waitList')
                     throw new BadRequestError('Dịch vụ này đang mở')
                 body.status = "waitlist"
             } else {
@@ -123,16 +124,26 @@ class OrderService {
     }
 
     static readOrder = async (orderId) => {
-        const order = await Order.findById(orderId).populate(
-            "talentChosenId",
-            "stageName avatar"
-        )
-        if (!order) throw new NotFoundError("Order not found!")
+        try {
+            const order = await Order.findById(orderId)
+                .populate('memberId', "avatar fullName")
+                .populate('commissionServiceId', "title")
+                .lean();
 
-        return {
-            order,
+            if (!order) {
+                throw new Error('Order not found');
+            }
+
+            const proposalsCount = await Proposal.countDocuments({ orderId });
+            order.proposalsCount = proposalsCount;
+            return {
+                order
+            };
+        } catch (error) {
+            console.error('Error reading order:', error);
+            throw error;
         }
-    }
+    };
 
     //Client read approved indirect orders in commission market
     static readOrders = async (req) => {
@@ -208,8 +219,8 @@ class OrderService {
 
             //4. Validate body and merge existing service fields with req.body to ensure fields not provided in req.body are retained
             const { memberId, talentChosenId, ...filteredBody } = req.body
-            const updatedFields =  { ...oldOrder.toObject(), ...filteredBody }
-            
+            const updatedFields = { ...oldOrder.toObject(), ...filteredBody }
+
             //5. update Order
             const updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
@@ -380,7 +391,7 @@ class OrderService {
                 },
                 {
                     $project: {
-                        proposalId: "$proposalId._id",
+                        proposalId: "$proposalId",
                         commissionServiceId: 1,
                         memberId: 1,
                         talentChosenId: 1,
@@ -403,8 +414,8 @@ class OrderService {
 
             console.log(orders)
 
-            return { 
-                talentOrderHistory: orders 
+            return {
+                talentOrderHistory: orders
             }
         } catch (error) {
             console.error("Error fetching orders by talent:", error)
@@ -628,6 +639,34 @@ class OrderService {
         return {
             order,
         };
+    }
+
+
+    // Talent delivers product 
+    static deliverOrder = async (userId, orderId) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId);
+        const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
+            .populate("memberId", "fullName avatar")
+            .populate("commissionServiceId", "title");;
+        if (!user) throw new NotFoundError("User not found");
+        if (!order) throw new NotFoundError("Order not found");
+        if (order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet");
+        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order");
+
+        //2. Start work
+        order.status = "in_progress";
+        order.save();
+
+
+        return {
+            order,
+        };
+    }
+
+    // Client confirm finishing order
+    static finishOrder = async (userId, orderId) => {
+       
     }
 }
 

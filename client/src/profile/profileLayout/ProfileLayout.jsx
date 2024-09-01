@@ -25,8 +25,6 @@ export default function ProfileLayout() {
     const [showMoreProfileActions, setShowMoreProfileActions] = useState(null);
     const [showRenderBadges, setShowRenderBadges] = useState(false);
 
-
-
     const location = useLocation();
 
     const fetchProfileById = async () => {
@@ -75,6 +73,10 @@ export default function ProfileLayout() {
             if (response.data.metadata.image_url) {
                 setUserInfo({ ...profileInfo, bg: response.data.metadata.image_url });
                 setProfileInfo({ ...profileInfo, bg: response.data.metadata.image_url });
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật ảnh bìa thành công"
+                })
             }
         } catch (error) {
             console.error('Error:', error);
@@ -144,6 +146,10 @@ export default function ProfileLayout() {
     const inputRef = useRef();
 
     // Handle the change event when a file is selected
+    const onChooseImg = () => {
+        inputRef.current.click();
+    };
+
     const handleOnChange = (event) => {
         if (event.target.files && event.target.files.length > 0) {
             const reader = new FileReader();
@@ -151,16 +157,18 @@ export default function ProfileLayout() {
             reader.onload = function (e) {
                 onImageSelected(reader.result);
                 setSelectedImage(reader.result);
-                console.log(reader.result);
+                setIsCropping(true); // Set isCropping after the image is selected
+                setOverlayVisible(true); // Set overlayVisible after the image is selected
             };
+        } else {
+            // Reset states if no image is selected or the user cancels the file dialog
+            setIsCropping(false);
+            setOverlayVisible(false);
+            setSelectedImage(null);
         }
     };
 
-    const onChooseImg = () => {
-        inputRef.current.click();
-        setIsCropping(true);
-        setOverlayVisible(true);
-    };
+
 
     if (isLoading) {
         return <span>Đang tải...</span>;
@@ -171,7 +179,7 @@ export default function ProfileLayout() {
     }
 
     if (!profileInfo) {
-        return <span>No profile information available.</span>;
+        return;
     }
 
 
@@ -228,7 +236,6 @@ export default function ProfileLayout() {
                                 </>
                             )}
                         </div>
-                        <button className="btn btn-1 btn-md" onClick={() => { setOverlayVisible(true); setShowRenderBadges(true) }}>Show badges</button>
 
                         <div className="sub-nav-container">
                             <div className="sub-nav-container--left">
@@ -236,7 +243,8 @@ export default function ProfileLayout() {
                                     <>
                                         <Link
                                             to={`/users/${userId}/profile-commission-services`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
+                                            className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                                (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
                                         >
                                             Dịch vụ
                                         </Link>
@@ -266,12 +274,6 @@ export default function ProfileLayout() {
 
                                 {isProfileOwner && (
                                     <>
-                                        <Link
-                                            to={`/users/${userId}/order-history`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/order-history') ? "active" : ""}`}
-                                        >
-                                            Đơn hàng
-                                        </Link>
                                         <Link
                                             to={`/users/${userId}/basic-info`}
                                             className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}

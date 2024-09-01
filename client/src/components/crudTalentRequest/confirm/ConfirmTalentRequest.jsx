@@ -1,14 +1,30 @@
 import { useState } from "react";
+import { useAuth } from "../../../contexts/auth/AuthContext";
+import { apiUtils } from "../../../utils/newRequest";
 
 export default function ConfirmTalentRequest({ talentRequest, confirmTalentRequestMutation, setShowConfirmTalentRequest, setOverlayVisible }) {
     const [isSubmitConfirmTalentRequestLoading, setIsSubmitConfirmTalentRequestLoading] = useState(false);
+    const { userInfo, socket } = useAuth();
 
-    const handleSubmit = async () => {
-        console.log(talentRequest)
+    const handleSubmit = async (e) => {
+        console.log(talentRequest);
         setIsSubmitConfirmTalentRequestLoading(true);
-        await confirmTalentRequestMutation.mutate(talentRequest._id);
+        try {
+            const response = await confirmTalentRequestMutation.mutate(talentRequest._id);
+            const senderId = userInfo._id;
+            const receiverId = talentRequest?.userId?._id;
+            const notificationInputs = { receiverId, type: "confirmTalentRequest", url: `/users/${receiverId}/upgrade-account` };
+            const notificationResponse = await apiUtils.post(`/notification/createNotification`, notificationInputs);
+            const notificationData = notificationResponse.data.metadata.notification;
+            console.log(notificationData)
+            socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
+
+        } catch (error) {
+            console.log(error);
+        }
         setIsSubmitConfirmTalentRequestLoading(false);
         setShowConfirmTalentRequest(false);
+        setOverlayVisible(false);
     };
 
     return (

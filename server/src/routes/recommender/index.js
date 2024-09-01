@@ -5,6 +5,8 @@ import recommenderController from '../../controllers/recommender.controller.js'
 
 const router = express.Router()
 router.get('/search', asyncHandler(recommenderController.search));
+router.get('/readSearchResults', asyncHandler(recommenderController.readSearchResults));
+
 router.get('/readPopularPosts', asyncHandler(recommenderController.readPopularPosts))
 router.get('/readLatestPosts', asyncHandler(recommenderController.readLatestPosts))
 router.get('/readPopularCommissionServices', asyncHandler(recommenderController.readPopularCommissionServices))

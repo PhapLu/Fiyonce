@@ -201,16 +201,6 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
     }
 
     // Handle share posts
-    const copyToClipboard = (selectedPostId) => {
-        const url = `${window.location.origin}/${selectedPostId}`;
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
-            })
-            .catch(err => {
-                setModalInfo({ status: "error", message: "Có lỗi xảy ra" });
-            });
-    };
     const url = window.location.href;
 
     const handleShare = (platform, itemId) => {
@@ -218,7 +208,8 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
 
         switch (platform) {
             case 'copy':
-                navigator.clipboard.writeText(`${url}/${itemId}`);
+                navigator.clipboard.writeText(`${url}posts/${itemId}`);
+                setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
                 break;
             case 'x':
                 window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}/${itemId}`);

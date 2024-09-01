@@ -1,5 +1,5 @@
 .help-center {
-    margin: 100px 0% 40px;
+    margin: 100px 0% 0px;
 
     .navbar {
         .navbar--left {}
@@ -7,9 +7,41 @@
         .navbar--right {}
     }
 
+    section {
+        margin-bottom: 80px;
+    }
+
+    .help-center__header {
+        margin: 0 2.5%;
+        background-color: orange;
+        position: relative;
+        width: 95%;
+        height: 45vh;
+
+        .theme-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            position: absolute;
+            top: 100%;
+
+            .theme-item {
+                width: 18%;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: var(--box-shadow-4);
+                margin: 8px 12px;
+                background-color: white;
+            }
+        }
+    }
+
 
     .help-center__content {
-        margin: 0 5%;
+        // margin: 0 5%;
+
+
 
         .faq-container {
             // display: flex;

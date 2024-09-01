@@ -10,7 +10,7 @@ import "./DashboardLayout.scss";
 
 export default function DashboardLayout() {
     return (
-        <>
+        <div className="admin-dashboard">
             <Navbar />
             <div className="app with-sidebar">
                 <DashboardSidebar />
@@ -18,6 +18,6 @@ export default function DashboardLayout() {
                     <Outlet />
                 </div>
             </div>
-        </>
+        </div>
     )
 }

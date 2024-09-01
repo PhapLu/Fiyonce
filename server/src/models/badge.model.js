@@ -4,7 +4,7 @@ const DOCUMENT_NAME = "Badge"
 const COLLECTION_NAME = "Badges"
 
 const badgeSchema = new mongoose.Schema({
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     icon: { type: String, required: true },
     level: { type: String, enum: ["easy", "medium", "hard"], required: true },
@@ -15,7 +15,7 @@ const badgeSchema = new mongoose.Schema({
         required: true,
     },
     criteria: { type: String, required: true },
-},{
+}, {
     collection: COLLECTION_NAME,
     timestamps: true
 })

@@ -110,7 +110,7 @@ class TalentRequestService {
         }
 
         return {
-            myTalentRequest: talentRequest.status,
+            myTalentRequest: talentRequest
         }
     }
 
@@ -189,6 +189,8 @@ class TalentRequestService {
     }
 
     static denyTalentRequest = async (adminId, requestId, body) => {
+        console.log("KKKK")
+        console.log(body)
         //1. Find and check request
         const request = await TalentRequest.findById(requestId)
         if (!request) throw new NotFoundError("Request not found")
@@ -214,6 +216,7 @@ class TalentRequestService {
             foundUser.taxCode.isVerified = false
         }
         request.status = "rejected"
+        request.rejectMessage = body.rejectMessage;
         await request.save()
 
         //4. Send email to user and delete images in cloudinary

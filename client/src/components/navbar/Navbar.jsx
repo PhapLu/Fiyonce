@@ -23,6 +23,8 @@ import './Navbar.scss';
 
 export default function Navbar() {
     const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const queryTerm = queryParams.get('q') || '';
     const { userInfo, socket } = useAuth();
     const [shadow, setShadow] = useState(false);
     const [showRenderConversations, setShowRenderConversations] = useState(false);
@@ -32,12 +34,12 @@ export default function Navbar() {
     const notificationBtnRef = useRef(null);
     const [unSeenConversations, setUnSeenConversations] = useState(userInfo?.unSeenConversations);
     const [unSeenNotifications, setUnSeenNotifications] = useState(userInfo?.unSeenNotifications);
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(queryTerm);
     const [searchResults, setSearchResults] = useState();
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const searchFieldRef = useRef(null);
 
-    const history = useNavigate();
+    const navigate = useNavigate();
     const handleSearchTermChange = async (e) => {
         const searchTerm = e.target.value;
         setQuery(searchTerm);
@@ -57,7 +59,7 @@ export default function Navbar() {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        // history.push(`/search?query=${query}`);
+        navigate(`/search?q=${query}`);
     };
 
     console.log(unSeenConversations);
@@ -96,6 +98,20 @@ export default function Navbar() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    useEffect(() => {
+        const handleClickOutsideSearch = (event) => {
+            if (searchFieldRef.current && !searchFieldRef.current.contains(event.target)) {
+                setIsSearchFocused(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutsideSearch);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutsideSearch);
+        };
+    }, []);
+
 
 
     const handleViewConversations = async () => {
@@ -216,44 +232,58 @@ export default function Navbar() {
                         <input
                             type="text"
                             className="navbar__search-field__input form-field__input"
+                            value={query || ""}
                             onChange={handleSearchTermChange}
                             onFocus={() => setIsSearchFocused(true)}
                             placeholder="Tìm kiếm tranh vẽ và họa sĩ"
                         />
-                        {isSearchFocused && searchResults?.users?.length > 0 && (
-                            <div className="search-result-container">
-                                <h4 className="p-4">Họa sĩ <span className="ml-4 p-4 fs-12 bg-gray-1 fw-500 br-8">{searchResults?.users?.length}</span></h4>
-                                <hr />
-                                {searchResults?.users?.slice(0, 5).map((user, index) => {
-                                    return (
-                                        <Link to={`/users/${user._id}/profile-commission-services`} key={index} className="search-result-item user sm gray-bg-hover">
-                                            <div className="user--left">
-                                                <img src={resizeImageUrl(user.avatar, 50)} alt="" className="user__avatar" />
-                                                <div className="user__name flex-align-center">
-                                                    <div className="user__name__title fw-600">{user?.fullName}</div>
-                                                    {
-                                                        user?.jobTitle ?
-                                                            <>
-                                                                <span className="dot-delimiter sm"></span>
-                                                                <span className="fs-14">{user?.jobTitle}</span>
-                                                            </>
-                                                            : user?.stageName ?
-                                                                <>
-                                                                    <span className="dot-delimiter sm"></span>
-                                                                    <span className="fs-14">{user?.stageName}</span>
-                                                                </> :
-                                                                <span></span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="user--right flex-align-center">
-                                                {/* <span className="mr-4">{user?.fullName}</span> */}
-                                            </div>
+                        {
+                            isSearchFocused && query.length > 0 && (
+                                <div className="search-result-container">
+                                    {searchResults?.users?.length > 0 ? (
+                                        <>
+                                            <h4 className="p-4">Họa sĩ <span className="ml-4 p-4 fs-12 bg-gray-1 fw-500 br-8">{searchResults?.users?.length}</span></h4>
+                                            <hr />
+                                            {searchResults?.users?.slice(0, 5).map((user, index) => {
+                                                return (
+                                                    <Link to={`/users/${user._id}/profile-commission-services`} key={index} className="search-result-item user sm gray-bg-hover">
+                                                        <div className="user--left">
+                                                            <img src={resizeImageUrl(user.avatar, 50)} alt="" className="user__avatar" />
+                                                            <div className="user__name flex-align-center">
+                                                                <div className="user__name__title fw-600">{user?.fullName}</div>
+                                                                {
+                                                                    user?.jobTitle ?
+                                                                        <>
+                                                                            <span className="dot-delimiter sm"></span>
+                                                                            <span className="fs-14">{user?.jobTitle}</span>
+                                                                        </>
+                                                                        : user?.stageName ?
+                                                                            <>
+                                                                                <span className="dot-delimiter sm"></span>
+                                                                                <span className="fs-14">{user?.stageName}</span>
+                                                                            </> :
+                                                                            <span></span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div className="user--right flex-align-center">
+                                                            {/* <span className="mr-4">{user?.fullName}</span> */}
+                                                        </div>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </>
+                                    ) : (
+                                        <Link to={`/search?q=${query}`} className="search-result-item flex-align-center fw-bold gray-bg-hover">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                            </svg>
+                                            {query}
                                         </Link>
-                                    );
-                                })}
-                            </div>
-                        )}
+                                    )}
+                                </div>)
+                        }
+
                     </form>
                 </div>
 

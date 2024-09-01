@@ -57,17 +57,55 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
         return;
     }
 
-    const displayedInteractionNotifications = groupedNotifications?.order?.length > 0 ? groupedNotifications?.interaction?.slice(0, 3) : groupedNotifications?.interaction?.slice(0, 5);
-    const displayedOrderNotifications = groupedNotifications?.interaction?.length > 0 ? groupedNotifications?.order?.slice(0, 3) : groupedNotifications?.order?.slice(0, 5);
+    const displayedInteractionNotifications = groupedNotifications?.interaction?.length > 0 ? groupedNotifications?.interaction?.slice(0, 3) : [];
+    const displayedOrderNotifications = groupedNotifications?.order?.length > 0 ? groupedNotifications?.order?.slice(0, 3) : [];
+    const displayedSystemNotifications = groupedNotifications?.system?.length > 0 ? groupedNotifications?.system?.slice(0, 3) : [];
     return (
         <>
             <div className="render-notifications">
                 <h2>Thông báo</h2>
                 <hr />
                 <div className="notification-container">
-                    {!(displayedOrderNotifications?.length > 0 || displayedInteractionNotifications?.length > 0) &&
+                    {!(displayedOrderNotifications?.length > 0 || displayedInteractionNotifications?.length > 0 || displayedSystemNotifications?.length > 0) &&
                         <p>Hiện chưa có thông báo nào</p>
                     }
+
+                    {displayedSystemNotifications?.length > 0 && (
+                        <div className="mb-12">
+                            <h4>Hệ thống</h4>
+                            {
+                                displayedSystemNotifications?.map((notification, index) => {
+                                    return (<Link
+                                        key={index}
+                                        to={notification?.url}
+                                        className="notification-item user md gray-bg-hover p-4 br-8 mb-8"
+                                        onClick={() => handleNotificationClick(notification)}
+                                    >
+                                        <div className="user--left">
+                                            <img src={notification?.senderAvatar} alt="" className="user__avatar" />
+                                            <div className="user__name">
+                                                <div className="user__name__sub-title">
+                                                    <span>
+                                                        {limitString(notification?.content, 100)}
+                                                    </span>
+                                                </div>
+                                                <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
+                                                    <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {
+                                            userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification?._id) &&
+                                            <div className="user--right unseen-dot">
+
+                                            </div>
+                                        }
+                                    </Link>)
+                                })
+                            }
+                        </div>
+                    )}
+
                     {displayedOrderNotifications?.length > 0 && (
                         <div className="mb-12">
                             <h4>Đơn hàng</h4>

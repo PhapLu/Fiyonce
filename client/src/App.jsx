@@ -1,3 +1,4 @@
+// Imports
 import { createBrowserRouter, RouterProvider, useRoutes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
@@ -5,7 +6,6 @@ import 'boxicons';
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
-import Talents from "./components/talents/Talents";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
 import RenderNews from "./components/crudNews/render/RenderNews";
@@ -25,11 +25,10 @@ import ExploreCommissionServices from "./explore/exploreCommissionServices/Explo
 import Layout from "./pages/layout/Layout.jsx";
 import Challenge from "./pages/challenge/Challenge.jsx";
 
-// Statics
+// Static pages
 import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
 import Glaze from "./statics/glaze/Glaze.jsx";
 import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
-
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
@@ -50,10 +49,70 @@ import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
 import HelpCenter from "./help/center/HelpCenter.jsx";
 import UpgradeAccount from "./components/upgradeAccount/UpgradeAccount.jsx";
 import MyProfile from "./profile/myProfile/MyProfile.jsx";
+import RenderTalentRequest from "./components/upgradeAccount/RenderTalentRequest.jsx";
+import SearchResult from "./pages/searchResult/SearchResult.jsx";
+import RenderCommissionOrder from "./components/crudCommissionOrder/render/RenderCommissionOrder.jsx";
+import CreateProposal from "./components/crudProposal/create/CreateProposal.jsx";
+import UpdateCommissionOrder from "./components/crudCommissionOrder/update/UpdateCommissionOrder.jsx";
+import RenderProposals from "./components/crudProposal/render/RenderProposals.jsx";
+import RenderProposal from "./components/crudProposal/render/RenderProposal.jsx";
+import RejectCommissionOrder from "./components/crudCommissionOrder/reject/RejectCommissionOrder.jsx";
+import CommissionOrderLayout from "./components/crudCommissionOrder/layout/CommissionOrderLayout.jsx";
+import StartWipCommissionOrder from "./components/crudCommissionOrder/startWip/StartWipCommissionOrder.jsx";
 
 const queryClient = new QueryClient();
 
+const commissionOrderRoutes = [
+  {
+    path: "commission-orders/:commission-order-id",
+    element: <CommissionOrderLayout />,
+    children: [
+      // CRUD commission order
+      {
+        path: "",
+        element: <RenderCommissionOrder />,
+      },
+      {
+        path: "update",
+        element: <UpdateCommissionOrder />,
+      },
+
+      // CRUD proposals
+      {
+        path: "proposals",
+        element: <RenderProposals />,
+      },
+      {
+        path: "proposals/:proposal-id",
+        element: <RenderProposal />,
+      },
+      {
+        path: "create-proposal",
+        element: <CreateProposal />,
+      },
+
+      // Other operations
+      {
+        path: "reject",
+        element: <RejectCommissionOrder />,
+      },
+      {
+        path: "start-wip",
+        element: <StartWipCommissionOrder />,
+      },
+      {
+        path: "complete",
+        element: <StartWipCommissionOrder />,
+      },
+    ],
+  },
+];
+
+
+
+
 const routes = [
+  // Static pages
   {
     path: "/help-center",
     element: <HelpCenter />,
@@ -76,6 +135,8 @@ const routes = [
       },
     ]
   },
+
+  // Manage profile/portfolio
   {
     path: "/users/:userId",
     element: <ProfileLayout />,
@@ -90,6 +151,12 @@ const routes = [
         path: "/users/:userId/upgrade-account",
         element: (
           <UpgradeAccount />
+        ),
+      },
+      {
+        path: "/users/:userId/render-talent-request",
+        element: (
+          <RenderTalentRequest />
         ),
       },
       {
@@ -133,10 +200,6 @@ const routes = [
         ]
       },
       {
-        path: "/users/:userId/order-history",
-        element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
-      },
-      {
         path: "/users/:userId/basic-info",
         element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
       },
@@ -146,6 +209,8 @@ const routes = [
       },
     ],
   },
+
+  // Explore layout
   {
     path: "/",
     element: <ExploreLayout />,
@@ -177,24 +242,37 @@ const routes = [
     ],
   },
 
+  // General Layout
   {
     path: "/",
     element: <Layout />,
     children: [
       {
-        path: "/commission-market",
-        element: <CommissionMarket />,
+        path: "order-history",
+        element: <ProtectedRoute allowedRoles={['all']}><OrderHistory /></ProtectedRoute>,
+        children: commissionOrderRoutes,
       },
       {
-        path: "/challenges",
+        path: "commission-market",
+        element: <CommissionMarket />,
+        children: commissionOrderRoutes
+      },
+      {
+        path: "challenges",
         element: <Challenge />,
       },
       {
-        path: "/newss/:newsId",
+        path: "newss/:newsId",
         element: <RenderNews />,
+      },
+      {
+        path: "search",
+        element: <SearchResult />,
       },
     ]
   },
+
+  // Admin dashboard
   {
     path: "/dashboard/",
     element: <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /></ProtectedRoute>,
@@ -229,6 +307,8 @@ const routes = [
       },
     ],
   },
+
+  // Other pages
   {
     path: "/forbidden",
     element: <Forbidden />,

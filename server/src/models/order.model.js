@@ -26,6 +26,7 @@ const OrderSchema = new mongoose.Schema(
                 "rejected",
                 "confirmed",
                 "in_progress",
+                "delivered",
                 "finished",
                 "under_processing",
             ],
@@ -63,6 +64,13 @@ const OrderSchema = new mongoose.Schema(
             comment: { type: String },
         },
         momoOrderId: { type: String },
+        startWipAt: { type: Date },
+        finalDelivery: {
+            note: { type: String, default: "" },
+            url: { type: String, default: "" },
+            files: [{ type: String, default: [] }],
+            finishedAt: { type: Date }
+        }
     },
     {
         timestamps: true,

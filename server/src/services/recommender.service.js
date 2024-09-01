@@ -5,12 +5,14 @@ import { AuthFailureError, BadRequestError } from "../core/error.response.js"
 import { CLIENT_RENEG_LIMIT } from "tls"
 
 class RecommenderService {
+    // Search for exactly matching keyword
     static search = async (query) => {
         if (!query.searchTerm) throw new BadRequestError("Invalid search Term")
         const searchRegex = new RegExp(query.searchTerm, 'i') // 'i' for case-insensitive search
         const userResults = await User.find({
             $or: [
                 { fullName: { $regex: searchRegex } },
+                { stageName: { $regex: searchRegex } },
                 { email: { $regex: searchRegex } },
                 { bio: { $regex: searchRegex } },
             ]
@@ -20,6 +22,70 @@ class RecommenderService {
             userResults,
             // artworkResults
         }
+    }
+
+    // Search for nearly matching keyword (top 20 relevant talent/service results)
+    static readSearchResults = async (query) => {
+        console.log("OOO")
+        console.log(query)
+        if (!query.searchTerm) throw new BadRequestError("Invalid search Term");
+
+        const caseSensitiveRegex = new RegExp(`^${query.searchTerm}$`); // Exact case-sensitive match
+        const caseInsensitiveRegex = new RegExp(query.searchTerm, 'i'); // Case-insensitive match
+
+        // Step 1: Search for case-sensitive matches in Users
+        const caseSensitiveUserResults = await User.find({
+            $or: [
+                { fullName: { $regex: caseSensitiveRegex } },
+                { stageName: { $regex: caseSensitiveRegex } },
+                { email: { $regex: caseSensitiveRegex } },
+                { bio: { $regex: caseSensitiveRegex } },
+            ]
+        }).limit(20);
+
+        // Step 2: Search for case-insensitive matches excluding those already found
+        const caseInsensitiveUserResults = await User.find({
+            $or: [
+                { fullName: { $regex: caseInsensitiveRegex } },
+                { stageName: { $regex: caseInsensitiveRegex } },
+                { email: { $regex: caseInsensitiveRegex } },
+                { bio: { $regex: caseInsensitiveRegex } },
+            ],
+            _id: { $nin: caseSensitiveUserResults.map(result => result._id) } // Exclude already found results
+        }).limit(20 - caseSensitiveUserResults.length);
+
+        // Combine user results, prioritizing case-sensitive matches
+        const userResults = [...caseSensitiveUserResults, ...caseInsensitiveUserResults];
+
+        // Step 3: Search for case-sensitive matches in Services
+        const caseSensitiveServiceResults = await CommissionService.find({
+            $or: [
+                { title: { $regex: caseSensitiveRegex } },
+                { description: { $regex: caseSensitiveRegex } },
+                { notes: { $regex: caseSensitiveRegex } },
+            ]
+        }).limit(20);
+
+        // Step 4: Search for case-insensitive matches excluding those already found
+        const caseInsensitiveServiceResults = await CommissionService.find({
+            $or: [
+                { title: { $regex: caseInsensitiveRegex } },
+                { description: { $regex: caseInsensitiveRegex } },
+                { notes: { $regex: caseInsensitiveRegex } },
+            ],
+            _id: { $nin: caseSensitiveServiceResults.map(result => result._id) } // Exclude already found results
+        }).limit(20 - caseSensitiveServiceResults.length);
+
+        // Combine service results, prioritizing case-sensitive matches
+        const serviceResults = [...caseSensitiveServiceResults, ...caseInsensitiveServiceResults];
+
+        console.log("PPP")
+        console.log(userResults)
+        console.log(serviceResults)
+        return {
+            userResults,
+            serviceResults
+        };
     }
 
     static readPopularPosts = async (req) => {
@@ -79,7 +145,6 @@ class RecommenderService {
                     },
                 },
             ])
-
 
             const minValues = minMaxValues.minValues[0] || {}
             const maxValues = minMaxValues.maxValues[0] || {}
@@ -831,7 +896,7 @@ class RecommenderService {
                     const followersScaled = (maxFollowersCount === minFollowersCount)
                         ? 0
                         : (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount)
-                    const artistViewsScaled =  (maxArtistViews === minArtistViews) ? 0 :
+                    const artistViewsScaled = (maxArtistViews === minArtistViews) ? 0 :
                         (talent.views - minArtistViews) /
                         (maxArtistViews - minArtistViews)
                     const ageInHours =

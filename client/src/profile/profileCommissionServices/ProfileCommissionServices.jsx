@@ -295,7 +295,6 @@ export default function ProfileCommissionServices() {
                                 </>
                             }
 
-
                             <h4 className="profile-commission-service__category-item__header">{category.title}</h4>
                             <br />
                             <div className="profile-commission-service__category-item__service-container">

@@ -15,7 +15,7 @@ import { useSetting } from "../../contexts/setting/SettingContext.jsx";
 export default function Auth() {
     const { userInfo, showMenu, setShowMenu, showLoginForm, showRegisterForm, showResetPasswordForm, showSetNewPasswordForm, setShowLoginForm, setShowRegisterForm, showRegisterVerificationForm, overlayVisible, setOverlayVisible } = useAuth();
     const { theme, setTheme } = useSetting();
-    
+
     // Toggle display menu
     const menuRef = useRef();
 
@@ -67,10 +67,12 @@ export default function Auth() {
                         <div className="modal-form type-1 login">
                             <div className="modal-form--left">
                                 <img src={AuthenticationImg} className="modal-form__img" alt="Authentication image" />
-                                <h2>Pastal</h2>
-                                <span className="line"></span>
-                                <p>Nền tảng vẽ tranh theo yêu cầu <br />hàng đầu tại Việt Nam</p>
-                                <p className="mt-32">Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ em vùng cao, trồng thêm cây xanh, và tạo sân chơi nuôi dưỡng đam mê hội họa cho các thế hệ họa sĩ tiếp theo.</p>
+                                <div className="modal-form__content">
+                                    <h1 className="mb-8">Pastal</h1>
+                                    <span className="line"></span>
+                                    <p>Nền tảng vẽ tranh theo yêu cầu <br />hàng đầu tại Việt Nam</p>
+                                    <p className="mt-32">Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ em vùng cao, trồng thêm cây xanh, và tạo sân chơi nuôi dưỡng đam mê hội họa cho các thế hệ họa sĩ tiếp theo.</p>
+                                </div>
                                 <p className="modal-form__img-reference">sáng tác bởi @re_name</p>
                             </div>
                             <div className="modal-form--right">

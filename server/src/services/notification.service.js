@@ -75,6 +75,15 @@ class NotificationService {
                 content = `${user.fullName} đã từ chối commission của bạn`;
                 notificationType = "order";
                 break;
+            case "confirmTalentRequest":
+                content = `Admin đã chấp nhận yêu cầu nâng cấp tài khoản của bạn`;
+                notificationType = "system";
+                break;
+            case "denyTalentRequest":
+                content = `Admin đã từ chối yêu cầu nâng cấp tài khoản của bạn`;
+                notificationType = "system";
+                break;
+
             default:
                 throw new BadRequestError("Invalid type");
         }
