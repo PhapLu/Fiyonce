@@ -55,6 +55,51 @@ export const compressAndUploadImage = async ({
     }
 }
 
+export const uploadFinalProduct = async ({
+    buffer,
+    originalname,
+    folderName,
+}) => {
+    try {
+        // Slice the originalname to just 30 characters and append the current time
+        const slicedOriginalName = originalname.slice(0, 30);
+        const currentTime = new Date().toISOString().replace(/:/g, "-"); // Replace colons to avoid issues with file names
+        const finalName = `${slicedOriginalName}_${currentTime}`;
+
+        // Function to upload image to Cloudinary without compression
+        const streamUpload = async (buffer) => {
+            return new Promise((resolve, reject) => {
+                const uploadStream = cloudinary.uploader.upload_stream(
+                    {
+                        resource_type: "image",
+                        public_id: finalName,
+                        folder: folderName,
+                    },
+                    (error, result) => {
+                        if (error) {
+                            console.error("Cloudinary upload error:", error);
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+                );
+
+                const bufferStream = new stream.PassThrough();
+                bufferStream.end(buffer);
+                bufferStream.pipe(uploadStream);
+            });
+        };
+
+        // Perform the upload without modifying the original buffer
+        const uploadResult = await streamUpload(buffer);
+        return uploadResult;
+    } catch (error) {
+        console.error("Error in uploadFinalProduct:", error);
+        throw error;
+    }
+};
+
 export const extractPublicIdFromUrl = (url) => {
     const urlObj = new URL(url)
     const pathParts = urlObj.pathname.split("/")
