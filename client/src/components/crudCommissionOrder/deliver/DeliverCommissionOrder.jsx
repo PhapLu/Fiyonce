@@ -18,16 +18,27 @@ export default function DeliverCommissionOrder() {
 
     const [errors, setErrors] = useState({});
     const [isSubmitDeliverCommissionOrderLoading, setIsSubmitDeliverCommissionOrderLoading] = useState(false);
+    const [isDeliverCommissionOrderSuccess, setIsDeliverCommissionOrderSuccess] = useState(false);
     const [selectedReason, setSelectedReason] = useState("");
     const [otherReason, setOtherReason] = useState("");
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
     // Toggle display modal form
+    const closeDeliverCommissionOrderView = () => {
+        if (location.pathname.includes("commission-market")) {
+            navigate("/commission-market");
+        } else {
+            navigate("/order-history");
+        }
+    }
+
     const commissionOrderRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (commissionOrderRef && commissionOrderRef.current && !commissionOrderRef.current.contains(e.target)) {
-                setShowDeliverCommissionOrder(false);
-                setOverlayVisible(false);
+                closeDeliverCommissionOrderView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -49,8 +60,7 @@ export default function DeliverCommissionOrder() {
                     status: "success",
                     message: "Đã xác nhận thực hiện đơn hàng",
                 });
-                setShowDeliverCommissionOrder(false);
-                setOverlayVisible(false);
+                closeDeliverCommissionOrderView();
             }
 
             // const senderId = userInfo._id;
@@ -59,7 +69,6 @@ export default function DeliverCommissionOrder() {
             // const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
             // const notificationData = response2.data.metadata.notification;
             // socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
-
         } catch (error) {
             console.error("Failed to submit:", error);
             setErrors((prevErrors) => ({
@@ -75,37 +84,42 @@ export default function DeliverCommissionOrder() {
         <div className="overlay">
             <div className="deliver-commission-order modal-form type-3 sm" ref={commissionOrderRef} onClick={(e) => { e.stopPropagation() }}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                    setShowDeliverCommissionOrder(false);
-                    setOverlayVisible(false);
+                    closeDeliverCommissionOrderView();
                 }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
                 <h2 className="form__title">Hoàn tất đơn hàng</h2>
-                <div className="form-field">
-                    <p className="highlight-bg-text text-align-justify">
-                        Khi khách hàng xác nhận "Đã nhận được hàng", bạn sẽ nhận được tiền thù lao của mình.
-                        Sau 07 ngày kể từ thời điểm hoàn tất, nếu không có báo cáo vi phạm từ phía khách hàng thì tiền sẽ được chuyển vào tài khoản mà bạn liên kết với Pastal.
-                    </p>
-                </div>
 
-                <p className="mt-8 mb-32 text-align-center">
-                    Pastal Team chúc bạn làm việc vui vẻ, giữ sức khỏe và đạt được trạng thái tốt nhất khi thực hiện dịch vụ trên nền tảng <span className="fs-20">💝</span>.
-                </p>
-                <div className="form-field">
-                    <button
-                        type="submit"
-                        className="form-field__input btn btn-2 btn-md"
-                        onClick={handleSubmit}
-                        disabled={isSubmitDeliverCommissionOrderLoading}
-                    >
-                        {isSubmitDeliverCommissionOrderLoading ? (
-                            <span className="btn-spinner"></span>
-                        ) : (
-                            "Xác nhận"
-                        )}
-                    </button>
-                </div>
-            </div>
-        </div>
+                {
+                    isDeliverCommissionOrderSuccess ? (
+                        <p className="mt-8 mb-32 text-align-center">
+                            Tadaaa, chúc mừng bạn đã hoàn thành đơn hàng cho khách và đóng góp vào các hoạt động cải thiện bữa ăn cho trẻ em vùng cao cũng như trồng thêm cây xanh. Pastal Team chúc bạn sớm có những đơn hàng kế tiếp và luôn đạt được trạng thái tốt nhất khi làm việc trên nền tảng. <span className="fs-20">🎉</span>.
+                        </p>
+                    ) : (
+                        <>
+                            <div className="form-field">
+                                <p className="highlight-bg-text text-align-justify fs-12">
+                                    Nếu khách hàng hài lòng với chất lượng sản phẩm và chọn "Đã nhận được hàng", 95.5% giá trị đơn hàng sẽ được chuyển ngay vào tài khoản thanh toán mà bạn liên kết với Pastal.
+                                    Nếu sau 07 ngày kể từ khi hoàn tất giao dịch mà không có phản hồi và báo cáo vi phạm từ phía khách hàng, giá trị đơn hàng sẽ tự động được chuyển vào tài khoản của bạn.
+                                </p>
+                            </div>
+                            <div className="form-field">
+                                <button
+                                    type="submit"
+                                    className="form-field__input btn btn-2 btn-md"
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitDeliverCommissionOrderLoading}
+                                >
+                                    {isSubmitDeliverCommissionOrderLoading ? (
+                                        <span className="btn-spinner"></span>
+                                    ) : (
+                                        "Xác nhận"
+                                    )}
+                                </button>
+                            </div >
+                        </>
+                    )}
+            </div >
+        </div >
     );
 }

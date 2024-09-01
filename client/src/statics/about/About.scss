@@ -1,0 +1,91 @@
+.about {
+    .development-story {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            font-size: 4rem;
+            line-height: 5rem;
+            font-weight: bold;
+        }
+
+        hr {
+            width: 28px;
+            margin: 20px 0;
+            height: 6px;
+            border-radius: 8px;
+            background-color: var(--gray-3-color);
+            text-align: left;
+        }
+
+        h4 {
+            font-size: 1.8rem;
+            opacity: 0.7;
+        }
+
+        .development-story--left {
+            width: 30%;
+        }
+
+        .development-story--right {
+            width: 65%;
+            text-align: justify;
+        }
+    }
+
+    .office {
+        img {
+            width: 100%;
+            height: 400px;
+        }
+    }
+
+    .core-values {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .core-values--left {
+            width: 65%;
+
+            .core-value-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+
+                .core-value-item {
+                    border: 1px solid var(--gray-1-color);
+                    border-radius: 16px;
+
+                    .core-value-item__ic-bg {
+                        background-color: #ED0000;
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 8px;
+                        vertical-align: center;
+                        line-height: 40px;
+                        text-align: center;
+
+                        svg {
+                            color: white;
+                        }
+                    }
+
+                    .core-value-item__title {
+                        color: #ED0000;
+                    }
+
+                    .core-value__description {
+                        color: var(--gray-4-color);
+                    }
+                }
+            }
+        }
+
+        .core-values--right {
+            width: 30%;
+
+        }
+    }
+}

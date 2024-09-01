@@ -51,13 +51,13 @@ const UserSchema = new Schema(
             isComplete: { type: Boolean, default: false },
             awardedAt: { type: Date, default: null }
         }],
-        referral: { 
+        referral: {
             code: { type: String, default: "" },
             referred: [{ type: Schema.Types.ObjectId, ref: "User" }]
         },
         pronoun: { type: String, default: "" },
         dob: { type: Date, default: null },
-        socialLinks: [{ type: String, required: true, default: []}],
+        socialLinks: [{ type: String, required: true, default: [] }],
         views: { type: Number, default: 0 },
         postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post", default: [] }],
         commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service", default: [] }],
@@ -70,7 +70,7 @@ const UserSchema = new Schema(
         },
         followers: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         following: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
-        taxCode:{
+        taxCode: {
             code: { type: String, default: "" },
             isVerified: { type: Boolean, default: false },
             message: { type: String, default: "" }
@@ -81,6 +81,7 @@ const UserSchema = new Schema(
         },
         accessToken: { type: String, default: '' },
         qrCode: { type: String, default: '' }, //Base 64
+        workQueue: { type: String, default: '' },
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: { type: String, default: "" },

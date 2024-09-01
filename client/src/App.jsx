@@ -28,7 +28,7 @@ import Challenge from "./pages/challenge/Challenge.jsx";
 // Static pages
 import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
 import Glaze from "./statics/glaze/Glaze.jsx";
-import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
+import About from "./statics/about/About.jsx";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
@@ -136,8 +136,8 @@ const routes = [
         element: <Glaze />,
       },
       {
-        path: "/statics/about-team",
-        element: <AboutTeam />,
+        path: "/statics/about",
+        element: <About />,
       },
     ]
   },

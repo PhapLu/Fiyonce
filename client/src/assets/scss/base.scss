@@ -204,7 +204,15 @@ body {
         flex-wrap: wrap;
         align-items: flex-start;
     }
+}
 
+.display-flex {
+    display: flex !important;
+}
+
+.display-flex-wrap {
+    display: flex !important;
+    flex-wrap: wrap;
 }
 
 .display-block {
@@ -1292,6 +1300,35 @@ table {
         &[type="submit"] {
             border: none;
         }
+    }
+}
+
+.collation-form {
+    display: flex;
+    align-items: center;
+
+    .collation-form__section {
+        &.search {
+            width: 30%;
+        }
+
+        &.filter {
+            // width: 50%;
+        }
+
+        &.sort {
+            width: 35%;
+        }
+
+        display: flex;
+        align-items: center;
+        margin-right: 28px;
+
+        .form-field {
+            // display: inline-block;
+            margin: 0 8px 0;
+        }
+
     }
 }
 

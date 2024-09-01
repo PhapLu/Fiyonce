@@ -246,6 +246,10 @@ export default function MenuBar() {
 
                             <span className="dropdown-menu-item__title">Đăng xuất</span>
                         </li>
+
+                        <span className="dropdown-menu-statics">
+                            &#169; Pastal <span className="dot-delimiter sm"></span> <Link to="/help-center">Trung tâm trợ giúp</Link> <span className="dot-delimiter sm"></span> <Link to="/statics/about">Về chúng tôi</Link> <span className="dot-delimiter sm"></span> <Link to="term-of-services">Điều khoản dịch vụ</Link>
+                        </span>
                     </>
                 )
             }

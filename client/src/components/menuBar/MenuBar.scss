@@ -84,4 +84,22 @@
             }
         }
     }
+
+    .dropdown-menu-statics {
+        font-size: 1.2rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 4px 12px;
+        color: var(--gray-3-color);
+
+        a {
+            color: var(--gray-3-color);
+
+            &:hover {
+                color: var(--gray-5-color);
+                text-decoration: underline;
+            }
+        }
+    }
 }

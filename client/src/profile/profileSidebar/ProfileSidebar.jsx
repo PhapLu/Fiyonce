@@ -471,11 +471,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
                                 </div>
                             </>
-
                         )
                     }
-
-
 
                     <div className="form-field">
                         <label htmlFor="pronoun" className="form-field__label">Pronoun</label>
@@ -567,6 +564,21 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     </div>
 
                     <div className="form-field">
+                        <label htmlFor="workQueueUrl" className="form-field__label">To-dos</label>
+                        <span className="form-field__annotation">Liên kết to-do list của bạn (vd Trello, Jira, v.v)</span>
+                        <input
+                            type="text"
+                            id="workQueueUrl"
+                            name="workQueueUrl"
+                            value={inputs?.workQueueUrl || ""}
+                            onChange={handleChange}
+                            className="form-field__input"
+                            placeholder="Nhập đường dẫn đến to-do list của bạn"
+                        />
+                        {errors.workQueueUrl && <span className="form-field__error">{errors.workQueueUrl}</span>}
+                    </div>
+
+                    <div className="form-field">
                         {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                     </div>
 
@@ -589,13 +601,13 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             ) : (
                 <>
                     <div className="sidebar__name">
-                        <p className="sidebar__name__fullName">{profileInfo?.fullName}</p>
+                        <p className="sid                         ebar__name__fullName">{profileInfo?.fullName}</p>
                         <div className="flex-justify-center flex-align-center">
                             {
                                 profileInfo?.stageName && profileInfo?.pronoun
                                     ? (<><span className="sidebar__name__stageName">{profileInfo?.stageName}</span><span className="dot-delimiter sm ml-8 mr-8"></span>
                                         <span className="sidebar__name__stageName">{displayPronoun(profileInfo?.pronoun)}</span></>) :
-                                    profileInfo?.stageName ? <span className="sidebar__name__stageName">{profileInfo?.stageName}</span> :
+                                    profileInfo?.stageName ? <span className="sidebar__name__stageName">@{profileInfo?.stageName}</span> :
                                         profileInfo?.pronoun &&
                                         <span className="sidebar__name__stageName">{displayPronoun(profileInfo?.pronoun)}</span>}
                         </div>
@@ -726,9 +738,16 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     )
                                 }
                             </div>
-
                         </div>}
-
+                    {
+                        !profileInfo?.workQueueUrl &&
+                        (<Link to={"https://trello.com/b/DxDwAoal/commissions?fbclid=IwY2xjawFA7o9leHRuA2FlbQIxMAABHQ88lCaL84OXRrsMw5-oKKd9cJd14x1wYdNV79vMQRrl9REFl9eXVxi3xQ_aem_87n6hYqHaE4mwu0K8eFABw" || profileInfo?.workQueueUrl} target="_blank" className="sidebar__btn btn btn-md btn-4" onClick={() => setOpenEditProfileForm(true)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                            <span>To-do list</span>
+                        </Link>)
+                    }
                     {
                         isProfileOwner && (
                             <>
@@ -736,7 +755,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                     </svg>
-
                                     <span>Chỉnh sửa thông tin</span>
                                 </button>
 
