@@ -11,16 +11,13 @@ import { useAuth } from "../../../contexts/auth/AuthContext";
 
 // Styling
 
-export default function StartWipCommissionOrder() {
+export default function FinishCommissionOrder() {
     // Return null if the commission order to be completeed is not specified
-    if (!commissionOrder) {
-        return null;
-    }
     const { userInfo, socket } = useAuth();
     const { setModalInfo } = useModal();
 
     const [errors, setErrors] = useState({});
-    const [isSubmitStartWipCommissionOrderLoading, setIsSubmitStartWipCommissionOrderLoading] = useState(false);
+    const [isSubmitFinishCommissionOrderLoading, setIsSubmitFinishCommissionOrderLoading] = useState(false);
     const [selectedReason, setSelectedReason] = useState("");
     const [otherReason, setOtherReason] = useState("");
 
@@ -29,7 +26,7 @@ export default function StartWipCommissionOrder() {
     useEffect(() => {
         let handler = (e) => {
             if (commissionOrderRef && commissionOrderRef.current && !commissionOrderRef.current.contains(e.target)) {
-                setShowStartWipCommissionOrder(false);
+                setShowFinishCommissionOrder(false);
                 setOverlayVisible(false);
             }
         };
@@ -41,7 +38,7 @@ export default function StartWipCommissionOrder() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitStartWipCommissionOrderLoading(true);
+        setIsSubmitFinishCommissionOrderLoading(true);
 
         try {
             console.log(commissionOrder._id)
@@ -52,7 +49,7 @@ export default function StartWipCommissionOrder() {
                     status: "success",
                     message: "Đã xác nhận thực hiện đơn hàng",
                 });
-                setShowStartWipCommissionOrder(false);
+                setShowFinishCommissionOrder(false);
                 setOverlayVisible(false);
             }
 
@@ -70,7 +67,7 @@ export default function StartWipCommissionOrder() {
                 serverError: error.response?.data?.message,
             }));
         } finally {
-            setIsSubmitStartWipCommissionOrderLoading(false);
+            setIsSubmitFinishCommissionOrderLoading(false);
         }
     };
 
@@ -78,16 +75,16 @@ export default function StartWipCommissionOrder() {
         <div className="overlay">
             <div className="complete-commission-order modal-form type-3 sm" ref={commissionOrderRef} onClick={(e) => { e.stopPropagation() }}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                    setShowStartWipCommissionOrder(false);
+                    setShowFinishCommissionOrder(false);
                     setOverlayVisible(false);
                 }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <h2 className="form__title">Bắt đầu thực hiện đơn</h2>
+                <h2 className="form__title">Hoàn tất đơn hàng</h2>
                 <div className="form-field">
                     <p className="highlight-bg-text text-align-justify">
-                        Bằng cách xác nhận, Pastal sẽ thông báo đến khách hàng rằng bạn đã bắt đầu thực hiện đơn hàng.
-                        Sau khi hoàn thành đơn hàng và bàn giao cho khách, hãy nhớ click vào nút "Hoàn tất" nhé.
+                        Khi khách hàng xác nhận "Đã nhận được hàng", bạn sẽ nhận
+                        Sau 07 ngày kể từ thời điểm hoàn tất, nếu không có báo cáo vi phạm gì thì tiền sẽ được chuyển vào tài khoản mà bạn liên kết với Pastal.
                     </p>
                 </div>
 
@@ -99,9 +96,9 @@ export default function StartWipCommissionOrder() {
                         type="submit"
                         className="form-field__input btn btn-2 btn-md"
                         onClick={handleSubmit}
-                        disabled={isSubmitStartWipCommissionOrderLoading}
+                        disabled={isSubmitFinishCommissionOrderLoading}
                     >
-                        {isSubmitStartWipCommissionOrderLoading ? (
+                        {isSubmitFinishCommissionOrderLoading ? (
                             <span className="btn-spinner"></span>
                         ) : (
                             "Xác nhận"

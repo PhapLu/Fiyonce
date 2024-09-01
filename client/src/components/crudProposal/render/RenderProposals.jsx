@@ -57,8 +57,11 @@ export default function RenderProposals() {
 
 
     const closeRenderProposalsView = () => {
-        navigate(-1);
-        // navigate(commissionOrder?.isDirect ? `/order-history` : `/commission-market`);
+        if (location.pathname.includes("commisison-market")) {
+            navigate("/commission-market")
+        } else {
+            navigate("/order-history")
+        }
     }
 
     const renderProposalsRef = useRef();

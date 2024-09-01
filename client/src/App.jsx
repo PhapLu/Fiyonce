@@ -59,6 +59,8 @@ import RenderProposal from "./components/crudProposal/render/RenderProposal.jsx"
 import RejectCommissionOrder from "./components/crudCommissionOrder/reject/RejectCommissionOrder.jsx";
 import CommissionOrderLayout from "./components/crudCommissionOrder/layout/CommissionOrderLayout.jsx";
 import StartWipCommissionOrder from "./components/crudCommissionOrder/startWip/StartWipCommissionOrder.jsx";
+import DeliverCommissionOrder from "./components/crudCommissionOrder/deliver/DeliverCommissionOrder.jsx";
+import FinishCommissionOrder from "./components/crudCommissionOrder/finish/FinishCommissionOrder.jsx";
 
 const queryClient = new QueryClient();
 
@@ -101,8 +103,12 @@ const commissionOrderRoutes = [
         element: <StartWipCommissionOrder />,
       },
       {
-        path: "complete",
-        element: <StartWipCommissionOrder />,
+        path: "deliver",
+        element: <DeliverCommissionOrder />,
+      },
+      {
+        path: "finish",
+        element: <FinishCommissionOrder />,
       },
     ],
   },

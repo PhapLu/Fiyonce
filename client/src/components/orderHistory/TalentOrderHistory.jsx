@@ -306,7 +306,7 @@ export default function TalentOrderHistory() {
                                                 <Link to={`/order-history/commission-orders/${order?._id}/start-wip`} aria-label="Bắt đầu thực hiện đơn hàng" className="btn btn-3 hover-display-label mr-8">Bắt đầu</Link>
                                             )}
                                             {order.status === "in_progress" && (
-                                                <Link to={`/order-history/commission-orders/${order?._id}/complete`} aria-label="Hoàn tất đơn hàng và giao cho khách" className="btn btn-3 hover-display-label mr-8">Hoàn tất</Link>
+                                                <Link to={`/order-history/commission-orders/${order?._id}/deliver`} aria-label="Hoàn tất đơn hàng và giao cho khách" className="btn btn-3 hover-display-label mr-8">Hoàn tất</Link>
                                             )}
                                         </>
                                         <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
