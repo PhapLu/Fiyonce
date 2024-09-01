@@ -1,5 +1,6 @@
 import Order from "../models/order.model.js"
 import { User } from "../models/user.model.js"
+import Review from "../models/review.model.js"
 import {
     AuthFailureError,
     BadRequestError,
@@ -13,112 +14,48 @@ class ReviewService {
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        if (order.memberId.toString() !== userId)
-            throw new AuthFailureError(
-                "Bạn không có quyền thực hiện thao tác này"
-            )
+        if (order.memberId.toString() !== userId && order.status !== "completed")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
-        //2. Create review
-        const review = {
-            userId: userId,
-            rating: body.rating,
-            comment: body.comment,
-        }
+        //2. Validate body
+        if (!body.rating)
+            throw new BadRequestError("Vui lòng nhập đủ thông tin")
 
-        //3. Create review (Update order)
-        await Order.findByIdAndUpdate(
+        //3. Create review
+        const review = await Review.create({
             orderId,
-            { $set: { review: review } },
-            { new: true }
-        )
-
-        return {
-            review: review,
-        }
-    }
-
-    static readReview = async (orderId) => {
-        // 1. Check order
-        const order = await Order.findById(orderId).populate(
-            "review.userId",
-            "stageName avatar"
-        )
-        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-
-        // 2. Return review
-        return {
-            review: order.review,
-        }
-    }
-
-    static readReviews = async (commissionServiceId) => {
-        //1. Find commission service
-        const orders = await Order.find({
-            commissionServiceId: commissionServiceId,
-        }).populate("review.userId", "stageName avatar")
-
-        //2. Calculate commissionService rating
-        let rating = 0
-        let count = 0
-        orders.forEach((order) => {
-            if (order.review) {
-                rating += order.review.rating
-                count++
-            }
+            reviewerId: userId,
+            reviewedUserId: order.talentChosenId,
+            content: body?.content,
+            rating: body?.rating,
         })
-        rating = rating / count
-        const reviews = orders.map((order) => order.review)
-        //3. Return reviews and commissionService rating
+
         return {
-            reviews,
-            rating,
+            review
         }
     }
 
-    static updateReview = async (userId, orderId, body) => {
-        //1. Check order, user
-        const user = await User.findById(userId)
-        const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        if (order.memberId.toString() !== userId)
-            throw new AuthFailureError(
-                "Bạn không có quyền thực hiện thao tác này"
-            )
-
-        //2. Update review (Update order)
-        body.userId = userId
-        const updatedOrder = await Order.findByIdAndUpdate(
-            orderId,
-            { $set: { review: body } },
-            { new: true }
-        ).populate("review.userId", "stageName avatar")
+    static readReview = async (reviewId) => {
+        // 1. Check review
+        const review = await Review.findById(reviewId)
+        if (!review) throw new NotFoundError("Không tìm thấy review")
 
         return {
-            review: updatedOrder.review,
+            review,
         }
     }
 
-    static deleteReview = async (userId, orderId) => {
-        //1. Check order, user
+    static readReviews = async (userId) => {
+        //1. Check user
         const user = await User.findById(userId)
-        const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        if (order.memberId.toString() !== userId)
-            throw new AuthFailureError(
-                "Bạn không có quyền thực hiện thao tác này"
-            )
+        if (!user) throw new NotFoundError("Không tìm thấy user")
 
-        //2. Delete review (Update order)
-        await Order.findByIdAndUpdate(
-            orderId,
-            { $unset: { review: "" } },
-            { new: true }
-        )
-
+        //2. Read reviews
+        const reviews = await Review.find({reviewedUserId: userId})
+        if (!reviews) throw new NotFoundError("Không tìm thấy review")
+        
         return {
-            message: "Review deleted successfully",
+            reviews
         }
     }
 }

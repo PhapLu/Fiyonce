@@ -10,6 +10,7 @@ const ReviewSchema = new mongoose.Schema(
         reviewedUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
         content: { type: String},
         rating: { type: Number, enum: [1,2,3,4,5], required: true },
+        hashtags: [{ type: String }],
     },{
         timestamps: true,
         collection: COLLECTION_NAME,
