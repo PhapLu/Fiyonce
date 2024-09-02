@@ -22,6 +22,15 @@ const CommissionReportSchema = new mongoose.Schema(
         },
         content: { type: String, required: true },
         evidences: [{ type: String, required: true }],
+        adminDecision: {
+            decision: {
+                type: String,
+                enum: ["client_favored", "artist_favored", "neutral"],
+                required: false,
+            },
+            reason: { type: String, default: '' },
+            notified: { type: Boolean, default: false },
+        },
     },{
         timestamps: true,
         collection: COLLECTION_NAME,

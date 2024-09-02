@@ -28,5 +28,7 @@ router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProp
 router.patch('/cancelOrder/:orderId', asyncHandler(orderController.cancelOrder))
 router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
 router.patch('/startWipCommissionOrder/:orderId', asyncHandler(orderController.startWipCommissionOrder))
+router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
+router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
 
 export default router

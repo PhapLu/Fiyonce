@@ -29,30 +29,22 @@ class OrderService {
         }
         const body = req.body
         const { isDirect, commissionServiceId, isWaitList} = body
-        const commissionService = await CommissionService.findById(
-            commissionServiceId
-        )
+        const commissionService = await CommissionService.findById(commissionServiceId)
         
         //2. Check isDirect of order
         let talent = null
         if (isDirect == 'true') {
             //direct order
-            const service = await CommissionService.findById(
-                commissionServiceId
-            )
-            const talentChosenId = service.talentId;
+            const talentChosenId = commissionService.talentId;
             talent = await User.findById(talentChosenId)
 
             if (!talent) throw new BadRequestError("Talent not found!")
-            if (!service)
-                throw new BadRequestError("commissionService not found!")
             if (talent.role != "talent")
                 throw new AuthFailureError("He/She is not a talent!")
             if (talent._id == userId)
                 throw new BadRequestError("You cannot choose yourself!")
             body.isDirect = true
             body.talentChosenId = talentChosenId
-            body.minPrice = commissionService.minPrice
             body.commissionServiceId = commissionServiceId
         } else {
             //inDirect order
@@ -618,6 +610,67 @@ class OrderService {
         return {
             order,
         };
+    }
+
+    // Talent delivers product 
+    static deliverOrder = async (userId, orderId, req) => {
+        //1. Check talent, order
+        const body = req.body
+        const talent = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!talent) throw new NotFoundError("Talent not found")
+        if(talent.role !== "talent") throw new BadRequestError("You are not a talent")
+        if (!order) throw new NotFoundError("Order not found")
+        if (order.talentChosenId.toString() !== userId) throw new AuthFailureError("You are not authorized to deliver this order")
+        if (order.status !== "in_progress") throw new BadRequestError("Order is not in progress")
+        console.log(order.finalDelivery);
+        //2. Deliver order
+        // Validate input
+        if(!req.files && !body?.url) 
+            throw new BadRequestError("No files or url provided for delivery")
+
+        // Upload new files to Cloudinary using uploadFinalProduct function
+        if(req.files && req.files.files && req.files.files.length > 0) {
+            const uploadPromises = req.files.files.map((file) =>
+                uploadFinalProduct({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/order/${userId}`,
+                })
+            )
+            const uploadResults = await Promise.all(uploadPromises)
+            const deliveryFiles = uploadResults.map((result) => result.secure_url)
+            order.finalDelivery.files = deliveryFiles
+        }
+        order.finalDelivery.url = body?.url
+        order.finalDelivery.note = body?.note
+        order.finalDelivery.deliveryAt = new Date()
+        order.status = "delivered"
+        await order.save()
+
+        return {
+            order,
+        }
+    }
+
+    // Client confirm finishing order
+    static finishOrder = async (userId, orderId) => {
+       //1. Check user, order
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        console.log(order.status);
+        if (!user) throw new NotFoundError("User not found")
+        if (!order) throw new NotFoundError("Order not found")
+        if (order.memberId.toString() !== userId) throw new AuthFailureError("You are not authorized to finish this order")
+        if(order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
+
+        //2. Finish order
+        order.status = "finished"
+        order.save()
+
+        return {
+            order
+        }
     }
 }
 

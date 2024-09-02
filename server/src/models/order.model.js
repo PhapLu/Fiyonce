@@ -28,6 +28,7 @@ const OrderSchema = new mongoose.Schema(
                 "in_progress",
                 "finished",
                 "under_processing",
+                "delivered"
             ],
             default: "pending",
         },
@@ -54,6 +55,13 @@ const OrderSchema = new mongoose.Schema(
         fileFormats: { type: [String], default: [] },
         momoOrderId: { type: String },
         deliverables: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artwork" }],
+        startWipAt: { type: Date },
+        finalDelivery: {
+            note: { type: String, default: "" },
+            url: { type: String, default: "" },
+            files: [{ type: String, default: [] }],
+            finishedAt: { type: Date }
+        }
     },{
         timestamps: true,
         collection: COLLECTION_NAME,

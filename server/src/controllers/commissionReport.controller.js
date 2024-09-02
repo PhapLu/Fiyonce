@@ -37,6 +37,19 @@ class ServiceController{
         }).send(res)
     }
 
+    adminReceiveReport = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Admin receive report success!',
+            metadata: await CommissionReportService.adminReceiveReport(req.userId, req.params.commissionReportId)
+        }).send(res)
+    }
+
+    adminMakeDecision = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Admin make decision success!',
+            metadata: await CommissionReportService.adminMakeDecision(req.userId, req.params.commissionReportId, req.body)
+        }).send(res)
+    }
 }
 
 export default new ServiceController()

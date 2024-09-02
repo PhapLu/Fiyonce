@@ -16,5 +16,7 @@ router.post('/createCommissionReport', uploadFields, asyncHandler(commissionRepo
 router.get('/readCommissionReports', accessService.grantAccess('readAny', 'profile'), asyncHandler(commissionReportController.readCommissionReports))
 router.patch('/updateCommissionReport/:commissionReportId', uploadFields, asyncHandler(commissionReportController.updateCommissionReport))
 router.delete('/deleteCommissionReport/:commissionReportId', asyncHandler(commissionReportController.deleteCommissionReport))
+router.patch('/adminReceiveReport/:commissionReportId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(commissionReportController.adminReceiveReport))
+router.patch('/adminMakeDecision/:commissionReportId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(commissionReportController.adminMakeDecision))
 
 export default router

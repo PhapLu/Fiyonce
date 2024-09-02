@@ -945,3 +945,15 @@ TypeError: Cannot read properties of undefined (reading 'replace')
     at OrderService.startWipCommissionOrder (file:///D:/Adam/OnisonProject/server/src/services/order.service.js:619:9)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async startWipCommissionOrder (file:///D:/Adam/OnisonProject/server/src/controllers/order.controller.js:96:23)::undefined
+2024-09-02 14:55:04::error::undefined::undefined::uncaughtException: Order validation failed: status: `delivered` is not a valid enum value for path `status`.
+ValidationError: Order validation failed: status: `delivered` is not a valid enum value for path `status`.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined
+2024-09-02 15:01:50::error::undefined::undefined::uncaughtException: Order validation failed: status: `delivered` is not a valid enum value for path `status`.
+ValidationError: Order validation failed: status: `delivered` is not a valid enum value for path `status`.
+    at Document.invalidate (D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:3197:32)
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\document.js:2990:17
+    at D:\Adam\OnisonProject\server\node_modules\mongoose\lib\schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)::undefined

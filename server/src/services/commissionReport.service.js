@@ -11,6 +11,8 @@ import {
     deleteFileByPublicId,
 } from "../utils/cloud.util.js"
 import Order from "../models/order.model.js"
+import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
+import { formatDate } from "../utils/index.js"
 
 class CommissionReportService {
     static createCommissionReport = async (userId, req) => {
@@ -193,7 +195,7 @@ class CommissionReportService {
         }
     }
 
-    static adminReceiveOrder = async (userId, commissionReportId) => {
+    static adminReceiveReport = async (userId, commissionReportId) => {
         //1. Check if user, commissionReport exists
         const user = await User.findById(userId);
         const commissionReport = await CommissionReport.findById(commissionReportId)
@@ -211,6 +213,41 @@ class CommissionReportService {
         const orderCode = `Mã đơn hàng: ${order._id.toString()}`
         const reason = `Nội dung vi phạm: ${commissionReport.content}`
         sendAnnouncementEmail(order.memberId.email, subject, message, orderCode, reason);
+        sendAnnouncementEmail(order.talentChosenId.email, subject, message, orderCode, reason);
+
+        return {
+            commissionReport,
+        };
+    }
+
+    static adminMakeDecision = async( userId, commissionReportId, body) => {
+        //1. Check if user, commissionReport exists
+        const user = await User.findById(userId);
+        const commissionReport = await CommissionReport.findById(commissionReportId)
+        const order = await Order.findById(commissionReport.orderId)
+        .populate("memberId", "email")
+        .populate("talentChosenId", "email")
+
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (user.role !== "admin") throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
+        if (!commissionReport) throw new NotFoundError("Không tìm thấy báo cáo");
+
+        //2. Update commissionReport
+        commissionReport.adminDecision = { 
+            decision: body.decision, 
+            reason: body.reason, 
+            notified: true 
+        };
+        await commissionReport.save();
+
+        //3. Send email to user and talents
+        const subject = `[PASTAL] - Kết quả xử lí vi phạm (${formatDate()})`
+        const message = `Admin đã có quyết định với báo cáo vi phạm`
+        const orderCode = `Mã đơn hàng: ${order._id.toString()}`
+        const reason = `Nội dung vi phạm: ${commissionReport.content}`
+        sendAnnouncementEmail(order.memberId.email, subject, message, orderCode, reason);
+        sendAnnouncementEmail(order.talentChosenId.email, subject, message, orderCode, reason);
 
         return {
             commissionReport,
