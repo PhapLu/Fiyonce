@@ -11,6 +11,7 @@ router.get('/readHelpArticle/:helpArticleId', asyncHandler(helpController.readHe
 
 router.get('/readHelpTopics', asyncHandler(helpController.readHelpTopics))
 router.get('/readHelpArticles', asyncHandler(helpController.readHelpArticles))
+router.get('/readTopicAndArticlesByTheme', asyncHandler(helpController.readTopicAndArticlesByTheme))
 
 //authentication
 router.use(verifyToken)

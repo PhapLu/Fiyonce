@@ -1,0 +1,2 @@
+2024-09-03 08:44:26::error::/v1/api/user/me::2afacf0b-3bdd-4751-b3aa-0d9ff000a896::403 - 1ms - Response: {"status":403,"now":1725327866741}::{"message":"Access token missing"}
+2024-09-03 08:44:40::error::/v1/api/conversation/readConversations::5fcf87d1-c04b-43df-92f1-5b69dfd431d3::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading '_id')"}

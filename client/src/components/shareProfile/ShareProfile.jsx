@@ -17,8 +17,9 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
     // Toggle display modal form
     const shareProfileRef = useRef();
     useEffect(() => {
-        let handler = (e) => {
-            if (shareProfileRef && shareProfileRef.current && !shareProfileRef.current.contains(e.target)) {
+        const handler = (e) => {
+            if (shareProfileRef.current && !shareProfileRef.current.contains(e.target)) {
+                alert("abc")
                 setShowMoreProfileActions(false);
                 setOverlayVisible(false);
             }
@@ -27,7 +28,8 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    });
+    }, []);
+
 
     const handleCopyReferralCode = () => {
         if (profileInfo?.referral?.code) {

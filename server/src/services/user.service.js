@@ -10,8 +10,6 @@ import { trackActivity, trackTrustedArtistBadge } from '../utils/badgeTracking.u
 class UserService {
     //-------------------CRUD----------------------------------------------------
     static updateProfile = async (userId, profileId, body) => {
-        console.log("UPDATEEE")
-        console.log(body.pronoun)
         //1. Check user
         const profile = await User.findById(profileId)
         if (!profile) throw new NotFoundError("User not found")
@@ -24,16 +22,14 @@ class UserService {
             { $set: body },
             { new: true }
         ).populate("followers", "avatar").populate("following", "avatar fullName");
-        console.log(updatedUser)
 
         //3. Track TrustedArtistBadge criteria
-        if(updatedUser.bio !== '' && 
-            updatedUser.taxCode !== '' && 
-            updatedUser.taxCode.isVerified == true && 
-            updatedUser.cccd !== '' && 
-            !updatedUser.avatar.includes('pastal_system_default') && 
-            !updatedUser.bg.includes('pastal_system_default'))
-        {
+        if (updatedUser.bio !== '' &&
+            updatedUser.taxCode !== '' &&
+            updatedUser.taxCode.isVerified == true &&
+            updatedUser.cccd !== '' &&
+            !updatedUser.avatar.includes('pastal_system_default') &&
+            !updatedUser.bg.includes('pastal_system_default')) {
             await trackTrustedArtistBadge(userId, 'updateProfile')
         }
 
@@ -44,7 +40,10 @@ class UserService {
 
     static readUserProfile = async (profileId) => {
         //1. Check user
-        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
+        const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName").populate({
+            path: 'badges.badgeId', // Populate the badgeId in badges
+            select: 'title description icon level type' // Select the badge details you want
+        });;
         if (!userProfile)
             throw new NotFoundError("User not found");
 
@@ -150,13 +149,8 @@ class UserService {
         // Filter unseen conversations based on the last message
         const filteredUnSeenConversations = unSeenConversations.filter(conversation => {
             const lastMessage = conversation.messages[conversation.messages.length - 1];
-            console.log(lastMessage.senderId.toString() !== userId)
-            console.log(lastMessage.senderId._id)
             return lastMessage && !lastMessage.isSeen && lastMessage.senderId._id.toString() !== userId;
         });
-
-        console.log("DEF")
-        console.log(filteredUnSeenConversations)
 
         // Fetch unseen notifications
         const unSeenNotifications = await Notification.find({
@@ -203,10 +197,8 @@ class UserService {
     };
 
     static getUserByReferralCode = async (referralCode) => {
-        console.log("ppp")
-        console.log(referralCode)
         //1. Check referrer
-        const referrer = await User.findOne({'referral.code': referralCode})
+        const referrer = await User.findOne({ 'referral.code': referralCode })
         if (!referrer) throw new NotFoundError("Referrer not found")
 
         return {

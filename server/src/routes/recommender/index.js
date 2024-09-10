@@ -13,6 +13,7 @@ router.get('/readPopularCommissionServices', asyncHandler(recommenderController.
 router.get('/readLatestCommissionServices', asyncHandler(recommenderController.readLatestCommissionServices))
 
 router.use(verifyToken)
+router.get('/recommendUsersToFollow', asyncHandler(recommenderController.recommendUsersToFollow))
 router.get('/readFollowingPosts', asyncHandler(recommenderController.readFollowingPosts))
 router.get('/readFollowingCommissionServices',  asyncHandler(recommenderController.readFollowingCommissionServices))
 

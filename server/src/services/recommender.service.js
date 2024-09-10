@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError } from "../core/error.response.js"
 import { CLIENT_RENEG_LIMIT } from "tls"
 
+import mongoose from "mongoose"
+
 class RecommenderService {
     // Search for exactly matching keyword
     static search = async (query) => {
@@ -985,6 +987,81 @@ class RecommenderService {
             throw new BadRequestError("Failed to read following commission services")
         }
     }
+
+    static recommendUsersToFollow = async (userId) => {
+        try {
+            // Find user A (the logged-in user)
+            const userA = await User.findById(userId).populate('following');
+
+            if (!userA) {
+                throw new Error("User not found");
+            }
+
+            // Get the list of users that A is following
+            const followingList = userA.following.map(user => user._id);
+
+            // Find users that are followed by or following someone A follows
+            let recommendations = await User.aggregate([
+                {
+                    $match: {
+                        _id: { $ne: new mongoose.Types.ObjectId(userId) },
+                        $or: [
+                            { followers: { $in: followingList } },   // Users followed by someone A follows
+                            { following: { $in: followingList } }    // Users following someone A follows
+                        ]
+                    }
+                },
+                { $sample: { size: 10 } }  // Random sample of 10 users
+            ]);
+
+            // Populate additional fields
+            recommendations = await User.populate(recommendations, {
+                path: 'followers following badges',
+                select: 'avatar fullName stageName jobTitle followers following badges'
+            });
+
+            // Map to return only necessary fields
+            recommendations = recommendations.map(user => ({
+                _id: user._id,
+                avatar: user.avatar,
+                fullName: user.fullName,
+                stageName: user.stageName,
+                jobTitle: user.jobTitle,
+                followersCount: user.followers.length,
+                followingCount: user.following.length,
+                badges: user.badges
+            }));
+
+            // If not enough recommendations, fill with recently registered users
+            if (recommendations.length < 10) {
+                const additionalRecommendations = await User.find({
+                    _id: { $nin: recommendations.map(user => user._id).concat(userA._id) }
+                })
+                    .sort({ createdAt: -1 })  // Recently registered users
+                    .limit(10 - recommendations.length)
+                    .select('avatar fullName stageName jobTitle followers following badges');
+
+                additionalRecommendations.forEach(user => {
+                    recommendations.push({
+                        _id: user._id,
+                        avatar: user.avatar,
+                        fullName: user.fullName,
+                        stageName: user.stageName,
+                        jobTitle: user.jobTitle,
+                        followersCount: user.followers.length,
+                        followingCount: user.following.length,
+                        badges: user.badges
+                    });
+                });
+            }
+
+            return { usersToFollow: recommendations };
+
+        } catch (error) {
+            console.error("Error recommending users:", error);
+            throw error;
+        }
+    };
 }
 
 export default RecommenderService

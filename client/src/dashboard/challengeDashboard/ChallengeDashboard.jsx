@@ -20,6 +20,8 @@ import "./ChallengeDashboard.scss";
 import { isFilled } from '../../utils/validator';
 import { limitString } from '../../utils/formatter.js';
 import CreateBadge from '../../components/crudBadge/create/CreateBadge.jsx';
+import UpdateBadge from '../../components/crudBadge/update/UpdateBadge.jsx';
+import DeleteBadge from '../../components/crudBadge/delete/DeleteBadge.jsx';
 
 export default function ChallengeDashboard() {
     const [overlayVisible, setOverlayVisible] = useState(false);
@@ -302,6 +304,10 @@ export default function ChallengeDashboard() {
                 <div className="overlay">
                     {showCreateChallenge && <CreateChallenge setShowCreateChallenge={setShowCreateChallenge} setOverlayVisible={setOverlayVisible} createChallengeMutation={createChallengeMutation} />}
                     {showCreateBadge && <CreateBadge setShowCreateBadge={setShowCreateBadge} setOverlayVisible={setOverlayVisible} createBadgeMutation={createBadgeMutation} />}
+                    {showUpdateBadge && <UpdateBadge setShowUpdateBadge={setShowUpdateBadge} setOverlayVisible={setOverlayVisible} updateBadgeMutation={updateBadgeMutation} />}
+                    {showDeleteBadge && <DeleteBadge setShowDeleteBadge={setShowDeleteBadge} setOverlayVisible={setOverlayVisible} deleteBadgeMutation={deleteBadgeMutation} />}
+
+
                     {/* {showUpdateChallenge && <UpdateChallenge challenge={challenge} setShowUpdateChallenge={setShowUpdateChallenge} setOverlayVisible={setOverlayVisible} updateChallengeMutation={updateChallengeMutation} />}
                     {showDeleteChallenge && <DeleteChallenge challenge={challenge} setShowDeleteChallenge={setShowDeleteChallenge} setOverlayVisible={setOverlayVisible} deleteChallengeMutation={deleteChallengeMutation} />} */}
                 </div>

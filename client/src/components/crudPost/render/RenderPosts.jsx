@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useOutletContext, useParams } from "rea
 import Masonry from 'react-masonry-css';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { formatNumber } from "../../../utils/formatter.js";
+import { formatNumber, limitString } from "../../../utils/formatter.js";
 import "./RenderPosts.scss";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
@@ -360,6 +360,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                             </div> */}
                                         </div>
                                     </div>
+                                    <span className="fs-15 fw-600">{limitString(post?.description, 30)}</span>
                                     {
                                         isDisplayOwner && (
                                             <span>
@@ -371,7 +372,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                                             effect="blur"
                                                         />
                                                         <div className="user__name">
-                                                            <div className="user__name__title fw-600">{post?.talentId?.fullName}</div>
+                                                            <div className="user__name__title fw-500">{post?.talentId?.fullName}</div>
                                                         </div>
                                                     </Link>
                                                     {/* <div className="user--right flex-align-center">

@@ -1,0 +1,118 @@
+.help-center {
+    h1 {
+        font-size: 3.2rem;
+    }
+
+   
+    section {
+        margin-bottom: 80px;
+    }
+
+
+    .help-theme {
+        position: relative;
+        margin-bottom: 180px;
+
+
+        .help-theme__content {
+            position: absolute;
+            bottom: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 58%;
+            background-color: var(--form-bg-2-color);
+            border-radius: 20px;
+
+            h1 {}
+
+            .help-theme-container {
+                display: flex;
+                align-items: center;
+                border-radius: 20px;
+                padding: 28px 20px;
+                box-shadow: var(--box-shadow-4);
+
+                hr {
+                    height: 100px;
+                    width: 1px;
+                    margin: 12px;
+                }
+
+                .help-theme-item {
+                    padding: 12px 24px;
+                    width: 30%;
+
+                    .help-theme-item__title {}
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: var(--gray-1-color);
+                        border-radius: 16px;
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    .help-center__content {
+        // margin: 0 5%;
+
+
+
+        .faq-container {
+            // display: flex;
+            // justify-content: space-between;
+
+            // .faq--left {}
+
+            // .faq--right {
+
+            // }
+            text-align: center;
+            margin: 20px 30% 40px;
+
+            .faq-item {
+                font-size: 1.7rem;
+                padding: 12px 0;
+                border-bottom: 2px solid var(--gray-1-color);
+                transition: 0.5s ease;
+
+                .faq-question {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.7;
+                    }
+                }
+
+                .close-icon {
+                    width: 24px;
+                    height: 24px;
+                    transition: transform 0.3s ease;
+                }
+
+                .close-icon.rotate {
+                    transform: rotate(45deg);
+                    /* Rotate when expanded */
+                }
+
+                .faq-answer {
+                    font-size: 1.6rem;
+                    text-align: left;
+                }
+
+
+                &:last-child {
+                    border-bottom: unset;
+                }
+            }
+        }
+
+
+    }
+}

@@ -7,7 +7,6 @@ import ProfileSidebar from "../profileSidebar/ProfileSidebar";
 import CropImage from '../../components/cropImage/CropImage.jsx';
 import { newRequest, apiUtils } from "../../utils/newRequest.js";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import ShareProfile from "../../components/shareProfile/ShareProfile.jsx";
 import RenderBadges from "../../components/crudBadge/render/RenderBadges.jsx";
 import "./ProfileLayout.scss";
 
@@ -22,7 +21,6 @@ export default function ProfileLayout() {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
     const [isCoverCropping, setIsCoverCropping] = useState(false);
     const [overlayVisible, setOverlayVisible] = useState(null);
-    const [showMoreProfileActions, setShowMoreProfileActions] = useState(null);
     const [showRenderBadges, setShowRenderBadges] = useState(false);
 
     const location = useLocation();
@@ -259,7 +257,8 @@ export default function ProfileLayout() {
                                     <>
                                         <Link
                                             to={`/users/${userId}/profile-commission-services`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-commission-services') ? "active" : ""}`}
+                                            className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                                (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
                                         >
                                             Dịch vụ
                                         </Link>
@@ -295,54 +294,13 @@ export default function ProfileLayout() {
                                 }
                             </div>
 
-                            <div className="sub-nav-container--right">
-                                <button className="btn non-hover btn-3 icon-only show-more-profile-actions-btn" onClick={() => { setShowMoreProfileActions(!showMoreProfileActions) }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                    </svg>
-                                </button>
-                                {
-                                    showMoreProfileActions && (
-                                        !["share-profile", "block-profile", "report-profile"].includes(showMoreProfileActions) && (
-                                            <div className="more-profile-action-container">
-                                                <div className="more-profile-action-item gray-bg-hover" onClick={() => { setOverlayVisible(true); setShowMoreProfileActions("share-profile") }}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-                                                    </svg>
-                                                    <span>
-                                                        Chia sẻ trang cá nhân
-                                                    </span>
-                                                </div>
-                                                <div className="more-profile-action-item gray-bg-hover">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
-                                                    </svg>
-                                                    <span>
-                                                        Chặn tài khoản
-                                                    </span>
-                                                </div>
-                                                <div className="more-profile-action-item gray-bg-hover">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                                    </svg>
-
-                                                    <span>
-                                                        Báo cáo tài khoản
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        )
-                                    )
-                                }
-                            </div>
+                           
                         </div>
                         <hr />
                     </div >
                     {overlayVisible && (
                         <div className="overlay">
-                            {showMoreProfileActions == "share-profile" && <ShareProfile profileInfo={profileInfo} setShowMoreProfileActions={setShowMoreProfileActions} setOverlayVisible={setOverlayVisible} />}
-                            {showMoreProfileActions == "block-profile" && <ShareProfile />}
-                            {showMoreProfileActions == "report-profile" && <ShareProfile />}
+                            
                             {isCropping && (
                                 <CropImage
                                     image={selectedImage}

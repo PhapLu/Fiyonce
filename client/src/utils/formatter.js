@@ -16,6 +16,9 @@ export function bytesToKilobytes(bytes) {
 }
 
 export function limitString(str, n) {
+    if (!str) {
+        return;
+    }
     if (str.length <= n) {
         return str;
     }
@@ -101,3 +104,7 @@ export function YYYYMMDDAsDDMMYYYY(date) {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
 };
+
+export function camelCaseToCapitalCase(str) {
+    
+}

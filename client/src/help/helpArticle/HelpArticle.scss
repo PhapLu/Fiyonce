@@ -1,0 +1,17 @@
+.help-article {
+    position: relative;
+
+    h1 {
+        font-size: 4rem;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: -8px;
+        left: 0px;
+    }
+
+    .article-content {
+        margin: 0 15%;
+    }
+}

@@ -1,6 +1,6 @@
 .sidebar {
     border: 1px solid var(--gray-1-color);
-    border-radius: 12px;
+    border-radius: 24px;
     padding: 40px 48px;
     box-shadow: var(--box-shadow-1);
 
@@ -37,8 +37,8 @@
         margin-left: 50%;
         transform: translate(-50%);
         position: relative;
-        width: 140px;
-        height: 140px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
 
         .sidebar__avatar__ic {
@@ -183,9 +183,12 @@
         margin-bottom: 20px;
 
         .sidebar__name__fullName {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 6px;
             font-weight: bold;
-            font-size: 1.6rem;
+            font-size: 2.2rem;
             color: var(--black-1-color);
         }
 
@@ -194,6 +197,35 @@
             color: var(--gray-3-color);
         }
     }
+
+
+    .more-profile-action {
+        position: relative;
+        z-index: 100;
+
+        .more-profile-action-container {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 4px;
+            min-width: 220px;
+            display: flex;
+            flex-direction: column;
+            padding: 6px 8px;
+            border-radius: 16px 0 16px 16px;
+            box-shadow: var(--box-shadow-2);
+            // border: 1px solid var(--gray-1-color);
+            background-color: var(--form-bg-2-color);
+        }
+
+        .more-profile-action-item {
+            padding: 6px 8px;
+            border-radius: 8px;
+            text-align: start;
+            display: flex;
+            align-items: center;
+        }
+    }
+
 
 
 
@@ -275,6 +307,7 @@
         }
     }
 
+
     .sidebar__btn {
         margin-bottom: 12px;
         width: 100%;
@@ -287,6 +320,16 @@
             margin-right: 8px;
             object-fit: cover;
         }
+    }
+
+    .follow-btn {
+        width: 70%;
+        min-width: unset;
+    }
+
+    .chat-btn {
+        min-width: unset;
+        margin-right: 0 !important;
     }
 
     .edit-profile-form {

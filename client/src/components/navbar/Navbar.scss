@@ -1,5 +1,5 @@
 .navbar {
-    padding: 12px 3%;
+    padding: 8px 3%;
 
     /* padding: 10px 0; */
     z-index: 1000;
@@ -9,7 +9,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: var(--white-3-color);
+    background-color: var(--theme-color);
     transition: 0.2s linear;
 
     .navbar__blur {
@@ -33,6 +33,13 @@
             height: 22px;
         }
     }
+
+    .toggle-display-conversations-btn .btn,
+    .toggle-display-notifications-btn .btn,
+    .toggle-display-bug-report-btn .btn {
+        padding: 8px;
+    }
+
 
 
     .navbar--left {
@@ -59,11 +66,10 @@
             margin-left: 16px;
             display: flex;
             align-items: center;
-            border: 2px solid var(--gray-1-color);
             border-radius: 16px;
             transition: border 0.1s;
             min-width: 320px;
-            background-color: var(--gray-1-color);
+            background-color: var(--gray-7-color);
             color: var(--black-2-color);
 
             .navbar__search-field__ic {
@@ -75,18 +81,18 @@
 
             .navbar__search-field__input {
                 width: 100%;
-                padding: 10px 10px;
+                padding: 9px 10px;
                 border: none;
                 padding-left: 8px;
                 outline: none;
                 font-size: 1.4rem;
                 font-weight: 600;
                 border-radius: 16px;
-                background-color: var(--gray-1-color);
+                background-color: var(--gray-7-color);
                 color: var(--black-2-color);
 
                 &::placeholder {
-                    color: var(--black-2-color);
+                    color: var(--gray-3-color);
                     font-weight: 500;
                 }
             }
@@ -133,8 +139,12 @@
 
             .navbar-link-item {
                 padding: 10px 16px 10px;
-                font-size: 1.6rem;
                 font-weight: 600;
+
+                a {
+                    font-size: 1.5rem;
+                    opacity: 0.8;
+                }
 
                 &:hover {
                     cursor: pointer;
@@ -144,17 +154,22 @@
                 &.active {
                     position: relative;
 
-                    &::after {
-                        position: absolute;
-                        width: 12px;
-                        height: 4px;
-                        border-radius: 4px;
-                        content: "";
-                        background-color: var(--black-2-color);
-                        bottom: 2px;
-                        left: 50%;
-                        transform: translate(-50%);
+                    a {
+                        opacity: 1;
+                        color: var(--black-1-color);
                     }
+
+                    // &::after {
+                    //     position: absolute;
+                    //     width: 12px;
+                    //     height: 4px;
+                    //     border-radius: 4px;
+                    //     content: "";
+                    //     background-color: var(--black-2-color);
+                    //     bottom: 2px;
+                    //     left: 50%;
+                    //     transform: translate(-50%);
+                    // }
                 }
 
                 &:last-of-type {
@@ -164,11 +179,11 @@
         }
 
         .navbar__veritcal-hr {
-            width: 30px;
-            height: 1px;
-            margin: 0 14px;
+            width: 28px;
+            height: 1.5px;
+            margin: 0 8px;
             transform: rotate(90deg);
-            background-color: var(--black-2-color);
+            background-color: var(--gray-5-color);
             opacity: 0.4;
         }
 
@@ -177,17 +192,27 @@
             align-items: center;
         }
 
+        .btn-7 {
+            border-radius: 50px;
+            border: 3px solid var(--theme-color);
+        }
+
+        .btn-7.active {
+            border: 3px solid var(--white-4-color);
+            box-shadow: var(--box-shadow-1);
+        }
+
         .toggle-display-conversations-btn {
             position: relative;
 
             .render-conversations {
-                border: 2px solid var(--gray-1-color);
+                border: 1px solid var(--gray-1-color);
                 position: absolute;
                 left: -155px;
                 top: calc(100% + 8px);
                 background-color: var(--form-bg-2-color);
                 padding: 8px 12px 8px 16px;
-                border-radius: 8px;
+                border-radius: 24px 0 24px 24px;
                 min-width: 310px;
                 height: 380px;
                 box-shadow: var(--box-shadow-1);
@@ -206,13 +231,13 @@
             position: relative;
 
             .render-notifications {
-                border: 2px solid var(--gray-1-color);
+                border: 1px solid var(--gray-1-color);
                 position: absolute;
                 left: -200px;
                 top: calc(100% + 8px);
                 background-color: var(--form-bg-2-color);
                 padding: 8px 12px 8px 16px;
-                border-radius: 8px;
+                border-radius: 24px 0 24px 24px;
                 min-width: 310px;
                 height: 380px;
                 box-shadow: var(--box-shadow-1);

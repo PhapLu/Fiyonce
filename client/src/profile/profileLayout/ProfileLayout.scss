@@ -50,33 +50,7 @@
     .sub-nav-container--left {}
 
     .sub-nav-container--right {
-        position: relative;
-
-        .show-more-profile-actions-btn {}
-
-        .more-profile-action-container {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            min-width: 220px;
-            display: flex;
-            flex-direction: column;
-            padding: 6px 8px;
-            border-radius: 8px;
-            z-index: 100;
-            border-radius: 8px;
-            box-shadow: var(--box-shadow-2);
-            border: 1px solid var(--gray-1-color);
-            background-color: var(--white-3-color);
-        }
-
-        .more-profile-action-item {
-            padding: 6px 8px;
-            border-radius: 8px;
-            text-align: start;
-            display: flex;
-            align-items: center;
-        }
+        
     }
 
 

@@ -81,7 +81,7 @@ const UserSchema = new Schema(
         },
         accessToken: { type: String, default: '' },
         qrCode: { type: String, default: '' }, //Base 64
-        workQueue: { type: String, default: '' },
+        workQueueUrl: { type: String, default: '' },
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: { type: String, default: "" },

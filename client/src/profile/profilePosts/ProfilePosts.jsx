@@ -201,7 +201,7 @@ export default function ProfilePosts() {
                             postsByCategories?.length > 0 ?
                                 (
                                     <button
-                                        className={`btn btn-3 btn-md ${postCategoryId === "all" ? "active" : ""}`}
+                                        className={`btn btn-md ${postCategoryId === "all" ? "btn-2" : "btn-7"}`}
                                         onClick={() => handleCategoryClick("all")}
                                     >
                                         Tất cả
@@ -216,7 +216,7 @@ export default function ProfilePosts() {
                                 <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
                                 {postsByCategories?.map((collection, index) => (
                                     <button
-                                        className={`btn btn-3 btn-md explore__filter-item scroll-item flex-align-center ${postCategoryId === collection?._id ? "active" : ""}`}
+                                        className={`btn btn-md explore__filter-item scroll-item flex-align-center ${postCategoryId === collection?._id ? "btn-2" : "btn-7"}`}
                                         key={index}
                                         onClick={() => handleCategoryClick(collection._id)}
                                     >
@@ -229,7 +229,7 @@ export default function ProfilePosts() {
                     </div>
                     {isProfileOwner && (
                         <div className="profile-page__header--right">
-                            <button className="btn btn-3" onClick={() => { setShowCreatePostForm(true); setOverlayVisible(true); }}>
+                            <button className="btn btn-7" onClick={() => { setShowCreatePostForm(true); setOverlayVisible(true); }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>

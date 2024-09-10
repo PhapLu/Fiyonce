@@ -67,24 +67,20 @@ export default function ProfileArchive() {
             <div className="profile-page__header">
                 <div className="profile-page__header--left">
                     <button
-                        className={`btn btn-3 btn-md ${archiveType === "post" ? "active" : ""}`}
+                        className={`btn btn-md ${archiveType === "post" ? "btn-2" : "btn-7"}`}
                         onClick={() => setArchiveType("post")}
                     >
                         Tác phẩm
                     </button>
 
                     <button
-                        className={`btn btn-3 btn-md ${archiveType === "service" ? "active" : ""}`}
+                        className={`btn btn-md ${archiveType === "service" ? "btn-2" : "btn-7"}`}
                         onClick={() => setArchiveType("service")}
                     >
                         Dịch vụ
                     </button>
                 </div>
             </div>
-
-
-
-
 
             {
                 archiveType == "post" && (

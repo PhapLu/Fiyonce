@@ -41,12 +41,11 @@ import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDa
 import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
 import NewsDashboard from "./dashboard/newsDashboard/NewsDashboard";
 import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
-import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 import CreatePost from "./components/crudPost/create/CreatePost";
 import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
 import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
-import HelpCenter from "./help/center/HelpCenter.jsx";
+import HelpCenter from "./help/helpCenter/HelpCenter.jsx";
 import UpgradeAccount from "./components/upgradeAccount/UpgradeAccount.jsx";
 import MyProfile from "./profile/myProfile/MyProfile.jsx";
 import RenderTalentRequest from "./components/upgradeAccount/RenderTalentRequest.jsx";
@@ -61,6 +60,11 @@ import CommissionOrderLayout from "./components/crudCommissionOrder/layout/Commi
 import StartWipCommissionOrder from "./components/crudCommissionOrder/startWip/StartWipCommissionOrder.jsx";
 import DeliverCommissionOrder from "./components/crudCommissionOrder/deliver/DeliverCommissionOrder.jsx";
 import FinishCommissionOrder from "./components/crudCommissionOrder/finish/FinishCommissionOrder.jsx";
+import HelpTopic from "./help/helpTopic/HelpTopic.jsx";
+import ForTalents from "./help/forTalents/ForTalents.jsx";
+import ForClients from "./help/forClients/ForClient.jsx";
+import HelpArticle from "./help/helpArticle/HelpArticle.jsx";
+import HelpCenterLayout from "./help/layout/HelpCenterLayout.jsx";
 
 const queryClient = new QueryClient();
 
@@ -119,10 +123,6 @@ const commissionOrderRoutes = [
 
 const routes = [
   // Static pages
-  {
-    path: "/help-center",
-    element: <HelpCenter />,
-  },
   {
     path: "/terms-and-policies",
     element: <InDevelopment />,
@@ -307,12 +307,28 @@ const routes = [
         path: "/dashboard/challenges",
         element: <ChallengeDashboard />,
       },
-      {
-        path: "/dashboard/help",
-        element: <HelpDashboard />,
-      },
     ],
   },
+
+  {
+    path: "help-center",
+    element: <HelpCenterLayout />,
+    children: [
+      // {
+      //   path: "topics/:topic-id",
+      //   element: <HelpTopic />,
+      // },
+      // {
+      //   path: "topics/:topic-id/:article-id",
+      //   element: <HelpArticle />,
+      // },
+      {
+        path: "",
+        element: <HelpCenter />,
+      },
+    ]
+  },
+
 
   // Other pages
   {
