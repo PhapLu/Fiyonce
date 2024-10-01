@@ -623,7 +623,7 @@ class OrderService {
         if (!order) throw new NotFoundError("Order not found")
         if (order.talentChosenId.toString() !== userId) throw new AuthFailureError("You are not authorized to deliver this order")
         if (order.status !== "in_progress") throw new BadRequestError("Order is not in progress")
-        console.log(order.finalDelivery);
+
         //2. Deliver order
         // Validate input
         if(!req.files && !body?.url) 
@@ -632,7 +632,7 @@ class OrderService {
         // Upload new files to Cloudinary using uploadFinalProduct function
         if(req.files && req.files.files && req.files.files.length > 0) {
             const uploadPromises = req.files.files.map((file) =>
-                uploadFinalProduct({
+                compressAndUploadImage({
                     buffer: file.buffer,
                     originalname: file.originalname,
                     folderName: `fiyonce/order/${userId}`,

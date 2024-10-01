@@ -233,12 +233,14 @@ class CommissionReportService {
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
         if (!commissionReport) throw new NotFoundError("Không tìm thấy báo cáo");
 
-        //2. Update commissionReport
+        //2. Update commissionReport, order
         commissionReport.adminDecision = { 
             decision: body.decision, 
             reason: body.reason, 
             notified: true 
         };
+        order.status = "resolved";
+        await order.save()
         await commissionReport.save();
 
         //3. Send email to user and talents

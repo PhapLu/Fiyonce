@@ -23,10 +23,9 @@ class MomoService {
             .digest("hex")
     }
 
-    static generatePaymentData = async (amount) => {
+    static generatePaymentData = async (amount, requestType) => {
         const orderId = partnerCode + new Date().getTime()
         const requestId = orderId
-        const requestType = "captureWallet"
         const orderInfo = "pay with MoMo"
         const extraData = ""
         const autoCapture = true

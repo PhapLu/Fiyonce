@@ -24,6 +24,7 @@ router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.con
 
 //END CRUD
 router.post('/generatePaymentUrl/:proposalId', asyncHandler(proposalController.generatePaymentUrl))
+router.post('/bindPaymentAccount', asyncHandler(proposalController.bindPaymentAccount))
 router.post('/momoCallback', asyncHandler(proposalController.momoCallback))
 router.post('/readMomoOrderStatus', asyncHandler(proposalController.readMomoOrderStatus))
 router.patch('/denyProposal/:proposalId', asyncHandler(proposalController.denyProposal))

@@ -13,7 +13,7 @@ import {
     BadRequestError,
     NotFoundError,
 } from "../core/error.response.js"
-import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
+import { sendAnnouncementEmail, sendCommissionEmail } from "../configs/brevo.email.config.js"
 import { formatDate } from "../utils/index.js"
 
 const accessKey = "F8BBA842ECF85"
@@ -39,20 +39,19 @@ class ProposalService {
             orderId,
         })
         if (existingProposal)
-            throw new BadRequestError(
-                "Bạn đã gửi đơn ứng cho đơn hàng này rồi"
-            )
+            throw new BadRequestError("Bạn đã gửi đơn ứng cho đơn hàng này rồi")
 
         //5.Check if price is valid
         if (body.price < 0)
             throw new BadRequestError("Giá trị đơn hàng phải lớn hơn 0")
 
-
         let proposal
-        const member = await User.findById(order.memberId)
-        const orderCode = `Mã đơn hàng: ${order._id.toString()}`
-        const reason = ''
-
+        const member = await User.findById(order.memberId).select("email avatar fullName")
+        const talent = await User.findById(userId).select("email stageName avatar fullName")
+        const subject = `PASTAL - Yêu cầu đặt hàng đã được chấp nhận (${formatDate()})`
+        const price = `Do họa sĩ đề xuất: <span>${body.price}</span> VNĐ`
+        const orderCode = `Mã đơn hàng: <span class="code">${order._id.toString()}</span>`
+        
         //4. Check if artworks are valid
         if (order.isDirect) {
             const commissionService = await CommissionService.findById(order.commissionServiceId)
@@ -66,12 +65,12 @@ class ProposalService {
             })
 
             //6. Send email to user
-            const subject = `[PASTAL] - Yêu cầu dặt hàng đã được chấp nhận (${formatDate()})`
-            const message = `Họa sĩ A đã chấp nhận yêu cầu đặt hàng của bạn. Xem hợp đồng <a href="https://www.facebook.com/">tại đây</a>`
-            sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
+            const subSubject = `Họa sĩ ${talent.fullName} đã chấp nhận yêu cầu đặt hàng của bạn`
+            const message = `${proposal.scope}`
+            sendCommissionEmail(member.email, talent, subject, subSubject, message, orderCode, price)
         } else {
             if (body.artworks.length === 0) throw new BadRequestError("Hãy cung cấp tranh")
-
+            
             //5. Send proposal
             proposal = new Proposal({
                 orderId,
@@ -82,9 +81,9 @@ class ProposalService {
             })
 
             //6. Send email to user
-            const subject = `[PASTAL] - Yêu cầu dặt hàng trên chợ Commission (${formatDate()})`
-            const message = `Họa sĩ A đã nộp hồ sơ ứng yêu cầu đặt hàng của bạn trên chợ Commission. Xem hồ sơ <a href="https://www.facebook.com/">tại đây</a>`
-            sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
+            const subSubject = `Họa sĩ ${talent.fullName} đã ứng đơn hàng của bạn trên chợ Commission`
+            const message = `${proposal.scope}`
+            sendCommissionEmail(member.email, talent, subject, subSubject, message, orderCode, price)
         }
 
         await proposal.save()
@@ -134,8 +133,8 @@ class ProposalService {
         const proposal = await Proposal.findById(proposalId);
         if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
-        // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
-        //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Check if user is authorized to update proposal
         if (proposal.talentId.toString() !== userId)
@@ -174,8 +173,8 @@ class ProposalService {
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
-        // if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
-        //     throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false)
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check status of order
         const order = await Order.findById(proposal.orderId)
@@ -202,11 +201,13 @@ class ProposalService {
         //3. Check if order exists and is approved
         const order = await Order.findById(proposal.orderId)
         if (!order) throw new NotFoundError("Không tìm thấy dịch vụ")
-        // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
+        if (order.memberId.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
+        if (order.status !== 'approved') throw new BadRequestError('Đơn hàng này chưa có hợp đồng')
 
         //4. Create payment with MoMo
         const amount = proposal.price
-        const paymentData = await MomoService.generatePaymentData(amount)
+        const requestType = 'payWithMethod'
+        const paymentData = await MomoService.generatePaymentData(amount, requestType)
 
         const options = {
             method: "POST",
@@ -290,6 +291,42 @@ class ProposalService {
         }
     }
 
+    static bindPaymentAccount = async(userId, body) => {
+        //1. Check if user exists
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError('User not found')
+
+        //2. Bind payment account
+        const amount = 0
+        const requestType = 'linkWallet'
+        const paymentData = await MomoService.generatePaymentData(amount, requestType)
+
+        const options = {
+            method: "POST",
+            url: "https://test-payment.momo.vn/v2/gateway/api/create",
+            headers: {
+                "Content-Type": "application/json",
+                "Content-Length": Buffer.byteLength(
+                    JSON.stringify(paymentData)
+                ),
+            },
+            data: JSON.stringify(paymentData),
+        }
+
+        let paymentResponse
+        try {
+            paymentResponse = await axios(options)
+            console.log(paymentResponse);
+        } catch (error) {
+            console.log("Error generating payment URL: ", error)
+            throw new BadRequestError("Error generating payment URL")
+        }
+
+        return {
+            paymentResponse: paymentResponse.data,
+        }
+    }
+
     static confirmProposal = async (userId, proposalId) => {
         // 1. Check if user exists
         const user = await User.findById(userId)
@@ -297,42 +334,42 @@ class ProposalService {
 
         // 2. Check if proposal exists
         const proposal = await Proposal.findById(proposalId)
-        // if (!proposal) throw new NotFoundError('Không tìm thấy hợp đồng')
+        if (!proposal) throw new NotFoundError('Không tìm thấy hợp đồng')
 
         // 3. Check if talent exists
         const talent = await User.findById(proposal.talentId)
-        // if (!talent) throw new NotFoundError('Talent not found')
+        if (!talent) throw new NotFoundError('Talent not found')
 
         // 4. Check if order exists and is approved
         const order = await Order.findById(proposal.orderId)
-        // if (!order) throw new NotFoundError('Không tìm thấy dịch vụ')
-        // if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
+        if (!order) throw new NotFoundError('Không tìm thấy dịch vụ')
+        if (order.status !== 'approved') throw new BadRequestError('Order is not approved')
 
         // 5. Create payment with MoMo
-        // const amount = proposal.price
-        // const paymentData = await MomoService.generatePaymentData(amount)
-        // const options = {
-        //     hostname: 'test-payment.momo.vn',
-        //     port: 443,
-        //     path: '/v2/gateway/api/create',
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Content-Length': Buffer.byteLength(JSON.stringify(paymentData))
-        //     }
-        // }
+        const amount = proposal.price
+        const paymentData = await MomoService.generatePaymentData(amount)
+        const options = {
+            hostname: 'test-payment.momo.vn',
+            port: 443,
+            path: '/v2/gateway/api/create',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(JSON.stringify(paymentData))
+            }
+        }
 
-        // const paymentResponse = await new Promise((resolve, reject) => {
-        //     const apiReq = https.request(options, apiRes => {
-        //         let data = ''
-        //         apiRes.on('data', chunk => { data += chunk })
-        //         apiRes.on('end', () => { resolve(JSON.parse(data)) })
-        //     })
+        const paymentResponse = await new Promise((resolve, reject) => {
+            const apiReq = https.request(options, apiRes => {
+                let data = ''
+                apiRes.on('data', chunk => { data += chunk })
+                apiRes.on('end', () => { resolve(JSON.parse(data)) })
+            })
 
-        //     apiReq.on('error', error => { reject(`Error: ${error.message}`) })
-        //     apiReq.write(JSON.stringify(paymentData))
-        //     apiReq.end()
-        // })
+            apiReq.on('error', error => { reject(`Error: ${error.message}`) })
+            apiReq.write(JSON.stringify(paymentData))
+            apiReq.end()
+        })
 
         // 6. Confirm proposal
         order.status = 'confirmed'
@@ -343,7 +380,7 @@ class ProposalService {
 
         // // 7. Send email to talent
         // try {
-        //     await brevoSendEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
+        //     await sendAnnouncementEmail(talent.email, 'Proposal confirmed', 'Your proposal has been confirmed by client')
         // } catch (error) {
         //     throw new Error('Email service error')
         // }
