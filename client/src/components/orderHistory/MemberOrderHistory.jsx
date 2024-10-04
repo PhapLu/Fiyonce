@@ -1,6 +1,6 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Contexts
@@ -32,6 +32,7 @@ import { ClipLoader } from "react-spinners";
 
 export default function MemberOrderHistory() {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const [commissionOrder, setCommissionOrder] = useState();
     const [showMemberOrderMoreActions, setShowMemberOrderMoreActions] =
@@ -171,14 +172,14 @@ export default function MemberOrderHistory() {
 
     if (isFetchingMemberOrderHistoryLoading) {
         return <>
-        <br /><br /><br /><br />
-        <div className="text-align-center flex-align-center flex-justify-center mt-40">
-            <ClipLoader className="clip-loader" size={40} loading={true} />
-            <h3 className="ml-12">
-                Đang tải
-            </h3>
-        </div>
-    </>
+            <br /><br /><br /><br />
+            <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                <ClipLoader className="clip-loader" size={40} loading={true} />
+                <h3 className="ml-12">
+                    Đang tải
+                </h3>
+            </div>
+        </>
     }
 
     if (isFetchingMemberOrderHistoryError) {
@@ -205,13 +206,8 @@ export default function MemberOrderHistory() {
                     {orders?.length > 0 ? (
                         orders?.map((order) => {
                             return (
-                                <tr
-                                    onClick={() => {
-                                        setCommissionOrder(order);
-                                        setShowRenderCommissionOrder(true);
-                                        setOverlayVisible(true);
-                                    }}
-                                >
+
+                                <tr onClick={() => { navigate(`/order-history/commission-orders/${order._id}`) }}>
                                     <td >
                                         <div className="status-cell">
                                             <div className={`status-cell__bg ${order?.status}`}>
@@ -391,83 +387,85 @@ export default function MemberOrderHistory() {
                     )}
                 </tbody>
 
-            </table>
+            </table >
 
             {/* Modal forms */}
-            {overlayVisible && (
-                <div className="overlay">
-                    {showRenderCommissionOrder && (
-                        <RenderCommissionOrder
-                            commissionOrder={commissionOrder}
-                            setShowRenderCommissionOrder={
-                                setShowRenderCommissionOrder
-                            }
-                            setShowUpdateCommissionOrder={setShowUpdateCommissionOrder}
-                            setShowRenderProposals={setShowRenderProposals}
-                            setOverlayVisible={setOverlayVisible}
-                        />
-                    )}
-                    {showUpdateCommissionOrder && (
-                        <UpdateCommissionOrder
-                            commissionOrder={commissionOrder}
-                            setShowUpdateCommissionOrder={
-                                setShowUpdateCommissionOrder
-                            }
-                            setOverlayVisible={setOverlayVisible}
-                        />
-                    )}
-                    {showArchiveCommissionOrder && (
-                        <ArchiveCommissionOrder
-                            commissionOrder={commissionOrder}
-                            setShowArchiveCommissionOrder={
-                                setShowArchiveCommissionOrder
-                            }
-                            setOverlayVisible={setOverlayVisible}
-                            archiveCommissionOrderMutation={
-                                archiveCommissionOrderMutation
-                            }
-                        />
-                    )}
-                    {showUnarchiveCommissionOrder && (
-                        <UnarchiveCommissionOrder
-                            commissionOrder={commissionOrder}
-                            setShowUnarchiveCommissionOrder={
-                                setShowUnarchiveCommissionOrder
-                            }
-                            setOverlayVisible={setOverlayVisible}
-                            unarchiveCommissionOrderMutation={
-                                unarchiveCommissionOrderMutation
-                            }
-                        />
-                    )}
-                    {showReportCommissionOrder && (
-                        <ReportCommissionOrder
-                            commissionOrder={commissionOrder}
-                            setShowReportCommissionOrder={
-                                setShowReportCommissionOrder
-                            }
-                            setOverlayVisible={setOverlayVisible}
-                            reportCommissionOrderMutation={
-                                reportCommissionOrderMutation
-                            }
-                        />
-                    )}
+            {
+                overlayVisible && (
+                    <div className="overlay">
+                        {showRenderCommissionOrder && (
+                            <RenderCommissionOrder
+                                commissionOrder={commissionOrder}
+                                setShowRenderCommissionOrder={
+                                    setShowRenderCommissionOrder
+                                }
+                                setShowUpdateCommissionOrder={setShowUpdateCommissionOrder}
+                                setShowRenderProposals={setShowRenderProposals}
+                                setOverlayVisible={setOverlayVisible}
+                            />
+                        )}
+                        {showUpdateCommissionOrder && (
+                            <UpdateCommissionOrder
+                                commissionOrder={commissionOrder}
+                                setShowUpdateCommissionOrder={
+                                    setShowUpdateCommissionOrder
+                                }
+                                setOverlayVisible={setOverlayVisible}
+                            />
+                        )}
+                        {showArchiveCommissionOrder && (
+                            <ArchiveCommissionOrder
+                                commissionOrder={commissionOrder}
+                                setShowArchiveCommissionOrder={
+                                    setShowArchiveCommissionOrder
+                                }
+                                setOverlayVisible={setOverlayVisible}
+                                archiveCommissionOrderMutation={
+                                    archiveCommissionOrderMutation
+                                }
+                            />
+                        )}
+                        {showUnarchiveCommissionOrder && (
+                            <UnarchiveCommissionOrder
+                                commissionOrder={commissionOrder}
+                                setShowUnarchiveCommissionOrder={
+                                    setShowUnarchiveCommissionOrder
+                                }
+                                setOverlayVisible={setOverlayVisible}
+                                unarchiveCommissionOrderMutation={
+                                    unarchiveCommissionOrderMutation
+                                }
+                            />
+                        )}
+                        {showReportCommissionOrder && (
+                            <ReportCommissionOrder
+                                commissionOrder={commissionOrder}
+                                setShowReportCommissionOrder={
+                                    setShowReportCommissionOrder
+                                }
+                                setOverlayVisible={setOverlayVisible}
+                                reportCommissionOrderMutation={
+                                    reportCommissionOrderMutation
+                                }
+                            />
+                        )}
 
-                    {showRenderProposals && (
-                        <RenderProposals
-                            commissionOrder={commissionOrder}
-                            setShowRenderProposals={setShowRenderProposals}
-                            setOverlayVisible={setOverlayVisible}
-                        />
-                    )}
+                        {showRenderProposals && (
+                            <RenderProposals
+                                commissionOrder={commissionOrder}
+                                setShowRenderProposals={setShowRenderProposals}
+                                setOverlayVisible={setOverlayVisible}
+                            />
+                        )}
 
-                    {/* {
+                        {/* {
                         showRenderProposal && (
 
                         )
                     } */}
-                </div>
-            )}
+                    </div>
+                )
+            }
         </>
     );
 }

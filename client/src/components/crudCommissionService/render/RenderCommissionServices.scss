@@ -66,18 +66,13 @@
                 top: 20px;
                 left: 20px;
 
-                &.open {
-                    background-image: linear-gradient(45deg, #00a1e1, #12bf4c);
-                    color: white;
-                    box-shadow: rgb(113 208 255 / 80%) 0px 1px 10px;
-                }
 
                 &.closed {}
 
                 &.open {
-                    background-image: linear-gradient(45deg, #0083e9, #fb76eb);
+                    background-image: linear-gradient(45deg, #09b987, #69d5cc);
                     color: white;
-                    box-shadow: rgb(113 116 255 / 80%) 0px 1px 10px;
+                    box-shadow: rgb(152 255 221 / 80%) 0px 1px 6px;
                 }
             }
 
@@ -92,7 +87,7 @@
                 box-shadow: var(--box-shadow-1);
 
                 &.active {
-                    background-image: linear-gradient(124deg, #7b60e5, #d57af3);
+                    background-image: linear-gradient(45deg, #09b987, #69d5cc);
                 }
 
             }

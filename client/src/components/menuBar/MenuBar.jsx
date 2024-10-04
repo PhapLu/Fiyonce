@@ -171,7 +171,7 @@ export default function MenuBar() {
                         <div className="dropdown-menu-container__email">{userInfo.email}</div>
                         {userInfo?.profileStatus?.icon && userInfo?.profileStatus?.title &&
                             <div className="dropdown-menu-item mt-8" onClick={() => { setShowProfileStatus(true); setOverlayVisible(true) }}>
-                                <div className="fs-18">{codePointToEmoji(userInfo?.profileStatus?.icon)} <span>{userInfo?.profileStatus?.title}</span></div>
+                                <div className="fs-18 flex-align-center">{codePointToEmoji(userInfo?.profileStatus?.icon)} <span className="ml-4">{userInfo?.profileStatus?.title}</span></div>
                             </div>
                         }
 

@@ -93,8 +93,10 @@ export default function EditProfileStatus({ profileInfo, setProfileInfo, setShow
                 status: "error",
                 message: error.response.data.message
             });
+        } finally {
+            setIsSubmitProfileStatusLoading(false);
+            setShowProfileStatus(false);
         }
-        setIsSubmitProfileStatusLoading(false);
     };
 
     const handleClearStatus = () => {

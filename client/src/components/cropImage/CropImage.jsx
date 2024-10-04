@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+// Imports
+import { useState, useEffect, useRef } from "react";
 import Cropper from "react-easy-crop";
+
+// Styling
 import "./CropImage.scss"
 
-function CropImage({ image, onCropDone, onCropCancel, ratio}) {
+function CropImage({ image, onCropDone, onCropCancel, ratio }) {
     // Define state variables
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
 
     const [croppedArea, setCroppedArea] = useState(null);
     const [aspectRatio, setAspectRatio] = useState(ratio || (1 / 1));
+
+    const cropImageRef = useRef();
 
     // Callback when cropping is completed
     const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
@@ -21,8 +26,23 @@ function CropImage({ image, onCropDone, onCropCancel, ratio}) {
         setAspectRatio(event.target.value);
     };
 
+    // Close modal when clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (cropImageRef.current && !cropImageRef.current.contains(event.target)) {
+                onCropCancel(); // Trigger onCropCancel if click is outside
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [cropImageRef]);
+
     return (
-        <div className="cropper modal-form type-3">
+        <div className="cropper modal-form type-3" ref={cropImageRef}>
             <h2 className="form__title">Cắt ảnh</h2>
             <div className="mb-32" style={{ "width": "100%", "height": "400px", "position": "relative", "border-radius": "12px", "overflow": "hidden" }}>
 

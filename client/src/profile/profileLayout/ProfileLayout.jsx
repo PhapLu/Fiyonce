@@ -256,7 +256,13 @@ export default function ProfileLayout() {
                                             to={`/users/${userId}/term-of-services`}
                                             className={`sub-nav-item btn ${location.pathname.includes('/term-of-services') ? "active" : ""}`}
                                         >
-                                            Điều khoản dịch vụ
+                                            Điều khoản
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/basic-info`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || (!location.pathname.endsWith("/profile-commission-services") && location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                        >
+                                            Thông tin cơ bản
                                         </Link>
                                     </>
                                 ) : (
