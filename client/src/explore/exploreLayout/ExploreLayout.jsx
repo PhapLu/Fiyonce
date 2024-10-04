@@ -123,6 +123,21 @@ export default function Explore() {
         setShowRecommenders(false); // Hide the recommender container
     };
 
+    const recommenderContainerRef = useRef();
+    // Close recommender dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (recommenderContainerRef.current && !recommenderContainerRef.current.contains(event.target)) {
+                setShowRecommenders(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
 
     // Fetch artworks
 
@@ -183,7 +198,7 @@ export default function Explore() {
                             </button>
 
                             {showRecommenders && (
-                                <div className="recommender-container">
+                                <div className="recommender-container" ref={recommenderContainerRef}>
                                     {recommenders && recommenders.map((recommender, idx) => {
                                         return (
                                             <div key={idx} className="recommender-item flex-align-center" onClick={() => handleRecommenderChange(recommender)}>
@@ -205,7 +220,7 @@ export default function Explore() {
                                         <img src={movement.thumbnail} alt={movement.title} className="scroll-item__thumbnail" />
                                         <div className="explore__filter-item__details">
                                             <span className="explore__filter-item__details__title">{movement.title}</span>
-                                         
+
                                             <span className="explore__fitler-item__details__count">{movement.postCount > 1000 ? formatNumber(movement.postCount, 1) : movement.postCount}</span>
                                         </div>
                                     </div>

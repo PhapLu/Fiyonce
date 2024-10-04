@@ -5,7 +5,7 @@ import { useSetting } from "../../contexts/setting/SettingContext";
 import "./MenuBar.scss";
 import { codePointToEmoji } from "../../utils/iconDisplayer";
 import GlazeLogo from "/uploads/glaze_logo.png";
-import ProfileStatus from "../profileStatus/ProfileStatus.jsx";
+import ProfileStatus from "../../profile/profileStatus/ProfileStatus.jsx";
 import RenderBadges from "../crudBadge/render/RenderBadges.jsx";
 export default function MenuBar() {
     const { userInfo, logout, setShowMenu } = useAuth();

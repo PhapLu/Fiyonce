@@ -28,6 +28,7 @@ import { formatCurrency } from "../../utils/formatter";
 // Styling
 import "./OrderHistory.scss";
 import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissionOrder";
+import { ClipLoader } from "react-spinners";
 
 export default function ArchivedOrderHistory() {
     const queryClient = useQueryClient();
@@ -123,7 +124,15 @@ export default function ArchivedOrderHistory() {
     }, []);
 
     if (isFetchingArchivedOrderHistoryLoading) {
-        return <span>Đang tải...</span>
+        return <>
+        <br /><br /><br /><br />
+        <div className="text-align-center flex-align-center flex-justify-center mt-40">
+            <ClipLoader className="clip-loader" size={40} loading={true} />
+            <h3 className="ml-12">
+                Đang tải
+            </h3>
+        </div>
+    </>
     }
 
     if (isFetchingArchivedOrderHistoryError) {
@@ -198,7 +207,7 @@ export default function ArchivedOrderHistory() {
                             )
                         }) : (
                             <tr className="non-hover">
-                                <td colSpan={6}>Mục lưu trữ đơn hàng đang trống.
+                                <td colSpan={6} className="text-align-center p-8">Mục lưu trữ đơn hàng đang trống.
                                 </td>
                             </tr>
                         )

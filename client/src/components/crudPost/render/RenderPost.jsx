@@ -4,6 +4,9 @@ import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
+// Components
+import ShareToSocials from "../../shareToSocials/ShareToSocials.jsx";
+
 // Utils
 import { apiUtils } from "../../../utils/newRequest";
 import { formatDate } from "../../../utils/formatter";
@@ -16,6 +19,7 @@ import "./RenderPost.scss";
 import Loading from '../../loading/Loading';
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
+
 
 export default function RenderPost() {
     const { userId } = useParams();
@@ -30,6 +34,8 @@ export default function RenderPost() {
     const [bookmarked, setBookmarked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [bookmarkCount, setBookmarkCount] = useState(0);
+
+    const [showShareToSocials, setShowShareToSocials] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
@@ -52,6 +58,23 @@ export default function RenderPost() {
             document.removeEventListener("mousedown", handler);
         };
     }, [navigate, userId]);
+
+    // Handle left and right arrow key navigation for the carousel
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "ArrowLeft") {
+                document.querySelector(".carousel .control-prev").click(); // Navigate to the previous image
+            } else if (e.key === "ArrowRight") {
+                document.querySelector(".carousel .control-next").click(); // Navigate to the next image
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
+
 
     const fetchPostByID = async () => {
         try {
@@ -152,8 +175,6 @@ export default function RenderPost() {
         }
     };
 
-
-
     if (isLoading) {
         return <span>Đang tải...</span>;
     }
@@ -200,7 +221,7 @@ export default function RenderPost() {
                                 />
                                 <div className="user__name">
                                     <div className="user__name__title">{post?.talentId?.fullName}</div>
-                                    <div className="user__name__sub-title">{post?.talentId?.stageName}</div>
+                                    <div className="user__name__sub-title">@{post?.talentId?.stageName}</div>
                                 </div>
                             </Link>
                         </div>
@@ -238,6 +259,16 @@ export default function RenderPost() {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                     </svg>
                                 )}
+                            </div>
+                            <div className="flex-align-center mr-8 hover-cursor-opacity" onClick={() => { setShowShareToSocials(true); }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                </svg>
+                                {
+                                    showShareToSocials && (
+                                        <ShareToSocials post={post} />
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

@@ -34,6 +34,7 @@ import { formatCurrency, formatDate } from "../../utils/formatter";
 import "./OrderHistory.scss";
 import RejectCommissionOrder from "../crudCommissionOrder/reject/RejectCommissionOrder";
 import { resizeImageUrl } from "../../utils/imageDisplayer";
+import { ClipLoader } from "react-spinners";
 
 export default function TalentOrderHistory() {
     const queryClient = useQueryClient();
@@ -63,8 +64,6 @@ export default function TalentOrderHistory() {
     const moreActionsRef = useRef(null);
     const archiveOrderBtnRef = useRef(null);
     const reportOrderBtnRef = useRef(null);
-
-
 
     const fetchTalentOrderHistory = async () => {
         try {
@@ -132,7 +131,7 @@ export default function TalentOrderHistory() {
         }
     );
 
-   
+
 
     const unarchiveCommissionOrderMutation = useMutation(
         async (orderId) => {
@@ -170,7 +169,15 @@ export default function TalentOrderHistory() {
     }, []);
 
     if (isFetchingTalentOrderHistoryLoading) {
-        return <span>Đang tải...</span>
+        return <>
+            <br /><br /><br /><br />
+            <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                <ClipLoader className="clip-loader" size={40} loading={true} />
+                <h3 className="ml-12">
+                    Đang tải
+                </h3>
+            </div>
+        </>
     }
 
     if (isFetchingTalentOrderHistoryError) {
@@ -344,8 +351,8 @@ export default function TalentOrderHistory() {
                             )
                         }) : (
                             <tr className="non-hover">
-                                <td colSpan={6}>Hiện chưa nhận được đơn hàng nào. Tham khảo
-                                    <Link><span className="highlight-text"> cẩm nang họa sĩ </span></Link> để xây dựng hồ sơ tốt hơn.
+                                <td colSpan={6} className="text-align-center p-8">Hiện chưa nhận được đơn hàng nào. Tham khảo
+                                    &nbsp;<Link><span className="highlight-text underlined-text">cẩm nang họa sĩ</span></Link>&nbsp; để xây dựng hồ sơ tốt hơn.
                                 </td>
                             </tr>
                         )

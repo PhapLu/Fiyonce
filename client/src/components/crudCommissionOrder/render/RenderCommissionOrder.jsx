@@ -96,7 +96,7 @@ export default function RenderCommissionOrder() {
                                         </div>
                                     </div>
                                     <h4>{commissionOrder?.commissionServiceId?.title || "Tên dịch vụ"}</h4>
-                                    <h4>Giá từ: <span className="highlight-text fs-16"> {(commissionOrder?.commissionServiceId?.minPrice && formatCurrency(commissionOrder?.commissionServiceId?.minPrice)) || "x"} VND</span></h4>
+                                    <h4>Giá từ: <span className="highlight-text underlined-text fs-16"> {(commissionOrder?.commissionServiceId?.minPrice && formatCurrency(commissionOrder?.commissionServiceId?.minPrice)) || "x"} VND</span></h4>
 
                                     <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity mt-32">
                                         {
@@ -221,7 +221,7 @@ export default function RenderCommissionOrder() {
                         <div className="form-field">
                             <label htmlFor="fileFormats" className="form-field__label">Mức giá khách hàng đề xuất</label>
                             <div>
-                                <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
+                                <span className="highlight-text fw-bold fs-14">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
                             </div>
                         </div>
 

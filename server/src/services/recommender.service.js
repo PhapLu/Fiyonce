@@ -91,30 +91,31 @@ class RecommenderService {
     }
 
     static readPopularPosts = async (req) => {
-        const q = req.query
+        const q = req.query;
+        const page = parseInt(req.query.page) || 1;  // Current page, default to 1
+        const limit = parseInt(req.query.limit) || 50;  // Number of posts per page, default to 50
+        const skip = (page - 1) * limit;
         const filters = {
             ...(q.movementId !== undefined && { movementId: q.movementId }),
-        }
+        };
+    
         try {
             const posts = await Post.find(filters)
                 .populate("talentId")
                 .populate("artworks")
                 .populate("movementId")
-                .populate("postCategoryId")
-
+                .populate("postCategoryId");
+    
             // Compute the minimum and maximum values for scaling
             const [minMaxValues] = await Post.aggregate([
                 {
                     $project: {
                         likesCount: { $size: "$likes" },
                         bookmarksCount: { $size: "$bookmarks" },
-                        viewsCount: { $size: "$views" },  // Count the number of views
-                        followersCount: { $size: { $ifNull: ["$talent.followers", []] } },  // Use $ifNull to avoid null
+                        viewsCount: { $size: "$views" },
+                        followersCount: { $size: { $ifNull: ["$talent.followers", []] } },
                         ageInHours: {
-                            $divide: [
-                                { $subtract: [new Date(), "$createdAt"] },
-                                1000 * 60 * 60,
-                            ],
+                            $divide: [{ $subtract: [new Date(), "$createdAt"] }, 1000 * 60 * 60],
                         },
                     },
                 },
@@ -146,54 +147,40 @@ class RecommenderService {
                         ],
                     },
                 },
-            ])
-
-            const minValues = minMaxValues.minValues[0] || {}
-            const maxValues = minMaxValues.maxValues[0] || {}
-
+            ]);
+    
+            const minValues = minMaxValues.minValues[0] || {};
+            const maxValues = minMaxValues.maxValues[0] || {};
+    
             // Ensure default values are set if there are no documents
-            const minLikesCount = minValues.minLikes || 0
-            const maxLikesCount = maxValues.maxLikes || 1 // Avoid division by zero
-            const minBookmarksCount = minValues.minBookmarks || 0
-            const maxBookmarksCount = maxValues.maxBookmarks || 1 // Avoid division by zero
-            const minViews = minValues.minViews || 0
-            const maxViews = maxValues.maxViews || 1 // Avoid division by zero
-            const minFollowersCount = minValues.minFollowers || 0
-            const maxFollowersCount = maxValues.maxFollowers || 1 // Avoid division by zero
-            const minAge = minValues.minAge || 0
-            const maxAge = maxValues.maxAge || 1 // Avoid division by zero
-
-
-
+            const minLikesCount = minValues.minLikes || 0;
+            const maxLikesCount = maxValues.maxLikes || 1; // Avoid division by zero
+            const minBookmarksCount = minValues.minBookmarks || 0;
+            const maxBookmarksCount = maxValues.maxBookmarks || 1; // Avoid division by zero
+            const minViews = minValues.minViews || 0;
+            const maxViews = maxValues.maxViews || 1; // Avoid division by zero
+            const minFollowersCount = minValues.minFollowers || 0;
+            const maxFollowersCount = maxValues.maxFollowers || 1; // Avoid division by zero
+            const minAge = minValues.minAge || 0;
+            const maxAge = maxValues.maxAge || 1; // Avoid division by zero
+    
             const scoredPosts = await Promise.all(
                 posts.map(async (post) => {
-                    const talent = await User.findById(post.talentId)
-                    console.log(talent.followers)
+                    const talent = await User.findById(post.talentId);
+    
                     // Compute scaled values
-                    const likesScaled =
-                        (post.likes.length - minLikesCount) /
-                        (maxLikesCount - minLikesCount)
-                    const viewsScaled =
-                        (post.views.length - minViews) / (maxViews - minViews)
-                    const bookmarksScaled =
-                        (post.bookmarks.length - minBookmarksCount) /
-                        (maxBookmarksCount - minBookmarksCount)
-                    const followersScaled =
-                        (talent.followers.length - minFollowersCount) /
-                        (maxFollowersCount - minFollowersCount)
-
+                    const likesScaled = (post.likes.length - minLikesCount) / (maxLikesCount - minLikesCount);
+                    const viewsScaled = (post.views.length - minViews) / (maxViews - minViews);
+                    const bookmarksScaled = (post.bookmarks.length - minBookmarksCount) / (maxBookmarksCount - minBookmarksCount);
+                    const followersScaled = (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount);
+    
                     // Compute post age weight
-                    const hoursSinceCreation =
-                        (new Date() - new Date(post.createdAt)) /
-                        (60 * 60 * 1000)
-                    const scaledPostAge =
-                        (hoursSinceCreation - minAge) / (maxAge - minAge)
-
+                    const hoursSinceCreation = (new Date() - new Date(post.createdAt)) / (60 * 60 * 1000);
+                    const scaledPostAge = (hoursSinceCreation - minAge) / (maxAge - minAge);
+    
                     // Calculate engagement rate
-                    const engagementRate = post.views.length
-                        ? post.likes.length / post.views.length
-                        : 0
-
+                    const engagementRate = post.views.length ? post.likes.length / post.views.length : 0;
+    
                     // Define weights
                     const weights = {
                         likes: 0.3,
@@ -202,8 +189,8 @@ class RecommenderService {
                         followers: 0.1,
                         engagementRate: 0.1,
                         postAgeWeight: 0.2,
-                    }
-
+                    };
+    
                     // Calculate the score with normalized values
                     const score =
                         likesScaled * weights.likes +
@@ -211,41 +198,33 @@ class RecommenderService {
                         followersScaled * weights.followers +
                         bookmarksScaled * weights.bookmarks +
                         engagementRate * weights.engagementRate +
-                        scaledPostAge * weights.postAgeWeight
-
+                        scaledPostAge * weights.postAgeWeight;
+    
                     return {
                         ...post.toObject(),
                         score,
                         scaledPostAge,
                         engagementRate,
-                    }
+                    };
                 })
-            )
-
-
+            );
+    
             // Sort posts by score
-            scoredPosts.sort((a, b) => b.score - a.score)
-
-            // Select the top 20 scored posts
-            const top20Posts = scoredPosts.slice(0, 20)
-
-            // Select 30 random posts from the remaining posts
-            const remainingPosts = scoredPosts.slice(20)
-            const random30Posts = remainingPosts
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 30)
-
-            // Combine top 20 scored posts with 30 random posts
-            const finalPosts = [...top20Posts, ...random30Posts]
-
+            scoredPosts.sort((a, b) => b.score - a.score);
+    
+            // Implement pagination here: select the right posts based on the page and limit
+            const paginatedPosts = scoredPosts.slice(skip, skip + limit);
+    
             return {
-                posts: finalPosts,
-            }
+                posts: paginatedPosts,
+                currentPage: page,
+                totalPages: Math.ceil(scoredPosts.length / limit),
+            };
         } catch (error) {
-            console.error("Error in readPopularPosts:", error)
-            throw new BadRequestError("Failed to read popular posts")
+            console.error("Error in readPopularPosts:", error);
+            throw new BadRequestError("Failed to read popular posts");
         }
-    }
+    };
 
     static readLatestPosts = async (req) => {
         const q = req.query

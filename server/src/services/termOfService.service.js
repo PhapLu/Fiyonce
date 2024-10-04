@@ -94,8 +94,11 @@ class TermOfServiceService {
         if (user.role !== "talent")
             throw new BadRequestError("User is not a talent")
 
+        console.log(termOfServiceId)
+
         //2. Check if termOfService exists
         const termOfService = await TermOfService.findById(termOfServiceId)
+        console.log(termOfService)
         if (!termOfService) throw new NotFoundError("TermOfService not found")
         if (termOfService.talentId.toString() !== userId)
             throw new BadRequestError(

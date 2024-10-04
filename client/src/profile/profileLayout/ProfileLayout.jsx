@@ -237,7 +237,7 @@ export default function ProfileLayout() {
 
                         <div className="sub-nav-container">
                             <div className="sub-nav-container--left">
-                                {isProfileOwner ? (userInfo?.role === "talent" && (
+                                {isProfileOwner ? (userInfo?.role === "talent" ? (
                                     <>
                                         <Link
                                             to={`/users/${userId}/profile-commission-services`}
@@ -251,6 +251,21 @@ export default function ProfileLayout() {
                                             className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
                                         >
                                             Tác phẩm
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/term-of-services`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/term-of-services') ? "active" : ""}`}
+                                        >
+                                            Điều khoản dịch vụ
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            to={`/users/${userId}/basic-info`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || (!location.pathname.endsWith("/profile-commission-services") && location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                        >
+                                            Thông tin cơ bản
                                         </Link>
                                     </>
                                 )) : (
@@ -271,17 +286,6 @@ export default function ProfileLayout() {
                                     </>
                                 )}
 
-                                {isProfileOwner && (
-                                    <>
-                                        <Link
-                                            to={`/users/${userId}/basic-info`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
-                                        >
-                                            Thông tin cơ bản
-                                        </Link>
-                                    </>
-                                )}
-
                                 {
                                     !isProfileOwner?.isPublicArchive && (
                                         <Link
@@ -294,13 +298,13 @@ export default function ProfileLayout() {
                                 }
                             </div>
 
-                           
+
                         </div>
                         <hr />
                     </div >
                     {overlayVisible && (
                         <div className="overlay">
-                            
+
                             {isCropping && (
                                 <CropImage
                                     image={selectedImage}

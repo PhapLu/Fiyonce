@@ -28,6 +28,7 @@ import { formatCurrency } from "../../utils/formatter";
 
 // Styling
 import "./OrderHistory.scss";
+import { ClipLoader } from "react-spinners";
 
 export default function MemberOrderHistory() {
     const queryClient = useQueryClient();
@@ -169,7 +170,15 @@ export default function MemberOrderHistory() {
     }, []);
 
     if (isFetchingMemberOrderHistoryLoading) {
-        return <span>Đang tải...</span>;
+        return <>
+        <br /><br /><br /><br />
+        <div className="text-align-center flex-align-center flex-justify-center mt-40">
+            <ClipLoader className="clip-loader" size={40} loading={true} />
+            <h3 className="ml-12">
+                Đang tải
+            </h3>
+        </div>
+    </>
     }
 
     if (isFetchingMemberOrderHistoryError) {
@@ -369,13 +378,13 @@ export default function MemberOrderHistory() {
                         })
                     ) : (
                         <tr className="non-hover">
-                            <td colSpan={6}>
-                                Hiện chưa có đơn hàng nào.{" "}
-                                <Link to="/commission-market">
+                            <td colSpan={6} className="text-align-center p-8">
+                                Hiện chưa có đơn hàng nào.
+                                &nbsp;<Link to="/commission-market">
                                     <span className="highlight-text">
                                         Tìm kiếm họa sĩ
                                     </span>
-                                </Link>{" "}
+                                </Link>&nbsp;
                                 trên Chợ Commission nhé!
                             </td>
                         </tr>

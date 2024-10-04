@@ -11,6 +11,7 @@ import {
     ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
 } from 'ckeditor5';
 import { useModal } from "../../../contexts/modal/ModalContext";
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 // Utils
 import { formatCurrency, limitString, formatFloat, bytesToKilobytes, formatNumber } from "../../../utils/formatter.js";
@@ -20,7 +21,7 @@ import { isFilled } from "../../../utils/validator.js";
 import "./UpdateCommissionTos.scss";
 import { apiUtils } from "../../../utils/newRequest.js";
 
-export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, setShowCommissionTosView, setOverlayVisible, commissionTos }) {
+export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, setOverlayVisible, commissionTos }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState(commissionTos);
     const [errors, setErrors] = useState({});
@@ -29,6 +30,8 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
     const { setModalInfo } = useModal();
 
     const [currentTime, setCurrentTime] = useState(new Date());
+
+    const queryClient = useQueryClient(); // Access the query client
 
     const formatTime = (date) => {
         const hours = String(date.getHours()).padStart(2, '0');
@@ -53,7 +56,6 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
         let handler = (e) => {
             if (updateCommissionRef && updateCommissionRef.current && !updateCommissionRef.current.contains(e.target)) {
                 setShowUpdateCommissionTosForm(false);
-                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         };
@@ -121,6 +123,31 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
         }));
     };
 
+    // Mutation for updating the commission terms
+    const mutation = useMutation(
+        async (updatedData) => {
+            return await apiUtils.patch(`/termOfService/updateTermOfService/${commissionTos._id}`, updatedData);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate the 'termsOfServices' query to refetch data
+                queryClient.invalidateQueries(['termsOfServices']);
+                setModalInfo({
+                    status: 'success',
+                    message: 'Cập nhật điều khoản dịch vụ thành công'
+                });
+                setShowUpdateCommissionTosForm(false);
+                setOverlayVisible(false);
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: 'error',
+                    message: error.response?.data?.message || 'Error updating terms of service'
+                });
+            }
+        }
+    );
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -145,7 +172,6 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                     message: "Cập nhật điều khoản dịch vụ thành công"
                 })
                 setShowUpdateCommissionTosForm(false);
-                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         } catch (error) {
@@ -156,6 +182,9 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
         } finally {
             // Clear the loading effect
             setIsSubmitUpdateCommissionTosLoading(false);
+
+            // Trigger the mutation
+            mutation.mutate(inputs);
         }
     };
 
@@ -169,7 +198,6 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowUpdateCommissionTosForm(false);
-                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -246,7 +274,6 @@ export default function UpdateCommissionTos({ setShowUpdateCommissionTosForm, se
                             <p>Bạn có thể xem lại điều khoản dịch vụ của mình trong danh sách điều khoản dịch vụ.</p>
                             <button className="button button__primary" onClick={() => {
                                 setShowUpdateCommissionTosForm(false);
-                                setShowCommissionTosView(false);
                                 setOverlayVisible(false);
                             }}>Đóng</button>
                         </div>

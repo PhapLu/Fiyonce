@@ -244,7 +244,7 @@ export default function CommissionMarket() {
 
                                         <div className="commission-market-item__content">
                                             <div className="mt-16">
-                                                <span className="highlight-text fs-16">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span>
+                                                <span className="highlight-text fs-16">{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text fs-16">{formatCurrency(indirectOrder.maxPrice)} VND</span>
                                             </div>
                                             <div className="mt-8 mb-16">
                                                 <span >{limitString(indirectOrder.description, 330)}</span>

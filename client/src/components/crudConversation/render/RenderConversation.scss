@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 0;
     right: 4%;
-    width: 350px;
+    width: 335px;
     height: 450px;
     border-radius: 16px 16px 0 0;
     z-index: 10;
@@ -57,14 +57,15 @@
                 /* border-radius: 12px; */
                 /* padding: 8px 12px; */
                 font-size: 1.3rem;
-                margin-bottom: 4px;
+                margin-bottom: 2px;
                 width: 100%;
 
                 span {
                     text-align: start;
                     // max-width: 70%;
-                    border-radius: 12px;
-                    padding: 8px 12px;
+                    border-radius: 16px;
+                    padding: 6px 12px;
+                    max-width: 70%;
                 }
             }
 
@@ -78,9 +79,15 @@
 
                 .message-item__content span {
                     background-color: #0084ff;
-                    box-shadow: var(--box-shadow-4);
+                    box-shadow: var(--box-shadow-6);
                     color: white;
                     font-weight: 400;
+
+                    a {
+                        font-size: 1.2rem;
+                        color: white;
+                        text-decoration: underline;
+                    }
                 }
             }
 
@@ -192,38 +199,41 @@
 .message-item.right {
     display: flex;
     align-items: center;
-  }
-  
-  .message-item.right .loading-dots {
+}
+
+.message-item.right .loading-dots {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 40px;
-  }
-  
-  .message-item.right .loading-dots span {
+}
+
+.message-item.right .loading-dots span {
     width: 6px;
     height: 6px;
     background-color: var(--gray-5-color);
     border-radius: 50%;
     display: inline-block;
     animation: loading 1.2s infinite ease-in-out both;
-  }
-  
-  .message-item.right .loading-dots span:nth-child(1) {
+}
+
+.message-item.right .loading-dots span:nth-child(1) {
     animation-delay: -0.32s;
-  }
-  
-  .message-item.right .loading-dots span:nth-child(2) {
+}
+
+.message-item.right .loading-dots span:nth-child(2) {
     animation-delay: -0.16s;
-  }
-  
-  @keyframes loading {
-    0%, 20%, 100% {
-      transform: scale(1);
+}
+
+@keyframes loading {
+
+    0%,
+    20%,
+    100% {
+        transform: scale(1);
     }
+
     50% {
-      transform: scale(1.5);
+        transform: scale(1.5);
     }
-  }
-  
+}

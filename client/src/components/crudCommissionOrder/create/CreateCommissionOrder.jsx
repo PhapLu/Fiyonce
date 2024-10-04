@@ -508,7 +508,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                         name="isAgreeTerms"
                                         checked={inputs.isAgreeTerms || ""}
                                         onChange={handleChange}
-                                    /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
+                                    /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text underlined-text"> điều khoản dịch vụ </Link> của Pastal</span>
                                 </label>
                                 {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                             </div>
@@ -546,14 +546,14 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                             <span>Các họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.</span></>
                                 }
                                 <br />
-                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text">tại đây</Link>.
+                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text underlined-text">tại đây</Link>.
                             </p>
 
                             <p className="border-text mt-32">
                                 <strong>Lưu ý: </strong>
                                 <br />
                                 Pastal không chịu trách nhiệm đảm bảo lợi ích cho các giao dịch ngoài nền tảng.
-                                Nếu họa sĩ có hành động không trung thực, hãy báo cáo cho chúng mình qua <Link to="/help-center" className="highlight-text">Trung tâm trợ giúp</Link>.
+                                Nếu họa sĩ có hành động không trung thực, hãy báo cáo cho chúng mình qua <Link to="/help-center" className="highlight-text underlined-text">Trung tâm trợ giúp</Link>.
                             </p>
                         </>
                     )}

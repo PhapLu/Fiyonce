@@ -296,7 +296,7 @@ export default function UpdateCommissionOrder({
                             commissionOrder?.isDirect == true ? (
                                 <span>
                                     Giá từ:{" "}
-                                    <span className="highlight-text">
+                                    <span className="highlight-text underlined-text">
                                         {(inputs?.minPrice &&
                                             formatCurrency(
                                                 inputs?.minPrice
@@ -308,7 +308,7 @@ export default function UpdateCommissionOrder({
                             ) : (
                                 <span>
                                     Giá:{" "}
-                                    <span className="highlight-text">
+                                    <span className="highlight-text underlined-text">
                                         {(inputs?.minPrice &&
                                             formatCurrency(
                                                 inputs?.minPrice
@@ -804,7 +804,7 @@ export default function UpdateCommissionOrder({
                             Kiểm tra thông tin đơn hàng{" "}
                             <Link
                                 to={`/order-history`}
-                                className="highlight-text"
+                                className="highlight-text underlined-text"
                             >
                                 tại đây
                             </Link>
@@ -819,7 +819,7 @@ export default function UpdateCommissionOrder({
                             <br />
                             -Nếu họa sĩ có hành động không trung thực, báo cáo
                             cho chúng tôi{" "}
-                            <Link to="" className="highlight-text">
+                            <Link to="" className="highlight-text underlined-text">
                                 tại đây
                             </Link>
                             .

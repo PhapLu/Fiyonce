@@ -97,28 +97,23 @@
                 height: 32px;
                 box-shadow: var(--box-shadow-2);
 
-                .show-more-actions {
-                    border-radius: 12px;
-                    padding: 16px 20px;
+                .show-more-action-container {
+                    padding: 12px;
                     position: absolute;
-                    background-color: white;
-                    border-radius: 8px;
+                    background-color: var(--form-bg-2-color);
+                    border-radius: 20px 20px 0 20px;
                     bottom: 40px;
                     right: 0;
                     z-index: 10000;
                     width: 240px;
                     box-shadow: var(--box-shadow-2);
 
-                    .share-to-socials-container {
+                    .show-more-action-item {
                         display: flex;
+                        justify-content: start;
                         align-items: center;
-
-                        .share-to-socials-item {
-                            padding: 0;
-                            text-align: start;
-                            width: 100% !important;
-                        }
                     }
+
                 }
 
                 &.active {

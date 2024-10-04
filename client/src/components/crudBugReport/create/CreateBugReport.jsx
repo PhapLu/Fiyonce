@@ -147,9 +147,8 @@ export default function CreateBugReport({ setShowCreateBugReport, setOverlayVisi
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-
-
             <h2 className="form__title">Báo cáo lỗi hệ thống</h2>
+            <p></p>
             <div className="form-field required">
                 <label htmlFor="description" className="form-field__label">Mô tả</label>
                 <textarea name="description" value={inputs?.description} className="form-field__input" onChange={handleChange} placeholder="Mô tả sự cố mà bạn gặp phải"></textarea>

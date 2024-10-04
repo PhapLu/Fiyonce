@@ -69,9 +69,9 @@
                 // width: 32.5%;
                 margin-top: 24px;
                 background-color: var(--form-bg-2-color);
-                border: 2px solid var(--gray-1-color);
-                border-radius: 8px;
+                border-radius: 16px;
                 padding: 18px;
+                box-shadow: var(--box-shadow-1);
 
                 &:hover {
                     opacity: 0.9;

@@ -11,18 +11,26 @@ export default function Modal({ modalInfo }) {
     const loadingLineRef = useRef(null);
 
     useEffect(() => {
-        // Reset state when modalInfo changes
+        // If modalInfo is not set, return early
+        if (!modalInfo) return;
+
+        // Clear any existing timers when modalInfo changes
+        clearTimeout(timerRef.current);
+
+        // Reset modal state for new modalInfo
         setVisible(true);
         remainingTimeRef.current = modalInfo?.status === "congrat" ? 5000 : 4000; // Reset the remaining time
         startTimeRef.current = Date.now(); // Reset the start time
         setHovered(false); // Reset hover state
 
+        // Start the timer for the new modal
         const startTimer = () => {
             timerRef.current = setTimeout(() => {
-                setVisible(false);
+                setVisible(false); // Hide the modal after timeout
             }, remainingTimeRef.current);
         };
 
+        // If the modal is not hovered, start the timer
         if (!hovered) {
             startTimer();
             if (loadingLineRef.current) {
@@ -31,8 +39,12 @@ export default function Modal({ modalInfo }) {
             }
         }
 
-        return () => clearTimeout(timerRef.current); // Cleanup timer on component unmount
-    }, [modalInfo, hovered]); // Add hovered to the dependency array
+        return () => {
+            // Cleanup the timer when the component is unmounted or modalInfo changes
+            clearTimeout(timerRef.current);
+        };
+    }, [modalInfo, hovered]); // Add modalInfo and hovered to the dependency array
+    // Add hovered to the dependency array
 
     const handleMouseEnter = () => {
         if (modalInfo?.status !== "congrat") {

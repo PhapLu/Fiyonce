@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth/AuthContext';
-import EmojiPicker from '../emojiPicker/EmojiPicker'; // Update the path as needed
+import EmojiPicker from '../../components/emojiPicker/EmojiPicker'; // Update the path as needed
 import { codePointToEmoji } from '../../utils/iconDisplayer';
 import { useModal } from '../../contexts/modal/ModalContext';
 import { apiUtils } from '../../utils/newRequest';

@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import ProfileCommissionServices from "../profileCommissionServices/ProfileCommissionServices";
-import OrderHistory from "../../components/orderHistory/OrderHistory";
-
+import ProfileBasicInfo from "../profileBasicInfo/ProfileBasicInfo";
 export default function MyProfile() {
     const { profileInfo } = useOutletContext();
 
@@ -18,7 +17,7 @@ export default function MyProfile() {
             {profileInfo?.role === "talent" ? (
                 <ProfileCommissionServices />
             ) : (
-                <OrderHistory />
+                <ProfileBasicInfo />
             )}
         </>
     )

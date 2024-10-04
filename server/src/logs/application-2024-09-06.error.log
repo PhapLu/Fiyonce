@@ -1,2 +1,0 @@
-2024-09-06 12:41:36::error::/v1/api/user/me::0663d816-2109-418f-bb15-5408d6bd2876::403 - 1ms - Response: {"status":403,"now":1725601296615}::{"message":"Access token missing"}
-2024-09-06 12:41:47::error::/v1/api/user/me::b7441cfd-ef48-4406-b054-2723667c5106::403 - 1ms - Response: {"status":403,"now":1725601307694}::{"message":"Access token missing"}

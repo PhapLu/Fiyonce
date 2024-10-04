@@ -1,0 +1,8 @@
+2024-10-03 13:25:56::error::/v1/api/conversation/readConversations::b2b7d5c5-0fcd-40ee-a8c8-6dd4cf9a5601::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading '_id')"}
+2024-10-03 14:20:22::error::/v1/api/user/me::195d8b6f-915b-4d82-be6f-b96197b7144b::403 - 1ms - Response: {"status":403,"now":1727940022972}::{"message":"Access token missing"}
+2024-10-03 18:48:06::error::/v1/api/conversation/readConversations::366f0589-8f3e-481c-97ad-75ae9c51200c::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading '_id')"}
+2024-10-03 18:49:26::error::/v1/api/user/me::86b9753d-3036-470d-a5b1-f7862f3262d8::403 - 1ms - Response: {"status":403,"now":1727956166040}::{"message":"Access token missing"}
+2024-10-03 18:49:33::error::/users/login::4d6a4420-b64c-49a9-8021-6ea5f1746487::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-03 18:49:33::error::/favicon.ico::384b7df1-2b7e-436b-bd11-3f0b154c03bb::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-03 19:17:59::error::/v1/api/user/me::1013faeb-63b7-4559-941f-cd4340b009f6::403 - 0ms - Response: {"status":403,"now":1727957879005}::{"message":"Access token missing"}
+2024-10-03 19:18:09::error::/v1/api/user/me::264a4a82-9841-4d7e-95e6-be9f4808fb52::403 - 0ms - Response: {"status":403,"now":1727957889649}::{"message":"Access token missing"}

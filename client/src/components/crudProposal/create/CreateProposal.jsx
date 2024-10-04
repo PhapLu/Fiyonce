@@ -414,25 +414,29 @@ export default function CreateProposal() {
 
                                 <div className="w-100 display-inline-block">
                                     {
-                                        termOfServices?.map((termOfService, index) => {
-                                            return (
-                                                <div className="mb-8" key={index}>
-                                                    <label className="flex-align-center w-100">
-                                                        <input
-                                                            type="radio"
-                                                            name="termOfServiceId"
-                                                            value={termOfService._id}
-                                                            checked={inputs.termOfServiceId === termOfService._id}
-                                                            onChange={(e) => {
-                                                                handleChange(e);
-                                                                setSelectedTermOfService(termOfService); // Update the selected term of service
-                                                            }}
-                                                        />
-                                                        {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
-                                                    </label>
-                                                </div>
-                                            );
-                                        })
+                                        termOfServices?.length > 0 ?
+                                            termOfServices?.map((termOfService, index) => {
+                                                return (
+                                                    <div className="mb-8" key={index}>
+                                                        <label className="flex-align-center w-100">
+                                                            <input
+                                                                type="radio"
+                                                                name="termOfServiceId"
+                                                                value={termOfService._id}
+                                                                checked={inputs.termOfServiceId === termOfService._id}
+                                                                onChange={(e) => {
+                                                                    handleChange(e);
+                                                                    setSelectedTermOfService(termOfService); // Update the selected term of service
+                                                                }}
+                                                            />
+                                                            {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
+                                                        </label>
+                                                    </div>
+                                                );
+                                            })
+                                            : (
+                                                <span>Bạn hiện chưa có điều khoản dịch vụ. Đi đến trang <Link to={`/users/${userInfo?._id}/term-of-services`} className="highlight-text underlined-text">Tạo điều khoản</Link> </span>
+                                            )
                                     }
 
                                     {selectedTermOfService?.content &&

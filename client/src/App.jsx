@@ -65,6 +65,8 @@ import ForTalents from "./help/forTalents/ForTalents.jsx";
 import ForClients from "./help/forClients/ForClient.jsx";
 import HelpArticle from "./help/helpArticle/HelpArticle.jsx";
 import HelpCenterLayout from "./help/layout/HelpCenterLayout.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
+import ProfileTermOfService from "./profile/profileTermOfService/ProfileTermOfService.jsx";
 
 const queryClient = new QueryClient();
 
@@ -119,10 +121,8 @@ const commissionOrderRoutes = [
 ];
 
 
-
-
 const routes = [
-  // Static pages
+  // Displaying static content
   {
     path: "/terms-and-policies",
     element: <InDevelopment />,
@@ -142,7 +142,7 @@ const routes = [
     ]
   },
 
-  // Manage profile/portfolio
+  // Pages for managing profile/portfolio
   {
     path: "/users/:userId",
     element: <ProfileLayout />,
@@ -204,6 +204,10 @@ const routes = [
             ),
           },
         ]
+      },
+      {
+        path: "/users/:userId/term-of-services",
+        element: <ProfileTermOfService />,
       },
       {
         path: "/users/:userId/basic-info",
