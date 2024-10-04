@@ -593,7 +593,7 @@ class OrderService {
             .populate("commissionServiceId", "title");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
-        if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
+        // if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
         if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Start work

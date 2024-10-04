@@ -66,7 +66,7 @@ class ProposalService {
 
             //6. Send email to user
             const subSubject = `Họa sĩ ${talent.fullName} đã chấp nhận yêu cầu đặt hàng của bạn`
-            const message = `${proposal.scope}`
+            const message = `"${proposal.scope}"`
             sendCommissionEmail(member.email, talent, subject, subSubject, message, orderCode, price)
         } else {
             if (body.artworks.length === 0) throw new BadRequestError("Hãy cung cấp tranh")
@@ -82,7 +82,7 @@ class ProposalService {
 
             //6. Send email to user
             const subSubject = `Họa sĩ ${talent.fullName} đã ứng đơn hàng của bạn trên chợ Commission`
-            const message = `${proposal.scope}`
+            const message = `"${proposal.scope}"`
             sendCommissionEmail(member.email, talent, subject, subSubject, message, orderCode, price)
         }
 

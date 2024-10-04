@@ -129,7 +129,7 @@ const announcementTemplate = (toEmail, message, orderCode, reason) => {
     
             .logo {
                 text-align: left;
-                margin-bottom: 35px;
+                margin-bottom: 25px;
             }
     
             .header {
@@ -260,7 +260,7 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
 
             .logo {
                 text-align: left;
-                margin-bottom: 35px;
+                margin-bottom: 25px;
             }
 
             .logo img {
@@ -270,7 +270,8 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
             .header {
                 font-size: 20px;
                 font-weight: 600;
-                margin-bottom: 35px;
+                margin-top: 0px;
+                margin-bottom: 25px;
                 color: black;
             }
 
@@ -290,8 +291,8 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
             }
             .profile-card img {
                 border-radius: 50%;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 float: left;
                 margin-right: 15px;
             }
@@ -301,7 +302,7 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
             }
             .profile-card h2 {
                 margin: 0;
-                font-size: 16px;
+                font-size: 18px;
                 color: #000000;
             }
             .profile-card p {
@@ -320,20 +321,20 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
             }
             .artist-info p{
                 color: #4D4D4D;
+                margin: 0;
             }
             .btn {
-                display: flex;
                 font-weight: bold;
+                display: flex;
                 align-items: center;
                 justify-content: space-between;
-                width: 125px;
-                padding: 12px 28px;
+                width: 145px;
+                padding: 6px 22px;
                 background-color: #000;
                 color: #fff;
                 border-radius: 28px;
                 text-decoration: none;
                 font-size: 14px;
-                margin-bottom: 40px;
             }
             .order_code{
                 font-weight: bold;
@@ -344,10 +345,6 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
 
             .btn:hover {
                 background-color: #000000;
-            }
-            svg{
-                width: 20px;
-                height: 20px;
             }
 
             .footer {
@@ -370,8 +367,12 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
             .footer a:hover {
                 text-decoration: underline;
             }
-            body .a3s p, body .a3s {
-                font-family: Arial, Helvetica, sans-serif !important;
+            .a3s {
+                direction: ltr;
+                font: 16px/1.5 Arial, Helvetica, sans-serif; /* Set font size to 16px */
+                overflow-x: auto;
+                overflow-y: hidden;
+                position: relative;
             }
             .gt{
                 font-size: 1rem
@@ -381,10 +382,10 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
     </head>
     <body>
 
-        <div class="container">
+        <div class="container" style="font: 16px/1.5 Arial, Helvetica, sans-serif;">
             <!-- Logo Section -->
             <div class="logo">
-                <h1>Pastal.</h1>
+                <h1 style="color: black">Pastal.</h1>
             </div>
 
             <!-- Content Section -->
@@ -413,10 +414,11 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
                 <p class="pastal_note">Pastal Team chúc bạn có được trải nghiệm tốt nhất khi đặt commission trên nền tảng.</p>
 
                 <!-- Button -->
-                <a href="#" style="color: white" class="btn">Xem hợp đồng <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                </svg>
+                <a class="btn" href="https://pastal.app" style="color: white; text-decoration: none; display: inline-block; text-align: center;">
+                    <span style="float: left; height: 30px; line-height: 30px">Xem hợp đồng</span>
+                    <img class='svg' src="https://res.cloudinary.com/fiyonce/image/upload/v1727946925/fiyonce/system/next-button-removebg-preview_wpy3xa.png" alt="Icon" style="float: right; width: 30px; height: 30px;">
                 </a>
+
                 <!-- Footer -->
                 <div class="footer">
                     <hr>

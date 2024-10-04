@@ -103,7 +103,7 @@ class TermOfServiceService {
             )
 
         //3. Delete termOfService
-        await TermOfService.findByIdAndDelete(termOfServiceId)
+        // await TermOfService.findByIdAndDelete(termOfServiceId)
 
         return {
             message: "Xóa ToS thành công",

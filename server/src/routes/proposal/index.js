@@ -19,7 +19,6 @@ router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProp
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 
-
 router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
 
 //END CRUD
