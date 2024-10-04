@@ -41,7 +41,7 @@ class OrderService {
             if (!talent) throw new BadRequestError("Talent not found!")
             if (talent.role != "talent")
                 throw new AuthFailureError("He/She is not a talent!")
-            if (talent._id == userId)
+            if (talent._id.toString() == userId)
                 throw new BadRequestError("You cannot choose yourself!")
             body.isDirect = true
             body.talentChosenId = talentChosenId
@@ -165,7 +165,7 @@ class OrderService {
             req.body.fileFormats = fileFormats
         }
         //2. Check order status
-        if (oldOrder.status != "pending")
+        if (oldOrder.status != "pending" && oldOrder.talentChosenId)
             throw new BadRequestError("Bạn không thể cập nhật đơn hàng ở bước này")
         try {
             //3. Handle file uploads if new files were uploaded
@@ -593,7 +593,8 @@ class OrderService {
             .populate("commissionServiceId", "title");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
-        // if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
+        if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
+        console.log('ORDER', order)
         if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Start work
@@ -602,14 +603,57 @@ class OrderService {
 
         //3. Send email to user
         const subject = `[PASTAL] - Đơn hàng đang được thực hiện (${formatDate()})`
-        const message = `Họa sĩ ${user.fullName} đã tiến hành thực hiện yêu cầu cho đơn hàng của bạn. Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
-        const orderCode = `Mã đơn hàng: ${order._id.toString()}`
-        const reason = ''
-        sendAnnouncementEmail(order.memberId.email, subject, message, orderCode, reason);
+        const subSubject = `Họa sĩ ${user.fullName} đã tiến hành thực hiện yêu cầu cho đơn hàng của bạn.`
+        const message = ` Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
+        sendAnnouncementEmail(order.memberId.email, subject, subSubject, message);
         
         return {
             order,
         };
+    }
+
+    static addMilestone = async (userId, orderId, req) => {
+        //1. Check if user, order exists
+        console.log(req.body)
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
+        if (!order.talentChosenId || order.talentChosenId.toString() !== userId)
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
+
+        //2. Check if order status is in_progress
+        // if (order.status !== "in_progress")
+        //     throw new BadRequestError("Đơn hàng không ở trạng thái đang thực hiện")
+
+        //3. Handle files in milestone
+        let files = []
+        if (req.files && req.files.files && req.files.files.length > 0) {
+            const uploadPromises = req.files.files.map((file) =>
+                compressAndUploadImage({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/order/${userId}`,
+                    width: 1920,
+                    height: 1080,
+                })
+            )
+            const uploadResults = await Promise.all(uploadPromises)
+            files = uploadResults.map((result) => result.secure_url)
+        }
+        const milestone = {
+            title: req.body.title,
+            files: files,
+            url: req.body.url,
+            note: req.body.note,
+            createdAt: new Date(),
+        }
+        order.milestones.push(milestone)
+        order.save()
+
+        return {
+            order,
+        }
     }
 
     // Talent delivers product 

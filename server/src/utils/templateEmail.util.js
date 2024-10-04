@@ -101,7 +101,7 @@ const otpTemplate = (toEmail, message, verificationCode) => {
     `;
 };
 
-const announcementTemplate = (toEmail, message, orderCode, reason) => {
+const announcementTemplate = (subSubject, message) => {
     return `
     <!DOCTYPE html>
     <html lang="vi">
@@ -110,125 +110,53 @@ const announcementTemplate = (toEmail, message, orderCode, reason) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pastal Violation Request Notification</title>
         <style>
-            body {
-                font-family: Arial, sans-serif !important;
-                background-color: #f9f9f9;
-                margin: 0;
-                padding: 0;
-            }
-    
-            .container {
-                max-width: 600px;
-                margin: 0 auto;
-                background-color: #fff;
-                padding: 5px 40px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                margin-top: 30px;
-            }
-    
-            .logo {
-                text-align: left;
-                margin-bottom: 25px;
-            }
-    
-            .header {
-                font-size: 20px;
-                font-weight: 600;
-                margin-bottom: 25px;
-                color: black;
-            }
-    
-            .violation-card {
-                display: flex;
-                flex-direction: column;
-                border: 1px solid #D9D9D9;
-                border-radius: 10px;
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-    
-            .violation-card p {
-                margin: 8px 0;
-                color: #000000;
-            }
-    
-            .violation-card span {
+            .btn {
                 font-weight: bold;
-            }
-    
-            .violation-card h2 {
-                margin: 0;
-                font-size: 16px;
-                color: black;
-            }
-    
-            .violation-details {
-                color: black;
-            }
-    
-            .violation-description {
-                margin-top: 8px;
-                color: #4D4D4D;
-            }
-    
-            .footer {
-                margin-top: 30px;
-                font-size: 14px;
-                color: #4D4D4D;
-                line-height: 1.5;
-                font-style: italic;
-            }
-    
-            .pastal_note {
-                color: #4D4D4D;
-            }
-    
-            .footer a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 145px;
+                padding: 6px 22px;
+                background-color: #000;
+                color: #fff;
+                border-radius: 28px;
                 text-decoration: none;
-                color: #4D4D4D;
+                font-size: 14px;
             }
-    
-            .footer a:hover {
-                text-decoration: underline;
-            }
-            #:ow{
-                font: Arial,Helvetica,sans-serif !important;
+
+            .btn:hover {
+                background-color: #000000;
             }
         </style>
     </head>
-    <body>
-    
-        <div class="container">
+    <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; font: 16px/1.5 Arial, Helvetica, sans-serif;">
+
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 5px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
             <!-- Logo Section -->
-            <div class="logo">
-                <h1>Pastal.</h1>
+            <div style="text-align: left; margin-bottom: 25px;">
+                <h1 style="color: black;">Pastal.</h1>
             </div>
-    
+
             <!-- Content Section -->
             <div class="content">
-                <p class="header">Admin đã tiếp nhận yêu cầu xử lí vi phạm</p>
-    
-                <!-- Violation Card -->
-                <div class="violation-card">
-                    <p class="violation-details"><span>Người gửi yêu cầu:</span>${toEmail}</p>
-                    <p class="violation-description"><span>Nội dung vi phạm:</span>${message}</p>
-                </div>
-    
-                <!-- Note -->
-                <p class="pastal_note">Pastal Team chúc bạn có được trải nghiệm tốt nhất khi đặt commission trên nền tảng.</p>
-    
-                <!-- Footer -->
-                <div class="footer">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 25px; color: black;">${subSubject}</p>
+                <p style="font-size: 19px; color: black;">${message}</p>
+                <p style="color: #4D4D4D; font-size: 17px">Pastal Team chúc bạn có được trải nghiệm tốt nhất khi đặt commission trên nền tảng.</p>
+                <a class="btn" href="https://pastal.app" style="color: white; text-decoration: none; display: inline-block; text-align: center;">
+                    <span style="float: left; height: 30px; line-height: 30px">Xem hợp đồng</span>
+                    <img class='svg' src="https://res.cloudinary.com/fiyonce/image/upload/v1727946925/fiyonce/system/next-button-removebg-preview_wpy3xa.png" alt="Icon" style="float: right; width: 30px; height: 30px;">
+                </a>
+
+                <div style="margin-top: 30px; font-size: 14px; color: #4D4D4D; line-height: 1.5; font-style: italic;">
                     <hr>
                     <p>Pastal là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau. Hiện tại Pastal vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn. Hẹn gặp lại trên Pastal.</p>
-                    <p>Mọi thắc mắc và đóng góp vui lòng liên hệ <a href="mailto:pastal@gmail.com">pastal@gmail.com</a> hoặc <a href="#">Fanpage</a></p>
+                    <p>Mọi thắc mắc và đóng góp vui lòng liên hệ <a href="mailto:pastal@gmail.com" style=" text-decoration: none;">pastal@gmail.com</a> hoặc <a href="#" style=" text-decoration: none;">Fanpage</a></p>
                 </div>
             </div>
         </div>
-    
+
     </body>
-    </html>    
+    </html>
     `;
 };
 
@@ -434,5 +362,50 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
     `
 }
 
+const reportTemplate = (fullName, subSubject, message) => {
+    return `
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pastal Violation Request Notification</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; font: 16px/1.5 Arial, Helvetica, sans-serif;">
+
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 5px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
+            <!-- Logo Section -->
+            <div style="text-align: left; margin-bottom: 25px;">
+                <h1 style="font-size: 24px; color: black;">Pastal.</h1>
+            </div>
+
+            <!-- Content Section -->
+            <div class="content">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 25px; color: black;">${subSubject}</p>
+
+                <div style="border: 1px solid #D9D9D9; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                    <div style="display: block; margin-bottom: 8px; color: #000000;">
+                        <strong>Người gửi yêu cầu:</strong> ${fullName}
+                    </div>
+                    <div style="display: block; margin-bottom: 8px; color: #4D4D4D;">
+                        <strong>Nội dung vi phạm:</strong> ${message}
+                    </div>
+                </div>
+
+                <p style="font-weight: bold; font-size: 18px">Pastal sẽ xử lí đơn tố cáo dựa trên điều khoản của nền tảng (1), điều khoản dịch vụ của họa sĩ (2) và thỏa thuận trong hợp đồng giữa hai bên (3). Rất mong khách hàng và họa sĩ cung cấp thêm các bằng chứng liên quan bằng cách trả lời bên dưới email này.</p>
+
+                <div style="margin-top: 30px; font-size: 14px; color: #4D4D4D; line-height: 1.5; font-style: italic;">
+                    <hr>
+                    <p>Pastal là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau. Hiện tại Pastal vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn. Hẹn gặp lại trên Pastal.</p>
+                    <p>Mọi thắc mắc và đóng góp vui lòng liên hệ <a href="mailto:pastal@gmail.com" style=" text-decoration: none;">pastal@gmail.com</a> hoặc <a href="#" style=" text-decoration: none;">Fanpage</a></p>
+                </div>
+            </div>
+        </div>
+
+    </body>
+    </html>
+    `;
+};
+
 // Export or use these functions as needed
-export { otpTemplate, announcementTemplate, commissionTemplate };
+export { otpTemplate, announcementTemplate, commissionTemplate, reportTemplate };

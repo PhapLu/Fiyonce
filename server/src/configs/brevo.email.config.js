@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import nodemailer from "nodemailer";
-import { otpTemplate, announcementTemplate, commissionTemplate } from "../utils/templateEmail.util.js";
+import { otpTemplate, announcementTemplate, commissionTemplate, reportTemplate } from "../utils/templateEmail.util.js";
 
 async function sendOtpEmail(to, subject, message, orderId, verificationCode) {
     const toEmail = to.replace("@gmail.com", "");
@@ -34,7 +34,7 @@ async function sendOtpEmail(to, subject, message, orderId, verificationCode) {
         console.error("Error sending OTP email:", error);
     }
 }
-async function sendAnnouncementEmail(to, subject, message, orderCode = '', reason = '') {
+async function sendAnnouncementEmail(to, subject, subSubject, message) {
     const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter
@@ -48,7 +48,39 @@ async function sendAnnouncementEmail(to, subject, message, orderCode = '', reaso
         });
 
         // Define the html form of the email
-        const htmlContent = announcementTemplate(toEmail, message, orderCode, reason);
+        const htmlContent = announcementTemplate(subSubject, message);
+
+        // Define the mail options
+        const mailOptions = {
+            from: '"Pastal" <phapluudev2k5@gmail.com>',
+            to,
+            subject,
+            html: htmlContent,
+        };
+
+        // Send the email
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Announcement Email sent::", info.messageId);
+    } catch (error) {
+        console.error("Error sending announcement email:", error);
+    }
+}
+
+async function sendReportEmail(to, subject, fullName, subSubject, message) {
+    const toEmail = to.replace("@gmail.com", "");
+    try {
+        // Create a transporter
+        const transporter = nodemailer.createTransport({
+            host: "smtp-relay.brevo.com",
+            port: 587,
+            auth: {
+                user: process.env.BREVO_SMTP_USERNAME,
+                pass: process.env.BREVO_SMTP_PASSWORD,
+            },
+        });
+
+        // Define the html form of the email
+        const htmlContent = reportTemplate(fullName, subSubject, message);
 
         // Define the mail options
         const mailOptions = {
@@ -97,4 +129,4 @@ async function sendCommissionEmail(to, user, subject, subSubject, message, order
     }
 }
 
-export {sendOtpEmail, sendAnnouncementEmail, sendCommissionEmail };
+export {sendOtpEmail, sendAnnouncementEmail, sendCommissionEmail, sendReportEmail };

@@ -110,6 +110,13 @@ class OrderController {
             metadata: await OrderService.finishOrder(req.userId, req.params.orderId)
         }).send(res)
     }
+
+    addMilestone = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Add milestone success!',
+            metadata: await OrderService.addMilestone(req.userId, req.params.orderId, req)
+        }).send(res)
+    }
 }
 
 export default new OrderController()

@@ -20,7 +20,7 @@ router.patch('/archiveOrder/:orderId', asyncHandler(orderController.archiveOrder
 router.patch('/unarchiveOrder/:orderId', asyncHandler(orderController.unarchiveOrder))
 
 //END CRUD
-
+router.patch('/addMilestone/:orderId', uploadFields, asyncHandler(orderController.addMilestone))
 router.get('/readMemberOrderHistory', asyncHandler(orderController.readMemberOrderHistory))
 router.get('/readTalentOrderHistory', asyncHandler(orderController.readTalentOrderHistory))
 router.get('/readArchivedOrderHistory', asyncHandler(orderController.readArchivedOrderHistory))

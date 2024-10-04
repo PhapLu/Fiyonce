@@ -62,7 +62,13 @@ const OrderSchema = new mongoose.Schema(
             url: { type: String, default: "" },
             files: [{ type: String, default: [] }],
             finishedAt: { type: Date }
-        }
+        },
+        milestones: [{
+            title: { type: String, default: "" },
+            note: { type: String, default: "" },
+            url: { type: String, default: "" },
+            files: [{ type: String, default: [] }],
+        }]
     },{
         timestamps: true,
         collection: COLLECTION_NAME,
