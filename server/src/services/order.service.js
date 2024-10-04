@@ -614,7 +614,6 @@ class OrderService {
 
     static addMilestone = async (userId, orderId, req) => {
         //1. Check if user, order exists
-        console.log(req.body)
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
@@ -623,8 +622,8 @@ class OrderService {
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Check if order status is in_progress
-        // if (order.status !== "in_progress")
-        //     throw new BadRequestError("Đơn hàng không ở trạng thái đang thực hiện")
+        if (order.status !== "in_progress")
+            throw new BadRequestError("Đơn hàng không ở trạng thái đang thực hiện")
 
         //3. Handle files in milestone
         let files = []
