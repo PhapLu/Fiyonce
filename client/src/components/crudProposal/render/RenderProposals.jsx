@@ -256,7 +256,7 @@ export default function RenderProposals() {
                                         </div>
                                     </div>
 
-                                    <p>Giá thỏa thuận: <span className="highlight-text">{formatCurrency(proposal.price)} VND</span></p>
+                                    <p>Họa sĩ đề xuất: <span className="highlight-text">{formatCurrency(proposal.price)} VND</span></p>
                                     <p>{limitString(proposal.scope, 250)}</p>
                                     <div className="reference-container mb-8">
                                         {proposal.artworks.map((artwork, index) => {
@@ -271,7 +271,7 @@ export default function RenderProposals() {
                                         <Link to={`${location.pathname}/${proposal._id}`} className="btn btn-2 btn-md">
                                             Xem hợp đồng
                                         </Link>
-                                        <button className="btn btn-3 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>
+                                        <button className="btn btn-4 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>
                                             Liên hệ
                                         </button>
                                     </div>

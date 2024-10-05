@@ -56,7 +56,7 @@ class NotificationService {
                 notificationType = "order";
                 break;
             case "approveCommissionOrder":
-                content = `${user.fullName} đã xác nhận đơn hàng và gửi proposal cho bạn`;
+                content = `${user.fullName} đã tiếp nhận đơn hàng và gửi proposal cho bạn`;
                 notificationType = "order";
                 break;
             case "confirmCommissionOrder":
@@ -64,15 +64,15 @@ class NotificationService {
                 notificationType = "order";
                 break;
             case "rejectCommissionOrder":
-                content = `${user.fullName} đã từ chối commission của bạn`;
+                content = `${user.fullName} đã từ chối yêu cầu commission của bạn`;
                 notificationType = "order";
                 break;
             case "startWipCommissionOrder":
-                content = `${user.fullName} đã từ chối commission của bạn`;
+                content = `${user.fullName} đã tiến hành thực hiện commission của bạn`;
                 notificationType = "order";
                 break;
             case "reportCommissionOrder":
-                content = `${user.fullName} đã từ chối commission của bạn`;
+                content = `${user.fullName} đã báo cáo vi phạm`;
                 notificationType = "order";
                 break;
             case "confirmTalentRequest":

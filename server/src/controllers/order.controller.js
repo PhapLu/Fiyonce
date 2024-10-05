@@ -88,7 +88,13 @@ class OrderController {
             metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
-
+    
+    readRejectResponse = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Read reject message success!',
+            metadata: await OrderService.readRejectResponse(req.userId, req.params.orderId, req.body)
+        }).send(res)
+    }
 
     startWipOrder = async (req, res, next) => {
         new SuccessResponse({

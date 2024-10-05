@@ -225,9 +225,8 @@ export default function ArchivedOrderHistory() {
                         {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
 
                         {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createProposalMutation={createProposalMutation} />}
-                        {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />}
-
-                        {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />}
+                        {/* {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />} */}
+                        {/* {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />} */}
                         {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
                     </div>
                 )

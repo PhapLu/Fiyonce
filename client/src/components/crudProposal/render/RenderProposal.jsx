@@ -98,7 +98,7 @@ export default function RenderProposal() {
 
             const senderId = userInfo?._id;
             const receiverId = proposal?.talentId?._id;
-            const inputs2 = { receiverId, type: "confirmCommissionOrder", url: `/users/${receiverId}/order-history` }
+            const inputs2 = { receiverId, type: "confirmCommissionOrder", url: `/order-history` }
             const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
             const notificationData = response2.data.metadata.notification;
             socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
@@ -317,17 +317,14 @@ export default function RenderProposal() {
                             </div>
 
                             {
-                                !isOrderOwnerAsMember && ["confirmed", "canceled",
-                                    "in_progress",
-                                    "finished",
-                                    "under_processing"].includes(commissionOrder?.status) && (
+                                isOrderOwnerAsMember && ["approved"].includes(commissionOrder?.status) && (
                                     <div className="form-field">
                                         <label htmlFor="price" className="form-field__label">Thanh toán</label>
 
                                         <div className="border-text w-100">
-                                            <span>Giá trị đơn hàng: <span className="highlight-text">{formatCurrency(proposal?.price)}đ</span></span>
-                                            <p className="fw-bold">Phương thức thanh toán</p>
-                                            <div className="payment-method-container">
+                                            <p className="text-align-center">Giá trị đơn hàng: <span className="highlight-text">{formatCurrency(proposal?.price)}đ</span></p>
+                                            {/* <p className="fw-bold">Phương thức thanh toán</p> */}
+                                            {/* <div className="payment-method-container">
                                                 {paymentMethods.map(method => (
                                                     <div
                                                         key={method.id}
@@ -339,9 +336,10 @@ export default function RenderProposal() {
                                                     </div>
                                                 ))}
                                             </div>
-                                            <hr />
-                                            <p className="text-align-center">Bạn vẫn chưa bị trừ tiền</p>
-                                            <button className="btn btn-md btn-hover color-4 w-100" onClick={handlePayment}>Thanh toán qua {selectedPaymentMethod ? paymentMethods.find(method => method.id === selectedPaymentMethod).name : '...'}</button>
+                                            <hr /> */}
+                                            <p className="text-align-center mb-20">Bạn vẫn chưa bị trừ tiền cho đến khi hoàn tất thủ tục thanh toán</p>
+                                            <br />
+                                            <button className="btn btn-lg btn-hover color-4 w-100" onClick={handlePayment}>Đi đến cổng thanh toán</button>
                                         </div>
                                     </div>
                                 )

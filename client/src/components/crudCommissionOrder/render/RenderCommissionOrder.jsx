@@ -227,8 +227,8 @@ export default function RenderCommissionOrder() {
 
                         <div className="form__submit-btn-container">
                             {
-                                isOrderOwner && (
-                                    <Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "order-history"}/${commissionOrder?._id}/update`} className="form__submit-btn-item btn btn-2 btn-md">Cập nhật</Link>
+                                isOrderOwner && !commissionOrder?.talentChosenId && (
+                                    <Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "/order-history"}/commission-orders/${commissionOrder?._id}/update`} className="form__submit-btn-item btn btn-2 btn-md">Cập nhật</Link>
                                 )
                             }
                             {

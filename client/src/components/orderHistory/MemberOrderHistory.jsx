@@ -42,7 +42,6 @@ export default function MemberOrderHistory() {
 
     const [showUpdateCommissionOrder, setShowUpdateCommissionOrder] =
         useState();
-    const [showRenderProposals, setShowRenderProposals] = useState(false);
 
     const [showCreateProposal, setShowCreateProposal] = useState(false);
     const [showRenderProposal, setShowRenderProposal] = useState(false);
@@ -257,13 +256,7 @@ export default function MemberOrderHistory() {
                                                 <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        setCommissionOrder(
-                                                            order
-                                                        );
-                                                        setShowRenderProposals(
-                                                            true
-                                                        );
-                                                        setOverlayVisible(true);
+                                                        navigate(`/order-history/commission-orders/${order._id}/proposals`)
                                                     }}
                                                     className="btn btn-3"
                                                 >
@@ -447,14 +440,6 @@ export default function MemberOrderHistory() {
                                 reportCommissionOrderMutation={
                                     reportCommissionOrderMutation
                                 }
-                            />
-                        )}
-
-                        {showRenderProposals && (
-                            <RenderProposals
-                                commissionOrder={commissionOrder}
-                                setShowRenderProposals={setShowRenderProposals}
-                                setOverlayVisible={setOverlayVisible}
                             />
                         )}
 

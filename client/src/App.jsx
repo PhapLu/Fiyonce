@@ -67,6 +67,10 @@ import HelpArticle from "./help/helpArticle/HelpArticle.jsx";
 import HelpCenterLayout from "./help/layout/HelpCenterLayout.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
 import ProfileTermOfService from "./profile/profileTermOfService/ProfileTermOfService.jsx";
+import RejectResponse from "./components/crudCommissionOrder/rejectResponse/RejectResponse.jsx";
+import RenderMilestones from "./components/crudCommissionOrder/renderMilestones/RenderMilestones.jsx";
+import Resources from "./statics/resources/Resources.jsx";
+import CreateMilestone from "./components/crudCommissionOrder/createMilestone/CreateMilestone.jsx";
 
 const queryClient = new QueryClient();
 
@@ -105,8 +109,20 @@ const commissionOrderRoutes = [
         element: <RejectCommissionOrder />,
       },
       {
+        path: "reject-response",
+        element: <RejectResponse />,
+      },
+      {
         path: "start-wip",
         element: <StartWipCommissionOrder />,
+      },
+      {
+        path: "render-milestones",
+        element: <RenderMilestones />,
+      },
+      {
+        path: "create-milestone",
+        element: <CreateMilestone />,
       },
       {
         path: "deliver",
@@ -136,8 +152,16 @@ const routes = [
         element: <Glaze />,
       },
       {
+        path: "/statics/term-of-services",
+        element: <Glaze />,
+      },
+      {
         path: "/statics/about",
         element: <About />,
+      },
+      {
+        path: "/statics/resources",
+        element: <Resources />,
       },
     ]
   },

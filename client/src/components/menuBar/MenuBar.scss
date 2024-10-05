@@ -3,10 +3,10 @@
     position: absolute;
     top: calc(100% + 8px);
     right: -20px;
-    min-width: 280px;
+    min-width: 290px;
     border: 1px solid var(--gray-1-color);
     padding: 18px 20px;
-    border-radius: 8px;
+    border-radius: 24px 0 24px 24px;
     background-color: var(--white-3-color);
     box-shadow: var(--box-shadow-1);
 
@@ -86,7 +86,7 @@
     }
 
     .dropdown-menu-statics {
-        font-size: 1.2rem;
+        font-size: 1.2rem !important;
         display: flex;
         flex-wrap: wrap;
         align-items: center;

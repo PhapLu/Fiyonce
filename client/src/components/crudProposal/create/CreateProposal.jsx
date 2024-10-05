@@ -63,7 +63,7 @@ export default function CreateProposal() {
     });
 
     const closeCreateProposalView = () => {
-        navigate(-1);
+        navigate(-2);
     }
 
     const handleShowCreateProposal = () => {
@@ -226,7 +226,7 @@ export default function CreateProposal() {
 
                 const senderId = userInfo._id;
                 const receiverId = commissionOrder.memberId._id;
-                const inputs2 = { receiverId, type: "approveCommissionOrder", url: `/users/${commissionOrder.memberId._id}/order-history` }
+                const inputs2 = { receiverId, type: "approveCommissionOrder", url: `/order-history/commission-orders/${commissionOrder._id}/proposals` }
                 const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
                 const notificationData = response2.data.metadata.notification;
                 socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });

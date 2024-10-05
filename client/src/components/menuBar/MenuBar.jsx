@@ -247,8 +247,16 @@ export default function MenuBar() {
                             <span className="dropdown-menu-item__title">Đăng xuất</span>
                         </li>
 
-                        <span className="dropdown-menu-statics mt-8">
-                            &#169; Pastal <span className="dot-delimiter sm"></span> <Link to="/help-center" onClick={() => setShowMenu(false)}>Trung tâm trợ giúp</Link> <span className="dot-delimiter sm"></span> <Link to="/statics/about" onClick={() => setShowMenu(false)}>Về chúng tôi</Link> <span className="dot-delimiter sm"></span> <Link to="term-of-services" onClick={() => setShowMenu(false)}>Điều khoản dịch vụ</Link>
+                        <span className="dropdown-menu-statics mt-8 fs-13">
+                            &#169; Pastal
+                            <span className="dot-delimiter sm"></span>
+                            <Link to="/help-center" onClick={() => setShowMenu(false)}>Trung tâm trợ giúp</Link>
+                            <span className="dot-delimiter sm"></span>
+                            <Link to="/statics/about" onClick={() => setShowMenu(false)}>Về Pastal</Link>
+                            <span className="dot-delimiter sm"></span>
+                            <Link to="/statics/term-of-services" onClick={() => setShowMenu(false)}>Điều khoản </Link>
+                            <span className="dot-delimiter sm"></span>
+                            <Link to="/statics/resources" onClick={() => setShowMenu(false)}>Tài nguyên</Link>
                         </span>
                     </>
                 )

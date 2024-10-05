@@ -1,0 +1,50 @@
+.render-milestones {
+    .milestone-container {
+        margin-top: 20px;
+        margin-left: 32px;
+        position: relative;
+
+        .milestone-item {
+            position: relative;
+            padding-bottom: 16px;
+
+            .milestone-item__title {
+                font-size: 1.6rem;
+            }
+
+            p {
+                margin: 8px 0;
+            }
+
+            &::before {
+                position: absolute;
+                content: '';
+                background-color: var(--gray-1-color);
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                left: -32px;
+                top: 4px;
+                z-index: 1000;
+            }
+
+            &::after {
+                position: absolute;
+                content: "";
+                height: calc(100%);
+                width: 0;
+                /* No width required, using border */
+                border-left: 2px dashed var(--gray-2-color);
+                /* Dashed line */
+                left: -24px;
+                top: 16px;
+            }
+
+            &:last-of-type {
+                &::after {
+                    display: none;
+                }
+            }
+        }
+    }
+}

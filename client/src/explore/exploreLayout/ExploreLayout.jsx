@@ -145,7 +145,6 @@ export default function Explore() {
         <>
             <Navbar />
             <div className='app without-sidebar'>
-
                 <div className="explore">
                     {/* Display informative news */}
                     <RenderNewss />

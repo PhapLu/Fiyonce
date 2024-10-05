@@ -128,6 +128,7 @@ class OrderService {
         try {
             const order = await Order.findById(orderId)
                 .populate('memberId', "avatar fullName")
+                .populate('talentChosenId', "avatar fullName")
                 .populate('commissionServiceId', "title")
                 .lean()
 
@@ -263,6 +264,28 @@ class OrderService {
         }
     }
 
+    static readRejectResponse = async (userId, orderId) => {
+        // 1. Find the order by ID and select memberId, talentChosenId, and rejectMessage
+        const order = await Order.findById(orderId, { memberId: 1, talentChosenId: 1, rejectMessage: 1 });
+        console.log("OOO")
+        console.log(order)
+
+        // 2. Check if the order exists
+        if (!order) {
+            throw new NotFoundError("Order not found");
+        }
+
+        // 3. Check if the userId is either the memberId or the talentChosenId
+        if (order.memberId.toString() !== userId && order.talentChosenId.toString() !== userId) {
+            throw new ForbiddenError("You are not authorized to view this reject response");
+        }
+
+        // 4. Return the necessary fields: talentId and rejectMessage
+        return {
+            talentId: order.talentChosenId,
+            rejectMessage: order.rejectMessage
+        };
+    }
 
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
@@ -274,6 +297,15 @@ class OrderService {
         try {
             // 2. Aggregate to get all orders involving the talent
             const orders = await Order.aggregate([
+                // Lookup to get details from Proposal if exists
+                {
+                    $lookup: {
+                        from: "Proposals",
+                        localField: "_id",
+                        foreignField: "orderId",
+                        as: "proposals",
+                    },
+                },
                 // Match orders where the talent is chosen or has a proposal
                 {
                     $match: {
@@ -281,16 +313,12 @@ class OrderService {
                             {
                                 $or: [
                                     {
-                                        talentChosenId:
-                                            new mongoose.Types.ObjectId(
-                                                talentId
-                                            ),
+                                        talentChosenId: new mongoose.Types.ObjectId(talentId),
                                     },
                                     {
-                                        "proposals.talentId":
-                                            new mongoose.Types.ObjectId(
-                                                talentId
-                                            ),
+                                        "proposals.talentId": new mongoose.Types.ObjectId(
+                                            talentId
+                                        ),
                                     },
                                 ],
                             },
@@ -303,15 +331,6 @@ class OrderService {
                         ],
                     },
                 },
-                // Lookup to get details from Proposal if exists
-                {
-                    $lookup: {
-                        from: "Proposals",
-                        localField: "_id",
-                        foreignField: "orderId",
-                        as: "proposals",
-                    },
-                },
                 // Lookup to get member details
                 {
                     $lookup: {
@@ -321,6 +340,7 @@ class OrderService {
                         as: "memberDetails",
                     },
                 },
+                // Lookup to get commission service details
                 {
                     $lookup: {
                         from: "CommissionServices",
@@ -333,27 +353,13 @@ class OrderService {
                 {
                     $project: {
                         commissionServiceId: {
-                            _id: {
-                                $arrayElemAt: [
-                                    "$commissionServiceDetails._id",
-                                    0,
-                                ],
-                            },
-                            title: {
-                                $arrayElemAt: [
-                                    "$commissionServiceDetails.title",
-                                    0,
-                                ],
-                            },
+                            _id: { $arrayElemAt: ["$commissionServiceDetails._id", 0] },
+                            title: { $arrayElemAt: ["$commissionServiceDetails.title", 0] },
                         },
                         memberId: {
                             _id: { $arrayElemAt: ["$memberDetails._id", 0] },
-                            avatar: {
-                                $arrayElemAt: ["$memberDetails.avatar", 0],
-                            },
-                            fullName: {
-                                $arrayElemAt: ["$memberDetails.fullName", 0],
-                            },
+                            avatar: { $arrayElemAt: ["$memberDetails.avatar", 0] },
+                            fullName: { $arrayElemAt: ["$memberDetails.fullName", 0] },
                         },
                         talentChosenId: 1,
                         status: 1,
@@ -378,9 +384,7 @@ class OrderService {
                                         cond: {
                                             $eq: [
                                                 "$$proposal.talentId",
-                                                new mongoose.Types.ObjectId(
-                                                    talentId
-                                                ),
+                                                new mongoose.Types.ObjectId(talentId),
                                             ],
                                         },
                                     },
@@ -392,7 +396,7 @@ class OrderService {
                 },
                 {
                     $project: {
-                        proposalId: "$proposalId",
+                        proposalId: 1,
                         commissionServiceId: 1,
                         memberId: 1,
                         talentChosenId: 1,
@@ -411,7 +415,8 @@ class OrderService {
                         review: 1,
                     },
                 },
-            ])
+            ]);
+
 
             console.log(orders)
 
@@ -650,18 +655,18 @@ class OrderService {
         const talent = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!talent) throw new NotFoundError("Talent not found")
-        if(talent.role !== "talent") throw new BadRequestError("You are not a talent")
+        if (talent.role !== "talent") throw new BadRequestError("You are not a talent")
         if (!order) throw new NotFoundError("Order not found")
         if (order.talentChosenId.toString() !== userId) throw new AuthFailureError("You are not authorized to deliver this order")
         if (order.status !== "in_progress") throw new BadRequestError("Order is not in progress")
 
         //2. Deliver order
         // Validate input
-        if(!req.files && !body?.url) 
+        if (!req.files && !body?.url)
             throw new BadRequestError("No files or url provided for delivery")
 
         // Upload new files to Cloudinary using uploadFinalProduct function
-        if(req.files && req.files.files && req.files.files.length > 0) {
+        if (req.files && req.files.files && req.files.files.length > 0) {
             const uploadPromises = req.files.files.map((file) =>
                 uploadFinalProduct({
                     buffer: file.buffer,
@@ -686,13 +691,13 @@ class OrderService {
 
     // Client confirm finishing order
     static finishOrder = async (userId, orderId) => {
-       //1. Check user, order
+        //1. Check user, order
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("User not found")
         if (!order) throw new NotFoundError("Order not found")
         if (order.memberId.toString() !== userId) throw new AuthFailureError("You are not authorized to finish this order")
-        if(order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
+        if (order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
 
         //2. Finish order
         order.status = "finished"

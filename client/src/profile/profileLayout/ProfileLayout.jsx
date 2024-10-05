@@ -9,6 +9,7 @@ import { newRequest, apiUtils } from "../../utils/newRequest.js";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import RenderBadges from "../../components/crudBadge/render/RenderBadges.jsx";
 import "./ProfileLayout.scss";
+import { ClipLoader } from "react-spinners";
 
 export default function ProfileLayout() {
     const [profileBtnActive, setProfileNavActive] = useState(null);
@@ -169,7 +170,15 @@ export default function ProfileLayout() {
 
 
     if (isLoading) {
-        return <span>Đang tải...</span>;
+        return <>
+            <br /><br /><br /><br />
+            <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                <ClipLoader className="clip-loader" size={40} loading={true} />
+                <h3 className="ml-12">
+                    Đang tải
+                </h3>
+            </div>
+        </>;
     }
 
     if (isError) {
@@ -260,7 +269,7 @@ export default function ProfileLayout() {
                                         </Link>
                                         <Link
                                             to={`/users/${userId}/basic-info`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || (!location.pathname.endsWith("/profile-commission-services") && location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
                                         >
                                             Thông tin cơ bản
                                         </Link>
@@ -269,7 +278,7 @@ export default function ProfileLayout() {
                                     <>
                                         <Link
                                             to={`/users/${userId}/basic-info`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || (!location.pathname.endsWith("/profile-commission-services") && location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
                                         >
                                             Thông tin cơ bản
                                         </Link>

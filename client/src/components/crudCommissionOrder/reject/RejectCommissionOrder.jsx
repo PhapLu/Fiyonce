@@ -132,7 +132,7 @@ export default function RejectCommissionOrder() {
 
             const senderId = userInfo._id;
             const receiverId = commissionOrder.memberId._id;
-            const inputs2 = { receiverId, type: "rejectCommissionOrder", url: `/order-history` }
+            const inputs2 = { receiverId, type: "rejectCommissionOrder", url: `/order-history/commission-orders/${commissionOrder?._id}/reject-response` }
             const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
             const notificationData = response2.data.metadata.notification;
             socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });

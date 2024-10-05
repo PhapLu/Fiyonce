@@ -10,6 +10,7 @@ import { useModal } from "../../contexts/modal/ModalContext.jsx";
 import { newRequest, apiUtils } from "../../utils/newRequest";
 import { formatEmailToName } from "../../utils/formatter";
 import socketIOClient from 'socket.io-client';
+import { ClipLoader } from 'react-spinners';
 
 const AuthContext = createContext();
 
@@ -33,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         if (userInfo) {
-            const newSocket = socketIOClient(import.meta.env.VITE_ENV=='production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN); // Adjust URL to your backend
+            const newSocket = socketIOClient(import.meta.env.VITE_ENV == 'production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN); // Adjust URL to your backend
             setSocket(newSocket);
             newSocket.emit('addUser', userInfo._id);
         }
@@ -71,7 +72,15 @@ export const AuthProvider = ({ children }) => {
 
 
     if (isLoading) {
-        return <span>Đang tải...</span>
+        return <>
+            <br /><br /><br /><br />
+            <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                <ClipLoader className="clip-loader" size={40} loading={true} />
+                <h3 className="ml-12">
+                    Đang tải
+                </h3>
+            </div>
+        </>
     }
 
     if (isError) {
