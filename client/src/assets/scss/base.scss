@@ -1077,8 +1077,9 @@ hr {
 table {
     border-collapse: collapse;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 16px;
     background-color: var(--form-bg-2-color);
+    box-shadow: var(--box-shadow-6);
 
     .status {
         min-width: 160px;
@@ -2001,7 +2002,7 @@ table {
     .form__back-ic {
         position: absolute;
         object-fit: cover;
-        top: 28px;
+        top: 22px;
         left: 28px;
         width: 40px;
         height: 40px;

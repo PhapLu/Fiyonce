@@ -106,7 +106,7 @@ export default function StartWipCommissionOrder() {
                 <div className="form-field">
                     <p className="highlight-bg-text text-align-justify">
                         Bằng cách xác nhận, Pastal sẽ thông báo đến khách hàng rằng bạn đã tiến hành thực hiện đơn hàng.
-                        Sau khi hoàn thành đơn hàng và bàn giao cho khách, hãy nhớ click vào nút "Hoàn tất" nhé.
+                        Hãy cập nhật tiến độ làm việc từ lúc lên bản thảo đến lúc hoàn thiện để khách hàng nắm rõ tiến độ đơn hàng hơn nhé.
                     </p>
                 </div>
 
