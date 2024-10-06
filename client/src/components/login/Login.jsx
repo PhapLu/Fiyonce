@@ -133,7 +133,7 @@ export default function Login() {
             {/* Extra section of the form */}
             <p className="form__extra-text">
                 <span>Chưa có tài khoản?{" "}</span>
-                <span className="form__extra-text__link" onClick={() => {
+                <span className="form__extra-text__link underlined-text" onClick={() => {
                     setShowLoginForm(false);
                     setShowRegisterForm(true);
                 }}>Đăng kí</span>

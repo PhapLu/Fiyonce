@@ -98,9 +98,8 @@ export default function DeliverCommissionOrder() {
                     ) : (
                         <>
                             <div className="form-field">
-                                <p className="highlight-bg-text text-align-justify fs-12">
-                                    Nếu khách hàng hài lòng với chất lượng sản phẩm và chọn "Đã nhận được hàng", 95.5% giá trị đơn hàng sẽ được chuyển ngay vào tài khoản thanh toán mà bạn liên kết với Pastal.
-                                    Nếu sau 07 ngày kể từ khi hoàn tất giao dịch mà không có phản hồi và báo cáo vi phạm từ phía khách hàng, giá trị đơn hàng sẽ tự động được chuyển vào tài khoản của bạn.
+                                <p className="highlight-bg-text text-align-justify fs-13">
+                                    Nếu khách hàng hài lòng với chất lượng sản phẩm và chọn "Đã nhận được hàng", 95.5% giá trị đơn hàng sẽ được chuyển vào tài khoản thanh toán mà bạn liên kết với Pastal trong vòng 24h. Nếu sau 07 ngày kể từ khi hoàn tất giao dịch mà không có phản hồi và báo cáo vi phạm từ phía khách hàng, giá trị đơn hàng sẽ tự động được chuyển vào tài khoản của bạn.
                                 </p>
                             </div>
                             <div className="form-field">

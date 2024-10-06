@@ -647,7 +647,6 @@ class OrderService {
         }
     }
 
-
     // Talent delivers product 
     static deliverOrder = async (userId, orderId, req) => {
         //1. Check talent, order
