@@ -11,6 +11,7 @@ import {
     deleteFileByPublicId,
 } from "../utils/cloud.util.js"
 import Order from "../models/order.model.js"
+import Proposal from "../models/proposal.model.js"
 import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
 import { formatDate } from "../utils/index.js"
 
@@ -21,14 +22,17 @@ class CommissionReportService {
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Validate request body
-        const { orderId, proposalId, content } = req.body
+        const { orderId, content } = req.body
 
-        if (!orderId || !proposalId || !content)
+        if (!orderId || !content)
             throw new BadRequestError("Hãy cung cấp những mục cần thiết")
 
         const order = await Order.findById(orderId)
         if (!order) throw new BadRequestError("Không tìm thấy đơn hàng")
-
+        const proposal = await Proposal.findOne({ orderId: orderId, talentId: order.talentChosenId })
+        console.log(proposal)
+        if (!proposal) throw new BadRequestError("Bạn không thể báo cáo vi phạm ở giai đoạn này")
+        
         //3. Upload files to Cloudinary if exists
         try {
             let evidences = []
@@ -51,7 +55,7 @@ class CommissionReportService {
             const commissionReport = new CommissionReport({
                 userId: userId,
                 orderId,
-                proposalId,
+                proposalId: proposal._id.toString(),
                 content,
                 evidences,
             })
@@ -73,7 +77,7 @@ class CommissionReportService {
         //1. Check commissionReport
         const commissionReport = await CommissionReport.findById(
             commissionReportId
-        ).populate("orderId", "memberId talentChosenId")
+        ).populate("orderId").populate("proposalId")
         if (!commissionReport)
             throw new NotFoundError("Không tìm thấy báo cáo")
 
@@ -91,7 +95,7 @@ class CommissionReportService {
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Get all commissionReports
-        const commissionReports = await CommissionReport.find()
+        const commissionReports = await CommissionReport.find().populate("orderId").populate("proposalId")
 
         return {
             commissionReports,
