@@ -21,19 +21,19 @@ class BadgeService {
         // 2. Validate request body
         const { title, description } = req.body
         if (!title || !description) throw new BadRequestError("Missing required fields!")
-        if (req.files && !req.files.thumbnail)
-            throw new BadRequestError("Please provide a thumbnail!")
+        if (!req.file)
+            throw new BadRequestError("Please provide a icon!")
     
         try {
             // 3. Compress and upload the image to Cloudinary
-            const thumbnailUploadResult = await compressAndUploadImage({
-                buffer: req.files.thumbnail[0].buffer,
-                originalname: req.files.thumbnail[0].originalname,
+            const iconUploadResult = await compressAndUploadImage({
+                buffer: req.file.buffer,
+                originalname: req.file.originalname,
                 folderName: `fiyonce/admin/badges`,
                 width: 1920,
                 height: 1080
             })
-            const icon = thumbnailUploadResult.secure_url
+            const icon = iconUploadResult.secure_url
     
             // 4. Parse the criteria field
             let criteriaString = ""

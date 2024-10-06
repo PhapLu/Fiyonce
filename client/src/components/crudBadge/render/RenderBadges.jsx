@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 
+
+// Contexts
+import { useAuth } from "../../../contexts/auth/AuthContext"
+
 // Components
 import RenderBadge from "./RenderBadge";
 
@@ -8,50 +12,55 @@ import RenderBadge from "./RenderBadge";
 import "./RenderBadges.scss"
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 import { limitString } from "../../../utils/formatter";
+import { apiUtils } from "../../../utils/newRequest";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function RenderBadges({ badge, setShowRenderBadges, setOverlayVisible }) {
+    const { userInfo } = useAuth();
+
     const fetchBadges = async () => {
         try {
-            // const response = await apiUtils.get(`/badge/readBadges`);
-            // return response.data.metadata.badges;
-            return [
-                {
-                    _id: "1",
-                    title: "Badge 01",
-                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-                    level: "hard",
-                    type: "platform_contributor",
-                    thumbnail: "https://i.pinimg.com/564x/40/00/9a/40009a289df54c8e570d89a7c72612fa.jpg",
-                    isComplete: true,
-                },
-                {
-                    _id: "2",
-                    title: "Badge 02",
-                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-                    level: "medium",
-                    type: "sale_achievement",
-                    thumbnail: "https://i.pinimg.com/736x/14/1f/40/141f40e1fae6a366cf81ff1a2f30600b.jpg",
-                    isComplete: false,
-                },
-                {
-                    _id: "3",
-                    title: "Badge 03",
-                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-                    level: "easy",
-                    type: "challenge_participation",
-                    thumbnail: "https://i.pinimg.com/736x/14/1f/40/141f40e1fae6a366cf81ff1a2f30600b.jpg",
-                    isComplete: false,
-                },
-                {
-                    _id: "4",
-                    title: "Badge 04",
-                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-                    level: "hard",
-                    type: "other",
-                    thumbnail: "https://i.pinimg.com/736x/25/d8/8d/25d88de4ab6f64ff2fafd8c67e0b85c3.jpg",
-                    isComplete: false,
-                }
-            ]
+            const response = await apiUtils.get(`/badge/readBadges`);
+            console.log(userInfo.badges);
+            return response.data.metadata.badges;
+            // return [
+            //     {
+            //         _id: "1",
+            //         title: "Badge 01",
+            //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+            //         level: "hard",
+            //         type: "platform_contributor",
+            //         thumbnail: "https://i.pinimg.com/564x/40/00/9a/40009a289df54c8e570d89a7c72612fa.jpg",
+            //         isComplete: true,
+            //     },
+            //     {
+            //         _id: "2",
+            //         title: "Badge 02",
+            //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+            //         level: "medium",
+            //         type: "sale_achievement",
+            //         thumbnail: "https://i.pinimg.com/736x/14/1f/40/141f40e1fae6a366cf81ff1a2f30600b.jpg",
+            //         isComplete: false,
+            //     },
+            //     {
+            //         _id: "3",
+            //         title: "Badge 03",
+            //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+            //         level: "easy",
+            //         type: "challenge_participation",
+            //         thumbnail: "https://i.pinimg.com/736x/14/1f/40/141f40e1fae6a366cf81ff1a2f30600b.jpg",
+            //         isComplete: false,
+            //     },
+            //     {
+            //         _id: "4",
+            //         title: "Badge 04",
+            //         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+            //         level: "hard",
+            //         type: "other",
+            //         thumbnail: "https://i.pinimg.com/736x/25/d8/8d/25d88de4ab6f64ff2fafd8c67e0b85c3.jpg",
+            //         isComplete: false,
+            //     }
+            // ]
         } catch (error) {
             console.log(error)
             return null;
@@ -109,6 +118,7 @@ export default function RenderBadges({ badge, setShowRenderBadges, setOverlayVis
     return (
         <div className="modal-form type-3 render-badges" ref={renderBadgesRef}>
             {selectedBadge ? (
+
                 <div className="badge-details">
                     <h2 className="form__title">{selectedBadge?.title}</h2>
                     <svg onClick={() => { setShowRenderBadges(false); setOverlayVisible(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__close-ic">
@@ -123,7 +133,7 @@ export default function RenderBadges({ badge, setShowRenderBadges, setOverlayVis
 
                     <div className="text-align-center">
                         <div className="flex-justify-center">
-                            <img className="badge-details__thumbnail" src={selectedBadge?.thumbnail} alt="" />
+                            <LazyLoadImage className="badge-details__thumbnail" src={selectedBadge?.icon} alt="" effect="blur" />
                         </div>
                         <h3>
                             <strong className="fw-bold fs-16">
@@ -131,7 +141,7 @@ export default function RenderBadges({ badge, setShowRenderBadges, setOverlayVis
                                     "Dễ" : selectedBadge?.level == "medium" ? "Trung bình" : "Khó"}</span> {selectedBadge.title}
                             </strong></h3>
                         {
-                            selectedBadge?.isComplete && (
+                            userInfo?.badges.find(el => el.badgeId == selectedBadge._id) && (
                                 <div className={`flex-justify-center flex-align-center badge-details__status complete`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -169,19 +179,28 @@ export default function RenderBadges({ badge, setShowRenderBadges, setOverlayVis
                                                     <strong className="badge-group-title fs-16 hover-display-label bottom" aria-label="Các huy hiệu khác">Huy hiệu khác</strong>
                                         }
                                     </div>
-                                    {groupedBadges[type].map((badge, index) => (
-                                        <div key={index} className={`badge-item gray-bg-hover ${badge?.isComplete ? "active" : " "}`} onClick={() => { setSelectedBadge(badge) }}>
-                                            <img className="badge-item__thumbnail badge-item--left" src={badge.thumbnail} alt="" />
+                                    {groupedBadges[type].map((badge, index) => {
+                                        const isBadgeComplete = userInfo?.badges.find(el => el.badgeId == badge._id);
+                                        return (
+                                            <div key={index} className={`badge-item gray-bg-hover`} onClick={() => { setSelectedBadge(badge) }}>
+                                                <LazyLoadImage className="badge-item__thumbnail badge-item--left" src={badge.icon} alt="" effect="blur" />
 
-                                            <div className="badge-item--right">
-                                                <div className="fw-bold fs-16 mb-8">
-                                                    <span className={`badge--level mr-8 ${badge?.level}`}>{badge?.level == "easy" ?
-                                                        "Dễ" : badge?.level == "medium" ? "Trung bình" : "Khó"}</span> {badge.title}
+                                                <div className="badge-item--right">
+                                                    <div className="fw-bold fs-16 mb-8 flex-align-center">
+                                                        <span className={`badge--level mr-8 ${badge?.level}`}>{badge?.level == "easy" ?
+                                                            "Dễ" : badge?.level == "medium" ? "Trung bình" : "Khó"}</span> {badge.title}
+                                                        {isBadgeComplete &&
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="ml-4 complete-badge-ic size-6">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                            </svg>
+                                                        }
+                                                    </div>
+                                                    <span className="mt-8">{limitString(badge?.description, 150)}</span>
                                                 </div>
-                                                <span className="mt-8">{limitString(badge?.description, 150)}</span>
                                             </div>
-                                        </div>
-                                    ))}
+                                        )
+                                    }
+                                    )}
                                 </div>
                             ))
                         ) : (

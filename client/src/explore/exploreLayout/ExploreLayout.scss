@@ -8,7 +8,7 @@
     .explore__filter-container {
         display: flex;
         align-items: center;
-        margin: 20px 0;
+        margin: 16px 0;
 
         .show-recommender-btn {
             position: relative;
@@ -16,11 +16,11 @@
             margin-right: 18px;
 
             .recommender-container {
-                width: 200px;
+                width: 180px;
                 position: absolute;
                 left: 0;
                 top: calc(100% + 8px);
-                border-radius: 8px;
+                border-radius: 0 12px 12px 12px;
                 border: 2px solid var(--gray-1-color);
                 background-color: var(--form-bg-2-color);
                 padding: 6px;
@@ -42,23 +42,24 @@
         .explore__filter-item {
             display: flex;
             align-items: center;
-            min-width: 170px;
+            min-width: 160px;
             padding: 6px 8px;
-            border-radius: 8px;
+            border-radius: 16px;
             margin-right: 8px;
 
             &:hover {
-                background-color: var(--gray-2-color);
+                background-color: var(--gray-7-color);
                 cursor: pointer;
+                opacity: 0.8;
             }
 
             &.active {
-                background-color: var(--gray-2-color);
+                background-color: var(--gray-7-color);
             }
 
             img {
-                width: 50px;
-                height: 50px;
+                width: 36px;
+                height: 36px;
                 object-fit: cover;
                 border-radius: 6px;
                 margin-right: 8px;

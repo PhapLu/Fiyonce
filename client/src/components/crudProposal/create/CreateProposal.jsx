@@ -1,6 +1,6 @@
 // Imports
 import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams, useOutletContext } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Styling
@@ -11,8 +11,11 @@ import { bytesToKilobytes, formatCurrency, formatFloat, limitString } from "../.
 import { isFilled, minValue } from "../../../utils/validator";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
+import DatePicker from "../../datePicker/DatePicker";
 
-export default function CreateProposal({ commissionOrder, setShowCreateProposal, setOverlayVisible }) {
+export default function CreateProposal() {
+    const commissionOrder = useOutletContext();
+
     const queryClient = useQueryClient();
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
@@ -20,9 +23,11 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
     const [isSubmitCreateProposalLoading, setIsSubmitCreateProposalLoading] = useState(false);
     const { setModalInfo } = useModal();
     const [selectedArtworks, setSelectedArtworks] = useState([]);
-    const { userInfo, socket} = useAuth();
+    const { userInfo, socket } = useAuth();
 
-    console.log(commissionOrder)
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const createProposalMutation = useMutation(
         async ({ orderId, inputs }) => {
             const response = await apiUtils.post(`/proposal/sendProposal/${orderId}`, inputs);
@@ -57,10 +62,13 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
     } = useQuery('fetchTermOfServices', fetchTermOfServices, {
     });
 
+    const closeCreateProposalView = () => {
+        navigate(-2);
+    }
+
     const handleShowCreateProposal = () => {
         if (termOfServices && termOfServices.length > 0) {
-            setShowCreateProposal(true);
-            setOverlayVisible(true);
+            closeCreateProposalView();
         } else {
             setModalInfo({
                 status: "warning",
@@ -80,7 +88,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             }
         });
         setSelectedArtworks(newArtworks);
-        setErrors((values) => ({...values, artworks: '' }));
+        setErrors((values) => ({ ...values, artworks: '' }));
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
@@ -107,6 +115,15 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
         setErrors((values) => ({ ...values, [name]: '' }));
     };
 
+    const handleDateChange = (name, formattedDate) => {
+        const date = new Date(formattedDate);
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+        const formattedDateISO = `${year}-${month}-${day}T00:00:00.000Z`;
+
+        setInputs((values) => ({ ...values, [name]: formattedDateISO }));
+    };
 
     const fetchProfileArtworks = async () => {
         try {
@@ -135,8 +152,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
     useEffect(() => {
         const handler = (e) => {
             if (createProposalRef.current && !createProposalRef.current.contains(e.target)) {
-                setShowCreateProposal(false);
-                setOverlayVisible(false);
+                closeCreateProposalView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -187,6 +203,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitCreateProposalLoading(true);
+
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
@@ -205,12 +222,11 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                     status: "success",
                     message: "Tạo hợp đồng thành công"
                 })
-                setShowCreateProposal(false);
-                setOverlayVisible(false);
+                closeCreateProposalView();
 
                 const senderId = userInfo._id;
                 const receiverId = commissionOrder.memberId._id;
-                const inputs2 = { receiverId, type: "approveCommissionOrder", url: `/users/${commissionOrder.memberId._id}/order-history` }
+                const inputs2 = { receiverId, type: "approveCommissionOrder", url: `/order-history/commission-orders/${commissionOrder._id}/proposals` }
                 const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
                 const notificationData = response2.data.metadata.notification;
                 socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
@@ -239,7 +255,7 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
             }
             return prevSelectedArtworks;
         });
-        setErrors((values) => ({...values, artworks: '' }));
+        setErrors((values) => ({ ...values, artworks: '' }));
     };
 
     const displayedSelectedArtworks = selectedArtworks.filter((selectedArtwork) => selectedArtwork !== null).slice(0, 5);
@@ -249,45 +265,67 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
     }
 
     return (
-        <div className="create-proposal modal-form type-2" ref={createProposalRef} onClick={(e) => { e.stopPropagation(); }}>
-            <Link to="/help_center" className="form__help" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
-                </svg> Trợ giúp
-            </Link>
+        <div className="overlay">
+            <div className="create-proposal modal-form type-2" ref={createProposalRef} onClick={(e) => { e.stopPropagation(); }}>
+                <Link to="/help_center" className="form__help" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                    </svg> Trợ giúp
+                </Link>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateProposal(false);
-                setOverlayVisible(false);
-            }}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
+                    closeCreateProposalView();
+                }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
 
-            <div className="modal-form--left">
-                {commissionOrder?.isDirect == true ? (
-                    <>
-                        <h3 className="mt-0 mb-8">{commissionOrder?.commissionServiceId?.title}</h3>
-                        <span>Giá tiền:
-                            <br />
-                            Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
-                            <br />
-                            Do bạn đề xuất: <span className="highlight-text">{formatCurrency(inputs?.price) || "x"} VND</span>
-                        </span>
-                        <hr />
-                    </>
-                ) : (
-                    <>
-                        <h3 className="mt-0 mb-8">Ứng đơn hàng trên Chợ Commission</h3>
-                        <span>Giá tiền:
-                            <br />
-                            Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
-                            <br />
-                            Do bạn đề xuất: <span className="highlight-text">{formatCurrency(inputs?.price) || "x"} VND</span>
-                        </span>
-                        <hr />
-                        <div className="image-container images-layout-3">
-                            {displayedSelectedArtworks.slice(0, 3).map((portfolio, index) => {
-                                if (index === 2 && displayedSelectedArtworks.length > 3) {
+                <div className="modal-form--left">
+                    <div className="btn btn-3 br-16 btn-sm gray-bg-hover mb-12" onClick={() => { navigate(-1) }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </svg>
+                        Quay lại
+                    </div>
+                    <br />
+                    {commissionOrder?.isDirect == true ? (
+                        <>
+                            <h3 className="mt-0 mb-8">{commissionOrder?.commissionServiceId?.title}</h3>
+                            <span>
+                                Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
+                                <br />
+                                Do bạn đề xuất: <span className="highlight-text">{formatCurrency(inputs?.price) || "x"} VND</span>
+                            </span>
+                            <hr />
+                        </>
+                    ) : (
+                        <>
+                            <h3 className="mt-0 mb-8">Ứng đơn hàng trên Chợ Commission</h3>
+                            <span>
+                                Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
+                                <br />
+                                Do bạn đề xuất: <span className="highlight-text">{formatCurrency(inputs?.price) || "x"} VND</span>
+                            </span>
+                            <hr />
+                            <div className="image-container images-layout-3">
+                                {displayedSelectedArtworks.slice(0, 3).map((portfolio, index) => {
+                                    if (index === 2 && displayedSelectedArtworks.length > 3) {
+                                        return (
+                                            <div className="image-item">
+                                                <img
+                                                    key={index}
+                                                    src={
+                                                        portfolio instanceof File
+                                                            ? URL.createObjectURL(portfolio)
+                                                            : portfolio.url || placeholderImage
+                                                    }
+                                                    alt={`portfolio ${index + 1}`}
+                                                />
+                                                <div className="image-item__overlay">
+                                                    +{displayedSelectedArtworks?.length - 3}
+                                                </div>
+                                            </div>
+                                        );
+                                    }
                                     return (
                                         <div className="image-item">
                                             <img
@@ -299,142 +337,133 @@ export default function CreateProposal({ commissionOrder, setShowCreateProposal,
                                                 }
                                                 alt={`portfolio ${index + 1}`}
                                             />
-                                            <div className="image-item__overlay">
-                                                +{displayedSelectedArtworks?.length - 3}
-                                            </div>
                                         </div>
                                     );
-                                }
-                                return (
-                                    <div className="image-item">
-                                        <img
-                                            key={index}
-                                            src={
-                                                portfolio instanceof File
-                                                    ? URL.createObjectURL(portfolio)
-                                                    : portfolio.url || placeholderImage
-                                            }
-                                            alt={`portfolio ${index + 1}`}
-                                        />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </>
-                )}
-
-                <br />
-                <h4>Phạm vi công việc: </h4>
-                <div>
-                    <span className="w-100">{inputs?.scope ? limitString(inputs?.scope, 150) : "Mô tả phạm vi công việc"}</span>
-                </div>
-            </div>
-
-            <div className="modal-form--right">
-                <h2 className="form__title">Soạn hợp đồng</h2>
-
-                <div className="form-field">
-                    <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
-                    <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
-                    <textarea type="text" name="scope" value={inputs?.scope || ""} placeholder="Nhập mô tả" onChange={handleChange} className="form-field__input"></textarea>
-                    {errors.scope && <span className="form-field__error">{errors.scope}</span>}
-                </div>
-
-                {commissionOrder?.isDirect == false && (
-                    <div className="form-field">
-                        <label className="form-field__label">Tranh mẫu</label>
-                        <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (3 - 5 tác phẩm).</span>
-                        <div className="img-preview-container border-text">
-                            {artworks?.length > 0 && artworks?.map((artwork, index) => {
-                                return (
-                                    <div key={artwork._id}
-                                        className={`img-preview-item ${selectedArtworks.includes(artwork) ? "active" : ""}`}
-                                        onClick={() => toggleArtworkSelection(artwork)}>
-                                        <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
-                                    </div>
-                                )
-                            })}
-                        </div>
-
-                        {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
-                    </div>
-                )}
-
-
-                <div className="form-field">
-                    <label htmlFor="startAt" className="form-field__label">Thời gian dự kiến</label>
-                    <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
-                    <div className="half-split">
-                        <label htmlFor="startAt">Bắt đầu</label>
-                        <input type="date" name="startAt" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange} />
-                        -
-                        <label htmlFor="deadline">Hạn chót</label>
-                        <input type="date" name="deadline" placeholder="Nhập tiêu đề" className="form-field__input" onChange={handleChange} />
-                    </div>
-                    {errors.startAt && <span className="form-field__error">{errors.startAt}</span>}
-                    {errors.deadline && <span className="form-field__error">{errors.deadline}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label htmlFor="price" className="form-field__label">Giá trị đơn hàng (VND)</label>
-                    <span className="form-field__annotation">Đưa ra mức giá chính xác mà bạn cần để thực hiện dịch vụ.</span>
-                    <input type="number" name="price" placeholder="Nhập mức giá (VND)" className="form-field__input" onChange={handleChange} />
-                    {errors.price && <span className="form-field__error">{errors.price}</span>}
-                </div>
-
-                {
-                    commissionOrder?.isDirect == false && (
-                        <div className="form-field">
-                            <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
-                            <span className="form-field__annotation">Vui lòng chọn một trong những điều khoản dịch vụ của bạn</span>
-
-                            <div className="w-100 display-inline-block">
-                                {
-                                    termOfServices?.map((termOfService, index) => {
-                                        return (
-                                            <div className="mb-8" key={index}>
-                                                <label className="flex-align-center w-100">
-                                                    <input
-                                                        type="radio"
-                                                        name="termOfServiceId"
-                                                        value={termOfService._id}
-                                                        checked={inputs.termOfServiceId === termOfService._id}
-                                                        onChange={(e) => {
-                                                            handleChange(e);
-                                                            setSelectedTermOfService(termOfService); // Update the selected term of service
-                                                        }}
-                                                    />
-                                                    {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
-                                                </label>
-                                            </div>
-                                        );
-                                    })
-                                }
-
-                                {selectedTermOfService?.content &&
-                                    <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
-                                }
+                                })}
                             </div>
-                            {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
-                        </div>
-                    )
-                }
-
-            </div>
-
-            <div className="form__submit-btn-container">
-                <button
-                    type="submit"
-                    className="form__submit-btn-item btn btn-2 btn-md"
-                    onClick={handleSubmit}
-                    disabled={isSubmitCreateProposalLoading}
-                >
-                    {isSubmitCreateProposalLoading ? (
-                        <span className="btn-spinner"></span>
-                    ) : (
-                        "Xác nhận"
+                        </>
                     )}
-                </button>
+
+                    <br />
+                    <h4>Phạm vi công việc: </h4>
+                    <div>
+                        <span className="w-100">{inputs?.scope ? limitString(inputs?.scope, 150) : "Mô tả phạm vi công việc"}</span>
+                    </div>
+                </div>
+
+                <div className="modal-form--right">
+                    <h2 className="form__title">Soạn hợp đồng</h2>
+
+                    <div className="form-field">
+                        <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
+                        <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
+                        <textarea type="text" name="scope" value={inputs?.scope || ""} placeholder="Nhập mô tả" onChange={handleChange} className="form-field__input"></textarea>
+                        {errors.scope && <span className="form-field__error">{errors.scope}</span>}
+                    </div>
+
+                    {commissionOrder?.isDirect == false && (
+                        <div className="form-field">
+                            <label className="form-field__label">Tranh mẫu</label>
+                            <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (3 - 5 tác phẩm).</span>
+                            <div className="img-preview-container border-text">
+                                {artworks?.length > 0 && artworks?.map((artwork, index) => {
+                                    return (
+                                        <div key={artwork._id}
+                                            className={`img-preview-item ${selectedArtworks.includes(artwork) ? "active" : ""}`}
+                                            onClick={() => toggleArtworkSelection(artwork)}>
+                                            <img src={resizeImageUrl(artwork.url, 300)} alt="" className="img-preview-item__img" />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            {errors.artworks && <span className="form-field__error">{errors.artworks}</span>}
+                        </div>
+                    )}
+
+
+                    <div className="form-field">
+                        <label htmlFor="startAt" className="form-field__label">Thời gian dự kiến</label>
+                        <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
+                        <div className="flex-align-center date-picker-sm">
+                            <label className="mr-8" htmlFor="startAt">Ngày bắt đầu</label>
+                            <DatePicker name="startAt" value={inputs.startAt} onChange={(date) => handleDateChange('startAt', date)} />
+                        </div>
+                        <div className="flex-align-center date-picker-sm mt-8">
+                            <label className="mr-8" htmlFor="deadline">Hạn chót</label>
+                            <DatePicker name="deadline" value={inputs.deadline} onChange={(date) => handleDateChange('deadline', date)} />
+                        </div>
+
+                        {errors.startAt && <span className="form-field__error">{errors.startAt}</span>}
+                        {errors.deadline && <span className="form-field__error">{errors.deadline}</span>}
+                    </div>
+
+
+                    <div className="form-field">
+                        <label htmlFor="price" className="form-field__label">Giá trị đơn hàng (VND)</label>
+                        <span className="form-field__annotation">Đưa ra mức giá chính xác mà bạn cần để thực hiện dịch vụ.</span>
+                        <input type="number" name="price" placeholder="Nhập mức giá (VND)" className="form-field__input" onChange={handleChange} />
+                        {errors.price && <span className="form-field__error">{errors.price}</span>}
+                    </div>
+
+                    {
+                        commissionOrder?.isDirect == false && (
+                            <div className="form-field">
+                                <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
+                                <span className="form-field__annotation">Vui lòng chọn một trong những điều khoản dịch vụ của bạn</span>
+
+                                <div className="w-100 display-inline-block">
+                                    {
+                                        termOfServices?.length > 0 ?
+                                            termOfServices?.map((termOfService, index) => {
+                                                return (
+                                                    <div className="mb-8" key={index}>
+                                                        <label className="flex-align-center w-100">
+                                                            <input
+                                                                type="radio"
+                                                                name="termOfServiceId"
+                                                                value={termOfService._id}
+                                                                checked={inputs.termOfServiceId === termOfService._id}
+                                                                onChange={(e) => {
+                                                                    handleChange(e);
+                                                                    setSelectedTermOfService(termOfService); // Update the selected term of service
+                                                                }}
+                                                            />
+                                                            {`${termOfService.title} ${(termOfService._id === selectedTermOfService?._id) ? " (Đã chọn)" : ""}`}
+                                                        </label>
+                                                    </div>
+                                                );
+                                            })
+                                            : (
+                                                <span>Bạn hiện chưa có điều khoản dịch vụ. Đi đến trang <Link to={`/users/${userInfo?._id}/term-of-services`} className="highlight-text underlined-text">Tạo điều khoản</Link> </span>
+                                            )
+                                    }
+
+                                    {selectedTermOfService?.content &&
+                                        <p className="border-text w-100" dangerouslySetInnerHTML={{ __html: selectedTermOfService?.content }}></p>
+                                    }
+                                </div>
+                                {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
+                            </div>
+                        )
+                    }
+
+                </div>
+
+                <div className="form__submit-btn-container">
+                    <button
+                        type="submit"
+                        className="form__submit-btn-item btn btn-2 btn-md"
+                        onClick={handleSubmit}
+                        disabled={isSubmitCreateProposalLoading}
+                    >
+                        {isSubmitCreateProposalLoading ? (
+                            <span className="btn-spinner"></span>
+                        ) : (
+                            "Xác nhận"
+                        )}
+                    </button>
+                </div>
             </div>
         </div>
     )

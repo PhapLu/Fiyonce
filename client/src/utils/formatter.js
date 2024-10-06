@@ -16,6 +16,9 @@ export function bytesToKilobytes(bytes) {
 }
 
 export function limitString(str, n) {
+    if (!str) {
+        return;
+    }
     if (str.length <= n) {
         return str;
     }
@@ -42,7 +45,7 @@ export function formatCurrency(val) {
         return;
     }
     // Convert the number to a string and use a regular expression to add periods as thousand separators
-    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 export function formatDate(val) {
@@ -101,3 +104,12 @@ export function YYYYMMDDAsDDMMYYYY(date) {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
 };
+
+export function camelCaseToCapitalCase(str) {
+
+}
+
+export function createClickableLinks(content) {
+    const urlPattern = /(\b(https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]))/gi;
+    return content.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+}

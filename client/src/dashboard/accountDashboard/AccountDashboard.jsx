@@ -2,11 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/auth/AuthContext';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { apiUtils } from '../../utils/newRequest';
+import ConfirmTalentRequest from '../../components/crudTalentRequest/confirm/ConfirmTalentRequest';
+import { useModal } from '../../contexts/modal/ModalContext';
+import DenyTalentRequest from '../../components/crudTalentRequest/deny/DenyTalentRequest';
+import { resizeImageUrl } from '../../utils/imageDisplayer';
+import ZoomImage from '../../components/zoomImage/ZoomImage';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function AccountDashboard() {
-    const {userInfo, socket} = useAuth()
+    const { userInfo, socket } = useAuth()
     const [talentRequests, setTalentRequests] = useState([]);
+    const { setModalInfo } = useModal();
     const queryClient = useQueryClient();
+
+    const [talentRequest, setTalentRequest] = useState();
+    const [showConfirmTalentRequest, setShowConfirmTalentRequest] = useState();
+    const [showDenyTalentRequest, setShowDenyTalentRequest] = useState();
+    const [showZoomImage, setShowZoomImage] = useState();
+    const [imageSrc, setImageSrc] = useState();
+    const [overlayVisible, setOverlayVisible] = useState(false);
 
     // Fetch existing talent requests from the API
     const { data, isError, error, isLoading } = useQuery('talentRequests', () =>
@@ -31,28 +45,39 @@ export default function AccountDashboard() {
             });
         });
 
-        socket.on('disconnect', () => {
-            console.log('Disconnected from socket server');
-        });
+        // socket.on('disconnect', () => {
+        //     console.log('Disconnected from socket server');
+        // });
 
-        return () => {
-            socket.disconnect();
-        };
+        // return () => {
+        //     socket.disconnect();
+        // };
     }, []);
 
     // Mutation hook for upgrading talent request
-    const upgradeMutation = useMutation(
+    const confirmTalentRequestMutation = useMutation(
         (requestId) => apiUtils.patch(`/talentRequest/upgradeRoleToTalent/${requestId}`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('talentRequests');
+                setModalInfo({
+                    status: "success",
+                    message: "Nâng cấp tài khoản thành công"
+                })
+            },
+            onError: (error) => {
+                queryClient.invalidateQueries('talentRequests');
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
             }
         }
     );
 
     // Mutation hook for denying talent request
-    const denyMutation = useMutation(
-        (requestId) => apiUtils.patch(`/talentRequest/denyTalentRequest/${requestId}`),
+    const denyTalentRequestMutation = useMutation(
+        ({ talentRequestId, inputs }) => apiUtils.patch(`/talentRequest/denyTalentRequest/${talentRequestId}`, inputs),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('talentRequests');
@@ -60,9 +85,6 @@ export default function AccountDashboard() {
         }
     );
 
-    const handleUpgrade = async (talentRequest) => {
-        upgradeMutation.mutate(talentRequest._id);
-    };
 
     const handleDeny = async (talentRequest) => {
         denyMutation.mutate(talentRequest._id);
@@ -74,6 +96,7 @@ export default function AccountDashboard() {
 
         socket.emit('sendNotification', { senderId: userInfo._id, receiverId: talentRequest.userId, notification: notificationData, url: notificationData.url });
     };
+
 
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error: {error.message}</div>;
@@ -121,6 +144,8 @@ export default function AccountDashboard() {
                             <th>Nghệ danh</th>
                             <th>Vị trí công việc</th>
                             <th>Portfolio URL</th>
+                            <th>CCCD</th>
+                            <th>MST</th>
                             <th>Tranh</th>
                             <th>Thao tác</th>
                         </tr>
@@ -139,19 +164,21 @@ export default function AccountDashboard() {
                                     <td>{talentRequest.userId.email}</td>
                                     <td>{talentRequest.userId.fullName}</td>
                                     <td>{talentRequest.stageName}</td>
-                                    <td><a href={talentRequest.portfolioLink} target="_blank" rel="noopener noreferrer">Portfolio</a></td>
                                     <td>{talentRequest.jobTitle}</td>
+                                    <td><a className="highlight-text underlined-text" href={talentRequest.portfolioLink} target="_blank" rel="noopener noreferrer">Link</a></td>
+                                    <td >{talentRequest?.cccd}</td>
+                                    <td >{talentRequest?.taxCode}</td>
                                     <td className='flex-align-center'>
                                         {talentRequest.artworks.map((artwork, index) => (
-                                            <img key={index} src={artwork} alt={`artwork-${index}`} />
+                                            <LazyLoadImage key={index} src={resizeImageUrl(artwork, 80)} alt={`artwork-${index}`} effect='blur' onClick={() => {setImageSrc(artwork); setShowZoomImage(true)}}/>
                                         ))}
                                     </td>
                                     <td>
                                         {talentRequest.status === "pending" && (
-                                        <>
-                                            <button className="btn btn-2" onClick={() => handleUpgrade(talentRequest)}>Chấp nhận</button>
-                                            <button className="btn btn-3" onClick={() => handleDeny(talentRequest)}>Từ chối</button>
-                                        </>
+                                            <>
+                                                <button className="btn btn-2" onClick={() => { setTalentRequest(talentRequest); setShowConfirmTalentRequest(true); setOverlayVisible(true) }}>Chấp nhận</button>
+                                                <button className="btn btn-3" onClick={() => { setTalentRequest(talentRequest); setShowDenyTalentRequest(true); setOverlayVisible(true) }}>Từ chối</button>
+                                            </>
                                         )}
                                     </td>
                                 </tr>
@@ -164,6 +191,15 @@ export default function AccountDashboard() {
                     </tbody>
                 </table>
             </section>
+            {showZoomImage && <ZoomImage src={imageSrc} setShowZoomImage={setShowZoomImage}/>}
+            {
+                overlayVisible && (
+                    <div className="overlay">
+                        {showConfirmTalentRequest && <ConfirmTalentRequest talentRequest={talentRequest} confirmTalentRequestMutation={confirmTalentRequestMutation} setShowConfirmTalentRequest={setShowConfirmTalentRequest} setOverlayVisible={setOverlayVisible} />}
+                        {showDenyTalentRequest && <DenyTalentRequest talentRequest={talentRequest} denyTalentRequestMutation={denyTalentRequestMutation} setShowDenyTalentRequest={setShowDenyTalentRequest} setOverlayVisible={setOverlayVisible} />}
+                    </div>
+                )
+            }
         </div>
     );
 }

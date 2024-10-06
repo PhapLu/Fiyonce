@@ -11,6 +11,10 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     return;
   }
 
+  if (allowedRoles && allowedRoles.includes("all")) {
+    return children;
+  }
+
   if (userInfo && userId && userInfo._id !== userId) {
     // If the userInfo is trying to access someone else's data, show a forbidden message or redirect
     return <Navigate to="/forbidden" />;

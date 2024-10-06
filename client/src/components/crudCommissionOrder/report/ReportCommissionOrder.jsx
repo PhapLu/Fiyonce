@@ -1,5 +1,8 @@
 // Imports
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Link, useParams, useNavigate, Outlet, useOutletContext } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Resources
 import { useModal } from "../../../contexts/modal/ModalContext";
@@ -10,19 +13,18 @@ import { bytesToKilobytes, formatFloat, limitString } from "../../../utils/forma
 
 // Styling
 
-export default function ReportCommissionOrder({ commissionOrder, proposalId, setShowReportCommissionOrder, setOverlayVisible, reportCommissionOrderMutation }) {
-    // Return null if the commission order to be reported is not specified
-    if (!commissionOrder) {
-        return null;
-    }
+export default function ReportCommissionOrder() {
+    const commissionOrder = useOutletContext();
+
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState(
         {
             orderId: commissionOrder._id,
-            proposalId: proposalId,
             content: "",
         }
     );
+
     const [errors, setErrors] = useState({});
     const [evidences, setEvidences] = useState();
 
@@ -75,13 +77,16 @@ export default function ReportCommissionOrder({ commissionOrder, proposalId, set
     const [otherReason, setOtherReason] = useState("");
     const isOrderOwnerAsMember = userInfo?._id === commissionOrder.memberId._id;
 
+
+    const closeReportCommissionOrderView = () => {
+        navigate(`/order-history`);
+    }
     // Toggle display modal form
     const commissionOrderRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (commissionOrderRef && commissionOrderRef.current && !commissionOrderRef.current.contains(e.target)) {
-                setShowReportCommissionOrder(false);
-                setOverlayVisible(false);
+                closeReportCommissionOrderView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -104,6 +109,21 @@ export default function ReportCommissionOrder({ commissionOrder, proposalId, set
 
         return errors;
     }
+
+    const reportCommissionOrderMutation = useMutation(
+        async (fd) => {
+            const response = await apiUtils.post(`/commissionReport/createCommissionReport`, fd);
+            return response;
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('fetchTalentOrderHistory');
+            },
+            onError: (error) => {
+                return error;
+            },
+        }
+    );
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -134,8 +154,6 @@ export default function ReportCommissionOrder({ commissionOrder, proposalId, set
                         message: "Báo cáo khách hàng thành công",
                     });
                 }
-                setShowReportCommissionOrder(false);
-                setOverlayVisible(false);
             }
         } catch (error) {
             console.error("Failed to submit:", error);
@@ -145,214 +163,215 @@ export default function ReportCommissionOrder({ commissionOrder, proposalId, set
             }));
         } finally {
             setIsSubmitReportCommissionOrderLoading(false);
+            closeReportCommissionOrderView();
         }
     };
 
     return (
-        <div className="report-commission-order modal-form type-3 sm" ref={commissionOrderRef} onClick={(e) => { e.stopPropagation() }}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowReportCommissionOrder(false);
-                setOverlayVisible(false);
-            }}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            <h2 className="form__title">{isOrderOwnerAsMember ? "Báo cáo họa sĩ" : "Báo cáo khách hàng"}</h2>
-            <div className="form-field">
-                <p className="highlight-bg-text text-align-center">
-                    Pastal sẽ dựa trên hợp đồng giữa hai bên và thông tin bạn cung cấp để giải quyết. Quá trình này có thể mất 1-3 ngày.
-                </p>
-            </div>
-
-            <div className="form-field">
-                <label htmlFor="" className="form-field__label">Lí do vi phạm</label>
-                {isOrderOwnerAsMember ? (
-                    <div className="mb-8">
-                        <div className="mb-8">
-                            <label className="form-field__label">
-                                <input
-                                    type="radio"
-                                    name="content"
-                                    value="Họa sĩ hoàn thành không đúng hạn"
-                                    checked={selectedReason === "Họa sĩ hoàn thành không đúng hạn"}
-                                    onChange={(e) => setSelectedReason(e.target.value)}
-                                />
-                                Họa sĩ hoàn thành không đúng hạn
-                            </label>
-                        </div>
-
-                        <div className="mb-8">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="content"
-                                    value="Li do 2"
-                                    checked={selectedReason === "Li do 2"}
-                                    onChange={(e) => setSelectedReason(e.target.value)}
-                                />
-                                Li do 2
-                            </label>
-                        </div>
-
-                        <div className="mb-8">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="content"
-                                    value="other"
-                                    checked={selectedReason === "other"}
-                                    onChange={(e) => setSelectedReason(e.target.value)}
-                                />
-                                Lí do khác
-                            </label>
-                        </div>
-                        {selectedReason === "other" && (
-                            <div className="form-field">
-                                <label htmlFor="content" className="form-field__label"></label>
-                                <textarea
-                                    id="otherReason"
-                                    className="form-field__input"
-                                    placeholder="Nhập lí do hủy đơn"
-                                    value={otherReason}
-                                    onChange={(e) => setOtherReason(e.target.value)}
-                                ></textarea>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <div className="mb-8">
-                        <div className="mb-8">
-                            <label className="form-field__label">
-                                <input
-                                    type="radio"
-                                    name="content"
-                                    value="Khách hàng không hợp tác"
-                                    checked={selectedReason === "Khách hàng không hợp tác"}
-                                    onChange={(e) => setSelectedReason(e.target.value)}
-                                />
-                                Khách hàng không hợp tác
-                            </label>
-                        </div>
-
-                        <div className="mb-8">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="content"
-                                    value="Khách hàng yêu cầu thêm quá nhiều chi tiết không đề cập trong hợp đồng "
-                                    checked={selectedReason === "Khách hàng yêu cầu thêm quá nhiều chi tiết không đề cập trong hợp đồng "}
-                                    onChange={(e) => setSelectedReason(e.target.value)}
-                                />
-                                Khách thêm quá nhiều chi tiết không đề cập trong hợp đồng
-                            </label>
-                        </div>
-
-                        <div className="mb-8">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="content"
-                                    value="other"
-                                    checked={selectedReason === "other"}
-                                    onChange={(e) => setSelectedReason(e.target.value)}
-                                />
-                                Lí do khác
-                            </label>
-                        </div>
-                        {selectedReason === "other" && (
-                            <div className="form-field">
-                                <label htmlFor="content" className="form-field__label"></label>
-                                <textarea
-                                    id="otherReason"
-                                    className="form-field__input"
-                                    placeholder="Nhập lí do hủy đơn"
-                                    value={otherReason}
-                                    onChange={(e) => setOtherReason(e.target.value)}
-                                ></textarea>
-                            </div>
-                        )}
-                    </div>
-                )}
-                {errors.content && <span className="form-field__error">{errors.content}</span>}
-            </div>
-
-
-            <div className="form-field">
-                <label className="form-field__label">Bằng chứng</label>
-                <span className="form-field__annotation">Vui lòng đính kèm 3 - 5 ảnh chứng minh {isOrderOwnerAsMember ? "họa sĩ" : "khách hàng"} đã vi phạm hợp đồng</span>
-                {evidences?.map((evidence, index) => {
-                    return (
-                        evidence && (
-                            <div key={index} className="form-field__input img-preview">
-                                <div className="img-preview--left">
-                                    <img
-                                        src={
-                                            evidence instanceof File
-                                                ? URL.createObjectURL(evidence)
-                                                : evidence || placeholderImage
-                                        }
-                                        alt={`evidence ${index + 1}`}
-                                        className="img-preview__img"
-                                    />
-                                    <div className="img-preview__info">
-                                        <span className="img-preview__name">
-                                            {evidence instanceof File
-                                                ? limitString(evidence.name, 15)
-                                                : "Tranh mẫu"}
-                                        </span>
-                                        <span className="img-preview__size">
-                                            {evidence instanceof File
-                                                ? formatFloat(bytesToKilobytes(evidence.size), 1) + " KB"
-                                                : ""}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="img-preview--right">
-                                    <svg
-                                        onClick={() => removeImage(index)}
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
-                                        className="size-6 img-preview__close-ic"
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </div>
-                        )
-                    );
-                })}
-
-                <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                    <span>Thêm ảnh</span>
-                    <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
+        <div className="overlay">
+            <div className="report-commission-order modal-form type-3 sm" ref={commissionOrderRef} onClick={(e) => { e.stopPropagation() }}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={closeReportCommissionOrderView}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <h2 className="form__title">{isOrderOwnerAsMember ? "Báo cáo họa sĩ" : "Báo cáo khách hàng"}</h2>
+                <div className="form-field">
+                    <p className="highlight-bg-text text-align-justify">
+                        Pastal Team sẽ dựa trên thông tin bạn cung cấp (1), hợp đồng giữa hai bên (2), điều khoản dịch vụ của họa sĩ (3) và điều khoản chung của nền tảng (4) để xử lí báo cáo vi phạm.
+                        Vui lòng kiểm tra email để cập nhật thông báo mới nhất.
+                        Quá trình này có thể mất từ 1-3 ngày.
+                    </p>
                 </div>
 
-                {errors.evidences && <span className="form-field__error">{errors.evidences}</span>}
-            </div>
+                <div className="form-field">
+                    <label htmlFor="" className="form-field__label">Lí do vi phạm</label>
+                    {isOrderOwnerAsMember ? (
+                        <div className="mb-8">
+                            <div className="mb-8">
+                                <label className="">
+                                    <input
+                                        type="radio"
+                                        name="content"
+                                        value="Họa sĩ hoàn thành không đúng hạn"
+                                        checked={selectedReason === "Họa sĩ hoàn thành không đúng hạn"}
+                                        onChange={(e) => setSelectedReason(e.target.value)}
+                                    />
+                                    Họa sĩ hoàn thành không đúng hạn
+                                </label>
+                            </div>
 
-            <div className="form-field">
-                {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-            </div>
-            <div className="form-field">
-                <button
-                    type="submit"
-                    className="form-field__input btn btn-2 btn-md"
-                    onClick={handleSubmit}
-                    disabled={isSubmitReportCommissionOrderLoading}
-                >
-                    {isSubmitReportCommissionOrderLoading ? (
-                        <span className="btn-spinner"></span>
+                            <div className="mb-8">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="content"
+                                        value="Li do 2"
+                                        checked={selectedReason === "Li do 2"}
+                                        onChange={(e) => setSelectedReason(e.target.value)}
+                                    />
+                                    Li do 2
+                                </label>
+                            </div>
+
+                            <div className="mb-8">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="content"
+                                        value="other"
+                                        checked={selectedReason === "other"}
+                                        onChange={(e) => setSelectedReason(e.target.value)}
+                                    />
+                                    Lí do khác
+                                </label>
+                            </div>
+                            {selectedReason === "other" && (
+                                <div className="form-field">
+                                    <label htmlFor="content"></label>
+                                    <textarea
+                                        id="otherReason"
+                                        className="form-field__input"
+                                        placeholder="Nhập nội dung tố cáo"
+                                        value={otherReason}
+                                        onChange={(e) => setOtherReason(e.target.value)}
+                                    ></textarea>
+                                </div>
+                            )}
+                        </div>
                     ) : (
-                        "Xác nhận"
-                    )}
-                </button>
-            </div>
+                        <div className="mb-8">
+                            <div className="mb-8">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="content"
+                                        value="Khách hàng không hợp tác"
+                                        checked={selectedReason === "Khách hàng không hợp tác"}
+                                        onChange={(e) => setSelectedReason(e.target.value)}
+                                    />
+                                    Khách hàng không hợp tác
+                                </label>
+                            </div>
 
+                            <div className="mb-8">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="content"
+                                        value="Khách hàng yêu cầu thêm quá nhiều chi tiết không đề cập trong hợp đồng "
+                                        checked={selectedReason === "Khách hàng yêu cầu thêm quá nhiều chi tiết không đề cập trong hợp đồng "}
+                                        onChange={(e) => setSelectedReason(e.target.value)}
+                                    />
+                                    Khách thêm quá nhiều chi tiết không đề cập trong hợp đồng
+                                </label>
+                            </div>
+
+                            <div className="mb-8">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="content"
+                                        value="other"
+                                        checked={selectedReason === "other"}
+                                        onChange={(e) => setSelectedReason(e.target.value)}
+                                    />
+                                    Lí do khác
+                                </label>
+                            </div>
+                            {selectedReason === "other" && (
+                                <div className="form-field">
+                                    <label htmlFor="content" className="form-field__label"></label>
+                                    <textarea
+                                        id="otherReason"
+                                        className="form-field__input"
+                                        placeholder="Nhập nội dung tố cáo"
+                                        value={otherReason}
+                                        onChange={(e) => setOtherReason(e.target.value)}
+                                    ></textarea>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {errors.content && <span className="form-field__error">{errors.content}</span>}
+                </div>
+
+
+                <div className="form-field">
+                    <label className="form-field__label">Bằng chứng</label>
+                    <span className="form-field__annotation">Vui lòng đính kèm 3 - 5 ảnh chứng minh {isOrderOwnerAsMember ? "họa sĩ" : "khách hàng"} đã vi phạm hợp đồng</span>
+                    {evidences?.map((evidence, index) => {
+                        return (
+                            evidence && (
+                                <div key={index} className="form-field__input img-preview">
+                                    <div className="img-preview--left">
+                                        <img
+                                            src={
+                                                evidence instanceof File
+                                                    ? URL.createObjectURL(evidence)
+                                                    : evidence || placeholderImage
+                                            }
+                                            alt={`evidence ${index + 1}`}
+                                            className="img-preview__img"
+                                        />
+                                        <div className="img-preview__info">
+                                            <span className="img-preview__name">
+                                                {evidence instanceof File
+                                                    ? limitString(evidence.name, 15)
+                                                    : "Tranh mẫu"}
+                                            </span>
+                                            <span className="img-preview__size">
+                                                {evidence instanceof File
+                                                    ? formatFloat(bytesToKilobytes(evidence.size), 1) + " KB"
+                                                    : ""}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="img-preview--right">
+                                        <svg
+                                            onClick={() => removeImage(index)}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="size-6 img-preview__close-ic"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            )
+                        );
+                    })}
+
+                    <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        <span>Thêm ảnh</span>
+                        <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
+                    </div>
+
+                    {errors.evidences && <span className="form-field__error">{errors.evidences}</span>}
+                </div>
+
+                <div className="form-field">
+                    {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                </div>
+                <div className="form-field">
+                    <button
+                        type="submit"
+                        className="form-field__input btn btn-2 btn-md"
+                        onClick={handleSubmit}
+                        disabled={isSubmitReportCommissionOrderLoading}
+                    >
+                        {isSubmitReportCommissionOrderLoading ? (
+                            <span className="btn-spinner"></span>
+                        ) : (
+                            "Xác nhận"
+                        )}
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

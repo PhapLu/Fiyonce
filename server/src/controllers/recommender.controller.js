@@ -9,6 +9,13 @@ class RecommenderController {
     }).send(res);
   }
 
+  readSearchResults = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get search results success!',
+      metadata: await RecommenderService.readSearchResults(req.query)
+    }).send(res)
+  }
+
   readPopularPosts = async (req, res, next) => {
     new SuccessResponse({
       message: 'Get Popular Posts success!',
@@ -48,6 +55,14 @@ class RecommenderController {
     new SuccessResponse({
       message: 'Get Popular Services success!',
       metadata: await RecommenderService.readLatestCommissionServices(req)
+    }).send(res)
+  }
+
+  recommendUsersToFollow = async (req, res, next) => {
+    console.log('CALL THIS METHOD')
+    new SuccessResponse({
+      message: 'Get users to follow success!',
+      metadata: await RecommenderService.recommendUsersToFollow(req.userId)
     }).send(res)
   }
 }

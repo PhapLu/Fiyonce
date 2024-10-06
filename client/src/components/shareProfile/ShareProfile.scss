@@ -146,8 +146,32 @@
                     margin: 0 12px !important;
                 }
             }
+
+            .copy-profile-url-ic {
+                width: 30px;
+                height: 30px;
+            }
         }
+    }
+}
 
+.makeStyles-container-1 {
+    margin-left: 16px !important;
+    background-color: unset !important;
+    color: #000 !important;
+    height: auto !important;
+    outline: none !important;
+    padding: unset !important;
+    max-width: unset !important;
+    min-width: unset !important;
 
+    svg {
+        width: 32px !important;
+        height: 32px !important;
+        margin-right: 4px !important;
+    }
+
+    .makeStyles-copyContainer-5 {
+        display: none !important;
     }
 }

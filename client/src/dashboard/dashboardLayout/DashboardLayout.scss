@@ -1,66 +1,68 @@
-.app {
-    .section {
-        margin-bottom: 24px;
+.admin-dashboard {
+    .app {
+        .section {
+            margin-bottom: 24px;
 
-        .section-header {
-            display: flex;
-            align-items: center;
-
-            .section-header--left {
+            .section-header {
                 display: flex;
                 align-items: center;
 
-                .section-header__title {
-                    display: inline-block;
-                    margin-right: 8px;
+                .section-header--left {
+                    display: flex;
+                    align-items: center;
+
+                    .section-header__title {
+                        display: inline-block;
+                        margin-right: 8px;
+                    }
                 }
             }
         }
-    }
 
-    .dashboard-sidebar {
-        width: 13%;
-    }
-    
-    .dashboard-outlet-content {
-        width: 84%;
-        background-color: var(--gray-1-color);
-        padding: 16px 28px;
-        border-radius: 12px;
-    }
+        .dashboard-sidebar {
+            width: 10%;
+        }
 
-    .overview-container {
-        display: flex;
-        margin-bottom: 32px;
+        .dashboard-outlet-content {
+            width: 88%;
+            background-color: var(--gray-1-color);
+            padding: 16px 28px;
+            border-radius: 12px;
+        }
 
-        .overview-item {
-            background-color: white;
-            border-radius: 8px;
-            padding: 10px 20px;
-            min-width: 120px;
-            margin-right: 12px;
+        .overview-container {
+            display: flex;
+            margin-bottom: 32px;
 
-            .overview-item__title {
-                margin: 0 0 8px 0;
-                font-weight: bold;
+            .overview-item {
+                background-color: var(--white-3-color);
+                border-radius: 8px;
+                padding: 10px 20px;
+                min-width: 120px;
+                margin-right: 12px;
+
+                .overview-item__title {
+                    margin: 0 0 8px 0;
+                    font-weight: bold;
+                }
             }
         }
-    }
 
-    table {
-        img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            margin-right: 8px;
+        table {
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                margin-right: 8px;
+            }
+
         }
 
-    }
-
-    .add-btn {
-        background-color: white;
-        border-radius: 4px;
-        display: inline-block;
-        padding: 2px;
+        .add-btn {
+            background-color: white;
+            border-radius: 4px;
+            display: inline-block;
+            padding: 2px;
+        }
     }
 }

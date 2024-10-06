@@ -1,0 +1,25 @@
+.share-to-socials {
+    color: var(--black-1-color);
+    padding: 12px;
+    position: absolute;
+    background-color: var(--form-bg-2-color);
+    border-radius: 20px 20px 0 20px;
+    bottom: 40px;
+    right: 0;
+    z-index: 10000;
+    width: 240px;
+    box-shadow: var(--box-shadow-2);
+
+    .share-to-social-container {
+        .share-to-social-item {
+            justify-content: unset;
+            // padding: 0;
+            text-align: start;
+            width: 100% !important;
+        }
+    }
+
+    button {
+        color: var(--black-1-color)
+    }
+}

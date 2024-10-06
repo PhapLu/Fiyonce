@@ -1,6 +1,6 @@
 .static-layout {
     .static-outlet-content {
-        margin: 90px 20%;
+        margin: 90px 16%;
 
         h1,
         h2,
@@ -16,5 +16,10 @@
             font-size: 1.6rem;
             line-height: 2.6rem;
         }
+    }
+
+    .highlight-text {
+        font-size: 1.6rem;
+        font-weight: bold;
     }
 }

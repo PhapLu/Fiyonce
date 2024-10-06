@@ -16,10 +16,10 @@
         text-align: center;
 
         .render-commission-service__artwork-item {
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: block;
+            // object-fit: cover;
+            // border-radius: 8px;
+            // margin-bottom: 20px;
+            // display: block;
         }
     }
 
@@ -80,10 +80,10 @@
                 }
 
                 img {
-
                     width: 100%;
                     max-height: 500px;
                     object-fit: cover;
+                    background-color: yellow;
                     // width: 100px;
                     // height: 100px;
                 }

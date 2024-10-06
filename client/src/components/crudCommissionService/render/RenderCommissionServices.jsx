@@ -138,7 +138,7 @@ export default function RenderCommissionServices({ isSorting, isDisplayOwner, al
             if (response1) {
                 const action = response1.data.metadata.action;
                 if (response1.data.metadata.action == "bookmark") {
-                    setModalInfo({ status: "success", message: "Đã lưu dịch vụ" });
+                    setModalInfo({ status: "success", message: "Đã thêm vào mục lưu trữ" });
                 } else {
                     setModalInfo({ status: "success", message: "Đã hoàn tác" });
                 }
@@ -214,7 +214,7 @@ export default function RenderCommissionServices({ isSorting, isDisplayOwner, al
                     sortedCommissionServices?.length > 0 ? (
                         <Masonry
                             breakpointCols={breakpointColumnsObj}
-                            className="my-masonry-grid"
+                            className={`my-masonry-grid layout-${layout}`}
                             columnClassName="my-masonry-grid_column"
                         >
 

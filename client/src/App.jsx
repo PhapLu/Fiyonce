@@ -1,3 +1,4 @@
+// Imports
 import { createBrowserRouter, RouterProvider, useRoutes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'boxicons';
@@ -5,7 +6,6 @@ import 'boxicons';
 // Components
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import OrderHistory from "./components/orderHistory/OrderHistory";
-import Talents from "./components/talents/Talents";
 import ProfileCommissionServices from "./profile/profileCommissionServices/ProfileCommissionServices.jsx";
 import RenderPost from "./components/crudPost/render/RenderPost";
 import RenderNews from "./components/crudNews/render/RenderNews";
@@ -25,11 +25,10 @@ import ExploreCommissionServices from "./explore/exploreCommissionServices/Explo
 import Layout from "./pages/layout/Layout.jsx";
 import Challenge from "./pages/challenge/Challenge.jsx";
 
-// Statics
+// Static pages
 import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
 import Glaze from "./statics/glaze/Glaze.jsx";
-import AboutTeam from "./statics/aboutTeam/AboutTeam.jsx";
-
+import About from "./statics/about/About.jsx";
 
 // Profiles
 import ProfilePosts from "./profile/profilePosts/ProfilePosts";
@@ -42,20 +41,121 @@ import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDa
 import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
 import NewsDashboard from "./dashboard/newsDashboard/NewsDashboard";
 import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
-import HelpDashboard from "./dashboard/helpDashboard/HelpDashboard";
 import CreatePost from "./components/crudPost/create/CreatePost";
 import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
 import ProfileArchive from "./profile/profileArchive/ProfileArchive.jsx";
-import HelpCenter from "./help/center/HelpCenter.jsx";
+import HelpCenter from "./help/helpCenter/HelpCenter.jsx";
+import UpgradeAccount from "./components/upgradeAccount/UpgradeAccount.jsx";
+import MyProfile from "./profile/myProfile/MyProfile.jsx";
+import RenderTalentRequest from "./components/upgradeAccount/RenderTalentRequest.jsx";
+import SearchResult from "./pages/searchResult/SearchResult.jsx";
+import RenderCommissionOrder from "./components/crudCommissionOrder/render/RenderCommissionOrder.jsx";
+import CreateProposal from "./components/crudProposal/create/CreateProposal.jsx";
+import UpdateCommissionOrder from "./components/crudCommissionOrder/update/UpdateCommissionOrder.jsx";
+import RenderProposals from "./components/crudProposal/render/RenderProposals.jsx";
+import RenderProposal from "./components/crudProposal/render/RenderProposal.jsx";
+import RejectCommissionOrder from "./components/crudCommissionOrder/reject/RejectCommissionOrder.jsx";
+import CommissionOrderLayout from "./components/crudCommissionOrder/layout/CommissionOrderLayout.jsx";
+import StartWipCommissionOrder from "./components/crudCommissionOrder/startWip/StartWipCommissionOrder.jsx";
+import DeliverCommissionOrder from "./components/crudCommissionOrder/deliver/DeliverCommissionOrder.jsx";
+import FinishCommissionOrder from "./components/crudCommissionOrder/finish/FinishCommissionOrder.jsx";
+import HelpTopic from "./help/helpTopic/HelpTopic.jsx";
+import ForTalents from "./help/forTalents/ForTalents.jsx";
+import ForClients from "./help/forClients/ForClient.jsx";
+import HelpArticle from "./help/helpArticle/HelpArticle.jsx";
+import HelpCenterLayout from "./help/layout/HelpCenterLayout.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
+import ProfileTermOfService from "./profile/profileTermOfService/ProfileTermOfService.jsx";
+import RejectResponse from "./components/crudCommissionOrder/rejectResponse/RejectResponse.jsx";
+import RenderMilestones from "./components/crudCommissionOrder/renderMilestones/RenderMilestones.jsx";
+import Resources from "./statics/resources/Resources.jsx";
+import CreateMilestone from "./components/crudCommissionOrder/createMilestone/CreateMilestone.jsx";
+import ArchivedOrderHistory from "./components/orderHistory/ArchivedOrderHistory.jsx";
+import UnarchiveCommissionOrder from "./components/crudCommissionOrder/archive/UnarchiveCommissionOrder.jsx";
+import ArchiveCommissionOrder from "./components/crudCommissionOrder/archive/ArchiveCommissionOrder.jsx";
+import ReportCommissionOrder from "./components/crudCommissionOrder/report/ReportCommissionOrder.jsx";
 
 const queryClient = new QueryClient();
 
-const routes = [
+const commissionOrderRoutes = [
   {
-    path: "/help-center",
-    element: <HelpCenter />,
+    path: "commission-orders/:commission-order-id",
+    element: <CommissionOrderLayout />,
+    children: [
+      // CRUD commission order
+      {
+        path: "",
+        element: <RenderCommissionOrder />,
+      },
+      {
+        path: "update",
+        element: <UpdateCommissionOrder />,
+      },
+
+      // CRUD proposals
+      {
+        path: "proposals",
+        element: <RenderProposals />,
+      },
+      {
+        path: "proposals/:proposal-id",
+        element: <RenderProposal />,
+      },
+      {
+        path: "create-proposal",
+        element: <CreateProposal />,
+      },
+
+      // Other operations
+      {
+        path: "reject",
+        element: <RejectCommissionOrder />,
+      },
+      {
+        path: "reject-response",
+        element: <RejectResponse />,
+      },
+      {
+        path: "start-wip",
+        element: <StartWipCommissionOrder />,
+      },
+      {
+        path: "render-milestones",
+        element: <RenderMilestones />,
+      },
+      {
+        path: "create-milestone",
+        element: <CreateMilestone />,
+      },
+      {
+        path: "deliver",
+        element: <DeliverCommissionOrder />,
+      },
+      {
+        path: "finish",
+        element: <FinishCommissionOrder />,
+      },
+      {
+        path: "report",
+        element: <ReportCommissionOrder />,
+      },
+      // More actions
+      {
+        path: "archive",
+        element: <ArchiveCommissionOrder />,
+      },
+      {
+        path: "unarchive",
+        element: <UnarchiveCommissionOrder />,
+      },
+    ],
   },
+];
+
+
+const routes = [
+  // Displaying static content
   {
     path: "/terms-and-policies",
     element: <InDevelopment />,
@@ -69,15 +169,43 @@ const routes = [
         element: <Glaze />,
       },
       {
-        path: "/statics/about-team",
-        element: <AboutTeam />,
+        path: "/statics/term-of-services",
+        element: <Glaze />,
+      },
+      {
+        path: "/statics/about",
+        element: <About />,
+      },
+      {
+        path: "/statics/resources",
+        element: <Resources />,
       },
     ]
   },
+
+  // Pages for managing profile/portfolio
   {
     path: "/users/:userId",
     element: <ProfileLayout />,
     children: [
+      {
+        path: "/users/:userId",
+        element: (
+          <MyProfile />
+        ),
+      },
+      {
+        path: "/users/:userId/upgrade-account",
+        element: (
+          <UpgradeAccount />
+        ),
+      },
+      {
+        path: "/users/:userId/render-talent-request",
+        element: (
+          <RenderTalentRequest />
+        ),
+      },
       {
         path: "/users/:userId/profile-commission-services",
         element: <ProfileCommissionServices />,
@@ -119,8 +247,8 @@ const routes = [
         ]
       },
       {
-        path: "/users/:userId/order-history",
-        element: <ProtectedRoute><OrderHistory /></ProtectedRoute>,
+        path: "/users/:userId/term-of-services",
+        element: <ProfileTermOfService />,
       },
       {
         path: "/users/:userId/basic-info",
@@ -132,6 +260,8 @@ const routes = [
       },
     ],
   },
+
+  // Explore layout
   {
     path: "/",
     element: <ExploreLayout />,
@@ -163,24 +293,37 @@ const routes = [
     ],
   },
 
+  // General Layout
   {
     path: "/",
     element: <Layout />,
     children: [
       {
-        path: "/commission-market",
-        element: <CommissionMarket />,
+        path: "order-history",
+        element: <ProtectedRoute allowedRoles={['all']}><OrderHistory /></ProtectedRoute>,
+        children: commissionOrderRoutes,
       },
       {
-        path: "/challenges",
+        path: "commission-market",
+        element: <CommissionMarket />,
+        children: commissionOrderRoutes
+      },
+      {
+        path: "challenges",
         element: <Challenge />,
       },
       {
-        path: "/newss/:newsId",
+        path: "newss/:newsId",
         element: <RenderNews />,
+      },
+      {
+        path: "search",
+        element: <SearchResult />,
       },
     ]
   },
+
+  // Admin dashboard
   {
     path: "/dashboard/",
     element: <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /></ProtectedRoute>,
@@ -209,12 +352,30 @@ const routes = [
         path: "/dashboard/challenges",
         element: <ChallengeDashboard />,
       },
-      {
-        path: "/dashboard/help",
-        element: <HelpDashboard />,
-      },
     ],
   },
+
+  {
+    path: "help-center",
+    element: <HelpCenterLayout />,
+    children: [
+      // {
+      //   path: "topics/:topic-id",
+      //   element: <HelpTopic />,
+      // },
+      // {
+      //   path: "topics/:topic-id/:article-id",
+      //   element: <HelpArticle />,
+      // },
+      {
+        path: "",
+        element: <HelpCenter />,
+      },
+    ]
+  },
+
+
+  // Other pages
   {
     path: "/forbidden",
     element: <Forbidden />,

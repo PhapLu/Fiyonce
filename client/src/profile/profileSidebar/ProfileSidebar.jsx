@@ -1,6 +1,6 @@
 // Imports
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, Link } from "react-router-dom";
 import EmojiPicker from '../../components/emojiPicker/EmojiPicker'; // Update the path as needed
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -8,9 +8,10 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import UpgradeAccount from "../../components/upgradeAccount/UpgradeAccount.jsx";
 import Follower from '../../components/follow/follower/Follower.jsx';
 import Following from '../../components/follow/following/Following.jsx';
-import ProfileStatus from '../../components/profileStatus/ProfileStatus.jsx';
+import ProfileStatus from '../profileStatus/ProfileStatus.jsx';
 import FileInput from '../../components/cropImage/FileInput.jsx';
 import CropImage from '../../components/cropImage/CropImage.jsx';
+import ShareProfile from "../../components/shareProfile/ShareProfile.jsx";
 
 // Contexts
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
@@ -25,6 +26,7 @@ import { codePointToEmoji, getSocialLinkIcon } from "../../utils/iconDisplayer.j
 // Styling
 import "./ProfileSidebar.scss";
 import { resizeImageUrl } from '../../utils/imageDisplayer.js';
+import UserBadge from '../../components/userBadge/UserBadge.jsx';
 
 export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -43,7 +45,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const isProfileOwner = userInfo?._id === userId;
 
     // Initialize variables for inputs, errors, loading effect
-    const [inputs, setInputs] = useState(profileInfo);
+    const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [isSubmitSidebarInfoLoading, setIsSubmitSidebarInfoLoading] = useState(false);
     const [isUploadAvatarLoading, setUploadAvatarLoading] = useState(false);
@@ -52,13 +54,36 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     const [openEditProfileForm, setOpenEditProfileForm] = useState(false);
     const [isAvatarLoading, setIsAvatarLoading] = useState(false);
-    const [openUpgradeAccountForm, setOpenUpgradeAccountForm] = useState(false);
+    // const [openUpgradeAccountForm, setOpenUpgradeAccountForm] = useState(false);
     const [showAllSocialLinks, setShowAllSocialLinks] = useState(false);
     const socialLinksToShow = showAllSocialLinks ? socialLinks : socialLinks.slice(0, 3);
     const remainingLinksCount = socialLinks.length - socialLinksToShow.length;
 
     const [profileFollowers, setProfileFollowers] = useState(profileInfo?.followers || [])
     const [userFollowing, setUserFollowing] = useState(userInfo?.following || [])
+
+    const moreProfileActionsRef = useRef();
+    const [showMoreProfileActions, setShowMoreProfileActions] = useState(null);
+
+    const handleClickOutside = (event) => {
+        if (moreProfileActionsRef.current && !moreProfileActionsRef.current.contains(event.target)) {
+            setShowMoreProfileActions(null);  // Close the action container when clicked outside
+            setOverlayVisible(false);  // Close the action container when clicked outside
+        }
+    };
+
+    useEffect(() => {
+        if (showMoreProfileActions) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);  // Cleanup the event listener
+        };
+    }, [showMoreProfileActions]);
+
 
     const handleShowAllLinks = () => {
         setShowAllSocialLinks(!showAllSocialLinks);
@@ -89,6 +114,11 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             if (response.data.metadata.image_url) {
                 setUserInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
                 setProfileInfo({ ...profileInfo, avatar: response.data.metadata.image_url });
+
+                setModalInfo({
+                    status: "success",
+                    message: "Cập nhật ảnh đại diện thành công"
+                })
             }
         } catch (error) {
             console.error('Error:', error);
@@ -134,8 +164,10 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         // Validate fullname
         if (!isFilled(inputs?.fullName)) {
             errors.fullName = 'Vui lòng nhập họ và tên';
-        } else if (hasSymbol(inputs?.fullName)) {
-            errors.fullName = 'Tên không được chứa kí tự đặc biệt';
+        }
+
+        if (pronoun === "custom" && !customPronoun) {
+            errors.pronoun = 'Vui lòng nhập pronoun';
         }
 
         return errors;
@@ -157,10 +189,19 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         }
 
         try {
+
             const userId = profileInfo._id;
             const submittedSocialLinks = socialLinks.filter(link => link.trim() !== ''); // Filter out empty URLs
-            const updatedData = { ...inputs, pronoun: pronoun, socialLinks: submittedSocialLinks };
-            console.log(updatedData)
+            const pronounToSubmit = pronoun === "custom" ? customPronoun : pronoun; // Set the correct pronoun
+
+            const updatedData = {
+                ...inputs,
+                pronoun: pronounToSubmit,  // Assign the correct pronoun here
+                socialLinks: submittedSocialLinks
+            };
+
+            console.log(updatedData.workQueueUrl)
+            console.log(updatedData.pronoun)
             const response = await apiUtils.patch(`/user/updateProfile/${userId}`, updatedData);
             if (response) {
                 setModalInfo({
@@ -184,9 +225,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [isSubmitFollowUserLoading, setIsSubmitFollowUserLoading] = useState();
     const [isSubmitUnFollowUserLoading, setIsSubmitUnFollowUserLoading] = useState();
 
-    const handleFollowUser = async (e) => {
-        e.preventDefault();
-
+    const checkLoggedIn = () => {
         if (!userInfo) {
             setModalInfo({
                 status: "error",
@@ -194,11 +233,15 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             })
             return;
         }
+    }
+    const handleFollowUser = async (e) => {
+        e.preventDefault();
+
+        checkLoggedIn();
 
         setIsSubmitFollowUserLoading(true);
         try {
             const response = await apiUtils.patch(`/user/followUser/${profileInfo._id}`)
-            console.log(response);
             // setProfileFollowers([...profileFollowers, response.data.metadata.user.followers]);
             setUserFollowing(response.data.metadata.user.following)
 
@@ -220,18 +263,11 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const handleUnFollowUser = async (e) => {
         e.preventDefault();
 
-        if (!userInfo) {
-            setModalInfo({
-                status: "error",
-                message: "Vui lòng đăng nhập để thực hiện thao tác"
-            })
-            return;
-        }
+        checkLoggedIn();
 
         setIsSubmitUnFollowUserLoading(true);
         try {
             const response = await apiUtils.patch(`/user/unFollowUser/${profileInfo._id}`)
-            console.log(response);
             setProfileFollowers(profileFollowers.filter(user => user._id !== profileInfo._id));
             setUserFollowing(response.data.metadata.user.following)
 
@@ -240,7 +276,6 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 message: "Đã hủy theo dõi"
             })
         } catch (error) {
-            console.log(error);
             setModalInfo({
                 status: "error",
                 message: error.response.data.message
@@ -249,6 +284,14 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             setIsSubmitUnFollowUserLoading(true);
         }
     }
+
+    useEffect(() => {
+        if (profileInfo) {
+            // Only set inputs if they are not already filled
+            setInputs(profileInfo);
+            setSocialLinks((prevSocialLinks) => prevSocialLinks.length === 0 ? profileInfo.socialLinks || [] : prevSocialLinks);
+        }
+    }, [profileInfo]);
 
     const handleOpenConversation = async (e) => {
         e.preventDefault();
@@ -272,6 +315,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         if (e.target.value !== "custom") {
             setCustomPronoun(""); // Clear custom pronoun if not selected
         }
+        setErrors((prevErrors) => ({ ...prevErrors, pronoun: '' })); // Clear error if pronoun is selected
     };
 
     const handleCustomPronounChange = (e) => {
@@ -291,7 +335,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     };
     const renderBioWithLineBreaks = (text) => {
         return text.split('\n').map((line, index) => (
-            <span key={index}>
+            <span key={index} className='semi-light-text'>
                 {line}
                 <br />
             </span>
@@ -359,7 +403,10 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     const inputRef = useRef();
 
-    // Handle the change event when a file is selected
+    const onChooseImg = () => {
+        inputRef.current.click();
+    };
+
     const handleOnChange = (event) => {
         if (event.target.files && event.target.files.length > 0) {
             const reader = new FileReader();
@@ -367,16 +414,20 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             reader.onload = function (e) {
                 onImageSelected(reader.result);
                 setSelectedImage(reader.result);
-                console.log(reader.result);
+                setIsCropping(true); // Set isCropping after the image is selected
+                setOverlayVisible(true); // Set overlayVisible after the image is selected
             };
+        } else {
+            // Reset states if no image is selected or the user cancels the file dialog
+            setIsCropping(false);
+            setOverlayVisible(false);
+            setSelectedImage(null);
         }
     };
 
-    const onChooseImg = () => {
-        inputRef.current.click();
-        setIsCropping(true);
-        setOverlayVisible(true);
-    };
+    const displayPronoun = (pronoun) => {
+        return pronoun == "him" ? "Anh ấy" : pronoun == "her" ? "Cô ấy" : pronoun == "them" ? "Chúng tôi" : pronoun;
+    }
 
     return (
 
@@ -456,11 +507,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     {errors.jobTitle && <span className="form-field__error">{errors.jobTitle}</span>}
                                 </div>
                             </>
-
                         )
                     }
-
-
 
                     <div className="form-field">
                         <label htmlFor="pronoun" className="form-field__label">Pronoun</label>
@@ -473,7 +521,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             <option value="">Không đề cập</option>
                             <option value="him">Nam | Anh ấy</option>
                             <option value="her">Nữ  | Cô ấy</option>
-                            <option value="them">Họ  | Họ</option>
+                            <option value="them">Chúng tôi | Chúng tôi</option>
                             <option value="custom">Custom</option>
                         </select>
                         {pronoun === "custom" && (
@@ -552,6 +600,21 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     </div>
 
                     <div className="form-field">
+                        <label htmlFor="workQueueUrl" className="form-field__label">To-dos</label>
+                        <span className="form-field__annotation">Liên kết to-do list của bạn (vd Trello, Jira, v.v)</span>
+                        <input
+                            type="text"
+                            id="workQueueUrl"
+                            name="workQueueUrl"
+                            value={inputs?.workQueueUrl || ""}
+                            onChange={handleChange}
+                            className="form-field__input"
+                            placeholder="Nhập đường dẫn đến to-do list của bạn"
+                        />
+                        {errors.workQueueUrl && <span className="form-field__error">{errors.workQueueUrl}</span>}
+                    </div>
+
+                    <div className="form-field">
                         {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                     </div>
 
@@ -574,21 +637,21 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             ) : (
                 <>
                     <div className="sidebar__name">
-                        <p className="sidebar__name__fullName">{profileInfo?.fullName}</p>
+                        <p className="sidebar__name__fullName">{profileInfo?.fullName} <UserBadge size={"lg"} badges={profileInfo.badges} /></p>
                         <div className="flex-justify-center flex-align-center">
-                            {profileInfo?.stageName && <span className="sidebar__name__stageName">{profileInfo?.stageName}</span>}
-                            {profileInfo?.pronoun && (
-                                <>
-                                    <span className="dot-delimiter sm ml-8 mr-8"></span>
-                                    <span className="sidebar__name__stageName">{profileInfo?.pronoun}</span>
-                                </>
-                            )}
+                            {
+                                profileInfo?.stageName && profileInfo?.pronoun
+                                    ? (<><span className="sidebar__name__stageName">{profileInfo?.stageName}</span><span className="dot-delimiter sm ml-8 mr-8"></span>
+                                        <span className="sidebar__name__stageName">{displayPronoun(profileInfo?.pronoun)}</span></>) :
+                                    profileInfo?.stageName ? <span className="sidebar__name__stageName">@{profileInfo?.stageName}</span> :
+                                        profileInfo?.pronoun &&
+                                        <span className="sidebar__name__stageName">{displayPronoun(profileInfo?.pronoun)}</span>}
                         </div>
 
                     </div>
                     <div>
                         {profileInfo?.role === "talent" && profileInfo.jobTitle && (
-                            <span className="sidebar__job-title">
+                            <span className="sidebar__job-title semi-light-text">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
                                 </svg>
@@ -596,7 +659,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             </span>
                         )}
                         {profileInfo.address && (
-                            <span className="sidebar__location">
+                            <span className="sidebar__location semi-light-text">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
@@ -608,29 +671,69 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     {!isProfileOwner &&
                         (
                             <div className="flex-justify-center flex-align-center mt-16 mb-8">
-                                <button className="btn btn-3 btn-md mr-16" onClick={handleOpenConversation}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                                    </svg>
-                                    Nhắn tin
-                                </button>
                                 {
                                     userFollowing.includes(profileInfo._id) ? (
-                                        <button className="btn btn-2 btn-md" onClick={handleUnFollowUser}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <button className="btn btn-2 btn-md follow-btn" onClick={handleUnFollowUser}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                             </svg>
                                             Đã theo dõi
                                         </button>
                                     ) : (
-                                        <button className="btn btn-2 btn-md" onClick={handleFollowUser}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <button className="btn btn-2 btn-md follow-btn" onClick={handleFollowUser}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
                                             </svg>
                                             Theo dõi
                                         </button>
                                     )
                                 }
+                                <button className="btn btn-7 btn-md icon-only chat-btn ml-8" onClick={handleOpenConversation}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.7} stroke="currentColor" className="size-6 ">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                                    </svg>
+                                </button>
+
+                                <div className="more-profile-action" ref={moreProfileActionsRef}>
+                                    <div className={`ml-8 btn btn-round btn-9 icon-only ${showMoreProfileActions && "active"}`} onClick={() => { setShowMoreProfileActions(!showMoreProfileActions) }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 ml-8">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                        </svg>
+                                    </div>
+                                    {
+                                        showMoreProfileActions && (
+                                            !["share-profile", "block-profile", "report-profile"].includes(showMoreProfileActions) && (
+                                                <div className="more-profile-action-container">
+                                                    <div className="more-profile-action-item gray-bg-hover" onClick={() => { setOverlayVisible(true); setShowMoreProfileActions("share-profile") }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                                        </svg>
+                                                        <span>
+                                                            Chia sẻ trang cá nhân
+                                                        </span>
+                                                    </div>
+                                                    <div className="more-profile-action-item gray-bg-hover">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                                                        </svg>
+                                                        <span>
+                                                            Chặn tài khoản
+                                                        </span>
+                                                    </div>
+                                                    <div className="more-profile-action-item gray-bg-hover">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 mr-8">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                                        </svg>
+
+                                                        <span>
+                                                            Báo cáo tài khoản
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )
+                                        )
+                                    }
+                                </div>
                             </div>
                         )
 
@@ -638,15 +741,15 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                     <br />
 
                     <div className="sidebar__follow">
-                        <div className='flex-justify-center flex-align-center'>
+                        <div className='flex-justify-center flex-align-center semi-light-text'>
                             <span className="sidebar__follow__follower hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowers(true) }}>{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
                             <span className="dot-delimiter sm ml-8 mr-8"></span>
                             <span className="sidebar__follow__following hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowing(true) }}>{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                         </div>
                         <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'marginLeft': `${profileInfo?.followers?.length > 6 ? "72px" : (profileInfo?.followers?.length - 1) * 10 + 'px'}` }}>
                             {
-                                profileInfo?.followers?.slice(0, 6)?.reverse().map((follower, index) => {
-                                    if (index == 5) {
+                                profileInfo?.followers?.slice(0, 5)?.reverse().map((follower, index) => {
+                                    if (index == 4) {
                                         return <div index={index} className="user xs sidebar__follow__follow-item">
                                             <div className="user--left">
                                                 <LazyLoadImage
@@ -656,7 +759,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                                     effect="blur"
                                                 />
                                                 <div className="overlay">
-                                                    <span>{profileInfo?.followers.length - 4 > 0 ? "..." : ""}</span>
+                                                    <span>{profileInfo?.followers?.length - 4 > 0 ? "..." : ""}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -706,14 +809,23 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                 {
                                     !showAllSocialLinks && remainingLinksCount > 0 && (
                                         <div className="sidebar__socials__link-item" onClick={handleShowAllLinks}>
-                                            <i>__ Hiển thị {remainingLinksCount} liên kết</i>
+                                            <span>
+                                                <i>__ Hiển thị {remainingLinksCount} liên kết</i> </span>
                                         </div>
                                     )
                                 }
                             </div>
-
                         </div>}
+                    {
+                        profileInfo?.workQueueUrl &&
+                        (<Link to={"https://trello.com/b/DxDwAoal/commissions?fbclid=IwY2xjawFA7o9leHRuA2FlbQIxMAABHQ88lCaL84OXRrsMw5-oKKd9cJd14x1wYdNV79vMQRrl9REFl9eXVxi3xQ_aem_87n6hYqHaE4mwu0K8eFABw" || profileInfo?.workQueueUrl} target="_blank" className="sidebar__btn btn btn-md btn-4" >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
 
+                            <span>To-do List</span>
+                        </Link>)
+                    }
                     {
                         isProfileOwner && (
                             <>
@@ -721,18 +833,17 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                     </svg>
-
                                     <span>Chỉnh sửa thông tin</span>
                                 </button>
 
                                 {
                                     profileInfo?.role != "talent" && (
-                                        <button className="sidebar__btn btn btn-1" onClick={() => setOpenUpgradeAccountForm(true)}>
+                                        <Link to={`/users/${profileInfo?._id}/upgrade-account`} className="sidebar__btn btn btn-md btn-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
                                                 <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
                                             </svg>
                                             <span>Nâng cấp tài khoản</span>
-                                        </button>
+                                        </Link>
                                     )
                                 }
                             </>
@@ -741,12 +852,15 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                 </>
             )
             }
-            {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />}
+            {/* {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />} */}
             {overlayVisible &&
                 <div className="overlay">
+                    {showMoreProfileActions == "share-profile" && <ShareProfile profileInfo={profileInfo} setShowMoreProfileActions={setShowMoreProfileActions} setOverlayVisible={setOverlayVisible} />}
+                    {/* {showMoreProfileActions == "block-profile" && <ShareProfile />} */}
+                    {/* {showMoreProfileActions == "report-profile" && <ShareProfile />} */}
                     {showProfileStatus && <ProfileStatus profileInfo={profileInfo} setProfileInfo={setProfileInfo} setShowProfileStatus={setShowProfileStatus} setOverlayVisible={setOverlayVisible} />}
-                    {showFollowers && <Follower followers={profileInfo?.followers} setShowFollowers={setShowFollowers} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
-                    {showFollowing && <Following following={profileInfo?.following} setShowFollowing={setShowFollowing} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {showFollowers && <Follower profileInfo={profileInfo} setShowFollowers={setShowFollowers} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
+                    {showFollowing && <Following profileInfo={profileInfo} setShowFollowing={setShowFollowing} setOverlayVisible={setOverlayVisible} setProfileInfo={setProfileInfo} />}
                     {isCropping && selectedImage && (
                         <CropImage
                             image={selectedImage}

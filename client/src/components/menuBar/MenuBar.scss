@@ -3,12 +3,12 @@
     position: absolute;
     top: calc(100% + 8px);
     right: -20px;
-    min-width: 280px;
+    min-width: 290px;
     border: 1px solid var(--gray-1-color);
     padding: 18px 20px;
-    border-radius: 8px;
+    border-radius: 24px 0 24px 24px;
     background-color: var(--white-3-color);
-    box-shadow: var(--box-shadow-2);
+    box-shadow: var(--box-shadow-1);
 
     img {
         width: 24px;
@@ -81,6 +81,24 @@
                 opacity: 1;
                 background-color: var(--black-4-color);
                 color: white;
+            }
+        }
+    }
+
+    .dropdown-menu-statics {
+        font-size: 1.2rem !important;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 4px 12px;
+        color: var(--gray-3-color);
+
+        a {
+            color: var(--gray-3-color);
+
+            &:hover {
+                color: var(--gray-5-color);
+                text-decoration: underline;
             }
         }
     }

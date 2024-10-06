@@ -97,6 +97,7 @@ class TermOfServiceService {
         //2. Check if termOfService exists
         const termOfService = await TermOfService.findById(termOfServiceId)
         if (!termOfService) throw new NotFoundError("Không tìm thấy ToS")
+        console.log(termOfService)
         if (termOfService.talentId.toString() !== userId)
             throw new BadRequestError(
                 "Bạn không có quyền thực hiện thao tác này"

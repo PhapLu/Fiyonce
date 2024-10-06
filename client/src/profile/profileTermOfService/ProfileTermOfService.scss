@@ -1,0 +1,40 @@
+.profile-term-of-service {
+
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -16px;
+        /* gutter size offset */
+        width: auto;
+    }
+
+    .my-masonry-grid_column {
+        padding-left: 20px;
+        /* gutter size */
+        background-clip: padding-box;
+    }
+
+
+    .profile-term-of-service-container {
+
+        .profile-term-of-service-item {
+            position: relative;
+            margin-bottom: 24px;
+            background-color: var(--form-bg-2-color);
+            border-radius: 16px;
+            padding: 6px 18px;
+            box-shadow: var(--box-shadow-1);
+
+            // .update-tos-ic {
+            //     position: absolute;
+            //     top: 8px;
+            //     right: 20px;
+            // }
+
+            // .delete-tos-ic {
+            //     position: absolute;
+            //     top: 8px;
+            //     right: 20px;
+            // }
+        }
+    }
+}

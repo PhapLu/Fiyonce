@@ -83,12 +83,20 @@ class OrderController {
     }
 
     rejectOrder = async (req, res, next) => {
-        console.log(req.body)
         new SuccessResponse({
             message: 'Deny the order success!',
             metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
         }).send(res)
     }
+    
+    readRejectResponse = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Read reject message success!',
+            metadata: await OrderService.readRejectResponse(req.userId, req.params.orderId, req.body)
+        }).send(res)
+    }
+
+    startWipOrder = async (req, res, next) => {
     
     startWipCommissionOrder = async (req, res, next) => {
         new SuccessResponse({
@@ -115,6 +123,20 @@ class OrderController {
         new SuccessResponse({
             message: 'Add milestone success!',
             metadata: await OrderService.addMilestone(req.userId, req.params.orderId, req)
+        }).send(res)
+    }
+
+    deliverOrder = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Deliver the order success!',
+            metadata: await OrderService.deliverOrder(req.userId, req.params.orderId, req)
+        }).send(res)
+    }
+
+    finishOrder = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Finish the order success!',
+            metadata: await OrderService.finishOrder(req.userId, req.params.orderId)
         }).send(res)
     }
 }

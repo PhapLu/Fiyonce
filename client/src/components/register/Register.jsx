@@ -1,5 +1,5 @@
 // Imports
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Resources
 import { useAuth } from "../../contexts/auth/AuthContext";
@@ -65,6 +65,12 @@ export default function Register() {
         } else if (!minLength(inputs.fullName, 4)) {
             errors.fullName = 'Họ tên phải trên 4 kí tự';
         }
+
+        if (isFilled(inputs.referralCode)) {
+            if (!inputs.referralCode.length == 8 || !referrerInfo) {
+                errors.referralCode = "Mã giới thiệu không hợp lệ";
+            }
+        }
         return errors;
     };
 
@@ -98,6 +104,31 @@ export default function Register() {
         }
     };
 
+
+    const [referrerInfo, setReferrerInfo] = useState(null); // State to store referrer information
+
+    useEffect(() => {
+        const fetchReferrerInfo = async () => {
+            if (inputs.referralCode && inputs.referralCode.length == 8) {
+                try {
+                    // return {
+                    //     fullName: "Luu Quoc Nhat"
+                    // };
+                    const response = await apiUtils.get(`/user/getUserByReferralCode/${inputs.referralCode}`);
+                    setReferrerInfo(response.data.metadata.user); // Assuming response.data contains referrer info
+                } catch (error) {
+                    console.error("Failed to fetch referrer info:", error);
+                    setErrors((values) => ({ ...values, referralCode: "Mã giới thiệu không hợp lệ" }));
+                    setReferrerInfo(null);
+                }
+            } else {
+                setReferrerInfo(null);
+            }
+        };
+
+        fetchReferrerInfo();
+    }, [inputs.referralCode]);
+
     return (
         <>
             {showRegisterVerificationForm ? (
@@ -115,9 +146,8 @@ export default function Register() {
 
                         <h2 className="form__title">Đăng kí</h2>
 
-                        <div className="form-field">
+                        <div className="form-field required">
                             <label htmlFor="email" className="form-field__label">Email</label>
-
                             <input type="email" id="email" name="email" value={inputs.email || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập email đăng nhập" autoComplete="on" />
                             {errors.email && <span className="form-field__error">{errors.email}</span>}
                         </div>
@@ -141,7 +171,7 @@ export default function Register() {
                             {errors.password && <span className="form-field__error">{errors.password}</span>}
                         </div>
 
-                        <div className="form-field">
+                        <div className="form-field required">
                             <label htmlFor="confirmPassword" className="form-field__label">Xác nhận mật khẩu</label>
 
                             <div className="form-field with-ic flex-justify-space-between">
@@ -161,10 +191,20 @@ export default function Register() {
                             {errors.confirmPassword && <span className="form-field__error">{errors.confirmPassword}</span>}
                         </div>
 
-                        <div className="form-field">
+                        <div className="form-field required">
                             <label htmlFor="fullName" className="form-field__label">Họ tên</label>
                             <input type="text" id="fullName" name="fullName" value={inputs.fullName || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập họ và tên" autoComplete="on" />
                             {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="referralCode" className="form-field__label">Mã giới thiệu</label>
+                            <input type="text" id="referralCode" name="referralCode" value={inputs.referralCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mã giới thiệu" autoComplete="on" />
+                            {errors.referralCode && <span className="form-field__error">{errors.referralCode}</span>}
+                            {referrerInfo && (
+                                <span className="mt-8">Người giới thiệu: {referrerInfo.fullName}</span>
+                            )}
+
                         </div>
 
                         <div className="form-field">

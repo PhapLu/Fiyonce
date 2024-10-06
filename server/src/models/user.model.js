@@ -51,7 +51,7 @@ const UserSchema = new Schema(
             isComplete: { type: Boolean, default: false },
             awardedAt: { type: Date, default: null }
         }],
-        referral: { 
+        referral: {
             code: { type: String, default: "" },
             referred: [{ type: Schema.Types.ObjectId, ref: "User" }]
         },
@@ -59,8 +59,8 @@ const UserSchema = new Schema(
         dob: { type: Date, default: null },
         socialLinks: [{ type: String, required: true, default: [] }],
         views: { type: Number, default: 0 },
-        postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-        commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
+        postBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post", default: [] }],
+        commissionServiceBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service", default: [] }],
         isPublicArchived: { type: Boolean, default: true },
         jobTitle: { type: String, default: "" },
         status: {
@@ -68,9 +68,9 @@ const UserSchema = new Schema(
             default: "pending",
             enum: ["pending", "active", "block"],
         },
-        followers: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
-        following: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
-        taxCode:{
+        followers: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+        following: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+        taxCode: {
             code: { type: String, default: "" },
             isVerified: { type: Boolean, default: false },
             message: { type: String, default: "" }
@@ -79,8 +79,9 @@ const UserSchema = new Schema(
             type: String,
             default: ''
         },
-        accessToken: { type: String },
+        accessToken: { type: String, default: '' },
         qrCode: { type: String, default: '' }, //Base 64
+        workQueueUrl: { type: String, default: '' },
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: { type: String, default: "" },

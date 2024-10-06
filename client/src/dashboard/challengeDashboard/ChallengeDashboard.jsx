@@ -19,6 +19,9 @@ import { formatDatetime } from '../../utils/formatter.js';
 import "./ChallengeDashboard.scss";
 import { isFilled } from '../../utils/validator';
 import { limitString } from '../../utils/formatter.js';
+import CreateBadge from '../../components/crudBadge/create/CreateBadge.jsx';
+import UpdateBadge from '../../components/crudBadge/update/UpdateBadge.jsx';
+import DeleteBadge from '../../components/crudBadge/delete/DeleteBadge.jsx';
 
 export default function ChallengeDashboard() {
     const [overlayVisible, setOverlayVisible] = useState(false);
@@ -26,6 +29,12 @@ export default function ChallengeDashboard() {
     const [showUpdateChallenge, setShowUpdateChallenge] = useState(false);
     const [showDeleteChallenge, setShowDeleteChallenge] = useState(false);
     const [challenge, setChallenge] = useState(null);
+
+
+    const [showCreateBadge, setShowCreateBadge] = useState(false);
+    const [showUpdateBadge, setShowUpdateBadge] = useState(false);
+    const [showDeleteBadge, setShowDeleteBadge] = useState(false);
+    const [badge, setBadge] = useState(null);
 
     const queryClient = useQueryClient();
     const [isSubmitCreateChallengeLoading, setIsSubmitCreateChallengeLoading] = useState(false);
@@ -51,9 +60,15 @@ export default function ChallengeDashboard() {
                 setShowCreateChallenge(false);
                 setModalInfo({
                     status: "success",
-                    message: "Tạo bản tin thành công"
+                    message: "Tạo thử thách thành công"
                 })
-            }
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            },
         }
     );
 
@@ -66,9 +81,15 @@ export default function ChallengeDashboard() {
                 setShowUpdateChallenge(false);
                 setModalInfo({
                     status: "success",
-                    message: "Cập nhật bản tin thành công"
+                    message: "Cập nhật thử thách thành công"
                 })
-            }
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            },
         }
     );
 
@@ -81,9 +102,15 @@ export default function ChallengeDashboard() {
                 setShowDeleteChallenge(false);
                 setModalInfo({
                     status: "success",
-                    message: "Xóa bản tin thành công"
+                    message: "Xóa thử thách thành công"
                 })
-            }
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            },
         }
     );
 
@@ -111,9 +138,15 @@ export default function ChallengeDashboard() {
                 setShowCreateBadge(false);
                 setModalInfo({
                     status: "success",
-                    message: "Tạo bản tin thành công"
+                    message: "Tạo huy hiệu thành công"
                 })
-            }
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            },
         }
     );
 
@@ -126,9 +159,15 @@ export default function ChallengeDashboard() {
                 setShowUpdateBadge(false);
                 setModalInfo({
                     status: "success",
-                    message: "Cập nhật bản tin thành công"
+                    message: "Cập nhật huy hiệu thành công"
                 })
-            }
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            },
         }
     );
 
@@ -141,9 +180,15 @@ export default function ChallengeDashboard() {
                 setShowDeleteBadge(false);
                 setModalInfo({
                     status: "success",
-                    message: "Xóa bản tin thành công"
+                    message: "Xóa huy hiệu thành công"
                 })
-            }
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            },
         }
     );
 
@@ -158,7 +203,7 @@ export default function ChallengeDashboard() {
                     <div className="section-header">
                         <div className="section-header--left">
                             <h3 className="section-header__title">Huy hiệu</h3>
-                            <svg onClick={() => { setOverlayVisible(true); setShowCreateChallenge(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 btn add-btn">
+                            <svg onClick={() => { setOverlayVisible(true); setShowCreateBadge(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 btn add-btn">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </div>
@@ -180,16 +225,11 @@ export default function ChallengeDashboard() {
                                 badges?.length > 0 ? (
                                     badges.map((badge, index) => (
                                         <tr key={badge._id}>
-                                            <td><img src={badge.thumbnail} alt="" /></td>
+                                            <td><img src={badge.icon} alt="" /></td>
                                             <td>{index + 1}</td>
                                             <td><span className='fw-bold'>{badge.title}</span></td>
                                             <td>{badge.description}</td>
-                                            <td>{badge.criteria?.map((criterion, index) => {
-                                                return (
-                                                    <>
-                                                    </>
-                                                )
-                                            })}</td>
+                                            <td>{badge.criteria}</td>
                                             <td>
                                                 <button className="btn btn-2" onClick={() => { setChallenge(badge); setOverlayVisible(true); setShowUpdateChallenge(true) }}>Chỉnh sửa</button>
                                                 <button className="btn btn-3" onClick={() => { setChallenge(badge); setOverlayVisible(true); setShowDeleteChallenge(true) }}>Xóa</button>
@@ -262,7 +302,12 @@ export default function ChallengeDashboard() {
             </div >
             {overlayVisible && (
                 <div className="overlay">
-                    {showCreateChallenge && <CreateChallenge challenge={challenge} setShowCreateChallenge={setShowCreateChallenge} setOverlayVisible={setOverlayVisible} createChallengeMutation={createChallengeMutation} />}
+                    {showCreateChallenge && <CreateChallenge setShowCreateChallenge={setShowCreateChallenge} setOverlayVisible={setOverlayVisible} createChallengeMutation={createChallengeMutation} />}
+                    {showCreateBadge && <CreateBadge setShowCreateBadge={setShowCreateBadge} setOverlayVisible={setOverlayVisible} createBadgeMutation={createBadgeMutation} />}
+                    {showUpdateBadge && <UpdateBadge setShowUpdateBadge={setShowUpdateBadge} setOverlayVisible={setOverlayVisible} updateBadgeMutation={updateBadgeMutation} />}
+                    {showDeleteBadge && <DeleteBadge setShowDeleteBadge={setShowDeleteBadge} setOverlayVisible={setOverlayVisible} deleteBadgeMutation={deleteBadgeMutation} />}
+
+
                     {/* {showUpdateChallenge && <UpdateChallenge challenge={challenge} setShowUpdateChallenge={setShowUpdateChallenge} setOverlayVisible={setOverlayVisible} updateChallengeMutation={updateChallengeMutation} />}
                     {showDeleteChallenge && <DeleteChallenge challenge={challenge} setShowDeleteChallenge={setShowDeleteChallenge} setOverlayVisible={setOverlayVisible} deleteChallengeMutation={deleteChallengeMutation} />} */}
                 </div>

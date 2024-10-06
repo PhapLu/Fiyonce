@@ -16,6 +16,7 @@ import { formatCurrency } from "../../../utils/formatter";
 
 // Styling
 import "./RenderCommissionService.scss";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 export default function RenderComissionService() {
     const { userId, commissionServiceId } = useParams();
@@ -155,7 +156,7 @@ export default function RenderComissionService() {
 
                                         {commissionService.artworks.map((artwork, index) => (
                                             <div key={index} className="render-commission-service__artwork-item" onClick={() => { setImageSource(artwork); setShowZoomImage(true) }}>
-                                                <img src={artwork} alt={`Artwork ${index + 1}`} />
+                                                <img src={resizeImageUrl(artwork, 900)} alt={`Artwork ${index + 1}`} />
                                             </div>
                                         ))}
                                     </Carousel>
@@ -169,7 +170,7 @@ export default function RenderComissionService() {
                                 <hr />
                                 <Link to={`/users/${commissionService?.talentId?._id}/profile-commission-services`} className="user md">
                                     <div className="user--left">
-                                        <img src={commissionService?.talentId?.avatar} alt="" className="user__avatar" />
+                                        <img src={resizeImageUrl(commissionService?.talentId?.avatar, 100)} alt="" className="user__avatar" />
                                         <div className="user__name">
                                             <div className="user__name__title">{commissionService?.talentId?.fullName}</div>
                                             <span className="user__name__sub-title">{commissionService?.talentId?.stageName}</span>
@@ -178,7 +179,7 @@ export default function RenderComissionService() {
                                 </Link>
                                 <div className="render-commission-service__owner-msg mt-12 mb-32">
                                     <span>
-                                        Cảm ơn bạn đã ghé thăm dịch vụ của mình. Vui lòng đọc thông tin và điều khoản dịch vụ trước khi đặt comm giúp mình nhé.
+                                        Cảm ơn bạn đã ghé thăm dịch vụ của mình. Vui lòng đọc kĩ thông tin và điều khoản dịch vụ trước khi đặt commission giúp mình nhé.
                                     </span>
                                 </div>
 

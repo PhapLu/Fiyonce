@@ -1,5 +1,6 @@
 // Imports
 import { useState, useEffect } from "react";
+import { Link, Outlet } from "react-router-dom"
 import { useQuery } from "react-query";
 import Masonry from 'react-masonry-css';
 
@@ -33,7 +34,7 @@ export default function CommissionMarket() {
         600: 1
     };
 
-    const [inputs, setInputs] = useState({status: "*"});
+    const [inputs, setInputs] = useState({ status: "*" });
     const [commissionOrder, setCommissionOrder] = useState();
 
     const [showCreateComissionOrder, setShowCreateCommissionOrder] = useState(false);
@@ -210,11 +211,7 @@ export default function CommissionMarket() {
                         >
                             {filteredOrders.map((indirectOrder) => {
                                 return (
-                                    <div className="commission-market-item" key={indirectOrder._id} onClick={() => {
-                                        setCommissionOrder(indirectOrder);
-                                        setShowRenderCommissionOrder(true);
-                                        setOverlayVisible(true);
-                                    }}>
+                                    <Link to={`/commission-market/commission-orders/${indirectOrder?._id}`} className="commission-market-item display-block" key={indirectOrder._id}>
                                         <div className="commission-market-item__header">
                                             <div className="mb-8">
                                                 {indirectOrder?.status == "approved" ? (
@@ -247,7 +244,7 @@ export default function CommissionMarket() {
 
                                         <div className="commission-market-item__content">
                                             <div className="mt-16">
-                                                <span className="highlight-text fs-16">đ{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text">đ{formatCurrency(indirectOrder.maxPrice)}</span>
+                                                <span className="highlight-text fs-16">{formatCurrency(indirectOrder.minPrice)}</span> - <span className="highlight-text fs-16">{formatCurrency(indirectOrder.maxPrice)} VND</span>
                                             </div>
                                             <div className="mt-8 mb-16">
                                                 <span >{limitString(indirectOrder.description, 330)}</span>
@@ -273,7 +270,7 @@ export default function CommissionMarket() {
                                                 );
                                             })}
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })}
                         </Masonry>
@@ -297,6 +294,7 @@ export default function CommissionMarket() {
                     </div>
                 )
             }
+            <Outlet />
         </>
     )
 }

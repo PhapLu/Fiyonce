@@ -6,11 +6,10 @@ import { resizeImageUrl } from "../../../utils/imageDisplayer";
 import "./Follower.scss";
 import { apiUtils } from "../../../utils/newRequest";
 
-export default function Follower({ followers, setShowFollowers, setProfileInfo, setOverlayVisible }) {
+export default function Follower({ profileInfo, setShowFollowers, setProfileInfo, setOverlayVisible }) {
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
-    const { userId } = useParams();
-    const isProfileOwner = userInfo?._id === userId;
+    const isProfileOwner = userInfo?._id === profileInfo._id;
 
     // State to track loading for each button
     const [loadingStates, setLoadingStates] = useState({});
@@ -122,8 +121,8 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="follow-container">
-                {followers?.length > 0 ? (
-                    followers.map((follower) => (
+                {profileInfo?.followers?.length > 0 ? (
+                    profileInfo?.followers.map((follower) => (
                         <div className="follow-item" key={follower._id}>
                             <div className="user lg">
                                 <div className="user--left">
@@ -132,7 +131,13 @@ export default function Follower({ followers, setShowFollowers, setProfileInfo, 
                                 <div className="user--right">
                                     <div className="user__name">
                                         <span className="user__name__title">{follower?.fullName}</span>
-                                        <span className="user__name__sub-title">{follower?.stageName}</span>
+                                        <span className="user__name__sub-title">
+                                            {follower?.stageName && `@${follower.stageName}`}
+                                            {follower?.jobTitle && <>
+                                                <span className="dot-delimiter sm"></span>
+                                                {follower?.jobTitle}
+                                            </>}
+                                        </span>
                                     </div>
                                 </div>
                             </div>

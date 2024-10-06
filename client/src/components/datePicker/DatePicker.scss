@@ -4,6 +4,7 @@
     outline: none !important;
     background-color: var(--white-2-color) !important;
     border-radius: 8px !important;
+    min-height: unset !important;
 }
 
 .css-1u9des2-indicatorSeparator {
@@ -17,7 +18,24 @@
 .css-1dimb5e-singleValue {
     color: var(--black-2-color) !important;
 }
+
 .css-15lsz6c-indicatorContainer,
 .css-1xc3v61-indicatorContainer {
     padding: 4px !important;
+}
+
+
+.date-picker-sm {
+    .css-1jqq78o-placeholder {
+        font-size: 1.2rem !important;
+    }
+
+    .css-hlgwow {
+        padding: 0 2px !important;
+    }
+
+    .css-tj5bde-Svg {
+        width: 18px;
+        height: 18px;
+    }
 }

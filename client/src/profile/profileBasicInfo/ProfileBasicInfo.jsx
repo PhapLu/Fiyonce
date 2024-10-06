@@ -21,7 +21,7 @@ export default function ProfileBasicInfo() {
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
 
-    const [inputs, setInputs] = useState(profileInfo);
+    const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [isSubmitProfileBasicInfoLoading, setIsSubmitProfileBasicInfoLoading] = useState(false);
     const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
@@ -30,13 +30,22 @@ export default function ProfileBasicInfo() {
         return null;
     }
 
+    // useEffect(() => {
+    //     if (profileInfo) {
+    //         const dob = profileInfo.dob ? new Date(profileInfo.dob).toISOString().split('T')[0] : "";
+    //         setInputs({ ...profileInfo, dob: dob });
+    //         setSocialLinks(profileInfo.socialLinks || []);
+    //     }
+    // }, [profileInfo]);
+
     useEffect(() => {
         if (profileInfo) {
-            const dob = profileInfo.dob ? new Date(profileInfo.dob).toISOString().split('T')[0] : "";
-            setInputs({ ...profileInfo, dob: dob });
-            setSocialLinks(profileInfo.socialLinks || []);
+            // Only set inputs if they are not already filled
+            setInputs(profileInfo);
+            setSocialLinks((prevSocialLinks) => prevSocialLinks.length === 0 ? profileInfo.socialLinks || [] : prevSocialLinks);
         }
-    }, []);
+    }, [profileInfo]);
+
 
     const handleDateChange = (formattedDate) => {
         const date = new Date(formattedDate);
@@ -46,6 +55,7 @@ export default function ProfileBasicInfo() {
         const dob = `${year}-${month}-${day}T00:00:00.000Z`;
         setInputs((values) => ({ ...values, dob: dob }));
     };
+    
     const handleChange = (e) => {
         const name = e.target.name;
         let value = e.target.value;
@@ -65,8 +75,6 @@ export default function ProfileBasicInfo() {
 
         if (!isFilled(inputs.fullName)) {
             errors.fullName = 'Vui lòng nhập họ và tên';
-        } else if (hasSymbol(inputs.fullName)) {
-            errors.fullName = 'Tên không được chứa kí tự đặc biệt';
         }
 
 
@@ -124,12 +132,12 @@ export default function ProfileBasicInfo() {
             <section className="section profile-basic-info-section">
                 <h3 className="section__title">Thông tin cơ bản</h3>
                 <form className="form profile-basic-info-form">
-                    <div className="form-field">
+                    <div className="form-field required">
                         <label htmlFor="fullName" className="form-field__label">Họ và tên</label>
                         <input
                             type="text"
                             name="fullName"
-                            value={inputs.fullName || ""}
+                            value={inputs?.fullName || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập họ và tên"
@@ -143,7 +151,7 @@ export default function ProfileBasicInfo() {
                             <input
                                 type="text"
                                 name="stageName"
-                                value={inputs.stageName || ""}
+                                value={inputs?.stageName || ""}
                                 onChange={handleChange}
                                 className="form-field__input"
                                 placeholder="Nhập nghệ danh"
@@ -179,7 +187,7 @@ export default function ProfileBasicInfo() {
                         <input
                             type="text"
                             name="address"
-                            value={inputs.address || ""}
+                            value={inputs?.address || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập địa chỉ cụ thể"
@@ -192,7 +200,7 @@ export default function ProfileBasicInfo() {
                         <input
                             type="text"
                             name="phone"
-                            value={inputs.phone || ""}
+                            value={inputs?.phone || ""}
                             onChange={handleChange}
                             className="form-field__input"
                             placeholder="Nhập số điện thoại"
@@ -210,7 +218,7 @@ export default function ProfileBasicInfo() {
                         <input
                             type="text"
                             name="email"
-                            value={inputs.email || ""}
+                            value={inputs?.email || ""}
                             onChange={handleChange}
                             readOnly={true}
                             className="form-field__input outline-border-none"

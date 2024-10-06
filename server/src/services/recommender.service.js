@@ -2,8 +2,12 @@ import Post from "../models/post.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError } from "../core/error.response.js"
+import { CLIENT_RENEG_LIMIT } from "tls"
+
+import mongoose from "mongoose"
 
 class RecommenderService {
+    // Search for exactly matching keyword
     static search = async (query) => {
         if (!query.searchTerm) throw new BadRequestError("Invalid search Term")
         const searchRegex = new RegExp(query.searchTerm, 'i') // 'i' for case-insensitive search
@@ -22,31 +26,96 @@ class RecommenderService {
         }
     }
 
+    // Search for nearly matching keyword (top 20 relevant talent/service results)
+    static readSearchResults = async (query) => {
+        console.log("OOO")
+        console.log(query)
+        if (!query.searchTerm) throw new BadRequestError("Invalid search Term");
+
+        const caseSensitiveRegex = new RegExp(`^${query.searchTerm}$`); // Exact case-sensitive match
+        const caseInsensitiveRegex = new RegExp(query.searchTerm, 'i'); // Case-insensitive match
+
+        // Step 1: Search for case-sensitive matches in Users
+        const caseSensitiveUserResults = await User.find({
+            $or: [
+                { fullName: { $regex: caseSensitiveRegex } },
+                { stageName: { $regex: caseSensitiveRegex } },
+                { email: { $regex: caseSensitiveRegex } },
+                { bio: { $regex: caseSensitiveRegex } },
+            ]
+        }).limit(20);
+
+        // Step 2: Search for case-insensitive matches excluding those already found
+        const caseInsensitiveUserResults = await User.find({
+            $or: [
+                { fullName: { $regex: caseInsensitiveRegex } },
+                { stageName: { $regex: caseInsensitiveRegex } },
+                { email: { $regex: caseInsensitiveRegex } },
+                { bio: { $regex: caseInsensitiveRegex } },
+            ],
+            _id: { $nin: caseSensitiveUserResults.map(result => result._id) } // Exclude already found results
+        }).limit(20 - caseSensitiveUserResults.length);
+
+        // Combine user results, prioritizing case-sensitive matches
+        const userResults = [...caseSensitiveUserResults, ...caseInsensitiveUserResults];
+
+        // Step 3: Search for case-sensitive matches in Services
+        const caseSensitiveServiceResults = await CommissionService.find({
+            $or: [
+                { title: { $regex: caseSensitiveRegex } },
+                { description: { $regex: caseSensitiveRegex } },
+                { notes: { $regex: caseSensitiveRegex } },
+            ]
+        }).limit(20);
+
+        // Step 4: Search for case-insensitive matches excluding those already found
+        const caseInsensitiveServiceResults = await CommissionService.find({
+            $or: [
+                { title: { $regex: caseInsensitiveRegex } },
+                { description: { $regex: caseInsensitiveRegex } },
+                { notes: { $regex: caseInsensitiveRegex } },
+            ],
+            _id: { $nin: caseSensitiveServiceResults.map(result => result._id) } // Exclude already found results
+        }).limit(20 - caseSensitiveServiceResults.length);
+
+        // Combine service results, prioritizing case-sensitive matches
+        const serviceResults = [...caseSensitiveServiceResults, ...caseInsensitiveServiceResults];
+
+        console.log("PPP")
+        console.log(userResults)
+        console.log(serviceResults)
+        return {
+            userResults,
+            serviceResults
+        };
+    }
+
     static readPopularPosts = async (req) => {
-        const q = req.query
+        const q = req.query;
+        const page = parseInt(req.query.page) || 1;  // Current page, default to 1
+        const limit = parseInt(req.query.limit) || 50;  // Number of posts per page, default to 50
+        const skip = (page - 1) * limit;
         const filters = {
             ...(q.movementId !== undefined && { movementId: q.movementId }),
-        }
+        };
+    
         try {
             const posts = await Post.find(filters)
                 .populate("talentId")
                 .populate("artworks")
                 .populate("movementId")
-                .populate("postCategoryId")
-
+                .populate("postCategoryId");
+    
             // Compute the minimum and maximum values for scaling
             const [minMaxValues] = await Post.aggregate([
                 {
                     $project: {
                         likesCount: { $size: "$likes" },
                         bookmarksCount: { $size: "$bookmarks" },
-                        viewsCount: { $size: "$views" },  // Count the number of views
-                        followersCount: { $size: { $ifNull: ["$talent.followers", []] } },  // Use $ifNull to avoid null
+                        viewsCount: { $size: "$views" },
+                        followersCount: { $size: { $ifNull: ["$talent.followers", []] } },
                         ageInHours: {
-                            $divide: [
-                                { $subtract: [new Date(), "$createdAt"] },
-                                1000 * 60 * 60,
-                            ],
+                            $divide: [{ $subtract: [new Date(), "$createdAt"] }, 1000 * 60 * 60],
                         },
                     },
                 },
@@ -78,55 +147,40 @@ class RecommenderService {
                         ],
                     },
                 },
-            ])
-
-
-            const minValues = minMaxValues.minValues[0] || {}
-            const maxValues = minMaxValues.maxValues[0] || {}
-
+            ]);
+    
+            const minValues = minMaxValues.minValues[0] || {};
+            const maxValues = minMaxValues.maxValues[0] || {};
+    
             // Ensure default values are set if there are no documents
-            const minLikesCount = minValues.minLikes || 0
-            const maxLikesCount = maxValues.maxLikes || 1 // Avoid division by zero
-            const minBookmarksCount = minValues.minBookmarks || 0
-            const maxBookmarksCount = maxValues.maxBookmarks || 1 // Avoid division by zero
-            const minViews = minValues.minViews || 0
-            const maxViews = maxValues.maxViews || 1 // Avoid division by zero
-            const minFollowersCount = minValues.minFollowers || 0
-            const maxFollowersCount = maxValues.maxFollowers || 1 // Avoid division by zero
-            const minAge = minValues.minAge || 0
-            const maxAge = maxValues.maxAge || 1 // Avoid division by zero
-
-
-
+            const minLikesCount = minValues.minLikes || 0;
+            const maxLikesCount = maxValues.maxLikes || 1; // Avoid division by zero
+            const minBookmarksCount = minValues.minBookmarks || 0;
+            const maxBookmarksCount = maxValues.maxBookmarks || 1; // Avoid division by zero
+            const minViews = minValues.minViews || 0;
+            const maxViews = maxValues.maxViews || 1; // Avoid division by zero
+            const minFollowersCount = minValues.minFollowers || 0;
+            const maxFollowersCount = maxValues.maxFollowers || 1; // Avoid division by zero
+            const minAge = minValues.minAge || 0;
+            const maxAge = maxValues.maxAge || 1; // Avoid division by zero
+    
             const scoredPosts = await Promise.all(
                 posts.map(async (post) => {
-                    const talent = await User.findById(post.talentId)
-
+                    const talent = await User.findById(post.talentId);
+    
                     // Compute scaled values
-                    const likesScaled =
-                        (post.likes.length - minLikesCount) /
-                        (maxLikesCount - minLikesCount)
-                    const viewsScaled =
-                        (post.views.length - minViews) / (maxViews - minViews)
-                    const bookmarksScaled =
-                        (post.bookmarks.length - minBookmarksCount) /
-                        (maxBookmarksCount - minBookmarksCount)
-                    const followersScaled =
-                        (talent.followers.length - minFollowersCount) /
-                        (maxFollowersCount - minFollowersCount)
-
+                    const likesScaled = (post.likes.length - minLikesCount) / (maxLikesCount - minLikesCount);
+                    const viewsScaled = (post.views.length - minViews) / (maxViews - minViews);
+                    const bookmarksScaled = (post.bookmarks.length - minBookmarksCount) / (maxBookmarksCount - minBookmarksCount);
+                    const followersScaled = (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount);
+    
                     // Compute post age weight
-                    const hoursSinceCreation =
-                        (new Date() - new Date(post.createdAt)) /
-                        (60 * 60 * 1000)
-                    const scaledPostAge =
-                        (hoursSinceCreation - minAge) / (maxAge - minAge)
-
+                    const hoursSinceCreation = (new Date() - new Date(post.createdAt)) / (60 * 60 * 1000);
+                    const scaledPostAge = (hoursSinceCreation - minAge) / (maxAge - minAge);
+    
                     // Calculate engagement rate
-                    const engagementRate = post.views.length
-                        ? post.likes.length / post.views.length
-                        : 0
-
+                    const engagementRate = post.views.length ? post.likes.length / post.views.length : 0;
+    
                     // Define weights
                     const weights = {
                         likes: 0.3,
@@ -135,8 +189,8 @@ class RecommenderService {
                         followers: 0.1,
                         engagementRate: 0.1,
                         postAgeWeight: 0.2,
-                    }
-
+                    };
+    
                     // Calculate the score with normalized values
                     const score =
                         likesScaled * weights.likes +
@@ -144,41 +198,33 @@ class RecommenderService {
                         followersScaled * weights.followers +
                         bookmarksScaled * weights.bookmarks +
                         engagementRate * weights.engagementRate +
-                        scaledPostAge * weights.postAgeWeight
-
+                        scaledPostAge * weights.postAgeWeight;
+    
                     return {
                         ...post.toObject(),
                         score,
                         scaledPostAge,
                         engagementRate,
-                    }
+                    };
                 })
-            )
-
-
+            );
+    
             // Sort posts by score
-            scoredPosts.sort((a, b) => b.score - a.score)
-
-            // Select the top 20 scored posts
-            const top20Posts = scoredPosts.slice(0, 20)
-
-            // Select 30 random posts from the remaining posts
-            const remainingPosts = scoredPosts.slice(20)
-            const random30Posts = remainingPosts
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 30)
-
-            // Combine top 20 scored posts with 30 random posts
-            const finalPosts = [...top20Posts, ...random30Posts]
-
+            scoredPosts.sort((a, b) => b.score - a.score);
+    
+            // Implement pagination here: select the right posts based on the page and limit
+            const paginatedPosts = scoredPosts.slice(skip, skip + limit);
+    
             return {
-                posts: finalPosts,
-            }
+                posts: paginatedPosts,
+                currentPage: page,
+                totalPages: Math.ceil(scoredPosts.length / limit),
+            };
         } catch (error) {
-            console.error("Error in readPopularPosts:", error)
-            throw new BadRequestError("Failed to read popular posts")
+            console.error("Error in readPopularPosts:", error);
+            throw new BadRequestError("Failed to read popular posts");
         }
-    }
+    };
 
     static readLatestPosts = async (req) => {
         const q = req.query
@@ -829,7 +875,7 @@ class RecommenderService {
                     const followersScaled = (maxFollowersCount === minFollowersCount)
                         ? 0
                         : (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount)
-                    const artistViewsScaled =  (maxArtistViews === minArtistViews) ? 0 :
+                    const artistViewsScaled = (maxArtistViews === minArtistViews) ? 0 :
                         (talent.views - minArtistViews) /
                         (maxArtistViews - minArtistViews)
                     const ageInHours =
@@ -918,6 +964,81 @@ class RecommenderService {
             throw new BadRequestError("Failed to read following commission services")
         }
     }
+
+    static recommendUsersToFollow = async (userId) => {
+        try {
+            // Find user A (the logged-in user)
+            const userA = await User.findById(userId).populate('following');
+
+            if (!userA) {
+                throw new Error("User not found");
+            }
+
+            // Get the list of users that A is following
+            const followingList = userA.following.map(user => user._id);
+
+            // Find users that are followed by or following someone A follows
+            let recommendations = await User.aggregate([
+                {
+                    $match: {
+                        _id: { $ne: new mongoose.Types.ObjectId(userId) },
+                        $or: [
+                            { followers: { $in: followingList } },   // Users followed by someone A follows
+                            { following: { $in: followingList } }    // Users following someone A follows
+                        ]
+                    }
+                },
+                { $sample: { size: 10 } }  // Random sample of 10 users
+            ]);
+
+            // Populate additional fields
+            recommendations = await User.populate(recommendations, {
+                path: 'followers following badges',
+                select: 'avatar fullName stageName jobTitle followers following badges'
+            });
+
+            // Map to return only necessary fields
+            recommendations = recommendations.map(user => ({
+                _id: user._id,
+                avatar: user.avatar,
+                fullName: user.fullName,
+                stageName: user.stageName,
+                jobTitle: user.jobTitle,
+                followersCount: user.followers.length,
+                followingCount: user.following.length,
+                badges: user.badges
+            }));
+
+            // If not enough recommendations, fill with recently registered users
+            if (recommendations.length < 10) {
+                const additionalRecommendations = await User.find({
+                    _id: { $nin: recommendations.map(user => user._id).concat(userA._id) }
+                })
+                    .sort({ createdAt: -1 })  // Recently registered users
+                    .limit(10 - recommendations.length)
+                    .select('avatar fullName stageName jobTitle followers following badges');
+
+                additionalRecommendations.forEach(user => {
+                    recommendations.push({
+                        _id: user._id,
+                        avatar: user.avatar,
+                        fullName: user.fullName,
+                        stageName: user.stageName,
+                        jobTitle: user.jobTitle,
+                        followersCount: user.followers.length,
+                        followingCount: user.following.length,
+                        badges: user.badges
+                    });
+                });
+            }
+
+            return { usersToFollow: recommendations };
+
+        } catch (error) {
+            console.error("Error recommending users:", error);
+            throw error;
+        }
+    };
 }
 
 export default RecommenderService

@@ -27,7 +27,10 @@ router.get('/readArchivedOrderHistory', asyncHandler(orderController.readArchive
 router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProposal))
 router.patch('/cancelOrder/:orderId', asyncHandler(orderController.cancelOrder))
 router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
+router.get('/readRejectResponse/:orderId', asyncHandler(orderController.readRejectResponse))
 router.patch('/startWipCommissionOrder/:orderId', asyncHandler(orderController.startWipCommissionOrder))
+router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
+router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
 router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
 router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
 

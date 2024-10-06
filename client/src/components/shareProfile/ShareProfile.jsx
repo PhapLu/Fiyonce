@@ -7,16 +7,19 @@ import { ShareSocial } from 'react-share-social'
 import "./ShareProfile.scss";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getSocialLinkIcon } from "../../utils/iconDisplayer";
+import { useModal } from "../../contexts/modal/ModalContext";
 
 export default function ShareProfile({ profileInfo, setShowMoreProfileActions, setOverlayVisible }) {
-    const [shareProfileOption, setShareProfileOption] = useState("qr-code");
+    const { setModalInfo } = useModal();
+    const [shareProfileOption, setShareProfileOption] = useState("social-media");
     const [showCardVisitSide, setShowCardVisitSide] = useState("front");
 
     // Toggle display modal form
     const shareProfileRef = useRef();
     useEffect(() => {
-        let handler = (e) => {
-            if (shareProfileRef && shareProfileRef.current && !shareProfileRef.current.contains(e.target)) {
+        const handler = (e) => {
+            if (shareProfileRef.current && !shareProfileRef.current.contains(e.target)) {
+                alert("abc")
                 setShowMoreProfileActions(false);
                 setOverlayVisible(false);
             }
@@ -25,7 +28,40 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    });
+    }, []);
+
+
+    const handleCopyReferralCode = () => {
+        if (profileInfo?.referral?.code) {
+            navigator.clipboard.writeText(profileInfo.referral.code).then(() => {
+                setModalInfo({
+                    status: "success",
+                    message: "Đã sao chép mã giới thiệu"
+                })
+            }).catch(err => {
+                setModalInfo({
+                    status: "error",
+                    message: "Sao chép mã giới thiệu thất bại"
+                })
+            });
+        }
+    };
+
+    const copyUrlToClipboard = () => {
+        const url = `${window.location.origin}/users/${profileInfo?._id}`;
+        navigator.clipboard.writeText(url).then(() => {
+            setModalInfo({
+                status: "success",
+                message: "Đã sao chép URL trang cá nhân"
+            })
+        }).catch(err => {
+            setModalInfo({
+                status: "error",
+                message: "Sao chép URL trang cá nhân thất bại"
+            })
+        });
+    };
+
 
     return (
         <div className="modal-form type-3 share-profile" ref={shareProfileRef}>
@@ -120,22 +156,39 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
                             )}
                         </div>
                     ) : shareProfileOption == "social-media" ? (
-                        <div className="social-media flex-align-center flex-justify-center">
-                            <ShareSocial
-                                url={window.location.href}  // Pass the current URL
-                                media={window.location.href}  // Pass the current URL
-                                socialTypes={['facebook', 'twitter', 'reddit', 'linkedin', 'pinterest', 'telegram']}
-                                // title={profileInfo?.fullName}  // Pass the title of the news article
-                                // Optionally, you can add more props like description, hashtags, etc.
-                                description={`Trang cá nhân của ${profileInfo?.fullName}`}
-                                hashtags={['Pastal', 'News']}
-                            />
+
+                        <div className="social-media text-align-center">
+                            {/*  flex-align-center flex-justify-center */}
+
+                            <p className="flex-justify-center flex-align-center  mt-32">Mã giới thiệu: {profileInfo?.referral?.code}
+                                <svg onClick={handleCopyReferralCode} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-16 size-6 hover-cursor-opacity">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                </svg>
+                            </p>
+
+                            <div className="flex-justify-center flex-align-center">
+                                <div aria-label="Copy URL" className="hover-display-label hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 copy-profile-url-ic " onClick={copyUrlToClipboard}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                    </svg>
+                                </div>
+
+                                <ShareSocial
+                                    url={window.location.href}  // Pass the current URL
+                                    media={window.location.href}  // Pass the current URL
+                                    socialTypes={['facebook', 'twitter', 'reddit', 'linkedin', 'pinterest', 'telegram']}
+                                    // title={profileInfo?.fullName}  // Pass the title of the news article
+                                    // Optionally, you can add more props like description, hashtags, etc.
+                                    description={`Trang cá nhân của ${profileInfo?.fullName}`}
+                                    hashtags={['Pastal', 'News']}
+                                />
+                            </div>
+
                         </div>
                     ) :
                         ""
                 }
             </div>
-
         </div >
     )
 }

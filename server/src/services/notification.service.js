@@ -49,17 +49,48 @@ class NotificationService {
                 notificationType = "interaction"
                 break
             case "follow":
-                content = `${user.fullName} đã theo dõi bạn`
-                notificationType = "interaction"
-                break
-            case "orderCommission":
-                content = `${user.fullName} đã đặt commission của bạn`
-                notificationType = "order"
-                break
-            case "updateOrderStatus":
-                content = `${user.fullName} đã cập nhật trạng thái đơn hàng`
-                notificationType = "order"
-                break
+                content = `${user.fullName} đã theo dõi bạn`;
+                notificationType = "interaction";
+                break;
+            case "createCommissionOrder":
+                content = `${user.fullName} đã đặt commission của bạn`;
+                notificationType = "order";
+                break;
+            case "updateCommissionOrder":
+                content = `${user.fullName} đã cập nhật thông tin đơn hàng`;
+                notificationType = "order";
+                break;
+            case "approveCommissionOrder":
+                content = `${user.fullName} đã tiếp nhận đơn hàng và gửi proposal cho bạn`;
+                notificationType = "order";
+                break;
+            case "confirmCommissionOrder":
+                content = `${user.fullName} đã thanh toán đơn hàng`;
+                notificationType = "order";
+                break;
+            case "rejectCommissionOrder":
+                content = `${user.fullName} đã từ chối yêu cầu commission của bạn`;
+                notificationType = "order";
+                break;
+            case "startWipCommissionOrder":
+                content = `${user.fullName} đã tiến hành thực hiện commission của bạn`;
+                notificationType = "order";
+                break;
+            case "reportCommissionOrder":
+                content = `${user.fullName} đã báo cáo vi phạm`;
+                notificationType = "order";
+                break;
+            case "confirmTalentRequest":
+                content = `Admin đã chấp nhận yêu cầu nâng cấp tài khoản của bạn`;
+                notificationType = "system";
+                break;
+            case "denyTalentRequest":
+                content = `Admin đã từ chối yêu cầu nâng cấp tài khoản của bạn`;
+                notificationType = "system";
+                break;
+
+            default:
+                throw new BadRequestError("Invalid type");
         }
 
         //3. Create and save notification

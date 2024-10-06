@@ -299,6 +299,9 @@ export default function CreateCommissionService({
                 </div>
                 <div className="form-field with-create-btn required">
                     <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
+                    {
+                        !commissionServiceCategories?.length > 0 && <span className="form-field__annotation">Bạn hiện chưa có thể loại dịch vụ nào, vui lòng chọn "Thêm thể loại"</span>
+                    }
                     {!isCreateNewCommissionServiceCategory ? (
                         <>
                             <select
@@ -338,7 +341,7 @@ export default function CreateCommissionService({
                         value={inputs?.title}
                         onChange={handleChange}
                         className="form-field__input"
-                        placeholder="Mô tả chi tiết yêu cầu của bạn ..."
+                        placeholder="Nhập tên dịch vụ"
                     />
                     {errors.title && <span className="form-field__error">{errors.title}</span>}
                 </div>
@@ -352,7 +355,7 @@ export default function CreateCommissionService({
                         value={inputs?.deliverables}
                         onChange={handleChange}
                         className="form-field__input"
-                        placeholder="Mô tả chi tiết yêu cầu của bạn ..."
+                        placeholder="Mô tả dịch vụ của bạn ..."
                     />
                     {errors.deliverables && <span className="form-field__error">{errors.deliverables}</span>}
                 </div>

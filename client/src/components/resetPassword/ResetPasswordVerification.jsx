@@ -92,7 +92,7 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
 
                 <h2 className="form__title">Đặt lại mật khẩu</h2>
 
-                <p>Pastal vừa gửi mã xác nhận đến <span className="highlight-text">{resetPasswordEmail}</span>.
+                <p>Pastal vừa gửi mã xác nhận đến email <span className="highlight-text">{resetPasswordEmail}</span>.
                     Để đặt lại mật khẩu, vui lòng điền mã xác thực.
                 </p>
 

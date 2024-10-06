@@ -90,6 +90,36 @@ class HelpService {
         }
     }
 
+    static readTopicAndArticlesByTheme = async (params) => {
+        const theme = params.theme;
+        try {
+            // Find all help topics by the given theme
+            const topics = await HelpTopic.find({ theme }).lean();
+
+            if (!topics || topics.length === 0) {
+                return { message: `No topics found for the theme: ${theme}` };
+            }
+
+            // Map through each topic and fetch its articles
+            const topicsAndArticles = await Promise.all(
+                topics.map(async (topic) => {
+                    const articles = await HelpArticle.find({ helpTopicId: topic._id });
+                    return {
+                        topicTitle: topic.title,
+                        articles: articles
+                    };
+                })
+            );
+
+            return {
+                topicsAndArticles
+            };
+        } catch (error) {
+            console.error("Error fetching topics and articles: ", error);
+            throw new Error("Error fetching help articles by theme.");
+        }
+    };
+
     static updateHelpTopic = async (adminId, helpTopicId, body) => {
         //1. Check admin, helpTopic
         const admin = await User.findById(adminId)

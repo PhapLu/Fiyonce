@@ -8,10 +8,10 @@ class TalentRequestController {
             metadata: await TalentRequestService.requestUpgradingToTalent(req.userId, req)
         }).send(res)
     }
-    readTalentRequestStatus = async(req, res, next) => {
+    readMyTalentRequest = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read talent request status success!',
-            metadata: await TalentRequestService.readTalentRequestStatus(req.userId)
+            metadata: await TalentRequestService.readMyTalentRequest(req.userId)
         }).send(res)
     }
     //Admin
@@ -23,6 +23,7 @@ class TalentRequestController {
     }
 
     denyTalentRequest = async(req, res, next) => {
+        console.log(req.body)
         new SuccessResponse({
             message: 'Deny talent request success!',
             metadata: await TalentRequestService.denyTalentRequest(req.userId, req.params.requestId, req.body)

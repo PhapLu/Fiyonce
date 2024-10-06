@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useOutletContext, useParams } from "rea
 import Masonry from 'react-masonry-css';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { formatNumber } from "../../../utils/formatter.js";
+import { formatNumber, limitString } from "../../../utils/formatter.js";
 import "./RenderPosts.scss";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
@@ -11,31 +11,7 @@ import { resizeImageUrl } from "../../../utils/imageDisplayer.js";
 import { apiUtils } from "../../../utils/newRequest.js";
 import { ClipLoader } from 'react-spinners';
 
-import {
-    FacebookIcon,
-    TwitterIcon,
-    PinterestIcon,
-    EmailShareButton,
-    FacebookShareButton,
-    GabShareButton,
-    HatenaShareButton,
-    InstapaperShareButton,
-    LineShareButton,
-    LinkedinShareButton,
-    LivejournalShareButton,
-    MailruShareButton,
-    OKShareButton,
-    PinterestShareButton,
-    PocketShareButton,
-    RedditShareButton,
-    TelegramShareButton,
-    TumblrShareButton,
-    TwitterShareButton,
-    ViberShareButton,
-    VKShareButton,
-    WhatsappShareButton,
-    WorkplaceShareButton,
-} from "react-share";
+import ShareToSocials from "../../shareToSocials/ShareToSocials.jsx";
 
 export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete, posts, layout }) {
     const breakpointColumnsObj = {
@@ -54,11 +30,12 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
     const profileInfo = useOutletContext();
     const isPostOwner = userId === userInfo?._id;
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [showShareToSocials, setShowShareToSocials] = useState(null);
 
     // State to track the like status of posts
     const [likedPosts, setLikedPosts] = useState([]);
     const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
-    const [showMorePostActions, setShowMorePostActions] = useState(false);
+    const [showMorePostActions, setShowMorePostActions] = useState(null);
 
     useEffect(() => {
         if (posts && userInfo) {
@@ -164,76 +141,98 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
         }
     }
 
+    const downloadImage = (imageUrl) => {
+        if (!imageUrl) {
+            console.error("Image URL not found");
+            return;
+        }
+
+        // Modify the URL to include the Cloudinary 'fl_attachment' flag to force download
+        const cloudinaryDownloadUrl = imageUrl.replace('/upload/', '/upload/fl_attachment/');
+
+        // Create a hidden <a> element
+        const link = document.createElement('a');
+        link.href = cloudinaryDownloadUrl;
+        link.download = imageUrl.split('/').pop(); // Use the image filename as the download name
+
+        // Append the link to the body
+        document.body.appendChild(link);
+
+        // Programmatically click the link to trigger the download
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
+    };
+
     // Sort posts by createdAt in descending order
     const sortedPosts = isSorting ? posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : posts;
 
     const handlePrevNext = (direction) => {
-        console.log("Direction:", direction);
-        console.log("Selected Post ID:", selectedPostId);
-        console.log("Sorted Posts:", sortedPosts);
-
         if (!selectedPostId || !sortedPosts.length) {
             console.log("No selectedPostId or posts available");
             return;
         }
 
         const currentIndex = sortedPosts.findIndex(post => post._id === selectedPostId);
-        console.log("Current Index:", currentIndex);
 
         if (currentIndex === -1) {
             console.log("Selected post not found in sortedPosts");
             return;
         }
 
+        let newPostId;
+
         if (direction === "prev" && currentIndex > 0) {
-            const prevPostId = sortedPosts[currentIndex - 1]._id;
-            console.log("Previous Post ID:", prevPostId);
-            navigate(location.pathname.split('/').filter(Boolean).length === 0 ? `posts/${prevPostId}` : `${location.pathname}/${prevPostId}`)
-            setSelectedPostId(prevPostId);
+            newPostId = sortedPosts[currentIndex - 1]._id;
         } else if (direction === "next" && currentIndex < sortedPosts.length - 1) {
-            const nextPostId = sortedPosts[currentIndex + 1]._id;
-            console.log("Next Post ID:", nextPostId);
-            navigate(location.pathname.split('/').filter(Boolean).length === 0 ? `posts/${nextPostId}` : `${location.pathname}/${nextPostId}`)
-            setSelectedPostId(nextPostId);
+            newPostId = sortedPosts[currentIndex + 1]._id;
         } else {
             console.log("No next or previous post available");
+            return;
         }
-    }
 
-    // Handle share posts
-    const copyToClipboard = (selectedPostId) => {
-        const url = `${window.location.origin}/${selectedPostId}`;
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
-            })
-            .catch(err => {
-                setModalInfo({ status: "error", message: "Có lỗi xảy ra" });
-            });
-    };
-    const url = window.location.href;
-
-    const handleShare = (platform, itemId) => {
-        // URL to share
-
-        switch (platform) {
-            case 'copy':
-                navigator.clipboard.writeText(`${url}/${itemId}`);
-                break;
-            case 'x':
-                window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}/${itemId}`);
-                break;
-            case 'messenger':
-                window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(url)}&app_id=YOUR_APP_ID&redirect_uri=${encodeURIComponent(url)}/${itemId}`);
-                break;
-            case 'facebook':
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}/${itemId}`);
-                break;
-            default:
-                break;
-        }
+        // Update the URL and set the new selected post
+        const basePath = location.pathname.split('/').filter(Boolean).slice(0, -1).join('/');
+        const newUrl = basePath ? `/${basePath}/${newPostId}` : `/posts/${newPostId}`;
+        navigate(newUrl);
+        setSelectedPostId(newPostId);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.post-item__img__react-operation-item') && !event.target.closest('.show-more-actions')) {
+                setShowMorePostActions(null); // Reset to null when clicking outside
+                setShowShareToSocials(null); // Reset ShareToSocials state to null when clicking outside
+            }
+        };
+    
+        document.addEventListener('click', handleClickOutside);
+    
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [showMorePostActions, showShareToSocials]);
+
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowLeft') {
+                handlePrevNext('prev');
+
+            } else if (e.key === 'ArrowRight') {
+                handlePrevNext('next');
+            }
+        };
+
+        // Add event listener for keydown
+        window.addEventListener('keydown', handleKeyDown);
+
+        // Cleanup event listener on component unmount
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [selectedPostId, sortedPosts]);
 
     return (
         <div className="posts">
@@ -313,62 +312,20 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                                 }
 
                                             </div>
-                                            <div className={`post-item__img__react-operation-item ${showMorePostActions == post?._id ? "active" : ""}`} onClick={() => { setShowMorePostActions(post?._id) }}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 hover-cursor-opacity">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+
+                                            <div className="post-item__img__react-operation-item" onClick={() => { setShowShareToSocials(post._id); }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                                                 </svg>
                                                 {
-                                                    showMorePostActions && (
-                                                        <div className="show-more-actions">
-                                                            <h4 className="black-color">Chia sẻ đến</h4>
-                                                            <hr />
-                                                            <div className="share-to-social-container">
-                                                                <button className="share-to-social-item btn hover-cursor-opacity gray-bg-hover" onClick={() => handleShare('copy', post._id)}>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
-                                                                    </svg>
-                                                                    Sao chép đường dẫn
-                                                                </button>
-                                                                <button className="share-to-social-item btn hover-cursor-opacity gray-bg-hover">
-                                                                    <FacebookShareButton className="flex-align-center" url={`${url}${post._id}`} title={"Share to Facebook"}>
-                                                                        <FacebookIcon size={36} round />
-                                                                        Share to Facebook
-                                                                    </FacebookShareButton>
-                                                                </button>
-
-                                                                <button className="share-to-social-item btn hover-cursor-opacity gray-bg-hover">
-                                                                    <TwitterShareButton className="flex-align-center" url={`${url}${post._id}`} title={"Share to Facebook"}>
-                                                                        <TwitterIcon size={36} round />
-                                                                        Share to Twitter
-                                                                    </TwitterShareButton>
-                                                                </button>
-
-                                                                <button className="share-to-social-item btn hover-cursor-opacity gray-bg-hover">
-                                                                    <PinterestShareButton media={`${url}${post._id}`} className="flex-align-center" url={`${url}${post._id}`} title={"Share to Facebook"}>
-                                                                        <PinterestIcon size={36} round />
-                                                                        Share to Pinterest
-                                                                    </PinterestShareButton>
-                                                                </button>
-
-
-                                                                {/* <button className="share-to-social-item w-100 btn" onClick={() => handleShare('x', post._id)}>Share to X</button>
-                                                                <button className="share-to-social-item btn" onClick={() => handleShare('messenger', post._id)}>Share to Messenger</button>
-                                                                <button className="share-to-social-item btn" onClick={() => handleShare('facebook', post._id)}>Share to Facebook</button>
-                                                                <button className="share-to-social-item btn" onClick={() => handleShare('instagram', post._id)}>Share to Instagram</button> */}
-                                                            </div>
-                                                        </div>
+                                                    showShareToSocials == post._id && (
+                                                        <ShareToSocials post={post} />
                                                     )
                                                 }
-
                                             </div>
-
-                                            {/* <div className="post-item__img__react-operation-item" onClick={() => copyToClipboard(post?._id)}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="size-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                                                </svg>
-                                            </div> */}
                                         </div>
-                                    </div>
+                                    </div >
+                                    <span className="fs-15 fw-600">{limitString(post?.description, 30)}</span>
                                     {
                                         isDisplayOwner && (
                                             <span>
@@ -380,7 +337,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                                             effect="blur"
                                                         />
                                                         <div className="user__name">
-                                                            <div className="user__name__title fw-600">{post?.talentId?.fullName}</div>
+                                                            <div className="user__name__title fw-500">{post?.talentId?.fullName}</div>
                                                         </div>
                                                     </Link>
                                                     {/* <div className="user--right flex-align-center">
@@ -394,7 +351,7 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                                             </span>
                                         )
                                     }
-                                </div>
+                                </div >
                             );
                         })}
                     </Masonry >
@@ -408,7 +365,6 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                             </h3>
                         </div>
                     </>
-
                 )
             }
         </div >

@@ -5,12 +5,12 @@ import { useModal } from "../../../contexts/modal/ModalContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 import "./Following.scss";
 import { apiUtils } from "../../../utils/newRequest";
+import { useQuery } from "react-query";
 
-export default function Following({ following, setShowFollowing, setProfileInfo, setOverlayVisible }) {
+export default function Following({ profileInfo, setShowFollowing, setProfileInfo, setOverlayVisible }) {
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
-    const { userId } = useParams();
-    const isProfileOwner = userInfo?._id === userId;
+    const isProfileOwner = userInfo?._id === profileInfo._id;
 
     // State to track loading for each button
     const [loadingStates, setLoadingStates] = useState({});
@@ -61,7 +61,6 @@ export default function Following({ following, setShowFollowing, setProfileInfo,
                 message: "Đã theo dõi"
             });
         } catch (error) {
-            console.log(error)
             setModalInfo({
                 status: "error",
                 message: error.response.data.message
@@ -112,6 +111,27 @@ export default function Following({ following, setShowFollowing, setProfileInfo,
         }
     };
 
+    const fetchUsersToFollow = async () => {
+        try {
+            // Fetch posts data
+            const response = await apiUtils.get(`/recommender/recommendUsersToFollow`);
+            console.log(response.data.metadata.usersToFollow)
+            return response.data.metadata.usersToFollow;
+        } catch (error) {
+            console.log(error)
+            throw new Error("Error fetching posts");
+        }
+    };
+
+    const {
+        data: usersToFollow = [],
+        error,
+        isError,
+        isLoading,
+    } = useQuery("fetchUsersToFollow", fetchUsersToFollow, {
+        enabled: isProfileOwner, // Only fetch if the user is the profile owner
+    });
+
     return (
         <div className="modal-form type-3 following" ref={followingRef} onClick={(e) => { e.stopPropagation() }}>
             <h3 className="form__title">Đang theo dõi</h3>
@@ -122,8 +142,8 @@ export default function Following({ following, setShowFollowing, setProfileInfo,
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="follow-container">
-                {following?.length > 0 ? (
-                    following.map((following) => (
+                {profileInfo?.followings?.length > 0 ? (
+                    profileInfo?.followings.map((following) => (
                         <div className="follow-item" key={following._id}>
                             <div className="user lg">
                                 <div className="user--left">
@@ -132,7 +152,13 @@ export default function Following({ following, setShowFollowing, setProfileInfo,
                                 <div className="user--right">
                                     <div className="user__name">
                                         <span className="user__name__title">{following?.fullName}</span>
-                                        <span className="user__name__sub-title">{following?.stageName}</span>
+                                        <span className="user__name__sub-title">
+                                            {following?.stageName && `@${following.stageName}`}
+                                            {following?.jobTitle && <>
+                                                <span className="dot-delimiter sm"></span>
+                                                {following?.jobTitle}
+                                            </>}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -159,12 +185,59 @@ export default function Following({ following, setShowFollowing, setProfileInfo,
                         </div>
                     ))
                 ) : (
-                    <>
-                        <p className="text-align-center fs-16 mt-32">Hiện chưa có người theo dõi</p>
-                        <hr />
-                        <h4>Bạn có thể quen</h4>
-                        
-                    </>
+                    !isProfileOwner ?
+                        <p className="text-align-center fs-16 mt-32">Hiện {profileInfo?.fullName} chưa theo dõi người khác</p>
+                        :
+                        <>
+                            <p className="text-align-center fs-16 mt-32">Hiện chưa theo dõi người khác</p>
+                            <hr />
+                            <h4 className="text-align-center">Bạn có thể quen</h4>
+
+
+                            {
+                                usersToFollow.map((following) => (
+                                    <div className="follow-item" key={following._id}>
+                                        <div className="user lg">
+                                            <div className="user--left">
+                                                <img src={resizeImageUrl(following?.avatar, 100)} className="user__avatar" alt="Avatar" />
+                                            </div>
+                                            <div className="user--right">
+                                                <div className="user__name">
+                                                    <span className="user__name__title">{following?.fullName}</span>
+                                                    <span className="user__name__sub-title">
+                                                        {following?.stageName && `@${following.stageName}`}
+                                                        {following?.jobTitle && <>
+                                                            <span className="dot-delimiter sm"></span>
+                                                            {following?.jobTitle}
+                                                        </>}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="btn-container">
+                                            {userInfo?.following?.some(followingEl => followingEl._id === following._id) ? (
+                                                <button
+                                                    className="btn btn-md btn-2"
+                                                    onClick={() => handleUnFollowUser(following)}
+                                                    disabled={loadingStates[following._id]}
+                                                >
+                                                    {loadingStates[following._id] ? "Đang hủy theo dõi..." : "Hủy theo dõi"}
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="btn btn-md btn-4"
+                                                    onClick={() => handleFollowUser(following)}
+                                                    disabled={loadingStates[following._id]}
+                                                >
+                                                    {loadingStates[following._id] ? "Đang theo dõi..." : "Theo dõi"}
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </>
                 )}
             </div>
         </div>

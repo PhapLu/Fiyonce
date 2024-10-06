@@ -26,6 +26,7 @@ const OrderSchema = new mongoose.Schema(
                 "rejected",
                 "confirmed",
                 "in_progress",
+                "delivered",
                 "finished",
                 "under_processing",
                 "delivered",

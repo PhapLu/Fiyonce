@@ -70,7 +70,7 @@ export function getSocialLinkIcon(url, iconOnly = false) {
 
     for (const platform in socialPlatforms) {
         if (url.includes(socialPlatforms[platform].domain)) {
-            return socialPlatforms[platform].svg + (iconOnly ? "" : `<a target="_blank" rel="noopener noreferrer" href=${url}>${extractUsernameFromUrl(url)}</a>`);
+            return socialPlatforms[platform].svg + (iconOnly ? "" : `<a target="_blank" rel="noopener noreferrer" class="semi-light-text" href=${url}>${extractUsernameFromUrl(url)}</a>`);
         }
     }
 

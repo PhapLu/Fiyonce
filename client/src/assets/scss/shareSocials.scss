@@ -1,12 +1,12 @@
 .makeStyles-container-1 {
-    margin-left: 16px;
+    margin-left: 16px !important;
     background-color: unset !important;
-    color: #000;
-    height: auto;
-    outline: none;
+    color: #000 !important;
+    height: auto !important;
+    outline: none !important;
     padding: unset !important;
-    max-width: unset;
-    min-width: unset;
+    max-width: unset !important;
+    min-width: unset !important;
 
     svg {
         width: 32px !important;
@@ -15,6 +15,6 @@
     }
 
     .makeStyles-copyContainer-5 {
-        display: none;
+        display: none !important;
     }
 }

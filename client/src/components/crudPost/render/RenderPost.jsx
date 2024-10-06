@@ -4,6 +4,9 @@ import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
+// Components
+import ShareToSocials from "../../shareToSocials/ShareToSocials.jsx";
+
 // Utils
 import { apiUtils } from "../../../utils/newRequest";
 import { formatDate } from "../../../utils/formatter";
@@ -16,6 +19,7 @@ import "./RenderPost.scss";
 import Loading from '../../loading/Loading';
 import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
+
 
 export default function RenderPost() {
     const { userId } = useParams();
@@ -31,16 +35,22 @@ export default function RenderPost() {
     const [likeCount, setLikeCount] = useState(0);
     const [bookmarkCount, setBookmarkCount] = useState(0);
 
+    const [showShareToSocials, setShowShareToSocials] = useState(false);
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
         }, 500); // Simulating a 500ms loading delay
     }, []);
 
+    const closeRenderPostView = () => {
+        navigate(userId ? `/users/${userId}/profile-posts` : `/`);
+    }
+
     useEffect(() => {
         const handler = (e) => {
             if (renderPostRef.current && !renderPostRef.current.contains(e.target)) {
-                navigate(userId ? `/users/${userId}/profile-posts` : `/`);
+                closeRenderPostView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -48,6 +58,23 @@ export default function RenderPost() {
             document.removeEventListener("mousedown", handler);
         };
     }, [navigate, userId]);
+
+    // Handle left and right arrow key navigation for the carousel
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "ArrowLeft") {
+                document.querySelector(".carousel .control-prev").click(); // Navigate to the previous image
+            } else if (e.key === "ArrowRight") {
+                document.querySelector(".carousel .control-next").click(); // Navigate to the next image
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
+
 
     const fetchPostByID = async () => {
         try {
@@ -148,8 +175,6 @@ export default function RenderPost() {
         }
     };
 
-
-
     if (isLoading) {
         return <span>Đang tải...</span>;
     }
@@ -184,7 +209,7 @@ export default function RenderPost() {
                         )}
                     </div>
                     <div className="modal-form--right">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => navigate(-1)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={closeRenderPostView}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
 
@@ -196,7 +221,7 @@ export default function RenderPost() {
                                 />
                                 <div className="user__name">
                                     <div className="user__name__title">{post?.talentId?.fullName}</div>
-                                    <div className="user__name__sub-title">{post?.talentId?.stageName}</div>
+                                    <div className="user__name__sub-title">@{post?.talentId?.stageName}</div>
                                 </div>
                             </Link>
                         </div>
@@ -210,23 +235,23 @@ export default function RenderPost() {
                         <br />
                         <hr className="mb-16 mt-16" />
                         <div className="flex-align-center">
-                            <div className="flex-align-center mr-8" onClick={handleLikePost}>
+                            <div className="flex-align-center mr-8 hover-cursor-opacity" onClick={handleLikePost}>
                                 <span className="mr-4">{likeCount}</span>
                                 {liked ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 liked-ic hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 liked-ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25a5.973 5.973 0 0 0-1.753-4.247A5.971 5.971 0 0 0 15 2.25a5.973 5.973 0 0 0-4.247 1.753l-.253.253-.253-.253A5.973 5.973 0 0 0 6 2.25a5.973 5.973 0 0 0-4.247 1.753A5.973 5.973 0 0 0 0 8.25c0 1.613.626 3.127 1.753 4.247l8.974 8.974a.75.75 0 0 0 1.06 0l8.974-8.974A5.973 5.973 0 0 0 21 8.25Z" />
                                     </svg>
                                 ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25a5.973 5.973 0 0 0-1.753-4.247A5.971 5.971 0 0 0 15 2.25a5.973 5.973 0 0 0-4.247 1.753l-.253.253-.253-.253A5.973 5.973 0 0 0 6 2.25a5.973 5.973 0 0 0-4.247 1.753A5.973 5.973 0 0 0 0 8.25c0 1.613.626 3.127 1.753 4.247l8.974 8.974a.75.75 0 0 0 1.06 0l8.974-8.974A5.973 5.973 0 0 0 21 8.25Z" />
                                     </svg>
                                 )}
                             </div>
 
-                            <div className="flex-align-center mr-8" onClick={handleBookmarkPost}>
+                            <div className="flex-align-center mr-8 hover-cursor-opacity" onClick={handleBookmarkPost}>
                                 <span className="mr-4">{bookmarkCount}</span>
                                 {bookmarked ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 bookmarked-ic hover-cursor-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 bookmarked-ic">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                     </svg>
                                 ) : (
@@ -234,6 +259,16 @@ export default function RenderPost() {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                     </svg>
                                 )}
+                            </div>
+                            <div className="flex-align-center mr-8 hover-cursor-opacity" onClick={() => { setShowShareToSocials(true); }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover-cursor-opacity">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                </svg>
+                                {
+                                    showShareToSocials && (
+                                        <ShareToSocials post={post} />
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

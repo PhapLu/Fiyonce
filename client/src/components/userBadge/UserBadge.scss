@@ -1,0 +1,27 @@
+.user-badge {
+    margin-left: 12px;
+
+    .user-badge-container {
+        display: flex;
+        align-items: center;
+
+        .user-badge-item {
+            .user-badge-item__icon {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+
+    &.lg {
+        .user-badge-container {
+            .user-badge-item {
+
+                .user-badge-item__icon {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+    }
+}

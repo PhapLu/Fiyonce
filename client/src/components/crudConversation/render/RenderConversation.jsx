@@ -6,6 +6,7 @@ import { apiUtils, createFormData } from "../../../utils/newRequest";
 import "./RenderConversation.scss";
 import { useConversation } from "../../../contexts/conversation/ConversationContext";
 import { set } from "date-fns";
+import { createClickableLinks } from "../../../utils/formatter";
 
 export default function RenderConversation() {
     const { userInfo, socket } = useAuth();
@@ -192,7 +193,7 @@ export default function RenderConversation() {
                             })}
                             {message.content && (
                                 <div className="message-item__content">
-                                    <span>{message.content}</span>
+                                    <span dangerouslySetInnerHTML={{ __html: createClickableLinks(message.content) }} />
                                 </div>
                             )}
                         </div>

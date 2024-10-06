@@ -1,12 +1,11 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
 
 // Contexts
 
 // Components
-import RenderProposal from "./RenderProposal"
 
 // Utils
 import { formatCurrency, formatTimeAgo, limitString } from "../../../utils/formatter";
@@ -18,76 +17,32 @@ import { resizeImageUrl } from "../../../utils/imageDisplayer";
 import { useConversation } from "../../../contexts/conversation/ConversationContext";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import ZoomImage from "../../zoomImage/ZoomImage";
+import { useAuth } from "../../../contexts/auth/AuthContext";
 
 
-export default function RenderProposals({ commissionOrder, setShowRenderProposals, setOverlayVisible }) {
-    if (!commissionOrder) {
-        return;
-    }
+export default function RenderProposals() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const commissionOrder = useOutletContext();
 
+    const { userInfo } = useAuth();
     const { setOtherMember } = useConversation();
 
-    const [proposalId, setProposalId] = useState();
-    const [showRenderProposal, setShowRenderProposal] = useState(false);
     const [isProcedureVisible, setIsProcedureVisible] = useState(false);
     const [imageSrc, setImageSrc] = useState();
     const [showZoomImage, setShowZoomImage] = useState(false);
 
     const fetchProposals = async () => {
         try {
-            const response = await apiUtils.get(`/proposal/readProposals/${commissionOrder._id}`);
+            const response = await apiUtils.get(`/proposal/readProposals/${commissionOrder?._id}`);
             console.log(response)
             return response.data.metadata.proposals;
-            // return [
-            //     {
-            //         _id: 1,
-            //         talentId: {
-            //             _id: 1,
-            //             fullName: "John Doe",
-            //             avatar: "https://i.pinimg.com/474x/61/eb/44/61eb4455fef6a3fca18cb0f53bd25eef.jpg"
-            //         },
-            //         scope: "Ban se nhan duoc ...",
-            //         artworks: [
-            //             {
-            //                 _id: 1,
-            //                 url: "https://i.pinimg.com/236x/c1/3f/cb/c13fcbce0b55b9aa9a3cdf0c7c6ea61c.jpg",
-            //             },
-            //             {
-            //                 _id: 2,
-            //                 url: "https://i.pinimg.com/236x/84/8c/7b/848c7bc0d8887b1a68eead56bb49f08f.jpg",
-            //             },
-            //         ],
-            //         price: 500000,
-            //         createdAt: "2024-05-18",
-            //     },
-            //     {
-            //         _id: 2,
-            //         talentId: {
-            //             _id: 1,
-            //             fullName: "John Doe",
-            //             avatar: "https://i.pinimg.com/474x/61/eb/44/61eb4455fef6a3fca18cb0f53bd25eef.jpg"
-            //         },
-            //         scope: "Ban se nhan duoc ...",
-            //         artworks: [
-            //             {
-            //                 _id: 1,
-            //                 url: "https://i.pinimg.com/236x/c1/3f/cb/c13fcbce0b55b9aa9a3cdf0c7c6ea61c.jpg",
-            //             },
-            //             {
-            //                 _id: 2,
-            //                 url: "https://i.pinimg.com/236x/84/8c/7b/848c7bc0d8887b1a68eead56bb49f08f.jpg",
-            //             },
-            //         ],
-            //         price: 500000,
-            //         createdAt: "2024-06-18",
-            //     }
-            // ]
         } catch (error) {
             return null;
         }
     }
 
-    const { data: proposals, error, isError, isLoading } = useQuery(
+    const { data: proposals, fetchingProposalsError, isFetchingProposalsError, isFetchingProposalsLoading } = useQuery(
         ['fetchProposals'],
         () => fetchProposals(), // Pass a function that calls 
         {
@@ -100,22 +55,39 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
         }
     );
 
+
+    const closeRenderProposalsView = () => {
+        if (location.pathname.includes("commisison-market")) {
+            navigate("/commission-market")
+        } else {
+            navigate("/order-history")
+        }
+    }
+
     const renderProposalsRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (renderProposalsRef && renderProposalsRef.current && !renderProposalsRef.current.contains(e.target)) {
-                setShowRenderProposals(false);
-                setOverlayVisible(false);
+                closeRenderProposalsView();
             }
         };
         document.addEventListener("mousedown", handler);
         return () => {
             document.removeEventListener("mousedown", handler);
         };
-    }, [setShowRenderProposals, setOverlayVisible]);
+    }, [navigate]);
 
+    if (isFetchingProposalsError) {
+        return fetchingCommissionOrderError;
+    }
+
+    if (isFetchingProposalsLoading) {
+        return <div className="loading-spinner" />;
+    }
+
+    const isOrderOwner = commissionOrder?.memberId?._id === userInfo._id;
     return (
-        showRenderProposal ? <RenderProposal commissionOrder={commissionOrder} proposalId={proposalId} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setShowRenderProposal} /> : (
+        <div className="overlay">
             <div className="render-proposals modal-form type-2" ref={renderProposalsRef} onClick={(e) => { e.stopPropagation() }}>
                 <Link to="/help-center" className="form__help" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
@@ -124,13 +96,75 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                 </Link>
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                    setShowRenderProposals(false);
-                    setOverlayVisible(false);
+                    closeRenderProposalsView();
                 }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
+
+
+
                 <div className="modal-form--left">
-                    <div className="user md">
+                    <div className="btn btn-3 br-16 btn-sm gray-bg-hover mb-12" onClick={() => { navigate(-1) }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </svg>
+                        Quay lại
+                    </div>
+                    <br />
+                    <div className={`status ${commissionOrder?.status}`}>
+                        <div className="status__title">
+                            {
+                                commissionOrder?.isDirect ?
+
+                                    commissionOrder?.status === "pending"
+                                        ?
+                                        "Đang đợi họa sĩ xác nhận"
+                                        : commissionOrder?.status === "approved"
+                                            ? "Đang đợi khách hàng thanh toán"
+                                            : commissionOrder?.status === "rejected"
+                                                ? "Họa sĩ đã từ chối"
+                                                : commissionOrder?.status === "confirmed"
+                                                    ?
+                                                    "Đã chọn họa sĩ và thanh toán"
+                                                    : commissionOrder?.status === "canceled"
+                                                        ?
+                                                        "Khách hàng đã hủy đơn"
+                                                        : commissionOrder?.status === "in_progress"
+                                                            ? "Họa sĩ đang thực hiện"
+                                                            : commissionOrder?.status === "finished"
+                                                                ?
+                                                                "Đã hoàn tất đơn hàng"
+                                                                : commissionOrder?.status === "under_processing"
+                                                                    ? "Admin đang xử lí"
+                                                                    : ""
+                                    : (
+                                        commissionOrder?.status === "pending"
+                                            ?
+                                            `${commissionOrder?.proposalsCount || 0} họa sĩ đã ứng`
+                                            : commissionOrder?.status === "approved"
+                                                ? "Đang đợi khách hàng thanh toán"
+                                                : commissionOrder?.status === "rejected"
+                                                    ? "Họa sĩ đã từ chối"
+                                                    : commissionOrder?.status === "confirmed"
+                                                        ?
+                                                        "Đã chọn họa sĩ và thanh toán"
+                                                        : commissionOrder?.status === "canceled"
+                                                            ? "Khách hàng đã hủy đơn"
+                                                            : commissionOrder?.status === "in_progress"
+                                                                ? "Họa sĩ đang thực hiện"
+                                                                : commissionOrder?.status === "finished"
+                                                                    ?
+                                                                    "Đã hoàn tất đơn hàng"
+                                                                    : commissionOrder?.status === "under_processing"
+                                                                        ? "Admin đang xử lí"
+                                                                        : ""
+
+                                    )
+                            }
+                        </div>
+                    </div>
+
+                    <div className="user md mt-16">
                         <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
                             <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                             <div className="user__name">
@@ -139,28 +173,19 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                         </Link>
                     </div>
 
-                    {commissionOrder?.talentChosenId ? (
-                        <div className="status approved">
-                            <span> &nbsp;Đã chọn họa sĩ và thanh toán</span>
-                        </div>
-                    ) : (
-                        <div className="status pending mt-8">
-                            <span className="highlight-text">&nbsp;{commissionOrder.talentsApprovedCount} họa sĩ đã ứng</span>
-                        </div>
-                    )}
                     {
-                        commissionOrder.isDirect ? (
+                        commissionOrder?.isDirect ? (
                             <>
-                                <h4 onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center">
-                                    Thủ tục đặt tranh
-                                    {isProcedureVisible ? (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                    </svg>
-                                    ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                    )}</h4>
+                                <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity mt-32">
+                                    {
+                                        isProcedureVisible ?
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                                            </svg> : (
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                                                </svg>
+                                            )} <span className="ml-8 fs-16">Thủ tục đăng yêu cầu tìm họa sĩ</span></strong>
                                 <hr />
                                 {
                                     isProcedureVisible && (
@@ -215,8 +240,8 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
 
                 <div className="modal-form--right">
                     <h2 className="form__title">Danh sách hồ sơ</h2>
-                    <p>Dưới đây là danh sách hồ sơ mà các họa sĩ đã nộp dựa trên yêu cầu của bạn. Các họa sĩ vẫn có thể nộp hồ sơ cho đến khi bạn chọn được họa sĩ phù hợp nhất.</p>
-
+                    <p>Dưới đây là danh sách hồ sơ mà các họa sĩ đã nộp dựa trên yêu cầu của {isOrderOwner ? "bạn" : commissionOrder?.memberId?.fullName}. Các họa sĩ vẫn có thể nộp hồ sơ cho đến khi {isOrderOwner ? "bạn" : commissionOrder?.memberId?.fullName} chọn được họa sĩ phù hợp nhất.</p>
+                    <hr />
                     <div className="proposal-container">{
                         proposals?.length > 0 ? proposals.map((proposal, index) => {
                             return (
@@ -231,29 +256,29 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
                                         </div>
                                     </div>
 
-                                    <p>Giá thỏa thuận: <span className="highlight-text">{formatCurrency(proposal.price)} VND</span></p>
+                                    <p>Họa sĩ đề xuất: <span className="highlight-text">{formatCurrency(proposal.price)} VND</span></p>
                                     <p>{limitString(proposal.scope, 250)}</p>
                                     <div className="reference-container mb-8">
                                         {proposal.artworks.map((artwork, index) => {
                                             return (
-                                                <div key={index} className="reference-item" onClick={() => {setImageSrc(artwork?.url); setShowZoomImage(true)}}>
+                                                <div key={index} className="reference-item" onClick={() => { setImageSrc(artwork?.url); setShowZoomImage(true) }}>
                                                     <LazyLoadImage effect="blur" src={artwork?.url} alt="" />
                                                 </div>
                                             )
                                         })}
                                     </div>
                                     <div>
-                                        <button className="btn btn-2 btn-md" onClick={() => { setProposalId(proposal?._id); setShowRenderProposal(true) }}>
+                                        <Link to={`${location.pathname}/${proposal._id}`} className="btn btn-2 btn-md">
                                             Xem hợp đồng
-                                        </button>
-                                        <button className="btn btn-3 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>
+                                        </Link>
+                                        <button className="btn btn-4 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>
                                             Liên hệ
                                         </button>
                                     </div>
                                 </div>
                             )
                         }) : (
-                            <p className="text-align-center">Tạm thời chưa có họa sĩ ứng đơn hàng của bạn.</p>
+                            <p className="text-align-center">Tạm thời chưa có họa sĩ ứng đơn hàng.</p>
                         )
                     }
                     </div>
@@ -261,6 +286,7 @@ export default function RenderProposals({ commissionOrder, setShowRenderProposal
 
                 {showZoomImage && <ZoomImage src={imageSrc} setShowZoomImage={setShowZoomImage} />}
             </div>
-        ))
+        </div>
+    )
 }
 

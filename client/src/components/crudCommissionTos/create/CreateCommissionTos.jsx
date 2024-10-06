@@ -9,6 +9,7 @@ import {
     ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
 } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css';
+import { useMutation, useQueryClient } from "react-query";
 
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useModal } from "../../../contexts/modal/ModalContext";
@@ -21,7 +22,36 @@ import { isFilled } from "../../../utils/validator.js";
 import "./CreateCommissionTos.scss";
 import { apiUtils } from "../../../utils/newRequest.js";
 
-export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setShowCommissionTosView, setOverlayVisible }) {
+export default function CreateCommissionTos({ setShowCreateCommissionTosForm, setOverlayVisible }) {
+    const queryClient = useQueryClient(); // Access the query client
+
+    const createMutation = useMutation(
+        async (newData) => {
+            return await apiUtils.post("/termOfService/createTermOfService", newData);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate the 'termsOfServices' query to refetch the updated list
+                queryClient.invalidateQueries(['termsOfServices']);
+
+                // Close the modal and show success message
+                setModalInfo({
+                    status: "success",
+                    message: "Thêm điều khoản dịch vụ thành công"
+                });
+
+                setShowCreateCommissionTosForm(false);
+                setOverlayVisible(false);
+            },
+            onError: (error) => {
+                setModalInfo({
+                    status: "error",
+                    message: error.response.data.message
+                });
+            }
+        }
+    );
+
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         content: `<p>
@@ -80,7 +110,6 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
         let handler = (e) => {
             if (createCommissionRef && createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
                 setShowCreateCommissionTosForm(false);
-                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }
         };
@@ -146,7 +175,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
         setErrors((values) => ({ ...values, [name]: '' }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         // Initialize loading effect for the submit button
@@ -156,35 +185,28 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            // Clear the loading effect if validation failed
+
+            if (validationErrors.title) {
+                titleRef.current.scrollIntoView({ behavior: 'smooth' });
+            } else if (validationErrors.content) {
+                contentRef.current.scrollIntoView({ behavior: 'smooth' });
+            } else if (validationErrors.isAgreeTerms) {
+                isAgreeTermsRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+
             setIsSubmitCreateCommissionTosLoading(false);
             return;
         }
 
-        // Handle submit request
-        try {
-            const response = await apiUtils.post("/termOfService/createTermOfService", inputs);
-            if (response) {
-                setModalInfo({
-                    status: "success",
-                    message: "Thêm điều khoản dịch vụ thành công"
-                })
-
-                setShowCreateCommissionTosForm(false);
-                setShowCommissionTosView(false);
-                setOverlayVisible(false);
-            }
-        } catch (error) {
-            setModalInfo({
-                status: "error",
-                message: error.response.data.message
-            })
-        } finally {
-            // Clear the loading effect
-            setIsSubmitCreateCommissionTosLoading(false);
-        }
-
+        // Trigger the mutation to create new TOS
+        createMutation.mutate(inputs);
     };
+
+
+    const titleRef = useRef(null);
+    const contentRef = useRef(null);
+    const isAgreeTermsRef = useRef(null);
+
 
     return (
         <div className="create-commission-tos modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation() }}>
@@ -196,7 +218,6 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
                 setShowCreateCommissionTosForm(false);
-                setShowCommissionTosView(false);
                 setOverlayVisible(false);
             }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -224,13 +245,14 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                     <div className="form-field">
                         <label htmlFor="title" className="form-field__label">Tên điều khoản</label>
                         <span className="form-field__annotation">Đặt tên cho điều khoản để tiện ghi nhớ và sử dụng</span>
-                        <input id="title" name="title" className="form-field__input" type="text" placeholder="Nhập tên điều khoản" onChange={handleInputChange} />
+                        <input ref={titleRef} id="title" name="title" className="form-field__input" type="text" placeholder="Nhập tên điều khoản" onChange={handleInputChange} />
                         {errors.title && <span className="form-field__error">{errors.title}</span>}
                     </div>
                     <div className="form-field">
                         <label htmlFor="content" className="form-field__label">Nội dung</label>
                         <span name="content" className="form-field__annotation">Thêm nội dung chi tiết điều khoản dịch vụ của bạn</span>
                         <CKEditor
+                            ref={contentRef}
                             editor={ClassicEditor}
                             data={inputs?.content}
                             onChange={handleEditorChange}
@@ -255,7 +277,7 @@ export default function CreateCommissionTos({ setShowCreateCommissionTosForm, se
                     </div>
                     <div className="form-field">
                         <label className="form-field__label">
-                            <input type="checkbox" name="isAgreeTerms" checked={inputs.isAgreeTerms || false}
+                            <input type="checkbox" ref={isAgreeTermsRef} name="isAgreeTerms" checked={inputs.isAgreeTerms || false}
                                 onChange={handleInputChange} />
                             <span>Tôi đồng ý với các <a className="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của Pastal</span>
                         </label>

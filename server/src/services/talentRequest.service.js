@@ -24,10 +24,10 @@ class TalentRequestService {
         // 2. Validate request body
         let taxCode = ''
         let cccd = ''
-        if(req.body.taxCode){
+        if (req.body.taxCode) {
             taxCode = req.body.taxCode
         }
-        if(req.body.cccd){
+        if (req.body.cccd) {
             cccd = req.body.cccd
         }
         const { stageName, jobTitle, portfolioLink } = req.body
@@ -76,7 +76,17 @@ class TalentRequestService {
                 cccd
             })
             await newTalentRequest.save()
-            
+
+            // 6. Create referral code
+            if (referralCode) {
+                const talent = await User.findOne({ referralCode })
+                const referralCode = new ReferralCode({
+                    code: referralCode,
+                    referrer: talent._id.toString(),
+                    referred: userId,
+                })
+            }
+
             return {
                 talentRequest: newTalentRequest,
             }
@@ -86,7 +96,7 @@ class TalentRequestService {
         }
     }
 
-    static readTalentRequestStatus = async (userId) => {
+    static readMyTalentRequest = async (userId) => {
         // 1. Check user exists
         const currentUser = await User.findById(userId)
         if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
@@ -98,7 +108,7 @@ class TalentRequestService {
         }
 
         return {
-            talentRequestStatus: talentRequest.status,
+            myTalentRequest: talentRequest
         }
     }
 
@@ -134,19 +144,19 @@ class TalentRequestService {
         )
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
-        if(request.taxCode){
+        if (request.taxCode) {
             updatedUser.taxCode.code = request.taxCode
             updatedUser.taxCode.isVerified = true
             updatedUser.taxCode.message = 'Bạn đã xác minh mã số thuế'
         }
-        if(request.cccd){
+        if (request.cccd) {
             updatedUser.cccd = request.cccd
         }
         updatedUser.save()
 
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser
-        
+
         // 7. Send email to user and delete images in cloudinary
         try {
             // request.artworks.forEach(async (artwork) => {
@@ -174,12 +184,14 @@ class TalentRequestService {
     }
 
     static denyTalentRequest = async (adminId, requestId, body) => {
+        console.log("KKKK")
+        console.log(body)
         //1. Find and check request
         const request = await TalentRequest.findById(requestId)
         if (!request) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
         if (request.status === "rejected")
             throw new BadRequestError("Yêu cầu nâng cấp này đã bị từ chối")
-        if(!body.rejectMessage || body.rejectMessage === '')
+        if (!body.rejectMessage || body.rejectMessage === '')
             throw new BadRequestError("Hãy cung cấp lí do từ chối")
 
         //2. Find and check admin, user and user role
@@ -194,11 +206,12 @@ class TalentRequestService {
             throw new BadRequestError("Bạn đã là họa sĩ")
 
         //3. Mark request as denied
-        if(request.taxCode){
+        if (request.taxCode) {
             foundUser.taxCode.message = body.rejectMessage
             foundUser.taxCode.isVerified = false
         }
         request.status = "rejected"
+        request.rejectMessage = body.rejectMessage;
         await request.save()
 
         //4. Send email to user and delete images in cloudinary
@@ -254,6 +267,16 @@ class TalentRequestService {
         if (!talentRequest) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
         return {
             talentRequest,
+        }
+    }
+
+    static readReferralCodeOwner = async (referralCode) => {
+        //1. Find the user who owns the referral code
+        const user = await User.findOne({ referralCode })
+        if (!user) throw new NotFoundError("User not found")
+
+        return {
+            user,
         }
     }
 }
