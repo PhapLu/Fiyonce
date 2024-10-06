@@ -96,8 +96,6 @@ class OrderController {
         }).send(res)
     }
 
-    startWipOrder = async (req, res, next) => {
-    
     startWipCommissionOrder = async (req, res, next) => {
         new SuccessResponse({
             message: 'Start WIP commission order success!',
