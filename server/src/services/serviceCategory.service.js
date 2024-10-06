@@ -1,125 +1,125 @@
-import ServiceCategory from "../models/serviceCategory.model.js";
-import CommissionService from "../models/commissionService.model.js";
-import { User } from "../models/user.model.js";
+import ServiceCategory from "../models/serviceCategory.model.js"
+import CommissionService from "../models/commissionService.model.js"
+import { User } from "../models/user.model.js"
 import {
     AuthFailureError,
     BadRequestError,
     NotFoundError,
-} from "../core/error.response.js";
+} from "../core/error.response.js"
 
 class ServiceCategoryService {
     static createServiceCategory = async (talentId, body) => {
         //1. Check talent
-        const talent = await User.findById(talentId);
-        if (!talent) throw new NotFoundError("Talent not found");
+        const talent = await User.findById(talentId)
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent");
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         //2. Create service
         const serviceCategory = new ServiceCategory({
             title: body.title,
             talentId,
-        });
-        await serviceCategory.save();
+        })
+        await serviceCategory.save()
         return {
             serviceCategory,
-        };
-    };
+        }
+    }
 
     static readServiceCategories = async (talentId) => {
         //1. Check talent
-        const talent = await User.findById(talentId);
-        if (!talent) throw new NotFoundError("Talent not found");
+        const talent = await User.findById(talentId)
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
-            throw new BadRequestError("He/She is not a talent");
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Find services
         const serviceCategories = await ServiceCategory.find({
             talentId: talentId,
-        }).populate("talentId", "stageName avatar");
+        }).populate("talentId", "stageName avatar")
 
         return {
             serviceCategories,
-        };
-    };
+        }
+    }
 
     static readServiceCategoriesWithServices = async (talentId) => {
         try {
             // Fetch all service categories
             const serviceCategories = await ServiceCategory.find({
                 talentId,
-            }).lean();
+            }).lean()
 
             // For each category, find associated services
             const categorizedServices = await Promise.all(
                 serviceCategories.map(async (category) => {
                     const services = await CommissionService.find({
                         serviceCategoryId: category._id,
-                    }).lean();
+                    }).lean()
 
                     return {
                         _id: category._id,
                         title: category.title,
                         commissionServices: services,
-                    };
+                    }
                 })
-            );
+            )
 
-            return { categorizedServices };
+            return { categorizedServices }
         } catch (error) {
-            console.error("Error fetching services by category:", error);
-            throw new Error("Failed to fetch services by category");
+            console.error("Error fetching services by category:", error)
+            throw new Error("Failed to fetch services by category")
         }
-    };
+    }
     static updateServiceCategory = async (
         talentId,
         serviceCategoryId,
         body
     ) => {
         //1. Check talent and service
-        const talent = await User.findById(talentId);
+        const talent = await User.findById(talentId)
         const serviceCategory = await ServiceCategory.findById(
             serviceCategoryId
-        );
+        )
         
-        if (!talent) throw new NotFoundError("Talent not found");
-        if (!serviceCategory) throw new NotFoundError("Service not found");
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!serviceCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (serviceCategory.talentId.toString() !== talentId)
-            throw new AuthFailureError("You can only update your service");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         //2. Update Service
         const updatedServiceCategory = await ServiceCategory.findByIdAndUpdate(
             serviceCategoryId,
             { $set: body },
             { new: true }
-        );
+        )
 
         return {
             serviceCategory: updatedServiceCategory,
-        };
-    };
+        }
+    }
 
     static deleteServiceCategory = async (talentId, serviceCategoryId) => {
         //1. Check talent and service
-        const talent = await User.findById(talentId);
+        const talent = await User.findById(talentId)
         const serviceCategory = await ServiceCategory.findById(
             serviceCategoryId
-        );
+        )
 
-        if (!talent) throw new NotFoundError("Talent not found");
-        if (!serviceCategory) throw new NotFoundError("Service not found");
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!serviceCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (serviceCategory.talentId.toString() !== talentId)
-            throw new AuthFailureError("You can only delete your service");
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         //2. Delete service
-        return await serviceCategory.deleteOne();
-    };
+        return await serviceCategory.deleteOne()
+    }
 }
 
-export default ServiceCategoryService;
+export default ServiceCategoryService

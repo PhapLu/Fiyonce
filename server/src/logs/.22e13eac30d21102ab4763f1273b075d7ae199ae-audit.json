@@ -31,9 +31,30 @@
             "hash": "a838776d86d6c3e7c5606f8da92763f29ee40569f2d0d0cd86b9eb3a380ed185"
         },
         {
-            "date": 1728174664156,
-            "name": "src\\logs\\application-2024-10-06.error.log",
-            "hash": "c7751ca277b86e4b866f475c1a72b988e2cb64c0b5c18cab9370ef6eacd785bd"
+            "date": 1724393662161,
+            "name": "src\\logs\\application-2024-08-23.error.log",
+            "hash": "5430745c64f4b3f3cb5a8f226df0572871ef427bec1518a8451d182fe9ea00f8"
+        },
+        {
+            "date": 1724459929888,
+            "name": "src\\logs\\application-2024-08-24.error.log",
+            "hash": "f974ff413ca25166fc8c8935ee963f65831a86ed73c14e56699f7c4dd39ebca7"
+        },
+        {
+            "date": 1724551328565,
+            "name": "src\\logs\\application-2024-08-25.error.log",
+            "hash": "8534d9cce1e9e91660c0e60c9ea776c2ea40c9429271c75a989e5faac62c58bd"
+        },
+        {
+            "date": 1724642622314,
+            "name": "src\\logs\\application-2024-08-26.error.log",
+            "hash": "6b06736ea4922d7e4393adff1bd176dd909b52c19a057c5b9b56117c3571012f"
+        },
+        {
+            "date": 1724731344991,
+            "name": "src\\logs\\application-2024-08-27.error.log",
+            "hash": "3fc812055a436b99c319a526978dcbefeec4e9ac1fd1be96a35c2061589fef9f"
+>>>>>>> phap_dev
         }
     ],
     "hashType": "sha256"

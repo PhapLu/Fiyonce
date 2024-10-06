@@ -9,8 +9,14 @@ class PostController {
             metadata: await PostService.createPost(req.userId, req)
         }).send(res)
     }
-
-    readPost = async (req, res, next) => {
+    createPostWithArtworksId = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Tạo tác phẩm thành công',
+            metadata: await PostService.createPostWithArtworksId(req.userId, req)
+        }).send(res)
+    }
+    
+    readPost = async(req, res, next) => {
         new SuccessResponse({
             message: 'Xem chi tiết tác phẩm thành công',
             metadata: await PostService.readPost(req, req.params.postId)

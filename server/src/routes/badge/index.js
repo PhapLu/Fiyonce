@@ -19,4 +19,5 @@ router.delete('/deleteBadge/:badgeId', accessService.grantAccess('deleteAny', 'p
 
 //Award badge
 router.patch('/awardEarlyBirdBadge/:userId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(badgeController.awardEarlyBirdBadge))
+
 export default router

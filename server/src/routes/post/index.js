@@ -15,6 +15,7 @@ router.get('/readBookmarkedPosts/:userId', asyncHandler(postController.readBookm
 //authentication
 router.use(verifyToken)
 router.post('/createPost', uploadFields, asyncHandler(postController.createPost))
+router.post('/createPostWithArtworksId', uploadFields, asyncHandler(postController.createPostWithArtworksId))
 router.patch('/updatePost/:postId', uploadFields, asyncHandler(postController.updatePost))
 router.delete('/deletePost/:postId', asyncHandler(postController.deletePost))
 

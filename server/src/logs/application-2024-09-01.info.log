@@ -1,0 +1,48 @@
+2024-09-01 09:19:33::info::/v1/api/order/createOrder::7dfee260-6ec4-49e0-b2c6-c6d97b57e377::input-params ::POST::::{}
+2024-09-01 09:21:42::info::/v1/api/auth/users/login::e92c3989-16ef-4797-8370-8dc700f08464::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ"}
+2024-09-01 09:21:43::error::/v1/api/auth/users/login::e92c3989-16ef-4797-8370-8dc700f08464::401 - 2ms - Response: {"status":401,"now":1725157303233}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-09-01 09:21:48::info::/v1/api/auth/users/login::158aa9e9-df2d-4efd-baa4-5d1a2cf62baf::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ!"}
+2024-09-01 09:21:48::error::/v1/api/auth/users/login::158aa9e9-df2d-4efd-baa4-5d1a2cf62baf::401 - 3ms - Response: {"status":401,"now":1725157308294}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-09-01 09:21:51::info::/v1/api/auth/users/login::6a0d930f-272e-49ee-ad1a-d700bfd15aad::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:22:18::info::/v1/api/order/rejectOrder/66d3cf388393cc8b4eca8f23::d6393688-323f-45b5-ad60-6b746628c2d5::input-params ::PATCH::::{}
+2024-09-01 09:22:47::info::/v1/api/auth/users/login::c117b666-a17e-4939-a38c-344f7b931520::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:23:01::info::/v1/api/order/createOrder::9a48d352-2c5e-492d-98c5-bc17b4bc0652::input-params ::POST::::{}
+2024-09-01 09:25:08::info::/v1/api/auth/users/login::9a602661-eb36-4d21-84cd-c81d72956a58::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:25:20::info::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::82e2174b-042a-42d8-ae9c-8ff3e932425e::input-params ::PATCH::::{}
+2024-09-01 09:26:32::info::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::94edd2f4-1249-4cb7-90a2-c97a5e915e64::input-params ::PATCH::::{}
+2024-09-01 09:26:32::error::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::94edd2f4-1249-4cb7-90a2-c97a5e915e64::403 - 2ms - Response: {"status":403,"now":1725157592872}::{"message":"Bạn không thể từ chối đơn hàng ở bước này"}
+2024-09-01 09:26:46::info::/v1/api/order/rejectOrder/66d3d0088393cc8b4eca8f36::6b748175-fced-4def-bec8-3f8feb4936ff::input-params ::PATCH::::{}
+2024-09-01 09:37:09::info::/v1/api/auth/users/login::ad657c7d-898f-4d18-ba87-2879a212c82a::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 09:37:30::info::/v1/api/termOfService/readTermOfServices::3a5372ed-7a21-4b26-b8f7-26ddc3a7ec9c::input-params ::GET::::{}
+2024-09-01 09:40:27::info::/v1/api/proposal/sendProposal/66d3d0088393cc8b4eca8f36::f647cd26-578d-4233-8405-f7c92d9d9745::input-params ::POST::::{"title":"France's order","scope":"You will get a jpg file","startAt":"","deadline":"","price":800000,"termOfServiceId":"66a5c899dea404a988c9197c"}
+2024-09-01 09:47:44::info::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::420f38ff-7b9e-4d80-a583-d3d64afe0f2a::input-params ::PATCH::::{}
+2024-09-01 09:47:45::error::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::420f38ff-7b9e-4d80-a583-d3d64afe0f2a::403 - 1ms - Response: {"status":403,"now":1725158865037}::{"message":"Đơn hàng chưa được xác nhận ở hiện tại"}
+2024-09-01 09:47:59::info::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::6b138362-1230-4489-a37f-f6928083baba::input-params ::PATCH::::{}
+2024-09-01 09:51:32::info::/v1/api/order/startWipCommissionOrder/66d3d0088393cc8b4eca8f36::8b3ba729-6d15-41a9-9910-3ba0ad72598b::input-params ::PATCH::::{}
+2024-09-01 19:41:50::info::/v1/api/review/createReview/667bd5ad8657cc300b1985e6::7d6a63bd-dcb5-4495-a59b-1a449afc8aa4::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 19:41:51::error::/v1/api/review/createReview/667bd5ad8657cc300b1985e6::7d6a63bd-dcb5-4495-a59b-1a449afc8aa4::404 - 0ms - Response: {"status":404,"now":1725194511240}::{"message":"Không tìm thấy đơn hàng"}
+2024-09-01 20:49:30::info::/v1/api/auth/users/login::84ff7994-8031-43d6-b667-bf3b109fc3a9::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 20:50:22::info::/v1/api/review/createReview/667bd5ad8657cc300b1985e6::2123e798-d131-4d37-ba78-1804f674ed47::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:50:22::error::/v1/api/review/createReview/667bd5ad8657cc300b1985e6::2123e798-d131-4d37-ba78-1804f674ed47::404 - 1ms - Response: {"status":404,"now":1725198622248}::{"message":"Không tìm thấy đơn hàng"}
+2024-09-01 20:50:56::info::/v1/api/review/createReview/667bd5ad8657cc300b1985e6::a45bc393-3362-40ad-9d6e-e0773ef03a44::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:50:56::error::/v1/api/review/createReview/667bd5ad8657cc300b1985e6::a45bc393-3362-40ad-9d6e-e0773ef03a44::404 - 1ms - Response: {"status":404,"now":1725198656326}::{"message":"Không tìm thấy đơn hàng"}
+2024-09-01 20:51:09::info::/v1/api/order/readOrder/667bd5ad8657cc300b1985e6::c4438a3f-706c-4a1e-b3b9-337c7dd5a1a3::input-params ::GET::::{}
+2024-09-01 20:51:09::error::/v1/api/order/readOrder/667bd5ad8657cc300b1985e6::c4438a3f-706c-4a1e-b3b9-337c7dd5a1a3::404 - 2ms - Response: {"status":404,"now":1725198669387}::{"message":"Không tìm thấy đơn hàng"}
+2024-09-01 20:51:12::info::/v1/api/order/readOrder/66d3d0088393cc8b4eca8f36::fdce6c8d-d367-41e3-81ca-a537da37eaf5::input-params ::GET::::{}
+2024-09-01 20:51:27::info::/v1/api/review/createReview/66d3d0088393cc8b4eca8f36::93ea0beb-5e27-43d4-a83a-d9b16c52bb44::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:51:27::error::/v1/api/review/createReview/66d3d0088393cc8b4eca8f36::93ea0beb-5e27-43d4-a83a-d9b16c52bb44::undefined - NaNms - Response: {}::{"message":"memberId is not defined"}
+2024-09-01 20:52:01::info::/v1/api/review/createReview/66d3d0088393cc8b4eca8f36::557822ef-5f95-4694-ac52-97449529b530::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:52:01::error::/v1/api/review/createReview/66d3d0088393cc8b4eca8f36::557822ef-5f95-4694-ac52-97449529b530::403 - 1ms - Response: {"status":403,"now":1725198721217}::{"message":"Bạn không thể review đơn hàng này"}
+2024-09-01 20:52:38::info::/v1/api/auth/users/login::4d1b8a64-990e-418b-8f1f-68e2777805f1::input-params ::POST::::{"email":"abzdq12zaazb@gmail.com","password":"123456789"}
+2024-09-01 20:52:47::info::/v1/api/auth/users/login::158a31f2-110b-45db-944e-bd665b6a93ff::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-01 20:53:02::info::/v1/api/order/readOrders::3336d31f-7348-4ff0-bf13-c96cbb1cdce7::input-params ::GET::::{"isDirect":"true"}
+2024-09-01 20:53:48::info::/v1/api/auth/users/login::320fa5c3-c6dd-4b0c-83ff-776bb6f5d7e5::input-params ::POST::::{"email":"abzdq12zaazb@gmail.com","password":"123456789"}
+2024-09-01 20:54:14::info::/v1/api/auth/users/login::05026f8e-9cd6-4458-afde-973d918f0e84::input-params ::POST::::{"email":"abzdq12zaazb@gmail.com","password":"123456789"}
+2024-09-01 20:54:20::info::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::86075598-79f1-4dbb-b76b-95fc19aacc70::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:54:21::error::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::86075598-79f1-4dbb-b76b-95fc19aacc70::403 - 1ms - Response: {"status":403,"now":1725198861067}::{"message":"Đơn hàng chưa hoàn thành"}
+2024-09-01 20:54:53::info::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::b1ef67c8-d27b-4545-a219-6b0e01ce46dd::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:54:53::error::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::b1ef67c8-d27b-4545-a219-6b0e01ce46dd::403 - 10ms - Response: {"status":403,"now":1725198893456}::{"message":"Bạn không thể review đơn hàng này"}
+2024-09-01 20:55:42::info::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::0cfd6332-7e66-4ce9-b074-754cd1724fd2::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:55:42::error::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::0cfd6332-7e66-4ce9-b074-754cd1724fd2::403 - 0ms - Response: {"status":403,"now":1725198942362}::{"message":"Bạn không thể review đơn hàng này"}
+2024-09-01 20:56:12::info::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::5690e7e1-f483-4249-a2be-2d717cc3be8f::input-params ::PATCH::::{"rating":5,"content":"This is so beautiful, I really love it!"}
+2024-09-01 20:56:58::info::/v1/api/review/readReview/66d4727c116d346bd42dcb7c::369f4fd9-6cbb-4407-a74b-cf660c7d9249::input-params ::GET::::{}

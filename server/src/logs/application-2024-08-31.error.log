@@ -1,0 +1,7 @@
+2024-08-31 16:10:30::error::/v1/api/auth/users/login::07fca68e-7f78-4372-b0ae-ae423cc56c77::401 - 1ms - Response: {"status":401,"now":1725095430628}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-31 16:10:32::error::/v1/api/auth/users/login::54732501-2fb4-49b1-a4ff-11892fd356c4::401 - 1ms - Response: {"status":401,"now":1725095432848}::{"message":"Tài khoản hoặc mật khẩu không chính xác"}
+2024-08-31 16:10:41::error::/v1/api/talentRequest/upgradeRoleToTalent/66a5acc973370474cf4eb46f::fb4545b3-be79-45b7-ba3b-2dbc69f95c7a::403 - 0ms - Response: {"status":403,"now":1725095441911}::{"message":"Bạn đã là họa sĩ"}
+2024-08-31 16:12:03::error::/v1/api/talentRequest/upgradeRoleToTalent/66a5acc973370474cf4eb46f::7834e75f-0d7f-475a-ba46-27fd01933aa1::403 - 0ms - Response: {"status":403,"now":1725095523255}::{"message":"Yêu cầu nâng cấp đã được chấp thuận"}
+2024-08-31 16:30:02::error::/v1/api/order/createOrder::1fd3775c-1cf6-47a2-8724-8d27d5aefebb::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'split')"}
+2024-08-31 16:31:45::error::/v1/api/order/createOrder::3dd3c7d5-d4e3-4a6e-bbbb-b4cc6aa66160::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'split')"}
+2024-08-31 16:31:57::error::/v1/api/order/createOrder::ef6f9773-a1bb-4c3e-b6e5-4ac9e770642b::undefined - NaNms - Response: {}::{"message":"Cannot read properties of undefined (reading 'split')"}

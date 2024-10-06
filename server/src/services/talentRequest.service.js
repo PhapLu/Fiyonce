@@ -1,7 +1,6 @@
 import TalentRequest from "../models/talentRequest.model.js"
 import crypto from 'crypto'
 import { User } from "../models/user.model.js"
-import ReferralCode from "../models/referralCode.model.js"
 import {
     AuthFailureError,
     BadRequestError,
@@ -12,15 +11,15 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 
 class TalentRequestService {
     static requestUpgradingToTalent = async (userId, req) => {
         // 1. Check user exists and is not a talent
         const currentUser = await User.findById(userId)
-        if (!currentUser) throw new NotFoundError("User not found")
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (currentUser.role === "talent")
-            throw new BadRequestError("User already a talent")
+            throw new BadRequestError("Bạn đã là họa sĩ")
 
         // 2. Validate request body
         let taxCode = ''
@@ -31,11 +30,11 @@ class TalentRequestService {
         if (req.body.cccd) {
             cccd = req.body.cccd
         }
-        const { stageName, jobTitle, portfolioLink, referralCode } = req.body
+        const { stageName, jobTitle, portfolioLink } = req.body
         if (!req.files || !req.files.files)
-            throw new BadRequestError("Please provide artwork files")
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
         if (!userId || !stageName || !jobTitle || !portfolioLink)
-            throw new BadRequestError("Please provide all required fields")
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
 
         // 3. Check if user has requested before
         const talentRequest = await TalentRequest.findOne({ userId })
@@ -74,7 +73,6 @@ class TalentRequestService {
                 portfolioLink,
                 artworks,
                 taxCode,
-                referralCode,
                 cccd
             })
             await newTalentRequest.save()
@@ -101,12 +99,12 @@ class TalentRequestService {
     static readMyTalentRequest = async (userId) => {
         // 1. Check user exists
         const currentUser = await User.findById(userId)
-        if (!currentUser) throw new NotFoundError("User not found")
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         // 2. Find talent request
         const talentRequest = await TalentRequest.findOne({ userId }).populate("userId", "fullName email")
         if (!talentRequest) {
-            throw new NotFoundError("Talent request not found")
+            throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
         }
 
         return {
@@ -118,21 +116,21 @@ class TalentRequestService {
     static upgradeRoleToTalent = async (adminId, requestId) => {
         // 1. Find and check request
         const request = await TalentRequest.findById(requestId)
-        if (!request) throw new NotFoundError("Request not found")
+        if (!request) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
         if (request.status === "approved")
-            throw new BadRequestError("Request already approved")
+            throw new BadRequestError("Yêu cầu nâng cấp đã được chấp thuận")
 
         // 2. Find and check admin user and user role
         const adminUser = await User.findById(adminId)
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         // 3. Find and check the user related to the request
         const userId = request.userId
         const foundUser = await User.findById(userId)
-        if (!foundUser) throw new NotFoundError("User not found")
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (foundUser.role === "talent")
-            throw new BadRequestError("User already a talent")
+            throw new BadRequestError("Bạn đã là họa sĩ")
 
         // 4. Mark request as approved
         request.status = "approved"
@@ -144,7 +142,6 @@ class TalentRequestService {
             { $set: { role: "talent" } },
             { new: true }
         )
-        updatedUser.referralCode = crypto.randomBytes(8).toString("hex")
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
         if (request.taxCode) {
@@ -166,18 +163,16 @@ class TalentRequestService {
             //     const publicId = extractPublicIdFromUrl(artwork)
             //     await deleteFileByPublicId(publicId)
             // })
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ''
-            const message = "Your role has been updated to talent"
-            const template = 'announcementTemplate'
-            await brevoSendEmail(
-                foundUser.email,
+            const subject =  '[PASTAL] - Nâng cấp tài khoản thành công'
+            const message = 'Chúc mừng! yêu cầu nâng cấp tài khoản họa sĩ của bạn đã chấp thuận'
+            const orderCode = ''
+            const reason = ''
+            sendAnnouncementEmail(
+                userWithoutPassword._doc.email,
                 subject,
-                subjectMessage,
-                verificationCode,
                 message,
-                template
+                orderCode,
+                reason
             )
             return {
                 user: userWithoutPassword._doc,
@@ -193,11 +188,11 @@ class TalentRequestService {
         console.log(body)
         //1. Find and check request
         const request = await TalentRequest.findById(requestId)
-        if (!request) throw new NotFoundError("Request not found")
+        if (!request) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
         if (request.status === "rejected")
-            throw new BadRequestError("Request already denied")
+            throw new BadRequestError("Yêu cầu nâng cấp này đã bị từ chối")
         if (!body.rejectMessage || body.rejectMessage === '')
-            throw new BadRequestError("Please provide a reason for denying the request")
+            throw new BadRequestError("Hãy cung cấp lí do từ chối")
 
         //2. Find and check admin, user and user role
         const userId = request.userId
@@ -205,10 +200,10 @@ class TalentRequestService {
         const foundUser = await User.findById(userId)
 
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission")
-        if (!foundUser) throw new NotFoundError("User not found")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (foundUser.role === "talent")
-            throw new BadRequestError("User already a talent")
+            throw new BadRequestError("Bạn đã là họa sĩ")
 
         //3. Mark request as denied
         if (request.taxCode) {
@@ -225,18 +220,14 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork)
                 await deleteFileByPublicId(publicId)
             })
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ''
-            const message = body.rejectMessage || "Your request has been denied"
-            const template = 'announcementTemplate'
-            await brevoSendEmail(
+            const subject = 'Nâng cấp tài khoản không thành công'
+            const message = 'Yêu cầu nâng cấp tài khoản họa sĩ của bạn đã bị từ chối'
+            const reason = 'Lí do: ' + body.rejectMessage
+            sendAnnouncementEmail(
                 foundUser.email,
                 subject,
-                subjectMessage,
-                verificationCode,
                 message,
-                template
+                reason
             )
             return {
                 success: true,
@@ -252,9 +243,9 @@ class TalentRequestService {
     static readTalentRequestsByStatus = async (adminId, status) => {
         //1. Check admin account
         const adminUser = await User.findById(adminId)
-        if (!adminUser) throw new NotFoundError("User not found")
+        if (!adminUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Find all talent requests
         const talentRequests = await TalentRequest.find({})
@@ -267,13 +258,13 @@ class TalentRequestService {
     static readTalentRequest = async (adminId, requestId) => {
         //1. Check admin account
         const adminUser = await User.findById(adminId)
-        if (!adminUser) throw new NotFoundError("User not found")
+        if (!adminUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!adminUser || adminUser.role !== "admin")
-            throw new AuthFailureError("You do not have enough permission")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Find talent request by id
         const talentRequest = await TalentRequest.findById(requestId)
-        if (!talentRequest) throw new NotFoundError("Talent request not found")
+        if (!talentRequest) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
         return {
             talentRequest,
         }

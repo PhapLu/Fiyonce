@@ -45,8 +45,8 @@ const TalentRequestSchema = new mongoose.Schema(
         },
         rejectMessage: {
             type: String,
-            default: ""
-        },
+            default: ''
+        }
     },
     {
         timestamps: true,

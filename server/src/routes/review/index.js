@@ -6,13 +6,11 @@ import reviewController from '../../controllers/review.controller.js'
 const router = express.Router()
 
 router.get('/readReview/:orderId',asyncHandler(reviewController.readReview))
-router.get('/readReviewsAndCommissionServiceRating/:commissionServiceId',asyncHandler(reviewController.readReviews))
+router.get('/readReviews/:userId',asyncHandler(reviewController.readReviews))
 
 //authentication
 router.use(verifyToken)
 
 router.patch('/createReview/:orderId', asyncHandler(reviewController.createReview))
-router.patch('/updateReview/:orderId',asyncHandler(reviewController.updateReview))
-router.patch('/deleteReview/:orderId',asyncHandler(reviewController.deleteReview))
 
 export default router

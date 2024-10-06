@@ -20,6 +20,7 @@ router.patch('/archiveOrder/:orderId', asyncHandler(orderController.archiveOrder
 router.patch('/unarchiveOrder/:orderId', asyncHandler(orderController.unarchiveOrder))
 
 //END CRUD
+router.patch('/addMilestone/:orderId', uploadFields, asyncHandler(orderController.addMilestone))
 router.get('/readMemberOrderHistory', asyncHandler(orderController.readMemberOrderHistory))
 router.get('/readTalentOrderHistory', asyncHandler(orderController.readTalentOrderHistory))
 router.get('/readArchivedOrderHistory', asyncHandler(orderController.readArchivedOrderHistory))
@@ -27,7 +28,9 @@ router.patch('/chooseProposal/:orderId', asyncHandler(orderController.chooseProp
 router.patch('/cancelOrder/:orderId', asyncHandler(orderController.cancelOrder))
 router.patch('/rejectOrder/:orderId', asyncHandler(orderController.rejectOrder))
 router.get('/readRejectResponse/:orderId', asyncHandler(orderController.readRejectResponse))
-router.patch('/startWipOrder/:orderId', asyncHandler(orderController.startWipOrder))
+router.patch('/startWipCommissionOrder/:orderId', asyncHandler(orderController.startWipCommissionOrder))
+router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
+router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
 router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
 router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
 

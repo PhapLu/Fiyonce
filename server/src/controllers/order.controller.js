@@ -96,10 +96,31 @@ class OrderController {
         }).send(res)
     }
 
-    startWipOrder = async (req, res, next) => {
+    startWipCommissionOrder = async (req, res, next) => {
         new SuccessResponse({
-            message: 'Start wip the order success!',
-            metadata: await OrderService.startWipOrder(req.userId, req.params.orderId)
+            message: 'Start WIP commission order success!',
+            metadata: await OrderService.startWipCommissionOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    deliverOrder = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Deliver order success!',
+            metadata: await OrderService.deliverOrder(req.userId, req.params.orderId, req)
+        }).send(res)
+    }
+
+    finishOrder = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Finish order success!',
+            metadata: await OrderService.finishOrder(req.userId, req.params.orderId)
+        }).send(res)
+    }
+
+    addMilestone = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Add milestone success!',
+            metadata: await OrderService.addMilestone(req.userId, req.params.orderId, req)
         }).send(res)
     }
 

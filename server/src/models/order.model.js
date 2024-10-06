@@ -29,6 +29,8 @@ const OrderSchema = new mongoose.Schema(
                 "delivered",
                 "finished",
                 "under_processing",
+                "delivered",
+                "resolved"
             ],
             default: "pending",
         },
@@ -36,11 +38,6 @@ const OrderSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
-        // character: {
-        //     photo: { type: String },
-        //     name: { type: String },
-        //     description: { type: String }
-        // },
         isDirect: { type: Boolean, required: true },
         references: [
             {
@@ -58,21 +55,22 @@ const OrderSchema = new mongoose.Schema(
         isPrivate: { type: Boolean },
         deadline: { type: Date },
         fileFormats: { type: [String], default: [] },
-        review: {
-            userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-            rating: { type: Number },
-            comment: { type: String },
-        },
         momoOrderId: { type: String },
+        deliverables: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artwork" }],
         startWipAt: { type: Date },
         finalDelivery: {
             note: { type: String, default: "" },
             url: { type: String, default: "" },
             files: [{ type: String, default: [] }],
             finishedAt: { type: Date }
-        }
-    },
-    {
+        },
+        milestones: [{
+            title: { type: String, default: "" },
+            note: { type: String, default: "" },
+            url: { type: String, default: "" },
+            files: [{ type: String, default: [] }],
+        }]
+    },{
         timestamps: true,
         collection: COLLECTION_NAME,
     }

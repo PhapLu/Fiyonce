@@ -12,7 +12,7 @@ class ReviewController{
     readReviews = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read reviews success!',
-            metadata: await ReviewService.readReviews(req.params.commissionServiceId)
+            metadata: await ReviewService.readReviews(req.params.userId)
         }).send(res)
     }
 
@@ -22,21 +22,6 @@ class ReviewController{
             metadata: await ReviewService.readReview(req.params.orderId)
         }).send(res)
     }
-    
-    updateReview = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Update review success!',
-            metadata: await ReviewService.updateReview(req.userId, req.params.orderId, req.body)
-        }).send(res)
-    }
-
-    deleteReview = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Delete review success!',
-            metadata: await ReviewService.deleteReview(req.userId, req.params.orderId)
-        }).send(res)
-    }
-
 }
 
 export default new ReviewController()

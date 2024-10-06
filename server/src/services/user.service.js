@@ -12,9 +12,9 @@ class UserService {
     static updateProfile = async (userId, profileId, body) => {
         //1. Check user
         const profile = await User.findById(profileId)
-        if (!profile) throw new NotFoundError("User not found")
+        if (!profile) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (profileId != userId)
-            throw new AuthFailureError("You can only update your account")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Update user
         const updatedUser = await User.findByIdAndUpdate(
@@ -45,7 +45,7 @@ class UserService {
             select: 'title description icon level type' // Select the badge details you want
         });;
         if (!userProfile)
-            throw new NotFoundError("User not found");
+            throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Update views
         userProfile.views += 1
@@ -60,9 +60,9 @@ class UserService {
     static deleteProfile = async (userId, profileId) => {
         //1. Check user and profile
         const userProfile = await User.findById(profileId)
-        if (!userProfile) throw new NotFoundError("User not found")
+        if (!userProfile) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (userId.toString() != profileId)
-            throw new AuthFailureError("You can only delete your account")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Delete profile
         await User.findByIdAndDelete(profileId)
@@ -74,10 +74,10 @@ class UserService {
         //1. Check user and follow
         const currentUser = await User.findById(userId)
         const followedUser = await User.findById(profileId)
-        if (!currentUser) throw new NotFoundError("User not found")
-        if (!followedUser) throw new NotFoundError("User not found")
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!followedUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (currentUser.following.includes(profileId))
-            throw new BadRequestError("You already follow this user")
+            throw new BadRequestError("Bạn đã theo dõi người này rồi")
 
         //2. Follow user
         currentUser.following.push(profileId)
@@ -94,10 +94,10 @@ class UserService {
         // 1. Check user and unfollow
         const currentUser = await User.findById(userId)
         const followedUser = await User.findById(profileId)
-        if (!currentUser) throw new NotFoundError("User not found")
-        if (!followedUser) throw new NotFoundError("User not found")
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!followedUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!currentUser.following.includes(profileId))
-            throw new BadRequestError("You do not follow this user")
+            throw new BadRequestError("Bạn chưa từng theo dõi người này")
 
         // 2. Unfollow user
         currentUser.following = currentUser.following.filter(
@@ -116,7 +116,7 @@ class UserService {
     static recommendUsers = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Get 10 talent users (stageName, avatar, fullName) each request
         const talentUsers = await User.find({ role: "talent" }).select("stageName avatar fullName").limit(10)
@@ -136,15 +136,15 @@ class UserService {
         if (!userId) throw new AuthFailureError("Invalid validation")
 
         // 3. Return user without password
-        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName");
-        if (!user) throw new NotFoundError("User not found");
+        const user = await User.findById(userId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         // Fetch unseen conversations
         const unSeenConversations = await Conversation.find({
             members: { $elemMatch: { user: userId } }
         })
             .populate('members.user messages.senderId')
-            .exec();
+            .exec()
 
         // Filter unseen conversations based on the last message
         const filteredUnSeenConversations = unSeenConversations.filter(conversation => {
@@ -167,14 +167,14 @@ class UserService {
 
         return {
             user: userData,
-        };
-    };
+        }
+    }
 
     static updateProfileStatus = async (userId, profileStatus) => {
         try {
             // Validate inputs
             if (!userId || !profileStatus) {
-                throw new Error('Invalid input data');
+                throw new Error('Hãy nhập đầy đủ những thông tin cần thiết')
             }
 
             // Update the profile status field in the user's document
@@ -182,24 +182,24 @@ class UserService {
                 userId,
                 { $set: { profileStatus: profileStatus } },
                 { new: true } // Return the updated document
-            );
+            )
 
             if (!user) {
-                throw new Error('User not found');
+                throw new Error('Bạn cần đăng nhập để thực hiện thao tác này')
             }
 
-            return { profileStatus: user.profileStatus };
+            return { profileStatus: user.profileStatus }
         } catch (error) {
             // Handle errors (e.g., logging or rethrowing)
-            console.error('Error updating profile status:', error.message);
-            throw error;
+            console.error('Error updating profile status:', error.message)
+            throw error
         }
     };
 
     static getUserByReferralCode = async (referralCode) => {
         //1. Check referrer
-        const referrer = await User.findOne({ 'referral.code': referralCode })
-        if (!referrer) throw new NotFoundError("Referrer not found")
+        const referrer = await User.findOne({ 'referral.code': referralCode }).select("fullName avatar")
+        if (!referrer) throw new NotFoundError("Không tìm thấy người giới thiệu")
 
         return {
             user: referrer

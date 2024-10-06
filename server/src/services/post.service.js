@@ -81,6 +81,40 @@ class PostService {
         }
     }
 
+    static createPostWithArtworksId = async (userId, req) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (user.role !== "talent")
+            throw new BadRequestError("Bạn không phải là họa sĩ")
+
+        //2. Validate request body
+        const { movementId, postCategoryId, artworks } = req.body
+        if (!userId || !movementId || !postCategoryId || !artworks)
+            throw new BadRequestError("Hãy nhập những thông tin bắt buộc")
+
+        //3. Create and save post
+        const newPost = new Post({
+            ...req.body,
+            talentId: userId,
+        })
+        await newPost.save()
+
+        //4. Add postId to artworks
+        await Promise.all(
+            artworks.map(async (artworkId) => {
+                await Artwork.findByIdAndUpdate(artworkId, {
+                    postId: newPost._id,
+                })
+            }
+            )
+        )
+
+        return {
+            artwork: newPost,
+        }
+    }
+
     static readPost = async (req, postId) => {
         try {
             // Extract token from cookies
@@ -122,8 +156,6 @@ class PostService {
         }
     }
 
-
-
     static likePost = async (userId, postId) => {
         // Find user
         const user = await User.findById(userId)
@@ -164,7 +196,7 @@ class PostService {
     static readBookmarkedPosts = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Fetch all bookmarked posts
         const bookmarkedPosts = await Post.find({ _id: { $in: user.postBookmarks } })
@@ -222,7 +254,7 @@ class PostService {
     static readPostsByMovement = async (movementId) => {
         //1. Check movement
         const movement = await Movement.findById(movementId)
-        if (!movement) throw new NotFoundError("Movement not found")
+        if (!movement) throw new NotFoundError("Không tìm thấy trường phái")
 
         //2. Read posts
         const posts = await Post.find({ movementId }).sort({ createdAt: -1 })
@@ -235,7 +267,7 @@ class PostService {
     static readBookmarkedPosts = async(userId) => {
         //1. Check user
         const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("User not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Fetch all bookmarked posts
         const bookmarkedPosts = await Post.find({ _id: { $in: user.postBookmarks } })

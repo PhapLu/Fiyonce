@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 import nodemailer from "nodemailer";
-import { announcementTemplate, otpTemplate } from "../utils/templateEmail.util.js";
+import { otpTemplate, announcementTemplate, commissionTemplate, reportTemplate } from "../utils/templateEmail.util.js";
 
-async function brevoSendEmail(to, subject, subjectMessage, verificationCode, message, template) {
+async function sendOtpEmail(to, subject, message, orderId, verificationCode) {
     const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter
@@ -17,26 +17,116 @@ async function brevoSendEmail(to, subject, subjectMessage, verificationCode, mes
         });
 
         // Define the html form of the email
-        let htmlContent
-        if(template === 'otpTemplate'){
-            htmlContent = otpTemplate(toEmail, subjectMessage, verificationCode);
-        }else if(template === 'announcementTemplate'){
-            htmlContent = announcementTemplate(toEmail, message);
-        }
+        const htmlContent = otpTemplate(toEmail, message, verificationCode);
 
-        //Define the mail options
+        // Define the mail options
         const mailOptions = {
             from: '"Pastal" <phapluudev2k5@gmail.com>',
             to,
             subject,
             html: htmlContent,
         };
-        //Send the email
+
+        // Send the email
         const info = await transporter.sendMail(mailOptions);
-        console.log("Email sent::", info.messageId);
+        console.log("OTP Email sent::", info.messageId);
     } catch (error) {
-        console.error("Error sending email:", error);
+        console.error("Error sending OTP email:", error);
+    }
+}
+async function sendAnnouncementEmail(to, subject, subSubject, message) {
+    const toEmail = to.replace("@gmail.com", "");
+    try {
+        // Create a transporter
+        const transporter = nodemailer.createTransport({
+            host: "smtp-relay.brevo.com",
+            port: 587,
+            auth: {
+                user: process.env.BREVO_SMTP_USERNAME,
+                pass: process.env.BREVO_SMTP_PASSWORD,
+            },
+        });
+
+        // Define the html form of the email
+        const htmlContent = announcementTemplate(subSubject, message);
+
+        // Define the mail options
+        const mailOptions = {
+            from: '"Pastal" <phapluudev2k5@gmail.com>',
+            to,
+            subject,
+            html: htmlContent,
+        };
+
+        // Send the email
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Announcement Email sent::", info.messageId);
+    } catch (error) {
+        console.error("Error sending announcement email:", error);
     }
 }
 
-export default brevoSendEmail;
+async function sendReportEmail(to, subject, fullName, subSubject, message) {
+    const toEmail = to.replace("@gmail.com", "");
+    try {
+        // Create a transporter
+        const transporter = nodemailer.createTransport({
+            host: "smtp-relay.brevo.com",
+            port: 587,
+            auth: {
+                user: process.env.BREVO_SMTP_USERNAME,
+                pass: process.env.BREVO_SMTP_PASSWORD,
+            },
+        });
+
+        // Define the html form of the email
+        const htmlContent = reportTemplate(fullName, subSubject, message);
+
+        // Define the mail options
+        const mailOptions = {
+            from: '"Pastal" <phapluudev2k5@gmail.com>',
+            to,
+            subject,
+            html: htmlContent,
+        };
+
+        // Send the email
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Announcement Email sent::", info.messageId);
+    } catch (error) {
+        console.error("Error sending announcement email:", error);
+    }
+}
+
+async function sendCommissionEmail(to, user, subject, subSubject, message, orderCode, price) {
+    try {
+        // Create a transporter
+        const transporter = nodemailer.createTransport({
+            host: "smtp-relay.brevo.com",
+            port: 587,
+            auth: {
+                user: process.env.BREVO_SMTP_USERNAME,
+                pass: process.env.BREVO_SMTP_PASSWORD,
+            },
+        });
+
+        // Define the html form of the email
+        const htmlContent = commissionTemplate(user, message, subSubject, orderCode, price);
+
+        // Define the mail options
+        const mailOptions = {
+            from: '"Pastal" <phapluudev2k5@gmail.com>',
+            to,
+            subject,
+            html: htmlContent,
+        };
+
+        // Send the email
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Announcement Email sent::", info.messageId);
+    } catch (error) {
+        console.error("Error sending announcement email:", error);
+    }
+}
+
+export {sendOtpEmail, sendAnnouncementEmail, sendCommissionEmail, sendReportEmail };

@@ -1,5 +1,4 @@
 import Order from "../models/order.model.js"
-import Artwork from "../models/artwork.model.js"
 import Proposal from "../models/proposal.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
@@ -14,16 +13,21 @@ import {
     deleteFileByPublicId,
     uploadFinalProduct,
 } from "../utils/cloud.util.js"
-import brevoSendEmail from "../configs/brevo.email.config.js"
+import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
+import { formatDate } from "../utils/index.js"
 
 class OrderService {
     //Order CRUD
     static createOrder = async (userId, req) => {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
-        const fileFormats = req.body.fileFormats.split(",")
-        req.body.fileFormats = fileFormats
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        
+        if(req.body.fileFormats){
+            const fileFormats = req.body.fileFormats.split(",")
+            req.body.fileFormats = fileFormats
+        }
         const body = req.body
 
 
@@ -43,15 +47,12 @@ class OrderService {
             talent = await User.findById(talentChosenId)
 
             if (!talent) throw new BadRequestError("Talent not found!")
-            if (!service)
-                throw new BadRequestError("commissionService not found!")
             if (talent.role != "talent")
                 throw new AuthFailureError("He/She is not a talent!")
-            if (talent._id == userId)
+            if (talent._id.toString() == userId)
                 throw new BadRequestError("You cannot choose yourself!")
             body.isDirect = true
             body.talentChosenId = talentChosenId
-            body.minPrice = commissionService.minPrice
             body.commissionServiceId = commissionServiceId
         } else {
             //inDirect order
@@ -93,22 +94,14 @@ class OrderService {
             })
             await order.save()
 
-            //5. Send email to user
+            //5. Send email to talent
             if (isDirect == 'true' && talent?.email) {
                 try {
-                    const subject = ""
-                    const subjectMessage = ""
-                    const verificationCode = ""
-                    const message = `You have a new order from ${user.fullName}. Please check the order details and accept or reject the order.`
-                    const template = "announcementTemplate"
-                    await brevoSendEmail(
-                        talent.email,
-                        subject,
-                        subjectMessage,
-                        verificationCode,
-                        message,
-                        template
-                    )
+                    const subject = `[PASTAL] - Yêu cầu đặt hàng (${formatDate()})`
+                    const message = `Khách hàng ${user.fullName} đã đặt commission ${commissionService.title} của bạn`
+                    const orderCode = `Mã đơn hàng: ${order._id.toString()}`
+                    const reason = ""
+                    await sendAnnouncementEmail(talent.email, subject, message, orderCode, reason)
                 } catch (error) {
                     console.log(error)
                     throw new BadRequestError("Email service error")
@@ -181,16 +174,18 @@ class OrderService {
         //1. check order and user
         const oldOrder = await Order.findById(orderId)
         const foundUser = await User.findById(userId)
-        if (!foundUser) throw new NotFoundError("User not found!")
-        if (!oldOrder) throw new NotFoundError("Order not found!")
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!oldOrder) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (oldOrder.memberId.toString() !== userId)
-            throw new AuthFailureError("You can update only your order")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
-        const fileFormats = req.body.fileFormats.split(",")
-        req.body.fileFormats = fileFormats
+        if(req.body.fileFormats){
+            const fileFormats = req.body.fileFormats.split(",")
+            req.body.fileFormats = fileFormats
+        }
         //2. Check order status
-        if (oldOrder.status != "pending")
-            throw new BadRequestError("You cannot update order on this stage!")
+        if (oldOrder.status != "pending" && oldOrder.talentChosenId)
+            throw new BadRequestError("Bạn không thể cập nhật đơn hàng ở bước này")
         try {
             //3. Handle file uploads if new files were uploaded
             if (req.files && req.files.files && req.files.files.length > 0) {
@@ -244,7 +239,7 @@ class OrderService {
     static readMemberOrderHistory = async (clientId) => {
         //1. Check user
         const foundUser = await User.findById(clientId)
-        if (!foundUser) throw new NotFoundError("User not found!")
+        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Get orders
         let orders
@@ -290,9 +285,9 @@ class OrderService {
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
         const foundTalent = await User.findById(talentId)
-        if (!foundTalent) throw new NotFoundError("Talent not found!")
+        if (!foundTalent) throw new NotFoundError("Không tìm thấy họa sĩ")
         if (foundTalent.role !== "talent")
-            throw new BadRequestError("You are not a talent!")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
 
         try {
             // 2. Aggregate to get all orders involving the talent
@@ -374,7 +369,6 @@ class OrderService {
                         isPrivate: 1,
                         deadline: 1,
                         fileFormats: 1,
-                        review: 1,
                         proposalId: {
                             $arrayElemAt: [
                                 {
@@ -412,7 +406,6 @@ class OrderService {
                         isPrivate: 1,
                         deadline: 1,
                         fileFormats: 1,
-                        review: 1,
                     },
                 },
             ]);
@@ -522,7 +515,6 @@ class OrderService {
                         isPrivate: 1,
                         deadline: 1,
                         fileFormats: 1,
-                        review: 1,
                     },
                 },
             ])
@@ -538,8 +530,8 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         if (userId == order.memberId.toString()) {
             order.isMemberArchived = true
@@ -557,8 +549,8 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         if (userId == order.memberId.toString()) {
             order.isMemberArchived = false
@@ -577,18 +569,18 @@ class OrderService {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         //2. Check if user is authorized to deny order
         if (user.role !== "talent")
             throw new AuthFailureError(
-                "You are not authorized to deny this order"
+                "Bạn không có quyền thực hiện thao tác này"
             )
 
         //3. Check if order status is pending
         if (order.status !== "pending")
-            throw new BadRequestError("You cannot deny this order")
+            throw new BadRequestError("Bạn không thể từ chối đơn hàng ở bước này")
 
         //4. Deny order
         order.status = "rejected"
@@ -603,19 +595,11 @@ class OrderService {
         //6. Send email to user
         const member = await User.findById(order.memberId)
         try {
-            const subject = ""
-            const subjectMessage = ""
-            const verificationCode = ""
-            const message = 'Your order has been denied by the talent you chose. Please check the order details and try again with another talent.'
-            const template = "announcementTemplate"
-            await brevoSendEmail(
-                member.email,
-                subject,
-                subjectMessage,
-                verificationCode,
-                message,
-                template
-            )
+            const subject = `[PASTAL] - Đơn hàng đã bị từ chối (${formatDate()})`
+            const message = `Họa sĩ ${user.fullName} đã từ chối đơn đặt hàng của bạn`
+            const orderCode = `Mã đơn hàng: ${order._id.toString()}`
+            const reason = ''
+            await sendAnnouncementEmail(member.email, subject, message, orderCode, reason)
         } catch (error) {
             console.error("Error sending email:", error)
             throw new BadRequestError("Email service error")
@@ -626,21 +610,90 @@ class OrderService {
         }
     }
 
-    static startWipOrder = async (userId, orderId) => {
+    static startWipCommissionOrder = async (userId, orderId) => {
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId).populate("talentChosenId", "stageName avatar")
-            .populate("memberId", "fullName avatar")
-            .populate("commissionServiceId", "title")
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
-        if (order.status !== "confirmed") throw new BadRequestError("Order is not confirmed yet")
-        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("You are not authorized to start work on this order")
+            .populate("memberId", "fullName avatar email")
+            .populate("commissionServiceId", "title");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
+        if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
+        console.log('ORDER', order)
+        if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Start work
         order.status = "in_progress"
         order.save()
 
+        //3. Send email to user
+        const subject = `[PASTAL] - Đơn hàng đang được thực hiện (${formatDate()})`
+        const subSubject = `Họa sĩ ${user.fullName} đã tiến hành thực hiện yêu cầu cho đơn hàng của bạn.`
+        const message = ` Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
+        sendAnnouncementEmail(order.memberId.email, subject, subSubject, message);
+        
+        return {
+            order,
+        }
+    }
+
+    // Client confirm finishing order
+    static finishOrder = async (userId, orderId) => {
+       //1. Check user, order
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        console.log(order.status);
+        if (!user) throw new NotFoundError("User not found")
+        if (!order) throw new NotFoundError("Order not found")
+        if (order.memberId.toString() !== userId) throw new AuthFailureError("You are not authorized to finish this order")
+        if(order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
+
+        //2. Finish order
+        order.status = "finished"
+        order.save()
+
+        return {
+            order
+        }
+    }
+
+    static addMilestone = async (userId, orderId, req) => {
+        //1. Check if user, order exists
+        const user = await User.findById(userId)
+        const order = await Order.findById(orderId)
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
+        if (!order.talentChosenId || order.talentChosenId.toString() !== userId)
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
+
+        //2. Check if order status is in_progress
+        if (order.status !== "in_progress")
+            throw new BadRequestError("Đơn hàng không ở trạng thái đang thực hiện")
+
+        //3. Handle files in milestone
+        let files = []
+        if (req.files && req.files.files && req.files.files.length > 0) {
+            const uploadPromises = req.files.files.map((file) =>
+                compressAndUploadImage({
+                    buffer: file.buffer,
+                    originalname: file.originalname,
+                    folderName: `fiyonce/order/${userId}`,
+                    width: 1920,
+                    height: 1080,
+                })
+            )
+            const uploadResults = await Promise.all(uploadPromises)
+            files = uploadResults.map((result) => result.secure_url)
+        }
+        const milestone = {
+            title: req.body.title,
+            files: files,
+            url: req.body.url,
+            note: req.body.note,
+            createdAt: new Date(),
+        }
+        order.milestones.push(milestone)
+        order.save()
 
         return {
             order,
@@ -654,20 +707,20 @@ class OrderService {
         const talent = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!talent) throw new NotFoundError("Talent not found")
-        if (talent.role !== "talent") throw new BadRequestError("You are not a talent")
+        if(talent.role !== "talent") throw new BadRequestError("You are not a talent")
         if (!order) throw new NotFoundError("Order not found")
         if (order.talentChosenId.toString() !== userId) throw new AuthFailureError("You are not authorized to deliver this order")
         if (order.status !== "in_progress") throw new BadRequestError("Order is not in progress")
 
         //2. Deliver order
         // Validate input
-        if (!req.files && !body?.url)
+        if(!req.files && !body?.url) 
             throw new BadRequestError("No files or url provided for delivery")
 
         // Upload new files to Cloudinary using uploadFinalProduct function
-        if (req.files && req.files.files && req.files.files.length > 0) {
+        if(req.files && req.files.files && req.files.files.length > 0) {
             const uploadPromises = req.files.files.map((file) =>
-                uploadFinalProduct({
+                compressAndUploadImage({
                     buffer: file.buffer,
                     originalname: file.originalname,
                     folderName: `fiyonce/order/${userId}`,
@@ -681,30 +734,11 @@ class OrderService {
         order.finalDelivery.note = body?.note
         order.finalDelivery.deliveryAt = new Date()
         order.status = "delivered"
-        order.save()
+        await order.save()
 
         return {
             order,
-        }
-    }
-
-    // Client confirm finishing order
-    static finishOrder = async (userId, orderId) => {
-        //1. Check user, order
-        const user = await User.findById(userId)
-        const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
-        if (order.memberId.toString() !== userId) throw new AuthFailureError("You are not authorized to finish this order")
-        if (order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
-
-        //2. Finish order
-        order.status = "finished"
-        order.save()
-
-        return {
-            order
-        }
+        };
     }
 }
 

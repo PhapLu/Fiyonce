@@ -39,7 +39,6 @@ class ChallengeService {
             thumbnail,
             ...req.body
         })
-        console.log(challenge.isPrivate)
         await challenge.save()
 
         return {

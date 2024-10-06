@@ -1,0 +1,71 @@
+2024-09-02 11:30:09::info::/v1/api/auth/users/login::dda4db2d-6370-499a-a2ca-762baa23bd58::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-09-02 11:30:59::info::/v1/api/commissionReport/readCommissionReports::cfde779f-dd83-4552-bfe3-e625edca6f98::input-params ::GET::::{}
+2024-09-02 11:31:54::info::/v1/api/commissionReport/createCommissionReport::60ebcedd-b885-4286-91de-f8c2a106db78::input-params ::POST::::{}
+2024-09-02 11:31:54::error::/v1/api/commissionReport/createCommissionReport::60ebcedd-b885-4286-91de-f8c2a106db78::403 - 0ms - Response: {"status":403,"now":1725251514675}::{"message":"Không tìm thấy đơn hàng"}
+2024-09-02 14:09:43::info::/v1/api/auth/users/login::eef111c3-9887-487e-bab6-aa177bbbc9e7::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 14:09:51::info::/v1/api/auth/users/login::ac1e4658-a2fa-4b5e-a333-6d154da14f1f::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 14:10:01::info::/v1/api/auth/users/login::c2368615-4529-452b-8e1f-bb16668fc6ae::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 14:15:49::info::/v1/api/order/createOrder::22cef74e-34e2-48fd-8317-d394de3ea09e::input-params ::POST::::{}
+2024-09-02 14:15:50::error::/v1/api/order/createOrder::22cef74e-34e2-48fd-8317-d394de3ea09e::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:19:28::info::/v1/api/order/createOrder::39b1329e-0bdd-499d-885f-2ffc9d7fe981::input-params ::POST::::{}
+2024-09-02 14:19:28::error::/v1/api/order/createOrder::39b1329e-0bdd-499d-885f-2ffc9d7fe981::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:19:48::info::/v1/api/order/createOrder::26484400-3816-4941-8835-8f45cc5c110f::input-params ::POST::::{}
+2024-09-02 14:19:48::error::/v1/api/order/createOrder::26484400-3816-4941-8835-8f45cc5c110f::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:20:40::info::/v1/api/order/createOrder::a2432259-1128-456e-9ccd-d797c79379a8::input-params ::POST::::{}
+2024-09-02 14:20:40::error::/v1/api/order/createOrder::a2432259-1128-456e-9ccd-d797c79379a8::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:21:59::info::/v1/api/order/createOrder::1f4cf614-9b73-4d5c-be36-a35c4dc4fc06::input-params ::POST::::{}
+2024-09-02 14:21:59::error::/v1/api/order/createOrder::1f4cf614-9b73-4d5c-be36-a35c4dc4fc06::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:22:35::info::/v1/api/order/createOrder::ae5f777c-3ffc-4155-80cc-11b8fc8a3783::input-params ::POST::::{}
+2024-09-02 14:22:35::error::/v1/api/order/createOrder::ae5f777c-3ffc-4155-80cc-11b8fc8a3783::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:23:22::info::/v1/api/order/createOrder::81b8d8ef-7c7c-48f2-befd-313bfa5e0a95::input-params ::POST::::{}
+2024-09-02 14:23:23::error::/v1/api/order/createOrder::81b8d8ef-7c7c-48f2-befd-313bfa5e0a95::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:25:23::info::/v1/api/order/createOrder::0a20e5ab-db75-4caa-891f-471cb2fab1de::input-params ::POST::::{}
+2024-09-02 14:25:23::error::/v1/api/order/createOrder::0a20e5ab-db75-4caa-891f-471cb2fab1de::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:32:12::info::/v1/api/order/createOrder::05beee97-5371-4cf4-b4f6-93b9dc1b0efa::input-params ::POST::::{}
+2024-09-02 14:32:12::error::/v1/api/order/createOrder::05beee97-5371-4cf4-b4f6-93b9dc1b0efa::undefined - NaNms - Response: {}::{"message":"Cannot read properties of null (reading 'talentId')"}
+2024-09-02 14:36:18::info::/v1/api/order/createOrder::f6f6b661-b095-4ca8-b98f-b496c27c169f::input-params ::POST::::{}
+2024-09-02 14:42:05::info::/v1/api/auth/users/login::24893924-3483-43be-9803-aa33ba09ad03::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 14:42:08::info::/v1/api/proposal/sendProposal/66d56af5064cb3c2daa08070::48486011-e9b2-4c7a-9d0b-25ada6c2f933::input-params ::POST::::{"title":"France's order","scope":"You will get a jpg file","startAt":"","deadline":"","price":800000,"termOfServiceId":"66a5c899dea404a988c9197c"}
+2024-09-02 14:42:08::error::/v1/api/proposal/sendProposal/66d56af5064cb3c2daa08070::48486011-e9b2-4c7a-9d0b-25ada6c2f933::403 - 0ms - Response: {"status":403,"now":1725262928884}::{"message":"Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này"}
+2024-09-02 14:42:44::info::/v1/api/proposal/sendProposal/66d56af5064cb3c2daa08070::e5a834d6-3501-40e7-9821-7040f3694d7f::input-params ::POST::::{"title":"France's order","scope":"You will get a jpg file","startAt":"","deadline":"","price":800000,"termOfServiceId":"66a5c899dea404a988c9197c"}
+2024-09-02 14:44:30::info::/v1/api/order/startWipCommissionOrder/66d56af5064cb3c2daa08070::7c601577-e89a-4e6a-90f2-2308713144a4::input-params ::PATCH::::{}
+2024-09-02 14:44:30::error::/v1/api/order/startWipCommissionOrder/66d56af5064cb3c2daa08070::7c601577-e89a-4e6a-90f2-2308713144a4::403 - 0ms - Response: {"status":403,"now":1725263070494}::{"message":"Đơn hàng chưa được xác nhận ở hiện tại"}
+2024-09-02 14:44:59::info::/v1/api/order/startWipCommissionOrder/66d56af5064cb3c2daa08070::1dd8edda-65e4-423e-aba4-af48c367eb09::input-params ::PATCH::::{}
+2024-09-02 14:46:12::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::86440fa5-a301-460a-beb9-74f2d90b937f::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 14:46:12::error::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::86440fa5-a301-460a-beb9-74f2d90b937f::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-09-02 14:51:40::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::de2f8310-1b13-4d60-94d1-1e3bf94bc213::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 14:51:40::error::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::de2f8310-1b13-4d60-94d1-1e3bf94bc213::undefined - NaNms - Response: {}::{"message":"Cannot set properties of undefined (setting 'url')"}
+2024-09-02 14:52:49::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::fe17eee9-db07-4145-bed7-ca885ec68976::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 14:52:49::error::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::fe17eee9-db07-4145-bed7-ca885ec68976::undefined - NaNms - Response: {}::{"message":"Cannot set properties of undefined (setting 'url')"}
+2024-09-02 14:54:43::info::/v1/api/order/readOrder/66d56af5064cb3c2daa08070::85293a1b-c72f-47d6-982d-37dee60faecb::input-params ::GET::::{}
+2024-09-02 14:55:04::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::7bd47be9-2783-4182-99ab-a0f1c6043a91::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 14:55:25::info::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::7f41f98e-de16-4855-bf8b-f0904f00233b::input-params ::PATCH::::{}
+2024-09-02 14:55:25::error::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::7f41f98e-de16-4855-bf8b-f0904f00233b::401 - 1ms - Response: {"status":401,"now":1725263725490}::{"message":"You are not authorized to finish this order"}
+2024-09-02 14:55:54::info::/v1/api/auth/users/login::2e85b178-ccdd-4794-a7f7-2b5230bcd93c::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 14:56:01::info::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::d00530ad-f9c0-4732-b763-537118d5723c::input-params ::PATCH::::{}
+2024-09-02 14:56:02::error::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::d00530ad-f9c0-4732-b763-537118d5723c::403 - 1ms - Response: {"status":403,"now":1725263762104}::{"message":"Order is not delivered yet"}
+2024-09-02 14:56:30::info::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::b31e8631-0490-492c-b25b-401b3a682656::input-params ::PATCH::::{}
+2024-09-02 14:56:30::error::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::b31e8631-0490-492c-b25b-401b3a682656::403 - 0ms - Response: {"status":403,"now":1725263790290}::{"message":"Order is not delivered yet"}
+2024-09-02 14:56:49::info::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::d39e5492-de84-4c93-99e3-407a30f73a70::input-params ::PATCH::::{}
+2024-09-02 14:56:49::error::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::d39e5492-de84-4c93-99e3-407a30f73a70::403 - 2ms - Response: {"status":403,"now":1725263809565}::{"message":"Order is not delivered yet"}
+2024-09-02 14:57:07::info::/v1/api/order/readOrder/66d56af5064cb3c2daa08070::4b20e578-048a-4c9d-bbcd-0e15891d1f8f::input-params ::GET::::{}
+2024-09-02 15:01:35::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::37389c9a-90ba-4347-8ab9-d430fa0b54f4::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 15:01:36::error::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::37389c9a-90ba-4347-8ab9-d430fa0b54f4::401 - 1ms - Response: {"status":401,"now":1725264096153}::{"message":"You are not authorized to deliver this order"}
+2024-09-02 15:01:48::info::/v1/api/auth/users/login::f56c4f27-a626-45a8-9ee0-3fc1da6d419b::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 15:01:50::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::fc8289d5-2143-4328-bb5c-f7cc0bc5db43::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 15:02:03::info::/v1/api/order/readOrder/66d56af5064cb3c2daa08070::a938e39f-a75a-4204-8c92-bc51996e114e::input-params ::GET::::{}
+2024-09-02 15:07:59::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::57f9bc41-9347-45ca-aceb-167ccbd163e6::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 15:08:00::error::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::57f9bc41-9347-45ca-aceb-167ccbd163e6::undefined - NaNms - Response: {"errors":{"status":{"name":"ValidatorError","message":"`delivered` is not a valid enum value for path `status`.","properties":{"message":"`delivered` is not a valid enum value for path `status`.","type":"enum","enumValues":["waitlist","pending","approved","rejected","confirmed","in_progress","finished","under_processing"],"path":"status","value":"delivered"},"kind":"enum","path":"status","value":"delivered"}},"_message":"Order validation failed","name":"ValidationError","message":"Order validation failed: status: `delivered` is not a valid enum value for path `status`."}::{"message":"Order validation failed: status: `delivered` is not a valid enum value for path `status`."}
+2024-09-02 15:08:55::info::/v1/api/order/readOrder/66d56af5064cb3c2daa08070::eace50dc-a771-4694-b914-6f4756ae3f78::input-params ::GET::::{}
+2024-09-02 15:09:06::info::/v1/api/order/deliverOrder/66d56af5064cb3c2daa08070::40364a44-578b-4706-b73f-a602b7d0adf2::input-params ::PATCH::::{"url":"urll","note":"note2"}
+2024-09-02 15:09:22::info::/v1/api/auth/users/login::b4fa4ea6-1d0c-4380-adcb-09ab96fbdc61::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-09-02 15:09:26::info::/v1/api/order/finishOrder/66d56af5064cb3c2daa08070::b9af03b2-c3db-4d17-8df7-e6c535f9d739::input-params ::PATCH::::{}
+2024-09-02 15:10:24::info::/v1/api/commissionReport/createCommissionReport::f8a9dbe0-69f2-4f5f-b322-44b63580c674::input-params ::POST::::{}
+2024-09-02 15:10:54::info::/v1/api/commissionreport/adminreceiveReport/66d572f3cfe2b9748ad9c020::517d448b-01e7-4040-b53b-42b717ec5dcf::input-params ::PATCH::::{}
+2024-09-02 15:11:04::info::/v1/api/auth/users/login::246bfbb1-bc54-435f-8dbc-f98967ba93da::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-09-02 15:11:07::info::/v1/api/commissionreport/adminreceiveReport/66d572f3cfe2b9748ad9c020::cee8c012-5a3b-428b-8162-8458005aa602::input-params ::PATCH::::{}
+2024-09-02 15:11:07::error::/v1/api/commissionreport/adminreceiveReport/66d572f3cfe2b9748ad9c020::cee8c012-5a3b-428b-8162-8458005aa602::undefined - NaNms - Response: {}::{"message":"formatDate is not defined"}
+2024-09-02 15:11:49::info::/v1/api/commissionreport/adminreceiveReport/66d572f3cfe2b9748ad9c020::17136eea-682e-4b1b-bc83-13533a22b1d4::input-params ::PATCH::::{}
+2024-09-02 15:13:47::info::/v1/api/commissionReport/adminMakeDecision/66d572f3cfe2b9748ad9c020::ab3616d4-cf10-4662-8544-2f5c7d66a6d6::input-params ::PATCH::::{"decision":"client_favored","reason":"Testing reason"}
+2024-09-02 15:13:48::error::/v1/api/commissionReport/adminMakeDecision/66d572f3cfe2b9748ad9c020::ab3616d4-cf10-4662-8544-2f5c7d66a6d6::undefined - NaNms - Response: {}::{"message":"decision is not defined"}
+2024-09-02 15:15:49::info::/v1/api/commissionReport/readCommissionReport/66d572f3cfe2b9748ad9c020::c55971a1-7ddf-4019-8119-4398f0da8502::input-params ::GET::::{}

@@ -116,8 +116,11 @@ const io = configureSocket(server);
 
 global._io.on('connection', SocketServices.connection);
 
+
 process.on('SIGINT', () => {
     server.close(() => console.log('Exit Server Express'));
 });
 
 export default server;
+
+

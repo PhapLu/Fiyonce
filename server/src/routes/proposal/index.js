@@ -19,11 +19,11 @@ router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProp
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 
-
 router.patch('/confirmProposal/:proposalId', asyncHandler(proposalController.confirmProposal))
 
 //END CRUD
 router.post('/generatePaymentUrl/:proposalId', asyncHandler(proposalController.generatePaymentUrl))
+router.post('/bindPaymentAccount', asyncHandler(proposalController.bindPaymentAccount))
 router.post('/momoCallback', asyncHandler(proposalController.momoCallback))
 router.post('/readMomoOrderStatus', asyncHandler(proposalController.readMomoOrderStatus))
 router.patch('/denyProposal/:proposalId', asyncHandler(proposalController.denyProposal))

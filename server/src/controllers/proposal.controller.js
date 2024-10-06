@@ -58,6 +58,13 @@ class ProposalController{
         }).send(res)
     }
 
+    bindPaymentAccount = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'Bind payment account success!',
+            metadata: await ProposalService.bindPaymentAccount(req.userId, req.body)
+        }).send(res)
+    }
+
     momoCallback = async(req, res, next) =>{
         new SuccessResponse({
             message: 'MoMo callback success!',
