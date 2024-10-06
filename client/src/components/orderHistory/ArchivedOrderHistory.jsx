@@ -125,14 +125,14 @@ export default function ArchivedOrderHistory() {
 
     if (isFetchingArchivedOrderHistoryLoading) {
         return <>
-        <br /><br /><br /><br />
-        <div className="text-align-center flex-align-center flex-justify-center mt-40">
-            <ClipLoader className="clip-loader" size={40} loading={true} />
-            <h3 className="ml-12">
-                Đang tải
-            </h3>
-        </div>
-    </>
+            <br /><br /><br /><br />
+            <div className="text-align-center flex-align-center flex-justify-center mt-40">
+                <ClipLoader className="clip-loader" size={40} loading={true} />
+                <h3 className="ml-12">
+                    Đang tải
+                </h3>
+            </div>
+        </>
     }
 
     if (isFetchingArchivedOrderHistoryError) {
@@ -155,7 +155,7 @@ export default function ArchivedOrderHistory() {
                     {
                         orders?.length > 0 ? orders.map((order, index) => {
                             return (
-                                <tr key={index} onClick={() => { setCommissionOrder(order); setShowRenderCommissionOrder(true); setOverlayVisible(true) }}>
+                                <tr key={index}>
                                     <td >
                                         <span className={`status ${order.status}`}>
                                             {order.status === "pending" && "Đang đợi bạn xác nhận"}
@@ -177,13 +177,13 @@ export default function ArchivedOrderHistory() {
                                                 order.status === "pending" &&
                                                 (
                                                     <>
-                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); handleShowCreateProposal() }} className="btn btn-3">Soạn hợp đồng</button>
-                                                        <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3">Từ chối</button>
+                                                        <button className="btn btn-3">Soạn hợp đồng</button>
+                                                        <button className="btn btn-3">Từ chối</button>
                                                     </>
                                                 )
                                             }
                                             {order.status === "approved" && (
-                                                <button onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderProposal(true); setOverlayVisible(true); }} className="btn btn-3">Xem hợp đồng</button>
+                                                <button className="btn btn-3">Xem hợp đồng</button>
                                             )}
                                         </>
                                         <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowArchiveOrderMoreActions(order) }}>
@@ -193,12 +193,12 @@ export default function ArchivedOrderHistory() {
 
                                             {showArchiveOrderMoreActions === order && (
                                                 <div className="more-action-container" ref={archiveOrderBtnRef}>
-                                                    <div className="more-action-item flex-align-center gray-bg-hover p-4 br-4" onClick={(e) => { e.stopPropagation(), setCommissionOrder(order), setShowUnarchiveCommissionOrder(true); setOverlayVisible(true) }}>
+                                                    <Link to={`/order-history/commission-orders/${order._id}/unarchive`} className="more-action-item flex-align-center gray-bg-hover p-4 br-4">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                                                         </svg>
                                                         Xóa khỏi lưu trữ
-                                                    </div>
+                                                    </Link>
                                                 </div>
                                             )}
                                         </button>
@@ -214,23 +214,6 @@ export default function ArchivedOrderHistory() {
                     }
                 </tbody>
             </table>
-            {/* Modal forms */}
-            {
-                overlayVisible &&
-                (
-                    <div className="overlay">
-                        {showRenderCommissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        {showUpdateCommissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        {showArchiveCommissionOrder && <ArchiveCommissionOrder commissionOrder={commissionOrder} setShowArchiveCommissionOrder={setShowArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} archiveCommissionOrderMutation={archiveCommissionOrderMutation} />}
-                        {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
-
-                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} createProposalMutation={createProposalMutation} />}
-                        {/* {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} termOfServices={termOfServices} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />} */}
-                        {/* {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />} */}
-                        {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
-                    </div>
-                )
-            }
         </>
     )
 }

@@ -39,27 +39,7 @@ import { ClipLoader } from "react-spinners";
 export default function TalentOrderHistory() {
     const queryClient = useQueryClient();
 
-    const [commissionOrder, setCommissionOrder] = useState();
     const [showTalentOrderMoreActions, setShowTalentOrderMoreActions] = useState();
-    const [showRenderCommissionOrder, setShowRenderCommissionOrder] = useState();
-
-    const [showUpdateCommissionOrder, setShowUpdateCommissionOrder] = useState();
-    const [showRenderProposals, setShowRenderProposals] = useState(false);
-
-    const [showCreateProposal, setShowCreateProposal] = useState(false);
-    const [showRenderProposal, setShowRenderProposal] = useState(false);
-
-    const [showRejectCommissionOrder, setShowRejectCommissionOrder] = useState(false);
-    const [showStartWipCommissionOrder, setShowStartWipCommissionOrder] = useState(false);
-
-    const [showArchiveCommissionOrder, setShowArchiveCommissionOrder] = useState(false);
-    const [showUnarchiveCommissionOrder, setShowUnarchiveCommissionOrder] = useState(false);
-    const [showReportCommissionOrder, setShowReportCommissionOrder] = useState(false);
-
-    const [showCommissionTosView, setShowCommissionTosView] = useState(false);
-    const [proposalId, setProposalId] = useState();
-
-    const [overlayVisible, setOverlayVisible] = useState();
 
     const moreActionsRef = useRef(null);
     const archiveOrderBtnRef = useRef(null);
@@ -83,39 +63,6 @@ export default function TalentOrderHistory() {
     } = useQuery('fetchTalentOrderHistory', fetchTalentOrderHistory, {
     });
 
-    const archiveCommissionOrderMutation = useMutation(
-        async (orderId) => {
-            const response = await apiUtils.patch(`/order/archiveOrder/${orderId}`);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-                queryClient.invalidateQueries('fetchArchivedOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
-
-    const reportCommissionOrderMutation = useMutation(
-        async (fd) => {
-            const response = await apiUtils.post(`/commissionReport/createCommissionReport`, fd);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
-
-
-
     const rejectCommissionOrderMutation = useMutation(
         async ({ orderId, fd }) => {
             const response = await apiUtils.patch(`/order/rejectOrder/${orderId}`, { rejectMessage: fd.get("rejectMessage") });
@@ -132,22 +79,6 @@ export default function TalentOrderHistory() {
     );
 
 
-
-    const unarchiveCommissionOrderMutation = useMutation(
-        async (orderId) => {
-            const response = await apiUtils.patch(`/order/unarchiveOrder/${orderId}`);
-            return response;
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('fetchTalentOrderHistory');
-                queryClient.invalidateQueries('fetchArchivedOrderHistory');
-            },
-            onError: (error) => {
-                return error;
-            },
-        }
-    );
 
 
     useEffect(() => {
@@ -185,7 +116,7 @@ export default function TalentOrderHistory() {
     }
 
     return (
-        <>
+        <div className="talent-order-history">
             <table>
                 <thead>
                     <tr className="non-hover">
@@ -302,7 +233,7 @@ export default function TalentOrderHistory() {
                                                 (
                                                     <>
                                                         <Link to={`/order-history/commission-orders/${order._id}/create-proposal`} className="btn btn-3 mr-8">Soạn hợp đồng</Link>
-                                                        <Link to={`/order-history/commission-orders/${order._id}/reject`} onClick={(e) => { e.stopPropagation(); setCommissionOrder(order); setShowRenderCommissionOrder(false); setShowRejectCommissionOrder(true); setOverlayVisible(true); }} className="btn btn-3 mr-8">Từ chối</Link>
+                                                        <Link to={`/order-history/commission-orders/${order._id}/reject`} className="btn btn-3 mr-8">Từ chối</Link>
                                                     </>
                                                 )
                                             }
@@ -319,14 +250,14 @@ export default function TalentOrderHistory() {
                                                 </>
                                             )}
                                         </>
-                                        <button className="btn btn-3 icon-only p-4 more-action-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
+                                        <button className="btn btn-3 icon-only p-4 more-actions-btn" ref={moreActionsRef} onClick={(e) => { e.stopPropagation(), setShowTalentOrderMoreActions(order) }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                             </svg>
 
                                             {showTalentOrderMoreActions === order && (
-                                                <div className="more-action-container" ref={archiveOrderBtnRef}>
-                                                    <Link to={`/order-history/commission-orders/${order?._id}/talent-archive`} className="more-action-item flex-align-center gray-bg-hover p-4 br-4" onClick={(e) => { e.stopPropagation(), setCommissionOrder(order), setShowArchiveCommissionOrder(true); setOverlayVisible(true) }}>
+                                                <div className="more-actions-container" ref={archiveOrderBtnRef}>
+                                                    <Link to={`/order-history/commission-orders/${order?._id}/archive`} className="more-actions-item flex-align-center gray-bg-hover p-4 br-4">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                                                         </svg>
@@ -337,7 +268,7 @@ export default function TalentOrderHistory() {
                                                         && (
                                                             <>
                                                                 <hr />
-                                                                <Link to={`/order-history/commission-orders/${order?._id}/client-report-talent`} className="more-action-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef}>
+                                                                <Link to={`/order-history/commission-orders/${order?._id}/report`} className="more-actions-item flex-align-center gray-bg-hover p-4 br-4" ref={reportOrderBtnRef}>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-8">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
                                                                     </svg>
@@ -362,36 +293,6 @@ export default function TalentOrderHistory() {
                     }
                 </tbody>
             </table>
-
-            {/* Modal forms */}
-            {
-                overlayVisible &&
-                (
-                    <div className="overlay">
-                        {/* {showRenderCommissionOrder && <RenderCommissionOrder commissionOrder={commissionOrder} setShowCreateProposal={setShowCreateProposal} setShowRenderCommissionOrder={setShowRenderCommissionOrder} setOverlayVisible={setOverlayVisible} />} */}
-                        {showUpdateCommissionOrder && <UpdateCommissionOrder commissionOrder={commissionOrder} setShowUpdateCommissionOrder={setShowUpdateCommissionOrder} setOverlayVisible={setOverlayVisible} />}
-                        {showArchiveCommissionOrder && <ArchiveCommissionOrder commissionOrder={commissionOrder} setShowArchiveCommissionOrder={setShowArchiveCommissionOrder} setOverlayVisible={setOverlayVisible} archiveCommissionOrderMutation={archiveCommissionOrderMutation} />}
-                        {showUnarchiveCommissionOrder && <UnarchiveCommissionOrder commissionOrder={commissionOrder} setShowUnarchiveCommissionOrder={setShowUnarchiveCommissionOrder} setOverlayVisible={setOverlayVisible} unarchiveCommissionOrderMutation={unarchiveCommissionOrderMutation} />}
-                        {showReportCommissionOrder && <ReportCommissionOrder proposalId={proposalId} commissionOrder={commissionOrder} setShowReportCommissionOrder={setShowReportCommissionOrder} setOverlayVisible={setOverlayVisible} reportCommissionOrderMutation={reportCommissionOrderMutation} />}
-
-                        {showCreateProposal && <CreateProposal commissionOrder={commissionOrder} setShowCreateProposal={setShowCreateProposal} setOverlayVisible={setOverlayVisible} />}
-                        {/* {showRenderProposal && <RenderProposal commissionOrder={commissionOrder} proposalId={proposalId} setShowRenderProposal={setShowRenderProposal} setOverlayVisible={setOverlayVisible} />} */}
-
-                        {/* {showRenderProposals && <RenderProposals commissionOrder={commissionOrder} setShowRenderProposals={setShowRenderProposals} setOverlayVisible={setOverlayVisible} />} */}
-                        {showRejectCommissionOrder && <RejectCommissionOrder commissionOrder={commissionOrder} setShowRejectCommissionOrder={setShowRejectCommissionOrder} setOverlayVisible={setOverlayVisible} rejectCommissionOrderMutation={rejectCommissionOrderMutation} />}
-
-                        {showStartWipCommissionOrder && <StartWipCommissionOrder commissionOrder={commissionOrder} setShowStartWipCommissionOrder={setShowStartWipCommissionOrder} setOverlayVisible={setOverlayVisible} startWipCommissionOrderMutation={startWipCommissionOrderMutation} />}
-
-                        {/* Commission TOS */}
-                        {showCommissionTosView &&
-                            <RenderCommissionTos
-                                setShowCommissionTosView={setShowCommissionTosView}
-                                setOverlayVisible={setOverlayVisible}
-                            />
-                        }
-                    </div>
-                )
-            }
-        </>
+        </div>
     )
 }

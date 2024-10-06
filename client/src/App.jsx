@@ -71,6 +71,10 @@ import RejectResponse from "./components/crudCommissionOrder/rejectResponse/Reje
 import RenderMilestones from "./components/crudCommissionOrder/renderMilestones/RenderMilestones.jsx";
 import Resources from "./statics/resources/Resources.jsx";
 import CreateMilestone from "./components/crudCommissionOrder/createMilestone/CreateMilestone.jsx";
+import ArchivedOrderHistory from "./components/orderHistory/ArchivedOrderHistory.jsx";
+import UnarchiveCommissionOrder from "./components/crudCommissionOrder/archive/UnarchiveCommissionOrder.jsx";
+import ArchiveCommissionOrder from "./components/crudCommissionOrder/archive/ArchiveCommissionOrder.jsx";
+import ReportCommissionOrder from "./components/crudCommissionOrder/report/ReportCommissionOrder.jsx";
 
 const queryClient = new QueryClient();
 
@@ -131,6 +135,19 @@ const commissionOrderRoutes = [
       {
         path: "finish",
         element: <FinishCommissionOrder />,
+      },
+      {
+        path: "report",
+        element: <ReportCommissionOrder />,
+      },
+      // More actions
+      {
+        path: "archive",
+        element: <ArchiveCommissionOrder />,
+      },
+      {
+        path: "unarchive",
+        element: <UnarchiveCommissionOrder />,
       },
     ],
   },

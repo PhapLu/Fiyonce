@@ -3,7 +3,7 @@
     .sub-nav-container {
         position: relative;
 
-        .more-action-btn {
+        .more-actions-btn {
             position: absolute;
             right: 0;
 
@@ -11,7 +11,7 @@
                 opacity: 1;
             }
 
-            .more-action-container {
+            .more-actions-container {
                 position: absolute;
                 top: calc(100% + 2px);
                 right: 0;
@@ -35,7 +35,7 @@
                     width: 100%;
                     font-size: 1.2rem;
                     padding: 4px 6px;
-                    border-radius: 6px;
+                    border-radius: 8px;
 
                     &:hover {
                         opacity: 1;
@@ -46,4 +46,38 @@
     }
 
 
+    .talent-order-history {
+        .more-actions-btn {
+            position: relative;
+
+
+            &:hover {
+                opacity: 1;
+            }
+
+            .more-actions-container {
+                position: absolute;
+                top: calc(100% + 2px);
+                right: 0;
+                z-index: 110000;
+                min-width: 150px;
+                background-color: var(--form-bg-2-color);
+                box-shadow: var(--box-shadow-1);
+                padding: 8px;
+                border-radius: 16px 0 16px 16px;
+                border: 2px solid var(--gray-1-color);
+                display: flex;
+                flex-wrap: wrap;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                .more-actions-item {
+                    width: 100%;
+                    border-radius: 8px;
+                }
+            }
+        }
+    }
 }

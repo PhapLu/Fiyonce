@@ -35,7 +35,6 @@ export default function CreateMilestone() {
 
     const closeCreateMilestoneView = () => {
         navigate(`/order-history`);
-        // navigate(commissionOrder?.isDirect ? `/order-history` : `/commission-market`);
     }
 
     useEffect(() => {
