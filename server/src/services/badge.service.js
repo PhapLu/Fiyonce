@@ -10,6 +10,8 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
+import Post from "../models/post.model.js"
+import Service from "../models/commissionService.model.js"
 
 class BadgeService {
     static createBadge = async (adminId, req) => {
@@ -73,20 +75,91 @@ class BadgeService {
         }
     }
 
-    static readBadges = async () => {
-        const badges = await Badge.find()
+    static readEarlyBirdBadge = async (userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError("User not found!")
+
+        //2. Find the badge
+        const badge = await Badge.findOne({ title: 'earlyBird' })
+        if (!badge) throw new NotFoundError("Badge not found!")
+
+        //3. Check if badge is achieved
+        const achievable = user.isEarlyBird
+        
+        //4. Check if badge is already awarded (if it awarded -> claimable = false, if not -> claimable = true)
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+        const claimable = badgeIndex === -1
+
         return {
-            badges
+            badge,
+            achievable,
+            claimable
         }
     }
 
-    static readBadge = async(badgeId) => {
-        //1. Check if the badge exists
-        const badge = await Badge.findById(badgeId)
+    static readTrustedArtistBadge = async (userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError("User not found!")
+
+        //2. Find the badge
+        const badge = await Badge.findOne({ title: 'trustedArtist' })
         if(!badge) throw new NotFoundError("Badge not found!")
-        
+
+        //3. Check if badge is achieved
+        let achievable = false
+        const posts = await Post.find({ talentId: userId })
+        const services = await Service.find({ talentId: userId })
+
+        if(user.bio !== '' &&
+            user.taxCode !== '' &&
+            user.taxCode.isVerified == true &&
+            user.cccd !== '' &&
+            !user.avatar.includes('pastal_system_default') &&
+            !user.bg.includes('pastal_system_default' &&
+            posts.length >= 1 &&
+            services.length >= 1)) {
+
+            achievable = true
+        }
+
+        //4. Check if badge is already awarded
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+        const claimable = badgeIndex === -1
+
         return {
-            badge
+            badge,
+            achievable,
+            claimable
+        }
+    }
+
+    static readAmbassadorBadge = async (userId) => {
+        //1. Check user
+        const user = await User.findById(userId)
+        if(!user) throw new NotFoundError("User not found!")
+
+        //2. Find the badge
+        const badge = await Badge.findOne({ title: 'platformAmbassador' })
+        if(!badge) throw new NotFoundError("Badge not found!")
+
+        //3. Check if badge is achieved
+        let achievable = false
+        const referrals = user.referral.referred
+
+        if(referrals.length >= 10) {
+            achievable = true
+        }
+
+        //4. Check if badge is already awarded
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+        const claimable = badgeIndex === -1
+
+        return {
+            badge,
+            achievable,
+            claimable
         }
     }
 

@@ -2,17 +2,31 @@ import { SuccessResponse } from "../core/success.response.js"
 import BadgeService from "../services/badge.service.js"
 
 class BadgeController{
+    readEarlyBirdBadge = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Read early bird badge success!',
+            metadata: await BadgeService.readEarlyBirdBadge(req.userId)
+        }).send(res)
+    }
+
+    readTrustedArtistBadge = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Read trusted artist badge success!',
+            metadata: await BadgeService.readTrustedArtistBadge(req.userId)
+        }).send(res)
+    }
+
+    readPlatformAmbassadorBadge = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Read platform ambassador badge success!',
+            metadata: await BadgeService.readPlatformAmbassadorBadge(req.userId)
+        }).send(res)
+    }
+
     createBadge = async(req, res, next) => {
         new SuccessResponse({
             message: 'Create badges success!',
             metadata: await BadgeService.createBadge(req.userId, req)
-        }).send(res)
-    }
-
-    readBadges = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Read badges success!',
-            metadata: await BadgeService.readBadges()
         }).send(res)
     }
 

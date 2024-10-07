@@ -16,22 +16,17 @@ class UserService {
         if (profileId != userId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
-        //2. Update user
+        //2. Validate body
+        if(body.followers || body.following || body.role || body.badges || body.views || body.status || body.accessToken || body.referral){
+            throw new BadRequestError("Không thể cập nhật trường này")
+        }
+
+        //3. Update user
         const updatedUser = await User.findByIdAndUpdate(
             profileId,
             { $set: body },
             { new: true }
         ).populate("followers", "avatar").populate("following", "avatar fullName");
-
-        //3. Track TrustedArtistBadge criteria
-        if (updatedUser.bio !== '' &&
-            updatedUser.taxCode !== '' &&
-            updatedUser.taxCode.isVerified == true &&
-            updatedUser.cccd !== '' &&
-            !updatedUser.avatar.includes('pastal_system_default') &&
-            !updatedUser.bg.includes('pastal_system_default')) {
-            await trackTrustedArtistBadge(userId, 'updateProfile')
-        }
 
         return {
             user: updatedUser,

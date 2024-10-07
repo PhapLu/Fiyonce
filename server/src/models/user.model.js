@@ -38,18 +38,7 @@ const UserSchema = new Schema(
             title: { type: String, default: "" },
         },
         badges: [{
-            badgeId: { type: Schema.Types.ObjectId, ref: "Badge" },
-            count: { type: Number, default: 0 },
-            progress: {
-                type: Map,
-                of: new Schema({
-                    currentProgress: { type: Number, default: 0 },
-                    totalCriteria: { type: Number, required: true },
-                    isComplete: { type: Boolean, default: false }
-                })
-            },
-            isComplete: { type: Boolean, default: false },
-            awardedAt: { type: Date, default: null }
+            type: Schema.Types.ObjectId, ref: "Badge",
         }],
         referral: {
             code: { type: String, default: "" },

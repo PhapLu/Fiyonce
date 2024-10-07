@@ -7,10 +7,13 @@ import { uploadFields, uploadMemory } from '../../configs/multer.config.js'
 
 const router = express.Router()
 
-router.get('/readBadges', asyncHandler(badgeController.readBadges))
-
 //authentication
 router.use(verifyToken)
+
+router.get('/readEarlyBirdBadge', asyncHandler(badgeController.readEarlyBirdBadge))
+router.get('/readTrustedArtistBadge', asyncHandler(badgeController.readTrustedArtistBadge))
+router.get('/readPlatformAmbassadorBadge', asyncHandler(badgeController.readPlatformAmbassadorBadge))
+
 
 //admin
 router.post('/createBadge', uploadMemory.single('file'), accessService.grantAccess('createAny', 'profile'), asyncHandler(badgeController.createBadge))
