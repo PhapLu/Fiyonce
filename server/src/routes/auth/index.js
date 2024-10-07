@@ -36,7 +36,7 @@ router.get(
                 });
             }
 
-            res.redirect("http://localhost:5173");
+            res.redirect("https://pastal.app/");
         } catch (error) {
             next(error);
         }
