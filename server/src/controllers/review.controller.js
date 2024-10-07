@@ -16,10 +16,10 @@ class ReviewController{
         }).send(res)
     }
 
-    readReview = async(req, res, next) => {
+    readReviewsOrderId = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read reviews success!',
-            metadata: await ReviewService.readReview(req.params.orderId)
+            metadata: await ReviewService.readReviewsOrderId(req.params.orderId)
         }).send(res)
     }
 }

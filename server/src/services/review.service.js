@@ -10,15 +10,12 @@ import {
 class ReviewService {
     static createReview = async (userId, orderId, body) => {
         //1. Check user, order
-        console.log(orderId);
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
         if(order.status !== "finished") throw new BadRequestError("Đơn hàng chưa hoàn thành")
 
-        console.log(userId);
-        console.log(order.memberId);
         //2. Validate body
         if (!body.rating)
             throw new BadRequestError("Vui lòng nhập đủ thông tin")
@@ -47,13 +44,17 @@ class ReviewService {
         }
     }
 
-    static readReview = async (reviewId) => {
-        // 1. Check review
-        const review = await Review.findById(reviewId)
-        if (!review) throw new NotFoundError("Không tìm thấy review")
+    static readReviewsOrderId = async(orderId) => {
+        //1. Check order
+        const order = await Order.findById(orderId)
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
+        //2. Read reviews
+        const reviews = await Review.find({orderId})
+        if (!reviews) throw new NotFoundError("Không tìm thấy review")
+        
         return {
-            review,
+            reviews
         }
     }
 
