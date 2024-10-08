@@ -15,7 +15,7 @@ const badgeSchema = new mongoose.Schema({
         default: "other",
         required: true,
     },
-    criteria: { type: String, required: true },
+    criteria: { type: String, default: "" },
 }, {
     collection: COLLECTION_NAME,
     timestamps: true

@@ -14,13 +14,15 @@ router.get('/readEarlyBirdBadge', asyncHandler(badgeController.readEarlyBirdBadg
 router.get('/readTrustedArtistBadge', asyncHandler(badgeController.readTrustedArtistBadge))
 router.get('/readPlatformAmbassadorBadge', asyncHandler(badgeController.readPlatformAmbassadorBadge))
 
-
 //admin
 router.post('/createBadge', uploadMemory.single('file'), accessService.grantAccess('createAny', 'profile'), asyncHandler(badgeController.createBadge))
-router.patch('/updateBadge/:badgeId', uploadFields, accessService.grantAccess('updateAny', 'profile'), asyncHandler(badgeController.updateBadge))
+router.patch('/updateBadge/:badgeId', uploadMemory.single('file'), accessService.grantAccess('updateAny', 'profile'), asyncHandler(badgeController.updateBadge))
 router.delete('/deleteBadge/:badgeId', accessService.grantAccess('deleteAny', 'profile'), asyncHandler(badgeController.deleteBadge))
 
 //Award badge
-router.patch('/awardEarlyBirdBadge/:userId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(badgeController.awardEarlyBirdBadge))
+router.patch('/awardEarlyBirdBadge', asyncHandler(badgeController.awardEarlyBirdBadge))
+router.patch('/awardTrustedArtistBadge', asyncHandler(badgeController.awardTrustedArtistBadge))
+router.patch('/awardPlatformAmbassadorBadge', asyncHandler(badgeController.awardPlatformAmbassadorBadge))
+
 
 export default router

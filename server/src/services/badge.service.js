@@ -10,11 +10,11 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import Post from "../models/post.model.js"
-import Service from "../models/commissionService.model.js"
+import { checkAmbassadorAchievable, checkEarlyBirdAchievable, checkTrustedArtistAchievable } from "../models/repositories/badge.repo.js"
 
 class BadgeService {
     static createBadge = async (adminId, req) => {
+        console.log(req.body);
         // 1. Check if the user is an admin
         const admin = await User.findById(adminId)
         if (!admin) throw new NotFoundError("Admin not found!")
@@ -62,6 +62,7 @@ class BadgeService {
                 criteria: criteriaString, // Store the criteria as a JSON string
                 level: req.body.level,
                 type: req.body.type,
+                displayTitle: req.body.displayTitle
             })
     
             await badge.save()
@@ -85,11 +86,11 @@ class BadgeService {
         if (!badge) throw new NotFoundError("Badge not found!")
 
         //3. Check if badge is achieved
-        const achievable = user.isEarlyBird
+        const achievable = await checkEarlyBirdAchievable(user)
         
         //4. Check if badge is already awarded (if it awarded -> claimable = false, if not -> claimable = true)
         const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
-        const claimable = badgeIndex === -1
+        const claimable = badgeIndex !== -1
 
         return {
             badge,
@@ -108,25 +109,11 @@ class BadgeService {
         if(!badge) throw new NotFoundError("Badge not found!")
 
         //3. Check if badge is achieved
-        let achievable = false
-        const posts = await Post.find({ talentId: userId })
-        const services = await Service.find({ talentId: userId })
-
-        if(user.bio !== '' &&
-            user.taxCode !== '' &&
-            user.taxCode.isVerified == true &&
-            user.cccd !== '' &&
-            !user.avatar.includes('pastal_system_default') &&
-            !user.bg.includes('pastal_system_default' &&
-            posts.length >= 1 &&
-            services.length >= 1)) {
-
-            achievable = true
-        }
+        const achievable = await checkTrustedArtistAchievable(user)
 
         //4. Check if badge is already awarded
         const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
-        const claimable = badgeIndex === -1
+        const claimable = badgeIndex !== -1
 
         return {
             badge,
@@ -135,7 +122,7 @@ class BadgeService {
         }
     }
 
-    static readAmbassadorBadge = async (userId) => {
+    static readPlatformAmbassadorBadge = async (userId) => {
         //1. Check user
         const user = await User.findById(userId)
         if(!user) throw new NotFoundError("User not found!")
@@ -145,16 +132,11 @@ class BadgeService {
         if(!badge) throw new NotFoundError("Badge not found!")
 
         //3. Check if badge is achieved
-        let achievable = false
-        const referrals = user.referral.referred
-
-        if(referrals.length >= 10) {
-            achievable = true
-        }
+        const achievable = await checkAmbassadorAchievable(user)
 
         //4. Check if badge is already awarded
         const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
-        const claimable = badgeIndex === -1
+        const claimable = badgeIndex !== -1
 
         return {
             badge,
@@ -164,53 +146,56 @@ class BadgeService {
     }
 
     static updateBadge = async (adminId, badgeId, req) => {
-        //1. Check admin and badge
-        const admin = await User.findById(adminId)
-        const badge = await Badge.findById(badgeId)
-        if(!admin) throw new NotFoundError("Admin not found!")
-        if(!badge) throw new NotFoundError("Badge not found!")
-        if(admin.role !== "admin") throw new AuthFailureError("You are not an admin!")
-
+        // 1. Check admin and badge
+        const admin = await User.findById(adminId);
+        const badge = await Badge.findById(badgeId);
+        if (!admin) throw new NotFoundError("Admin not found!");
+        if (!badge) throw new NotFoundError("Badge not found!");
+        if (admin.role !== "admin") throw new AuthFailureError("You are not an admin!");
+    
         try {
-            const iconToDelete = badge.icon
-            let iconUpdated
-
-            if(req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
-                //3. Compress and upload the image to Cloudinary
-                const thumbnailUploadResult = await compressAndUploadImage({
-                    buffer: req.files.thumbnail[0].buffer,
-                    originalname: req.files.thumbnail[0].originalname,
+            const iconToDelete = badge.icon;
+            let iconUpdated;
+    
+            if (req.file) {
+                // 3. Compress and upload the image to Cloudinary
+                const iconUploadResult = await compressAndUploadImage({
+                    buffer: req.file.buffer,
+                    originalname: req.file.originalname,
                     folderName: `fiyonce/badges/admin`,
                     width: 1920,
                     height: 1080
-                })
-                iconUpdated = thumbnailUploadResult.secure_url
-                
-                //4. Delete the old icon in Cloudinary
-                if(iconUpdated) {
-                    const publicId = extractPublicIdFromUrl(iconToDelete)
-                    await deleteFileByPublicId(publicId)
+                });
+                iconUpdated = iconUploadResult.secure_url;
+    
+                // 4. Delete the old icon in Cloudinary
+                if (iconUpdated) {
+                    const publicId = extractPublicIdFromUrl(iconToDelete);
+                    await deleteFileByPublicId(publicId);
                 }
             }
-
-            //5. Update the badge
+    
+            // 5. Prepare the update data
+            const updateData = { ...req.body };
+            if (iconUpdated) {
+                updateData.icon = iconUpdated;
+            }
+    
+            // 6. Update the badge
             const updatedBadge = await Badge.findByIdAndUpdate(
                 badgeId,
-                {
-                    icon: iconUpdated,
-                    ...req.body
-                },
+                updateData,
                 { new: true }
-            )
+            );
     
             return {
                 badge: updatedBadge
-            }
+            };
         } catch (error) {
-            console.error(`Error uploading or saving data ${error}`)
-            throw new BadRequestError("Error updating badge!")
+            console.error(`Error uploading or saving data ${error}`);
+            throw new BadRequestError("Error updating badge!");
         }
-    }
+    }    
 
     static deleteBadge = async (adminId, badgeId) => {
         //1. Check user and badge
@@ -233,52 +218,77 @@ class BadgeService {
         }
     }
 
-    static awardEarlyBirdBadge = async (adminId, userId) => {
-        // 1. Check admin, user, badge
-        const admin = await User.findById(adminId)
+    static awardEarlyBirdBadge = async (userId) => {
+        //1. Check user, badge
         const user = await User.findById(userId)
         const badge = await Badge.findOne({ title: 'earlyBird' })
-    
-        if (!admin || !user)
-            throw new NotFoundError('User not found')
-        if (admin.role !== 'admin')
-            throw new BadRequestError('Only an admin can perform this action')
-        if (!badge)
-            throw new NotFoundError('Badge not found')
-    
-        // 2. Check if badge is already awarded
+        if(!user) throw new NotFoundError("User not found!")
+        if(!badge) throw new NotFoundError("Badge not found!")
+
+        //2. Check if user is achievable
+        const achievable = await checkEarlyBirdAchievable(user)
+        if(!achievable) throw new BadRequestError("User is not eligible for this badge!")
+
+        //3. Check if badge is already awarded
         const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
-    
-        if (badgeIndex !== -1) 
-            throw new BadRequestError('Badge already awarded to this user')
-    
-        // 3. Award the badge
-        const progressMap = new Map()
-    
-        // Assuming badge.criteria is a string representing JSON object like {"createPost": 1, "createService": 1}
-        const criteria = JSON.parse(badge.criteria)
-        for (const [criterion, totalCriteria] of Object.entries(criteria)) {
-            progressMap.set(criterion, {
-                currentProgress: totalCriteria,
-                totalCriteria,
-                isComplete: false
-            })
-        }
-    
-        user.badges.push({
-            badgeId: badge._id,
-            count: 1,
-            progress: progressMap,
-            isComplete: true,
-            awardedAt: new Date(),
-        })
-        
+        if(badgeIndex !== -1) throw new BadRequestError("User already has this badge!")
+
+        //4. Award the badge
+        user.badges.push(badge._id.toString())
         await user.save()
-    
+
         return {
-            user
+            message: "Badge awarded successfully!"
         }
     }    
+
+    static awardTrustedArtistBadge = async (userId) => {
+        //1. Check user, badge
+        const user = await User.findById(userId)
+        const badge = await Badge.findOne({ title: 'trustedArtist' })
+        if(!user) throw new NotFoundError("User not found!")
+        if(!badge) throw new NotFoundError("Badge not found!")
+
+        //2. Check if user is achievable
+        const achievable = await checkTrustedArtistAchievable(user)
+        if(!achievable) throw new BadRequestError("User is not eligible for this badge!")
+
+        //3. Check if badge is already awarded
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+        if(badgeIndex !== -1) throw new BadRequestError("User already has this badge!")
+
+        //4. Award the badge
+        user.badges.push(badge._id.toString())
+        await user.save()
+
+        return {
+            message: "Badge awarded successfully!"
+        }
+    }
+
+    static awardPlatformAmbassadorBadge = async (userId) => {
+        //1. Check user, badge
+        const user = await User.findById(userId)
+        const badge = await Badge.findOne({ title: 'platformAmbassador' })
+        if(!user) throw new NotFoundError("User not found!")
+        if(!badge) throw new NotFoundError("Badge not found!")
+
+        //2. Check if user is achievable
+        const achievable = await checkAmbassadorAchievable(user)
+        if(!achievable) throw new BadRequestError("User is not eligible for this badge!")
+
+        //3. Check if badge is already awarded
+        const badgeIndex = user.badges.findIndex(b => b.badgeId.toString() === badge._id.toString())
+        if(badgeIndex !== -1) throw new BadRequestError("User already has this badge!")
+
+        //4. Award the badge
+        user.badges.push(badge._id.toString())
+        await user.save()
+
+        return {
+            message: "Badge awarded successfully!"
+        }
+    }
 }
 
 export default BadgeService

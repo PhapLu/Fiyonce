@@ -47,7 +47,21 @@ class BadgeController{
     awardEarlyBirdBadge = async(req, res, next) => {
         new SuccessResponse({
             message: 'Award early bird badge success!',
-            metadata: await BadgeService.awardEarlyBirdBadge(req.userId, req.params.userId)
+            metadata: await BadgeService.awardEarlyBirdBadge(req.userId)
+        }).send(res)
+    }
+
+    awardTrustedArtistBadge = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Award trusted artist badge success!',
+            metadata: await BadgeService.awardTrustedArtistBadge(req.userId)
+        }).send(res)
+    }
+
+    awardPlatformAmbassadorBadge = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Award platform ambassador badge success!',
+            metadata: await BadgeService.awardPlatformAmbassadorBadge(req.userId)
         }).send(res)
     }
 }

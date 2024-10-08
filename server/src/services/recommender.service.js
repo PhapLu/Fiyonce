@@ -101,7 +101,7 @@ class RecommenderService {
     
         try {
             const posts = await Post.find(filters)
-                .populate("talentId")
+                .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
                 .populate("postCategoryId");
@@ -233,7 +233,7 @@ class RecommenderService {
         }
         try {
             const posts = await Post.find(filters)
-                .populate("talentId")
+                .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
                 .populate("postCategoryId")
@@ -403,7 +403,7 @@ class RecommenderService {
 
             // Fetch posts from users in the following list
             const posts = await Post.find({ talentId: { $in: followingIds } })
-                .populate("talentId")
+                .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
                 .populate("postCategoryId")
@@ -577,7 +577,7 @@ class RecommenderService {
         }
         try {
             const services = await CommissionService.find(filters)
-                .populate("talentId")
+                .populate("talentId", "fullName stageName avatar")
                 .populate("serviceCategoryId")
                 .populate("termOfServiceId")
                 .populate("movementId")
@@ -756,7 +756,7 @@ class RecommenderService {
         }
         try {
             const commissionServices = await CommissionService.find(filters)
-                .populate("talentId")
+                .populate("talentId", "fullName stageName avatar")
                 .populate("movementId")
                 .populate("serviceCategoryId")
                 .populate("termOfServiceId")
@@ -944,7 +944,7 @@ class RecommenderService {
             const commissionServices = await CommissionService.find({
                 talentId: { $in: followingIds },
             })
-                .populate("talentId")
+                .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
                 .populate("serviceCategoryId")
