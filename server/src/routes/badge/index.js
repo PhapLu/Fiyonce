@@ -8,14 +8,10 @@ const router = express.Router()
 //authentication
 router.use(verifyToken)
 
-router.get('/readEarlyBirdBadge/:badgeKey', asyncHandler(badgeController.readEarlyBirdBadge))
-router.get('/readTrustedArtistBadge/:badgeKey', asyncHandler(badgeController.readTrustedArtistBadge))
-router.get('/readPlatformAmbassadorBadge/:badgeKey', asyncHandler(badgeController.readPlatformAmbassadorBadge))
+router.get('/readBadge/:badgeKey', asyncHandler(badgeController.readBadge))
 
 //Award badge
-router.patch('/awardEarlyBirdBadge/:badgeKey', asyncHandler(badgeController.awardEarlyBirdBadge))
-router.patch('/awardTrustedArtistBadge/:badgeKey', asyncHandler(badgeController.awardTrustedArtistBadge))
-router.patch('/awardPlatformAmbassadorBadge/:badgeKey', asyncHandler(badgeController.awardPlatformAmbassadorBadge))
+router.patch('/awardBadge/:badgeKey', asyncHandler(badgeController.awardBadge))
 
 
 export default router
