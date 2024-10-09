@@ -13,7 +13,7 @@ const checkFresherArtistAchievable = async (user) => {
 
     //1: Find all orders where the user is the chosen talent
     const orders = await Order.find({ talentChosenId: user._id }).select('_id');
-    
+
     //2: Get all reviews for these orders with a 5-star rating
     const reviews = await Review.find({
         orderId: { $in: orders.map(order => order._id) },
@@ -98,7 +98,7 @@ const checkAmbassadorAchievable = async (user) => {
     return achievable
 }
 
-const checkEmergingArtistAchievable = async (user) => {
+const checkRisingStarAchievable = async (user) => {
     let achievable = false
     if(user.followers.length >= 100) {
         achievable = true
@@ -107,7 +107,7 @@ const checkEmergingArtistAchievable = async (user) => {
     return achievable
 }
 
-const checkFamousArtistAchievable = async (user) => {
+const checkSuperStarAchievable = async (user) => {
     let achievable = false
     if(user.followers.length >= 500) {
         achievable = true
@@ -119,8 +119,8 @@ const checkFamousArtistAchievable = async (user) => {
 export {checkEarlyBirdAchievable, 
     checkAmbassadorAchievable, 
     checkTrustedArtistAchievable, 
-    checkEmergingArtistAchievable, 
-    checkFamousArtistAchievable, 
+    checkRisingStarAchievable, 
+    checkSuperStarAchievable, 
     checkCommunityBuilderAchievable,
     checkFresherArtistAchievable,
     checkJuniorArtistAchievable,

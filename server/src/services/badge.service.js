@@ -1,24 +1,18 @@
-import Badge from "../models/badge.model.js"
 import { User } from "../models/user.model.js"
 import {
     AuthFailureError,
     BadRequestError,
     NotFoundError,
 } from "../core/error.response.js"
-import {
-    compressAndUploadImage,
-    deleteFileByPublicId,
-    extractPublicIdFromUrl,
-} from "../utils/cloud.util.js"
 import { checkAmbassadorAchievable, 
     checkEarlyBirdAchievable, 
-    checkEmergingArtistAchievable, 
-    checkFamousArtistAchievable, 
+    checkRisingStarAchievable, 
     checkTrustedArtistAchievable,
     checkCommunityBuilderAchievable,
     checkFresherArtistAchievable,
     checkSeniorArtistAchievable,
-    checkJuniorArtistAchievable
+    checkJuniorArtistAchievable,
+    checkSuperStarAchievable
 } from "../models/repositories/badge.repo.js"
 
 class BadgeService {
@@ -42,8 +36,8 @@ class BadgeService {
             case "fresherArtist":
                 achievable = await checkFresherArtistAchievable(user);
                 break;
-            case "emergingArtist":
-                achievable = await checkEmergingArtistAchievable(user);
+            case "risingStar":
+                achievable = await checkRisingStarAchievable(user);
                 break;
             case "platformAmbassador":
                 achievable = await checkAmbassadorAchievable(user);
@@ -51,8 +45,8 @@ class BadgeService {
             case "juniorArtist":
                 achievable = await checkJuniorArtistAchievable(user);
                 break;
-            case "famousArtist":
-                achievable = await checkFamousArtistAchievable(user);
+            case "superStar":
+                achievable = await checkSuperStarAchievable(user);
                 break;
             case "seniorArtist":
                 achievable = await checkSeniorArtistAchievable(user);
@@ -89,8 +83,8 @@ class BadgeService {
             case "fresherArtist":
                 achievable = await checkFresherArtistAchievable(user);
                 break;
-            case "emergingArtist":
-                achievable = await checkEmergingArtistAchievable(user);
+            case "risingStar":
+                achievable = await checkRisingStarAchievable(user);
                 break;
             case "platformAmbassador":
                 achievable = await checkAmbassadorAchievable(user);
@@ -98,8 +92,8 @@ class BadgeService {
             case "juniorArtist":
                 achievable = await checkJuniorArtistAchievable(user);
                 break;
-            case "famousArtist":
-                achievable = await checkFamousArtistAchievable(user);
+            case "superStar":
+                achievable = await checkSuperStarAchievable(user);
                 break;
             case "seniorArtist":
                 achievable = await checkSeniorArtistAchievable(user);
