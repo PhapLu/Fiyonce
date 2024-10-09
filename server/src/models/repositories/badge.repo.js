@@ -1,10 +1,68 @@
 import Service from "../commissionService.model.js"
 import Post from "../post.model.js"
+import Order from "../order.model.js"
+import Review from "../review.model.js"
 
 const checkEarlyBirdAchievable = async (user) => {
     let achievable = false
     return achievable
 }
+
+const checkFresherArtistAchievable = async (user) => {
+    const minimumFiveStarOrderCount = 1;
+
+    //1: Find all orders where the user is the chosen talent
+    const orders = await Order.find({ talentChosenId: user._id }).select('_id');
+    
+    //2: Get all reviews for these orders with a 5-star rating
+    const reviews = await Review.find({
+        orderId: { $in: orders.map(order => order._id) },
+        rating: 5
+    });
+
+    console.log(reviews);
+
+    //3: Check if the user has at least the minimum number of 5-star rated orders
+    const achievable = reviews.length >= minimumFiveStarOrderCount;
+
+    return achievable;
+};
+
+const checkJuniorArtistAchievable = async (user) => {
+    const minimumFiveStarOrderCount = 5
+
+    //1: Find all orders where the user is the chosen talent
+    const orders = await Order.find({ talentChosenId: user._id }).select('_id');
+
+    //2: Get all reviews for these orders with a 5-star rating
+    const reviews = await Review.find({
+        orderId: { $in: orders.map(order => order._id) },
+        rating: 5
+    });
+
+    //3: Check if the user has at least the minimum number of 5-star rated orders
+    const achievable = reviews.length >= minimumFiveStarOrderCount;
+
+    return achievable;
+};
+
+const checkSeniorArtistAchievable = async (user) => {
+    const minimumFiveStarOrderCount = 20
+
+    //1: Find all orders where the user is the chosen talent
+    const orders = await Order.find({ talentChosenId: user._id }).select('_id');
+
+    //2: Get all reviews for these orders with a 5-star rating
+    const reviews = await Review.find({
+        orderId: { $in: orders.map(order => order._id) },
+        rating: 5
+    });
+
+    //3: Check if the user has at least the minimum number of 5-star rated orders
+    const achievable = reviews.length >= minimumFiveStarOrderCount;
+
+    return achievable;
+};
 
 const checkTrustedArtistAchievable = async (user) => {
     let achievable = false
@@ -24,7 +82,7 @@ const checkTrustedArtistAchievable = async (user) => {
     return achievable
 }
 
-const checkAmbassadorAchievable = async (user) => {
+const checkCommunityBuilderAchievable = async (user) => {
     let achievable = false
     if(user.referral.referred.length >= 10) {
         achievable = true
@@ -32,4 +90,39 @@ const checkAmbassadorAchievable = async (user) => {
     return achievable
 }
 
-export {checkEarlyBirdAchievable, checkAmbassadorAchievable, checkTrustedArtistAchievable}
+const checkAmbassadorAchievable = async (user) => {
+    let achievable = false
+    if(user.referral.referred.length >= 50) {
+        achievable = true
+    }
+    return achievable
+}
+
+const checkEmergingArtistAchievable = async (user) => {
+    let achievable = false
+    if(user.followers.length >= 100) {
+        achievable = true
+    }
+
+    return achievable
+}
+
+const checkFamousArtistAchievable = async (user) => {
+    let achievable = false
+    if(user.followers.length >= 500) {
+        achievable = true
+    }
+
+    return achievable
+}
+
+export {checkEarlyBirdAchievable, 
+    checkAmbassadorAchievable, 
+    checkTrustedArtistAchievable, 
+    checkEmergingArtistAchievable, 
+    checkFamousArtistAchievable, 
+    checkCommunityBuilderAchievable,
+    checkFresherArtistAchievable,
+    checkJuniorArtistAchievable,
+    checkSeniorArtistAchievable
+}

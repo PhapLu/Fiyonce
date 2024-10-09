@@ -10,13 +10,22 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import { checkAmbassadorAchievable, checkEarlyBirdAchievable, checkTrustedArtistAchievable } from "../models/repositories/badge.repo.js"
+import { checkAmbassadorAchievable, 
+    checkEarlyBirdAchievable, 
+    checkEmergingArtistAchievable, 
+    checkFamousArtistAchievable, 
+    checkTrustedArtistAchievable,
+    checkCommunityBuilderAchievable,
+    checkFresherArtistAchievable,
+    checkSeniorArtistAchievable,
+    checkJuniorArtistAchievable
+} from "../models/repositories/badge.repo.js"
 
 class BadgeService {
     static readBadge = async (userId, badgeKey) => {
         // 1. Check user
         const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("User not found!");
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
     
         // 2. Check if badge is achievable
         let achievable = false;
@@ -27,11 +36,29 @@ class BadgeService {
             case "trustedArtist":
                 achievable = await checkTrustedArtistAchievable(user);
                 break;
+            case "communityBuilder":
+                achievable = await checkCommunityBuilderAchievable(user);
+                break;
+            case "fresherArtist":
+                achievable = await checkFresherArtistAchievable(user);
+                break;
+            case "emergingArtist":
+                achievable = await checkEmergingArtistAchievable(user);
+                break;
             case "platformAmbassador":
                 achievable = await checkAmbassadorAchievable(user);
                 break;
+            case "juniorArtist":
+                achievable = await checkJuniorArtistAchievable(user);
+                break;
+            case "famousArtist":
+                achievable = await checkFamousArtistAchievable(user);
+                break;
+            case "seniorArtist":
+                achievable = await checkSeniorArtistAchievable(user);
+                break;
             default:
-                throw new BadRequestError("Invalid badge key!");
+                throw new BadRequestError("Có lỗi xảy ra");
         }
         
         // 3. Check if badge is already awarded
@@ -46,9 +73,8 @@ class BadgeService {
     static awardBadge = async (userId, badgeKey) => {
         //1. Check user
         const user = await User.findById(userId)
-        if(!user) throw new NotFoundError("User not found!")
+        if(!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
-        //2. Check if user is achievable
         let achievable = false;
         switch(badgeKey) {
             case "earlyBird":
@@ -57,24 +83,42 @@ class BadgeService {
             case "trustedArtist":
                 achievable = await checkTrustedArtistAchievable(user);
                 break;
+            case "communityBuilder":
+                achievable = await checkCommunityBuilderAchievable(user);
+                break;
+            case "fresherArtist":
+                achievable = await checkFresherArtistAchievable(user);
+                break;
+            case "emergingArtist":
+                achievable = await checkEmergingArtistAchievable(user);
+                break;
             case "platformAmbassador":
                 achievable = await checkAmbassadorAchievable(user);
                 break;
+            case "juniorArtist":
+                achievable = await checkJuniorArtistAchievable(user);
+                break;
+            case "famousArtist":
+                achievable = await checkFamousArtistAchievable(user);
+                break;
+            case "seniorArtist":
+                achievable = await checkSeniorArtistAchievable(user);
+                break;
             default:
-                throw new BadRequestError("Something went wrong!")
+                throw new BadRequestError("Có lỗi xảy ra");
         }
-        if(!achievable) throw new BadRequestError("User is not eligible for this badge!")
+        if(!achievable) throw new BadRequestError("Bạn chưa đủ điều kiện để nhận huy hiệu này")
 
         //3. Check if badge is already awarded
         const badgeIndex = user.badges.findIndex(badge => badge === badgeKey)
-        if(badgeIndex !== -1) throw new BadRequestError("User already has this badge!")
+        if(badgeIndex !== -1) throw new BadRequestError("Bạn đã nhận huy hiệu này rồi")
 
         //4. Award the badge
         user.badges.push(badgeKey)
         await user.save()
 
         return {
-            message: "Badge awarded successfully!"
+            message: "Nhận huy hiệu thành công"
         }
     }
 }
