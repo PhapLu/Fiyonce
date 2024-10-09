@@ -13,7 +13,6 @@ import {
 } from "../utils/cloud.util.js"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
-import { trackTrustedArtistBadge } from "../utils/badgeTracking.util.js"
 
 class CommissionServiceService {
     static createCommissionService = async (talentId, req) => {
@@ -79,9 +78,6 @@ class CommissionServiceService {
 
             // Populate talentId field with stageName and avatar
             service = await service.populate("talentId", "stageName avatar")
-
-            //5. Track the badgeProgress
-            await trackTrustedArtistBadge(talentId, "createService")
 
             return {
                 commissionService: service,

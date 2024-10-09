@@ -20,6 +20,7 @@ import sanitizeInputs from './middlewares/sanitize.middleware.js';
 import { globalLimiter, blockChecker } from './configs/rateLimit.config.js';
 import './configs/passport.config.js'; // Import passport configuration
 import session from 'express-session'
+import mongoose from 'mongoose';
 
 const app = express();
 
@@ -116,9 +117,26 @@ const io = configureSocket(server);
 
 global._io.on('connection', SocketServices.connection);
 
-
 process.on('SIGINT', () => {
-    server.close(() => console.log('Exit Server Express'));
+    console.log('Received SIGINT. Shutting down WebSocket and HTTP connections...');
+
+    // Close WebSocket connections if using Socket.IO
+    if (global._io) {
+        global._io.close(() => {
+            console.log('WebSocket connections closed.');
+        });
+    }
+
+    // Close MongoDB connection if applicable
+    mongoose.connection.close(() => {
+        console.log('MongoDB connection closed.');
+    });
+
+    // Close HTTP server
+    server.close(() => {
+        console.log('HTTP server closed.');
+        process.exit(0);  // Exit the process properly
+    });
 });
 
 export default server;

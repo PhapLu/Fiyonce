@@ -159,10 +159,6 @@ class TalentRequestService {
 
         // 7. Send email to user and delete images in cloudinary
         try {
-            // request.artworks.forEach(async (artwork) => {
-            //     const publicId = extractPublicIdFromUrl(artwork)
-            //     await deleteFileByPublicId(publicId)
-            // })
             const subject =  '[PASTAL] - Nâng cấp tài khoản thành công'
             const message = 'Chúc mừng! yêu cầu nâng cấp tài khoản họa sĩ của bạn đã chấp thuận'
             const orderCode = ''
@@ -184,8 +180,6 @@ class TalentRequestService {
     }
 
     static denyTalentRequest = async (adminId, requestId, body) => {
-        console.log("KKKK")
-        console.log(body)
         //1. Find and check request
         const request = await TalentRequest.findById(requestId)
         if (!request) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
