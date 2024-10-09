@@ -15,6 +15,7 @@ import SuperstarIcon from "../../../assets/img/fresher-artist-badge.png";
 import FresherArtistIcon from "../../../assets/img/fresher-artist-badge.png";
 import JuniorArtistIcon from "../../../assets/img/junior-artist-badge.png";
 import SeniorArtistIcon from "../../../assets/img/senior-artist-badge.png";
+import { apiUtils } from "../../../utils/newRequest";
 
 // Map badge keys to their corresponding icons
 const badgeIcons = {
@@ -32,6 +33,7 @@ const badgeIcons = {
 export default function RenderBadges({ setShowRenderBadges, setOverlayVisible }) {
     const { userInfo } = useAuth();
     const [selectedBadge, setSelectedBadge] = useState(null);
+    const [isClaimable, setIsClaimable] = useState(null);
 
     const renderBadgesRef = useRef();
     useEffect(() => {
@@ -47,6 +49,38 @@ export default function RenderBadges({ setShowRenderBadges, setOverlayVisible })
 
     const getIcon = (badgeKey) => badgeIcons[badgeKey]; // Use default icon if key not found
 
+    const fetchBadgeClaimStatus = async (badgeKey) => {
+        try {
+            console.log(badgeKey)
+            const response = await apiUtils.get(`/badge/readBadge/${badgeKey}`);
+
+            console.log(response)
+            setIsClaimable(response.data.metadata.claimable);
+
+        } catch (error) {
+            console.error("Error fetching badge claim status:", error);
+        }
+    };
+
+    const handleClaimBadge = async () => {
+        try {
+            const response = await apiUtils.patch(`/badge/awardBadge/${selectedBadge.key}`);
+            if (response.ok) {
+                console.log(response)
+                // alert(data.message);
+                setIsClaimable(false); // Update to show "Đã nhận" after claiming
+            }
+        } catch (error) {
+            console.error("Error claiming badge:", error);
+        }
+    };
+
+    const handleBadgeSelect = (badge) => {
+        setSelectedBadge(badge);
+        fetchBadgeClaimStatus(badge.key);
+    };
+
+
     return (
         <div className="render-badges modal-form type-3" ref={renderBadgesRef}>
             <h2 className="form__title">Huy hiệu</h2>
@@ -57,7 +91,7 @@ export default function RenderBadges({ setShowRenderBadges, setOverlayVisible })
             {
                 selectedBadge ? (
                     <div className="render-badge badge-details">
-                        <div className="form__back-ic" onClick={() => {setSelectedBadge(null)}}>
+                        <div className="form__back-ic" onClick={() => { setSelectedBadge(null); setIsClaimable(null); }}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                             </svg>
@@ -66,14 +100,35 @@ export default function RenderBadges({ setShowRenderBadges, setOverlayVisible })
                         <h3 className="text-align-center badge-item__title">{selectedBadge.title}</h3>
                         <p className="text-align-justify">{selectedBadge?.description}</p>
 
-                        <button className="btn btn-2 btn-md w-100 mt-16 mb-16">Nhận huy hiệu</button>
+                        {
+                            userInfo?.badges?.includes(selectedBadge?.key) ?
+                                (<button
+                                    className={`btn btn-4 btn-md w-100 mt-16 mb-16 `}
+                                    onClick={isClaimable ? handleClaimBadge : null}
+                                    disabled={!isClaimable}
+                                >
+                                    Đã nhận
+                                </button>) : isClaimable ?
+                                    (<button
+                                        className={`btn btn-4 btn-md w-100 mt-16 mb-16 `}
+                                        disabled={!isClaimable}
+                                    >
+                                        Nhận huy hiệu
+                                    </button>) : (
+                                        <button
+                                            className={`btn btn-4 btn-md w-100 mt-16 mb-16 `}
+                                        >
+                                            Đã hiểu
+                                        </button>
+                                    )
+                        }
                     </div>
                 ) : (
                     <div className="badge-container">
                         {badges?.map((badge, index) => {
                             const icon = getIcon(badge.key);
                             return (
-                                <div className="badge-item" key={index} onClick={() => { setSelectedBadge(badge) }}>
+                                <div className="badge-item" key={index} onClick={() => handleBadgeSelect(badge)}>
                                     <img src={icon} alt={badge.icon} className="badge-item__ic" />
                                     <h4 className="badge-item__title">{badge.title}</h4>
                                 </div>
