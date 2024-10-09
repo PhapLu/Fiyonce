@@ -2,7 +2,7 @@ import Service from "../commissionService.model.js"
 import Post from "../post.model.js"
 
 const checkEarlyBirdAchievable = async (user) => {
-    const achievable = user.isEarlyBird
+    
     return achievable
 }
 

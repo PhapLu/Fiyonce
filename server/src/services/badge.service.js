@@ -18,13 +18,10 @@ class BadgeService {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("User not found!")
 
-        //2. Check if badge is achieved
-        const achievable = await checkEarlyBirdAchievable(user)
-        
-        //3. Check if badge is already awarded (if it awarded -> claimable = false, if not -> claimable = true)
+        //2. Check if badge is already awarded (if it awarded -> claimable = false, if not -> claimable = true)
         const badgeIndex = user.badges.findIndex(badge => badge === badgeKey)
         let claimable = false
-        if(achievable && badgeIndex === -1) {
+        if(badgeIndex !== -1) {
             claimable = true
         }
 
@@ -33,7 +30,7 @@ class BadgeService {
         }
     }
 
-    static readTrustedArtistBadge = async (userId) => {
+    static readTrustedArtistBadge = async (userId, badgeKey) => {
         //1. Check user
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("User not found!")
@@ -43,6 +40,7 @@ class BadgeService {
         
         //3. Check if badge is already awarded (if it awarded -> claimable = false, if not -> claimable = true)
         const badgeIndex = user.badges.findIndex(badge => badge === badgeKey)
+
         let claimable = false
         if(achievable && badgeIndex === -1) {
             claimable = true
@@ -53,7 +51,7 @@ class BadgeService {
         }
     }
 
-    static readPlatformAmbassadorBadge = async (userId) => {
+    static readPlatformAmbassadorBadge = async (userId, badgeKey) => {
         //1. Check user
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("User not found!")

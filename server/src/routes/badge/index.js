@@ -14,8 +14,8 @@ router.get('/readPlatformAmbassadorBadge/:badgeKey', asyncHandler(badgeControlle
 
 //Award badge
 router.patch('/awardEarlyBirdBadge/:badgeKey', asyncHandler(badgeController.awardEarlyBirdBadge))
-router.patch('/awardTrustedArtistBadge:badgeKey', asyncHandler(badgeController.awardTrustedArtistBadge))
-router.patch('/awardPlatformAmbassadorBadge:badgeKey', asyncHandler(badgeController.awardPlatformAmbassadorBadge))
+router.patch('/awardTrustedArtistBadge/:badgeKey', asyncHandler(badgeController.awardTrustedArtistBadge))
+router.patch('/awardPlatformAmbassadorBadge/:badgeKey', asyncHandler(badgeController.awardPlatformAmbassadorBadge))
 
 
 export default router
