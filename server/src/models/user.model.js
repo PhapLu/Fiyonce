@@ -38,7 +38,7 @@ const UserSchema = new Schema(
             title: { type: String, default: "" },
         },
         badges: [{
-            type: Schema.Types.ObjectId, ref: "Badge",
+            type: String, default: []
         }],
         referral: {
             code: { type: String, default: "" },
