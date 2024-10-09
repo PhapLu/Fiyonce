@@ -193,11 +193,13 @@ export default function TalentOrderHistory() {
                                                                     ? "Đã hủy"
                                                                     : order?.status === "in_progress"
                                                                         ? "Đang thực hiện đơn"
-                                                                        : order?.status === "finished"
-                                                                            ? "Hoàn tất"
-                                                                            : order?.status === "under_processing"
-                                                                                ? "Admin đang xử lí"
-                                                                                : ""}
+                                                                        : order?.status === "delivered"
+                                                                            ? "Đã bàn giao"
+                                                                            : order?.status === "finished"
+                                                                                ? "Hoàn tất"
+                                                                                : order?.status === "under_processing"
+                                                                                    ? "Admin đang xử lí"
+                                                                                    : ""}
                                             </div>
                                         </div>
                                     </td>
@@ -240,6 +242,9 @@ export default function TalentOrderHistory() {
                                             {order.status === "approved" && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/proposals`} aria-label="Xem hồ sơ họa sĩ đã gửi" className="btn btn-3 mr-8 hover-display-label">Xem hợp đồng</Link>
                                             )}
+                                             {order.status === "rejected" && (
+                                                <Link to={`/order-history/commission-orders/${order?._id}/reject-response`} aria-label="Xem lí do từ chối" className="btn btn-3 mr-8 hover-display-label">Lí do từ chối</Link>
+                                            )}
                                             {order.status === "confirmed" && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/start-wip`} aria-label="Bắt đầu thực hiện đơn hàng" className="btn btn-3 hover-display-label mr-8">Bắt đầu</Link>
                                             )}
@@ -247,6 +252,11 @@ export default function TalentOrderHistory() {
                                                 <>
                                                     <Link to={`/order-history/commission-orders/${order?._id}/render-milestones`} aria-label="Cập nhật tiến độ công việc" className="btn btn-3 hover-display-label mr-8">Cập nhật tiến độ</Link>
                                                     <Link to={`/order-history/commission-orders/${order?._id}/deliver`} aria-label="Hoàn tất đơn hàng và giao cho khách" className="btn btn-3 hover-display-label mr-8">Hoàn tất</Link>
+                                                </>
+                                            )}
+                                            {order.status === "delivered" && (
+                                                <>
+                                                    <Link to={`/order-history/commission-orders/${order?._id}/review`} aria-label="Cập nhật tiến độ công việc" className="btn btn-3 hover-display-label mr-8">Đánh giá</Link>
                                                 </>
                                             )}
                                         </>

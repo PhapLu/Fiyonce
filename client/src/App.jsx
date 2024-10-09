@@ -75,6 +75,9 @@ import ArchivedOrderHistory from "./components/orderHistory/ArchivedOrderHistory
 import UnarchiveCommissionOrder from "./components/crudCommissionOrder/archive/UnarchiveCommissionOrder.jsx";
 import ArchiveCommissionOrder from "./components/crudCommissionOrder/archive/ArchiveCommissionOrder.jsx";
 import ReportCommissionOrder from "./components/crudCommissionOrder/report/ReportCommissionOrder.jsx";
+import CommissionReviews from "./components/crudCommissionReviews/render/RenderCommissionReviews.jsx";
+import ReviewCommissionOrder from "./components/crudCommissionOrder/review/ReviewCommissionOrder.jsx";
+import ReportDashboard from "./dashboard/reportDashboard/ReportDashboard.jsx";
 
 const queryClient = new QueryClient();
 
@@ -140,6 +143,10 @@ const commissionOrderRoutes = [
         path: "report",
         element: <ReportCommissionOrder />,
       },
+      {
+        path: "review",
+        element: <ReviewCommissionOrder />,
+      },
       // More actions
       {
         path: "archive",
@@ -157,147 +164,150 @@ const commissionOrderRoutes = [
 const routes = [
   // Displaying static content
   {
-    path: "/terms-and-policies",
-    element: <InDevelopment />,
-  },
-  {
-    path: "/statics",
-    element: <StaticLayout />,
+    path: "",
+    element: <Layout />,
     children: [
-      {
-        path: "/statics/glaze",
-        element: <Glaze />,
-      },
-      {
-        path: "/statics/term-of-services",
-        element: <Glaze />,
-      },
-      {
-        path: "/statics/about",
-        element: <About />,
-      },
-      {
-        path: "/statics/resources",
-        element: <Resources />,
-      },
-    ]
-  },
-
-  // Pages for managing profile/portfolio
-  {
-    path: "/users/:userId",
-    element: <ProfileLayout />,
-    children: [
-      {
-        path: "/users/:userId",
-        element: (
-          <MyProfile />
-        ),
-      },
-      {
-        path: "/users/:userId/upgrade-account",
-        element: (
-          <UpgradeAccount />
-        ),
-      },
-      {
-        path: "/users/:userId/render-talent-request",
-        element: (
-          <RenderTalentRequest />
-        ),
-      },
-      {
-        path: "/users/:userId/profile-commission-services",
-        element: <ProfileCommissionServices />,
-        children: [
-          {
-            path: "/users/:userId/profile-commission-services/:commissionServiceId",
-            element: <RenderCommissionService />,
-          },
-        ]
-      },
-      {
-        path: "/users/:userId/profile-posts",
-        element: <ProfilePosts />,
-        children: [
-          {
-            path: "/users/:userId/profile-posts/create",
-            element: (
-              <CreatePost />
-            ),
-          },
-          {
-            path: "/users/:userId/profile-posts/:postId",
-            element: (
-              <RenderPost />
-            ),
-          },
-          {
-            path: "/users/:userId/profile-posts/:postId/update",
-            element: (
-              <UpdatePost />
-            ),
-          },
-          {
-            path: "/users/:userId/profile-posts/:postId/delete",
-            element: (
-              <DeletePost />
-            ),
-          },
-        ]
-      },
-      {
-        path: "/users/:userId/term-of-services",
-        element: <ProfileTermOfService />,
-      },
-      {
-        path: "/users/:userId/basic-info",
-        element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
-      },
-      {
-        path: "/users/:userId/archive",
-        element: <ProtectedRoute><ProfileArchive /></ProtectedRoute>,
-      },
-    ],
-  },
-
-  // Explore layout
-  {
-    path: "/",
-    element: <ExploreLayout />,
-    children: [
-      {
-        path: "/commission-services",
-        element: <ExploreCommissionServices showCommissionServices={true} />,
-        children: [
-          {
-            path: "/commission-services/:commissionServiceId",
-            element: <RenderCommissionService />,
-          },
-        ]
-      },
-      // {
-      //   path: "/talents",
-      //   element: <Talents showTalents={true} />,
-      // },
+      // Explore layout
       {
         path: "/",
-        element: <ExplorePosts showPosts={true} />,
+        element: <ExploreLayout />,
         children: [
           {
-            path: "/posts/:postId",
-            element: <RenderPost />,
+            path: "/commission-services",
+            element: <ExploreCommissionServices showCommissionServices={true} />,
+            children: [
+              {
+                path: "/commission-services/:commissionServiceId",
+                element: <RenderCommissionService />,
+              },
+            ]
+          },
+          // {
+          //   path: "/talents",
+          //   element: <Talents showTalents={true} />,
+          // },
+          {
+            path: "/",
+            element: <ExplorePosts showPosts={true} />,
+            children: [
+              {
+                path: "/posts/:postId",
+                element: <RenderPost />,
+              },
+            ],
           },
         ],
       },
-    ],
-  },
 
-  // General Layout
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
+      {
+        path: "/terms-and-policies",
+        element: <InDevelopment />,
+      },
+      {
+        path: "/statics",
+        element: <StaticLayout />,
+        children: [
+          {
+            path: "/statics/glaze",
+            element: <Glaze />,
+          },
+          {
+            path: "/statics/term-of-services",
+            element: <Glaze />,
+          },
+          {
+            path: "/statics/about",
+            element: <About />,
+          },
+          {
+            path: "/statics/resources",
+            element: <Resources />,
+          },
+        ]
+      },
+      // Pages for managing profile/portfolio
+      {
+        path: "/users/:userId",
+        element: <ProfileLayout />,
+        children: [
+          {
+            path: "/users/:userId",
+            element: (
+              <MyProfile />
+            ),
+          },
+          {
+            path: "/users/:userId/upgrade-account",
+            element: (
+              <UpgradeAccount />
+            ),
+          },
+          {
+            path: "/users/:userId/render-talent-request",
+            element: (
+              <RenderTalentRequest />
+            ),
+          },
+          {
+            path: "/users/:userId/profile-commission-services",
+            element: <ProfileCommissionServices />,
+            children: [
+              {
+                path: "/users/:userId/profile-commission-services/:commissionServiceId",
+                element: <RenderCommissionService />,
+              },
+            ]
+          },
+          {
+            path: "/users/:userId/profile-posts",
+            element: <ProfilePosts />,
+            children: [
+              {
+                path: "/users/:userId/profile-posts/create",
+                element: (
+                  <CreatePost />
+                ),
+              },
+              {
+                path: "/users/:userId/profile-posts/:postId",
+                element: (
+                  <RenderPost />
+                ),
+              },
+              {
+                path: "/users/:userId/profile-posts/:postId/update",
+                element: (
+                  <UpdatePost />
+                ),
+              },
+              {
+                path: "/users/:userId/profile-posts/:postId/delete",
+                element: (
+                  <DeletePost />
+                ),
+              },
+            ]
+          },
+          {
+            path: "/users/:userId/term-of-services",
+            element: <ProfileTermOfService />,
+          },
+          {
+            path: "/users/:userId/basic-info",
+            element: <ProtectedRoute><ProfileBasicInfo /></ProtectedRoute>,
+          },
+          {
+            path: "/users/:userId/archive",
+            element: <ProtectedRoute><ProfileArchive /></ProtectedRoute>,
+          },
+        ],
+      },
+
+
+
+
+
+      // General Layout
       {
         path: "order-history",
         element: <ProtectedRoute allowedRoles={['all']}><OrderHistory /></ProtectedRoute>,
@@ -320,41 +330,44 @@ const routes = [
         path: "search",
         element: <SearchResult />,
       },
+
+      // Admin dashboard
+      {
+        path: "/dashboard/",
+        element: <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /></ProtectedRoute>,
+        children: [
+          {
+            path: "/dashboard/overview",
+            element: <OverviewDashboard />,
+          },
+          {
+            path: "/dashboard/art",
+            element: <ArtDashboard />,
+          },
+          {
+            path: "/dashboard/transactions",
+            element: <TransactionDashboard />,
+          },
+          {
+            path: "/dashboard/accounts",
+            element: <AccountDashboard />,
+          },
+          {
+            path: "/dashboard/news",
+            element: <NewsDashboard />,
+          },
+          {
+            path: "/dashboard/challenges",
+            element: <ChallengeDashboard />,
+          },
+          {
+            path: "/dashboard/reports",
+            element: <ReportDashboard />,
+          },
+        ],
+      },
     ]
   },
-
-  // Admin dashboard
-  {
-    path: "/dashboard/",
-    element: <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /></ProtectedRoute>,
-    children: [
-      {
-        path: "/dashboard/overview",
-        element: <OverviewDashboard />,
-      },
-      {
-        path: "/dashboard/art",
-        element: <ArtDashboard />,
-      },
-      {
-        path: "/dashboard/transactions",
-        element: <TransactionDashboard />,
-      },
-      {
-        path: "/dashboard/accounts",
-        element: <AccountDashboard />,
-      },
-      {
-        path: "/dashboard/news",
-        element: <NewsDashboard />,
-      },
-      {
-        path: "/dashboard/challenges",
-        element: <ChallengeDashboard />,
-      },
-    ],
-  },
-
   {
     path: "help-center",
     element: <HelpCenterLayout />,

@@ -11,12 +11,9 @@ import "./DashboardLayout.scss";
 export default function DashboardLayout() {
     return (
         <div className="admin-dashboard">
-            <Navbar />
-            <div className="app with-sidebar">
-                <DashboardSidebar />
-                <div className="dashboard-outlet-content">
-                    <Outlet />
-                </div>
+            <DashboardSidebar />
+            <div className="dashboard-outlet-content">
+                <Outlet />
             </div>
         </div>
     )

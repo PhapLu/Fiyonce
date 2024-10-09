@@ -113,3 +113,22 @@ export function createClickableLinks(content) {
     const urlPattern = /(\b(https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]))/gi;
     return content.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
 }
+
+export function convertToHCMTime(utcDateString) {
+    const options = {
+        timeZone: 'Asia/Ho_Chi_Minh',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    };
+
+    const date = new Date(utcDateString);
+    const hcmTime = date.toLocaleString('en-GB', options);
+
+    // Reformat the date to hh:mm dd/mm/yyyy
+    const [time, datePart] = hcmTime.split(', ');
+    return `${time} ${datePart.replace(/\//g, '/')}`;
+}

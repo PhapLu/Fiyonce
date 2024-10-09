@@ -49,12 +49,7 @@ export default function RejectResponse() {
     );
 
     const closeRejectResponseView = () => {
-        if (location.pathname.includes("commission-market")) {
-            navigate("/commission-market");
-        } else {
-            navigate("/order-history");
-        }
-        // navigate(commissionOrder?.isDirect ? `/order-history` : `/commission-market`);
+        navigate("/order-history");
     }
 
     const renderOrderRejectResponseRef = useRef();

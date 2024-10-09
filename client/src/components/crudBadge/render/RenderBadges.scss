@@ -1,85 +1,138 @@
-.render-badges.modal-form.type-3 {
-    min-width: unset;
-    height: 60vh;
-    overflow-y: scroll;
+// .render-badges.modal-form.type-3 {
+//     min-width: unset;
+//     height: 60vh;
+//     overflow-y: scroll;
 
+//     .badge-container {
+//         .badge-item {
+//             display: flex;
+//             align-items: center;
+//             justify-content: space-between;
+//             padding: 10px 12px;
+//             border-radius: 8px;
+//             margin-bottom: 12px;
+
+//             .badge-item__thumbnail {
+//                 width: 60px;
+//                 height: 60px;
+//                 border-radius: 8px;
+//                 transition: 0.05s linear;
+//             }
+
+//             .badge-item--right {
+//                 width: calc(100% - 70px);
+
+//                 .complete-badge-ic {
+//                     stroke: hsl(104, 53.2%, 40.2%);
+//                     fill: #ffffff;
+//                 }
+//             }
+
+
+
+//         }
+//     }
+
+//     .badge-details {
+//         .badge-details__thumbnail {
+//             width: 160px;
+//             height: 160px;
+//             border-radius: 12px;
+//             margin: 32px 0 12px;
+//         }
+
+//         .badge-details__status {
+//             svg {
+//                 width: 24px;
+//                 height: 24px;
+//             }
+
+//             margin-left: 50%;
+//             transform: translate(-50%);
+//             color: #039144;
+//             background: #c3f7cf;
+//             padding: 6px 12px;
+//             border-radius: 16px;
+//         }
+//     }
+
+
+
+//     .badge--level {
+//         padding: 4px 6px;
+//         border-radius: 16px;
+//         font-size: 1.2rem;
+//         line-height: 1.4rem;
+
+//         &.easy {
+//             background-image: linear-gradient(45deg, #34c1fd, #55e7bf);
+//             color: white;
+//         }
+
+//         &.medium {
+//             background-image: linear-gradient(45deg, #ff9856, #ffbc00);
+//             color: white;
+//         }
+
+//         &.hard {
+//             background-image: linear-gradient(45deg, #0083e9, #fb76eb);
+//             color: white;
+//         }
+//     }
+
+//     .hover-display-label::after {
+//         left: 0;
+//         transform: unset;
+//     }
+// }
+
+.render-badges {
     .badge-container {
-        .badge-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
 
-            .badge-item__thumbnail {
+        .badge-item {
+            width: 30%;
+            margin-right: 3.33%;
+            margin-top: 32px;
+            text-align: center;
+            padding: 8px;
+            border-radius: 12px;
+
+            &:hover {
+                background-color: var(--gray-1-color);
+                cursor: pointer;
+            }
+
+            .badge-item__ic {
                 width: 60px;
                 height: 60px;
-                border-radius: 8px;
-                transition: 0.05s linear;
+                margin-left: 50%;
+                transform: translateX(-50%);
             }
 
-            .badge-item--right {
-                width: calc(100% - 70px);
-
-                .complete-badge-ic {
-                    stroke: hsl(104, 53.2%, 40.2%);
-                    fill: #ffffff;
-                }
+            .badge-item__title {
+                font-size: 1.4rem;
             }
 
 
-
+            &:nth-of-type(3n) {
+                margin-right: 0;
+            }
         }
+
+
     }
 
     .badge-details {
-        .badge-details__thumbnail {
-            width: 160px;
-            height: 160px;
-            border-radius: 12px;
-            margin: 32px 0 12px;
-        }
-
-        .badge-details__status {
-            svg {
-                width: 24px;
-                height: 24px;
-            }
-
+        margin: 0 20px;
+        img {
+            margin: 20px 0;
             margin-left: 50%;
-            transform: translate(-50%);
-            color: #039144;
-            background: #c3f7cf;
-            padding: 6px 12px;
-            border-radius: 16px;
+            transform: translateX(-50%);
+            width: 130px;
+            height: auto;
         }
-    }
-
-
-
-    .badge--level {
-        padding: 4px 8px;
-        border-radius: 8px;
-
-        &.easy {
-            background-image: linear-gradient(45deg, #34c1fd, #55e7bf);
-            color: white;
-        }
-
-        &.medium {
-            background-image: linear-gradient(45deg, #ff9856, #ffbc00);
-            color: white;
-        }
-
-        &.hard {
-            background-image: linear-gradient(45deg, #0083e9, #fb76eb);
-            color: white;
-        }
-    }
-
-    .hover-display-label::after {
-        left: 0;
-        transform: unset;
     }
 }

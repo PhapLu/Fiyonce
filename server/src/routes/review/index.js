@@ -11,6 +11,6 @@ router.get('/readReviews/:userId',asyncHandler(reviewController.readReviews))
 //authentication
 router.use(verifyToken)
 
-router.patch('/createReview/:orderId', asyncHandler(reviewController.createReview))
+router.post('/createReview/:orderId', asyncHandler(reviewController.createReview))
 
 export default router

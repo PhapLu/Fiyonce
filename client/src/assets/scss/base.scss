@@ -89,7 +89,7 @@
 
     --complete-status-bg-color: #e4f7db;
     --complete-status-color: #82c011;
-    --complete-status-border-color: #f68038;
+    --complete-status-border-color: #82c011;
 
     --highlight-bg-color: #ffebdc;
 }
@@ -153,7 +153,7 @@ body.dark {
 
     --complete-status-bg-color: #20271d;
     --complete-status-color: #7ab114;
-    --complete-status-border-color: #f68038;
+    --complete-status-border-color: #82c011;
 
     --highlight-bg-color: #2d221a;
     --highlight-text-color: #e69f66;
@@ -189,6 +189,15 @@ svg {
     &.lg {
         width: 24px;
         height: 24px;
+    }
+
+    &.rating-star-ic {
+        &.active {
+            fill: var(--orange-1-color);
+        }
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
     }
 }
 
@@ -598,7 +607,8 @@ img {
         }
     }
 
-    &.complete {
+    &.complete,
+    &.delivered {
         background-color: var(--complete-status-bg-color);
         border: 1px solid var(--complete-status-border-color);
 

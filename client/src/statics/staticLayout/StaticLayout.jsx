@@ -19,11 +19,9 @@ import "./StaticLayout.scss"
 export default function StaticLayout() {
     return (
         <div className='static-layout'>
-            <Navbar />
-            <div className='app without-sidebar static-outlet-content'>
+            <div className='static-outlet-content'>
                 <Outlet />
             </div>
-
             <Footer />
         </div>
     )

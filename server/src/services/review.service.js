@@ -10,12 +10,13 @@ import {
 class ReviewService {
     static createReview = async (userId, orderId, body) => {
         //1. Check user, order
-        console.log(orderId);
+        console.log(body)
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        if(order.status !== "finished") throw new BadRequestError("Đơn hàng chưa hoàn thành")
+        console.log(order)
+        if (!["delivered", "finished"].includes(order.status)) throw new BadRequestError("Không thể đánh ở giai đoạn này")
 
         console.log(userId);
         console.log(order.memberId);
@@ -25,12 +26,18 @@ class ReviewService {
 
         //3. Check who is the reviewer
         let reviewedUserId
-        if(userId === order.memberId.toString()) {
+        if (userId === order.memberId.toString()) {
             reviewedUserId = order.talentChosenId
-        } else if(userId === order.talentChosenId.toString()){
+        } else if (userId === order.talentChosenId.toString()) {
             reviewedUserId = order.memberId
-        }else{
+        } else {
             throw new BadRequestError("Bạn không thể review đơn hàng này")
+        }
+
+        // Check if the user has already reviewed this order
+        const existingReview = await Review.findOne({ orderId, reviewerId: userId });
+        if (existingReview) {
+            throw new BadRequestError("Bạn đã đánh giá đơn hàng này");
         }
 
         const review = await Review.create({
@@ -63,9 +70,9 @@ class ReviewService {
         if (!user) throw new NotFoundError("Không tìm thấy user")
 
         //2. Read reviews
-        const reviews = await Review.find({reviewedUserId: userId})
+        const reviews = await Review.find({ reviewedUserId: userId })
         if (!reviews) throw new NotFoundError("Không tìm thấy review")
-        
+
         return {
             reviews
         }

@@ -10,7 +10,7 @@ import { resizeImageUrl } from '../../utils/imageDisplayer';
 import ZoomImage from '../../components/zoomImage/ZoomImage';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-export default function TransactionDashboard() {
+export default function ReportDashboard() {
     const { userInfo, socket } = useAuth()
     const [talentRequests, setTalentRequests] = useState([]);
     const { setModalInfo } = useModal();

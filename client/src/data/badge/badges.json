@@ -1,0 +1,65 @@
+[
+    {
+        "key": "earlyBird",
+        "title": "Early Bird",
+        "description": "Trở thành những Pastalists tiên phong khám phá và đóng góp cho nền tảng ở giai đoạn MVP, Beta.",
+        "icon": "early-bird-badge.png",
+        "level": "easy"
+    },
+    {
+        "key": "communityBuilder",
+        "title": "Community Builder",
+        "description": "Trở thành người xây dựng cộng đồng bằng cách mời 15 người bạn đăng kí tài khoản qua link giới thiệu của bạn.",
+        "icon": "community-builder-badge.png",
+        "level": "easy"
+    },
+    {
+        "key": "platformAmbassador",
+        "title": "Plarform Ambassador",
+        "description": "Trở thành đại sứ nền tảng bằng cách mời 50 người bạn đăng kí tài khoản qua link giới thiệu của bạn.",
+        "icon": "platform-ambassador-badge.png",
+        "level": "medium"
+    },
+    {
+        "key": "trustedArtist",
+        "title": "Trusted Artist",
+        "description": "Họa sĩ đã được kiểm duyệt và chính thức thực hiện commission trên nền tảng.",
+        "icon": "trusted-artist-badge.png",
+        "level": "easy"
+    },
+    {
+        "key": "risingStar",
+        "title": "Rising Star",
+        "description": "Đạt được 100 người theo dõi và bắt đầu lan tỏa những giá trị nghệ thuật của bạn.",
+        "icon": "rising-star-badge.png",
+        "level": "medium"
+    },
+    {
+        "key": "superstar",
+        "title": "Superstar",
+        "description": "Chạm mốc 500 người theo dõi và trở thành hình tượng nghệ thuật được yêu thích.",
+        "icon": "superstar-badge.png",
+        "level": "hard"
+    },
+    {
+        "key": "fresherArtist",
+        "title": "Fresher Artist",
+        "description": "Hoàn tất đơn commission đầu tiên với đánh giá 5 sao.",
+        "icon": "fresher-artist-badge.png",
+        "level": "easy"
+    },
+    {
+        "key": "juniorArtist",
+        "title": "Junior Artist",
+        "description": "Hoàn tất 5 đơn commission với đánh giá 5 sao.",
+        "icon": "junior-artist-badge.png",
+        "level": "medium"
+    },
+    {
+        "key": "seniorArtist",
+        "title": "Senior Artist",
+        "description": "Hoàn tất 20 đơn commission với đánh giá 5 sao.",
+        "icon": "senior-artist-badge.png",
+        "level": "hard"
+    }
+]

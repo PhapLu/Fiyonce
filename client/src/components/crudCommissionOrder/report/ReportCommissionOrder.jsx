@@ -15,6 +15,7 @@ import { bytesToKilobytes, formatFloat, limitString } from "../../../utils/forma
 
 export default function ReportCommissionOrder() {
     const commissionOrder = useOutletContext();
+    const queryClient = useQueryClient();
 
     const navigate = useNavigate();
 
@@ -297,7 +298,7 @@ export default function ReportCommissionOrder() {
 
                 <div className="form-field">
                     <label className="form-field__label">Bằng chứng</label>
-                    <span className="form-field__annotation">Vui lòng đính kèm 3 - 5 ảnh chứng minh {isOrderOwnerAsMember ? "họa sĩ" : "khách hàng"} đã vi phạm hợp đồng</span>
+                    <span className="form-field__annotation">Vui lòng đính kèm bằng chứng (3 - 5 ảnh) chứng minh {isOrderOwnerAsMember ? "họa sĩ" : "khách hàng"} đã vi phạm hợp đồng</span>
                     {evidences?.map((evidence, index) => {
                         return (
                             evidence && (

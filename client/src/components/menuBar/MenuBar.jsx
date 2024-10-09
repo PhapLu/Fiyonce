@@ -221,10 +221,10 @@ export default function MenuBar() {
                             <span className="dropdown-menu-item__title">Cài đặt</span>
                         </li> */}
                         <hr />
-                        <Link onClick={() => setShowMenu(false)} to={'/statics/glaze'} className="dropdown-menu-item">
+                        {/* <Link onClick={() => setShowMenu(false)} to={'/statics/glaze'} className="dropdown-menu-item">
                             <img src={GlazeLogo} alt="Glaze logo" />
                             <span className="dropdown-menu-item__title">Glaze</span>
-                        </Link>
+                        </Link> */}
 
                         {/* <Link onClick={() => setShowMenu(false)} to="/help-center" className="dropdown-menu-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 mr-8">

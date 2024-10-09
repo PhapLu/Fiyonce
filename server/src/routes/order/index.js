@@ -31,7 +31,6 @@ router.get('/readRejectResponse/:orderId', asyncHandler(orderController.readReje
 router.patch('/startWipCommissionOrder/:orderId', asyncHandler(orderController.startWipCommissionOrder))
 router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
 router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
-router.patch('/deliverOrder/:orderId', uploadFields, asyncHandler(orderController.deliverOrder))
 router.patch('/finishOrder/:orderId', asyncHandler(orderController.finishOrder))
 
 export default router

@@ -8,7 +8,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { bytesToKilobytes, formatFloat, limitString } from "../../../utils/formatter";
-import { createFormData } from "../../../utils/newRequest";
+import { apiUtils, createFormData } from "../../../utils/newRequest";
 
 // Styling
 
@@ -23,8 +23,8 @@ export default function CreateMilestone() {
 
     const { userInfo } = useAuth();
     const commissionOrder = useOutletContext();
-    const isOrderOwner = commissionOrder?.memberId?._id === userInfo._id;
-    const isTalentChosen = commissionOrder?.talentChosenId?._id === userInfo._id;
+    const isOrderOwner = commissionOrder?.memberId?._id === userInfo?._id;
+    const isTalentChosen = commissionOrder?.talentChosenId?._id === userInfo?._id;
 
     const [showZoomImage, setShowZoomImage] = useState(false);
     const [zoomedImageSrc, setZoomedImageSrc] = useState();
@@ -138,13 +138,15 @@ export default function CreateMilestone() {
 
         try {
             console.log(inputs)
-            // const response = await apiUtils.post("/bugReport/createBugReport", fd);
-            // console.log(response);
+            const response = await apiUtils.patch(`/order/addMilestone/${commissionOrder?._id}`, fd);
+            console.log(response);
 
-            // setModalInfo({
-            //     status: "success",
-            //     message: "Báo cáo sự cố thành công"
-            // })
+            setModalInfo({
+                status: "success",
+                message: "Thêm tiến độ thành công"
+            })
+
+            navigate("/order-history")
         } catch (error) {
             console.log(error);
             setModalInfo({
@@ -180,7 +182,7 @@ export default function CreateMilestone() {
 
                 <div className="form-field">
                     <label htmlFor="note" className="form-field__label">Ghi chú cho khách hàng</label>
-                    <textarea name="note" value={inputs?.note} className="form-field__input" onChange={handleChange} placeholder="Mô tả sự cố mà bạn gặp phải"></textarea>
+                    <textarea name="note" value={inputs?.note} className="form-field__input" onChange={handleChange} placeholder="Nhập ghi chú cho khách hàng nếu có"></textarea>
                     {errors.note && <span className="form-field__error">{errors.note}</span>}
                 </div>
 
@@ -192,8 +194,8 @@ export default function CreateMilestone() {
                 </div>
 
                 <div className="form-field required">
-                    <label className="form-field__label">Bản thảo</label>
-                    <span className="form-field__annotation">Cập nhật các bản thảo cho khách hàng</span>
+                    <label className="form-field__label">Bản thảo </label>
+                    <span className="form-field__annotation">Cập nhật các bản thảo cho khách hàng (1 - 5 ảnh)</span>
                     <div className="form-field with-ic btn add-link-btn" onClick={triggerFileInput}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

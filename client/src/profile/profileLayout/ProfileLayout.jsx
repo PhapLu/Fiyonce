@@ -191,41 +191,38 @@ export default function ProfileLayout() {
 
 
     return (
-        <>
-            <Navbar />
+        <div className="profile-layout">
+            <ProfileSidebar profileInfo={profileInfo} setProfileInfo={setProfileInfo} />
 
-            <div className='app with-sidebar'>
-                <ProfileSidebar profileInfo={profileInfo} setProfileInfo={setProfileInfo} />
-
-                <div className="outlet-content">
-                    <div className="profile">
-                        <div className="profile__bg">
-                            <LazyLoadImage
-                                src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
-                                alt={`${profileInfo.fullName}'s cover photo`}
-                                className={`mobile-hide profile__bg__img ${uploadBgLoading ? "skeleton-img" : ""}`}
-                                effect="blur"
-                            />
-                            {isProfileOwner && (
-                                <>
-                                    <button className="profile__bg__edit-btn btn btn-md" onClick={onChooseImg}>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="2.5"
-                                            stroke="currentColor"
-                                            className="size-6 profile__bg__ic"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                                            />
-                                        </svg>
-                                        Đổi ảnh nền
-                                    </button>
-                                    {/* {isCoverCropping && (
+            <div className="outlet-content">
+                <div className="profile">
+                    <div className="profile__bg">
+                        <LazyLoadImage
+                            src={profileInfo.bg || "/uploads/pastal_system_default_background.png"}
+                            alt={`${profileInfo.fullName}'s cover photo`}
+                            className={`mobile-hide profile__bg__img ${uploadBgLoading ? "skeleton-img" : ""}`}
+                            effect="blur"
+                        />
+                        {isProfileOwner && (
+                            <>
+                                <button className="profile__bg__edit-btn btn btn-md" onClick={onChooseImg}>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2.5"
+                                        stroke="currentColor"
+                                        className="size-6 profile__bg__ic"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M2.25 15.75L7.409 10.591a2.25 2.25 0 013.182 0L15.75 15.75m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0L22.75 15.75m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12.75 8.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                                        />
+                                    </svg>
+                                    Đổi ảnh nền
+                                </button>
+                                {/* {isCoverCropping && (
                                         <CropImage
                                             imageSrc={selectedCoverImage}
                                             onCropComplete={handleCoverCropComplete}
@@ -233,108 +230,107 @@ export default function ProfileLayout() {
                                         />
                                     )} */}
 
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        ref={inputRef}
-                                        onChange={handleOnChange}
-                                        style={{ display: "none" }}
-                                    />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={inputRef}
+                                    onChange={handleOnChange}
+                                    style={{ display: "none" }}
+                                />
+                            </>
+                        )}
+                    </div>
+
+                    <div className="sub-nav-container">
+                        <div className="sub-nav-container--left">
+                            {isProfileOwner ? (userInfo?.role === "talent" ? (
+                                <>
+                                    <Link
+                                        to={`/users/${userId}/profile-commission-services`}
+                                        className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                            (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                    >
+                                        Dịch vụ
+                                    </Link>
+                                    <Link
+                                        to={`/users/${userId}/profile-posts`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                    >
+                                        Tác phẩm
+                                    </Link>
+                                    <Link
+                                        to={`/users/${userId}/term-of-services`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/term-of-services') ? "active" : ""}`}
+                                    >
+                                        Điều khoản
+                                    </Link>
+                                    <Link
+                                        to={`/users/${userId}/basic-info`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
+                                    >
+                                        Thông tin cơ bản
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        to={`/users/${userId}/basic-info`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
+                                    >
+                                        Thông tin cơ bản
+                                    </Link>
+                                </>
+                            )) : (
+                                <>
+                                    <Link
+                                        to={`/users/${userId}/profile-commission-services`}
+                                        className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                            (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                    >
+                                        Dịch vụ
+                                    </Link>
+                                    <Link
+                                        to={`/users/${userId}/profile-posts`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                    >
+                                        Tác phẩm
+                                    </Link>
                                 </>
                             )}
+
+                            {
+                                !isProfileOwner?.isPublicArchive && (
+                                    <Link
+                                        to={`/users/${userId}/archive`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
+                                    >
+                                        Lưu trữ
+                                    </Link>
+                                )
+                            }
                         </div>
 
-                        <div className="sub-nav-container">
-                            <div className="sub-nav-container--left">
-                                {isProfileOwner ? (userInfo?.role === "talent" ? (
-                                    <>
-                                        <Link
-                                            to={`/users/${userId}/profile-commission-services`}
-                                            className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
-                                                (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
-                                        >
-                                            Dịch vụ
-                                        </Link>
-                                        <Link
-                                            to={`/users/${userId}/profile-posts`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
-                                        >
-                                            Tác phẩm
-                                        </Link>
-                                        <Link
-                                            to={`/users/${userId}/term-of-services`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/term-of-services') ? "active" : ""}`}
-                                        >
-                                            Điều khoản
-                                        </Link>
-                                        <Link
-                                            to={`/users/${userId}/basic-info`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
-                                        >
-                                            Thông tin cơ bản
-                                        </Link>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Link
-                                            to={`/users/${userId}/basic-info`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
-                                        >
-                                            Thông tin cơ bản
-                                        </Link>
-                                    </>
-                                )) : (
-                                    <>
-                                        <Link
-                                            to={`/users/${userId}/profile-commission-services`}
-                                            className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
-                                                (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
-                                        >
-                                            Dịch vụ
-                                        </Link>
-                                        <Link
-                                            to={`/users/${userId}/profile-posts`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
-                                        >
-                                            Tác phẩm
-                                        </Link>
-                                    </>
-                                )}
 
-                                {
-                                    !isProfileOwner?.isPublicArchive && (
-                                        <Link
-                                            to={`/users/${userId}/archive`}
-                                            className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
-                                        >
-                                            Lưu trữ
-                                        </Link>
-                                    )
-                                }
-                            </div>
-
-
-                        </div>
-                        <hr />
-                    </div >
-                    {overlayVisible && (
-                        <div className="overlay">
-
-                            {isCropping && (
-                                <CropImage
-                                    image={selectedImage}
-                                    onCropDone={onCropDone}
-                                    onCropCancel={onCropCancel}
-                                    ratio={990 / 220}
-                                />
-                            )}
-                            {showRenderBadges && <RenderBadges setShowRenderBadges={setShowRenderBadges} setOverlayVisible={setOverlayVisible} />}
-                        </div>
-                    )}
-
-                    <Outlet context={{ profileInfo, setProfileInfo }} />
+                    </div>
+                    <hr />
                 </div >
+                {overlayVisible && (
+                    <div className="overlay">
+
+                        {isCropping && (
+                            <CropImage
+                                image={selectedImage}
+                                onCropDone={onCropDone}
+                                onCropCancel={onCropCancel}
+                                ratio={990 / 220}
+                            />
+                        )}
+                        {showRenderBadges && <RenderBadges setShowRenderBadges={setShowRenderBadges} setOverlayVisible={setOverlayVisible} />}
+                    </div>
+                )}
+
+                <Outlet context={{ profileInfo, setProfileInfo }} />
             </div >
-        </>
+        </div>
     );
 }

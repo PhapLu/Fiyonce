@@ -48,8 +48,8 @@ export default function RenderCommissionOrder() {
 
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
 
-    const isOrderOwner = commissionOrder?.memberId?._id === userInfo._id;
-    const isTalentChosen = commissionOrder?.talentChosenId?._id === userInfo._id;
+    const isOrderOwner = commissionOrder?.memberId?._id === userInfo?._id;
+    const isTalentChosen = commissionOrder?.talentChosenId?._id === userInfo?._id;
 
     return (
         <>
@@ -240,7 +240,7 @@ export default function RenderCommissionOrder() {
                                 commissionOrder?.isDirect ? (
                                     isTalentChosen && (<Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "order-history"}/commission-orders/${commissionOrder?._id}/create-proposal`} className="form__submit-btn-item btn btn-2 btn-md">Tạo hợp đồng</Link>)
                                 ) : (
-                                    !isOrderOwner && userInfo.role == "talent") && (
+                                    !isOrderOwner && userInfo?.role == "talent") && (
                                     <Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "order-history"}/commission-orders/${commissionOrder?._id}/create-proposal`} className="form__submit-btn-item btn btn-2 btn-md">Ứng commission</Link>
                                 )
                             }
