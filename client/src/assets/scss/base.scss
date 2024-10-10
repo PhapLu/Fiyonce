@@ -195,6 +195,7 @@ svg {
         &.active {
             fill: var(--orange-1-color);
         }
+
         width: 16px;
         height: 16px;
         margin-left: 4px;
@@ -728,6 +729,12 @@ svg.btn-ic {
         opacity: 0.8;
         cursor: pointer;
         transition: 0.05s;
+    }
+
+    &.inactive {
+        &:hover {
+            opacity: 1;
+        }
     }
 
     &.btn-7:hover {

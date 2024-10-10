@@ -77,16 +77,6 @@ class TalentRequestService {
             })
             await newTalentRequest.save()
 
-            // 6. Create referral code
-            if (referralCode) {
-                const talent = await User.findOne({ referralCode })
-                const referralCode = new ReferralCode({
-                    code: referralCode,
-                    referrer: talent._id.toString(),
-                    referred: userId,
-                })
-            }
-
             return {
                 talentRequest: newTalentRequest,
             }

@@ -16,6 +16,7 @@ import FresherArtistIcon from "../../../assets/img/fresher-artist-badge.png";
 import JuniorArtistIcon from "../../../assets/img/junior-artist-badge.png";
 import SeniorArtistIcon from "../../../assets/img/senior-artist-badge.png";
 import { apiUtils } from "../../../utils/newRequest";
+import { useModal } from "../../../contexts/modal/ModalContext";
 
 // Map badge keys to their corresponding icons
 const badgeIcons = {
@@ -31,7 +32,8 @@ const badgeIcons = {
 };
 
 export default function RenderBadges({ setShowRenderBadges, setOverlayVisible }) {
-    const { userInfo } = useAuth();
+    const { userInfo, setUserInfo } = useAuth();
+    const { setModalInfo } = useModal();
     const [selectedBadge, setSelectedBadge] = useState(null);
     const [isClaimable, setIsClaimable] = useState(null);
 
@@ -61,19 +63,30 @@ export default function RenderBadges({ setShowRenderBadges, setOverlayVisible })
             console.error("Error fetching badge claim status:", error);
         }
     };
-
     const handleClaimBadge = async () => {
         try {
             const response = await apiUtils.patch(`/badge/awardBadge/${selectedBadge.key}`);
-            if (response.ok) {
-                console.log(response)
-                // alert(data.message);
+            if (response) {
+                console.log(response);
+
+                // Update userInfo with the new badge
+                const updatedBadges = [...userInfo.badges, selectedBadge.key];
+                setUserInfo({ ...userInfo, badges: updatedBadges });
+
                 setIsClaimable(false); // Update to show "Đã nhận" after claiming
+                setModalInfo({
+                    status: "congrat",
+                    message: "Nhận huy hiệu thành công"
+                });
             }
         } catch (error) {
             console.error("Error claiming badge:", error);
+            setModalInfo({
+                status: "error",
+                message: error.message.response.data
+            })
         }
-    };
+    }
 
     const handleBadgeSelect = (badge) => {
         setSelectedBadge(badge);
@@ -104,23 +117,17 @@ export default function RenderBadges({ setShowRenderBadges, setOverlayVisible })
                             userInfo?.badges?.includes(selectedBadge?.key) ?
                                 (<button
                                     className={`btn btn-4 btn-md w-100 mt-16 mb-16 `}
-                                    onClick={isClaimable ? handleClaimBadge : null}
                                     disabled={!isClaimable}
                                 >
                                     Đã nhận
-                                </button>) : isClaimable ?
+                                </button>) : 
                                     (<button
-                                        className={`btn btn-4 btn-md w-100 mt-16 mb-16 `}
+                                        className={`btn ${isClaimable ? "btn-2" : "btn-4 inactive"} btn-md w-100 mt-16 mb-16 `}
+                                        onClick={isClaimable ? handleClaimBadge : null}
                                         disabled={!isClaimable}
                                     >
                                         Nhận huy hiệu
-                                    </button>) : (
-                                        <button
-                                            className={`btn btn-4 btn-md w-100 mt-16 mb-16 `}
-                                        >
-                                            Đã hiểu
-                                        </button>
-                                    )
+                                    </button>)
                         }
                     </div>
                 ) : (

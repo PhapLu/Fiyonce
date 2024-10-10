@@ -60,9 +60,7 @@ const UserSchema = new Schema(
         followers: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         following: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         taxCode: {
-            code: { type: String, default: "" },
-            isVerified: { type: Boolean, default: false },
-            message: { type: String, default: "" }
+            type: String, default: "",
         },
         cccd: {
             type: String,
@@ -74,10 +72,10 @@ const UserSchema = new Schema(
         lastViewConversations: { type: Date, default: Date.now },
         lastViewNotifications: { type: Date, default: Date.now },
         timeZone: { type: String, default: "" },
-    },{
-        timestamps: true,
-        collection: COLLECTION_NAME,
-    }
+    }, {
+    timestamps: true,
+    collection: COLLECTION_NAME,
+}
 )
 // Middleware to set the verificationExpiry field to 30 minutes in the future
 UserSchema.pre("save", function (next) {

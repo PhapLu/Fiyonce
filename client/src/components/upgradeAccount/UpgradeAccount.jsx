@@ -51,8 +51,9 @@ const UpgradeAccount = () => {
         isLoading,
     } = useQuery("fetchTalentRequest", fetchTalentRequest,
         {
+
             onSuccess: (data) => {
-                if (data && query.get("is-again") !== '1') {
+                if (["pending", "rejected"].includes(data.status) && query.get("is-again") !== '1') {
                     const currentPath = window.location.pathname;
                     const newPath = currentPath.replace('/upgrade-account', '/render-talent-request');
                     navigate(`${newPath}`);
@@ -146,7 +147,7 @@ const UpgradeAccount = () => {
             console.log('Connected to socket server:', socket.id);
 
             // Add user to socket (for demonstration, assuming userId is 1)
-            socket.emit('addUser', "665929dd1937df564df71660");
+            socket.emit('addUser', userInfo?._id);
         });
 
         try {
@@ -161,7 +162,7 @@ const UpgradeAccount = () => {
             }
 
             socket.emit('sendTalentRequest', {
-                senderId: "665929dd1937df564df71660",
+                senderId: userInfo?._id,
                 talentRequest: response.data.metadata.talentRequest,
             });
         } catch (error) {
@@ -261,7 +262,7 @@ const UpgradeAccount = () => {
                             Pastal Team.
                         </p>
 
-                        <p>Hướng dẫn tra cứu MST: <Link to="" className="highlight-text underlined-text">tại đây</Link></p>
+                        <p>Hướng dẫn tra cứu MST: <Link to="" className="highlight-text underlined-text">Tại đây</Link></p>
 
                     </div>
 
@@ -269,9 +270,7 @@ const UpgradeAccount = () => {
 
                         <h3 className="form__title">Nâng cấp tài khoản</h3>
 
-
-                        {talentRequest !== "pending" && talentRequest !== "rejected" &&
-
+                        {!["pending", "rejected"].includes(talentRequest) &&
                             <>
                                 <div className="form-field required">
                                     <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
@@ -336,7 +335,7 @@ const UpgradeAccount = () => {
 
                                 <div className="form-field">
                                     <label htmlFor="taxCode" className="form-field__label">Mã số thuế</label>
-                                    <span className="form-field__annotation">Mã số thuế cá nhân. Tra cứu <Link to="" className="highlight-text underlined-text">tại đây</Link></span>
+                                    <span className="form-field__annotation">Mã số thuế cá nhân. Tra cứu <Link to="" className="highlight-text underlined-text">Tại đây</Link></span>
                                     <input type="text" id="taxCode" name="taxCode" value={inputs.taxCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
                                     {errors.taxCode && <span className="form-field__error">{errors.taxCode}</span>}
                                 </div>

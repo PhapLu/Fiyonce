@@ -78,6 +78,7 @@ import ReportCommissionOrder from "./components/crudCommissionOrder/report/Repor
 import CommissionReviews from "./components/crudCommissionReviews/render/RenderCommissionReviews.jsx";
 import ReviewCommissionOrder from "./components/crudCommissionOrder/review/ReviewCommissionOrder.jsx";
 import ReportDashboard from "./dashboard/reportDashboard/ReportDashboard.jsx";
+import SupplementTalentRequest from "./components/upgradeAccount/SupplementTalentRequest.jsx";
 
 const queryClient = new QueryClient();
 
@@ -240,6 +241,12 @@ const routes = [
             path: "/users/:userId/upgrade-account",
             element: (
               <UpgradeAccount />
+            ),
+          },
+          {
+            path: "/users/:userId/supplement-talent-request",
+            element: (
+              <SupplementTalentRequest />
             ),
           },
           {

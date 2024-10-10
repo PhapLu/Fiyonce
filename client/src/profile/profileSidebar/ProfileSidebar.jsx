@@ -45,7 +45,15 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     const isProfileOwner = userInfo?._id === userId;
 
     // Initialize variables for inputs, errors, loading effect
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({
+        fullName: '',
+        bio: '',
+        socialLinks: [],
+        pronoun: '',
+        address: '',
+        workQueueUrl: '',
+        jobTitle: '',
+    });
     const [errors, setErrors] = useState({});
     const [isSubmitSidebarInfoLoading, setIsSubmitSidebarInfoLoading] = useState(false);
     const [isUploadAvatarLoading, setUploadAvatarLoading] = useState(false);
@@ -100,7 +108,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     //         setInputs(profileInfo);
     //         setSocialLinks(profileInfo.socialLinks || []);
     //     }
-    // }, [userId]);
+    // }, []);
 
 
     const handleFileUpload = async (croppedFile) => {
@@ -285,13 +293,28 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         }
     }
 
+    // useEffect(() => {
+    //     if (profileInfo) {
+    //         // Only set inputs if they are not already filled
+    //         setInputs(profileInfo);
+    //         setSocialLinks((prevSocialLinks) => prevSocialLinks.length === 0 ? profileInfo.socialLinks || [] : prevSocialLinks);
+    //     }
+    // }, []);
+
     useEffect(() => {
-        if (profileInfo) {
-            // Only set inputs if they are not already filled
-            setInputs(profileInfo);
-            setSocialLinks((prevSocialLinks) => prevSocialLinks.length === 0 ? profileInfo.socialLinks || [] : prevSocialLinks);
+        if (userInfo && profileInfo) {
+            // Set only specific fields from profileInfo or userInfo
+            setInputs((prevInputs) => ({
+                ...prevInputs,
+                fullName: profileInfo.fullName || userInfo.fullName || '',
+                bio: profileInfo.bio || userInfo.bio || '',
+                pronoun: profileInfo.pronoun || userInfo.pronoun || '',
+                workQueueUrl: profileInfo.workQueueUrl || userInfo.workQueueUrl || '',
+                address: profileInfo.address || userInfo.address || '',
+            }));
+            setSocialLinks(profileInfo.socialLinks || []);
         }
-    }, [profileInfo]);
+    }, []);
 
     const handleOpenConversation = async (e) => {
         e.preventDefault();
@@ -464,24 +487,30 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         </div>
                     }
                 </div>
-                {isProfileOwner ? (
-                    <>
+                {
+                    isProfileOwner ? (
                         <span onClick={() => { setShowProfileStatus(true); setOverlayVisible(true) }}>
                             {
-                                userInfo?.profileStatus?.icon ?
-                                    (<span aria-label={userInfo?.profileStatus?.title || ""} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'> {codePointToEmoji(userInfo?.profileStatus?.icon)}</span>)
-                                    :
-                                    (<span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sidebar__avatar__ic">
+                                userInfo?.profileStatus?.icon ? (
+                                    <span aria-label={userInfo?.profileStatus?.title || "Cập nhật trạng thái"} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'>
+                                        {codePointToEmoji(userInfo?.profileStatus?.icon)}
+                                    </span>
+                                ) : (
+                                    <span aria-label={"Cập nhật trạng thái"} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
                                         </svg>
-                                    </span>)
+                                    </span>
+                                )
                             }
                         </span>
-                    </>
-                ) : (
-                    userInfo?.profileStatus?.emoji && (<span className="size-6 sidebar__avatar__ic"> {codePointToEmoji(userInfo?.profileStatus?.icon)} </span>)
-                )
+                    ) : (
+                        userInfo?.profileStatus?.emoji && (
+                            <span aria-label={userInfo?.profileStatus?.title || "Cập nhật trạng thái"} className='hover-display-label sidebar__avatar__ic update-profile-status-ic'>
+                                <span className="size-6 sidebar__avatar__ic"> {codePointToEmoji(userInfo?.profileStatus?.icon)} </span>
+                            </span>
+                        )
+                    )
                 }
             </div>
 
@@ -835,9 +864,18 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     </svg>
                                     <span>Chỉnh sửa thông tin</span>
                                 </button>
-
+                                
                                 {
-                                    profileInfo?.role != "talent" && (
+                                    profileInfo?.role == "talent" ? (
+                                        (profileInfo.cccd == "" || profileInfo?.taxCode == "") && (
+                                            <Link to={`/users/${profileInfo?._id}/supplement-talent-request`} className="sidebar__btn btn btn-md btn-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
+                                                    <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
+                                                </svg>
+                                                <span>Bổ sung hồ sơ</span>
+                                            </Link>
+                                        )
+                                    ) : (
                                         <Link to={`/users/${profileInfo?._id}/upgrade-account`} className="sidebar__btn btn btn-md btn-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#726FFF" className="size-6">
                                                 <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
@@ -853,7 +891,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             )
             }
             {/* {openUpgradeAccountForm && <UpgradeAccount closeModal={() => setOpenUpgradeAccountForm(false)} />} */}
-            {overlayVisible &&
+            {
+                overlayVisible &&
                 <div className="overlay">
                     {showMoreProfileActions == "share-profile" && <ShareProfile profileInfo={profileInfo} setShowMoreProfileActions={setShowMoreProfileActions} setOverlayVisible={setOverlayVisible} />}
                     {/* {showMoreProfileActions == "block-profile" && <ShareProfile />} */}

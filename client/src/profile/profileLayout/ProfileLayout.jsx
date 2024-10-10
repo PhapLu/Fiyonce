@@ -275,7 +275,7 @@ export default function ProfileLayout() {
                                 <>
                                     <Link
                                         to={`/users/${userId}/basic-info`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || location.pathname.split("/").length === 3 ? "active" : ""}`}
                                     >
                                         Thông tin cơ bản
                                     </Link>
