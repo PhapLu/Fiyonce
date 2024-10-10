@@ -223,7 +223,7 @@ class TalentRequestService {
                 const publicId = extractPublicIdFromUrl(artwork)
                 await deleteFileByPublicId(publicId)
             })
-            const subject = 'Nâng cấp tài khoản không thành công'
+            const subject = 'Yêu cầu nâng cấp tài khoản họa sĩ của bạn đã bị từ chối'
             const message = 'Yêu cầu nâng cấp tài khoản họa sĩ của bạn đã bị từ chối'
             const reason = 'Lí do: ' + body.rejectMessage
             sendAnnouncementEmail(
