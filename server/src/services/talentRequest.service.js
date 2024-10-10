@@ -86,6 +86,31 @@ class TalentRequestService {
         }
     }
 
+    static requestSupplement = async (userId, body) => {
+        // 1. Check user exists
+        const currentUser = await User.findById(userId)
+        if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+
+        // 2. Find talent request
+        const talentRequest = await TalentRequest.findOne({ userId })
+        if (!talentRequest) {
+            throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
+        }
+
+        // 3. Validate request body
+        if (!body.cccd && !body.taxCode)
+            throw new BadRequestError("Hãy nhập thông tin cần bổ sung")
+        talentRequest.cccd = body.cccd
+        talentRequest.taxCode = body.taxCode
+
+        // 4. Save the updated request
+        await talentRequest.save()
+
+        return {
+            talentRequest,
+        }
+    }
+
     static readMyTalentRequest = async (userId) => {
         // 1. Check user exists
         const currentUser = await User.findById(userId)
