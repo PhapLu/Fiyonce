@@ -28,6 +28,7 @@ class NotificationService {
             type !== "follow" &&
             type !== "orderCommission" &&
             type !== "updateOrderStatus"
+
         ) {
             throw new BadRequestError("Invalid type")
         }
@@ -88,7 +89,14 @@ class NotificationService {
                 content = `Admin đã từ chối yêu cầu nâng cấp tài khoản của bạn`;
                 notificationType = "system";
                 break;
-
+            case "sendTalentRequest":
+                content = `${user.fullName} đã gửi yêu cầu nâng cấp tài khoản`;
+                notificationType = "system";
+                break;
+            case "supplementTalentRequest":
+                content = `${user.fullName} đã bổ sung yêu cầu nâng cấp tài khoản`;
+                notificationType = "system";
+                break;
             default:
                 throw new BadRequestError("Invalid type");
         }

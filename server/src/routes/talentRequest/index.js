@@ -12,6 +12,7 @@ router.use(verifyToken)
 
 router.post('/requestUpgradingToTalent', uploadFields, asyncHandler(talentRequestController.requestUpgradingToTalent))
 router.get('/readMyTalentRequest', asyncHandler(talentRequestController.readMyTalentRequest))
+router.patch('/requestSupplement', asyncHandler(talentRequestController.requestSupplement))
 
 //admin
 router.patch('/upgradeRoleToTalent/:requestId', accessService.grantAccess('updateAny', 'profile'), asyncHandler(talentRequestController.upgradeRoleToTalent))
