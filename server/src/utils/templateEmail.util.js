@@ -77,30 +77,20 @@ const otpTemplate = (toEmail, message, verificationCode) => {
                 </div>
                 <div class="content">
                     <div class="content_container">
-                        <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                         <p class="content_head">Chào ${toEmail},</p>
                         <p>${message}</p>
                         <div class="verification-code">${verificationCode}</div>
                         <p class="content_note">*Mã có hiệu lực trong vòng 30 phút.</p>
-                        <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                     </div>
                 </div>
                 <div style='font-size: 15px;' class="footer">
-                    <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                     <p>Pastal là nền tảng vẽ tranh theo yêu cầu hàng đầu Việt Nam, nơi quy tụ những họa sĩ trẻ tài năng từ nhiều trường phái hội họa khác nhau.</p>
                     <span>Hiện tại Pastal vẫn còn đang trong giai đoạn thử nghiệm, rất mong nhận được những đóng góp và ý kiến từ các bạn để sản phẩm cải thiện hơn.</span>
-                    <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                     <p class="footer_final_p">Hẹn gặp lại trên Pastal.</p>
-                    <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
-                    <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
-                    <p>Mọi thắc mắc và đóng góp vui lòng liên hệ <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
-                    <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@pastal.com">help@pastal.com</a></p>
+                    <p>Mọi thắc mắc và đóng góp vui lòng liên hệ <a style='color: #ff9027; font-size: 16px;' class="fiyonce_help" href="mailto:help@pastal.com">help@pastal.com</a></p>
                     <!-- <div class="social-icons">
-                        <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                         <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718068817/fiyonce/system/facebook_icon_sk9jnu.png" style="object-fit: cover; border-radius:0px;display:block" class="CToWUd" data-bit="iit" /></a>
-                        <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                         <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064053/fiyonce/system/tiktok_icon_zkvjzu.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
-                        <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
                         <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064137/fiyonce/system/instagram_icon_lzz8ox.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
                         <a href="#" target="_blank" style='margin-right:12px;'><img height="22" src="https://res.cloudinary.com/fiyonce/image/upload/v1718064187/fiyonce/system/pinterest_icon_xjzzls.png" style="border-radius:0px;display:block" width="22" class="CToWUd" data-bit="iit"/></a>
                     </div> -->

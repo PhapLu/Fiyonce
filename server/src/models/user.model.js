@@ -60,12 +60,13 @@ const UserSchema = new Schema(
         followers: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         following: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
         taxCode: {
-            type: String,
-            default: "",
-        }, 
+            code: { type: String, default: "" },
+            isVerified: { type: Boolean, default: false },
+            message: { type: String, default: "" }
+        },
         cccd: {
             type: String,
-            default: "",
+            default: ''
         },
         accessToken: { type: String, default: '' },
         qrCode: { type: String, default: '' }, //Base 64

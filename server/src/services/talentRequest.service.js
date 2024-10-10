@@ -77,37 +77,22 @@ class TalentRequestService {
             })
             await newTalentRequest.save()
 
+            // 6. Create referral code
+            if (referralCode) {
+                const talent = await User.findOne({ referralCode })
+                const referralCode = new ReferralCode({
+                    code: referralCode,
+                    referrer: talent._id.toString(),
+                    referred: userId,
+                })
+            }
+
             return {
                 talentRequest: newTalentRequest,
             }
         } catch (error) {
             console.log("Error uploading images:", error)
             throw new Error("File upload or database save failed")
-        }
-    }
-
-    static requestSupplement = async(userId, body) => {
-        //1. Check user
-        const user = await User.findById(userId)
-        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-
-        //2. Find old TalentRequest
-        const talentRequest = await TalentRequest.findOne({userId})
-        if (!talentRequest) throw new NotFoundError("Không tìm thấy yêu cầu nâng cấp")
-
-        //3. Add ccd, taxCode to request
-        if(!body.cccd || !body.taxCode) {
-            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
-        }
-        talentRequest.cccd = body.cccd
-        talentRequest.taxCode = body.taxCode
-
-        //4. Update talent request status
-        talentRequest.status = "pending"
-        await talentRequest.save()
-
-        return {
-            talentRequest
         }
     }
 
@@ -160,7 +145,9 @@ class TalentRequestService {
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
         if (request.taxCode) {
-            updatedUser.taxCode = request.taxCode
+            updatedUser.taxCode.code = request.taxCode
+            updatedUser.taxCode.isVerified = true
+            updatedUser.taxCode.message = 'Bạn đã xác minh mã số thuế'
         }
         if (request.cccd) {
             updatedUser.cccd = request.cccd
@@ -213,6 +200,10 @@ class TalentRequestService {
             throw new BadRequestError("Bạn đã là họa sĩ")
 
         //3. Mark request as denied
+        if (request.taxCode) {
+            foundUser.taxCode.message = body.rejectMessage
+            foundUser.taxCode.isVerified = false
+        }
         request.status = "rejected"
         request.rejectMessage = body.rejectMessage;
         await request.save()

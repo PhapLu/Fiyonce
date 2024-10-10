@@ -3,7 +3,7 @@ dotenv.config();
 import nodemailer from "nodemailer";
 import { otpTemplate, announcementTemplate, commissionTemplate, reportTemplate } from "../utils/templateEmail.util.js";
 
-async function sendOtpEmail(to, subject, message, verificationCode) {
+async function sendOtpEmail(to, subject, message, orderId, verificationCode) {
     const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter

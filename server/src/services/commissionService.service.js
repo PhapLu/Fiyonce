@@ -21,7 +21,7 @@ class CommissionServiceService {
         if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
             throw new AuthFailureError("Bạn không có quyền thưc hiện thao tác này")
-        if(!talent.taxCode) 
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         // 2. Validate request body
@@ -268,7 +268,7 @@ class CommissionServiceService {
         if (!service) throw new NotFoundError('Không tìm thấy dịch vụ')
         if (!service.movementId) throw new NotFoundError('Không tìm thấy trường phái')
         if (service.talentId.toString() !== talentId) throw new BadRequestError('Bạn không có quyền thực hiện thao tác này')
-        if(!talent.taxCode) 
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
         const oldCategoryId = service.serviceCategoryId
 
@@ -328,7 +328,7 @@ class CommissionServiceService {
         if (!service) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (service.talentId.toString() !== talentId)
             throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
-        if(!talent.taxCode) 
+        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
         
         // 2. Extract public IDs and delete files from Cloudinary

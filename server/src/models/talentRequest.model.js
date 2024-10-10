@@ -35,11 +35,9 @@ const TalentRequestSchema = new mongoose.Schema(
         },
         taxCode: {
             type: String,
-            default: "",
         },
         cccd: {
             type: String,
-            default: "",
         },
         referralCode: {
             type: mongoose.Schema.Types.ObjectId,

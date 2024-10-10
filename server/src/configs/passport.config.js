@@ -14,7 +14,7 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: "http://localhost:300/v1/api/auth/google/callback",
+            callbackURL: "https://pastal.app/v1/api/auth/google/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
