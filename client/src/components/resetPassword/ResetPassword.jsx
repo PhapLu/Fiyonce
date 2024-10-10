@@ -121,7 +121,7 @@ export default function ResetPassword() {
                         Quay lại <span className="form__extra-text__link" onClick={() => {
                             setShowResetPasswordForm(false);
                             setShowLoginForm(true);
-                        }}>đăng nhập</span>
+                        }}>Đăng nhập</span>
                     </p>
                 </>
             )}

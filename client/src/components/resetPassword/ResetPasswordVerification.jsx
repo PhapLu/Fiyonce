@@ -127,7 +127,7 @@ export default function ResetPasswordVerification({ resetPasswordEmail }) {
                     setShowResetPasswordForm(false);
                     setShowResetPasswordVerificationForm(false);
                     setShowLoginForm(true);
-                }}>đăng nhập</span>
+                }}>Đăng nhập</span>
             </p>
         </>
     );

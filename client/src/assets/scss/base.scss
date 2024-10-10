@@ -1776,6 +1776,7 @@ table {
 
             .form__extra-text__link {
                 color: var(--orange-2-color);
+                text-decoration: underline;
 
                 &:hover {
                     opacity: 0.7;

@@ -199,7 +199,7 @@ export default function Register() {
 
                         <div className="form-field">
                             <label htmlFor="referralCode" className="form-field__label">Mã giới thiệu</label>
-                            <input type="text" id="referralCode" name="referralCode" value={inputs.referralCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mã giới thiệu" autoComplete="on" />
+                            <input type="text" id="referralCode" name="referralCode" value={inputs.referralCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập mã giới thiệu từ bạn bè (nếu có)" autoComplete="on" />
                             {errors.referralCode && <span className="form-field__error">{errors.referralCode}</span>}
                             {referrerInfo && (
                                 <span className="mt-8">Người giới thiệu: {referrerInfo.fullName}</span>
