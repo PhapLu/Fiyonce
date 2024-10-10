@@ -7,9 +7,9 @@ import { AuthProvider } from './contexts/auth/AuthContext';
 import { ConversationProvider } from './contexts/conversation/ConversationContext';
 import { MovementProvider } from './contexts/movement/MovementContext';
 import { QueryClient, QueryClientProvider } from 'react-query'
-import {disableReactDevTools} from '@fvilers/disable-react-devtools'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
-if(import.meta.env.VITE_ENV === 'production') {
+if (import.meta.env.VITE_ENV === 'production') {
   disableReactDevTools()
 }
 
@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <AuthProvider>
             <ConversationProvider>
               <MovementProvider>
-                  <App />
+                <App />
               </MovementProvider>
             </ConversationProvider>
           </AuthProvider>

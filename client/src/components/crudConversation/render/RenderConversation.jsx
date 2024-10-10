@@ -25,18 +25,72 @@ export default function RenderConversation() {
     const [conversationId, setConversationId] = useState(conversation._id);
     const [messages, setMessages] = useState(conversation?.messages || []);
     const [isSendMessageLoading, setIsSendMessageLoading] = useState(false)
-    console.log(messages)
+    const [isFetching, setIsFetching] = useState(false);
+    const [hasMoreMessages, setHasMoreMessages] = useState(true); // Assume there are more messages initially
+    const messagesContainerRef = useRef(null);
+    const limit = 10; // Number of messages to fetch each time
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (isInitialLoad) {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            setIsInitialLoad(false); // Disable auto-scroll after the initial load
+        }
     };
 
+
     useEffect(() => {
-        if (messages.length) {
+        // Only scroll to the bottom when a new message arrives (not fetching older messages)
+        if (messages.length && !isFetching) {
             scrollToBottom();
         }
-    }, [messages]);
+    }, [messages, isFetching]);
 
+
+    const fetchOlderMessages = async () => {
+        if (isFetching || !hasMoreMessages) return;
+
+        setIsFetching(true);
+
+        // Capture the current scroll position and container height before fetching
+        const previousScrollHeight = messagesContainerRef.current.scrollHeight;
+        const previousScrollTop = messagesContainerRef.current.scrollTop;
+
+        try {
+            const oldestMessage = messages[0]; // Get the earliest message loaded
+            const response = await apiUtils.get(`/conversation/fetchOlderMessages`, {
+                params: {
+                    conversationId,
+                    beforeMessageId: oldestMessage._id,
+                    limit,
+                },
+            });
+
+            const olderMessages = response.data.metadata.messages;
+            if (olderMessages.length < limit) {
+                setHasMoreMessages(false); // No more messages to load
+            }
+
+            setMessages((prevMessages) => [...olderMessages, ...prevMessages]);
+
+            // Use a timeout to wait for the DOM to update after state change
+            setTimeout(() => {
+                // Calculate the new scroll position by maintaining the view
+                const newScrollHeight = messagesContainerRef.current.scrollHeight;
+                messagesContainerRef.current.scrollTop = newScrollHeight - previousScrollHeight + previousScrollTop;
+            }, 0);
+        } catch (error) {
+            console.error("Failed to fetch older messages:", error);
+        } finally {
+            setIsFetching(false);
+        }
+    };
+
+    const handleScroll = () => {
+        if (messagesContainerRef.current.scrollTop === 0) {
+            fetchOlderMessages();
+        }
+    };
 
     // <img key={index} src={media instanceof File ? URL.createObjectURL(media) : media} alt="Media" />
     useEffect(() => {
@@ -182,7 +236,7 @@ export default function RenderConversation() {
                     </svg>
                 </div>
             </div>
-            <div className="message-container" ref={mediaOptionsRef}>
+            <div className="message-container" ref={messagesContainerRef} onScroll={handleScroll}>
                 {messages?.length > 0 ? (
                     messages?.map((message, index) => (
                         <div key={index} className={`message-item mb-4 ${message.senderId === userInfo._id ? "right" : "left"}`}>

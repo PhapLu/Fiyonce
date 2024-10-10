@@ -14,10 +14,9 @@ export const ConversationProvider = ({ children }) => {
     const [showRenderConversation, setShowRenderConversation] = useState(false);
     const [conversationFetched, setConversationFetched] = useState(false);
     const queryClient = useQueryClient();
-    
+
     const fetchConversation = async (otherMember) => {
         try {
-            console.log(otherMember)
             const response = await apiUtils.get(`/conversation/readConversationWithOtherMember/${otherMember._id}`);
             const conversationData = response.data.metadata.conversation;
             console.log("FETCHED CONVERSATION DATA")
@@ -62,13 +61,17 @@ export const ConversationProvider = ({ children }) => {
     }, [conversationFetched]);
 
     const value = {
-        otherMember,
+        otherMember: otherMember || {}, // Provide default empty object
         setOtherMember,
-        conversation,
-        showRenderConversation,
+        conversation: conversation || {
+            _id: "",
+            otherMember: otherMember,
+            messages: [],
+        }, // Provide default empty object
+        showRenderConversation: showRenderConversation || false,
         setShowRenderConversation,
-        isLoading,
-        error,
+        isLoading: isLoading || false,
+        error: error || null,
     };
 
     return (

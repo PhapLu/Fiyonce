@@ -1,6 +1,7 @@
 let users = []
 
 const addUser = (userId, socketId) => {
+    console.log("User connected with id:", socketId)
     !users.some((user) => user.userId === userId) &&
         users.push({ userId, socketId })
 }

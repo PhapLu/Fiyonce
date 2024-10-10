@@ -24,7 +24,7 @@ export default function ProfilePosts() {
     const isProfileOwner = userInfo?._id === userId;
 
     const { postId } = useParams();
-    const profileInfo = useOutletContext();
+    const {profileInfo} = useOutletContext();
 
     const fetchPosts = async () => {
         try {

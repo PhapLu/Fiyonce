@@ -149,6 +149,30 @@ class ConversationService {
         }
     }
 
+    // Route: GET /conversation/fetchOlderMessages
+    static fetchOlderMessages = async (userId, req) => {
+        console.log("ppp")
+        console.log(req.query)
+        const { conversationId, beforeMessageId, limit } = req.query;
+
+        try {
+            const conversation = await Conversation.findById(conversationId);
+            if (!conversation) {
+                return res.status(404).json({ message: "Conversation not found" });
+            }
+
+            const index = conversation.messages.findIndex(msg => msg._id.toString() === beforeMessageId);
+            const olderMessages = conversation.messages.slice(Math.max(index - limit, 0), index);
+
+            console.log(olderMessages)
+            return { messages: olderMessages.reverse() }
+            // return res.status(200).json({ messages: olderMessages.reverse() });
+        } catch (error) {
+            console.error("Error in fetchOlderMessages:", error);
+            return res.status(500).json({ message: "Failed to fetch older messages" });
+        }
+    };
+
 
     // static readConversation = async (userId, conversationId) => {
 

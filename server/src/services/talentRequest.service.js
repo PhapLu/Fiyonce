@@ -11,7 +11,7 @@ import {
     deleteFileByPublicId,
     extractPublicIdFromUrl,
 } from "../utils/cloud.util.js"
-import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
+import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
 
 class TalentRequestService {
     static requestUpgradingToTalent = async (userId, req) => {
@@ -38,7 +38,10 @@ class TalentRequestService {
 
         // 3. Check if user has requested before
         const talentRequest = await TalentRequest.findOne({ userId })
+        console.log("LLL")
+        console.log(talentRequest)
         if (talentRequest) {
+            console.log("PAS")
             // Extract the artwork public_id by using cloud util function
             const publicIds = talentRequest.artworks.map((artwork) =>
                 extractPublicIdFromUrl(artwork)
@@ -48,7 +51,7 @@ class TalentRequestService {
                 publicIds.map((publicId) => deleteFileByPublicId(publicId))
             )
             // Delete the request from database
-            await TalentRequest.deleteOne({ userId })
+            await talentRequest.deleteOne()
         }
 
         // 4. Upload files to Cloudinary (compressed)
@@ -77,6 +80,28 @@ class TalentRequestService {
             })
             await newTalentRequest.save()
 
+            //6. Send email to admin
+            try {
+                const subject = '[PASTAL] - Yêu cầu nâng cấp tài khoản họa sĩ'
+                const subSubject = 'Có yêu cầu nâng cấp tài khoản họa sĩ mới từ ' + currentUser.fullName;
+                const message = 'Có yêu cầu nâng cấp tài khoản họa sĩ mới từ ' + currentUser.fullName;
+                sendAnnouncementEmail(
+                    'phapluudev2k5@gmail.com',
+                    subject,
+                    subSubject,
+                    message
+                )
+                sendAnnouncementEmail(
+                    'nhatluudev@gmail.com',
+                    subject,
+                    subSubject,
+                    message
+                )
+            } catch (error) {
+                console.log("Failed:::", error)
+                throw new BadRequestError("Email service error")
+            }
+
             return {
                 talentRequest: newTalentRequest,
             }
@@ -102,6 +127,9 @@ class TalentRequestService {
             throw new BadRequestError("Hãy nhập thông tin cần bổ sung")
         talentRequest.cccd = body.cccd
         talentRequest.taxCode = body.taxCode
+        talentRequest.status = "pending";
+        talentRequest.isSupplemented = true;
+
 
         // 4. Save the updated request
         await talentRequest.save()
@@ -144,8 +172,6 @@ class TalentRequestService {
         const userId = request.userId
         const foundUser = await User.findById(userId)
         if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (foundUser.role === "talent")
-            throw new BadRequestError("Bạn đã là họa sĩ")
 
         // 4. Mark request as approved
         request.status = "approved"
@@ -160,9 +186,7 @@ class TalentRequestService {
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
         if (request.taxCode) {
-            updatedUser.taxCode.code = request.taxCode
-            updatedUser.taxCode.isVerified = true
-            updatedUser.taxCode.message = 'Bạn đã xác minh mã số thuế'
+            updatedUser.taxCode = request.taxCode
         }
         if (request.cccd) {
             updatedUser.cccd = request.cccd
@@ -174,7 +198,7 @@ class TalentRequestService {
 
         // 7. Send email to user and delete images in cloudinary
         try {
-            const subject =  '[PASTAL] - Nâng cấp tài khoản thành công'
+            const subject = '[PASTAL] - Nâng cấp tài khoản thành công'
             const message = 'Chúc mừng! yêu cầu nâng cấp tài khoản họa sĩ của bạn đã chấp thuận'
             const orderCode = ''
             const reason = ''
@@ -211,13 +235,10 @@ class TalentRequestService {
         if (!adminUser || adminUser.role !== "admin")
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (foundUser.role === "talent")
-            throw new BadRequestError("Bạn đã là họa sĩ")
 
         //3. Mark request as denied
         if (request.taxCode) {
-            foundUser.taxCode.message = body.rejectMessage
-            foundUser.taxCode.isVerified = false
+            foundUser.taxCode = body.taxCode
         }
         request.status = "rejected"
         request.rejectMessage = body.rejectMessage;

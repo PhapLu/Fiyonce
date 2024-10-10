@@ -9,17 +9,18 @@ class ControllerController{
         }).send(res)
     }
 
-    readConversation = async(req, res, next) => {
-        new SuccessResponse({
-            message: 'Read conversation success!',
-            metadata: await ConversationService.readConversation(req.userId, req.params.conversationId)
-        }).send(res)
-    }
-
     readConversationWithOtherMember = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read conversation success!',
             metadata: await ConversationService.readConversationWithOtherMember(req.userId, req.params.otherMemberId)
+        }).send(res)
+    }
+
+
+    fetchOlderMessages = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Fetch older messages success!',
+            metadata: await ConversationService.fetchOlderMessages(req.userId, req)
         }).send(res)
     }
 

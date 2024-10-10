@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from '../../contexts/auth/AuthContext.jsx';
 import { useQuery } from "react-query";
 import { apiUtils } from '../../utils/newRequest.js';
 
 export default function RenderTalentRequest() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
 
     const closeModal = () => {
         const currentPath = window.location.pathname;
@@ -23,12 +25,6 @@ export default function RenderTalentRequest() {
             return null;
         }
     };
-
-    const handleUpgradeAccountAgain = () => {
-        const currentPath = window.location.pathname;
-        const newPath = currentPath.replace('/render-talent-request', '/upgrade-account?is-again=1');
-        navigate(newPath);
-    }
 
     const {
         data: talentRequest,
@@ -49,6 +45,19 @@ export default function RenderTalentRequest() {
                 console.error('Error fetching notifications:', error);
             },
         });
+
+    const handleUpgradeAccountAgain = () => {
+        const currentPath = window.location.pathname;
+        let newPath = currentPath;
+        if (talentRequest?.isSupplemented) {
+            newPath = currentPath.replace('/render-talent-request', '/supplement-talent-request?is-again=1');
+        } else {
+            newPath = currentPath.replace('/render-talent-request', '/upgrade-account?is-again=1');
+        }
+
+        console.log(newPath)
+        navigate(newPath);
+    }
 
     const RenderTalentRequestRef = useRef();
     useEffect(() => {

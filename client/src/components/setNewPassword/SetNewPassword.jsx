@@ -4,8 +4,10 @@ import { useAuth } from "../../contexts/auth/AuthContext";
 import { apiUtils } from "../../utils/newRequest";
 import "./SetNewPassword.scss";
 import { isFilled, minLength, isMatch, isValidPassword } from "../../utils/validator.js";
+import { useModal } from "../../contexts/modal/ModalContext.jsx";
 
 export default function SetNewPassword({ resetPasswordEmail }) {
+    const {setModalInfo} = useModal();
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const { setShowMenu, login, setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, setShowSetNewPasswordForm } = useAuth();
@@ -62,6 +64,11 @@ export default function SetNewPassword({ resetPasswordEmail }) {
             console.log(response)
             if (response) {
                 setShowSetNewPasswordForm(false);
+                setShowResetPasswordForm(false);
+                setModalInfo({
+                    status: "success",
+                    message: "Đặt lại mật khẩu thành công"
+                })
                 login(resetPasswordEmail, inputs.password);
             }
         } catch (error) {

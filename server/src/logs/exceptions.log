@@ -1004,3 +1004,8 @@ Error: listen EADDRINUSE: address already in use :::3000
     at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:316:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-10 14:40:55::error::undefined::undefined::uncaughtException: Connection.prototype.close() no longer accepts a callback
+MongooseError: Connection.prototype.close() no longer accepts a callback
+    at NativeConnection.close (E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\connection.js:915:11)
+    at process.<anonymous> (file:///E:/Pastal/Fiyonce/server/src/app.js:131:25)
+    at process.emit (node:events:519:28)::undefined

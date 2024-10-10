@@ -12,12 +12,12 @@ import "./UpgradeAccount.scss";
 import { io } from 'socket.io-client';
 import { useModal } from '../../contexts/modal/ModalContext.jsx';
 import Loading from '../loading/Loading.jsx';
-const SOCKET_SERVER_URL = "http://localhost:8900"; // Update this with your server URL
 
 const UpgradeAccount = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
+    const { socket } = useAuth();
 
     const { setModalInfo } = useModal();
     const [inputs, setInputs] = useState({});
@@ -51,9 +51,9 @@ const UpgradeAccount = () => {
         isLoading,
     } = useQuery("fetchTalentRequest", fetchTalentRequest,
         {
-
             onSuccess: (data) => {
-                if (["pending", "rejected"].includes(data.status) && query.get("is-again") !== '1') {
+                console.log(data)
+                if (["pending", "rejected"].includes(data?.status) && query.get("is-again") !== '1') {
                     const currentPath = window.location.pathname;
                     const newPath = currentPath.replace('/upgrade-account', '/render-talent-request');
                     navigate(`${newPath}`);
@@ -138,17 +138,6 @@ const UpgradeAccount = () => {
             setIsSubmitUpgradeAccountLoading(false);
             return;
         }
-
-        const socket = io(SOCKET_SERVER_URL, {
-            withCredentials: true
-        });
-
-        socket.on('connect', () => {
-            console.log('Connected to socket server:', socket.id);
-
-            // Add user to socket (for demonstration, assuming userId is 1)
-            socket.emit('addUser', userInfo?._id);
-        });
 
         try {
             const formData = createFormData(inputs, "files", artworks);
@@ -314,7 +303,7 @@ const UpgradeAccount = () => {
                                         ))}
                                     </div>
 
-                                    <div className="form-field required with-ic btn add-link-btn" onClick={triggerFileInput}>
+                                    <div className="form-field required with-ic btn add-link-btn mt-8 mb-8" onClick={triggerFileInput}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic add-link-btn__ic">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                         </svg>

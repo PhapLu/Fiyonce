@@ -33,6 +33,10 @@ const TalentRequestSchema = new mongoose.Schema(
             default: "pending", // 'pending', 'approved', 'rejected'
             enum: ["pending", "approved", "rejected"],
         },
+        isSupplemented: {
+            type: Boolean,
+            default: false
+        },
         taxCode: {
             type: String,
         },

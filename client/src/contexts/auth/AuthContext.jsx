@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         if (userInfo) {
             const newSocket = socketIOClient(import.meta.env.VITE_ENV == 'production' ? import.meta.env.VITE_SERVER_ORIGIN : import.meta.env.VITE_SERVER_LOCAL_ORIGIN); // Adjust URL to your backend
             setSocket(newSocket);
+            console.log("Start at user", userInfo._id)
             newSocket.emit('addUser', userInfo._id);
         }
     }, [userInfo]);
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     const fetchUserProfile = async () => {
         try {
             const response = await newRequest.get('/user/me');
+            console.log("ABC")
             return response.data.metadata.user;
         } catch (error) {
             return null;
@@ -90,7 +92,6 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const response = await newRequest.post("auth/users/login", { email, password });
-            // alert("Successfully logged in as: " + response.data.metadata.user.email);
             setUserInfo(response.data.metadata.user);
             setShowMenu(false);
             setShowLoginForm(false);

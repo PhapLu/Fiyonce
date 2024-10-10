@@ -26,7 +26,7 @@ const SupplementTalentRequest = () => {
     const [isSubmitSupplementTalentRequestLoading, setIsSubmitSupplementTalentRequestLoading] = useState(false);
     const closeModal = () => {
         const currentPath = window.location.pathname;
-        const newPath = currentPath.replace('/upgrade-account', '');
+        const newPath = currentPath.replace('/supplement-talent-request', '');
         navigate(newPath);
     };
 
@@ -55,7 +55,7 @@ const SupplementTalentRequest = () => {
                 if (["pending", "rejected"].includes(data.status) && query.get("is-again") !== '1') {
                     console.log("abc")
                     const currentPath = window.location.pathname;
-                    const newPath = currentPath.replace('/supplement-talent-request', '/render-talent-request');
+                    const newPath = currentPath.replace('/supplement-talent-request', '/render-talent-request?is-supplement=1');
                     navigate(`${newPath}`);
                 }
                 setLoading(false);
@@ -112,20 +112,20 @@ const SupplementTalentRequest = () => {
         });
 
         try {
-            // const response = await apiUtils.patch(`/talentRequest/requestSupplement`, inputs);
-            const response = true;
+            const response = await apiUtils.patch(`/talentRequest/requestSupplement`, inputs);
             if (response) {
                 setModalInfo({
                     status: "success",
                     message: "Đã gửi yêu cầu bổ sung hồ sơ"
                 })
-                closeModal()
+
+                socket.emit('supplementTalentRequest', {
+                    senderId: userInfo?._id,
+                    talentRequest: response.data.metadata.talentRequest,
+                });
+                closeModal();
             }
 
-            socket.emit('supplementTalentRequest', {
-                senderId: userInfo?._id,
-                talentRequest: response.data.metadata.talentRequest,
-            });
         } catch (error) {
             console.log(error)
             setModalInfo({

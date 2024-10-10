@@ -39,6 +39,7 @@ export default function DenyTalentRequest({ talentRequest, denyTalentRequestMuta
             const response = await denyTalentRequestMutation.mutate({ talentRequestId: talentRequest._id, inputs });
             const senderId = userInfo._id;
             const receiverId = talentRequest?.userId?._id;
+            console.log(response)
             const notificationInputs = { receiverId, type: "denyTalentRequest", url: `/users/${receiverId}/upgrade-account` };
             const notificationResponse = await apiUtils.post(`/notification/createNotification`, notificationInputs);
             const notificationData = notificationResponse.data.metadata.notification;

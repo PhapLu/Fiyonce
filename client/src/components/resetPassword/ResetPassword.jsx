@@ -12,8 +12,10 @@ import { isFilled, minLength, isMatch, hasSymbol, isValidEmail } from "../../uti
 
 // Styling
 import "./ResetPassword.scss";
+import { useModal } from "../../contexts/modal/ModalContext.jsx";
 
 export default function ResetPassword() {
+    const {setModalInfo} = useModal();
     // Resources from AuthContext
     const { setShowLoginForm, setOverlayVisible, setShowResetPasswordForm, showSetNewPasswordForm, showResetPasswordVerificationForm, setShowResetPasswordVerificationForm } = useAuth();
 
@@ -66,6 +68,10 @@ export default function ResetPassword() {
                 setShowResetPasswordVerificationForm(true);
             }
         } catch (error) {
+            setModalInfo({
+                status: "error",
+                message: error.response.data.message
+            })
             console.error("Failed to reset password:", error);
             errors.serverError = error.response.data.message;
         } finally {

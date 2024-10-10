@@ -628,20 +628,24 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         {errors.socialLinks && <span className="form-field__error">{errors.socialLinks}</span>}
                     </div>
 
-                    <div className="form-field">
-                        <label htmlFor="workQueueUrl" className="form-field__label">To-dos</label>
-                        <span className="form-field__annotation">Liên kết to-do list của bạn (vd Trello, Jira, v.v)</span>
-                        <input
-                            type="text"
-                            id="workQueueUrl"
-                            name="workQueueUrl"
-                            value={inputs?.workQueueUrl || ""}
-                            onChange={handleChange}
-                            className="form-field__input"
-                            placeholder="Nhập đường dẫn đến to-do list của bạn"
-                        />
-                        {errors.workQueueUrl && <span className="form-field__error">{errors.workQueueUrl}</span>}
-                    </div>
+                    {
+                        profileInfo?.role == "talent" && (
+                            <div className="form-field">
+                                <label htmlFor="workQueueUrl" className="form-field__label">To-dos</label>
+                                <span className="form-field__annotation">Liên kết to-do list của bạn (vd Trello, Jira, v.v)</span>
+                                <input
+                                    type="text"
+                                    id="workQueueUrl"
+                                    name="workQueueUrl"
+                                    value={inputs?.workQueueUrl || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Nhập đường dẫn đến to-do list của bạn"
+                                />
+                                {errors.workQueueUrl && <span className="form-field__error">{errors.workQueueUrl}</span>}
+                            </div>
+                        )
+                    }
 
                     <div className="form-field">
                         {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
@@ -846,7 +850,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             </div>
                         </div>}
                     {
-                        profileInfo?.workQueueUrl &&
+                        profileInfo?.role == "talent" && profileInfo?.workQueueUrl &&
                         (<Link to={"https://trello.com/b/DxDwAoal/commissions?fbclid=IwY2xjawFA7o9leHRuA2FlbQIxMAABHQ88lCaL84OXRrsMw5-oKKd9cJd14x1wYdNV79vMQRrl9REFl9eXVxi3xQ_aem_87n6hYqHaE4mwu0K8eFABw" || profileInfo?.workQueueUrl} target="_blank" className="sidebar__btn btn btn-md btn-4" >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -864,7 +868,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                                     </svg>
                                     <span>Chỉnh sửa thông tin</span>
                                 </button>
-                                
+
                                 {
                                     profileInfo?.role == "talent" ? (
                                         (profileInfo.cccd == "" || profileInfo?.taxCode == "") && (

@@ -7,9 +7,9 @@ import { apiUtils } from "../../../utils/newRequest";
 import { formatTimeAgo, limitString } from "../../../utils/formatter";
 import { useConversation } from "../../../contexts/conversation/ConversationContext";
 
-export default function RenderConversations({ setShowRenderConversation, setShowRenderConversations }) {
+export default function RenderConversations() {
     const { userInfo } = useAuth();
-    const { setOtherMember } = useConversation();
+    const { setOtherMember,setShowRenderConversation,setShowRenderConversations  } = useConversation();
 
     const fetchConversations = async () => {
         try {

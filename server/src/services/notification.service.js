@@ -8,6 +8,8 @@ import {
 
 class NotificationService {
     static createNotification = async (senderId, body) => {
+        console.log("Create noti")
+        console.log(body)
         //1. Check user
         const user = await User.findById(senderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
@@ -21,21 +23,10 @@ class NotificationService {
         if (!receiver) throw new NotFoundError("Không tìm thấy người nhận")
 
         if (senderId === receiverId) return
-        if (
-            type !== "like" &&
-            type !== "share" &&
-            type !== "bookmark" &&
-            type !== "follow" &&
-            type !== "orderCommission" &&
-            type !== "updateOrderStatus"
-
-        ) {
-            throw new BadRequestError("Invalid type")
-        }
 
         //3. Assign content based on type of notification
-        let content
-        let notificationType
+        let content = '';
+        let notificationType = ''
         switch (type) {
             case "like":
                 content = `${user.fullName} đã thích bài viết của bạn`

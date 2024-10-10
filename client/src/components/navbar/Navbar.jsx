@@ -62,8 +62,6 @@ export default function Navbar() {
         navigate(`/search?q=${query}`);
     };
 
-    const { conversation, setConversation, showRenderConversation, setShowRenderConversation } = useConversation();
-
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
@@ -321,7 +319,7 @@ export default function Navbar() {
                                     </div>
                                     {showRenderConversations && (
                                         <div ref={conversationsRef}>
-                                            <RenderConversations setConversation={setConversation} setShowRenderConversation={setShowRenderConversation} setShowRenderConversations={setShowRenderConversations} />
+                                            <RenderConversations />
                                         </div>
                                     )}
                                 </div>

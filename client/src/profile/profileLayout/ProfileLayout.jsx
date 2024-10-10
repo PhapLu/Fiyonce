@@ -270,6 +270,12 @@ export default function ProfileLayout() {
                                     >
                                         Thông tin cơ bản
                                     </Link>
+                                    <Link
+                                        to={`/users/${userId}/archive`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
+                                    >
+                                        Lưu trữ
+                                    </Link>
                                 </>
                             ) : (
                                 <>
@@ -278,6 +284,12 @@ export default function ProfileLayout() {
                                         className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || location.pathname.split("/").length === 3 ? "active" : ""}`}
                                     >
                                         Thông tin cơ bản
+                                    </Link>
+                                    <Link
+                                        to={`/users/${userId}/archive`}
+                                        className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
+                                    >
+                                        Lưu trữ
                                     </Link>
                                 </>
                             )) : (
@@ -297,7 +309,7 @@ export default function ProfileLayout() {
                                     </Link>
                                 </>
                             )}
-
+                            {/* 
                             {
                                 !isProfileOwner?.isPublicArchive && (
                                     <Link
@@ -307,7 +319,7 @@ export default function ProfileLayout() {
                                         Lưu trữ
                                     </Link>
                                 )
-                            }
+                            } */}
                         </div>
 
 
