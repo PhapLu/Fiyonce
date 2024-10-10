@@ -48,7 +48,7 @@ class TalentRequestService {
                 publicIds.map((publicId) => deleteFileByPublicId(publicId))
             )
             // Delete the request from database
-            await TalentRequest.deleteOne({ userId })
+            await talentRequest.deleteOne({ userId })
         }
 
         // 4. Upload files to Cloudinary (compressed)
@@ -102,6 +102,7 @@ class TalentRequestService {
             throw new BadRequestError("Hãy nhập thông tin cần bổ sung")
         talentRequest.cccd = body.cccd
         talentRequest.taxCode = body.taxCode
+        talentRequest.status = "pending"
 
         // 4. Save the updated request
         await talentRequest.save()
@@ -144,8 +145,6 @@ class TalentRequestService {
         const userId = request.userId
         const foundUser = await User.findById(userId)
         if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (foundUser.role === "talent")
-            throw new BadRequestError("Bạn đã là họa sĩ")
 
         // 4. Mark request as approved
         request.status = "approved"
@@ -160,9 +159,7 @@ class TalentRequestService {
         updatedUser.jobTitle = request.jobTitle
         updatedUser.stageName = request.stageName
         if (request.taxCode) {
-            updatedUser.taxCode.code = request.taxCode
-            updatedUser.taxCode.isVerified = true
-            updatedUser.taxCode.message = 'Bạn đã xác minh mã số thuế'
+            updatedUser.taxCode = request.taxCode
         }
         if (request.cccd) {
             updatedUser.cccd = request.cccd
@@ -211,13 +208,10 @@ class TalentRequestService {
         if (!adminUser || adminUser.role !== "admin")
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (foundUser.role === "talent")
-            throw new BadRequestError("Bạn đã là họa sĩ")
 
         //3. Mark request as denied
         if (request.taxCode) {
-            foundUser.taxCode.message = body.rejectMessage
-            foundUser.taxCode.isVerified = false
+            foundUser.taxCode = body.taxCode
         }
         request.status = "rejected"
         request.rejectMessage = body.rejectMessage;
