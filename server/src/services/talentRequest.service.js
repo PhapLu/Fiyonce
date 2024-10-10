@@ -52,6 +52,7 @@ class TalentRequestService {
             )
             // Delete the request from database
             await talentRequest.deleteOne()
+            await talentRequest.deleteOne()
         }
 
         // 4. Upload files to Cloudinary (compressed)
@@ -71,12 +72,7 @@ class TalentRequestService {
             // 5. Create and save talent request
             const newTalentRequest = new TalentRequest({
                 userId,
-                stageName,
-                jobTitle,
-                portfolioLink,
-                artworks,
-                taxCode,
-                cccd
+                ...req.body
             })
             await newTalentRequest.save()
 
@@ -101,6 +97,29 @@ class TalentRequestService {
                 console.log("Failed:::", error)
                 throw new BadRequestError("Email service error")
             }
+
+            //6. Send email to admin
+            try {
+                const subject = '[PASTAL] - Yêu cầu nâng cấp tài khoản họa sĩ'
+                const subSubject = 'Có yêu cầu nâng cấp tài khoản họa sĩ mới từ ' + currentUser.fullName;
+                const message = 'Có yêu cầu nâng cấp tài khoản họa sĩ mới từ ' + currentUser.fullName;
+                sendAnnouncementEmail(
+                    'phapluudev2k5@gmail.com',
+                    subject,
+                    subSubject,
+                    message
+                )
+                sendAnnouncementEmail(
+                    'nhatluudev@gmail.com',
+                    subject,
+                    subSubject,
+                    message
+                )
+            } catch (error) {
+                console.log("Failed:::", error)
+                throw new BadRequestError("Email service error")
+            }
+
 
             return {
                 talentRequest: newTalentRequest,

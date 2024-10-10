@@ -5,6 +5,8 @@ import { asyncHandler } from "../../auth/checkAuth.js";
 import { authenticationV2 } from "../../auth/authUtils.js";
 import { verifyToken } from "../../middlewares/jwt.js";
 import "../../configs/passport.config.js";
+import dotenv from 'dotenv'
+dotenv.config()
 
 const router = express.Router();
 
@@ -25,7 +27,7 @@ router.get(
 
 router.get(
     "/google/callback",
-    passport.authenticate("google", { failureRedirect: "/users/login" }),
+    passport.authenticate("google", { failureRedirect: "/" }),
     async (req, res, next) => {
         try {
             const { user } = req;
@@ -35,8 +37,8 @@ router.get(
                     maxAge: 24 * 60 * 60 * 1000 * 30,
                 });
             }
-
-            res.redirect("http://localhost:3000");
+            const redirectString = process.env.NODE_ENV === "production" ? process.env.CLIENT_ORIGIN : "http://localhost:5173"
+            res.redirect(redirectString);
         } catch (error) {
             next(error);
         }

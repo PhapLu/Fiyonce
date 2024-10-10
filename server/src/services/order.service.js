@@ -642,7 +642,6 @@ class OrderService {
        //1. Check user, order
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        console.log(order.status);
         if (!user) throw new NotFoundError("User not found")
         if (!order) throw new NotFoundError("Order not found")
         if (order.memberId.toString() !== userId) throw new AuthFailureError("You are not authorized to finish this order")

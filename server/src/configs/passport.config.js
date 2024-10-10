@@ -43,7 +43,7 @@ passport.use(
                 const jwtToken = generateToken(user)
                 user.accessToken = jwtToken
                 await user.save();
-
+                console.log('Successfully authenticated with Google');
                 return done(null, user);
             } catch (err) {
                 console.error("Error during authentication:", err);

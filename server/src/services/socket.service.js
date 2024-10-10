@@ -29,7 +29,7 @@ class SocketServices {
 
         socket.on("sendMessage", (newMessage) => {
             const receiver = getUser(newMessage.receiverId)
-
+            console.log(newMessage)
             global._io.to(receiver?.socketId).emit("getMessage", newMessage)
         })
 

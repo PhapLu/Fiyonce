@@ -59,7 +59,6 @@ class RecommenderController {
   }
 
   recommendUsersToFollow = async (req, res, next) => {
-    console.log('CALL THIS METHOD')
     new SuccessResponse({
       message: 'Get users to follow success!',
       metadata: await RecommenderService.recommendUsersToFollow(req.userId)

@@ -25,8 +25,8 @@ class NotificationService {
         if (senderId === receiverId) return
 
         //3. Assign content based on type of notification
-        let content = '';
-        let notificationType = ''
+        let content = ''; = ''
+        let notificationType = '' = ''
         switch (type) {
             case "like":
                 content = `${user.fullName} đã thích bài viết của bạn`
@@ -78,14 +78,6 @@ class NotificationService {
                 break;
             case "denyTalentRequest":
                 content = `Admin đã từ chối yêu cầu nâng cấp tài khoản của bạn`;
-                notificationType = "system";
-                break;
-            case "sendTalentRequest":
-                content = `${user.fullName} đã gửi yêu cầu nâng cấp tài khoản`;
-                notificationType = "system";
-                break;
-            case "supplementTalentRequest":
-                content = `${user.fullName} đã bổ sung yêu cầu nâng cấp tài khoản`;
                 notificationType = "system";
                 break;
             default:

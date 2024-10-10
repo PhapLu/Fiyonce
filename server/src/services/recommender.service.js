@@ -2,7 +2,6 @@ import Post from "../models/post.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError } from "../core/error.response.js"
-import { CLIENT_RENEG_LIMIT } from "tls"
 
 import mongoose from "mongoose"
 
@@ -28,8 +27,6 @@ class RecommenderService {
 
     // Search for nearly matching keyword (top 20 relevant talent/service results)
     static readSearchResults = async (query) => {
-        console.log("OOO")
-        console.log(query)
         if (!query.searchTerm) throw new BadRequestError("Invalid search Term");
 
         const caseSensitiveRegex = new RegExp(`^${query.searchTerm}$`); // Exact case-sensitive match
@@ -81,9 +78,6 @@ class RecommenderService {
         // Combine service results, prioritizing case-sensitive matches
         const serviceResults = [...caseSensitiveServiceResults, ...caseInsensitiveServiceResults];
 
-        console.log("PPP")
-        console.log(userResults)
-        console.log(serviceResults)
         return {
             userResults,
             serviceResults

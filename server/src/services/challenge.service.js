@@ -17,7 +17,7 @@ class ChallengeService {
         //1. Check admin
         const admin = await User.findById(adminId)
         if (!admin) throw new NotFoundError("Admin not found")
-        if(admin.role !== 'admin') throw new AuthFailureError("Admin not found")
+        if(admin.role !== "admin") throw new AuthFailureError("Unauthorized")
 
         //2. Validate request body
         if (!req.body.title || !req.body.description) 
@@ -67,7 +67,7 @@ class ChallengeService {
         //1. Check admin
         const admin = await User.findById(adminId)
         if (!admin) throw new NotFoundError("Admin not found")
-        if(admin.role !== 'admin') throw new AuthFailureError("Admin not found")
+        if(admin.role !== "admin") throw new AuthFailureError("Unauthorized")
 
         //2. Read challenges with participants count and votes count
         try {
@@ -135,7 +135,7 @@ class ChallengeService {
         const challenge = await Challenge.findById(challengeId)
         if (!admin) throw new NotFoundError("Admin not found")
         if(!challenge) throw new NotFoundError("Challenge not found")
-        if(admin.role !== 'admin') throw new AuthFailureError("Admin not found")
+        if(admin.role !== "admin") throw new AuthFailureError("Unauthorized")
 
         //2. Validate request body
         if (!req.body.title || !req.body.description) 

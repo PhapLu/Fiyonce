@@ -11,7 +11,6 @@ const router = express.Router()
 router.use(verifyToken)
 
 router.post('/createConversation', uploadFields, asyncHandler(conversationController.createConversation))
-router.get('/readConversation/:conversationId', asyncHandler(conversationController.readConversation))
 router.get('/readConversationWithOtherMember/:otherMemberId', asyncHandler(conversationController.readConversationWithOtherMember))
 router.get('/readConversations', asyncHandler(conversationController.readConversations))
 router.patch('/sendMessage', uploadFields, asyncHandler(conversationController.sendMessage))

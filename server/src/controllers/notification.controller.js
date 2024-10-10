@@ -3,8 +3,6 @@ import NotificationService from "../services/notification.service.js"
 
 class NotificationController{
     createNotification = async(req, res, next) => {
-        console.log(req.userId)
-        console.log(req.body)
         new SuccessResponse({
             message: 'Create notification success!',
             metadata: await NotificationService.createNotification(req.userId, req.body)
