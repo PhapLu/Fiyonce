@@ -112,27 +112,30 @@ const SupplementTalentRequest = () => {
         });
 
         try {
-            const response = await apiUtils.post(`/talentRequest/requestSupplement`, inputs);
+            // const response = await apiUtils.patch(`/talentRequest/requestSupplement`, inputs);
+            const response = true;
             if (response) {
                 setModalInfo({
                     status: "success",
-                    message: "Yêu cầu nâng cấp tài khoản thành công"
+                    message: "Đã gửi yêu cầu bổ sung hồ sơ"
                 })
                 closeModal()
             }
 
-            socket.emit('sendTalentRequest', {
+            socket.emit('supplementTalentRequest', {
                 senderId: userInfo?._id,
                 talentRequest: response.data.metadata.talentRequest,
             });
         } catch (error) {
+            console.log(error)
             setModalInfo({
                 status: "error",
                 message: error.response.data.message
             })
             setErrors((values) => ({ ...values, serverError: error.response.data.message }));
+        } finally {
+            setIsSubmitSupplementTalentRequestLoading(false);
         }
-        setIsSubmitSupplementTalentRequestLoading(false);
     };
 
 
@@ -166,17 +169,18 @@ const SupplementTalentRequest = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
                 <h3 className="form__title">Bổ sung hồ sơ</h3>
+
                 <div className="form-field">
                     <label htmlFor="cccd" className="form-field__label">CMND/CCCD</label>
                     <span className="form-field__annotation">CMND bao gồm 9 số hoặc CCCD bao gồm 12 số</span>
-                    <input type="text" id="cccd" name="cccd" value={inputs.cccd || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
+                    <input type="text" id="cccd" name="cccd" value={inputs.cccd || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập CMND/CCCD" autoComplete="on" />
                     {errors.cccd && <span className="form-field__error">{errors.cccd}</span>}
                 </div>
 
                 <div className="form-field">
                     <label htmlFor="taxCode" className="form-field__label">Mã số thuế</label>
                     <span className="form-field__annotation">Mã số thuế cá nhân. Tra cứu <Link to="" className="highlight-text underlined-text">Tại đây</Link></span>
-                    <input type="text" id="taxCode" name="taxCode" value={inputs.taxCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
+                    <input type="text" id="taxCode" name="taxCode" value={inputs.taxCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập MST cá nhân" autoComplete="on" />
                     {errors.taxCode && <span className="form-field__error">{errors.taxCode}</span>}
                 </div>
 
@@ -184,9 +188,10 @@ const SupplementTalentRequest = () => {
                     {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
                 </div>
 
-                <div className="form__submit-btn-container">
+                <div className="form-field">
                     <button
-                        className="form__submit-btn-item form-field__input btn btn-2 btn-md"
+                        type='submit'
+                        className="form-field__input btn btn-2 btn-md"
                         disabled={isSubmitSupplementTalentRequestLoading}
                         onClick={handleSubmit}
                     >

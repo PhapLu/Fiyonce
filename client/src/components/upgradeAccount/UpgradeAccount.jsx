@@ -329,14 +329,14 @@ const UpgradeAccount = () => {
                                 <div className="form-field">
                                     <label htmlFor="cccd" className="form-field__label">CMND/CCCD</label>
                                     <span className="form-field__annotation">CMND bao gồm 9 số hoặc CCCD bao gồm 12 số</span>
-                                    <input type="text" id="cccd" name="cccd" value={inputs.cccd || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
+                                    <input type="text" id="cccd" name="cccd" value={inputs.cccd || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập CMND/CCCD" autoComplete="on" />
                                     {errors.cccd && <span className="form-field__error">{errors.cccd}</span>}
                                 </div>
 
                                 <div className="form-field">
                                     <label htmlFor="taxCode" className="form-field__label">Mã số thuế</label>
                                     <span className="form-field__annotation">Mã số thuế cá nhân. Tra cứu <Link to="" className="highlight-text underlined-text">Tại đây</Link></span>
-                                    <input type="text" id="taxCode" name="taxCode" value={inputs.taxCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập vị trí công việc" autoComplete="on" />
+                                    <input type="text" id="taxCode" name="taxCode" value={inputs.taxCode || ""} onChange={handleChange} className="form-field__input" placeholder="Nhập MST cá nhân" autoComplete="on" />
                                     {errors.taxCode && <span className="form-field__error">{errors.taxCode}</span>}
                                 </div>
 
