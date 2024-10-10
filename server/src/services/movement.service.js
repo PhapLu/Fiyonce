@@ -16,6 +16,7 @@ class MovementService {
         //1. Check if admin exists
         const admin = await User.findById(adminId)
         if (!admin) throw new AuthFailureError("Admin not found")
+        if(admin.role !== "admin") throw new AuthFailureError("Unauthorized")
 
         //2. Validate request body
         if (!req.body.title) throw new BadRequestError("Please provide title")
@@ -138,6 +139,7 @@ class MovementService {
         const movement = await Movement.findById(movementId)
         if (!admin) throw new AuthFailureError("Admin not found")
         if (!movement) throw new BadRequestError("Movement not found")
+        if(admin.role !== "admin") throw new AuthFailureError("Unauthorized")
 
         //2. Delete movement
         const thumbnailToDelete = movement.thumbnail

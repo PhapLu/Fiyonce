@@ -13,5 +13,4 @@ router.get('/readBadge/:badgeKey', asyncHandler(badgeController.readBadge))
 //Award badge
 router.patch('/awardBadge/:badgeKey', asyncHandler(badgeController.awardBadge))
 
-
 export default router

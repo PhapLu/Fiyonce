@@ -20,8 +20,6 @@ const checkFresherArtistAchievable = async (user) => {
         rating: 5
     });
 
-    console.log(reviews);
-
     //3: Check if the user has at least the minimum number of 5-star rated orders
     const achievable = reviews.length >= minimumFiveStarOrderCount;
 

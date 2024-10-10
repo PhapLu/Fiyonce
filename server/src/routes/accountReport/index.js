@@ -13,8 +13,10 @@ router.get('/readAccountReport/:accountReportId', asyncHandler(accountReportCont
 router.use(verifyToken)
 
 router.post('/createAccountReport', uploadFields, asyncHandler(accountReportController.createAccountReport))
-router.get('/readAccountReports', accessService.grantAccess('readAny', 'profile'), asyncHandler(accountReportController.readAccountReports))
 router.patch('/updateAccountReport/:accountReportId', uploadFields, asyncHandler(accountReportController.updateAccountReport))
 router.delete('/deleteAccountReport/:accountReportId', asyncHandler(accountReportController.deleteAccountReport))
+
+//admin
+router.get('/readAccountReports', accessService.grantAccess('readAny', 'profile'), asyncHandler(accountReportController.readAccountReports))
 
 export default router

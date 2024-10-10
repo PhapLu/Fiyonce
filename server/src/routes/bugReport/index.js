@@ -13,8 +13,10 @@ router.get('/readBugReport/:bugReportId', asyncHandler(bugReportController.readB
 router.use(verifyToken)
 
 router.post('/createBugReport', uploadFields, asyncHandler(bugReportController.createBugReport))
-router.get('/readBugReports', accessService.grantAccess('readAny', 'profile'), asyncHandler(bugReportController.readBugReports))
 router.patch('/updateBugReport/:bugReportId', uploadFields, asyncHandler(bugReportController.updateBugReport))
 router.delete('/deleteBugReport/:bugReportId', asyncHandler(bugReportController.deleteBugReport))
+
+//admin
+router.get('/readBugReports', accessService.grantAccess('readAny', 'profile'), asyncHandler(bugReportController.readBugReports))
 
 export default router
