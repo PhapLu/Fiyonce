@@ -30,7 +30,7 @@ class ProposalService {
         //2. Check if user is a talent
         if (user.role !== "talent")
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
-        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+        if(!user.taxCode) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check if user has already given proposal for the order
@@ -133,7 +133,7 @@ class ProposalService {
         const proposal = await Proposal.findById(proposalId);
         if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
-        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false) 
+        if(!user.taxCode) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //2. Check if user is authorized to update proposal
@@ -173,7 +173,7 @@ class ProposalService {
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
-        if(!user.taxCode || !user.taxCode.code || user.taxCode.isVerified === false)
+        if(!user.taxCode)
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
 
         //3. Check status of order

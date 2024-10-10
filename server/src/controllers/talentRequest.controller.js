@@ -8,6 +8,12 @@ class TalentRequestController {
             metadata: await TalentRequestService.requestUpgradingToTalent(req.userId, req)
         }).send(res)
     }
+    requestSupplement = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Talent request submitted successfully.',
+            metadata: await TalentRequestService.requestSupplement(req.userId, req.body)
+        }).send(res)
+    }
     readMyTalentRequest = async(req, res, next) => {
         new SuccessResponse({
             message: 'Read talent request status success!',

@@ -14,7 +14,7 @@ class ServiceCategoryService {
         if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (talent.role !== "talent")
             throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if(!talent.taxCode) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         //2. Create service
@@ -88,7 +88,7 @@ class ServiceCategoryService {
         if (!serviceCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (serviceCategory.talentId.toString() !== talentId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if(!talent.taxCode) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         //2. Update Service
@@ -114,7 +114,7 @@ class ServiceCategoryService {
         if (!serviceCategory) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (serviceCategory.talentId.toString() !== talentId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if(!talent.taxCode) 
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
 
         //2. Delete service
