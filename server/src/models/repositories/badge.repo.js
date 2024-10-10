@@ -70,8 +70,8 @@ const checkTrustedArtistAchievable = async (user) => {
     const services = await Service.find({ talentId: user._id})
     if(user.bio !== '' &&
             user.taxCode !== '' &&
-            user.taxCode.isVerified == true &&
             user.cccd !== '' &&
+            user.bio !== '' &&
             !user.avatar.includes('pastal_system_default') &&
             !user.bg.includes('pastal_system_default' &&
             posts.length >= 1 &&
