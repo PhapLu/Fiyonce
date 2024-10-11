@@ -60,17 +60,26 @@ class UserService {
         }
         await userProfile.save()
 
-        //4. Read user's rating
+        // 4. Read user's rating and rating count
         if (userProfile.role === 'talent') {
             const result = await Review.aggregate([
                 { $match: { reviewedUserId: new mongoose.Types.ObjectId(profileId) } },
-                { $group: { _id: null, averageRating: { $avg: "$rating" } } }
+                { 
+                    $group: { 
+                        _id: null, 
+                        averageRating: { $avg: "$rating" },
+                        ratingCount: { $sum: 1 } // Count the number of ratings
+                    } 
+                }
             ]);
-        
+
             userProfile.rating = result.length > 0 ? result[0].averageRating : 0;
-        }        
+            userProfile.ratingCount = result.length > 0 ? result[0].ratingCount : 0;
+        }
+
         const userProfileObject = userProfile.toObject();
         userProfileObject.rating = userProfile.rating;
+        userProfileObject.ratingCount = userProfile.ratingCount; // Include rating count in the object
 
         //4. Return user profile
         return {
