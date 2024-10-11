@@ -14,7 +14,7 @@ class UserController {
     readUserProfile = async (req, res, next) => {
         new SuccessResponse({
             message: 'Read User profile success!',
-            metadata: await UserService.readUserProfile(req.params.profileId)
+            metadata: await UserService.readUserProfile(req, req.params.profileId)
         }).send(res)
     }
 

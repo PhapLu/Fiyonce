@@ -99,19 +99,22 @@ class CommissionServiceService {
         const token = req.cookies.accessToken
 
         // Initialize user-related variables
+        let talent
         let userId = null
-        let email = null
 
         if (token) {
             // Verify token if it exists
             const payload = jwt.verify(token, process.env.JWT_SECRET)
             userId = payload.id
-            email = payload.email
         }
 
         // If user is authenticated and not the service owner, increment the views
-        if (userId && userId !== service.talentId.toString()) {
+        if (userId && userId !== service.talentId._id.toString()) {
+            console.log('Alo');
+            talent = await User.findById(service.talentId._id.toString())
+            talent.views += 1
             service.views.push(userId)
+            talent.save()
         }
 
         // Save the service to update views

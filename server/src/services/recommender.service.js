@@ -54,7 +54,28 @@ class RecommenderService {
         }).limit(20 - caseSensitiveUserResults.length);
 
         // Combine user results, prioritizing case-sensitive matches
-        const userResults = [...caseSensitiveUserResults, ...caseInsensitiveUserResults];
+        let userResults = [...caseSensitiveUserResults, ...caseInsensitiveUserResults];
+
+        // Add rating to talent user result
+        userResults = await Promise.all(userResults.map(async user => {
+            const userObj = user.toObject();
+            if (user.role === 'talent') {
+                const result = await Review.aggregate([
+                    { $match: { reviewedUserId: user._id } },
+                    { 
+                        $group: { 
+                            _id: null, 
+                            averageRating: { $avg: "$rating" },
+                            ratingCount: { $sum: 1 }  // Add field to count the number of reviews
+                        } 
+                    }
+                ]);
+                
+                userObj.rating = result.length > 0 ? result[0].averageRating : 0;
+                userObj.ratingCount = result.length > 0 ? result[0].ratingCount : 0; // Include the count of ratings
+            }
+            return userObj;
+        }));
 
         // Step 3: Search for case-sensitive matches in Services
         const caseSensitiveServiceResults = await CommissionService.find({

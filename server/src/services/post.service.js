@@ -117,14 +117,13 @@ class PostService {
             const token = req.cookies.accessToken
 
             // Initialize user-related variables
+            let talent = null
             let userId = null
-            let email = null
 
             if (token) {
                 // Verify token if it exists
                 const payload = jwt.verify(token, process.env.JWT_SECRET)
                 userId = payload.id
-                email = payload.email
             }
 
             // Find post
@@ -138,9 +137,13 @@ class PostService {
             if (!post) throw new NotFoundError('Tác phẩm không tồn tại')
 
             // If user is authenticated and not the post owner, increment the views
-            if (userId && userId !== post.talentId.toString()) {
+            if (userId && userId !== post.talentId._id.toString()) {
+                console.log('Alo');
+                talent = await User.findById(post.talentId._id.toString())
+                talent.views += 1
                 post.views.push({ user: new mongoose.Types.ObjectId(userId) })
-                await post.save() // Save the post to update views
+                talent.save()
+                await post.save()
             }
 
             return {

@@ -8,8 +8,6 @@ import {
 
 class NotificationService {
     static createNotification = async (senderId, body) => {
-        console.log("Create noti")
-        console.log(body)
         //1. Check user
         const user = await User.findById(senderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")

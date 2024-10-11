@@ -6,6 +6,7 @@ import Conversation from '../models/conversation.model.js'
 import Notification from '../models/notification.model.js'
 import mongoose from 'mongoose'
 import { trackActivity, trackTrustedArtistBadge } from '../utils/badgeTracking.util.js'
+import Review from '../models/review.model.js'
 
 class UserService {
     //-------------------CRUD----------------------------------------------------
@@ -33,22 +34,47 @@ class UserService {
         }
     }
 
-    static readUserProfile = async (profileId) => {
-        //1. Check user
+    static readUserProfile = async (req, profileId) => {
+
+        //1. Check user logged in
+        const token = req.cookies.accessToken
+        let userId = ''
+
+        if (token) {
+            // Verify token if it exists
+            const payload = jwt.verify(token, process.env.JWT_SECRET)
+            userId = payload.id.toString()
+        }
+
+        //2. Check profile
         const userProfile = await User.findById(profileId).select("-password").populate("followers", "avatar fullName").populate("following", "avatar fullName").populate({
             path: 'badges.badgeId', // Populate the badgeId in badges
             select: 'title description icon level type' // Select the badge details you want
-        });;
+        });
         if (!userProfile)
             throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
-        //2. Update views
-        userProfile.views += 1
+        //3. Update views
+        if(userId !== profileId){
+            userProfile.views += 1
+        }
         await userProfile.save()
 
-        //3. Return user profile
+        //4. Read user's rating
+        if (userProfile.role === 'talent') {
+            const result = await Review.aggregate([
+                { $match: { reviewedUserId: new mongoose.Types.ObjectId(profileId) } },
+                { $group: { _id: null, averageRating: { $avg: "$rating" } } }
+            ]);
+        
+            userProfile.rating = result.length > 0 ? result[0].averageRating : 0;
+        }        
+        const userProfileObject = userProfile.toObject();
+        userProfileObject.rating = userProfile.rating;
+
+        //4. Return user profile
         return {
-            user: userProfile,
+            user: userProfileObject,
         }
     }
 
