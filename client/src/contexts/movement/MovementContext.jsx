@@ -12,6 +12,7 @@ export const MovementProvider = ({ children }) => {
     const fetchMovements = async () => {
         try {
             const response = await newRequest.get('/movement/readMovements');
+            console.log(response.data.metadata.movements)
             return response.data.metadata.movements;
         } catch (error) {
             // console.log(error.response)

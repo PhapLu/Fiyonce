@@ -247,7 +247,7 @@ export default function MenuBar() {
                             <span className="dropdown-menu-item__title">Đăng xuất</span>
                         </li>
 
-                        <span className="dropdown-menu-statics mt-8 fs-13">
+                        <span className="dropdown-menu-statics mt-8 fs-14">
                             &#169; Pastal
                             <span className="dot-delimiter sm"></span>
                             <Link to="/help-center" onClick={() => setShowMenu(false)}>Trung tâm trợ giúp</Link>

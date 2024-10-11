@@ -12,9 +12,17 @@ export default function ExploreCommissionServices() {
     const { selectedRecommender, selectedMovement } = useOutletContext(); // Add this to use the context
     const [filteredCommissionServices, setFilteredCommissionServices] = useState([]);
 
+    const [searchParams] = useSearchParams();
+    const movementId = searchParams.get('movementId');
+
+
+
+
     const fetchRecommendedCommissionServices = async () => {
         try {
             let endpoint;
+            const movementId = searchParams.get('movementId');
+
             switch (selectedRecommender.algorithm) {
                 case "following":
                     endpoint = `/recommender/readFollowingCommissionServices`;
@@ -27,41 +35,38 @@ export default function ExploreCommissionServices() {
                     endpoint = `/recommender/readPopularCommissionServices`;
                     break;
             }
-            const response = await apiUtils.get(endpoint);
-            let commissionServices = response.data.metadata.commissionServices;
-            console.log(commissionServices)
 
+            // Append movementId to the endpoint if available
+            if (movementId) {
+                endpoint += `?movementId=${movementId}`;
+            }
+
+            const response = await apiUtils.get(endpoint);
+            const commissionServices = response?.data?.metadata?.commissionServices || [];
             return commissionServices;
         } catch (error) {
-            console.log(error);
-            return null;
+            console.error("Error fetching commission services:", error);
+            return [];
         }
     };
 
-    const { data: commissionServices, error: fetchingCommissionServices, isError: isFetchingCommissionServicesError, isLoading: isFetchingCommissionServicesLoading } = useQuery(
-        ['fetchRecommendedCommissionServices', selectedRecommender],
+
+    const { data: commissionServices, error, isError, isLoading } = useQuery(
+        ['fetchRecommendedCommissionServices', selectedRecommender, movementId],
         fetchRecommendedCommissionServices,
         {
-            onSuccess: (data) => {
-                setFilteredCommissionServices(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching commissionServices:', error);
-            },
+            onSuccess: (data) => setFilteredCommissionServices(data),
+            onError: (error) => console.error('Error fetching commissionServices:', error),
         }
     );
 
     // Filter commissionServices when selectedMovement changes
     useEffect(() => {
-        if (selectedMovement && commissionServices) {
-            const filtered = commissionServices.filter(commissionServices => commissionServices?.movementId?._id === selectedMovement?._id);
-            setFilteredCommissionServices(filtered);
-        } else {
-            setFilteredCommissionServices(commissionServices || []);
+        if (!movementId && commissionServices) {
+            setFilteredCommissionServices(commissionServices); // Show all if no movementId
         }
-    }, [selectedMovement, commissionServices]);
-
-
+    }, [movementId, commissionServices]);
+    
     return (
         <div className="explore-commission-services">
             <RenderComissionServices commissionServices={commissionServices} />

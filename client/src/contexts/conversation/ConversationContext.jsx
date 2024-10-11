@@ -9,6 +9,7 @@ export const useConversation = () => {
     return useContext(ConversationContext);
 };
 
+
 export const ConversationProvider = ({ children }) => {
     const [otherMember, setOtherMember] = useState();
     const [showRenderConversation, setShowRenderConversation] = useState(false);
@@ -19,8 +20,6 @@ export const ConversationProvider = ({ children }) => {
         try {
             const response = await apiUtils.get(`/conversation/readConversationWithOtherMember/${otherMember._id}`);
             const conversationData = response.data.metadata.conversation;
-            console.log("FETCHED CONVERSATION DATA")
-            console.log(conversationData)
             return conversationData;
         } catch (error) {
             console.log(error);

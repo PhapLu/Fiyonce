@@ -21,10 +21,14 @@ export default function ProfileBasicInfo() {
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
 
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({
+        fullName: '',
+        address: '',
+        phone: '',
+        email: '',
+    });
     const [errors, setErrors] = useState({});
     const [isSubmitProfileBasicInfoLoading, setIsSubmitProfileBasicInfoLoading] = useState(false);
-    const [socialLinks, setSocialLinks] = useState(profileInfo.socialLinks || []);
 
     if (!profileInfo) {
         return null;
@@ -34,15 +38,20 @@ export default function ProfileBasicInfo() {
     //     if (profileInfo) {
     //         const dob = profileInfo.dob ? new Date(profileInfo.dob).toISOString().split('T')[0] : "";
     //         setInputs({ ...profileInfo, dob: dob });
-    //         setSocialLinks(profileInfo.socialLinks || []);
     //     }
     // }, [profileInfo]);
 
     useEffect(() => {
-        if (profileInfo) {
+        if (userInfo && profileInfo) {
             // Only set inputs if they are not already filled
-            setInputs(profileInfo);
-            setSocialLinks((prevSocialLinks) => prevSocialLinks.length === 0 ? profileInfo.socialLinks || [] : prevSocialLinks);
+            setInputs((prevInputs) => ({
+                ...prevInputs,
+                fullName: profileInfo.fullName || userInfo.fullName || '',
+                address: profileInfo.address || userInfo.address || '',
+                phone: profileInfo.phone || userInfo.phone || '',
+                email: profileInfo.email || userInfo.email || '',
+                dob: profileInfo.dob || userInfo.dob || '',
+            }));
         }
     }, [profileInfo]);
 
@@ -55,7 +64,7 @@ export default function ProfileBasicInfo() {
         const dob = `${year}-${month}-${day}T00:00:00.000Z`;
         setInputs((values) => ({ ...values, dob: dob }));
     };
-    
+
     const handleChange = (e) => {
         const name = e.target.name;
         let value = e.target.value;
@@ -93,14 +102,14 @@ export default function ProfileBasicInfo() {
             return;
         }
 
-
         try {
+            console.log(inputs)
+
             // Convert the date format to yyyy-mm-dd for backend compatibility
             if (inputs.dob) {
                 inputs.dob = inputs.dob.split('/').reverse().join('-');
             }
 
-            console.log(inputs)
 
             const userId = profileInfo._id;
             const response = await apiUtils.patch(`/user/updateProfile/${userId}`, inputs);
@@ -123,7 +132,6 @@ export default function ProfileBasicInfo() {
         e.preventDefault();
         if (profileInfo) {
             setInputs(profileInfo);
-            setSocialLinks(profileInfo.socialLinks || []);
         }
     };
 
@@ -160,7 +168,7 @@ export default function ProfileBasicInfo() {
                         </div>
                     )}
 
-                    <div className="form-field">
+                    {/* <div className="form-field">
                         <label htmlFor="gender" className="form-field__label">Giới tính</label>
                         <select
                             name="gender"
@@ -174,7 +182,7 @@ export default function ProfileBasicInfo() {
                             <option value="other">Khác</option>
                         </select>
                         {errors.gender && <span className="form-field__error">{errors.gender}</span>}
-                    </div>
+                    </div> */}
 
                     <div className="form-field">
                         <label htmlFor="dob" className="form-field__label">Ngày sinh</label>

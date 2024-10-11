@@ -11,6 +11,7 @@ import { apiUtils } from "../../utils/newRequest";
 // Styling
 import "./ExplorePosts.scss";
 
+
 export default function ExplorePosts() {
     const [searchParams] = useSearchParams();
     const { selectedRecommender, selectedMovement } = useOutletContext(); // Add this to use the context
@@ -22,6 +23,9 @@ export default function ExplorePosts() {
     const fetchRecommendedPosts = async (page = 1) => {
         try {
             let endpoint;
+            const movementId = searchParams.get('movementId');
+            console.log(movementId)
+    
             switch (selectedRecommender.algorithm) {
                 case "following":
                     endpoint = `/recommender/readFollowingPosts?page=${page}&limit=10`;
@@ -34,16 +38,20 @@ export default function ExplorePosts() {
                     endpoint = `/recommender/readPopularPosts?page=${page}&limit=10`;
                     break;
             }
+    
+            // Append the movementId query parameter if it exists
+            if (movementId) {
+                console.log("lll")
+                endpoint += `&movementId=${movementId}`;
+            }
+    
             const response = await apiUtils.get(endpoint);
-            console.log(response)
-
-            // Add a safety check in case the response structure isn't what you expect
-            const posts = response?.data.metadata?.posts || []; // Fallback to an empty array if posts are undefined
-
+            const posts = response?.data.metadata?.posts || [];
+    
             return posts;
         } catch (error) {
             console.error("Error fetching recommended posts:", error);
-            return []; // Return an empty array on error to prevent further issues
+            return [];
         }
     };
 
@@ -63,16 +71,14 @@ export default function ExplorePosts() {
     useEffect(() => {
         const loadInitialPosts = async () => {
             const initialPosts = await fetchRecommendedPosts(1);
-
             setFilteredPosts(initialPosts);
             setPage(1);
-
-            // Check if the initialPosts array has more than 0 items
             setHasMore(initialPosts.length > 0);
         };
-
+    
         loadInitialPosts();
-    }, [selectedRecommender]);
+    }, [selectedRecommender, searchParams]);
+
     // Fetch posts again if the recommender algorithm changes
 
     // Filter posts when selectedMovement changes

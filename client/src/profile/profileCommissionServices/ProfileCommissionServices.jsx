@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useOutletContext, useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate, Link, useLocation, Outlet } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -33,8 +33,6 @@ export default function ProfileCommissionServices() {
     const location = useLocation();
 
     const isProfileOwner = userInfo?._id === userId;
-
-
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showCreateCommissionServiceForm, setShowCreateCommissionServiceForm] = useState(false);
@@ -424,6 +422,7 @@ export default function ProfileCommissionServices() {
                     }
                 </div>
             )}
+            <Outlet />
         </div>
     );
 }

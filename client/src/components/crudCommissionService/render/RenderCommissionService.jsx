@@ -19,7 +19,8 @@ import "./RenderCommissionService.scss";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 export default function RenderComissionService() {
-    const { userId, commissionServiceId } = useParams();
+    const { userId, "commission-service-id": commissionServiceId } = useParams();
+
     const [showRenderCommissionService, setShowRenderCommissionService] = useState(false);
     const [overlayVisible, setOverlayVisible] = useState(false);
     const navigate = useNavigate();
@@ -40,7 +41,8 @@ export default function RenderComissionService() {
     useEffect(() => {
         const handler = (e) => {
             if (renderCommissionServiceRef.current && !renderCommissionServiceRef.current.contains(e.target)) {
-                navigate(userId ? `/users/${userId}/commission-services` : `/commission-services`);
+                navigate(-1);
+                // userId ? `/users/${userId}/commission-services` : `/commission-services`
             }
         };
         document.addEventListener("mousedown", handler);

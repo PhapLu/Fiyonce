@@ -44,7 +44,7 @@ export default function RenderNews() {
                 <div className="news-header text-align-center">
                     <h1 className="news-header__title">{news?.title}</h1>
                     <h3 className="news-header__sub-title">{news?.subTitle}</h3>
-                    <p>bởi <span className="highlight-text fw-bold">Pastal Team</span> <span className="dot-delimiter"></span> {formatDate(news?.createdAt)}</p>
+                    <p className="flex-align-center flex-justify-center">bởi <span className="highlight-text fw-bold"> Pastal Team</span> <span className="dot-delimiter"></span> {formatDate(news?.createdAt)}</p>
                     <img src={news?.thumbnail} alt="" className="news-header__thumbnail" />
                 </div>
                 <div className="news-content">
@@ -56,7 +56,7 @@ export default function RenderNews() {
                 <br />
 
                 <div className="flex-align-center">
-                    <h4>Chia sẻ</h4>
+                    <h4>Chia sẻ bài viết</h4>
                     <ShareSocial
                         url={window.location.href}  // Pass the current URL
                         media={window.location.href}  // Pass the current URL

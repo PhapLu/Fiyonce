@@ -178,7 +178,7 @@ const routes = [
             element: <ExploreCommissionServices showCommissionServices={true} />,
             children: [
               {
-                path: "/commission-services/:commissionServiceId",
+                path: "/commission-services/:commission-service-id",
                 element: <RenderCommissionService />,
               },
             ]
@@ -260,7 +260,7 @@ const routes = [
             element: <ProfileCommissionServices />,
             children: [
               {
-                path: "/users/:userId/profile-commission-services/:commissionServiceId",
+                path: "/users/:userId/profile-commission-services/:commission-service-id",
                 element: <RenderCommissionService />,
               },
             ]
@@ -336,6 +336,12 @@ const routes = [
       {
         path: "search",
         element: <SearchResult />,
+        children: [
+          {
+            path: "commission-services/:commission-service-id",
+            element: <RenderCommissionService />,
+          },
+        ]
       },
 
       // Admin dashboard
@@ -379,6 +385,18 @@ const routes = [
     path: "help-center",
     element: <HelpCenterLayout />,
     children: [
+      {
+        path: "",
+        element: <HelpCenter />,
+      },
+      {
+        path: "topics/:topic-id",
+        element: <HelpTopic />,
+      },
+      {
+        path: "topics/:topic-id/articles/:article-id",
+        element: <HelpArticle />
+      }
       // {
       //   path: "topics/:topic-id",
       //   element: <HelpTopic />,
@@ -387,10 +405,16 @@ const routes = [
       //   path: "topics/:topic-id/:article-id",
       //   element: <HelpArticle />,
       // },
-      {
-        path: "",
-        element: <HelpCenter />,
-      },
+      // {
+      //   path: "",
+      //   element: <HelpCenter />,
+      //   children: [
+      //     {
+      //       path: "articles/for-talents",
+      //       element: <ForTalents />,
+      //     },
+      //   ]
+      // },
     ]
   },
 

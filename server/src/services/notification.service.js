@@ -25,8 +25,8 @@ class NotificationService {
         if (senderId === receiverId) return
 
         //3. Assign content based on type of notification
-        let content = ''; = ''
-        let notificationType = '' = ''
+        let content = '';
+        let notificationType = '';
         switch (type) {
             case "like":
                 content = `${user.fullName} đã thích bài viết của bạn`

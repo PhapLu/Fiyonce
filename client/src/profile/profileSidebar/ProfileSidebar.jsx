@@ -26,7 +26,7 @@ import { codePointToEmoji, getSocialLinkIcon } from "../../utils/iconDisplayer.j
 // Styling
 import "./ProfileSidebar.scss";
 import { resizeImageUrl } from '../../utils/imageDisplayer.js';
-import UserBadge from '../../components/userBadge/UserBadge.jsx';
+import UserBadge from '../../components/crudBadge/render/UserBadge.jsx';
 
 export default function Sidebar({ profileInfo, setProfileInfo }) {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -145,6 +145,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
         setInputs((values) => ({ ...values, [name]: value }));
         setErrors((values) => ({ ...values, [name]: '' }));
     };
+
 
     const handleLinkChange = (event, index) => {
         const { value } = event.target;
@@ -418,7 +419,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
 
     // Callback function when cropping is canceled
     const onCropCancel = () => {
-        setImage("");
+        setImage(null);
         setIsCropping(false);
         setOverlayVisible(false);
         setSelectedImage(null);
@@ -446,6 +447,9 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             setOverlayVisible(false);
             setSelectedImage(null);
         }
+
+        // Reset the file input to allow selecting the same file again
+        event.target.value = null;
     };
 
     const displayPronoun = (pronoun) => {
@@ -670,7 +674,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             ) : (
                 <>
                     <div className="sidebar__name">
-                        <p className="sidebar__name__fullName">{profileInfo?.fullName} <UserBadge size={"lg"} badges={profileInfo.badges} /></p>
+                        <p className="sidebar__name__fullName">{profileInfo?.fullName} <UserBadge size={"lg"} badges={profileInfo?.badges} /></p>
                         <div className="flex-justify-center flex-align-center">
                             {
                                 profileInfo?.stageName && profileInfo?.pronoun
@@ -771,9 +775,8 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                         )
 
                     }
-                    <br />
 
-                    <div className="sidebar__follow">
+                    <div className="sidebar__follow mt-8">
                         <div className='flex-justify-center flex-align-center semi-light-text'>
                             <span className="sidebar__follow__follower hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowers(true) }}>{profileInfo?.followers?.length === 0 ? "Chưa có người theo dõi" : `${profileInfo?.followers?.length} người theo dõi`}</span>
                             <span className="dot-delimiter sm ml-8 mr-8"></span>

@@ -165,6 +165,9 @@ export default function ProfileLayout() {
             setOverlayVisible(false);
             setSelectedImage(null);
         }
+
+        // Reset the file input to allow selecting the same file again
+        event.target.value = null;
     };
 
 

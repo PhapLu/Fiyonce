@@ -184,13 +184,25 @@ export default function RenderCommissionServices({ isSorting, isDisplayOwner, al
     };
     const url = window.location.href;
 
+    const handleNavigation = (commissionServiceId) => {
+        const currentPath = location.pathname;
+        const searchParams = new URLSearchParams(location.search);
+        const searchTerm = searchParams.get('q'); // Extract the search term from query parameters
+    
+        if (currentPath === "/commission-services") {
+            navigate(`/commission-services/${commissionServiceId}${location.search}`);
+        } else if (currentPath === "/search") {
+            // Navigate to /search/:searchTerm/commission-services/:commissionServiceId and include query params
+            navigate(`/search/commission-services/${commissionServiceId}${location.search}`);
+        }
+    };
+
     const handleShare = (platform, itemId) => {
         // URL to share
 
         switch (platform) {
             case 'copy':
                 navigator.clipboard.writeText(`${url}${itemId}`);
-                alert('URL copied to clipboard!');
                 break;
             case 'x':
                 window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}/${itemId}`);
@@ -223,7 +235,8 @@ export default function RenderCommissionServices({ isSorting, isDisplayOwner, al
                                 const hasBookmarked = bookmarkedCommissionServices.includes(commissionService._id);
                                 return (
                                     // onClick={() => { setCommissionServiceId(commissionService?._id), setOverlayVisible(true), setShowRenderCommissionService(true) }}
-                                    <Link to={location.pathname.split('/').filter(Boolean).length === 0 ? `commisison-services/${commissionService?._id}` : `${location.pathname}/${commissionService?._id}`} key={idx} className="commission-service-item gray-bg-hover" >
+
+                                    <div onClick={() => {handleNavigation(commissionService?._id)}} key={idx} className="commission-service-item gray-bg-hover" >
                                         <div className={`commission-service-item__status ${commissionService?.status}`}>
                                             {commissionService?.status == "open" ? (
                                                 "Open"
@@ -302,7 +315,7 @@ export default function RenderCommissionServices({ isSorting, isDisplayOwner, al
                                                 </span>
                                             )
                                         }
-                                    </Link>
+                                    </div>
                                 );
                             })}
                         </Masonry >
