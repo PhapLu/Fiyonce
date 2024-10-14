@@ -77,7 +77,7 @@
 
     --pending-status-bg-color: #e9e5ff;
     --pending-status-color: #b22ad2;
-    --pending-status-border-color: #f89dff;
+    --pending-status-border-color: #c360ca;
 
     --rejected-status-bg-color: #fad6d6;
     --rejected-status-color: #e20c0c;
@@ -307,7 +307,7 @@ p {
 }
 
 span {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     line-height: 2rem;
     // word-break: break-all;
     // width: 100%;
@@ -1072,6 +1072,11 @@ hr {
     .normal-text {
         color: var(--gray-2-color);
     }
+}
+
+.flex-align-end {
+    display: flex;
+    align-items: flex-end;
 }
 
 .overlay-visible {
@@ -2478,7 +2483,7 @@ table {
     }
 
     html {
-        font-size: 58.59%;
+        // font-size: 60.5%;
         line-height: 1.5rem;
     }
 
@@ -2514,21 +2519,61 @@ table {
 
 /* Mobile styles (<= 739px) */
 @media only screen and (max-width: 739px) {
+    .app {
+        margin-top: 55px;
+    }
+
+    .modal-form.type-1 {
+        position: absolute;
+        width: 100%;
+        bottom: 0 !important;
+        border-radius: 20px 20px 0 0;
+        flex-wrap: wrap;
+        overflow-y: scroll;
+
+        .modal-form--left {
+            border-radius: 20px 0 0 0;
+            width: 100% !important;
+            height: 80% !important;
+        }
+
+        .modal-form--right {
+            width: 100% !important;
+            min-height: unset;
+            height: unset;
+        }
+    }
+
+    .modal-form.type-3 {
+        position: absolute;
+        bottom: 0;
+        width: 100% !important;
+        border-radius: 12px 12px 0 0;
+        padding: 20px 32px 20px;
+    }
+
     .mobile-hide {
         display: none !important;
     }
 
     html {
-        font-size: 50.78%;
+        // font-size: 60.5%;
         line-height: 1.3rem;
     }
 
-    .btn.btn-3 {
-        padding: 4px;
+    .btn {
+        .btn-3 {
+            padding: 4px;
 
-        svg {
-            width: 22px;
-            height: 22px;
+            svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        &.btn-md {
+            padding: 10px 12px;
+            min-width: 110px;
         }
     }
 }

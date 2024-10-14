@@ -153,6 +153,7 @@
 
 /* Tablet styles (740px to 1023px) */
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
+
     .app.with-sidebar {
         .sidebar {
             width: 36%;
@@ -185,5 +186,23 @@
 
 /* Mobile styles (<= 739px) */
 @media only screen and (max-width: 739px) {
+    .app:has(.sidebar) {
+        margin: 50px 16px 20px 16px !important;
+    }
+
+    .profile-layout {
+        flex-wrap: wrap;
+
+        .profile-page__header {
+            .profile-page__header--left {
+                width: 100%;
+            }
+        }
+
+        .outlet-content {
+            width: 100%;
+        }
+    }
+
     // body {}
 }

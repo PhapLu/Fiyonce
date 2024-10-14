@@ -41,9 +41,9 @@ import RenderComissionService from "./RenderCommissionService.jsx";
 export default function RenderCommissionServices({ isSorting, isDisplayOwner, allowEditDelete, commissionServices, layout }) {
     const breakpointColumnsObj = {
         default: 4,
-        1200: 5,
         1023: 4,
-        739: 2
+        739: 1,
+        // 739: 1
     };
 
     const [showRenderCommissionService, setShowRenderCommissionService] = useState(false);

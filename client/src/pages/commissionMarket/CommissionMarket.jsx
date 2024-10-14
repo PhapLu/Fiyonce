@@ -224,7 +224,7 @@ export default function CommissionMarket() {
                                                     </span>
                                                 ) : indirectOrder?.talentsApprovedCount > 0 && (
                                                     <span className="status pending">
-                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                                                        <span className="status__title">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
                                                     </span>
                                                 )}
                                             </div>

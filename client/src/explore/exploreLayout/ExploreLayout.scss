@@ -101,5 +101,18 @@
 @media only screen and (max-width: 739px) {
     body {}
 
-    /* Add your mobile-specific styles here */
+    .explore {
+        .explore__filter-container {
+            .explore__filter-item {
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .show-recommender-btn {
+                margin-right: 12px;
+            }
+        }
+    }
 }

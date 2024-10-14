@@ -508,7 +508,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                         name="isAgreeTerms"
                                         checked={inputs.isAgreeTerms || ""}
                                         onChange={handleChange}
-                                    /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text underlined-text"> điều khoản dịch vụ </Link> của Pastal</span>
+                                    /> <span>Tôi đồng ý với các <Link to="/statics/terms-of-services" target="_blank" className="highlight-text underlined-text"> điều khoản dịch vụ </Link> của Pastal</span>
                                 </label>
                                 {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                             </div>

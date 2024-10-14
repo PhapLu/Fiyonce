@@ -199,11 +199,6 @@ const routes = [
           },
         ],
       },
-
-      {
-        path: "/terms-and-policies",
-        element: <InDevelopment />,
-      },
       {
         path: "/statics",
         element: <StaticLayout />,
@@ -213,7 +208,7 @@ const routes = [
             element: <Glaze />,
           },
           {
-            path: "/statics/term-of-services",
+            path: "/statics/terms-of-services",
             element: <Glaze />,
           },
           {

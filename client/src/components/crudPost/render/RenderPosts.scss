@@ -183,28 +183,39 @@
 }
 
 // RESPONSIVE
-@media (max-width: 1200px) {
+@media (min-width: 1024px) {}
+
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
     .my-masonry-grid {
         column-count: 4 !important;
     }
 }
 
-@media (max-width: 800px) {
-    .my-masonry-grid {
-        column-count: 2 !important;
-    }
+@media only screen and (max-width: 739px) {
+    .posts {
+        .prev-btn,
+        .next-btn {
+            display: none;
+        }
 
-    .post-item__img__thumbnail {
-        max-height: 260px;
-    }
-}
+        .my-masonry-grid {
+            column-count: 2 !important;
+        }
 
-@media (max-width: 600px) {
-    .my-masonry-grid {
-        column-count: 1 !important;
-    }
+        .post-item__img__thumbnail {
+            max-height: 260px;
+        }
 
-    .post-item__img__thumbnail {
-        max-height: 200px;
+        .my-masonry-grid_column {
+            padding-left: 10px;
+        }
+
+        .post-item {
+            margin-bottom: 20px;
+
+            .post-item__img__thumbnail {
+                max-height: 200px;
+            }
+        }
     }
 }

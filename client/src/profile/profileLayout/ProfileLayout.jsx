@@ -208,7 +208,7 @@ export default function ProfileLayout() {
                         />
                         {isProfileOwner && (
                             <>
-                                <button className="profile__bg__edit-btn btn btn-md" onClick={onChooseImg}>
+                                <button className="profile__bg__edit-btn btn btn-md mobile-hide" onClick={onChooseImg}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
