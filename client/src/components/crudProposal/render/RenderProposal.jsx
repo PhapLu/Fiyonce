@@ -213,7 +213,7 @@ export default function RenderProposal() {
                     </div>
 
                     <div className="user md mt-16">
-                        <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
+                        <Link to={`/users/${commissionOrder?.memberId?._id}`} className="user--left hover-cursor-opacity">
                             <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                             <div className="user__name">
                                 <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>

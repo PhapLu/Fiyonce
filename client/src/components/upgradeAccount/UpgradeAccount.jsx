@@ -53,7 +53,7 @@ const UpgradeAccount = () => {
         {
             onSuccess: (data) => {
                 console.log(data)
-                if (["pending", "rejected"].includes(data?.status) && query.get("is-again") !== '1') {
+                if (["pending", "rejected", "approved"].includes(data?.status) && query.get("is-again") !== '1') {
                     const currentPath = window.location.pathname;
                     const newPath = currentPath.replace('/upgrade-account', '/render-talent-request');
                     navigate(`${newPath}`);

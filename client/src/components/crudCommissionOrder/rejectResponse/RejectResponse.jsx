@@ -14,6 +14,7 @@ import { apiUtils, newRequest } from "../../../utils/newRequest";
 import "./RejectResponse.scss"
 import { useAuth } from "../../../contexts/auth/AuthContext";
 
+
 export default function RejectResponse() {
     const commissionOrder = useOutletContext();
 
@@ -24,7 +25,8 @@ export default function RejectResponse() {
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
-
+    console.log(commissionOrder)
+    
     const fetchOrderRejectResponse = async () => {
         try {
             const response = await apiUtils.get(`/order/readRejectResponse/${commissionOrderId}`);

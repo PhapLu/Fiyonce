@@ -92,6 +92,7 @@
     --complete-status-border-color: #82c011;
 
     --highlight-bg-color: #ffebdc;
+    --highlight-bg-green-color: #e3ffdc;
 }
 
 body.dark {
@@ -313,6 +314,10 @@ span {
     // width: 100%;
 }
 
+h1, h2, h3, h4, h5, h6, p, span, body, .btn {
+    // color: red !important;
+}
+
 img {
     display: block;
     object-fit: cover;
@@ -513,6 +518,10 @@ img {
     color: var(--highlight-text-color);
     padding: 10px 16px;
     border-radius: 8px;
+
+    &.green {
+        background-color: var(--highlight-bg-green-color);
+    }
 }
 
 .normal-text {}
@@ -1103,6 +1112,10 @@ table {
     background-color: var(--form-bg-2-color);
     box-shadow: var(--box-shadow-6);
 
+    .btn {
+        font-size: 1.2rem;
+    }
+
     .status {
         min-width: 160px;
     }
@@ -1250,9 +1263,10 @@ table {
         width: 100%;
         border-radius: 16px;
         padding: 8px 10px;
-        border: 2px solid var(--gray-7-color);
         outline: none;
-        background-color: var(--gray-7-color);
+        border: 2px solid var(--gray-7-color);
+        // background-color: var(--gray-7-color);
+        background-color: var(--form-bg-1-color);
         color: var(--black-2-color);
         color-scheme: var(--color-scheme);
 

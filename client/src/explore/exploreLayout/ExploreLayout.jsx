@@ -9,7 +9,7 @@ import RenderNewss from "../../components/crudNews/render/RenderNewss.jsx";
 import BackToTop from '../../components/backToTop/BackToTop.jsx';
 
 // Utils
-import { formatNumber } from "../../utils/formatter.js";
+import { formatFloat, formatNumber } from "../../utils/formatter.js";
 
 // Styling
 import "../../assets/scss/base.scss";
@@ -231,7 +231,7 @@ export default function Explore() {
                                 <img src="https://i.pinimg.com/564x/3d/1e/f7/3d1ef71d293b8a427a601f1e3d676dbf.jpg" alt="Tất cả" className="scroll-item__thumbnail" />
                                 <div className="explore__filter-item__details">
                                     <span className="explore__filter-item__details__title">Tất cả</span>
-                                    <span className="explore__fitler-item__details__count">1,000</span>
+                                    <span className="explore__fitler-item__details__count">{formatFloat(1000)}</span>
                                 </div>
                             </div>
 
@@ -241,20 +241,20 @@ export default function Explore() {
                                     <div className="explore__filter-item__details">
                                         <span className="explore__filter-item__details__title">{movement.title}</span>
                                         {
-                                            location.pathname.includes("commission-services") ? 
-                                            (
-                                                <span className="explore__fitler-item__details__count">{movement.commissionServiceCount > 1000 ? formatNumber(movement.commissionServiceCount, 1) : movement.commissionServiceCount}</span>
-                                            )
-                                            : 
-                                            (
-                                                <span className="explore__fitler-item__details__count">{movement.postCount > 1000 ? formatNumber(movement.postCount, 1) : movement.postCount}</span>
-                                            )
+                                            location.pathname.includes("commission-services") ?
+                                                (
+                                                    <span className="explore__fitler-item__details__count">{movement.commissionServiceCount > 1000 ? formatNumber(movement.commissionServiceCount, 1) : movement.commissionServiceCount}</span>
+                                                )
+                                                :
+                                                (
+                                                    <span className="explore__fitler-item__details__count">{movement.postCount > 1000 ? formatNumber(movement.postCount, 1) : movement.postCount}</span>
+                                                )
                                         }
-                                        
+
                                     </div>
                                 </div>
                             ))}
-                            
+
                             <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>&gt;</button>
                         </div>
                     </div>

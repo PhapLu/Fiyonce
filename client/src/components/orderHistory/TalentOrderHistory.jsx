@@ -208,7 +208,7 @@ export default function TalentOrderHistory() {
                                     </td>
                                     <td>
                                         <span>
-                                            <Link to={`/users/${order?.memberId._id}`} className="user sm hover-cursor-opacity">
+                                            <Link to={`/users/${order?.memberId?._id}`} className="user sm hover-cursor-opacity">
                                                 <div className="user--left">
                                                     <img src={resizeImageUrl(order?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                                                     <div className="user__name">
@@ -256,6 +256,7 @@ export default function TalentOrderHistory() {
                                             )}
                                             {order.status === "delivered" && (
                                                 <>
+                                                    <Link to={`/order-history/commission-orders/${order?._id}/render-final-delivery`} aria-label="Xem sản phẩm do họa sĩ bàn giao" className="btn btn-3 hover-display-label mr-8">Xem sản phẩm</Link>
                                                     <Link to={`/order-history/commission-orders/${order?._id}/review`} aria-label="Cập nhật tiến độ công việc" className="btn btn-3 hover-display-label mr-8">Đánh giá</Link>
                                                 </>
                                             )}

@@ -79,6 +79,7 @@ import CommissionReviews from "./components/crudCommissionReviews/render/RenderC
 import ReviewCommissionOrder from "./components/crudCommissionOrder/review/ReviewCommissionOrder.jsx";
 import ReportDashboard from "./dashboard/reportDashboard/ReportDashboard.jsx";
 import SupplementTalentRequest from "./components/upgradeAccount/SupplementTalentRequest.jsx";
+import RenderFinalDelivery from "./components/crudCommissionOrder/renderFinalDelivery/RenderFinalDelivery.jsx";
 
 const queryClient = new QueryClient();
 
@@ -135,6 +136,10 @@ const commissionOrderRoutes = [
       {
         path: "deliver",
         element: <DeliverCommissionOrder />,
+      },
+      {
+        path: "render-final-delivery",
+        element: <RenderFinalDelivery />,
       },
       {
         path: "finish",
@@ -312,7 +317,7 @@ const routes = [
       // General Layout
       {
         path: "order-history",
-        element: <ProtectedRoute allowedRoles={['all']}><OrderHistory /></ProtectedRoute>,
+        element: <ProtectedRoute allowedRoles={['all-exclude-guest']}><OrderHistory /></ProtectedRoute>,
         children: commissionOrderRoutes,
       },
       {

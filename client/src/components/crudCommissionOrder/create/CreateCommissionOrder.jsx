@@ -546,7 +546,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                             <span>Các họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.</span></>
                                 }
                                 <br />
-                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text underlined-text">tại đây</Link>.
+                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text underlined-text">Tại đây</Link>.
                             </p>
 
                             <p className="border-text mt-32">

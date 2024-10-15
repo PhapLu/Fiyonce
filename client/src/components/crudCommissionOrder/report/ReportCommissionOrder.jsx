@@ -21,7 +21,7 @@ export default function ReportCommissionOrder() {
 
     const [inputs, setInputs] = useState(
         {
-            orderId: commissionOrder._id,
+            orderId: commissionOrder?._id,
             content: "",
         }
     );
@@ -70,13 +70,13 @@ export default function ReportCommissionOrder() {
         document.getElementById('file-input').click();
     };
 
-    const { userInfo } = useAuth();
+    const { userInfo, socket } = useAuth();
     const { setModalInfo } = useModal();
 
     const [isSubmitReportCommissionOrderLoading, setIsSubmitReportCommissionOrderLoading] = useState(false);
     const [selectedReason, setSelectedReason] = useState("");
     const [otherReason, setOtherReason] = useState("");
-    const isOrderOwnerAsMember = userInfo?._id === commissionOrder.memberId._id;
+    const isOrderOwnerAsMember = userInfo?._id === commissionOrder?.memberId?._id;
 
 
     const closeReportCommissionOrderView = () => {
@@ -144,17 +144,28 @@ export default function ReportCommissionOrder() {
 
             const response = await reportCommissionOrderMutation.mutateAsync(fd);
             if (response) {
+                let receiverId;
                 if (isOrderOwnerAsMember) {
                     setModalInfo({
                         status: "success",
                         message: "Báo cáo họa sĩ thành công",
                     });
+                    receiverId = commissionOrder?.talentChosenId?._id;
                 } else {
                     setModalInfo({
                         status: "success",
                         message: "Báo cáo khách hàng thành công",
                     });
+                    receiverId = commissionOrder?.memberId?._id;
                 }
+
+                // Send notification
+                const senderId = userInfo?._id;
+                const inputs2 = { receiverId, type: "reportCommissionOrder", url: `/order-history` }
+                const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+                console.log(response2)
+                const notificationData = response2.data.metadata.notification;
+                socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
             }
         } catch (error) {
             console.error("Failed to submit:", error);

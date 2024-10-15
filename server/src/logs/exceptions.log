@@ -1009,3 +1009,6 @@ MongooseError: Connection.prototype.close() no longer accepts a callback
     at NativeConnection.close (E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\connection.js:915:11)
     at process.<anonymous> (file:///E:/Pastal/Fiyonce/server/src/app.js:131:25)
     at process.emit (node:events:519:28)::undefined
+2024-10-15 07:53:28::error::undefined::undefined::uncaughtException: read ECONNRESET
+Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:218:20)::undefined

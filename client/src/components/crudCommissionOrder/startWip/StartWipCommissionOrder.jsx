@@ -76,12 +76,13 @@ export default function StartWipCommissionOrder() {
                 closeStartWipCommissionOrderView();
             }
 
-            // const senderId = userInfo._id;
-            // const receiverId = commissionOrder.memberId._id;
-            // const inputs2 = { receiverId, type: "startWipCommissionOrder", url: `/order-history` }
-            // const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
-            // const notificationData = response2.data.metadata.notification;
-            // socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
+            // Send notification
+            const senderId = userInfo?._id;
+            const receiverId = commissionOrder?.memberId?._id;
+            const inputs2 = { receiverId, type: "startWipCommissionOrder", url: `/order-history` }
+            const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+            const notificationData = response2.data.metadata.notification;
+            socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
 
         } catch (error) {
             console.error("Failed to submit:", error);
@@ -89,6 +90,10 @@ export default function StartWipCommissionOrder() {
                 ...prevErrors,
                 serverError: error.response?.data?.message,
             }));
+            setModalInfo({
+                status: "error",
+                message: error.response?.data?.message,
+            });
         } finally {
             setIsSubmitStartWipCommissionOrderLoading(false);
         }
@@ -106,7 +111,7 @@ export default function StartWipCommissionOrder() {
                 <div className="form-field">
                     <p className="highlight-bg-text text-align-justify">
                         Bằng cách xác nhận, Pastal sẽ thông báo đến khách hàng rằng bạn đã tiến hành thực hiện đơn hàng.
-                        Hãy cập nhật tiến độ làm việc từ lúc lên bản thảo đến lúc hoàn thiện để khách hàng nắm rõ tiến độ đơn hàng hơn nhé.
+                        Hãy cập nhật tiến độ làm việc từ lúc lên bản thảo đến khi hoàn thiện để khách hàng nắm rõ tiến độ đơn hàng hơn nhé.
                     </p>
                 </div>
 

@@ -153,7 +153,7 @@ export default function ProfileBasicInfo() {
                         {errors.fullName && <span className="form-field__error">{errors.fullName}</span>}
                     </div>
 
-                    {userInfo?.role === "talent" && (
+                    {profileInfo?.role === "talent" && (
                         <div className="form-field">
                             <label htmlFor="stageName" className="form-field__label">Nghệ danh</label>
                             <input

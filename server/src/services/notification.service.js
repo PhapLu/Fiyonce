@@ -8,8 +8,6 @@ import {
 
 class NotificationService {
     static createNotification = async (senderId, body) => {
-        console.log("Create noti")
-        console.log(body)
         //1. Check user
         const user = await User.findById(senderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
@@ -22,7 +20,7 @@ class NotificationService {
         }
         if (!receiver) throw new NotFoundError("Không tìm thấy người nhận")
 
-        if (senderId === receiverId) return
+        if (senderId === receiverId) throw new BadRequestError("Có lỗi xảy ra")
 
         //3. Assign content based on type of notification
         let content = '';
@@ -69,7 +67,15 @@ class NotificationService {
                 notificationType = "order";
                 break;
             case "reportCommissionOrder":
-                content = `${user.fullName} đã báo cáo vi phạm`;
+                content = `${user.fullName} đã báo cáo vi phạm về đơn hàng`;
+                notificationType = "order";
+                break;
+            case "createCommissionOrderMilestone":
+                content = `${user.fullName} đã cập nhật tiến độ cho đơn hàng của bạn`;
+                notificationType = "order";
+                break;
+            case "deliverCommissionOrder":
+                content = `${user.fullName} đã hoàn tất đơn hàng của bạn`;
                 notificationType = "order";
                 break;
             case "confirmTalentRequest":

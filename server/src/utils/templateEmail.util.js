@@ -74,7 +74,7 @@ const otpTemplate = (toEmail, message, verificationCode) => {
             <div class="container">
                 <div class="header">
                     <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
-                    <img src="https://res.cloudinary.com/fiyonce/image/upload/v1721793532/fiyonce/system/email_logo_fqu2hq.png" alt="Pastal">
+                    <img style="width: 100px; height: auto; object-fit: cover" src="https://res.cloudinary.com/fiyonce/image/upload/v1721793532/fiyonce/system/email_logo_fqu2hq.png" alt="Pastal">
                 </div>
                 <div class="content">
                     <div class="content_container">
@@ -141,7 +141,7 @@ const announcementTemplate = (subSubject, message) => {
         <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 5px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
             <!-- Logo Section -->
             <div style="text-align: left; margin-bottom: 25px;">
-                <h1 style="color: black;">Pastal.</h1>
+                <img src="https://res.cloudinary.com/ddcywkzto/image/upload/v1728996102/pastal_logo_qgsivy.png" alt="Pastal Logo"/>
             </div>
 
             <!-- Content Section -->
@@ -325,7 +325,7 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
         <div class="container" style="font: 16px/1.5 Arial, Helvetica, sans-serif;">
             <!-- Logo Section -->
             <div class="logo">
-                <h1 style="color: black">Pastal.</h1>
+                    <img style="width: 100px; height: auto; object-fit: cover" src="https://res.cloudinary.com/fiyonce/image/upload/v1721793532/fiyonce/system/email_logo_fqu2hq.png" alt="Pastal">
             </div>
 
             <!-- Content Section -->
@@ -398,7 +398,7 @@ const reportTemplate = (fullName, subSubject, message) => {
             <!-- Logo Section -->
             <div style="text-align: left; margin-bottom: 25px;">
                 <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>
-                <h1 style="font-size: 24px; color: black;">Pastal.</h1>
+                    <img style="width: 100px; height: auto; object-fit: cover" src="https://res.cloudinary.com/fiyonce/image/upload/v1721793532/fiyonce/system/email_logo_fqu2hq.png" alt="Pastal">
             </div>
 
             <!-- Content Section -->

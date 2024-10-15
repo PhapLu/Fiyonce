@@ -63,7 +63,7 @@ export default function CreateProposal() {
     });
 
     const closeCreateProposalView = () => {
-        navigate(-2);
+        navigate(-1);
     }
 
     const handleShowCreateProposal = () => {
