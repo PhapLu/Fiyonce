@@ -29,7 +29,6 @@ const OrderSchema = new mongoose.Schema(
                 "delivered",
                 "finished",
                 "under_processing",
-                "delivered",
                 "resolved"
             ],
             default: "pending",

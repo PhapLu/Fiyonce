@@ -1009,3 +1009,21 @@ MongooseError: Connection.prototype.close() no longer accepts a callback
     at NativeConnection.close (E:\Pastal\Fiyonce\server\node_modules\mongoose\lib\connection.js:915:11)
     at process.<anonymous> (file:///E:/Pastal/Fiyonce/server/src/app.js:131:25)
     at process.emit (node:events:519:28)::undefined
+2024-10-15 12:12:22::error::undefined::undefined::uncaughtException: artistryDashboardController is not defined
+ReferenceError: artistryDashboardController is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/reportDashboard/index.js:12:102
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-15 12:12:41::error::undefined::undefined::uncaughtException: artistryDashboardController is not defined
+ReferenceError: artistryDashboardController is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/reportDashboard/index.js:12:102
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-15 12:14:07::error::undefined::undefined::uncaughtException: artistryDashboardController is not defined
+ReferenceError: artistryDashboardController is not defined
+    at file:///D:/Adam/OnisonProject/server/src/routes/reportDashboard/index.js:12:97
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined

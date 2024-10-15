@@ -8,6 +8,13 @@ class TransactionDashboardController{
             metadata: await TransactionDashboardService.readTransactionOverview(req.userId)
         }).send(res)
     }
+
+    calculateIncomeOverview = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Get income overview success!',
+            metadata: await TransactionDashboardService.calculateIncomeOverview(req.userId)
+        }).send(res)
+    }
 }
 
 export default new TransactionDashboardController()

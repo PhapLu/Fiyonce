@@ -26,7 +26,7 @@ import accountDashboardRoute from './accountDashboard/index.js'
 import commissionReportRoute from './commissionReport/index.js'
 import commissionServiceRoute from './commissionService/index.js'
 import overviewDashboardRoute from './overviewDashboard/index.js'
-import challengeDashboardRoute from './challengeDashboard/index.js'
+import artistryDashboardRoute from './artistryDashboard/index.js'
 import transactionDashboardRoute from './transactionDashboard/index.js'
 
 const router = express.Router()
@@ -59,7 +59,7 @@ router.use('/v1/api/commissionReport', commissionReportRoute)
 router.use('/v1/api/accountDashboard', accountDashboardRoute)
 router.use('/v1/api/commissionService', commissionServiceRoute)
 router.use('/v1/api/overviewDashboard', overviewDashboardRoute)
-router.use('/v1/api/challengeDashboard', challengeDashboardRoute)
+router.use('/v1/api/artistryDashboard', artistryDashboardRoute)
 router.use('/v1/api/transactionDashboard', transactionDashboardRoute)
 
 export default router

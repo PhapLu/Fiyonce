@@ -10,5 +10,6 @@ const router = express.Router()
 router.use(verifyToken)
 
 router.get('/readTransactionOverview', accessService.grantAccess('readAny', 'profile'), asyncHandler(transactionDashboardController.readTransactionOverview))
+router.get('/calculateIncomeOverview', accessService.grantAccess('readAny', 'profile'), asyncHandler(transactionDashboardController.calculateIncomeOverview))
 
 export default router
