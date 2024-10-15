@@ -107,6 +107,28 @@ class ArtistryDashboardService {
             challenges: challengeData
         }
     }
+
+    static readChallengeTotalVotes = async (userId) => {
+        // 1. Check if the user is an admin
+        const admin = await User.findById(userId)
+        if (!admin) throw new NotFoundError("User not found")
+        if (admin.role !== "admin") throw new AuthFailureError("User is not admin")
+
+        // 2. Get all submissions of each challenge and count total votes
+        const challenges = await Challenge.find()
+        const challengeData = await Promise.all(challenges.map(async (challenge) => {
+            const submissions = await Submission.find({ challengeId: challenge._id })
+            const totalVotes = submissions.reduce((acc, submission) => acc + submission.votes.length, 0)
+            return {
+                title: challenge.title,
+                totalVotes
+            }
+        }))
+
+        return {
+            challenges: challengeData
+        }
+    }
 }
 
 export default ArtistryDashboardService
