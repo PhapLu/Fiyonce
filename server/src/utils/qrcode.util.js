@@ -16,7 +16,7 @@ const createUserQRCode = async (userId) => {
       if (!user) throw new Error('User not found')
   
       // Generate URL to be encoded in the QR code
-      const url = `https://www.pastal.com/users/${userId}`
+      const url = `https://pastal.app/users/${userId}`
       const qrCodeData = await generateQRCode(url)
   
       // Save the QR code in the database if it hasn't been saved yet
