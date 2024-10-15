@@ -15,11 +15,18 @@ class ArtistryDashboardController{
             metadata: await ArtistryDashboardService.readBadgeAchievedOverview(req.userId)
         }).send(res)
     }
-    
+
     readChallengeOverview = async(req, res, next) => {
         new SuccessResponse({
             message: 'Create accountReport success!',
             metadata: await ArtistryDashboardService.readChallengeOverview(req.userId)
+        }).send(res)
+    }
+
+    readChallengeTotalVotes = async(req, res, next) => {
+        new SuccessResponse({
+            message: 'Create accountReport success!',
+            metadata: await ArtistryDashboardService.readChallengeTotalVotes(req.userId)
         }).send(res)
     }
 }
