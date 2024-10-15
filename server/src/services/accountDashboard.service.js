@@ -19,7 +19,7 @@ class AccountDashboardService {
         const adminCount = await User.countDocuments({ role: "admin" })
         const talentCount = await User.countDocuments({ role: "talent" })
         const memberCount = await User.countDocuments({ role: "member" })
-        const talentRequestCount = await TalentRequest.countDocuments()
+        const talentRequestCount = await TalentRequest.countDocuments({ status: "pending" })
 
         return {
             userCount,
