@@ -11,7 +11,6 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import './db/init.mongodb.js';
 import router from './routes/index.js';
 import myLogger from './loggers/mylogger.log.js';
 import configureSocket from './configs/socket.config.js';
@@ -69,6 +68,11 @@ app.use(session({
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Init db
+import './db/init.mongodb.js';
+import { initRedis } from './db/init.redis.js';
+initRedis()
 
 // Advanced Logger
 app.use((req, res, next) => {

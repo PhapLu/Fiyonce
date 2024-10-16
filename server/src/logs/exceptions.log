@@ -1027,3 +1027,57 @@ ReferenceError: artistryDashboardController is not defined
     at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:23:31::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:21:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:24:19::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:21:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:24:40::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:21:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:27:50::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:21:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:28:06::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:21:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:46:33::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:22:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:48:03::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:22:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:49:08::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:22:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-16 21:49:45::error::undefined::undefined::uncaughtException: statusConnectRedis is not defined
+ReferenceError: statusConnectRedis is not defined
+    at file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:22:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
