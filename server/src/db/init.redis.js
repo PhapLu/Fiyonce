@@ -5,13 +5,36 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import redis from 'redis'
+import { RedisErrorResponse } from '../core/error.response.js'
 
 let client = {}
-const statusConnectRedis = {
+let statusConnectRedis = {
     CONNECT: 'connect',
     END: 'end',
     RECONNECT: 'reconnecting',
     ERROR: 'error'
+}
+let connectionTimeout
+
+const REDIS_CONNECT_TIMEOUT = 10000
+const REDIS_CONNECT_MESSAGE = {
+    code: -99,
+    message: {
+        vn: 'Không thể kết nối đến Redis',
+        en: 'Service connection error'
+    }
+}
+
+const handleTimeoutError = () => {
+    connectionTimeout = setTimeout(() => {
+
+        console.log('Redis connection timeout')
+        throw new RedisErrorResponse({
+            message: REDIS_CONNECT_MESSAGE.message.vn,
+            statusCode: REDIS_CONNECT_MESSAGE.code
+        })
+
+    }, REDIS_CONNECT_TIMEOUT)
 }
 
 const handleEventConnect = ({
@@ -20,18 +43,24 @@ const handleEventConnect = ({
     // Check if connection is null
     connectionRedis.on(statusConnectRedis.CONNECT, () => {
         console.log('connectionRedis - Connection status: connected')
+        clearTimeout(connectionTimeout)
     })
 
     connectionRedis.on(statusConnectRedis.END, () => {
         console.log('connectionRedis - Connection status: disconnected')
+        //Connect retry
+        handleTimeoutError()
     })
 
     connectionRedis.on(statusConnectRedis.RECONNECT, () => {
         console.log('connectionRedis - Connection status: reconnecting')
+        clearTimeout(connectionTimeout)
     })
 
     connectionRedis.on(statusConnectRedis.ERROR, (err) => {
         console.log(`connectionRedis - Connection status: error ${err}`)
+        //Connect retry
+        handleTimeoutError()
     })
 }
 
