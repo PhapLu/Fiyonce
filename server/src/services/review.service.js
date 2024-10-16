@@ -14,7 +14,6 @@ class ReviewService {
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        console.log(order)
         if (!["delivered", "finished"].includes(order.status)) throw new BadRequestError("Không thể đánh ở giai đoạn này")
 
         //2. Validate body

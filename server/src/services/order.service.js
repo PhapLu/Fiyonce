@@ -651,6 +651,8 @@ class OrderService {
         order.status = "finished"
         order.save()
 
+        //3. Send email to talent
+
         return {
             order
         }
@@ -694,6 +696,8 @@ class OrderService {
         order.milestones.push(milestone)
         order.save()
 
+        //4. Send email to user
+
         return {
             order,
         }
@@ -734,6 +738,8 @@ class OrderService {
         order.finalDelivery.deliveryAt = new Date()
         order.status = "delivered"
         await order.save()
+
+        //3. Send email to user
 
         return {
             order,

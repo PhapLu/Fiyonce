@@ -29,7 +29,7 @@ const OrderSchema = new mongoose.Schema(
                 "delivered",
                 "finished",
                 "under_processing",
-                "resolved"
+                "resolved",
             ],
             default: "pending",
         },
