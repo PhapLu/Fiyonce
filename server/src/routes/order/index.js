@@ -4,12 +4,12 @@ import { authenticationV2 } from "../../auth/authUtils.js"
 import orderController from "../../controllers/order.controller.js"
 import { verifyToken } from "../../middlewares/jwt.js"
 import { uploadFields } from "../../configs/multer.config.js"
-import { readCache, validation } from "../../middlewares/cache.middleware.js"
+import { readCache, readCacheForMultiple, validation } from "../../middlewares/cache.middleware.js"
 
 const router = express.Router()
 
 router.get('/readOrder/:orderId', validation('order'), readCache('order') , asyncHandler(orderController.readOrder))
-router.get('/readOrders', asyncHandler(orderController.readOrders))
+router.get('/readOrders', readCacheForMultiple('order'), asyncHandler(orderController.readOrders))
 
 //authentication
 router.use(verifyToken)

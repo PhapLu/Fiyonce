@@ -18,7 +18,7 @@ import mongoose from "mongoose"
 import { formatDate } from "../utils/index.js"
 import { setCacheIOExpiration } from "../models/repositories/cache.repo.js"
 
-const CACHE_EXPIRATION_SECONDS = 3600;
+const CACHE_EXPIRATION_SECONDS = 600;
 
 class OrderService {
     //Order CRUD
@@ -153,6 +153,8 @@ class OrderService {
 
     //Client read approved indirect orders in commission market
     static readOrders = async (req) => {
+        console.log('Cache miss: Reading orders from database');
+        const cacheKey = 'order-k-all';
         const q = req.query
         const filters = {
             isMemberArchived: false,
@@ -175,10 +177,16 @@ class OrderService {
                 return order
             })
         )
+        // 3. Store the processed orders in Redis
+        const dataToCache = { orders: ordersWithCounts };
+        await setCacheIOExpiration({ 
+            key: cacheKey, 
+            value: JSON.stringify(dataToCache),
+            expirationInSeconds: CACHE_EXPIRATION_SECONDS,
+         });
 
-        return {
-            orders: ordersWithCounts,
-        }
+        // 4. Return the orders
+        return dataToCache;
     }
 
     static updateOrder = async (userId, orderId, req) => {

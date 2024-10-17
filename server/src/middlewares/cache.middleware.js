@@ -35,6 +35,26 @@ const readCache = (dataType) => async (req, res, next) => {
     });
 };
 
+const readCacheForMultiple = (dataType) => async (req, res, next) => {
+    const cachePrefix = CACHE_PREFIXES[dataType];
+    if (!cachePrefix) {
+        console.error(`Unsupported data type: ${dataType}`);
+        return next(); // Skip the cache and proceed
+    }
+
+    const cacheKey = `${cachePrefix}all`; // Use a fixed key for all documents
+    let cachedData = await getCacheIO({ key: cacheKey });
+
+    if (!cachedData) {
+        return next(); // No cache available, proceed to fetch from the database
+    }
+
+    return res.status(200).json({
+        data: JSON.parse(cachedData),
+        fromCache: true
+    });
+};
+
 const validation = (dataType) => async (req, res, next) => {
     const idParam = Object.keys(req.params).find((key) => key.endsWith('Id'));
     if (!idParam) {
@@ -55,28 +75,4 @@ const isValidObjectId = (id) => {
     return mongoose.Types.ObjectId.isValid(id);
 };
 
-
-export { readCache, validation };
-
-
-
-
-// import { CACHE_ORDER } from '../configs/constant.js'
-// import { getCacheIO } from '../models/repositories/cache.repo';
-
-// console.log(CACHE_ORDER);
-// const readCache = async (req, res, next) => {
-//     const {orderId} = req.params
-//     const orderKeyCache = `${CACHE_ORDER.ORDER}${orderId}`
-//     let orderCache = await getCacheIO({ key: orderKeyCache })
-//     if(!orderCache) return next()
-
-//     if(orderCache){
-//         return res.status(200).json({
-//             ...JSON.parse(orderCache),
-//             fromCache: true
-//         })
-//     }
-// }
-
-// export { readCache }
+export { readCache, validation, readCacheForMultiple };
