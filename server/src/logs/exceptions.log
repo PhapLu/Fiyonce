@@ -1081,3 +1081,57 @@ ReferenceError: statusConnectRedis is not defined
     at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 08:43:59::error::undefined::undefined::uncaughtException: [object Object]
+Error: [object Object]
+    at Timeout._onTimeout (file:///D:/Adam/OnisonProject/server/src/db/init.redis.js:32:15)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)::undefined
+2024-10-17 09:24:19::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at initRedis (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:75:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 09:25:45::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at initRedis (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:75:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 09:26:51::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at initRedis (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:75:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 09:27:20::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at initRedis (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:75:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 09:27:27::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at initRedis (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:75:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 09:28:46::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at init (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:77:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 09:29:32::error::undefined::undefined::uncaughtException: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it is undefined.
+    at init (file:///D:/Adam/OnisonProject/server/src/db/init.ioredis.js:68:5)
+    at file:///D:/Adam/OnisonProject/server/src/app.js:77:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined

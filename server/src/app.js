@@ -71,8 +71,12 @@ app.use(passport.session());
 
 // Init db
 import './db/init.mongodb.js';
-import { initRedis } from './db/init.redis.js';
-initRedis()
+// import { initRedis } from './db/init.redis.js';
+// initRedis()
+import { init } from './db/init.ioredis.js';
+init({
+    IOREDIS_IS_ENABLED: true
+})
 
 // Advanced Logger
 app.use((req, res, next) => {
