@@ -16,6 +16,9 @@ import {
 import {sendAnnouncementEmail} from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
 import { formatDate } from "../utils/index.js"
+import { setCacheIOExpiration } from "../models/repositories/cache.repo.js"
+
+const CACHE_EXPIRATION_SECONDS = 3600;
 
 class OrderService {
     //Order CRUD
@@ -131,9 +134,17 @@ class OrderService {
 
             const proposalsCount = await Proposal.countDocuments({ orderId })
             order.proposalsCount = proposalsCount
-            return {
-                order
-            }
+
+            const orderData = { order };
+
+            // Cache the result for future requests
+            const cacheKey = `order-k-${orderId}`;
+            await setCacheIOExpiration({
+                key: cacheKey,
+                value: JSON.stringify(orderData),
+                expirationInSeconds: CACHE_EXPIRATION_SECONDS,
+            });
+            return orderData
         } catch (error) {
             console.error('Error reading order:', error)
             throw error

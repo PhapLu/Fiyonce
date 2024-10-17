@@ -1135,3 +1135,171 @@ TypeError: Cannot destructure property 'IOREDIS_IS_ENABLED' of 'undefined' as it
     at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
+2024-10-17 16:03:00::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:55:27)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:29:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:51:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:04:42::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:55:27)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:30:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:53:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:06:24::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:55:27)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:32:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:57:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:07:27::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:56:27)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:32:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:57:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:07:43::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:56:27)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:32:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:57:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:10:53::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:54:28)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:32:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:57:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:18:58::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:24:28)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:25:54::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:24:28)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:27:32::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'status')
+TypeError: Cannot read properties of undefined (reading 'status')
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:24:63)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:27:49::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'status')
+TypeError: Cannot read properties of undefined (reading 'status')
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:24:63)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:28:14::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:25:28)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:28:32::error::undefined::undefined::uncaughtException: Cannot read properties of undefined (reading 'status')
+TypeError: Cannot read properties of undefined (reading 'status')
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:24:63)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:30:39::error::undefined::undefined::uncaughtException: Redis client not initialized
+Error: Redis client not initialized
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:27:28)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:31:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:55:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-17 16:40:54::error::undefined::undefined::uncaughtException: redisCache is not defined
+ReferenceError: redisCache is not defined
+    at getCacheIO (file:///D:/Adam/OnisonProject/server/src/models/repositories/cache.repo.js:56:5)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:29:28
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/Adam/OnisonProject/server/src/middlewares/cache.middleware.js:51:5
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined

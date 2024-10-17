@@ -1,5 +1,4 @@
-import { getIORedis } from "../../db/init.ioredis";
-const redisCache = getIORedis().instanceConnect
+import { getIORedis } from "../../db/init.ioredis.js";
 // // Caching process
 // // 1. Check params
 // if(order_id < 0) return null
@@ -30,6 +29,7 @@ const redisCache = getIORedis().instanceConnect
 const setCacheIO = async({
     key, value
 }) => {
+    const redisCache = getIORedis().instanceConnect
     if(!redisCache) throw new Error('Redis client not initialized')
     try {
         return await redisCache.set(key, value)
@@ -41,6 +41,7 @@ const setCacheIO = async({
 const setCacheIOExpiration = async({
     key, value, expirationInSeconds
 }) => {
+    const redisCache = getIORedis().instanceConnect
     if(!redisCache) throw new Error('Redis client not initialized')
     try {
         return await redisCache.set(key, value, 'EX', expirationInSeconds)
@@ -52,6 +53,7 @@ const setCacheIOExpiration = async({
 const getCacheIO = async({
     key
 }) => {
+    const redisCache = getIORedis().instanceConnect
     if(!redisCache) throw new Error('Redis client not initialized')
     try {
         return await redisCache.get(key)

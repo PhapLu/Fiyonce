@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { CACHE_ORDER, CACHE_USER, CACHE_BADGE, CACHE_NEWS } from '../configs/constant.js';
-import { getCacheIO } from '../models/repositories/cache.repo';
+import { getCacheIO } from '../models/repositories/cache.repo.js';
 
 const CACHE_PREFIXES = {
     order: CACHE_ORDER.ORDER,
