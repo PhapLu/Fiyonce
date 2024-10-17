@@ -154,8 +154,8 @@ class OrderService {
     //Client read approved indirect orders in commission market
     static readOrders = async (req) => {
         console.log('Cache miss: Reading orders from database');
-        const cacheKey = 'order-k-all';
         const q = req.query
+        const cacheKey = `orders-k-direct-${q.isDirect}`
         const filters = {
             isMemberArchived: false,
             ...(q.isDirect !== undefined && { isDirect: q.isDirect === 'true' }),

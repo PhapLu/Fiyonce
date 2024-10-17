@@ -9,7 +9,7 @@ import { readCache, readCacheForMultiple, validation } from "../../middlewares/c
 const router = express.Router()
 
 router.get('/readOrder/:orderId', validation('order'), readCache('order') , asyncHandler(orderController.readOrder))
-router.get('/readOrders', readCacheForMultiple('order'), asyncHandler(orderController.readOrders))
+router.get('/readOrders', readCacheForMultiple('orders'), asyncHandler(orderController.readOrders))
 
 //authentication
 router.use(verifyToken)

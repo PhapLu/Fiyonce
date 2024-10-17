@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
-import { CACHE_ORDER, CACHE_USER, CACHE_BADGE, CACHE_NEWS } from '../configs/constant.js';
+import { CACHE_ORDER, CACHE_USER, CACHE_BADGE, CACHE_NEWS, CACHE_ORDERS } from '../configs/constant.js';
 import { getCacheIO } from '../models/repositories/cache.repo.js';
 
 const CACHE_PREFIXES = {
     order: CACHE_ORDER.ORDER,
+    orders: CACHE_ORDERS.ORDERS,
     user: CACHE_USER.USER,
     news: CACHE_NEWS.NEWS,
     badge: CACHE_BADGE.BADGE,
@@ -41,8 +42,9 @@ const readCacheForMultiple = (dataType) => async (req, res, next) => {
         console.error(`Unsupported data type: ${dataType}`);
         return next(); // Skip the cache and proceed
     }
-
-    const cacheKey = `${cachePrefix}all`; // Use a fixed key for all documents
+    const { isDirect } = req.query;
+    const cacheKey = `${cachePrefix}-${isDirect}`; // Use a fixed key for all documents
+    console.log(cacheKey);
     let cachedData = await getCacheIO({ key: cacheKey });
 
     if (!cachedData) {

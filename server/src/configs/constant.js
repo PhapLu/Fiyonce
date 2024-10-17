@@ -1,6 +1,9 @@
 export const CACHE_ORDER = {
     'ORDER': 'order-k-'
 }
+export const CACHE_ORDERS = {
+    'ORDERS': 'orders-k-direct'
+}
 export const CACHE_USER = {
     'USER': 'user-k-'
 }
