@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { CACHE_ORDER, CACHE_USER, CACHE_BADGE, CACHE_NEWS } from '../configs/constant.js';
 import { getCacheIO } from '../models/repositories/cache.repo';
 
@@ -34,7 +35,28 @@ const readCache = (dataType) => async (req, res, next) => {
     });
 };
 
-export { readCache };
+const validation = (dataType) => async (req, res, next) => {
+    const idParam = Object.keys(req.params).find((key) => key.endsWith('Id'));
+    if (!idParam) {
+        console.error(`No ID parameter found for data type: ${dataType}`);
+        return next();
+    }
+
+    const id = req.params[idParam];
+    if (!isValidObjectId(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    // Proceed with existence check or other logic
+    next();
+}
+
+const isValidObjectId = (id) => {
+    return mongoose.Types.ObjectId.isValid(id);
+};
+
+
+export { readCache, validation };
 
 
 
