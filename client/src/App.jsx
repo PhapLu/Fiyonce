@@ -80,6 +80,7 @@ import ReviewCommissionOrder from "./components/crudCommissionOrder/review/Revie
 import ReportDashboard from "./dashboard/reportDashboard/ReportDashboard.jsx";
 import SupplementTalentRequest from "./components/upgradeAccount/SupplementTalentRequest.jsx";
 import RenderFinalDelivery from "./components/crudCommissionOrder/renderFinalDelivery/RenderFinalDelivery.jsx";
+import RenderCommissionOrderReviews from "./components/crudCommissionOrder/renderReviews/RenderCommissionOrderReviews.jsx";
 
 const queryClient = new QueryClient();
 
@@ -152,6 +153,10 @@ const commissionOrderRoutes = [
       {
         path: "review",
         element: <ReviewCommissionOrder />,
+      },
+      {
+        path: "render-reviews",
+        element: <RenderCommissionOrderReviews />,
       },
       // More actions
       {

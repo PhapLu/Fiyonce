@@ -922,7 +922,7 @@ export default function ArchivedOrderHistory() {
                                             {order.status === "delivered" && (
                                                 <>
                                                     <Link to={`/order-history/commission-orders/${order?._id}/render-final-delivery`} aria-label="Xem sản phẩm do họa sĩ bàn giao" className="btn btn-3 hover-display-label mr-8">Xem sản phẩm</Link>
-                                                    <Link to={`/order-history/commission-orders/${order?._id}/review`} aria-label="Xem tiến độ công việc" className="btn btn-3 hover-display-label mr-8">Đánh giá</Link>
+                                                    <Link to={`/order-history/commission-orders/${order?._id}/render-reviews`} aria-label="Xem đánh giá" className="btn btn-3 hover-display-label mr-8">Xem đánh giá</Link>
                                                 </>
                                             )}
                                         </>

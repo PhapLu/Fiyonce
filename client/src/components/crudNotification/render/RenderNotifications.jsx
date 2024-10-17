@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import "./RenderNotifications.scss";
 import { apiUtils } from "../../../utils/newRequest";
@@ -12,35 +12,40 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
     const fetchNotifications = async () => {
         try {
             const response = await apiUtils.patch(`/notification/readNotifications`);
-            console.log(response)
             return response.data.metadata.notifications;
         } catch (error) {
-            console.log(error)
+            console.error(error);
             return null;
         }
-    }
+    };
 
-    // Utility function to group notifications by type
+    // Utility function to group notifications by type and sort by latest notification date within each group
     const groupNotificationsByType = (notifications) => {
-        return notifications.reduce((acc, notification) => {
+        const grouped = notifications.reduce((acc, notification) => {
             const { type } = notification;
             if (!acc[type]) {
                 acc[type] = [];
             }
             acc[type].push(notification);
+            // Sort notifications by createdAt within each type
+            acc[type].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             return acc;
         }, {});
-    };
-    const [groupedNotifications, setGroupedNotifications] = useState({});
 
-    const { data: notifications, error: fetchingNotifications, isError: isFetchingNotificationsError, isLoading: isFetchingNotificationsLoading } = useQuery(
+        // Sort the groups based on the latest notification's createdAt
+        return Object.entries(grouped).sort((a, b) => {
+            const latestA = new Date(a[1][0].createdAt);
+            const latestB = new Date(b[1][0].createdAt);
+            return latestB - latestA;
+        });
+    };
+
+    const { data: notifications, isLoading } = useQuery(
         'fetchNotifications',
         fetchNotifications,
         {
             onSuccess: (data) => {
-                setGroupedNotifications(groupNotificationsByType(data))
-                console.log(groupNotificationsByType(data))
-                console.log(data);
+                setGroupedNotifications(groupNotificationsByType(data));
             },
             onError: (error) => {
                 console.error('Error fetching notifications:', error);
@@ -48,137 +53,51 @@ export default function RenderNotifications({ setShowRenderNotifications }) {
         }
     );
 
-    const handleConversationClick = (notification) => {
-        setOtherMember(notification.otherMember)
+    const [groupedNotifications, setGroupedNotifications] = useState([]);
+
+    const handleNotificationClick = (notification) => {
         setShowRenderNotifications(false);
+    };
+
+    if (isLoading) {
+        return null;
     }
 
-    if (isFetchingNotificationsLoading) {
-        return;
-    }
-
-    const displayedInteractionNotifications = groupedNotifications?.interaction?.length > 0 ? groupedNotifications?.interaction?.slice(0, 3) : [];
-    const displayedOrderNotifications = groupedNotifications?.order?.length > 0 ? groupedNotifications?.order?.slice(0, 3) : [];
-    const displayedSystemNotifications = groupedNotifications?.system?.length > 0 ? groupedNotifications?.system?.slice(0, 3) : [];
     return (
-        <>
-            <div className="render-notifications">
-                <h2>Thông báo</h2>
-                <hr />
-                <div className="notification-container">
-                    {!(displayedOrderNotifications?.length > 0 || displayedInteractionNotifications?.length > 0 || displayedSystemNotifications?.length > 0) &&
-                        <p>Hiện chưa có thông báo nào</p>
-                    }
-
-                    {displayedSystemNotifications?.length > 0 && (
-                        <div className="mb-12">
-                            <h4>Hệ thống</h4>
-                            {
-                                displayedSystemNotifications?.map((notification, index) => {
-                                    return (<Link
-                                        key={index}
-                                        to={notification?.url}
-                                        className="notification-item user md gray-bg-hover p-4 br-8 mb-8"
-                                        onClick={() => handleNotificationClick(notification)}
-                                    >
-                                        <div className="user--left">
-                                            <img src={notification?.senderAvatar} alt="" className="user__avatar" />
-                                            <div className="user__name">
-                                                <div className="user__name__sub-title">
-                                                    <span>
-                                                        {limitString(notification?.content, 100)}
-                                                    </span>
-                                                </div>
-                                                <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
-                                                    <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
-                                                </div>
-                                            </div>
+        <div className="render-notifications">
+            <h2>Thông báo</h2>
+            <hr />
+            <div className="notification-container">
+                {groupedNotifications.length === 0 && <p>Hiện chưa có thông báo nào</p>}
+                {groupedNotifications.map(([type, notifications]) => (
+                    <div key={type} className="mb-12">
+                        <h4>{type === 'interaction' ? 'Tương tác' : type === 'order' ? 'Đơn hàng' : 'Hệ thống'}</h4>
+                        {notifications.slice(0, 3).map((notification, index) => (
+                            <Link
+                                key={index}
+                                to={notification?.url}
+                                className="notification-item user md gray-bg-hover p-4 br-8 mb-8"
+                                onClick={() => handleNotificationClick(notification)}
+                            >
+                                <div className="user--left">
+                                    <img src={notification?.senderAvatar} alt="" className="user__avatar" />
+                                    <div className="user__name">
+                                        <div className="user__name__sub-title">
+                                            <span>{limitString(notification?.content, 100)}</span>
                                         </div>
-                                        {
-                                            userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification?._id) &&
-                                            <div className="user--right unseen-dot">
-
-                                            </div>
-                                        }
-                                    </Link>)
-                                })
-                            }
-                        </div>
-                    )}
-
-                    {displayedOrderNotifications?.length > 0 && (
-                        <div className="mb-12">
-                            <h4>Đơn hàng</h4>
-                            {
-                                displayedOrderNotifications?.map((notification, index) => {
-                                    return (<Link
-                                        key={index}
-                                        to={notification?.url}
-                                        className="notification-item user md gray-bg-hover p-4 br-8 mb-8"
-                                        onClick={() => handleNotificationClick(notification)}
-                                    >
-                                        <div className="user--left">
-                                            <img src={notification?.senderAvatar} alt="" className="user__avatar" />
-                                            <div className="user__name">
-                                                <div className="user__name__sub-title">
-                                                    <span>
-                                                        {limitString(notification?.content, 100)}
-                                                    </span>
-                                                </div>
-                                                <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
-                                                    <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
-                                                </div>
-                                            </div>
+                                        <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
+                                            <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
                                         </div>
-                                        {
-                                            userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification?._id) &&
-                                            <div className="user--right unseen-dot">
-
-                                            </div>
-                                        }
-                                    </Link>)
-                                })
-                            }
-                        </div>
-                    )}
-
-                    {displayedInteractionNotifications?.length > 0 && (
-                        <div>
-                            <h4>Tương tác</h4>
-                            {
-                                displayedInteractionNotifications?.map((notification, index) => {
-                                    return (<Link
-                                        key={index}
-                                        to={notification?.url}
-                                        className="notification-item user md gray-bg-hover p-4 br-8 mb-8"
-                                        onClick={() => handleNotificationClick(notification)}
-                                    >
-                                        <div className="user--left">
-                                            <img src={notification?.senderAvatar} alt="" className="user__avatar" />
-                                            <div className="user__name">
-                                                <div className="user__name__sub-title">
-                                                    <span>
-                                                        {limitString(notification?.content, 100)}
-                                                    </span>
-                                                </div>
-                                                <div className={`user__name__sub-title flex-align-center ${userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification._id) && "fw-bold"}`}>
-                                                    <span className="fs-12 downlight-text fw-500">{formatTimeAgo(notification?.createdAt)}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {
-                                            userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification?._id) &&
-                                            <div className="user--right unseen-dot">
-
-                                            </div>
-                                        }
-                                    </Link>)
-                                })
-                            }
-                        </div>
-                    )}
-                </div>
+                                    </div>
+                                </div>
+                                {userInfo?.unSeenNotifications?.some(unSeenNotification => unSeenNotification._id === notification?._id) &&
+                                    <div className="user--right unseen-dot"></div>
+                                }
+                            </Link>
+                        ))}
+                    </div>
+                ))}
             </div>
-        </>
-    )
+        </div>
+    );
 }

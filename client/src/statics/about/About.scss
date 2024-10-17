@@ -38,7 +38,7 @@
     .office {
         img {
             width: 100%;
-            height: 400px;
+            height: 350px;
         }
     }
 
@@ -134,7 +134,7 @@
 
                         .core-value-item__title,
                         .core-value-item__explore {
-                            color: #3D02E8;
+                            color: #8173ff;
                         }
 
                         .core-value-item__explore {
@@ -166,7 +166,8 @@
                     }
 
                     .core-value-item__description {
-                        font-size: 1.2rem;
+                        font-size: 1.3rem;
+                        text-align: justify;
                     }
                 }
             }
@@ -273,5 +274,12 @@
 
     // Join the community
     .join-community {
+        p {
+            text-align: center;
+        }
+
+        svg {
+            margin-right: 0;
+        }
     }
 }

@@ -14,7 +14,6 @@ class ReviewService {
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
-        console.log(order)
         if (!["delivered", "finished"].includes(order.status)) throw new BadRequestError("Không thể đánh ở giai đoạn này")
 
         //2. Validate body
@@ -24,12 +23,18 @@ class ReviewService {
         //3. Check who is the reviewer
         let reviewedUserId
         if (userId === order.memberId.toString()) {
-            reviewedUserId = order.talentChosenId
+            // Member review
+            reviewedUserId = order.talentChosenId;
+            order.isReviewedByMember = true;
         } else if (userId === order.talentChosenId.toString()) {
-            reviewedUserId = order.memberId
+            // Talent review
+            reviewedUserId = order.memberId;
+            order.isReviewedByTalent = true;
         } else {
             throw new BadRequestError("Bạn không thể review đơn hàng này")
         }
+
+        await order.save();
 
         // Check if the user has already reviewed this order
         const existingReview = await Review.findOne({ orderId, reviewerId: userId });
@@ -51,15 +56,15 @@ class ReviewService {
         }
     }
 
-    static readReviewsOrderId = async(orderId) => {
+    static readReviewsByOrderId = async (orderId) => {
         //1. Check order
         const order = await Order.findById(orderId)
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
 
         //2. Read reviews
-        const reviews = await Review.find({orderId})
+        const reviews = await Review.find({ orderId })
         if (!reviews) throw new NotFoundError("Không tìm thấy review")
-        
+
         return {
             reviews
         }

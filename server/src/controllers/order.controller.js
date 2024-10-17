@@ -83,6 +83,8 @@ class OrderController {
     }
 
     rejectOrder = async (req, res, next) => {
+        console.log("pppp")
+        console.log(req.body)
         new SuccessResponse({
             message: 'Deny the order success!',
             metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req)

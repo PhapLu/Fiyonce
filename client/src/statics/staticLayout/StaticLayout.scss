@@ -10,16 +10,19 @@
             color: var(--black-1-color);
         }
 
-        span {
+        p, span {
             color: var(--black-3-color);
-            text-align: justify;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             line-height: 2.6rem;
+        }
+
+        span {
+            // text-align: justify;
         }
     }
 
     .highlight-text {
-        font-size: 1.6rem;
+        // font-size: 1.6rem;
         font-weight: bold;
     }
 }

@@ -87,8 +87,11 @@ export default function RejectCommissionOrder() {
     }
 
     const rejectCommissionOrderMutation = useMutation(
-        async ({ orderId, fd }) => {
-            const response = await apiUtils.patch(`/order/rejectOrder/${orderId}`, fd);
+        async ({ orderId, rejectMessage }) => {
+            console.log("kkkk")
+            console.log(orderId)
+            console.log(rejectMessage)
+            const response = await apiUtils.patch(`/order/rejectOrder/${orderId}`, {rejectMessage});
             return response;
         },
         {
@@ -120,7 +123,7 @@ export default function RejectCommissionOrder() {
             console.log(commissionOrder._id)
             console.log(fd.get("rejectMessage"))
             // const response = await apiUtils.patch(`/order/rejectOrder/${commissionOrder.orderId}`, fd);
-            const response = await rejectCommissionOrderMutation.mutateAsync({ orderId: commissionOrder._id, fd });
+            const response = await rejectCommissionOrderMutation.mutateAsync({ orderId: commissionOrder._id, rejectMessage });
             if (response) {
                 setModalInfo({
                     status: "success",

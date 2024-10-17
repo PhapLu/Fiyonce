@@ -9,7 +9,7 @@ import RenderNewss from "../../components/crudNews/render/RenderNewss.jsx";
 import BackToTop from '../../components/backToTop/BackToTop.jsx';
 
 // Utils
-import { formatFloat, formatNumber } from "../../utils/formatter.js";
+import { formatFloat, formatNumber, limitString } from "../../utils/formatter.js";
 
 // Styling
 import "../../assets/scss/base.scss";
@@ -235,11 +235,11 @@ export default function Explore() {
                                 </div>
                             </div>
 
-                            {movements && movements.map((movement, idx) => (
+                            {movements && movements?.map((movement, idx) => (
                                 <div key={idx} onClick={() => handleRecommenderChange(selectedRecommender, movement)} className={`explore__filter-item scroll-item flex-align-center ${selectedMovement?._id === movement._id ? "active" : ""}`}>
-                                    <img src={movement.thumbnail} alt={movement.title} className="scroll-item__thumbnail" />
+                                    <img src={movement?.thumbnail} alt={movement?.title} className="scroll-item__thumbnail" />
                                     <div className="explore__filter-item__details">
-                                        <span className="explore__filter-item__details__title">{movement.title}</span>
+                                        <span className="explore__filter-item__details__title">{limitString(movement?.title, 12)}</span>
                                         {
                                             location.pathname.includes("commission-services") ?
                                                 (

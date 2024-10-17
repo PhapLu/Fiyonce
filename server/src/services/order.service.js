@@ -248,7 +248,7 @@ class OrderService {
         let orders;
         try {
             orders = await Order.find({ memberId: clientId, isMemberArchived: false })
-                .populate("talentChosenId", "stageName avatar fullName")
+                .populate("talentChosenId", "stageName avatar fullName stageName")
                 .populate("memberId", "fullName avatar")
                 .populate("commissionServiceId", "price title")
                 .sort({ createdAt: -1 })
@@ -339,6 +339,15 @@ class OrderService {
                         as: "memberDetails",
                     },
                 },
+                // Lookup to get talent details
+                {
+                    $lookup: {
+                        from: "Users",
+                        localField: "talentChosenId",
+                        foreignField: "_id",
+                        as: "talentDetails",
+                    },
+                },
                 // Lookup to get commission service details
                 {
                     $lookup: {
@@ -360,7 +369,12 @@ class OrderService {
                             avatar: { $arrayElemAt: ["$memberDetails.avatar", 0] },
                             fullName: { $arrayElemAt: ["$memberDetails.fullName", 0] },
                         },
-                        talentChosenId: 1,
+                        talentChosenId: {
+                            _id: { $arrayElemAt: ["$talentDetails._id", 0] },
+                            avatar: { $arrayElemAt: ["$talentDetails.avatar", 0] },
+                            fullName: { $arrayElemAt: ["$talentDetails.fullName", 0] },
+                            stageName: { $arrayElemAt: ["$talentDetails.stageName", 0] },
+                        },
                         status: 1,
                         title: 1,
                         description: 1,
@@ -514,6 +528,7 @@ class OrderService {
                             _id: { $arrayElemAt: ["$talentDetails._id", 0] },
                             avatar: { $arrayElemAt: ["$talentDetails.avatar", 0] },
                             fullName: { $arrayElemAt: ["$talentDetails.fullName", 0] },
+                            stageName: { $arrayElemAt: ["$talentDetails.stageName", 0] },
                         },
                         status: 1,
                         title: 1,
@@ -622,6 +637,8 @@ class OrderService {
     }
 
     static rejectOrder = async (userId, orderId, req) => {
+        console.log("OOOOO")
+        console.log(req.body)
         //1. Check if user, order exists
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
