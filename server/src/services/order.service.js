@@ -630,7 +630,6 @@ class OrderService {
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
         if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
-        console.log('ORDER', order)
         if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
 
         //2. Start work
@@ -663,6 +662,11 @@ class OrderService {
         order.save()
 
         //3. Send email to talent
+        const talent = await User.findById(order.talentChosenId)
+        const subject = `[PASTAL] - Đơn hàng đang được thực hiện (${formatDate()})`
+        const subSubject = `Họa sĩ ${user.fullName} đã tiến hành thực hiện yêu cầu cho đơn hàng của bạn.`
+        const message = ` Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
+        sendAnnouncementEmail(talent.email, subject, subSubject, message);
 
         return {
             order
@@ -708,6 +712,11 @@ class OrderService {
         order.save()
 
         //4. Send email to user
+        const member = await User.findById(order.memberId)
+        const subject = `[PASTAL] - Đơn hàng đã được cập nhật bản thảo (${formatDate()})`
+        const subSubject = `Họa sĩ ${user.fullName} đã cập nhật bản thảo cho đơn hàng của bạn.`
+        const message = ` Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
+        sendAnnouncementEmail(member.email, subject, subSubject, message);
 
         return {
             order,
@@ -751,6 +760,11 @@ class OrderService {
         await order.save()
 
         //3. Send email to user
+        const member = await User.findById(order.memberId)
+        const subject = `[PASTAL] - Đơn hàng đã được bàn giao (${formatDate()})`
+        const subSubject = `Họa sĩ ${talent.fullName} đã bàn giao sản phẩm cho đơn hàng của bạn.`
+        const message = ` Bạn và họa sĩ có thể trao đổi về sản phẩm chi tiết hơn qua tin nhắn`
+        sendAnnouncementEmail(member.email, subject, subSubject, message);
 
         return {
             order,
