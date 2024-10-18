@@ -281,8 +281,6 @@ class OrderService {
     static readRejectResponse = async (userId, orderId) => {
         // 1. Find the order by ID and select memberId, talentChosenId, and rejectMessage
         const order = await Order.findById(orderId, { memberId: 1, talentChosenId: 1, rejectMessage: 1 });
-        console.log("OOO")
-        console.log(order)
 
         // 2. Check if the order exists
         if (!order) {
@@ -428,9 +426,6 @@ class OrderService {
                     },
                 },
             ]);
-
-
-            console.log(orders)
 
             return {
                 talentOrderHistory: orders
@@ -636,6 +631,7 @@ class OrderService {
             .populate("memberId", "fullName avatar email")
             .populate("commissionServiceId", "title");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (user.role !== "talent") throw new BadRequestError("You are not a talent");
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng");
         if (order.status !== "confirmed") throw new BadRequestError("Đơn hàng chưa được xác nhận ở hiện tại");
         if (order.talentChosenId._id.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
@@ -660,9 +656,9 @@ class OrderService {
        //1. Check user, order
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
-        if (!user) throw new NotFoundError("User not found")
-        if (!order) throw new NotFoundError("Order not found")
-        if (order.memberId.toString() !== userId) throw new AuthFailureError("You are not authorized to finish this order")
+        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
+        if (order.memberId.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
         if(order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
 
         //2. Finish order
@@ -671,9 +667,9 @@ class OrderService {
 
         //3. Send email to talent
         const talent = await User.findById(order.talentChosenId)
-        const subject = `[PASTAL] - Đơn hàng đang được thực hiện (${formatDate()})`
-        const subSubject = `Họa sĩ ${user.fullName} đã tiến hành thực hiện yêu cầu cho đơn hàng của bạn.`
-        const message = ` Bạn và họa sĩ có thể trao đổi về bản thảo chi tiết hơn qua tin nhắn`
+        const subject = `[PASTAL] - Đơn hàng đã hoàn tất (${formatDate()})`
+        const subSubject = `${user.fullName} đã xác nhận hoàn tất đơn hàng của bạn.`
+        const message = ``
         sendAnnouncementEmail(talent.email, subject, subSubject, message);
 
         return {
@@ -686,6 +682,7 @@ class OrderService {
         const user = await User.findById(userId)
         const order = await Order.findById(orderId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (user.role !== 'talent') throw new NotFoundError("You are not a talent")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (!order.talentChosenId || order.talentChosenId.toString() !== userId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
@@ -731,7 +728,6 @@ class OrderService {
         }
     }
 
-    // Talent delivers product 
     static deliverOrder = async (userId, orderId, req) => {
         //1. Check talent, order
         const body = req.body

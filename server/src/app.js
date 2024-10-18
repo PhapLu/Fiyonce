@@ -75,7 +75,7 @@ import './db/init.mongodb.js';
 // initRedis()
 import { init } from './db/init.ioredis.js';
 init({
-    IOREDIS_IS_ENABLED: true
+    IOREDIS_IS_ENABLED: false
 })
 
 // Advanced Logger
