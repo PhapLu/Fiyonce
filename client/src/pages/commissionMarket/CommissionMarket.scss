@@ -58,7 +58,7 @@
 
 
         .my-masonry-grid_column {
-            width: 32.5% !important;
+            width: 32.5%;
             margin-right: 1.25%;
 
             &:nth-of-type(3n) {
@@ -66,7 +66,6 @@
             }
 
             .commission-market-item {
-                // width: 32.5%;
                 margin-top: 24px;
                 background-color: var(--form-bg-2-color);
                 border-radius: 16px;
@@ -114,28 +113,46 @@
     }
 }
 
-@media (max-width: 1200px) {
-    .my-masonry-grid {
-        column-count: 3 !important;
+// RESPONSIVE
+/* PC styles (>= 1024px) */
+@media only screen and (min-width: 1024px) {}
+
+/* Tablet styles (740px to 1023px) */
+@media only screen and (min-width: 740px) and (max-width: 1023px) {}
+
+/* Mobile styles (<= 739px) */
+@media only screen and (max-width: 739px) {
+    .commission-market {
+        margin-top: 66px;
+
+        .commission-market__header {
+            flex-wrap: wrap;
+
+            .page__title {
+                font-size: 4rem;
+            }
+
+            h3 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1.6rem;
+            }
+
+            .commission-market__header--left {
+                width: 100%;
+            }
+
+            .commission-market__header--right {
+                display: none;
+            }
+        }
+
+        .commission-market-container {
+            .my-masonry-grid_column {
+                width: 100%;
+            }
+        }
     }
 }
-
-// @media (max-width: 800px) {
-//     .my-masonry-grid {
-//         column-count: 2 !important;
-//     }
-
-//     .commission-market-item__reference-item__img__thumbnail {
-//         max-height: 250px;
-//     }
-// }
-
-// @media (max-width: 600px) {
-//     .my-masonry-grid {
-//         column-count: 1 !important;
-//     }
-
-//     .commission-market-item__reference-item__img__thumbnail {
-//         max-height: 200px;
-//     }
-// }

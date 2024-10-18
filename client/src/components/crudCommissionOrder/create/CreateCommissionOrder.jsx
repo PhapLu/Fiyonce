@@ -518,7 +518,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
                             <div className="form__submit-btn-container">
                                 <button type="submit"
-                                    className="form__submit-btn-item btn btn-2 btn-md"
+                                    className="form__submit-btn-item btn btn-2 btn-md mobile-full-width-btn"
                                     onClick={handleSubmit}
                                     disabled={isSubmitOrderCommissionLoading}>
                                     {isSubmitOrderCommissionLoading ? (

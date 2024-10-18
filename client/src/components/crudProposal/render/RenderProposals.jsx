@@ -131,12 +131,14 @@ export default function RenderProposals() {
                                                         "Khách hàng đã hủy đơn"
                                                         : commissionOrder?.status === "in_progress"
                                                             ? "Họa sĩ đang thực hiện"
-                                                            : commissionOrder?.status === "finished"
-                                                                ?
-                                                                "Đã hoàn tất đơn hàng"
-                                                                : commissionOrder?.status === "under_processing"
-                                                                    ? "Admin đang xử lí"
-                                                                    : ""
+                                                            : commissionOrder?.status === "delivered"
+                                                                ? "Họa sĩ đã bàn giao"
+                                                                : commissionOrder?.status === "finished"
+                                                                    ?
+                                                                    "Đã hoàn tất đơn hàng"
+                                                                    : commissionOrder?.status === "under_processing"
+                                                                        ? "Admin đang xử lí"
+                                                                        : ""
                                     : (
                                         commissionOrder?.status === "pending"
                                             ?
@@ -158,7 +160,6 @@ export default function RenderProposals() {
                                                                     : commissionOrder?.status === "under_processing"
                                                                         ? "Admin đang xử lí"
                                                                         : ""
-
                                     )
                             }
                         </div>
@@ -172,7 +173,7 @@ export default function RenderProposals() {
                             </div>
                         </Link>
                     </div>
-                  
+
                     {
                         commissionOrder?.isDirect ? (
                             <>
@@ -188,7 +189,7 @@ export default function RenderProposals() {
                                             )} <span className="ml-8 fs-16">Thủ tục đặt tranh</span></strong>
                                 <hr />
                                 {
-                                     isProcedureVisible && (
+                                    isProcedureVisible && (
                                         <ul className="step-container">
                                             <li className="step-item checked">Khách hàng mô tả yêu cầu</li>
                                             <li className="step-item">Họa sĩ xác nhận và gửi proposal</li>

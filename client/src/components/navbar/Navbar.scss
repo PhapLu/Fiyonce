@@ -209,12 +209,12 @@
 
         .btn-7 {
             border-radius: 50px;
-            border: 3px solid var(--theme-color);
+            // border: 3px solid var(--theme-color);
         }
 
         .btn-7.active {
-            border: 3px solid var(--white-4-color);
-            box-shadow: var(--box-shadow-1);
+            // border: 3px solid var(--white-4-color);
+            box-shadow: var(--box-shadow-2);
         }
 
         .toggle-display-conversations-btn {
@@ -230,7 +230,7 @@
                 border-radius: 24px 0 24px 24px;
                 min-width: 310px;
                 height: 380px;
-                box-shadow: var(--box-shadow-1);
+                box-shadow: var(--box-shadow-2);
                 overflow-y: scroll;
 
                 .unseen-dot {
@@ -255,7 +255,7 @@
                 border-radius: 24px 0 24px 24px;
                 min-width: 310px;
                 height: 380px;
-                box-shadow: var(--box-shadow-1);
+                box-shadow: var(--box-shadow-2);
                 overflow-y: scroll;
 
                 .unseen-dot {

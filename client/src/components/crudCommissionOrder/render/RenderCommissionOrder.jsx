@@ -88,12 +88,14 @@ export default function RenderCommissionOrder() {
                                                                 "Khách hàng đã hủy đơn"
                                                                 : commissionOrder?.status === "in_progress"
                                                                     ? "Họa sĩ đang thực hiện"
-                                                                    : commissionOrder?.status === "finished"
-                                                                        ?
-                                                                        "Đã hoàn tất đơn hàng"
-                                                                        : commissionOrder?.status === "under_processing"
-                                                                            ? "Admin đang xử lí"
-                                                                            : ""}
+                                                                    : commissionOrder?.status === "delivered"
+                                                                        ? "Họa sĩ đã bàn giao"
+                                                                        : commissionOrder?.status === "finished"
+                                                                            ?
+                                                                            "Đã hoàn tất đơn hàng"
+                                                                            : commissionOrder?.status === "under_processing"
+                                                                                ? "Admin đang xử lí"
+                                                                                : ""}
                                         </div>
                                     </div>
 

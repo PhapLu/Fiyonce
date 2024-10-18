@@ -152,6 +152,8 @@ export default function Explore() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+    const totalPostCount = movements.reduce((total, movement) => total + movement.postCount, 0);
+    const totalServiceCount = movements.reduce((total, movement) => total + movement.commissionServiceCount, 0);
 
 
     // Fetch artworks
@@ -231,7 +233,16 @@ export default function Explore() {
                                 <img src="https://i.pinimg.com/564x/3d/1e/f7/3d1ef71d293b8a427a601f1e3d676dbf.jpg" alt="Tất cả" className="scroll-item__thumbnail" />
                                 <div className="explore__filter-item__details">
                                     <span className="explore__filter-item__details__title">Tất cả</span>
-                                    <span className="explore__fitler-item__details__count">{formatFloat(1000)}</span>
+                                    {
+                                        location.pathname.includes("commission-services") ?
+                                            (
+                                                <span className="explore__fitler-item__details__count">{formatFloat(totalServiceCount)}</span>
+                                            )
+                                            :
+                                            (
+                                                <span className="explore__fitler-item__details__count">{formatFloat(totalPostCount)}</span>
+                                            )
+                                    }
                                 </div>
                             </div>
 
@@ -250,7 +261,6 @@ export default function Explore() {
                                                     <span className="explore__fitler-item__details__count">{movement.postCount > 1000 ? formatNumber(movement.postCount, 1) : movement.postCount}</span>
                                                 )
                                         }
-
                                     </div>
                                 </div>
                             ))}

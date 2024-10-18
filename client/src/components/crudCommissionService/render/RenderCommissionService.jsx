@@ -231,7 +231,7 @@ export default function RenderComissionService() {
 
                             <div className="form__submit-btn-container">
                                 <button
-                                    className="btn btn-2 btn-md form__submit-btn-item"
+                                    className="btn btn-2 btn-md form__submit-btn-item mobile-full-width-btn"
                                     onClick={handleShowCreateCommissionOrderBtn}
                                 >
                                     Đặt ngay

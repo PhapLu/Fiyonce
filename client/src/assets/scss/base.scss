@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 :root {
-    --theme-color: #f8f7f8;
+    --theme-color: #f9f9f9;
     // Light theme colors
     --black-1-color: black;
     --black-1-color: #2a2b2c;
@@ -37,7 +37,7 @@
     --white-4-color: white;
 
     --box-shadow-1: rgba(0, 0, 0, 0.1) 0px 1px 4px;
-    --box-shadow-2: rgba(0, 0, 0, 0.2) 0px 2px 8px;
+    --box-shadow-2: rgba(0, 0, 0, 0.15) 0px 2px 6px;
     --box-shadow-3: rgb(0 0 0 / 30%) 0px 2px 20px;
     --box-shadow-4: rgb(79 127 249 / 20%) 0px 3px 5px;
     --box-shadow-4: rgba(252, 120, 63, 0.2) 0px 3px 5px;
@@ -196,6 +196,7 @@ svg {
         &.active {
             fill: var(--orange-1-color);
         }
+
         fill: var(--gray-2-color);
 
         width: 16px;
@@ -274,6 +275,11 @@ a {
     font-size: 1.4rem;
     text-decoration: none;
     color: var(--black-2-color);
+
+    &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
 }
 
 // Headings & Texts
@@ -315,7 +321,16 @@ span {
     // width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, body, .btn {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+body,
+.btn {
     // color: red !important;
 }
 
@@ -624,7 +639,8 @@ img {
     }
 
     &.complete,
-    &.delivered {
+    &.delivered,
+    &.finished {
         background-color: var(--complete-status-bg-color);
         border: 1px solid var(--complete-status-border-color);
 
@@ -877,6 +893,7 @@ svg.btn-ic {
     width: 100%;
     overflow: hidden;
 
+
     .scroll-container {
         display: flex;
         overflow-x: auto;
@@ -894,6 +911,8 @@ svg.btn-ic {
     }
 
     .button {
+        width: 32px;
+        height: 32px;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -902,11 +921,12 @@ svg.btn-ic {
         font-weight: bold;
         color: white;
         border: none;
-        padding: 12px;
+        // padding: 12px;
         cursor: pointer;
         z-index: 1;
         display: none;
-        border-radius: 8px;
+        // border-radius: 8px;
+        border-radius: 50%;
     }
 
     .button-left {
@@ -1048,7 +1068,7 @@ hr {
     z-index: 1000;
     transform: translate(-50%, -50%);
     width: 100%;
-    height: 100%;
+    height: calc(100% + 4px);
     // opacity: 0;
     animation: fadeIn 0.4s;
 }
@@ -1272,7 +1292,7 @@ table {
         outline: none;
         border: 2px solid var(--gray-7-color);
         // background-color: var(--gray-7-color);
-        background-color: var(--form-bg-1-color);
+        background-color: var(--gray-7-color);
         color: var(--black-2-color);
         color-scheme: var(--color-scheme);
 
@@ -1299,6 +1319,10 @@ table {
 
         &.btn-md {
             padding: 10px 20px !important;
+
+            &.btn-1 {
+                padding: 8px 20px !important;
+            }
         }
 
         &.img-preview {
@@ -1764,7 +1788,8 @@ table {
     }
 
     .form__close-ic {
-        stroke-width: 2.0;
+        stroke-width: 2.5;
+        z-index: 10 !important;
 
         &:hover {
             opacity: 0.7;
@@ -2550,6 +2575,7 @@ table {
         border-radius: 20px 20px 0 0;
         flex-wrap: wrap;
         overflow-y: scroll;
+        max-height: calc(90vh + 4px);
 
         .modal-form--left {
             border-radius: 20px 0 0 0;
@@ -2564,11 +2590,61 @@ table {
         }
     }
 
+    .modal-form.type-2 {
+        width: 100% !important;
+        position: absolute;
+        bottom: 0;
+        flex-wrap: wrap;
+        height: 100vh;
+        overflow-y: scroll;
+        padding: 24px 16px;
+
+        .form__help {
+            display: none;
+        }
+
+        .modal-form--left {
+            border-radius: 20px 0 0 0;
+            padding: 12px 0 12px 0 !important;
+            width: 100% !important;
+            margin-bottom: 16px;
+            // height: 80% !important;
+        }
+
+        .modal-form--right {
+            width: 100% !important;
+            padding: 16px;
+            // min-height: unset;
+            // height: unset;
+
+        }
+
+        .form__submit-btn-container {
+            position: fixed;
+            bottom: 16px;
+
+            .btn {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+
+            &:has(.mobile-full-width-btn) {
+                width: calc(100% - 32px);
+                .btn {
+                    width: 100%;
+                    margin-right: 0;
+                    padding: 12px 16px;
+                }
+            }
+        }
+
+    }
+
     .modal-form.type-3 {
         position: absolute;
         bottom: 0;
         width: 100% !important;
-        border-radius: 12px 12px 0 0;
+        border-radius: 20px 20px 0 0;
         padding: 20px 32px 20px;
     }
 
@@ -2577,8 +2653,8 @@ table {
     }
 
     html {
-        // font-size: 60.5%;
-        line-height: 1.3rem;
+        // font-size: 65.5%;
+        line-height: 1.6rem;
     }
 
     .btn {
@@ -2592,8 +2668,21 @@ table {
         }
 
         &.btn-md {
-            padding: 10px 12px;
+            padding: 10px 8px;
             min-width: 110px;
+
+            &.btn-1 {
+                padding: 8px 20px !important;
+            }
+        }
+    }
+
+    .reference-container {
+        .reference-item {
+            img {
+                width: 80px;
+                height: 80px;
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ import { useModal } from "../../contexts/modal/ModalContext";
 
 // Utils
 import { apiUtils } from "../../utils/newRequest"
-import { formatCurrency, formatDate } from "../../utils/formatter";
+import { formatCurrency, formatDate, getDaysLeft } from "../../utils/formatter";
 
 // Styling
 import "./OrderHistory.scss";
@@ -48,6 +48,7 @@ export default function TalentOrderHistory() {
     const fetchTalentOrderHistory = async () => {
         try {
             const response = await apiUtils.get(`/order/readTalentOrderHistory`);
+            console.log(response.data.metadata.talentOrderHistory)
             return response.data.metadata.talentOrderHistory;
         } catch (error) {
             return null;
@@ -223,7 +224,17 @@ export default function TalentOrderHistory() {
                                         <br />
                                         Họa sĩ đề xuất: {order?.proposalId?.price ? `đ${formatCurrency(order?.proposalId?.price)}` : "-"}
                                     </td>
-                                    <td>{order.proposalId?.startAt && order.proposalId?.deadline ? formatDate(order.proposalId?.startAt) + " - " + formatDate(order.proposalId?.deadline) : "-"}</td>
+                                    <td>
+                                        <span>
+                                            {order.proposalId?.startAt && order.proposalId?.deadline ? formatDate(order.proposalId?.startAt) + " - " + formatDate(order.proposalId?.deadline) : "-"}
+                                        </span>
+                                        <br />
+
+                                        {
+                                            order.proposalId?.deadline && <span>{getDaysLeft(order.proposalId?.deadline) >= 0 ? `còn ${getDaysLeft(order.proposalId?.deadline)} ngày`: "Đã qua hạn"} </span>
+                                        }
+
+                                    </td>
 
                                     <td className="flex-align-center">
                                         <>

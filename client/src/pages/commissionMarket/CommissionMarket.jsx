@@ -29,9 +29,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 export default function CommissionMarket() {
     const breakpointColumnsObj = {
         default: 3,
-        1200: 3,
-        800: 2,
-        600: 1
+        1023: 3,
+        739: 1,
     };
 
     const [inputs, setInputs] = useState({ status: "*" });

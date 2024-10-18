@@ -187,9 +187,12 @@ export default function Navbar() {
                     {
                         !isSearchExpanded && (
                             <>
-                                <svg onClick={() => { setShowHamburgerMenu(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 lg mr-8 desktop-hide hover-cursor-opacity">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                </svg>
+                                <div className="hamburger-btn">
+                                    <svg onClick={() => { setShowHamburgerMenu(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 lg mr-8 desktop-hide hover-cursor-opacity">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </div>
+
                                 <div className={`desktop-hide ${showHamburgerMenu ? "overlay" : ""}`} onClick={() => { setShowHamburgerMenu(false) }}>
                                     <ul onClick={(e) => { e.stopPropagation() }} className={`hamburger-menu-container ${showHamburgerMenu ? "active" : ""}`}>
                                         <svg onClick={() => { setShowHamburgerMenu(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 lg mr-8 ml-8 mb-12 desktop-hide hover-cursor-opacity">

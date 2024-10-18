@@ -132,3 +132,19 @@ export function convertToHCMTime(utcDateString) {
     const [time, datePart] = hcmTime.split(', ');
     return `${time} ${datePart.replace(/\//g, '/')}`;
 }
+
+export const getDaysLeft = (deadline) => {
+    if (!deadline) return "-";
+
+    const today = new Date(); // Get today's date
+    const deadlineDate = new Date(deadline); // Convert the deadline string to a Date object
+
+    // Calculate the difference in milliseconds
+    const timeDifference = deadlineDate - today;
+
+    // Convert the time difference from milliseconds to days
+    const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+    // Return days left or 'Overdue' if the deadline has passed
+    return daysLeft > 0 ? daysLeft : "Overdue";
+}

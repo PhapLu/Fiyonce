@@ -67,11 +67,11 @@ class UserService {
 
     static followUser = async (userId, profileId) => {
         //1. Check user and follow
-        const currentUser = await User.findById(userId)
+        const currentUser = await User.findById(userId).populate("followers", "_id avatar fullName").populate("following", "_id avatar fullName")
         const followedUser = await User.findById(profileId)
         if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!followedUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (currentUser.following.includes(profileId))
+        if (currentUser?.following?.some(el => el._id.toString() === profileId))
             throw new BadRequestError("Bạn đã theo dõi người này rồi")
 
         //2. Follow user
@@ -87,19 +87,19 @@ class UserService {
 
     static unFollowUser = async (userId, profileId) => {
         // 1. Check user and unfollow
-        const currentUser = await User.findById(userId)
+        const currentUser = await User.findById(userId).populate("followers", "_id avatar fullName").populate("following", "_id avatar fullName")
         const followedUser = await User.findById(profileId)
+
         if (!currentUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!followedUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (!currentUser.following.includes(profileId))
+        if (!currentUser?.following?.some(el => el._id.toString() === profileId))
             throw new BadRequestError("Bạn chưa từng theo dõi người này")
-
         // 2. Unfollow user
         currentUser.following = currentUser.following.filter(
-            (id) => id.toString() !== profileId.toString()
+            (el) => el._id.toString() !== profileId.toString()
         )
         followedUser.followers = followedUser.followers.filter(
-            (id) => id.toString() !== userId.toString()
+            (el) => el._id.toString() !== userId.toString()
         )
         await currentUser.save()
         await followedUser.save()

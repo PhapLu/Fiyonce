@@ -289,10 +289,10 @@ class OrderService {
 
     static readTalentOrderHistory = async (talentId) => {
         // 1. Check if the talent exists and is of role 'talent'
-        const foundTalent = await User.findById(talentId)
-        if (!foundTalent) throw new NotFoundError("Không tìm thấy họa sĩ")
+        const foundTalent = await User.findById(talentId);
+        if (!foundTalent) throw new NotFoundError("Không tìm thấy họa sĩ");
         if (foundTalent.role !== "talent")
-            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
+            throw new BadRequestError("Bạn không có quyền thực hiện thao tác này");
 
         try {
             // 2. Aggregate to get all orders involving the talent
@@ -317,7 +317,7 @@ class OrderService {
                                     },
                                     {
                                         "proposals.talentId": new mongoose.Types.ObjectId(talentId),
-                                        talentChosenId: null
+                                        talentChosenId: null,
                                     },
                                 ],
                             },
@@ -339,15 +339,6 @@ class OrderService {
                         as: "memberDetails",
                     },
                 },
-                // Lookup to get talent details
-                {
-                    $lookup: {
-                        from: "Users",
-                        localField: "talentChosenId",
-                        foreignField: "_id",
-                        as: "talentDetails",
-                    },
-                },
                 // Lookup to get commission service details
                 {
                     $lookup: {
@@ -355,6 +346,15 @@ class OrderService {
                         localField: "commissionServiceId",
                         foreignField: "_id",
                         as: "commissionServiceDetails",
+                    },
+                },
+                // Additional lookup for proposal details
+                {
+                    $lookup: {
+                        from: "Proposals",
+                        localField: "_id",
+                        foreignField: "orderId",
+                        as: "proposalDetails",
                     },
                 },
                 // Project to shape the output
@@ -389,63 +389,31 @@ class OrderService {
                         fileFormats: 1,
                         createdAt: 1,
                         proposalId: {
-                            $arrayElemAt: [
-                                {
-                                    $filter: {
-                                        input: "$proposals",
-                                        as: "proposal",
-                                        cond: {
-                                            $eq: [
-                                                "$$proposal.talentId",
-                                                new mongoose.Types.ObjectId(talentId),
-                                            ],
-                                        },
-                                    },
-                                },
-                                0,
-                            ],
-                        },
+                            _id: { $arrayElemAt: ["$proposalDetails._id", 0] },
+                            scope: { $arrayElemAt: ["$proposalDetails.scope", 0] },
+                            startAt: { $arrayElemAt: ["$proposalDetails.startAt", 0] },
+                            deadline: { $arrayElemAt: ["$proposalDetails.deadline", 0] },
+                            price: { $arrayElemAt: ["$proposalDetails.price", 0] },
+                            rejectMessage: { $arrayElemAt: ["$proposalDetails.rejectMessage", 0] },
+                        }
                     },
                 },
                 {
-                    $project: {
-                        proposalId: 1,
-                        commissionServiceId: 1,
-                        memberId: 1,
-                        talentChosenId: 1,
-                        status: 1,
-                        title: 1,
-                        description: 1,
-                        isDirect: 1,
-                        references: 1,
-                        rejectMessage: 1,
-                        minPrice: 1,
-                        maxPrice: 1,
-                        purpose: 1,
-                        isPrivate: 1,
-                        deadline: 1,
-                        fileFormats: 1,
-                        createdAt: 1,
-                    },
-                }, 
-                {
                     $sort: {
-                        createdAt: -1 // Use 1 for ascending order
-                    }
-                }
+                        createdAt: -1, // Use 1 for ascending order
+                    },
+                },
             ]);
 
-
-            console.log(orders)
-
             return {
-                talentOrderHistory: orders
-            }
+                talentOrderHistory: orders,
+            };
         } catch (error) {
-            console.error("Error fetching orders by talent:", error)
-            throw error
+            console.error("Error fetching orders by talent:", error);
+            throw error;
         }
-    }
+    };
+
 
     static readArchivedOrderHistory = async (userId) => {
         try {
@@ -512,6 +480,15 @@ class OrderService {
                         as: "commissionServiceDetails",
                     },
                 },
+                // Additional lookup for proposal details
+                {
+                    $lookup: {
+                        from: "Proposals",
+                        localField: "_id",
+                        foreignField: "orderId",
+                        as: "proposalDetails",
+                    },
+                },
                 // Project to shape the output
                 {
                     $project: {
@@ -544,22 +521,13 @@ class OrderService {
                         fileFormats: 1,
                         createdAt: 1,
                         proposalId: {
-                            $arrayElemAt: [
-                                {
-                                    $filter: {
-                                        input: "$proposals",
-                                        as: "proposal",
-                                        cond: {
-                                            $eq: [
-                                                "$$proposal.talentId",
-                                                new mongoose.Types.ObjectId(userId),
-                                            ],
-                                        },
-                                    },
-                                },
-                                0,
-                            ],
-                        },
+                            _id: { $arrayElemAt: ["$proposalDetails._id", 0] },
+                            scope: { $arrayElemAt: ["$proposalDetails.scope", 0] },
+                            startAt: { $arrayElemAt: ["$proposalDetails.startAt", 0] },
+                            deadline: { $arrayElemAt: ["$proposalDetails.deadline", 0] },
+                            price: { $arrayElemAt: ["$proposalDetails.price", 0] },
+                            rejectMessage: { $arrayElemAt: ["$proposalDetails.rejectMessage", 0] },
+                        }
                     },
                 },
                 {
