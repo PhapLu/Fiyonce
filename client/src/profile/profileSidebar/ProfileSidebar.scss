@@ -240,16 +240,12 @@
         }
     }
 
-    .sidebar__section {
-        margin-bottom: 8px;
-    }
-
     .sub-nav-container {
         padding: 0;
     }
 
     .sidebar__follow {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
 
         .sidebar__follow__follow-container {
             // position: relative;
@@ -383,6 +379,10 @@
         width: 100% !important;
         border: unset;
         box-shadow: unset;
+
+        .sidebar__section {
+            margin-bottom: 8px;
+        }
 
         .sidebar__avatar {
             .sidebar__avatar__update-img .sidebar__avatar__img {
