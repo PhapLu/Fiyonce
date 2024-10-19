@@ -1,41 +1,48 @@
 import { useState, useEffect, useRef } from "react";
 import { isFilled } from "../../../utils/validator.js";
-import "./CreateNews.scss"
+import { useQuery } from "react-query";
+import { apiUtils, createFormData } from "../../../utils/newRequest.js";
+import RichTextEditor from "../../richTextEditor/RichTextEditor.jsx";
 
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import {
-    ClassicEditor, ImageInsert,
-    ImageResize,
-    ImageStyle,
-    ImageToolbar,
-    ImageUpload, SourceEditing, Bold, Essentials, Italic, Mention, Paragraph, Undo, Font
-} from 'ckeditor5';
-import 'ckeditor5/ckeditor5.css';
 export default function CreateNews({
     setShowCreateNews,
     setOverlayVisible,
     createNewsMutation,
 }) {
-    const [inputs, setInputs] = useState({});
+
+    const [inputs, setInputs] = useState({
+        isPrivate: true,
+        isPinned: true
+    });
     const [errors, setErrors] = useState({});
     const [thumbnail, setThumbnail] = useState(null);
     const createCommissionRef = useRef();
     const [isSubmitCreateNewsLoading, setIsSubmitCreateNewsLoading] = useState();
-    const [editorData, setEditorData] = useState('');
+    const [editorData, setEditorData] = useState("");
 
-    const handleImageChange = (event) => {
-        const { name, value, files } = event.target;
-        setThumbnail(files[0]);
-        setErrors(prev => ({ ...prev, [name]: "" }));
+    const urlToFile = async (url, filename, mimeType) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], filename, { type: mimeType });
     };
 
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
+    const handleImageChange = (e) => {
+        const { name, value, files } = e.target;
+        setThumbnail(files[0]);
+        console.log(files[0])
+        setErrors(prev => ({ ...prev, [name]: "" }));
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
+    };
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
         setInputs(prev => ({ ...prev, [name]: value }));
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
-    const handleEditorChange = (event, editor) => {
+    const handleEditorChange = (e, editor) => {
         const data = editor.getData();
         setEditorData(data);
         setInputs(prev => ({ ...prev, content: data }));
@@ -76,31 +83,32 @@ export default function CreateNews({
             return;
         }
 
-        const fd = new FormData();
-        inputs.isPrivate = inputs?.isPrivate === "true" ? true : false;
-        inputs.isPinned = inputs?.isPrivate === "true" ? true : false;
+        inputs.isPrivate = inputs?.isPrivate === true ? true : false;
+        inputs.isPinned = inputs?.isPrivate === true ? true : false;
 
+        console.log(inputs)
+        console.log(thumbnail)
+
+        let fd = new FormData();
         for (const key in inputs) {
             fd.append(key, inputs[key]);
         }
-        fd.append('thumbnail', thumbnail);
+        fd.set('thumbnail', thumbnail);
 
         try {
             console.log(inputs)
             console.log(thumbnail)
+            console.log(fd.get("thumbnail"))
 
             const response = await createNewsMutation.mutateAsync(fd);
             console.log(response);
-            setModalInfo({
-                status: "success",
-                message: "Thêm bản tin thành công"
-            })
+
         } catch (error) {
             console.error("Failed to create new news:", error);
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                serverError: error.response.data.message
-            }));
+            // setErrors((prevErrors) => ({
+            //     ...prevErrors,
+            //     serverError: error.response.data.message
+            // }));
         } finally {
             setIsSubmitCreateNewsLoading(false);
         }
@@ -143,11 +151,22 @@ export default function CreateNews({
                     {errors.subTitle && <span className="form-field__error">{errors.subTitle}</span>}
                 </div>
 
+
                 <div className="form-field">
                     <label htmlFor="thumbnail" className="form-field__label">Thumbnail</label>
+
+                    {thumbnail &&
+                        <div className="form-field__input img-preview">
+                            <div className="img-preview--left">
+                                <img src={thumbnail instanceof File ? URL.createObjectURL(thumbnail) : thumbnail} alt="Artwork 1" className="img-preview__img" />
+                                <div className="img-preview__info">
+                                    <span className="img-preview__name">Preview</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <input type="file" className="form-field__input" name="thumbnail" id="fileInput" onChange={handleImageChange} />
                     {errors.thumbnail && <span className="form-field__error">{errors.thumbnail}</span>}
-                    {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
                 </div>
 
                 <div className="form-field">
@@ -167,35 +186,12 @@ export default function CreateNews({
                     </select>
                     {errors.isPinned && <span className="form-field__error">{errors.isPinned}</span>}
                 </div>
-
-
-
             </div>
             <div className="modal-form--right">
                 <div className="form-field">
                     <label htmlFor="content" className="form-field__label">Content</label>
-                    <CKEditor
-                        editor={ClassicEditor}
-                        data={editorData}
-                        onChange={handleEditorChange}
-                        config={{
-                            plugins: [Essentials, ImageInsert,
-                                ImageResize,
-                                ImageStyle,
-                                ImageToolbar,
-                                ImageUpload, SourceEditing, Bold, Italic, Font, Paragraph],
-                            toolbar: {
-                                items: [
-                                    'sourceEditing', '|', 'bold', 'italic', '|',
-                                    'fontSize', 'fontFamily', 'fontColor', '|'
-                                ]
-                            },
-                            mention: {
-                                // Mention configuration
-                            },
-                            initialData: '<p>Hello from CKEditor 5 in React!</p>',
-                        }}
-                    />
+                    <RichTextEditor editorData={editorData} handleEditorChange={handleEditorChange} />
+
                     {/* <textarea name="content" value={inputs?.content || ''} onChange={handleChange} className="form-field__input"></textarea> */}
 
                     {errors.content && <span className="form-field__error">{errors.content}</span>}
@@ -206,7 +202,7 @@ export default function CreateNews({
 
             <div className="form__submit-btn-container">
                 <button type="submit" className="btn btn-2 btn-md form__submit-btn-item" disabled={isSubmitCreateNewsLoading} onClick={handleSubmit}>
-                    {isSubmitCreateNewsLoading ? 'Đang thêm...' : 'Thêm mới'}
+                    {isSubmitCreateNewsLoading ? 'Thêm mới...' : 'Thêm mới'}
                 </button>
             </div>
 

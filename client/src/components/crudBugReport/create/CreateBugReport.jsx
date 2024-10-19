@@ -92,6 +92,9 @@ export default function CreateBugReport({ setShowCreateBugReport, setOverlayVisi
         });
 
         setFiles(newFiles);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
 

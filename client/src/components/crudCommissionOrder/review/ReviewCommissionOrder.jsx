@@ -28,8 +28,12 @@ export default function ReviewCommissionOrder() {
     );
 
 
-    const hashtags = [
-        "Khách hàng thân thiện", "Giá cả hợp lí"
+    const reviewMemberHashtags = [
+        "Khách hàng thân thiện", "Mô tả yêu cầu rõ ràng", "Rất hợp tác"
+    ]
+
+    const reviewTalentHashtags = [
+        "Họa sĩ thân thiện", "Làm việc chuyên nghiệp", "Đáng tin cậy", "Phản hồi nhanh chóng", "Trả comm đúng hạn"
     ]
 
     const [errors, setErrors] = useState({});
@@ -64,7 +68,7 @@ export default function ReviewCommissionOrder() {
     };
 
 
-    const { userInfo } = useAuth();
+    const { userInfo, socket  } = useAuth();
     const { setModalInfo } = useModal();
 
     const [isSubmitReviewCommissionOrderLoading, setIsSubmitReviewCommissionOrderLoading] = useState(false);
@@ -142,9 +146,18 @@ export default function ReviewCommissionOrder() {
                         message: "Đánh giá khách hàng thành công",
                     });
                 }
+
+                // Send notification
+                const senderId = userInfo?._id;
+                const receiverId = isOrderOwnerAsMember ? commissionOrder?.talentChosenId?._id : commissionOrder?.memberId?._id;
+                const inputs2 = { receiverId, type: "reviewCommissionOrder", url: `/order-history` }
+                const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+                const notificationData = response2.data.metadata.notification;
+                socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
             }
         } catch (error) {
             console.error("Failed to submit:", error);
+            console.log(error)
             setModalInfo({
                 status: "error",
                 message: error.response.data.message
@@ -187,7 +200,7 @@ export default function ReviewCommissionOrder() {
                                     type="radio"
                                     name="rating"
                                     value="2"
-                                    checked={inputs?.rating === "2"}
+                                    checked={inputs?.rating === "1"}
                                     onChange={handleChange}
                                 />
                                 1 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 rating-star-ic active ml-4">
@@ -316,15 +329,28 @@ export default function ReviewCommissionOrder() {
                 </div>
 
                 <div className="">
-                    {hashtags?.map((hashtag, idx) => (
-                        <button
-                            key={idx}
-                            className={`btn btn-3 btn-sm mr-8 ${inputs?.hashtags?.includes(hashtag) ? "active" : ""}`}
-                            onClick={() => handleHashtagClick(hashtag)}
-                        >
-                            #{hashtag}
-                        </button>
-                    ))}
+                    {
+                        isOrderOwnerAsMember ? reviewTalentHashtags?.map((hashtag, idx) => (
+                            <button
+                                key={idx}
+                                className={`btn btn-3 btn-sm mr-8 mb-8 ${inputs?.hashtags?.includes(hashtag) ? "active" : ""}`}
+                                onClick={() => handleHashtagClick(hashtag)}
+                            >
+                                #{hashtag}
+                            </button>
+                        )) : (
+                            reviewMemberHashtags?.map((hashtag, idx) => (
+                                <button
+                                    key={idx}
+                                    className={`btn btn-3 btn-sm mr-8 mb-8 ${inputs?.hashtags?.includes(hashtag) ? "active" : ""}`}
+                                    onClick={() => handleHashtagClick(hashtag)}
+                                >
+                                    #{hashtag}
+                                </button>
+                            ))
+                        )
+                    }
+
                 </div>
 
                 <div className="form-field">

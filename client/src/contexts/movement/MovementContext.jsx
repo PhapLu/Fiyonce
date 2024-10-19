@@ -1,4 +1,4 @@
-import {useQuery} from 'react-query';
+import { useQuery } from 'react-query';
 import { createContext, useState, useContext, useEffect } from 'react';
 import { newRequest } from '../../utils/newRequest';
 
@@ -12,7 +12,10 @@ export const MovementProvider = ({ children }) => {
     const fetchMovements = async () => {
         try {
             const response = await newRequest.get('/movement/readMovements');
-            console.log(response.data.metadata.movements)
+            let movements = response.data.metadata.movements;
+            movements.totalPostCount = movements?.reduce((total, movement) => total + movement.postCount, 0);
+            movements.totalServiceCount = movements?.reduce((total, movement) => total + movement.commissionServiceCount, 0);
+
             return response.data.metadata.movements;
         } catch (error) {
             // console.log(error.response)

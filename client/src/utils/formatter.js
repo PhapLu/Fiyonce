@@ -34,7 +34,7 @@ export function formatFloat(number, n) {
 
 export function formatNumber(num, digits) {
     const units = ["", "K", "M", "B", "T"];
-    const unitIndex = Math.floor((num.toString().length - 1) / 3);
+    const unitIndex = Math.floor((num?.toString().length - 1) / 3);
     const unitValue = num / Math.pow(1000, unitIndex);
 
     return unitValue.toFixed(digits) + units[unitIndex];
@@ -45,13 +45,13 @@ export function formatCurrency(val) {
         return;
     }
     // Convert the number to a string and use a regular expression to add periods as thousand separators
-    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return val?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 export function formatDate(val) {
     const date = new Date(val);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+    const day = date.getDate()?.toString().padStart(2, '0');
+    const month = (date.getMonth() + 1)?.toString().padStart(2, '0'); // Months are zero-indexed
     const year = date.getFullYear();
 
     return `${day}/${month}/${year}`;
@@ -61,15 +61,15 @@ export function formatDatetime(dateString) {
     const date = new Date(dateString);
 
     // Extract the components
-    const hours = date.getUTCHours().toString().padStart(2, '0');
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-    const day = date.getUTCDate().toString().padStart(2, '0');
-    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+    const hours = date.getUTCHours()?.toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes()?.toString().padStart(2, '0');
+    const day = date.getUTCDate()?.toString().padStart(2, '0');
+    const month = (date.getUTCMonth() + 1)?.toString().padStart(2, '0'); // Months are 0-based
     const year = date.getUTCFullYear();
 
     // Determine AM/PM
     const period = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
+    const formattedHours = (hours % 12 || 12)?.toString().padStart(2, '0');
 
     // Format the date as "HH:MM PM/AM, DD/MM/YYYY"
     return `${formattedHours}:${minutes} ${period}, ${day}/${month}/${year}`;

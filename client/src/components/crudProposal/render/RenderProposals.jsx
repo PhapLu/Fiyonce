@@ -243,7 +243,7 @@ export default function RenderProposals() {
                     <h2 className="form__title">Danh sách hồ sơ</h2>
                     <p>Dưới đây là danh sách hồ sơ mà các họa sĩ đã nộp dựa trên yêu cầu của {isOrderOwner ? "bạn" : commissionOrder?.memberId?.fullName}. Các họa sĩ vẫn có thể nộp hồ sơ cho đến khi {isOrderOwner ? "bạn" : commissionOrder?.memberId?.fullName} chọn được họa sĩ phù hợp nhất.</p>
                     <hr />
-                    <div className="proposal-container">{
+                    <div className="proposal-container mt-16">{
                         proposals?.length > 0 ? proposals.map((proposal, index) => {
                             return (
                                 <div className="proposal-item" key={index}>

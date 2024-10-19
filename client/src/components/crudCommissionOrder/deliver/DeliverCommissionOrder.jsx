@@ -119,6 +119,9 @@ export default function DeliverCommissionOrder() {
         });
 
         setFiles(newFiles);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const deliverCommissionOrderMutation = useMutation(

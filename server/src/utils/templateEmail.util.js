@@ -138,10 +138,10 @@ const announcementTemplate = (subSubject, message) => {
     </head>
     <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; font: 16px/1.5 Arial, Helvetica, sans-serif;">
 
-        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 5px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
             <!-- Logo Section -->
             <div style="text-align: left; margin-bottom: 25px;">
-                <img src="https://res.cloudinary.com/ddcywkzto/image/upload/v1728996102/pastal_logo_qgsivy.png" alt="Pastal Logo"/>
+                <img style="width: 100px; height: auto; object-fit: cover" src="https://res.cloudinary.com/ddcywkzto/image/upload/v1728996102/pastal_logo_qgsivy.png" alt="Pastal Logo"/>
             </div>
 
             <!-- Content Section -->
@@ -192,7 +192,7 @@ const commissionTemplate = (user, message, subSubject, orderCode, price) => {
                 max-width: 600px;
                 margin: 0 auto;
                 background-color: #fff;
-                padding: 5px 40px;
+                padding: 16px 20px;
                 border-radius: 10px;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
                 margin-top: 30px;
@@ -394,7 +394,7 @@ const reportTemplate = (fullName, subSubject, message) => {
     </head>
     <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; font: 16px/1.5 Arial, Helvetica, sans-serif;">
 
-        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 5px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 30px;">
             <!-- Logo Section -->
             <div style="text-align: left; margin-bottom: 25px;">
                 <span aria-hidden="true" style="display:none;">${new Date().getTime()}</span>

@@ -42,8 +42,12 @@ class ProposalService {
             throw new BadRequestError("Bạn đã gửi đơn ứng cho đơn hàng này rồi")
 
         //5.Check if price is valid
-        if (body.price < 0)
-            throw new BadRequestError("Giá trị đơn hàng phải lớn hơn 0")
+        if (body.price && body.price < 0)
+            throw new BadRequestError("Giá trị đơn hàng không hợp lệ")
+
+        if (!body.startAt || !body.deadline) {
+            throw new BadRequestError("Thời gian dự kiến là bắt buộc")
+        }
 
         let proposal
         const member = await User.findById(order.memberId).select("email avatar fullName")

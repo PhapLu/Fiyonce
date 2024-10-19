@@ -110,6 +110,9 @@ export default function CreateMilestone() {
         });
 
         setFiles(newFiles);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
 

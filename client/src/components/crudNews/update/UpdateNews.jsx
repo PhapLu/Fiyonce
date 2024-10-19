@@ -11,22 +11,25 @@ export default function UpdateNews({
     updateNewsMutation,
 }) {
 
-    const fetchNewsById = async () => {
-        try {
-            const response = await apiUtils.get(`/news/readNews/${news._id}`);
-            return response.data.metadata.news;
-        } catch (error) {
-            console.log(error);
-            return null;
-        }
-    };
+    console.log(news)
 
-    const {
-        data: newsData,
-        error,
-        isError,
-        isLoading,
-    } = useQuery("fetchNewsById", fetchNewsById);
+    // const fetchNewsById = async () => {
+    //     try {
+    //         const response = await apiUtils.get(`/news/readNews/${news._id}`);
+    //         console.log("abc")
+    //         return response.data.metadata.news;
+    //     } catch (error) {
+    //         console.log(error);
+    //         return null;
+    //     }
+    // };
+
+    // const {
+    //     data: newsData,
+    //     error,
+    //     isError,
+    //     isLoading,
+    // } = useQuery("fetchNewsById", fetchNewsById);
 
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
@@ -36,12 +39,13 @@ export default function UpdateNews({
     const [editorData, setEditorData] = useState("");
 
     useEffect(() => {
-        if (newsData) {
-            setInputs(newsData);
-            setEditorData(newsData?.content);
-            setThumbnail(newsData?.thumbnail || null);
+        if (news) {
+            console.log("ddd")
+            setInputs(news);
+            setEditorData(news?.content);
+            setThumbnail(news?.thumbnail || null);
         }
-    }, []);
+    }, [news]);
 
     const urlToFile = async (url, filename, mimeType) => {
         const response = await fetch(url);
@@ -60,20 +64,24 @@ export default function UpdateNews({
         convertThumbnailUrlToFile();
     }, [news.thumbnail]);
 
-    const handleImageChange = (event) => {
-        const { name, value, files } = event.target;
+
+    const handleImageChange = (e) => {
+        const { name, value, files } = e.target;
         setThumbnail(files[0]);
         console.log(files[0])
         setErrors(prev => ({ ...prev, [name]: "" }));
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
         setInputs(prev => ({ ...prev, [name]: value }));
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
-    const handleEditorChange = (event, editor) => {
+    const handleEditorChange = (e, editor) => {
         const data = editor.getData();
         setEditorData(data);
         setInputs(prev => ({ ...prev, content: data }));
@@ -215,8 +223,8 @@ export default function UpdateNews({
             <div className="modal-form--right">
                 <div className="form-field">
                     <label htmlFor="content" className="form-field__label">Content</label>
-                     <RichTextEditor editorData={editorData} handleEditorChange={handleEditorChange}/>
-                   
+                    <RichTextEditor editorData={editorData} handleEditorChange={handleEditorChange} />
+
                     {/* <textarea name="content" value={inputs?.content || ''} onChange={handleChange} className="form-field__input"></textarea> */}
 
                     {errors.content && <span className="form-field__error">{errors.content}</span>}

@@ -126,7 +126,7 @@ export default function RenderBadges({ setShowRenderBadges, setOverlayVisible })
                                         onClick={isClaimable ? handleClaimBadge : null}
                                         disabled={!isClaimable}
                                     >
-                                        Nhận huy hiệu
+                                        {isClaimable ? "Nhận huy hiệu" : "Đã hiểu"}
                                     </button>)
                         }
                     </div>

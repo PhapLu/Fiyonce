@@ -121,17 +121,13 @@ export default function RenderComissionService() {
         }
     }
 
-    if (isLoading) {
-        return <span>Đang tải...</span>
-    }
-
     if (isError) {
         return <span>Có lỗi xảy ra: {error.message}</span>
     }
 
     return (
         <div className="overlay">
-            {loading ? (
+            {isLoading || loading ? (
                 <Loading />
             ) : (
                 !showCreateCommissionOrder ?
@@ -223,7 +219,7 @@ export default function RenderComissionService() {
                                             onChange={handleInputChange}
                                             required
                                         />
-                                        <span>Tôi đồng ý với các <a className="highlight-text" href="/terms_and_policies"> điều khoản dịch vụ </a> của {commissionService?.talentId?.fullName}</span>
+                                        <span>Tôi đồng ý với các điều khoản dịch vụ của {commissionService?.talentId?.fullName}</span>
                                     </label>
                                     {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                                 </div>

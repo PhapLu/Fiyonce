@@ -14,14 +14,17 @@ export default function CreateBadge({
     const [isSubmitCreateBadgeLoading, setIsSubmitCreateBadgeLoading] = useState(false);
     const [editorData, setEditorData] = useState('');
 
-    const handleImageChange = (event) => {
-        const { name, files } = event.target;
+    const handleImageChange = (e) => {
+        const { name, files } = e.target;
         setThumbnail(files[0]);
         setErrors(prev => ({ ...prev, [name]: "" }));
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
         setInputs(prev => ({ ...prev, [name]: value }));
         setErrors(prev => ({ ...prev, [name]: "" }));
     };

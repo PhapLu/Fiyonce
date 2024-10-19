@@ -24,10 +24,10 @@ import './Navbar.scss';
 export default function Navbar() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
+    const {showRenderConversations, setShowRenderConversations} = useConversation();
     const queryTerm = queryParams.get('q') || '';
     const { userInfo, socket } = useAuth();
     const [shadow, setShadow] = useState(false);
-    const [showRenderConversations, setShowRenderConversations] = useState(false);
     const [showRenderNotifications, setShowRenderNotifications] = useState(false);
     const messageButtonRef = useRef(null);
     const conversationsRef = useRef(null);

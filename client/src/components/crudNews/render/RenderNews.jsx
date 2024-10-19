@@ -44,7 +44,7 @@ export default function RenderNews() {
                 <div className="news-header text-align-center">
                     <h1 className="news-header__title">{news?.title}</h1>
                     <h3 className="news-header__sub-title">{news?.subTitle}</h3>
-                    <p className="flex-align-center flex-justify-center">bởi <span className="highlight-text fw-bold"> Pastal Team</span> <span className="dot-delimiter"></span> {formatDate(news?.createdAt)}</p>
+                    <span className="flex-align-center flex-justify-center">bởi <span className="highlight-text fw-bold"> &nbsp; Pastal Team &nbsp;</span> <span className="dot-delimiter sm"></span> {formatDate(news?.createdAt)}</span>
                     <img src={news?.thumbnail} alt="" className="news-header__thumbnail" />
                 </div>
                 <div className="news-content">

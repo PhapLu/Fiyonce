@@ -26,9 +26,11 @@ const ProposalSchema = new mongoose.Schema(
         },
         startAt: {
             type: Date,
+            required: true,
         },
         deadline: {
             type: Date,
+            required: true,
         },
         artworks: [
             {

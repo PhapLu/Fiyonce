@@ -4,10 +4,10 @@ function FileInput({ onImageSelected }) {
   const inputRef = useRef();
 
   // Handle the change event when a file is selected
-  const handleOnChange = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
+  const handleOnChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
+      reader.readAsDataURL(e.target.files[0]);
       reader.onload = function (e) {
         onImageSelected(reader.result);
       };

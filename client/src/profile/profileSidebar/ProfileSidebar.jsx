@@ -796,7 +796,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
                             <span className="dot-delimiter sm ml-8 mr-8"></span>
                             <span className="sidebar__follow__following hover-cursor-opacity hover-underline" onClick={() => { setOverlayVisible(true); setShowFollowing(true) }}>{profileInfo?.following?.length === 0 ? "Chưa theo dõi" : `${profileInfo?.following?.length} đang theo dõi`}</span>
                         </div>
-                        <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'marginLeft': `${profileInfo?.followers?.length > 6 ? "72px" : (profileInfo?.followers?.length - 1) * 10 + 'px'}` }}>
+                        <div className="flex-justify-center sidebar__follow__follow-container mt-8" style={{ 'marginLeft': `${profileInfo?.followers?.length > 6 ? "50px" : (profileInfo?.followers?.length - 1) * 10 + 'px'}` }}>
                             {
                                 profileInfo?.followers?.slice(0, 5)?.reverse().map((follower, index) => {
                                     if (index == 4) {

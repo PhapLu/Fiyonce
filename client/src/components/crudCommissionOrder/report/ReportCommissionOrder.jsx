@@ -56,6 +56,9 @@ export default function ReportCommissionOrder() {
             }
         });
         setEvidences(newEvidences);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";

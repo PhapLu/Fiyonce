@@ -154,6 +154,9 @@ export default function UpdateCommissionOrder() {
             }
         });
         setReferences(newReferences);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const removeImage = (index) => {

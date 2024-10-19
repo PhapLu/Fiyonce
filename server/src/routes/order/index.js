@@ -8,8 +8,8 @@ import { readCache, readCacheForMultiple, validation } from "../../middlewares/c
 
 const router = express.Router()
 
-router.get('/readOrder/:orderId', validation('order'), readCache('order') , asyncHandler(orderController.readOrder))
-router.get('/readOrders', readCacheForMultiple('orders'), asyncHandler(orderController.readOrders))
+router.get('/readOrder/:orderId', asyncHandler(orderController.readOrder))
+router.get('/readOrders', asyncHandler(orderController.readOrders))
 
 //authentication
 router.use(verifyToken)

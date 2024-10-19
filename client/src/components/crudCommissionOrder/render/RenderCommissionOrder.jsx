@@ -21,6 +21,7 @@ import { apiUtils } from "../../../utils/newRequest";
 export default function RenderCommissionOrder() {
     const commissionOrder = useOutletContext();
     console.log(commissionOrder)
+    console.log(commissionOrder)
     const { userInfo } = useAuth();
 
     const [showZoomImage, setShowZoomImage] = useState(false);
@@ -214,7 +215,7 @@ export default function RenderCommissionOrder() {
 
                         <div className="form-field">
                             <label htmlFor="isPrivate" className="form-field__label">Riêng tư?</label>
-                            <span>{commissionOrder?.isPrivate ? "Không cho phép họa sĩ sử dụng tranh vẽ cho bạn để quảng bá hình ảnh của họ" : "Cho phép họa sĩ sử dụng tranh vẽ cho bạn để quảng bá hình ảnh của họ"}</span>
+                            <span>{commissionOrder?.isPrivate ? "Không cho phép họa sĩ sử dụng tranh vẽ để quảng bá hình ảnh của họ" : "Cho phép họa sĩ sử dụng tranh vẽ để quảng bá hình ảnh của họ"}</span>
                         </div>
 
                         <div className="form-field">

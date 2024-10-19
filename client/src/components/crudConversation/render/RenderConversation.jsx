@@ -7,6 +7,9 @@ import "./RenderConversation.scss";
 import { useConversation } from "../../../contexts/conversation/ConversationContext";
 import { set } from "date-fns";
 import { createClickableLinks } from "../../../utils/formatter";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
+import ZoomImage from "../../zoomImage/ZoomImage";
 
 export default function RenderConversation() {
     const { userInfo, socket } = useAuth();
@@ -32,11 +35,16 @@ export default function RenderConversation() {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
     const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
         if (isInitialLoad) {
-            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
             setIsInitialLoad(false); // Disable auto-scroll after the initial load
         }
     };
+
+    // Handle zoom image
+    const [showZoomImage, setShowZoomImage] = useState(false);
+    const [zoomedImageSrc, setZoomedImageSrc] = useState();
 
 
     useEffect(() => {
@@ -134,6 +142,9 @@ export default function RenderConversation() {
             }
         });
         setMedia(newMedia);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const removeImage = (index) => {
@@ -242,7 +253,7 @@ export default function RenderConversation() {
                         <div key={index} className={`message-item mb-4 ${message.senderId === userInfo._id ? "right" : "left"}`}>
                             {message.media?.map((media, index) => {
                                 return (
-                                    <img key={index} src={media} alt="Media" />
+                                    <LazyLoadImage key={index} onClick={() => { setShowZoomImage(true); setZoomedImageSrc(media) }} src={resizeImageUrl(media, 150)} alt="" effect="blur" />
                                 )
                             })}
                             {message.content && (
@@ -255,18 +266,21 @@ export default function RenderConversation() {
                 ) : (
                     <div className="mt-32 text-align-center">Bắt đầu cuộc trò chuyện với {conversation?.otherMember?.fullName}.</div>
                 )}
-                <div ref={messagesEndRef} />
-                {isSendMessageLoading && (
-                    <div className="message-item right mt-8 mb-16">
-                        <div className="loading-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
+
+                <div ref={messagesEndRef}>
+                    {isSendMessageLoading && (
+                        <div className="message-item right mt-8 mb-16">
+                            <div className="loading-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
+
             <div className="send-message flex-justify-space-between flex-align-center">
                 <div className="send-message--left flex-align-center mr-8">
                     <input id="image-upload" type="file" onChange={handleImageChange} style={{ display: "none" }} />
@@ -310,6 +324,7 @@ export default function RenderConversation() {
                     } */}
                 </div>
 
+
                 <div className={`send-message--middle ${inputs?.content || media ? "typing" : ""}`}>
                     {media && media.length > 0 && (
                         <div className="preview-img-container flex-align-center mb-8">
@@ -346,6 +361,8 @@ export default function RenderConversation() {
                     </div>
                 </div>
             </div>
+            {/* Show ZoomImage component */}
+            {showZoomImage && <ZoomImage src={zoomedImageSrc} setShowZoomImage={setShowZoomImage} />}
         </div>
     )
 }

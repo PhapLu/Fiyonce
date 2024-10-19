@@ -91,6 +91,9 @@ const UpgradeAccount = () => {
             }
         });
         setArtworks(newArtworks);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const validateInputs = () => {

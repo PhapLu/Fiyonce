@@ -89,6 +89,9 @@ export default function CreateProposal() {
         });
         setSelectedArtworks(newArtworks);
         setErrors((values) => ({ ...values, artworks: '' }));
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
@@ -226,7 +229,7 @@ export default function CreateProposal() {
 
                 const senderId = userInfo._id;
                 const receiverId = commissionOrder.memberId._id;
-                const inputs2 = { receiverId, type: "approveCommissionOrder", url: `/order-history/commission-orders/${commissionOrder._id}/proposals` }
+                const inputs2 = { receiverId, type: commissionOrder?.isDirect ? "approveDirectCommissionOrder" : "approveIndirectCommissionOrder", url: `/order-history/commission-orders/${commissionOrder._id}/proposals` }
                 const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
                 const notificationData = response2.data.metadata.notification;
                 socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
@@ -354,7 +357,7 @@ export default function CreateProposal() {
                 <div className="modal-form--right">
                     <h2 className="form__title">Soạn hợp đồng</h2>
 
-                    <div className="form-field">
+                    <div className="form-field required">
                         <label htmlFor="scope" className="form-field__label">Phạm vi công việc</label>
                         <span className="form-field__annotation">Mô tả những gì khách hàng sẽ nhận được từ dịch vụ của bạn</span>
                         <textarea type="text" name="scope" value={inputs?.scope || ""} placeholder="Nhập mô tả" onChange={handleChange} className="form-field__input"></textarea>
@@ -362,7 +365,7 @@ export default function CreateProposal() {
                     </div>
 
                     {commissionOrder?.isDirect == false && (
-                        <div className="form-field">
+                        <div className="form-field required">
                             <label className="form-field__label">Tranh mẫu</label>
                             <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (3 - 5 tác phẩm).</span>
                             <div className="img-preview-container border-text">
@@ -382,7 +385,7 @@ export default function CreateProposal() {
                     )}
 
 
-                    <div className="form-field">
+                    <div className="form-field required">
                         <label htmlFor="startAt" className="form-field__label">Thời gian dự kiến</label>
                         <span className="form-field__annotation">Cam kết thời gian dự định bắt đầu thực hiện công việc và hạn chót giao sản phẩm</span>
                         <div className="flex-align-center date-picker-sm">
@@ -399,7 +402,7 @@ export default function CreateProposal() {
                     </div>
 
 
-                    <div className="form-field">
+                    <div className="form-field required">
                         <label htmlFor="price" className="form-field__label">Giá trị đơn hàng (VND)</label>
                         <span className="form-field__annotation">Đưa ra mức giá chính xác mà bạn cần để thực hiện dịch vụ.</span>
                         <input type="number" name="price" placeholder="Nhập mức giá (VND)" className="form-field__input" onChange={handleChange} />
@@ -408,7 +411,7 @@ export default function CreateProposal() {
 
                     {
                         commissionOrder?.isDirect == false && (
-                            <div className="form-field">
+                            <div className="form-field required">
                                 <label htmlFor="scope" className="form-field__label">Điều khoản dịch vụ</label>
                                 <span className="form-field__annotation">Vui lòng chọn một trong những điều khoản dịch vụ của bạn</span>
 

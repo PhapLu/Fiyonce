@@ -50,8 +50,12 @@ class NotificationService {
                 content = `${user.fullName} đã cập nhật thông tin đơn hàng`;
                 notificationType = "order";
                 break;
-            case "approveCommissionOrder":
+            case "approveDirectCommissionOrder":
                 content = `${user.fullName} đã tiếp nhận đơn hàng và gửi proposal cho bạn`;
+                notificationType = "order";
+                break;
+            case "approveIndirectCommissionOrder":
+                content = `${user.fullName} đã ứng đơn hàng của bạn trên chợ Commission`;
                 notificationType = "order";
                 break;
             case "confirmCommissionOrder":
@@ -76,6 +80,10 @@ class NotificationService {
                 break;
             case "deliverCommissionOrder":
                 content = `${user.fullName} đã hoàn tất đơn hàng của bạn`;
+                notificationType = "order";
+                break;
+            case "reviewCommissionOrder":
+                content = `${user.fullName} đã để lại đánh giá cho đơn hàng`;
                 notificationType = "order";
                 break;
             case "confirmTalentRequest":

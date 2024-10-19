@@ -218,6 +218,7 @@
         }
 
         .toggle-display-conversations-btn {
+            z-index: 10000;
             position: relative;
 
             .render-conversations {
@@ -232,6 +233,7 @@
                 height: 380px;
                 box-shadow: var(--box-shadow-2);
                 overflow-y: scroll;
+                z-index: 1000;
 
                 .unseen-dot {
                     width: 8px;
@@ -244,6 +246,7 @@
 
         .toggle-display-notifications-btn {
             position: relative;
+            z-index: 10000;
 
             .render-notifications {
                 border: 1px solid var(--gray-1-color);
@@ -257,6 +260,7 @@
                 height: 380px;
                 box-shadow: var(--box-shadow-2);
                 overflow-y: scroll;
+                z-index: 100;
 
                 .unseen-dot {
                     width: 8px;

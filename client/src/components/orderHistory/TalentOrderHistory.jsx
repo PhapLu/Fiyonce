@@ -231,9 +231,8 @@ export default function TalentOrderHistory() {
                                         <br />
 
                                         {
-                                            order.proposalId?.deadline && <span>{getDaysLeft(order.proposalId?.deadline) >= 0 ? `còn ${getDaysLeft(order.proposalId?.deadline)} ngày`: "Đã qua hạn"} </span>
+                                            order.proposalId?.deadline && <span>{getDaysLeft(order.proposalId?.deadline) >= 0 ? `còn ${getDaysLeft(order.proposalId?.deadline)} ngày` : "Đã qua hạn"} </span>
                                         }
-
                                     </td>
 
                                     <td className="flex-align-center">
@@ -250,12 +249,12 @@ export default function TalentOrderHistory() {
                                                     </>
                                                 )
                                             }
-                                            {order.status === "approved" && (
+                                            {order?.talentChosenId && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/proposals`} aria-label="Xem hồ sơ họa sĩ đã gửi" className="btn btn-3 mr-8 hover-display-label">Xem hợp đồng</Link>
                                             )}
-                                            {order.status === "rejected" && (
+                                            {/* {order.status === "rejected" && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/reject-response`} aria-label="Xem lí do từ chối" className="btn btn-3 mr-8 hover-display-label">Lí do từ chối</Link>
-                                            )}
+                                            )} */}
                                             {order.status === "confirmed" && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/start-wip`} aria-label="Bắt đầu thực hiện đơn hàng" className="btn btn-3 hover-display-label mr-8">Bắt đầu</Link>
                                             )}

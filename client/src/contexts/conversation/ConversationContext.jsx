@@ -13,6 +13,7 @@ export const useConversation = () => {
 export const ConversationProvider = ({ children }) => {
     const [otherMember, setOtherMember] = useState();
     const [showRenderConversation, setShowRenderConversation] = useState(false);
+    const [showRenderConversations, setShowRenderConversations] = useState(false);
     const [conversationFetched, setConversationFetched] = useState(false);
     const queryClient = useQueryClient();
 
@@ -76,6 +77,8 @@ export const ConversationProvider = ({ children }) => {
         }, // Provide default empty object
         showRenderConversation: showRenderConversation || false,
         setShowRenderConversation,
+        showRenderConversations,
+        setShowRenderConversations,
         isLoading: isLoading || false,
         error: error || null,
     };

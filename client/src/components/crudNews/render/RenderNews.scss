@@ -1,6 +1,18 @@
 .news {
     margin: 90px 20%;
 
+    p,
+    span {
+        color: var(--black-2-color);
+        text-align: justify;
+        font-size: 1.6rem;
+        line-height: 2.6rem;
+    }
+
+    strong {
+        color: var(--black-1-color);
+    }
+
     .news-header {
         text-align: center;
 
@@ -24,14 +36,6 @@
 
     .news-content {
         margin: 0 4%;
-
-        p,
-        span {
-            color: var(--black-3-color);
-            text-align: justify;
-            font-size: 1.6rem;
-            line-height: 2.6rem;
-        }
 
         .text-tiny {
             font-size: 1.4rem;

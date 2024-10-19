@@ -1,6 +1,6 @@
 // Imports
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams, useOutletContext } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Resources
@@ -12,6 +12,8 @@ import { useAuth } from "../../../contexts/auth/AuthContext";
 // Styling
 
 export default function RejectCommissionOrder() {
+    const commissionOrder = useOutletContext();
+    
     // Navigation
     const navigate = useNavigate();
     const location = useLocation();
@@ -19,7 +21,6 @@ export default function RejectCommissionOrder() {
         navigate(-1);
     }
     const { "commission-order-id": commissionOrderId } = useParams();
-
 
     // Contexts
     const { userInfo, socket } = useAuth();
@@ -30,37 +31,6 @@ export default function RejectCommissionOrder() {
     const [errors, setErrors] = useState({});
     const [selectedReason, setSelectedReason] = useState("");
     const [otherReason, setOtherReason] = useState("");
-
-
-    const fetchCommissionOrder = async () => {
-        console.log(commissionOrderId)
-        try {
-            const response = await apiUtils.get(`/order/readOrder/${commissionOrderId}`);
-            console.log(response)
-            return response.data.metadata.order;
-        } catch (error) {
-            return null;
-        }
-    }
-
-    const { data: commissionOrder, fetchingCommissionOrderError, isFetchingCommissionOrderError, isFetchingCommissionOrderLoading } = useQuery(
-        ['fetchCommissionOrder'],
-        () => fetchCommissionOrder(),
-        {
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching commissionOrders by Order ID:', error);
-            },
-        }
-    );
-
-    if (isFetchingCommissionOrderLoading) {
-        return <div className="loading-spinner"></div>
-    }
-
-
 
     // Toggle display modal form
     const commissionOrderRef = useRef();
@@ -120,10 +90,9 @@ export default function RejectCommissionOrder() {
             console.log(rejectMessage);
             const fd = new FormData();
             fd.append("rejectMessage", rejectMessage);
-            console.log(commissionOrder._id)
             console.log(fd.get("rejectMessage"))
             // const response = await apiUtils.patch(`/order/rejectOrder/${commissionOrder.orderId}`, fd);
-            const response = await rejectCommissionOrderMutation.mutateAsync({ orderId: commissionOrder._id, rejectMessage });
+            const response = await rejectCommissionOrderMutation.mutateAsync({ orderId: commissionOrderId, rejectMessage });
             if (response) {
                 setModalInfo({
                     status: "success",
@@ -131,7 +100,6 @@ export default function RejectCommissionOrder() {
                 });
                 closeRejectCommissionOrderView();
             }
-
 
             const senderId = userInfo?._id;
             const receiverId = commissionOrder.memberId._id;

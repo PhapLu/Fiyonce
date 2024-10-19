@@ -51,8 +51,8 @@ export default function RenderFinalDelivery() {
                 <svg onClick={closeRenderFinalDeliveryView} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 form__close-ic">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
-                <p className="highlight-bg-text green text-align-justify">
-                    Một phần lợi nhuận từ đơn hàng sẽ được trích ra để hỗ trợ tổ chức phi lợi nhuận <strong>Làng trẻ em SOS</strong>,  😊
+                <p className="highlight-bg-text green text-align-center">
+                    Một phần lợi nhuận từ đơn hàng sẽ được trích ra để hỗ trợ tổ chức phi lợi nhuận <strong>Làng trẻ em SOS</strong>  😊
                 </p>
 
                 {

@@ -58,7 +58,7 @@
 
 
         .my-masonry-grid_column {
-            width: 32.5%;
+            width: 32.5% !important;
             margin-right: 1.25%;
 
             &:nth-of-type(3n) {
@@ -151,7 +151,7 @@
 
         .commission-market-container {
             .my-masonry-grid_column {
-                width: 100%;
+                width: 100% !important;
             }
         }
     }

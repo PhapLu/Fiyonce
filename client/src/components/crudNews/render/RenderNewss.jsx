@@ -8,8 +8,8 @@ export default function RenderNewss() {
     const fetchNewss = async () => {
         try {
             const response = await apiUtils.get("/news/readNewss");
-            console.log(response)
-            return response.data.metadata.newss;
+            const publicNews = response.data.metadata.newss.filter(news => news.isPrivate === false);
+            return publicNews;
         } catch (error) {
             return null;
         }
@@ -19,6 +19,7 @@ export default function RenderNewss() {
         onError: (error) => {
             console.error('Error fetching news:', error);
         },
+
         onSuccess: (news) => {
             // console.log('Fetched news:', news);
         },

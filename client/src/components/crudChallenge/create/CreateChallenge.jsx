@@ -23,19 +23,22 @@ export default function CreateChallenge({
     const [isSubmitCreateChallengeLoading, setIsSubmitCreateChallengeLoading] = useState();
     const [editorData, setEditorData] = useState('');
 
-    const handleImageChange = (event) => {
-        const { name, value, files } = event.target;
+    const handleImageChange = (e) => {
+        const { name, value, files } = e.target;
         setThumbnail(files[0]);
         setErrors(prev => ({ ...prev, [name]: "" }));
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
         setInputs(prev => ({ ...prev, [name]: value }));
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
-    const handleEditorChange = (event, editor) => {
+    const handleEditorChange = (e, editor) => {
         const data = editor.getData();
         setEditorData(data);
         setInputs(prev => ({ ...prev, description: data }));
@@ -53,7 +56,7 @@ export default function CreateChallenge({
             errors.description = "Vui lòng nhập nội dung";
         }
 
-        
+
         if (!isFilled(inputs.shortDescription)) {
             errors.shortDescription = "Vui lòng nhập mô tả ngắn gọn";
         }
@@ -145,7 +148,7 @@ export default function CreateChallenge({
 
                 <div className="form-field">
                     <label htmlFor="shortDescription" className="form-field__label">Mô tả ngắn gọn</label>
-                    <input type="text" name="shortDescription" className="form-field__input" placeholder="Nhập mô tả ngắn gọn" onChange={handleChange}/>
+                    <input type="text" name="shortDescription" className="form-field__input" placeholder="Nhập mô tả ngắn gọn" onChange={handleChange} />
                     {errors.shortDescription && <span className="form-field__error">{errors.shortDescription}</span>}
                 </div>
 
@@ -162,12 +165,12 @@ export default function CreateChallenge({
                         <label htmlFor="startDate" className="form-field__label">Bắt đầu - Kết thúc</label>
                         <input type="datetime-local" name="startDate" className="form-field__input" onChange={handleChange} />
                         {errors.startDate && <span className="form-field__error">{errors.startDate}</span>}
-                        <input type="datetime-local" name="endDate" className="form-field__input"  onChange={handleChange}/>
+                        <input type="datetime-local" name="endDate" className="form-field__input" onChange={handleChange} />
                         {errors.endDate && <span className="form-field__error">{errors.endDate}</span>}
                     </div>
                 </div>
 
-                
+
 
                 <div className="form-field">
                     <label htmlFor="isPrivate" className="form-field__label">Riêng tư?</label>

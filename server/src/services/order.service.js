@@ -16,9 +16,8 @@ import {
 import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
 import mongoose from "mongoose"
 import { formatDate } from "../utils/index.js"
-import { setCacheIOExpiration } from "../models/repositories/cache.repo.js"
-
-const CACHE_EXPIRATION_SECONDS = 600;
+// import { setCacheIOExpiration } from "../models/repositories/cache.repo.js"
+// const CACHE_EXPIRATION_SECONDS = 600;
 
 class OrderService {
     //Order CRUD
@@ -26,6 +25,8 @@ class OrderService {
         //1. Get type, talentChosenId and check user
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+
+        console.log(req.body.fileFormats)
 
         if (req.body.fileFormats) {
             const fileFormats = req.body.fileFormats.split(",")
@@ -137,13 +138,13 @@ class OrderService {
 
             const orderData = { order };
 
-            // Cache the result for future requests
-            const cacheKey = `order-k-${orderId}`;
-            await setCacheIOExpiration({
-                key: cacheKey,
-                value: JSON.stringify(orderData),
-                expirationInSeconds: CACHE_EXPIRATION_SECONDS,
-            });
+            // // Cache the result for future requests
+            // const cacheKey = `order-k-${orderId}`;
+            // await setCacheIOExpiration({
+            //     key: cacheKey,
+            //     value: JSON.stringify(orderData),
+            //     expirationInSeconds: CACHE_EXPIRATION_SECONDS,
+            // });
             return orderData
         } catch (error) {
             console.error('Error reading order:', error)
@@ -153,9 +154,9 @@ class OrderService {
 
     //Client read approved indirect orders in commission market
     static readOrders = async (req) => {
-        console.log('Cache miss: Reading orders from database');
+        // console.log('Cache miss: Reading orders from database');
         const q = req.query
-        const cacheKey = `orders-k-direct-${q.isDirect}`
+        // const cacheKey = `orders-k-direct-${q.isDirect}`
         const filters = {
             isMemberArchived: false,
             ...(q.isDirect !== undefined && { isDirect: q.isDirect === 'true' }),
@@ -177,13 +178,13 @@ class OrderService {
                 return order
             })
         )
-        // 3. Store the processed orders in Redis
+        // // 3. Store the processed orders in Redis
         const dataToCache = { orders: ordersWithCounts };
-        await setCacheIOExpiration({ 
-            key: cacheKey, 
-            value: JSON.stringify(dataToCache),
-            expirationInSeconds: CACHE_EXPIRATION_SECONDS,
-         });
+        // await setCacheIOExpiration({ 
+        //     key: cacheKey, 
+        //     value: JSON.stringify(dataToCache),
+        //     expirationInSeconds: CACHE_EXPIRATION_SECONDS,
+        //  });
 
         // 4. Return the orders
         return dataToCache;
@@ -257,31 +258,126 @@ class OrderService {
 
     //End Order CRUD
 
-    static readMemberOrderHistory = async (clientId) => {
-        //1. Check user
-        const foundUser = await User.findById(clientId)
-        if (!foundUser) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+    static readMemberOrderHistory = async (userId) => {
+        // 1. Check if the talent exists and is of role 'talent'
+        const foundMember = await User.findById(userId);
+        if (!foundMember) throw new NotFoundError("Không tìm thấy người dùng");
 
-
-        //2. Get orders
-        let orders;
         try {
-            orders = await Order.find({ memberId: clientId, isMemberArchived: false })
-                .populate("talentChosenId", "stageName avatar fullName stageName")
-                .populate("memberId", "fullName avatar")
-                .populate("commissionServiceId", "price title")
-                .sort({ createdAt: -1 })
+            // 2. Aggregate to get all orders involving the talent
+            const orders = await Order.aggregate([
+                // Match orders where user is the order owner as member
+                {
+                    $match: {
+                        $and: [
+                            {
+                                $or: [
+                                    {
+                                        memberId: new mongoose.Types.ObjectId(userId),
+                                    },
+                                ],
+                            },
+                            {
+                                $or: [
+                                    { isMemberArchived: { $exists: false } },
+                                    { isMemberArchived: false },
+                                ],
+                            },
+                        ],
+                    },
+                },
+                // Lookup to get member details
+                {
+                    $lookup: {
+                        from: "Users",
+                        localField: "memberId",
+                        foreignField: "_id",
+                        as: "memberDetails",
+                    },
+                },
+                // Lookup to get member details
+                {
+                    $lookup: {
+                        from: "Users",
+                        localField: "talentChosenId",
+                        foreignField: "_id",
+                        as: "talentDetails",
+                    },
+                },
+                // Lookup to get commission service details
+                {
+                    $lookup: {
+                        from: "CommissionServices",
+                        localField: "commissionServiceId",
+                        foreignField: "_id",
+                        as: "commissionServiceDetails",
+                    },
+                },
+                // Additional lookup for proposal details
+                {
+                    $lookup: {
+                        from: "Proposals",
+                        localField: "_id",
+                        foreignField: "orderId",
+                        as: "proposalDetails",
+                    },
+                },
+                // Project to shape the output
+                {
+                    $project: {
+                        commissionServiceId: {
+                            _id: { $arrayElemAt: ["$commissionServiceDetails._id", 0] },
+                            title: { $arrayElemAt: ["$commissionServiceDetails.title", 0] },
+                        },
+                        memberId: {
+                            _id: { $arrayElemAt: ["$memberDetails._id", 0] },
+                            avatar: { $arrayElemAt: ["$memberDetails.avatar", 0] },
+                            fullName: { $arrayElemAt: ["$memberDetails.fullName", 0] },
+                        },
+                        talentChosenId: {
+                            _id: { $arrayElemAt: ["$talentDetails._id", 0] },
+                            avatar: { $arrayElemAt: ["$talentDetails.avatar", 0] },
+                            fullName: { $arrayElemAt: ["$talentDetails.fullName", 0] },
+                            stageName: { $arrayElemAt: ["$talentDetails.stageName", 0] },
+                        },
+                        status: 1,
+                        title: 1,
+                        description: 1,
+                        isDirect: 1,
+                        references: 1,
+                        rejectMessage: 1,
+                        minPrice: 1,
+                        maxPrice: 1,
+                        purpose: 1,
+                        isPrivate: 1,
+                        deadline: 1,
+                        fileFormats: 1,
+                        createdAt: 1,
+                        proposalId: {
+                            _id: { $arrayElemAt: ["$proposalDetails._id", 0] },
+                            scope: { $arrayElemAt: ["$proposalDetails.scope", 0] },
+                            startAt: { $arrayElemAt: ["$proposalDetails.startAt", 0] },
+                            deadline: { $arrayElemAt: ["$proposalDetails.deadline", 0] },
+                            price: { $arrayElemAt: ["$proposalDetails.price", 0] },
+                            rejectMessage: { $arrayElemAt: ["$proposalDetails.rejectMessage", 0] },
+                        }
+                    },
+                },
+                {
+                    $sort: {
+                        createdAt: -1, // Use 1 for ascending order
+                    },
+                },
+            ]);
+
+            return {
+                memberOrderHistory: orders,
+            };
         } catch (error) {
-            console.error("Error populating orders:", error)
-            throw new Error("Failed to fetch orders")
+            console.error("Error fetching orders by talent:", error);
+            throw error;
         }
-
-        console.log(orders)
-
-        return {
-            memberOrderHistory: orders,
-        }
-    }
+    };
 
     static readRejectResponse = async (userId, orderId) => {
         // 1. Find the order by ID and select memberId, talentChosenId, and rejectMessage
@@ -345,6 +441,15 @@ class OrderService {
                                 ],
                             },
                         ],
+                    },
+                },
+                // Lookup to get member details
+                {
+                    $lookup: {
+                        from: "Users",
+                        localField: "talentChosenId",
+                        foreignField: "_id",
+                        as: "talentDetails",
                     },
                 },
                 // Lookup to get member details
@@ -707,7 +812,7 @@ class OrderService {
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!order) throw new NotFoundError("Không tìm thấy đơn hàng")
         if (order.memberId.toString() !== userId) throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
-        if(order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
+        if (order.status !== "delivered") throw new BadRequestError("Order is not delivered yet")
 
         //2. Finish order
         order.status = "finished"

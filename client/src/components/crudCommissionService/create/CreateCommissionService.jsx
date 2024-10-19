@@ -140,6 +140,9 @@ export default function CreateCommissionService({
             }
         });
         setPortfolios(newPortfolios);
+
+        // Reset the input value to allow re-selecting the same file later
+        e.target.value = '';
     };
 
     const placeholderImage = "/uploads/default_image_placeholder.png";
