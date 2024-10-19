@@ -8,7 +8,6 @@ import { apiUtils } from '../../utils/newRequest';
 // Styling
 
 export default function ForTalents() {
-
     const queryClient = useQueryClient();
 
     const fetchHelpTopicsAndArticles = async () => {

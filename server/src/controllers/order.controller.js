@@ -83,9 +83,11 @@ class OrderController {
     }
 
     rejectOrder = async (req, res, next) => {
+        console.log("pppp")
+        console.log(req.body)
         new SuccessResponse({
             message: 'Deny the order success!',
-            metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req.body)
+            metadata: await OrderService.rejectOrder(req.userId, req.params.orderId, req)
         }).send(res)
     }
     
@@ -96,10 +98,10 @@ class OrderController {
         }).send(res)
     }
 
-    startWipCommissionOrder = async (req, res, next) => {
+    startWipOrder = async (req, res, next) => {
         new SuccessResponse({
             message: 'Start WIP commission order success!',
-            metadata: await OrderService.startWipCommissionOrder(req.userId, req.params.orderId)
+            metadata: await OrderService.startWipOrder(req.userId, req.params.orderId)
         }).send(res)
     }
 

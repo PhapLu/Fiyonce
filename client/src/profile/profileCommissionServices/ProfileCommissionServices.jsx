@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useOutletContext, useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate, Link, useLocation, Outlet } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -24,17 +24,18 @@ import { newRequest, apiUtils } from "../../utils/newRequest.js";
 // Styling
 import "./ProfileCommissionServices.scss";
 import { resizeImageUrl } from "../../utils/imageDisplayer.js";
+import { useConversation } from "../../contexts/conversation/ConversationContext.jsx";
 
 export default function ProfileCommissionServices() {
     const { userId } = useParams();
     const { userInfo } = useAuth();
     const { profileInfo } = useOutletContext();
+    const {setOtherMember} = useConversation();
+    
     const queryClient = useQueryClient();
     const location = useLocation();
 
     const isProfileOwner = userInfo?._id === userId;
-
-
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [showCreateCommissionServiceForm, setShowCreateCommissionServiceForm] = useState(false);
@@ -292,7 +293,7 @@ export default function ProfileCommissionServices() {
                             <br />
                             <div className="profile-commission-service__category-item__service-container">
                                 {category.commissionServices?.map((service, serviceIndex) => (
-                                    <Link to={`${location.pathname + "/" + service?._id}`} key={serviceIndex} className="profile-commission-service__category-item__service-item">
+                                    <Link to={`${(location.pathname.includes("profile-commission-services") ? location.pathname : location.pathname + "/profile-commission-services") + "/" + service?._id}`} key={serviceIndex} className="profile-commission-service__category-item__service-item">
                                         <div className="profile-commission-service__category-item__service-item--left image-container images-layout-3">
                                             {service?.artworks.slice(0, 3).map((artwork, index) => {
                                                 if (index === 2 && service?.artworks.length > 3) {
@@ -320,13 +321,6 @@ export default function ProfileCommissionServices() {
                                                 );
                                             })}
                                         </div>
-                                        {/* {!isProfileOwner &&
-                                            <button className="btn btn-7 icon-only bookmark-service-btn">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 bookmark-service-btn__ic">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                                                </svg>
-                                            </button>
-                                        } */}
                                         <div className="profile-commission-service__category-item__service-item--right">
                                             <h3>{service?.title}</h3>
                                             <h4 className="fs-18">Giá từ: <span className="highlight-text">{formatCurrency(service?.minPrice)} VND</span></h4>
@@ -339,8 +333,8 @@ export default function ProfileCommissionServices() {
                                                 </>
                                             ) : (
                                                 <div className="flex-align-center">
-                                                    <button className="btn btn-2 btn-md order-service-now-btn" onClick={() => { setRenderCommissionServiceId(service._id); setShowRenderCommissionService(true); setOverlayVisible(true) }}>Đặt ngay</button>
-                                                    <button className="btn btn-4 btn-md">Liên hệ</button>
+                                                    <button className="btn btn-2 btn-md order-service-now-btn">Đặt ngay</button>
+                                                    <button className="btn btn-4 btn-md" onClick={(e) => {e.preventDefault(); setOtherMember(profileInfo)}}>Liên hệ</button>
                                                 </div>
                                             )}
                                         </div>
@@ -360,63 +354,6 @@ export default function ProfileCommissionServices() {
             {/* Modal forms */}
             {overlayVisible && (
                 <div className={`overlay`}>
-                    {/* CRUD commisssion service */}
-                    {
-                        showRenderCommissionService &&
-                        <RenderCommissionService
-                            commissionServiceId={renderCommissionServiceId}
-                            setShowRenderCommissionService={setShowRenderCommissionService}
-                            setOverlayVisible={setOverlayVisible}
-                        />
-
-                    }
-
-                    {showCreateCommissionServiceForm &&
-                        <CreateCommissionService
-                            commissionServiceCategories={commissionServiceCategories}
-                            setShowCreateCommissionServiceForm={setShowCreateCommissionServiceForm}
-                            setOverlayVisible={setOverlayVisible}
-                            createMutation={createMutation}
-                        />
-                    }
-
-                    {showUpdateCommissionServiceForm &&
-                        <UpdateCommissionService
-                            updateCommissionService={updateCommissionService}
-                            commissionServiceCategories={commissionServiceCategories}
-                            setShowUpdateCommissionServiceForm={setShowUpdateCommissionServiceForm}
-                            setOverlayVisible={setOverlayVisible}
-                            updateMutation={updateMutation}
-                        />
-                    }
-
-                    {showDeleteCommissionServiceForm &&
-                        <DeleteCommissionService
-                            deleteCommissionService={deleteCommissionService}
-                            setShowDeleteCommissionServiceForm={setShowDeleteCommissionServiceForm}
-                            setOverlayVisible={setOverlayVisible}
-                            deleteMutation={deleteMutation}
-                        />
-                    }
-
-                    {/* Commisssion service category */}
-                    {showUpdateCommissionServiceCategoryForm &&
-                        <UpdateCommissionServiceCategory
-                            updateCommissionServiceCategory={updateCommissionServiceCategory}
-                            setShowUpdateCommissionServiceCategoryForm={setShowUpdateCommissionServiceCategoryForm}
-                            setOverlayVisible={setOverlayVisible}
-                            updateCommissionServiceCategoryMutation={updateCommissionServiceCategoryMutation}
-                        />
-                    }
-                    {showDeleteCommissionServiceCategoryForm &&
-                        <DeleteCommissionServiceCategory
-                            deleteCommissionServiceCategory={deleteCommissionServiceCategory}
-                            setShowDeleteCommissionServiceCategoryForm={setShowDeleteCommissionServiceCategoryForm}
-                            setOverlayVisible={setOverlayVisible}
-                            deleteCommissionServiceCategoryMutation={deleteCommissionServiceCategoryMutation}
-                        />
-                    }
-
                     {/* Reviews */}
                     {showRenderCommissionReviews &&
                         <RenderCommissionReviews setShowRenderCommissionReviews={setShowRenderCommissionReviews}
@@ -424,6 +361,7 @@ export default function ProfileCommissionServices() {
                     }
                 </div>
             )}
+            <Outlet />
         </div>
     );
 }

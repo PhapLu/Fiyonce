@@ -179,12 +179,14 @@ export default function RenderProposal() {
                                                         "Khách hàng đã hủy đơn"
                                                         : commissionOrder?.status === "in_progress"
                                                             ? "Họa sĩ đang thực hiện"
-                                                            : commissionOrder?.status === "finished"
-                                                                ?
-                                                                "Đã hoàn tất đơn hàng"
-                                                                : commissionOrder?.status === "under_processing"
-                                                                    ? "Admin đang xử lí"
-                                                                    : ""
+                                                            : commissionOrder?.status === "delivered"
+                                                                ? "Họa sĩ đã bàn giao"
+                                                                : commissionOrder?.status === "finished"
+                                                                    ?
+                                                                    "Đã hoàn tất đơn hàng"
+                                                                    : commissionOrder?.status === "under_processing"
+                                                                        ? "Admin đang xử lí"
+                                                                        : ""
                                     : (
                                         commissionOrder?.status === "pending"
                                             ?
@@ -200,12 +202,14 @@ export default function RenderProposal() {
                                                             ? "Khách hàng đã hủy đơn"
                                                             : commissionOrder?.status === "in_progress"
                                                                 ? "Họa sĩ đang thực hiện"
-                                                                : commissionOrder?.status === "finished"
-                                                                    ?
-                                                                    "Đã hoàn tất đơn hàng"
-                                                                    : commissionOrder?.status === "under_processing"
-                                                                        ? "Admin đang xử lí"
-                                                                        : ""
+                                                                : commissionOrder?.status === "delivered"
+                                                                    ? "Họa sĩ đã bàn giao"
+                                                                    : commissionOrder?.status === "finished"
+                                                                        ?
+                                                                        "Đã hoàn tất đơn hàng"
+                                                                        : commissionOrder?.status === "under_processing"
+                                                                            ? "Admin đang xử lí"
+                                                                            : ""
 
                                     )
                             }
@@ -213,7 +217,7 @@ export default function RenderProposal() {
                     </div>
 
                     <div className="user md mt-16">
-                        <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
+                        <Link to={`/users/${commissionOrder?.memberId?._id}`} className="user--left hover-cursor-opacity">
                             <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                             <div className="user__name">
                                 <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
@@ -244,7 +248,7 @@ export default function RenderProposal() {
                                             {commissionOrder?.status === "under_processing" ? <li className="step-item checked">Admin đang xử lí</li> : (
                                                 <>
                                                     <li className={`step-item ${["in_progress"].includes(commissionOrder?.status) && "checked"}`}>Họa sĩ cập nhật tiến độ và bản thảo qua tin nhắn và gmail</li>
-                                                    <li className={`step-item ${["finished"].includes(commissionOrder?.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
+                                                    <li className={`step-item ${["delivered", "finished"].includes(commissionOrder?.status) && "checked"}`}>Họa sĩ hoàn tất đơn hàng, khách hàng đánh giá chất lượng sản phẩm</li>
                                                 </>
                                             )}
                                         </ul>

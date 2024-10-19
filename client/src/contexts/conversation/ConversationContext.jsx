@@ -9,6 +9,7 @@ export const useConversation = () => {
     return useContext(ConversationContext);
 };
 
+
 export const ConversationProvider = ({ children }) => {
     const [otherMember, setOtherMember] = useState();
     const [showRenderConversation, setShowRenderConversation] = useState(false);
@@ -19,8 +20,6 @@ export const ConversationProvider = ({ children }) => {
         try {
             const response = await apiUtils.get(`/conversation/readConversationWithOtherMember/${otherMember._id}`);
             const conversationData = response.data.metadata.conversation;
-            console.log("FETCHED CONVERSATION DATA")
-            console.log(conversationData)
             return conversationData;
         } catch (error) {
             console.log(error);
@@ -28,7 +27,7 @@ export const ConversationProvider = ({ children }) => {
                 _id: "",
                 otherMember: otherMember,
                 messages: [],
-            }
+            };
         }
     };
 
@@ -46,8 +45,15 @@ export const ConversationProvider = ({ children }) => {
         }
     );
 
+    const handleSetOtherMember = (member) => {
+        // Force reset otherMember to trigger useEffect
+        setOtherMember(null);
+        setTimeout(() => setOtherMember(member), 0); // Reset to the selected member after a short delay
+    };
+
     useEffect(() => {
         if (otherMember) {
+            console.log("abc"); // This will now run as otherMember changes
             setShowRenderConversation(false);
             setConversationFetched(false);
             queryClient.invalidateQueries(['fetchConversation', otherMember]);
@@ -62,7 +68,7 @@ export const ConversationProvider = ({ children }) => {
 
     const value = {
         otherMember: otherMember || {}, // Provide default empty object
-        setOtherMember,
+        setOtherMember: handleSetOtherMember, // Use the new function to set otherMember
         conversation: conversation || {
             _id: "",
             otherMember: otherMember,

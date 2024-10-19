@@ -59,9 +59,9 @@ export default function ProfileTermOfService() {
 
     const breakpointColumnsObj = {
         default: 2,
-        739: 2,
-        1023: 4,
-        1200: 5,
+        739: 1,
+        1023: 2,
+        1200: 2,
     };
 
     const handleShowCreateCommissionTosForm = () => {

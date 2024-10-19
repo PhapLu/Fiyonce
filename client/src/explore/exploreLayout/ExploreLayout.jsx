@@ -9,7 +9,7 @@ import RenderNewss from "../../components/crudNews/render/RenderNewss.jsx";
 import BackToTop from '../../components/backToTop/BackToTop.jsx';
 
 // Utils
-import { formatNumber } from "../../utils/formatter.js";
+import { formatFloat, formatNumber, limitString } from "../../utils/formatter.js";
 
 // Styling
 import "../../assets/scss/base.scss";
@@ -21,7 +21,9 @@ export default function Explore() {
     const [searchParams, setSearchParams] = useSearchParams();
     const { movements } = useMovement();
 
-    const [selectedMovement, setSelectedMovement] = useState(null);
+    // Initialize selectedMovement based on the movementId from the URL, defaulting to null (for "Tất cả")
+    const movementIdFromUrl = searchParams.get("movementId");
+    const [selectedMovement, setSelectedMovement] = useState(movementIdFromUrl || null);
 
     const [showRecommenders, setShowRecommenders] = useState(false);
     const [selectedRecommender, setSelectedRecommender] = useState({
@@ -71,6 +73,16 @@ export default function Explore() {
             behavior: 'smooth'
         });
     };
+    useEffect(() => {
+        if (movementIdFromUrl && movements.length > 0) {
+            // Find the movement object that matches the movementIdFromUrl
+            const movement = movements.find(mov => mov._id === movementIdFromUrl);
+            setSelectedMovement(movement || null); // Set to the found movement or to null if not found
+        } else {
+            // If no movementId is in the URL, default to "Tất cả" (null)
+            setSelectedMovement(null);
+        }
+    }, [movementIdFromUrl, movements]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -114,12 +126,15 @@ export default function Explore() {
 
     const handleRecommenderChange = (recommender, movement = null) => {
         setSelectedRecommender(recommender);
-        // Toggle selected movement if clicked again
-        if (movement && selectedMovement && movement?._id === selectedMovement?._id) {
-            setSelectedMovement(null);
+
+        // Update the URL with the selected movement's ID
+        if (movement) {
+            setSearchParams({ movementId: movement._id });
         } else {
-            setSelectedMovement(movement);
+            setSearchParams({}); // Clear movementId from URL if no movement is selected
         }
+
+        setSelectedMovement(movement);
         setShowRecommenders(false); // Hide the recommender container
     };
 
@@ -137,6 +152,8 @@ export default function Explore() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+    const totalPostCount = movements.reduce((total, movement) => total + movement.postCount, 0);
+    const totalServiceCount = movements.reduce((total, movement) => total + movement.commissionServiceCount, 0);
 
 
     // Fetch artworks
@@ -212,16 +229,42 @@ export default function Explore() {
                     <div className="scroll">
                         <div className="scroll-container" ref={scrollContainerRef}>
                             <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
-                            {movements && movements.map((movement, idx) => (
-                                <div key={idx} onClick={() => handleRecommenderChange(selectedRecommender, movement)} className={`explore__filter-item scroll-item flex-align-center ${selectedMovement?._id === movement?._id ? "active" : ""}`}>
-                                    <img src={movement.thumbnail} alt={movement.title} className="scroll-item__thumbnail" />
-                                    <div className="explore__filter-item__details">
-                                        <span className="explore__filter-item__details__title">{movement.title}</span>
+                            <div onClick={() => handleRecommenderChange(selectedRecommender, null)} className={`explore__filter-item scroll-item flex-align-center ${selectedMovement === null ? "active" : ""}`}>
+                                <img src="https://i.pinimg.com/564x/3d/1e/f7/3d1ef71d293b8a427a601f1e3d676dbf.jpg" alt="Tất cả" className="scroll-item__thumbnail" />
+                                <div className="explore__filter-item__details">
+                                    <span className="explore__filter-item__details__title">Tất cả</span>
+                                    {
+                                        location.pathname.includes("commission-services") ?
+                                            (
+                                                <span className="explore__fitler-item__details__count">{formatFloat(totalServiceCount)}</span>
+                                            )
+                                            :
+                                            (
+                                                <span className="explore__fitler-item__details__count">{formatFloat(totalPostCount)}</span>
+                                            )
+                                    }
+                                </div>
+                            </div>
 
-                                        <span className="explore__fitler-item__details__count">{movement.postCount > 1000 ? formatNumber(movement.postCount, 1) : movement.postCount}</span>
+                            {movements && movements?.map((movement, idx) => (
+                                <div key={idx} onClick={() => handleRecommenderChange(selectedRecommender, movement)} className={`explore__filter-item scroll-item flex-align-center ${selectedMovement?._id === movement._id ? "active" : ""}`}>
+                                    <img src={movement?.thumbnail} alt={movement?.title} className="scroll-item__thumbnail" />
+                                    <div className="explore__filter-item__details">
+                                        <span className="explore__filter-item__details__title">{limitString(movement?.title, 12)}</span>
+                                        {
+                                            location.pathname.includes("commission-services") ?
+                                                (
+                                                    <span className="explore__fitler-item__details__count">{movement.commissionServiceCount > 1000 ? formatNumber(movement.commissionServiceCount, 1) : movement.commissionServiceCount}</span>
+                                                )
+                                                :
+                                                (
+                                                    <span className="explore__fitler-item__details__count">{movement.postCount > 1000 ? formatNumber(movement.postCount, 1) : movement.postCount}</span>
+                                                )
+                                        }
                                     </div>
                                 </div>
                             ))}
+
                             <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>&gt;</button>
                         </div>
                     </div>

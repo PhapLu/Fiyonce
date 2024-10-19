@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { apiUtils } from '../../utils/newRequest';
 import RenderCommissionServices from '../../components/crudCommissionService/render/RenderCommissionServices.jsx';
 import "./SearchResult.scss";
@@ -104,6 +104,7 @@ export default function SearchResult() {
           </section>
         )
       }
+      <Outlet />
     </div >
   );
 }

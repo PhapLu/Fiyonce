@@ -6,7 +6,7 @@ import reviewController from '../../controllers/review.controller.js'
 const router = express.Router()
 
 router.get('/readReviews/:userId',asyncHandler(reviewController.readReviews))
-router.get('/readReviewsOrderId/:orderId', asyncHandler(reviewController.readReviewsOrderId))
+router.get('/readReviewsByOrderId/:orderId', asyncHandler(reviewController.readReviewsByOrderId))
 
 //authentication
 router.use(verifyToken)

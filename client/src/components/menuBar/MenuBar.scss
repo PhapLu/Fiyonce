@@ -4,11 +4,11 @@
     top: calc(100% + 8px);
     right: -16px;
     min-width: 300px;
-    border: 1px solid var(--gray-1-color);
+    // border: 1px solid var(--gray-1-color);
     padding: 16px 16px;
     border-radius: 24px 0 24px 24px;
     background-color: var(--white-3-color);
-    box-shadow: var(--box-shadow-1);
+    box-shadow: var(--box-shadow-2);
 
     img {
         width: 24px;
@@ -86,7 +86,8 @@
     }
 
     .dropdown-menu-statics {
-        font-size: 1.2rem !important;
+        font-size: 1.3rem !important;
+        font-weight: 500;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -95,11 +96,28 @@
 
         a {
             color: var(--gray-3-color);
+            font-size: 1.3rem !important;
 
             &:hover {
                 color: var(--gray-5-color);
                 text-decoration: underline;
             }
         }
+    }
+}
+
+
+// RESPONSIVE
+@media (min-width: 1024px) {}
+
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .my-masonry-grid {
+        column-count: 4 !important;
+    }
+}
+
+@media only screen and (max-width: 739px) {
+    .dropdown-menu-container {
+        min-width: 260px;
     }
 }

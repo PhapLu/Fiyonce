@@ -21,7 +21,7 @@ export default function CreateMilestone() {
     const { setModalInfo } = useModal();
     const triggerFileInput = () => { document.getElementById('file-input').click(); };
 
-    const { userInfo } = useAuth();
+    const { userInfo, socket } = useAuth();
     const commissionOrder = useOutletContext();
     const isOrderOwner = commissionOrder?.memberId?._id === userInfo?._id;
     const isTalentChosen = commissionOrder?.talentChosenId?._id === userInfo?._id;
@@ -99,8 +99,8 @@ export default function CreateMilestone() {
         const newFiles = [...files];
 
         selectedFiles.forEach((file) => {
-            if (file.size > 2 * 1024 * 1024) {
-                setErrors((values) => ({ ...values, files: "Dung lượng ảnh không được vượt quá 2MB." }));
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors((values) => ({ ...values, files: "Dung lượng ảnh không được vượt quá 5MB." }));
             } else if (newFiles.length + selectedFiles.length <= 10) {
                 newFiles.push(file);
                 setErrors((values) => ({ ...values, files: "" }));
@@ -145,6 +145,14 @@ export default function CreateMilestone() {
                 status: "success",
                 message: "Thêm tiến độ thành công"
             })
+
+            // Send notification
+            const senderId = userInfo?._id;
+            const receiverId = commissionOrder?.memberId?._id;
+            const inputs2 = { receiverId, type: "createCommissionOrderMilestone", url: `/order-history` }
+            const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+            const notificationData = response2.data.metadata.notification;
+            socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
 
             navigate("/order-history")
         } catch (error) {

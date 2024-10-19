@@ -508,7 +508,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                         name="isAgreeTerms"
                                         checked={inputs.isAgreeTerms || ""}
                                         onChange={handleChange}
-                                    /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text underlined-text"> điều khoản dịch vụ </Link> của Pastal</span>
+                                    /> <span>Tôi đồng ý với các <Link to="/statics/terms-of-services" target="_blank" className="highlight-text underlined-text"> điều khoản dịch vụ </Link> của Pastal</span>
                                 </label>
                                 {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
                             </div>
@@ -518,7 +518,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
 
                             <div className="form__submit-btn-container">
                                 <button type="submit"
-                                    className="form__submit-btn-item btn btn-2 btn-md"
+                                    className="form__submit-btn-item btn btn-2 btn-md mobile-full-width-btn"
                                     onClick={handleSubmit}
                                     disabled={isSubmitOrderCommissionLoading}>
                                     {isSubmitOrderCommissionLoading ? (
@@ -546,7 +546,7 @@ export default function CreateCommissionOrder({ isDirect, commissionService, set
                                             <span>Các họa sĩ sẽ liên hệ với bạn qua nền tảng sớm nhất có thể.</span></>
                                 }
                                 <br />
-                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text underlined-text">tại đây</Link>.
+                                Kiểm tra thông tin đơn hàng <Link to={`/order-history`} className="highlight-text underlined-text">Tại đây</Link>.
                             </p>
 
                             <p className="border-text mt-32">

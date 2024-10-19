@@ -20,6 +20,7 @@ import { apiUtils } from "../../../utils/newRequest";
 
 export default function RenderCommissionOrder() {
     const commissionOrder = useOutletContext();
+    console.log(commissionOrder)
     const { userInfo } = useAuth();
 
     const [showZoomImage, setShowZoomImage] = useState(false);
@@ -87,16 +88,23 @@ export default function RenderCommissionOrder() {
                                                                 "Khách hàng đã hủy đơn"
                                                                 : commissionOrder?.status === "in_progress"
                                                                     ? "Họa sĩ đang thực hiện"
-                                                                    : commissionOrder?.status === "finished"
-                                                                        ?
-                                                                        "Đã hoàn tất đơn hàng"
-                                                                        : commissionOrder?.status === "under_processing"
-                                                                            ? "Admin đang xử lí"
-                                                                            : ""}
+                                                                    : commissionOrder?.status === "delivered"
+                                                                        ? "Họa sĩ đã bàn giao"
+                                                                        : commissionOrder?.status === "finished"
+                                                                            ?
+                                                                            "Đã hoàn tất đơn hàng"
+                                                                            : commissionOrder?.status === "under_processing"
+                                                                                ? "Admin đang xử lí"
+                                                                                : ""}
                                         </div>
                                     </div>
-                                    <h4>{commissionOrder?.commissionServiceId?.title || "Tên dịch vụ"}</h4>
-                                    <h4>Giá từ: <span className="highlight-text underlined-text fs-16"> {(commissionOrder?.commissionServiceId?.minPrice && formatCurrency(commissionOrder?.commissionServiceId?.minPrice)) || "x"} VND</span></h4>
+
+                                    <h3 className="mt-0 mb-8">{commissionOrder?.commissionServiceId?.title}</h3>
+                                    <span>
+                                        Do khách hàng đề xuất: <span className="highlight-text">{formatCurrency(commissionOrder?.minPrice)} - {formatCurrency(commissionOrder?.maxPrice)} VND</span>
+                                    </span>
+                                    <hr />
+                                    {/* <h4>Do khách hàng đề xuất: <span className="highlight-text fs-16"> {(commissionOrder?.minPrice && formatCurrency(commissionOrder?.minPrice)) || "x"} VND</span></h4> */}
 
                                     <strong onClick={() => { setIsProcedureVisible(!isProcedureVisible) }} className="flex-space-between flex-align-center hover-cursor-opacity mt-32">
                                         {
@@ -175,7 +183,7 @@ export default function RenderCommissionOrder() {
                             <p>
                                 <strong>*Lưu ý:</strong>
                                 <br />
-                                Vui lòng bật thông báo Gmail để cập nhật thông tin mới nhất về đơn hàng của bạn.
+                                Vui lòng bật thông báo Gmail để cập nhật thông tin mới nhất về đơn hàng{isOrderOwner ? " của bạn" : ""}.
                             </p>
                         </div>
                     </div >
@@ -238,10 +246,10 @@ export default function RenderCommissionOrder() {
                             }
                             {
                                 commissionOrder?.isDirect ? (
-                                    isTalentChosen && (<Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "order-history"}/commission-orders/${commissionOrder?._id}/create-proposal`} className="form__submit-btn-item btn btn-2 btn-md">Tạo hợp đồng</Link>)
+                                    isTalentChosen && (<Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "/order-history"}/commission-orders/${commissionOrder?._id}/create-proposal`} className="form__submit-btn-item btn btn-2 btn-md">Tạo hợp đồng</Link>)
                                 ) : (
                                     !isOrderOwner && userInfo?.role == "talent") && (
-                                    <Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "order-history"}/commission-orders/${commissionOrder?._id}/create-proposal`} className="form__submit-btn-item btn btn-2 btn-md">Ứng commission</Link>
+                                    <Link to={`${location.pathname.includes("commission-market") ? "/commission-market" : "/order-history"}/commission-orders/${commissionOrder?._id}/create-proposal`} className="form__submit-btn-item btn btn-2 btn-md">Ứng commission</Link>
                                 )
                             }
                         </div>

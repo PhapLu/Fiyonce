@@ -28,7 +28,7 @@ import { useModal } from "../../contexts/modal/ModalContext";
 
 // Utils
 import { apiUtils } from "../../utils/newRequest"
-import { formatCurrency, formatDate } from "../../utils/formatter";
+import { formatCurrency, formatDate, getDaysLeft } from "../../utils/formatter";
 
 // Styling
 import "./OrderHistory.scss";
@@ -48,6 +48,7 @@ export default function TalentOrderHistory() {
     const fetchTalentOrderHistory = async () => {
         try {
             const response = await apiUtils.get(`/order/readTalentOrderHistory`);
+            console.log(response.data.metadata.talentOrderHistory)
             return response.data.metadata.talentOrderHistory;
         } catch (error) {
             return null;
@@ -208,7 +209,7 @@ export default function TalentOrderHistory() {
                                     </td>
                                     <td>
                                         <span>
-                                            <Link to={`/users/${order?.memberId._id}`} className="user sm hover-cursor-opacity">
+                                            <Link to={`/users/${order?.memberId?._id}`} className="user sm hover-cursor-opacity">
                                                 <div className="user--left">
                                                     <img src={resizeImageUrl(order?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                                                     <div className="user__name">
@@ -223,7 +224,17 @@ export default function TalentOrderHistory() {
                                         <br />
                                         Họa sĩ đề xuất: {order?.proposalId?.price ? `đ${formatCurrency(order?.proposalId?.price)}` : "-"}
                                     </td>
-                                    <td>{order.proposalId?.startAt && order.proposalId?.deadline ? formatDate(order.proposalId?.startAt) + " - " + formatDate(order.proposalId?.deadline) : "-"}</td>
+                                    <td>
+                                        <span>
+                                            {order.proposalId?.startAt && order.proposalId?.deadline ? formatDate(order.proposalId?.startAt) + " - " + formatDate(order.proposalId?.deadline) : "-"}
+                                        </span>
+                                        <br />
+
+                                        {
+                                            order.proposalId?.deadline && <span>{getDaysLeft(order.proposalId?.deadline) >= 0 ? `còn ${getDaysLeft(order.proposalId?.deadline)} ngày`: "Đã qua hạn"} </span>
+                                        }
+
+                                    </td>
 
                                     <td className="flex-align-center">
                                         <>
@@ -242,7 +253,7 @@ export default function TalentOrderHistory() {
                                             {order.status === "approved" && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/proposals`} aria-label="Xem hồ sơ họa sĩ đã gửi" className="btn btn-3 mr-8 hover-display-label">Xem hợp đồng</Link>
                                             )}
-                                             {order.status === "rejected" && (
+                                            {order.status === "rejected" && (
                                                 <Link to={`/order-history/commission-orders/${order?._id}/reject-response`} aria-label="Xem lí do từ chối" className="btn btn-3 mr-8 hover-display-label">Lí do từ chối</Link>
                                             )}
                                             {order.status === "confirmed" && (
@@ -256,7 +267,8 @@ export default function TalentOrderHistory() {
                                             )}
                                             {order.status === "delivered" && (
                                                 <>
-                                                    <Link to={`/order-history/commission-orders/${order?._id}/review`} aria-label="Cập nhật tiến độ công việc" className="btn btn-3 hover-display-label mr-8">Đánh giá</Link>
+                                                    <Link to={`/order-history/commission-orders/${order?._id}/render-final-delivery`} aria-label="Xem sản phẩm do họa sĩ bàn giao" className="btn btn-3 hover-display-label mr-8">Xem sản phẩm</Link>
+                                                    <Link to={`/order-history/commission-orders/${order?._id}/render-reviews`} aria-label="Xem đánh giá" className="btn btn-3 hover-display-label mr-8">Xem đánh giá</Link>
                                                 </>
                                             )}
                                         </>

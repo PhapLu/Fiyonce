@@ -17,6 +17,7 @@ export default function ProfileLayout() {
     const { userInfo, setUserInfo } = useAuth();
     const { userId } = useParams();
     const [profileInfo, setProfileInfo] = useState();
+
     const isProfileOwner = userInfo && userInfo?._id === userId;
 
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
@@ -165,6 +166,9 @@ export default function ProfileLayout() {
             setOverlayVisible(false);
             setSelectedImage(null);
         }
+
+        // Reset the file input to allow selecting the same file again
+        event.target.value = null;
     };
 
 
@@ -205,7 +209,7 @@ export default function ProfileLayout() {
                         />
                         {isProfileOwner && (
                             <>
-                                <button className="profile__bg__edit-btn btn btn-md" onClick={onChooseImg}>
+                                <button className="profile__bg__edit-btn btn btn-md mobile-hide" onClick={onChooseImg}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -243,72 +247,94 @@ export default function ProfileLayout() {
 
                     <div className="sub-nav-container">
                         <div className="sub-nav-container--left">
-                            {isProfileOwner ? (userInfo?.role === "talent" ? (
-                                <>
-                                    <Link
-                                        to={`/users/${userId}/profile-commission-services`}
-                                        className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
-                                            (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
-                                    >
-                                        Dịch vụ
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/profile-posts`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
-                                    >
-                                        Tác phẩm
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/term-of-services`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/term-of-services') ? "active" : ""}`}
-                                    >
-                                        Điều khoản
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/basic-info`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
-                                    >
-                                        Thông tin cơ bản
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/archive`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
-                                    >
-                                        Lưu trữ
-                                    </Link>
-                                </>
-                            ) : (
-                                <>
-                                    <Link
-                                        to={`/users/${userId}/basic-info`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || location.pathname.split("/").length === 3 ? "active" : ""}`}
-                                    >
-                                        Thông tin cơ bản
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/archive`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
-                                    >
-                                        Lưu trữ
-                                    </Link>
-                                </>
-                            )) : (
-                                <>
-                                    <Link
-                                        to={`/users/${userId}/profile-commission-services`}
-                                        className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
-                                            (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
-                                    >
-                                        Dịch vụ
-                                    </Link>
-                                    <Link
-                                        to={`/users/${userId}/profile-posts`}
-                                        className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
-                                    >
-                                        Tác phẩm
-                                    </Link>
-                                </>
-                            )}
+                            {isProfileOwner ?
+                                (userInfo?.role === "talent" ? (
+                                    <>
+                                        <Link
+                                            to={`/users/${userId}/profile-commission-services`}
+                                            className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                                (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                        >
+                                            Dịch vụ
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/profile-posts`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                        >
+                                            Tác phẩm
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/term-of-services`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/term-of-services') ? "active" : ""}`}
+                                        >
+                                            Điều khoản
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/basic-info`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') ? "active" : ""}`}
+                                        >
+                                            Thông tin cơ bản
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/archive`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
+                                        >
+                                            Lưu trữ
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            to={`/users/${userId}/basic-info`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/basic-info') || location.pathname.split("/").length === 3 ? "active" : ""}`}
+                                        >
+                                            Thông tin cơ bản
+                                        </Link>
+                                        <Link
+                                            to={`/users/${userId}/archive`}
+                                            className={`sub-nav-item btn ${location.pathname.includes('/archive') ? "active" : ""}`}
+                                        >
+                                            Lưu trữ
+                                        </Link>
+                                    </>
+                                ))
+                                :
+                                (
+                                    userInfo?.role === "talent" ? (
+                                        <>
+                                            <Link
+                                                to={`/users/${userId}/profile-commission-services`}
+                                                className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                                    (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                            >
+                                                Dịch vụ
+                                            </Link>
+                                            <Link
+                                                to={`/users/${userId}/profile-posts`}
+                                                className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                            >
+                                                Tác phẩm
+                                            </Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Link
+                                                to={`/users/${userId}/profile-commission-services`}
+                                                className={`sub-nav-item btn ${location.pathname.includes("/users/") &&
+                                                    (location.pathname.endsWith("/profile-commission-services") || location.pathname.split("/").length === 3) ? "active" : ""}`}
+                                            >
+                                                Thông tin cá nhân
+                                            </Link>
+                                            <Link
+                                                to={`/users/${userId}/profile-posts`}
+                                                className={`sub-nav-item btn ${location.pathname.includes('/profile-posts') ? "active" : ""}`}
+                                            >
+                                                Lưu trữ
+                                            </Link>
+                                        </>
+                                    )
+                                )
+                            }
                             {/* 
                             {
                                 !isProfileOwner?.isPublicArchive && (

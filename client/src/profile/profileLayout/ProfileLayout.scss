@@ -185,5 +185,59 @@
 
 /* Mobile styles (<= 739px) */
 @media only screen and (max-width: 739px) {
+    #root:has(.sidebar) {
+        .app {
+            margin: 0 16px 20px 16px !important;
+        }
+
+        .navbar {
+            background-color: transparent !important;
+            &.with-shadow {
+                box-shadow: unset;
+            }
+            .navbar--left {
+
+                .navbar__brand-logo,
+                .navbar__search-field {
+                    display: none;
+                }
+
+                .hamburger-menu-btn {
+
+                    svg {
+                        stroke: rgb(255, 255, 255);
+                    }
+                }
+            }
+
+            .navbar--right {
+                display: none;
+            }
+        }
+    }
+
+
+
+
+
+    .profile-layout {
+        flex-wrap: wrap;
+
+        .sub-nav-container {
+            margin-top: 0;
+            padding-top: 0;
+        }
+
+        .profile-page__header {
+            .profile-page__header--left {
+                width: 100%;
+            }
+        }
+
+        .outlet-content {
+            width: 100%;
+        }
+    }
+
     // body {}
 }

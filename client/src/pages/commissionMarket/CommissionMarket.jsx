@@ -29,9 +29,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 export default function CommissionMarket() {
     const breakpointColumnsObj = {
         default: 3,
-        1200: 3,
-        800: 2,
-        600: 1
+        1023: 3,
+        739: 1,
     };
 
     const [inputs, setInputs] = useState({ status: "*" });
@@ -224,7 +223,7 @@ export default function CommissionMarket() {
                                                     </span>
                                                 ) : indirectOrder?.talentsApprovedCount > 0 && (
                                                     <span className="status pending">
-                                                        <span className="highlight-text">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
+                                                        <span className="status__title">&nbsp;{indirectOrder.talentsApprovedCount} họa sĩ đã ứng</span>
                                                     </span>
                                                 )}
                                             </div>

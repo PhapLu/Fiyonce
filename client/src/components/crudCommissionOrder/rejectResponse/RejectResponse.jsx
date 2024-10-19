@@ -13,6 +13,8 @@ import { apiUtils, newRequest } from "../../../utils/newRequest";
 // Styling
 import "./RejectResponse.scss"
 import { useAuth } from "../../../contexts/auth/AuthContext";
+import { resizeImageUrl } from "../../../utils/imageDisplayer";
+
 
 export default function RejectResponse() {
     const commissionOrder = useOutletContext();
@@ -24,29 +26,6 @@ export default function RejectResponse() {
     const { setModalInfo } = useModal();
     const { userInfo } = useAuth();
     const [isProcedureVisible, setIsProcedureVisible] = useState(true);
-
-    const fetchOrderRejectResponse = async () => {
-        try {
-            const response = await apiUtils.get(`/order/readRejectResponse/${commissionOrderId}`);
-            console.log(response)
-            return response.data.metadata.rejectResponse;
-        } catch (error) {
-            return null;
-        }
-    }
-
-    const { data: rejectResponse, fetchingOrderRejectResponseError, isFetchingOrderRejectResponseError, isFetchingOrderRejectResponseLoading } = useQuery(
-        ['fetchOrderRejectResponse'],
-        () => fetchOrderRejectResponse(),
-        {
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching reject response by Order ID:', error);
-            },
-        }
-    );
 
     const closeRejectResponseView = () => {
         navigate("/order-history");
@@ -65,15 +44,6 @@ export default function RejectResponse() {
         };
     }, [navigate]);
 
-
-    if (isFetchingOrderRejectResponseError) {
-        return fetchingCommissionOrderError;
-    }
-
-    if (isFetchingOrderRejectResponseLoading) {
-        return <div className="loading-spinner" />;
-    }
-
     const isOrderOwnerAsMember = userInfo?._id === commissionOrder?.memberId?._id;
 
     return (
@@ -81,13 +51,26 @@ export default function RejectResponse() {
             <div className="reject-response modal-form type-3" ref={renderOrderRejectResponseRef} onClick={(e) => { e.stopPropagation() }}>
                 <h2 className="form__title">Lí do từ chối</h2>
 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                    closeRejectResponseView();
-                }}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={closeRejectResponseView}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
 
-                <p>{rejectResponse?.rejectMessage}</p>
+                <p className="text-align-justify border-text type-1 mt-20 mb-24">
+                    <Link to={`/users/${commissionOrder?.talentChosenId?._id}`} className="user md hover-cursor-opacity w-30">
+                        <div className="user--left">
+                            <img src={resizeImageUrl(commissionOrder?.talentChosenId?.avatar, 50)} alt="" className="user__avatar" />
+                            <div className="user__name">
+                                <div className="fs-13">{commissionOrder?.talentChosenId?.fullName}</div>
+                                {
+                                    commissionOrder?.talentChosenId?.stageName &&
+                                    <div className="fs-13">@{commissionOrder?.talentChosenId?.stageName}</div>
+                                }
+                            </div>
+                        </div>
+                    </Link>
+                    <p className="mt-16">"{commissionOrder?.rejectMessage}"</p>
+                </p>
+                <button className="btn btn-2 btn-md w-100" onClick={closeRejectResponseView}>Xác nhận</button>
             </div >
         </div >
     )

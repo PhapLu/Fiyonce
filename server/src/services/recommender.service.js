@@ -1,4 +1,5 @@
 import Post from "../models/post.model.js"
+import Review from "../models/review.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import { User } from "../models/user.model.js"
 import { AuthFailureError, BadRequestError } from "../core/error.response.js"
@@ -59,18 +60,18 @@ class RecommenderService {
         // Add rating to talent user result
         userResults = await Promise.all(userResults.map(async user => {
             const userObj = user.toObject();
-            if (user.role === 'talent') {
+            if (user.role === 'admin') {
                 const result = await Review.aggregate([
                     { $match: { reviewedUserId: user._id } },
-                    { 
-                        $group: { 
-                            _id: null, 
+                    {
+                        $group: {
+                            _id: null,
                             averageRating: { $avg: "$rating" },
                             ratingCount: { $sum: 1 }  // Add field to count the number of reviews
-                        } 
+                        }
                     }
                 ]);
-                
+
                 userObj.rating = result.length > 0 ? result[0].averageRating : 0;
                 userObj.ratingCount = result.length > 0 ? result[0].ratingCount : 0; // Include the count of ratings
             }
@@ -113,14 +114,14 @@ class RecommenderService {
         const filters = {
             ...(q.movementId !== undefined && { movementId: q.movementId }),
         };
-    
+
         try {
             const posts = await Post.find(filters)
                 .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
                 .populate("postCategoryId");
-    
+
             // Compute the minimum and maximum values for scaling
             const [minMaxValues] = await Post.aggregate([
                 {
@@ -163,10 +164,10 @@ class RecommenderService {
                     },
                 },
             ]);
-    
+
             const minValues = minMaxValues.minValues[0] || {};
             const maxValues = minMaxValues.maxValues[0] || {};
-    
+
             // Ensure default values are set if there are no documents
             const minLikesCount = minValues.minLikes || 0;
             const maxLikesCount = maxValues.maxLikes || 1; // Avoid division by zero
@@ -178,24 +179,24 @@ class RecommenderService {
             const maxFollowersCount = maxValues.maxFollowers || 1; // Avoid division by zero
             const minAge = minValues.minAge || 0;
             const maxAge = maxValues.maxAge || 1; // Avoid division by zero
-    
+
             const scoredPosts = await Promise.all(
                 posts.map(async (post) => {
                     const talent = await User.findById(post.talentId);
-    
+
                     // Compute scaled values
                     const likesScaled = (post.likes.length - minLikesCount) / (maxLikesCount - minLikesCount);
                     const viewsScaled = (post.views.length - minViews) / (maxViews - minViews);
                     const bookmarksScaled = (post.bookmarks.length - minBookmarksCount) / (maxBookmarksCount - minBookmarksCount);
                     const followersScaled = (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount);
-    
+
                     // Compute post age weight
                     const hoursSinceCreation = (new Date() - new Date(post.createdAt)) / (60 * 60 * 1000);
                     const scaledPostAge = (hoursSinceCreation - minAge) / (maxAge - minAge);
-    
+
                     // Calculate engagement rate
                     const engagementRate = post.views.length ? post.likes.length / post.views.length : 0;
-    
+
                     // Define weights
                     const weights = {
                         likes: 0.3,
@@ -205,7 +206,7 @@ class RecommenderService {
                         engagementRate: 0.1,
                         postAgeWeight: 0.2,
                     };
-    
+
                     // Calculate the score with normalized values
                     const score =
                         likesScaled * weights.likes +
@@ -214,7 +215,7 @@ class RecommenderService {
                         bookmarksScaled * weights.bookmarks +
                         engagementRate * weights.engagementRate +
                         scaledPostAge * weights.postAgeWeight;
-    
+
                     return {
                         ...post.toObject(),
                         score,
@@ -223,13 +224,13 @@ class RecommenderService {
                     };
                 })
             );
-    
+
             // Sort posts by score
             scoredPosts.sort((a, b) => b.score - a.score);
-    
+
             // Implement pagination here: select the right posts based on the page and limit
             const paginatedPosts = scoredPosts.slice(skip, skip + limit);
-    
+
             return {
                 posts: paginatedPosts,
                 currentPage: page,

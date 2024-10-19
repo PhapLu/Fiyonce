@@ -79,6 +79,8 @@ import CommissionReviews from "./components/crudCommissionReviews/render/RenderC
 import ReviewCommissionOrder from "./components/crudCommissionOrder/review/ReviewCommissionOrder.jsx";
 import ReportDashboard from "./dashboard/reportDashboard/ReportDashboard.jsx";
 import SupplementTalentRequest from "./components/upgradeAccount/SupplementTalentRequest.jsx";
+import RenderFinalDelivery from "./components/crudCommissionOrder/renderFinalDelivery/RenderFinalDelivery.jsx";
+import RenderCommissionOrderReviews from "./components/crudCommissionOrder/renderReviews/RenderCommissionOrderReviews.jsx";
 
 const queryClient = new QueryClient();
 
@@ -137,6 +139,10 @@ const commissionOrderRoutes = [
         element: <DeliverCommissionOrder />,
       },
       {
+        path: "render-final-delivery",
+        element: <RenderFinalDelivery />,
+      },
+      {
         path: "finish",
         element: <FinishCommissionOrder />,
       },
@@ -147,6 +153,10 @@ const commissionOrderRoutes = [
       {
         path: "review",
         element: <ReviewCommissionOrder />,
+      },
+      {
+        path: "render-reviews",
+        element: <RenderCommissionOrderReviews />,
       },
       // More actions
       {
@@ -178,7 +188,7 @@ const routes = [
             element: <ExploreCommissionServices showCommissionServices={true} />,
             children: [
               {
-                path: "/commission-services/:commissionServiceId",
+                path: "/commission-services/:commission-service-id",
                 element: <RenderCommissionService />,
               },
             ]
@@ -199,11 +209,6 @@ const routes = [
           },
         ],
       },
-
-      {
-        path: "/terms-and-policies",
-        element: <InDevelopment />,
-      },
       {
         path: "/statics",
         element: <StaticLayout />,
@@ -213,7 +218,7 @@ const routes = [
             element: <Glaze />,
           },
           {
-            path: "/statics/term-of-services",
+            path: "/statics/terms-of-services",
             element: <Glaze />,
           },
           {
@@ -260,7 +265,7 @@ const routes = [
             element: <ProfileCommissionServices />,
             children: [
               {
-                path: "/users/:userId/profile-commission-services/:commissionServiceId",
+                path: "/users/:userId/profile-commission-services/:commission-service-id",
                 element: <RenderCommissionService />,
               },
             ]
@@ -317,7 +322,7 @@ const routes = [
       // General Layout
       {
         path: "order-history",
-        element: <ProtectedRoute allowedRoles={['all']}><OrderHistory /></ProtectedRoute>,
+        element: <ProtectedRoute allowedRoles={['all-exclude-guest']}><OrderHistory /></ProtectedRoute>,
         children: commissionOrderRoutes,
       },
       {
@@ -336,6 +341,12 @@ const routes = [
       {
         path: "search",
         element: <SearchResult />,
+        children: [
+          {
+            path: "commission-services/:commission-service-id",
+            element: <RenderCommissionService />,
+          },
+        ]
       },
 
       // Admin dashboard
@@ -379,6 +390,18 @@ const routes = [
     path: "help-center",
     element: <HelpCenterLayout />,
     children: [
+      {
+        path: "",
+        element: <HelpCenter />,
+      },
+      {
+        path: "topics/:topic-id",
+        element: <HelpTopic />,
+      },
+      {
+        path: "topics/:topic-id/articles/:article-id",
+        element: <HelpArticle />
+      }
       // {
       //   path: "topics/:topic-id",
       //   element: <HelpTopic />,
@@ -387,10 +410,16 @@ const routes = [
       //   path: "topics/:topic-id/:article-id",
       //   element: <HelpArticle />,
       // },
-      {
-        path: "",
-        element: <HelpCenter />,
-      },
+      // {
+      //   path: "",
+      //   element: <HelpCenter />,
+      //   children: [
+      //     {
+      //       path: "articles/for-talents",
+      //       element: <ForTalents />,
+      //     },
+      //   ]
+      // },
     ]
   },
 

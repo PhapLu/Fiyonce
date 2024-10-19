@@ -87,7 +87,7 @@ export default function Resources() {
 
                 <div className="color-palette--right">
                     <h2 className="text-align-center">Bộ màu sắc tạo nên Pastal</h2>
-                    <p>Màu sắc chính là phương tiện để Pastal truyền tải giá trị nghệ thuật đến với cộng đồng những bạn yêu nghệ thuật nói chung và làm công việc sáng tạo nói riêng. Mỗi mã màu trên Pastal đều được chọn lọc kĩ lưỡng nhằm mang đến một tổ hợp màu sắc riêng biệt, thể hiện sự tự do sáng tạo, trẻ trung năng động và đặc biệt . Ở Pastal, nghệ thuật đẹp đến từng pixel.</p>
+                    <p>Màu sắc chính là phương tiện để Pastal truyền tải giá trị nghệ thuật đến với cộng đồng những người yêu nghệ thuật nói chung và người làm công việc sáng tạo nói riêng. Mỗi mã màu trên Pastal đều được chọn lọc kĩ lưỡng nhằm mang đến một tổ hợp màu sắc riêng biệt, thể hiện tinh thần tự do sáng tạo của một thế hệ họa sĩ trẻ đầy tài năng và nhiệt huyết.</p>
                 </div>
             </div>
             <br />

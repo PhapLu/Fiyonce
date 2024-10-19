@@ -46,6 +46,8 @@ const OrderSchema = new mongoose.Schema(
         ],
         isTalentArchived: { type: Boolean, default: false },
         isMemberArchived: { type: Boolean, default: false },
+        isReviewedByMember: { type: Boolean, default: false },
+        isReviewedByTalent: { type: Boolean, default: false },
         rejectMessage: { type: String },
         cancelMessage: { type: String },
         minPrice: { type: Number },

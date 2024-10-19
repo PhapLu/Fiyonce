@@ -17,9 +17,9 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
     // Toggle display modal form
     const shareProfileRef = useRef();
     useEffect(() => {
+
         const handler = (e) => {
             if (shareProfileRef.current && !shareProfileRef.current.contains(e.target)) {
-                alert("abc")
                 setShowMoreProfileActions(false);
                 setOverlayVisible(false);
             }

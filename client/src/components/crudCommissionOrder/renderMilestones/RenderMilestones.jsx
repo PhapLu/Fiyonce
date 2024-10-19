@@ -58,7 +58,7 @@ export default function RenderMilestones() {
                         (
                             <>
                                 <p>
-                                    Pastal kính chúc quý khách hàng và họa sĩ trao đổi công việc một cách suôn sẻ nhé <span className="fs-18">😊</span></p>
+                                    Pastal Team kính chúc quý khách hàng và họa sĩ trao đổi công việc một cách suôn sẻ nhé <span className="fs-18">😊</span></p>
                                 <div className="milestone-container">
                                     {
                                         commissionOrder?.milestones?.map((milestone) => {
@@ -86,7 +86,7 @@ export default function RenderMilestones() {
                                 </div>
                             </>
                         ) : (
-                            <p className="text-align-center mb-24">Hiện họa sĩ chưa cập nhật bản thảo cho đơn hàng này. Pastal kính chúc quý khách hàng và họa sĩ trao đổi công việc một cách suôn sẻ nhé <span className="fs-18">😊</span></p>
+                            <p className="text-align-center mb-24">Hiện họa sĩ chưa cập nhật bản thảo cho đơn hàng này. Pastal Team kính chúc quý khách hàng và họa sĩ trao đổi công việc một cách suôn sẻ nhé <span className="fs-18">😊</span></p>
                         )
                 }
 

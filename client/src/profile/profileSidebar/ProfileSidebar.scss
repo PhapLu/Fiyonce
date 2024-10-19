@@ -179,7 +179,6 @@
     }
 
     .sidebar__name {
-        text-align: center;
         margin-bottom: 20px;
 
         .sidebar__name__fullName {
@@ -241,8 +240,12 @@
         }
     }
 
+    .sub-nav-container {
+        padding: 0;
+    }
+
     .sidebar__follow {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
 
         .sidebar__follow__follow-container {
             // position: relative;
@@ -370,4 +373,90 @@
 }
 
 /* Mobile styles (<= 739px) */
-@media only screen and (max-width: 739px) {}
+@media only screen and (max-width: 739px) {
+    .sidebar {
+        padding: 90px 0 0;
+        width: 100% !important;
+        border: unset;
+        box-shadow: unset;
+
+        .sidebar__section {
+            margin-bottom: 8px;
+        }
+
+        .sidebar__avatar {
+            .sidebar__avatar__update-img .sidebar__avatar__img {
+                border: 3px solid white;
+
+            }
+
+            .sidebar__avatar__ic {
+                bottom: 2px;
+                right: 2px;
+                width: 24px;
+                height: 24px;
+                font-size: 1.4rem;
+            }
+        }
+
+
+        .btn.btn-md.chat-btn {
+            min-width: 70px;
+        }
+
+        .sidebar__avatar {
+            margin-left: 0;
+            transform: unset;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 0;
+
+            img {
+                border: 1px solid white;
+            }
+        }
+
+        .sidebar__name {
+            margin: 12px 0 4px;
+            text-align: start;
+
+            .sidebar__name__fullName {
+                justify-content: unset;
+                margin-top: 8px;
+            }
+        }
+
+        .sidebar__location,
+        .sidebar__job-title {
+            justify-content: unset;
+
+            svg {
+                margin-left: 0 !important;
+            }
+        }
+
+        .sidebar__follow .sidebar__follow__follow-container {
+            margin-left: 0 !important;
+
+            .sidebar__follow__follow-item {
+                .overlay {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+        }
+
+        .sidebar__bg.mobile {
+            width: calc(100% + 40px);
+            height: 130px;
+            left: -20px;
+            top: -90px;
+            position: absolute;
+
+        }
+
+        .flex-justify-center {
+            justify-content: unset !important;
+        }
+    }
+}

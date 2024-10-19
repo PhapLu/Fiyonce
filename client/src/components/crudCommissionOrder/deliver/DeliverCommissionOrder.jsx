@@ -166,6 +166,15 @@ export default function DeliverCommissionOrder() {
                     status: "success",
                     message: "Hoàn tất bàn giao sản phẩm",
                 });
+
+                // Send notification
+                const senderId = userInfo?._id;
+                const receiverId = commissionOrder?.memberId?._id;
+                const inputs2 = { receiverId, type: "deliverCommissionOrder", url: `/order-history` }
+                const response2 = await apiUtils.post(`/notification/createNotification`, inputs2);
+                const notificationData = response2.data.metadata.notification;
+                socket.emit('sendNotification', { senderId, receiverId, notification: notificationData, url: notificationData.url });
+
                 closeDeliverCommissionOrderView();
             }
 

@@ -32,15 +32,17 @@ export default function About() {
             <br />
             <section className="section development-story mb-80">
                 <div className="development-story--left">
-                    <h2>PASTAL</h2>
+                    <h2> PASTAL</h2>
                     <h4>Passionate & Talent</h4>
                 </div>
 
                 <div className="development-story--right">
-                    <span>Khoảng đầu năm 2022, trong một lần cùng teammates chuẩn bị cho kì thi Hackathon tại TPHCM, mình đã có tìm hiểu về những mô hình “vẽ tranh theo yêu cầu”. Kể từ đó, mình đã ấp ủ ý tưởng xây dựng một nền tảng kết nối những người yêu nghệ thuật nói chung và những họa sĩ trẻ đầy tài năng nói riêng. Mình muốn nghệ thuật trở nên dễ tiếp cận hơn với cộng đồng,
-                        Với hơn 8 năm ở vai trò là một họa sĩ tự do, một nhà thiết kế part-time, cũng như một lập trình viên phần mềm, mình
-                        Như tinh thần của cái tên Pastal (passionate & talent), mình muốn tạo ra một cộng đồng những người trẻ sáng tạo, dám bước ra khỏi vòng an toàn để theo đuổi giấc mơ .
-                        Thật may mắn khi được gặp những người cộng sự làm việc hết mình. </span>
+                    <span>✨ Art commission đã trở thành một khái niệm không còn xa lạ trong cộng đồng những người yêu nghệ thuật khi nhu cầu sở hữu một tác phẩm được cá nhân hóa theo ý mình ngày càng phổ biến.
+                        Tuy vậy việc chọn cho mình một họa sĩ phù hợp và đáng tin cậy là điều không hề dễ dàng.
+                        Hiểu được nỗi đau này, Pastal sinh ra như một nền tảng trung gian kết nối những ý tưởng nghệ thuật của khách hàng với hàng nghìn họa sĩ trẻ tài năng trên cả nước.
+                        <br />
+                        <br />
+                        Không chỉ dừng lại ở vai trò nền tảng giao dịch trung gian, Pastal tiên phong trong việc giúp họa sĩ xây dựng thương hiệu cá nhân và hồ sơ công việc một cách chuyên nghiệp, lan tỏa những giá trị nghệ thuật đến với đông đảo công chúng. Như tinh thần của cái tên Pastal (Passionate & Talent), chúng ta sẽ tạo nên một cộng đồng những họa sĩ trẻ đầy tài năng và nhiệt huyết, dám bước ra khỏi vùng an toàn và theo đuổi sự nghiệp nghệ thuật về lâu dài. </span>
                 </div>
             </section>
 
@@ -55,16 +57,44 @@ export default function About() {
                         <div className="core-value-item active">
                             <div className="core-value-item__ic-bg">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                                 </svg>
                             </div>
 
-                            <h4 className="core-value-item__title">Phát triển vì cộng đồng</h4>
+                            <h4 className="core-value-item__title">Sự đa dạng</h4>
                             <p className="core-value-item__description">
-                                Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ  em vùng cao, trồng thêm cây xanh và tạo sân chơi nuôi dưỡng đam mê cho các thế hệ họa sĩ tiếp theo.
+                                Nhu cầu cá nhân hóa một tác phẩm nghệ thuật đã thúc đẩy Pastal phát triển một nền tảng với quy mô lớn. Tại đây, những họa sĩ trẻ đầy tài năng đến từ nhiều trường phái nghệ thuật khác nhau, sẵn sàng đáp ứng các yêu cầu từ phía khách hàng.
                             </p>
 
-                            <Link to="" className="core-value-item__explore">Xem thêm</Link>
+                            {/* <Link to="" className="core-value-item__explore">Xem thêm</Link> */}
+                        </div>
+                        <div className="core-value-item">
+                            <div className="core-value-item__ic-bg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            </div>
+
+                            <h4 className="core-value-item__title">Sự đáng tin cậy</h4>
+                            <p className="core-value-item__description">
+                                Tất cả giao dịch trên Pastal đều hướng đến bảo vệ quyền lợi cho họa sĩ và khách hàng. Pastal sẽ dựa trên các điều khoản của nền tảng, chính sách dịch vụ của họa sĩ, cũng như hợp đồng làm việc giữa hai bên để xử lí các báo cáo vi phạm.
+                            </p>
+
+                            {/* <Link to="" className="core-value-item__explore">Xem thêm</Link> */}
+                        </div>
+                        <div className="core-value-item">
+                            <div className="core-value-item__ic-bg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                            </div>
+
+                            <h4 className="core-value-item__title">Sự chuyên nghiệp</h4>
+                            <p className="core-value-item__description">
+                                Pastal tiên phong hỗ trợ họa sĩ xây dựng thương hiệu cá nhân một cách chuyên nghiệp. Pastal cung cấp các tính năng cho phép họa sĩ trưng bày các tác phẩm nghệ thuật của mình như một bộ sưu tập, tùy chỉnh các dịch vụ commission, và quản lí các đơn hàng một cách hiệu quả.
+                            </p>
+
+                            {/* <Link to="" className="core-value-item__explore">Xem thêm</Link> */}
                         </div>
                         <div className="core-value-item">
                             <div className="core-value-item__ic-bg">
@@ -73,40 +103,12 @@ export default function About() {
                                 </svg>
                             </div>
 
-                            <h4 className="core-value-item__title">Phát triển vì cộng đồng</h4>
+                            <h4 className="core-value-item__title">Sự bền vững</h4>
                             <p className="core-value-item__description">
-                                Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ  em vùng cao, trồng thêm cây xanh và tạo sân chơi nuôi dưỡng đam mê cho các thế hệ họa sĩ tiếp theo.
+                                Mỗi giao dịch thành công trên nền tảng sẽ trực tiếp đóng góp để cải thiện chất lượng cuộc sống cho trẻ em không nơi nương nựa. Ngoài ra, các hoạt động vẽ tranh gây quỹ cũng sẽ được tổ chức định kì nhằm tạo ra sân chơi bồi dưỡng các thế hệ họa sĩ tiếp theo.
                             </p>
 
-                            <Link to="" className="core-value-item__explore">Xem thêm</Link>
-                        </div>
-                        <div className="core-value-item">
-                            <div className="core-value-item__ic-bg">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                </svg>
-                            </div>
-
-                            <h4 className="core-value-item__title">Phát triển vì cộng đồng</h4>
-                            <p className="core-value-item__description">
-                                Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ  em vùng cao, trồng thêm cây xanh và tạo sân chơi nuôi dưỡng đam mê cho các thế hệ họa sĩ tiếp theo.
-                            </p>
-
-                            <Link to="" className="core-value-item__explore">Xem thêm</Link>
-                        </div>
-                        <div className="core-value-item">
-                            <div className="core-value-item__ic-bg">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                </svg>
-                            </div>
-
-                            <h4 className="core-value-item__title">Phát triển vì cộng đồng</h4>
-                            <p className="core-value-item__description">
-                                Mỗi giao dịch thành công trên Pastal sẽ trực tiếp đóng góp cải thiện bữa ăn cho trẻ  em vùng cao, trồng thêm cây xanh và tạo sân chơi nuôi dưỡng đam mê cho các thế hệ họa sĩ tiếp theo.
-                            </p>
-
-                            <Link to="" className="core-value-item__explore">Xem thêm</Link>
+                            {/* <Link to="" className="core-value-item__explore">Xem thêm</Link> */}
                         </div>
                     </div>
                 </div>
@@ -273,10 +275,12 @@ export default function About() {
                 <div className="text-align-center">
                     <h3>Trở thành một phần của cộng đồng Pastal?</h3>
                     <p>
-                        Pastal hiện đang trong giai đoạn beta, mọi thắc mắc và đóng góp vui lòng liên hệ qua <span className="highlight-text">help@gmail.com</span> hoặc Fanpage
+                        Pastal hiện đang trong giai đoạn beta nên sẽ không tránh khỏi những thiếu sót.
+                        <br /> Mọi thắc mắc và đóng góp vui lòng liên hệ qua <span className="highlight-text fs-13">help@gmail.com</span> hoặc <Link to="" className='highlight-text'>Fanpage</Link>
                     </p>
+                    <br />
 
-                    <Link to="" className="register-now-btn flex-align-center">Đăng kí ngay <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <Link to="" className="btn btn-2 btn-lg register-now-btn text-align-center">Đăng kí ngay <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 ml-8 mr-0">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                     </svg>
                     </Link>

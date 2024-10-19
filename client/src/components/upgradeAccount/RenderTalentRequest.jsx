@@ -87,20 +87,19 @@ export default function RenderTalentRequest() {
                     (
                         <div className="form-field">
                             <p className="text-align-center">Admin đang xử lí yêu cầu nâng cấp tài khoản của bạn. <br />Trong thời gian đó, bạn có thể tham khảo cẩm nang họa sĩ <Link to="" className="highlight-text underlined-text">Tại đây</Link>.</p>
-                            <button className="btn btn-2 btn-md mt-8 w-100" onClick={closeModal}>Tôi hiểu</button>
+                            <button className="btn btn-2 btn-md mt-8 w-100" onClick={closeModal}>Xác nhận</button>
                         </div>
                     )
                 }
 
                 {talentRequest?.status === "approved" &&
                     (
-                        <div className="form-field">
+                        <div className="form-field text-align-center">
                             <p>
-                                <span className="text-align-center">Admin đã chấp nhận yêu cầu nâng cấp tài khoản của bạn.</span>
-                                <br />
-                                <span>Tham khảo <Link to="" className='highlight-text underlined-text'>Cẩm nang họa sĩ</Link> để xây dựng portfolio tốt hơn. Chúc bạn có thật nhiều đơn hàng và trải nghiệm thật tốt trên Pastal nhé.</span>
+                                <span className="">Admin đã chấp nhận yêu cầu nâng cấp tài khoản của bạn.</span>
+                                <span> Tham khảo <Link to="/help-center" target="_blank" className='highlight-text underlined-text'>Cẩm nang họa sĩ</Link> để xây dựng portfolio tốt hơn. Chúc bạn sớm có những đơn hàng đầu tiên trên nền tảng nhé ☘️.</span>
                             </p>
-                            <button className="btn btn-2 btn-md mt-8 w-100" onClick={closeModal}>Tôi hiểu</button>
+                            <button className="btn btn-2 btn-md mt-8 w-100" onClick={closeModal}>Xác nhận</button>
                         </div>
                     )
                 }

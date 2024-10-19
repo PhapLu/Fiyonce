@@ -28,7 +28,7 @@ export default function RenderProposals() {
     const { userInfo } = useAuth();
     const { setOtherMember } = useConversation();
 
-    const [isProcedureVisible, setIsProcedureVisible] = useState(false);
+    const [isProcedureVisible, setIsProcedureVisible] = useState(true);
     const [imageSrc, setImageSrc] = useState();
     const [showZoomImage, setShowZoomImage] = useState(false);
 
@@ -57,7 +57,7 @@ export default function RenderProposals() {
 
 
     const closeRenderProposalsView = () => {
-        if (location.pathname.includes("commisison-market")) {
+        if (location.pathname.includes("commission-market")) {
             navigate("/commission-market")
         } else {
             navigate("/order-history")
@@ -85,7 +85,7 @@ export default function RenderProposals() {
         return <div className="loading-spinner" />;
     }
 
-    const isOrderOwner = commissionOrder?.memberId?._id === userInfo._id;
+    const isOrderOwner = commissionOrder?.memberId?._id === userInfo?._id;
     return (
         <div className="overlay">
             <div className="render-proposals modal-form type-2" ref={renderProposalsRef} onClick={(e) => { e.stopPropagation() }}>
@@ -131,12 +131,14 @@ export default function RenderProposals() {
                                                         "Khách hàng đã hủy đơn"
                                                         : commissionOrder?.status === "in_progress"
                                                             ? "Họa sĩ đang thực hiện"
-                                                            : commissionOrder?.status === "finished"
-                                                                ?
-                                                                "Đã hoàn tất đơn hàng"
-                                                                : commissionOrder?.status === "under_processing"
-                                                                    ? "Admin đang xử lí"
-                                                                    : ""
+                                                            : commissionOrder?.status === "delivered"
+                                                                ? "Họa sĩ đã bàn giao"
+                                                                : commissionOrder?.status === "finished"
+                                                                    ?
+                                                                    "Đã hoàn tất đơn hàng"
+                                                                    : commissionOrder?.status === "under_processing"
+                                                                        ? "Admin đang xử lí"
+                                                                        : ""
                                     : (
                                         commissionOrder?.status === "pending"
                                             ?
@@ -158,14 +160,13 @@ export default function RenderProposals() {
                                                                     : commissionOrder?.status === "under_processing"
                                                                         ? "Admin đang xử lí"
                                                                         : ""
-
                                     )
                             }
                         </div>
                     </div>
 
                     <div className="user md mt-16">
-                        <Link to={`/users/${commissionOrder?.memberId._id}`} className="user--left hover-cursor-opacity">
+                        <Link to={`/users/${commissionOrder?.memberId?._id}`} className="user--left hover-cursor-opacity">
                             <img src={resizeImageUrl(commissionOrder?.memberId?.avatar, 50)} alt="" className="user__avatar" />
                             <div className="user__name">
                                 <div className="fs-14">{commissionOrder?.memberId?.fullName}</div>
@@ -185,7 +186,7 @@ export default function RenderProposals() {
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
                                                 </svg>
-                                            )} <span className="ml-8 fs-16">Thủ tục đăng yêu cầu tìm họa sĩ</span></strong>
+                                            )} <span className="ml-8 fs-16">Thủ tục đặt tranh</span></strong>
                                 <hr />
                                 {
                                     isProcedureVisible && (
@@ -233,7 +234,7 @@ export default function RenderProposals() {
                         <p>
                             <strong>*Lưu ý:</strong>
                             <br />
-                            Vui lòng bật thông báo Gmail để cập nhật thông tin mới nhất về đơn hàng của bạn.
+                            Vui lòng bật thông báo Gmail để cập nhật thông tin mới nhất về đơn hàng{isOrderOwner ? " của bạn" : ""}.
                         </p>
                     </div>
                 </div>
@@ -268,7 +269,7 @@ export default function RenderProposals() {
                                         })}
                                     </div>
                                     <div>
-                                        <Link to={`${location.pathname}/${proposal._id}`} className="btn btn-2 btn-md">
+                                        <Link to={`${location.pathname}/${proposal?._id}`} className="btn btn-2 btn-md">
                                             Xem hợp đồng
                                         </Link>
                                         <button className="btn btn-4 btn-md" onClick={() => { setOtherMember(proposal?.talentId) }}>

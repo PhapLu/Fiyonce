@@ -11,6 +11,14 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     return;
   }
 
+  if (allowedRoles && allowedRoles.includes("all-exclude-guest")) {
+    if (!userInfo) {
+      return <Navigate to="/" />;
+    } else {
+      return children;
+    }
+  }
+
   if (allowedRoles && allowedRoles.includes("all")) {
     return children;
   }

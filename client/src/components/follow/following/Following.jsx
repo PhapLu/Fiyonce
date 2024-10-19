@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../../contexts/auth/AuthContext";
 import { useModal } from "../../../contexts/modal/ModalContext";
 import { resizeImageUrl } from "../../../utils/imageDisplayer";
@@ -145,7 +145,7 @@ export default function Following({ profileInfo, setShowFollowing, setProfileInf
                 {profileInfo?.followings?.length > 0 ? (
                     profileInfo?.followings.map((following) => (
                         <div className="follow-item" key={following._id}>
-                            <div className="user lg">
+                            <Link to={`/users/${following._id}`} className="user lg">
                                 <div className="user--left">
                                     <img src={resizeImageUrl(following?.avatar, 100)} className="user__avatar" alt="Avatar" />
                                 </div>
@@ -161,7 +161,7 @@ export default function Following({ profileInfo, setShowFollowing, setProfileInf
                                         </span>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
 
                             <div className="btn-container">
                                 {userInfo?.following?.some(followingEl => followingEl._id === following._id) ? (
@@ -197,7 +197,7 @@ export default function Following({ profileInfo, setShowFollowing, setProfileInf
                             {
                                 usersToFollow.map((following) => (
                                     <div className="follow-item" key={following._id}>
-                                        <div className="user lg">
+                                        <Link to={`/users/${following._id}`} className="user lg">
                                             <div className="user--left">
                                                 <img src={resizeImageUrl(following?.avatar, 100)} className="user__avatar" alt="Avatar" />
                                             </div>
@@ -213,7 +213,7 @@ export default function Following({ profileInfo, setShowFollowing, setProfileInf
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
 
                                         <div className="btn-container">
                                             {userInfo?.following?.some(followingEl => followingEl._id === following._id) ? (

@@ -1,5 +1,5 @@
 .user-badge {
-    margin-left: 12px;
+    // margin-left: 12px;
 
     .user-badge-container {
         display: flex;
@@ -9,6 +9,7 @@
             .user-badge-item__icon {
                 width: 18px;
                 height: 18px;
+                margin-left: 6px;
             }
         }
     }

@@ -50,6 +50,7 @@ export default function ArchiveCommissionOrder() {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('fetchTalentOrderHistory');
+                queryClient.invalidateQueries('fetchMemberOrderHistory');
                 queryClient.invalidateQueries('fetchArchivedOrderHistory');
             },
             onError: (error) => {

@@ -19,14 +19,14 @@
 
 .render-users {
     .my-masonry-grid_column {
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 16px;
+        padding-right: 16px;
         background-clip: padding-box;
     }
 
     .my-masonry-grid {
         display: flex;
-        margin-left: -16px;
+        margin-left: -10px;
         /* gutter size offset */
         width: auto;
 
@@ -49,7 +49,7 @@
             .user-item__bg {
                 width: 100%;
                 z-index: 1;
-                height: 130px;
+                height: 110px;
                 border-radius: 8px 8px 0 0;
             }
 
@@ -57,7 +57,7 @@
                 z-index: 10;
                 left: 20px;
                 position: relative;
-                top: -10px;
+                top: -12px;
 
                 .user {
                     // position: absolute;

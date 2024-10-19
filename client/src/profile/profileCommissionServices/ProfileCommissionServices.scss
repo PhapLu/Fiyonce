@@ -90,6 +90,43 @@
 
     .order-service-now-btn {
         width: 70%;
-        padding: 12px 8px;
+        // padding: 12px 8px;
+    }
+}
+
+// RESPONSIVE
+/* PC styles (>= 1024px) */
+@media only screen and (min-width: 1024px) {}
+
+/* Tablet styles (740px to 1023px) */
+@media only screen and (min-width: 740px) and (max-width: 1023px) {}
+
+/* Mobile styles (<= 739px) */
+@media only screen and (max-width: 739px) {
+   
+    .profile-commission-service__category-item {
+        padding: 18px 16px !important;
+        .images-layout-3 {
+            height: 200px;
+        }
+        
+        .profile-commission-service__category-item__service-container {
+            // flex-wrap: wrap;
+
+            .profile-commission-service__category-item__service-item {
+                flex-wrap: wrap;
+                // width: 100%;
+                // flex-wrap: wrap;
+
+                .profile-commission-service__category-item__service-item--left,
+                .profile-commission-service__category-item__service-item--right {
+                    width: 100% !important;
+                }
+
+                .profile-commission-service__category-item__service-item--right {
+                    margin-top: 12px;
+                }
+            }
+        }
     }
 }

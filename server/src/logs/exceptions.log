@@ -1303,3 +1303,6 @@ ReferenceError: redisCache is not defined
     at Route.dispatch (D:\Adam\OnisonProject\server\node_modules\express\lib\router\route.js:119:3)
     at Layer.handle [as handle_request] (D:\Adam\OnisonProject\server\node_modules\express\lib\router\layer.js:95:5)
     at D:\Adam\OnisonProject\server\node_modules\express\lib\router\index.js:284:15::undefined
+2024-10-15 07:53:28::error::undefined::undefined::uncaughtException: read ECONNRESET
+Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:218:20)::undefined
