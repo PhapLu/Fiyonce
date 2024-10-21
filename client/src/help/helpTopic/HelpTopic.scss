@@ -1,13 +1,12 @@
 .help-topic {
     margin: 60px 15%;
 
-    .outlet-content {
-        margin: 80px 15%;
+    .help-topic__header{
+        // margin: 80px 15%;
         position: relative;
 
         .back-btn {
             position: absolute;
-            top: -8px;
             left: 0px;
         }
     }

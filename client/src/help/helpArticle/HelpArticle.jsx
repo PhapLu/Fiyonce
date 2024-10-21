@@ -15,6 +15,7 @@ import { apiUtils } from "../../utils/newRequest";
 import { formatDate, limitString } from "../../utils/formatter";
 
 export default function HelpArticle() {
+    const { "topic-id": helpTopicId } = useParams();
     const { "article-id": articleId } = useParams();
     const navigate = useNavigate();
 
@@ -43,21 +44,21 @@ export default function HelpArticle() {
         <div className="help-article">
             <div className="breadcrumb">
                 <div className="breadcrumb-container flex-align-center flex-justify-center">
-                    <Link to="" className="hover-underline hover-cursor-opacity highlight-text">
+                    <Link to="/help-center" className="hover-underline hover-cursor-opacity highlight-text">
                         Trung tâm trợ giúp
                     </Link >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sm">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
-                    <Link className="hover-underline hover-cursor-opacity highlight-text">
+                    <Link to={`/help-center/topics/${helpTopicId}`} className="hover-underline hover-cursor-opacity highlight-text">
                         {helpArticle?.helpTopicId?.theme == "for_artists" ? "Dành cho họa sĩ" : helpArticle?.helpTopicId?.theme == "for_clients" ? "Dành cho khách hàng" : "Về Pastal"}
                     </Link >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 sm">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
-                    <Link className="hover-underline hover-cursor-opacity hover-highlight-text">
+                    <span className="">
                         {helpArticle?.title && limitString(helpArticle?.title, 80)}
-                    </Link >
+                    </span >
                 </div>
             </div>
 

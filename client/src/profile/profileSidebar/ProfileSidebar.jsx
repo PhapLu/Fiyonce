@@ -47,6 +47,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
     // Initialize variables for inputs, errors, loading effect
     const [inputs, setInputs] = useState({
         fullName: '',
+        stageName: '',
         bio: '',
         socialLinks: [],
         pronoun: '',
@@ -291,6 +292,7 @@ export default function Sidebar({ profileInfo, setProfileInfo }) {
             setInputs((prevInputs) => ({
                 ...prevInputs,
                 fullName: profileInfo.fullName || userInfo.fullName || '',
+                stageName: profileInfo.stageName || userInfo.fullName || '',
                 bio: profileInfo.bio || userInfo.bio || '',
                 pronoun: profileInfo.pronoun || userInfo.pronoun || '',
                 workQueueUrl: profileInfo.workQueueUrl || userInfo.workQueueUrl || '',

@@ -61,8 +61,6 @@ import StartWipCommissionOrder from "./components/crudCommissionOrder/startWip/S
 import DeliverCommissionOrder from "./components/crudCommissionOrder/deliver/DeliverCommissionOrder.jsx";
 import FinishCommissionOrder from "./components/crudCommissionOrder/finish/FinishCommissionOrder.jsx";
 import HelpTopic from "./help/helpTopic/HelpTopic.jsx";
-import ForTalents from "./help/forTalents/ForTalents.jsx";
-import ForClients from "./help/forClients/ForClient.jsx";
 import HelpArticle from "./help/helpArticle/HelpArticle.jsx";
 import HelpCenterLayout from "./help/layout/HelpCenterLayout.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
@@ -81,6 +79,11 @@ import ReportDashboard from "./dashboard/reportDashboard/ReportDashboard.jsx";
 import SupplementTalentRequest from "./components/upgradeAccount/SupplementTalentRequest.jsx";
 import RenderFinalDelivery from "./components/crudCommissionOrder/renderFinalDelivery/RenderFinalDelivery.jsx";
 import RenderCommissionOrderReviews from "./components/crudCommissionOrder/renderReviews/RenderCommissionOrderReviews.jsx";
+import CreateCommissionService from "./components/crudCommissionService/create/CreateCommissionService.jsx";
+import DeleteCommissionService from "./components/crudCommissionService/delete/DeleteCommissionService.jsx";
+import UpdateCommissionService from "./components/crudCommissionService/update/UpdateCommissionService.jsx";
+import UpdateCommissionServiceCategory from "./components/crudCommissionServiceCategory/update/UpdateCommissionServiceCategory.jsx";
+import DeleteCommissionServiceCategory from "./components/crudCommissionServiceCategory/delete/DeleteCommissionServiceCategory.jsx";
 
 const queryClient = new QueryClient();
 
@@ -265,8 +268,28 @@ const routes = [
             element: <ProfileCommissionServices />,
             children: [
               {
+                path: "/users/:userId/profile-commission-services/create",
+                element: <CreateCommissionService />,
+              },
+              {
                 path: "/users/:userId/profile-commission-services/:commission-service-id",
                 element: <RenderCommissionService />,
+              },
+              {
+                path: "/users/:userId/profile-commission-services/:commission-service-id/delete",
+                element: <DeleteCommissionService />,
+              },
+              {
+                path: "/users/:userId/profile-commission-services/:commission-service-id/update",
+                element: <UpdateCommissionService />,
+              },
+              {
+                path: "/users/:userId/profile-commission-services/service-categories/:service-category-id/update",
+                element: <UpdateCommissionServiceCategory />,
+              },
+              {
+                path: "/users/:userId/profile-commission-services/service-categories/:service-category-id/delete",
+                element: <DeleteCommissionServiceCategory />,
               },
             ]
           },

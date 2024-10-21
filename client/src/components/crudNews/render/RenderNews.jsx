@@ -37,6 +37,9 @@ export default function RenderNews() {
         isLoading,
     } = useQuery(["fetchNewsById", newsId], fetchNewsById);
 
+    if (isLoading) {
+        return <span className="btn-spinner"></span>
+    }
 
     return (
         <>

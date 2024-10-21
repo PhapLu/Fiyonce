@@ -1,6 +1,6 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -20,6 +20,9 @@ import { resizeImageUrl } from "../../../utils/imageDisplayer";
 
 export default function RenderComissionService() {
     const { userId, "commission-service-id": commissionServiceId } = useParams();
+    const {commissionService, commissionServiceCategories} = useOutletContext();
+    console.log(commissionService)
+    console.log(commissionServiceCategories)
 
     const [showRenderCommissionService, setShowRenderCommissionService] = useState(false);
     const [overlayVisible, setOverlayVisible] = useState(false);
@@ -68,31 +71,6 @@ export default function RenderComissionService() {
         setErrors((values) => ({ ...values, [name]: '' }));
     };
 
-    const fetchCommissionService = async () => {
-        try {
-            const response = await apiUtils.get(`/commissionService/readCommissionService/${commissionServiceId}`);
-            console.log(response.data.metadata.commissionService)
-            // console.log(commissionService)
-            return response.data.metadata.commissionService;
-        } catch (error) {
-            console.log(error)
-            return null;
-        }
-    }
-
-    const { data: commissionService, error, isError, isLoading } = useQuery(
-        ['fetchCommissionService'],
-        fetchCommissionService,
-        {
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (error) => {
-                console.error('Error fetching service by ID:', error);
-            },
-        }
-    );
-
     // Toggle display overlay box
     const renderCommissionServiceRef = useRef();
     useEffect(() => {
@@ -121,13 +99,9 @@ export default function RenderComissionService() {
         }
     }
 
-    if (isError) {
-        return <span>Có lỗi xảy ra: {error.message}</span>
-    }
-
     return (
         <div className="overlay">
-            {isLoading || loading ? (
+            {loading ? (
                 <Loading />
             ) : (
                 !showCreateCommissionOrder ?

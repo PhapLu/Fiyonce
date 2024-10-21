@@ -1,7 +1,7 @@
 // Imports
 import { useState, useEffect, useRef } from "react";
-import { useQuery } from 'react-query'
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Resources
 import { useModal } from "../../../contexts/modal/ModalContext.jsx";
@@ -20,13 +20,23 @@ import { createFormData, newRequest, apiUtils } from "../../../utils/newRequest.
 
 // Styling
 import "./CreateCommissionService.scss";
+import { useAuth } from "../../../contexts/auth/AuthContext.jsx";
 
-export default function CreateCommissionService({
-    commissionServiceCategories,
-    setShowCreateCommissionServiceForm,
-    setOverlayVisible,
-    createMutation
-}) {
+export default function CreateCommissionService() {
+    const queryClient = useQueryClient();
+    const { userInfo } = useAuth();
+
+    const createMutation = useMutation(
+        (newService) => apiUtils.post(`/commissionService/createCommissionService`, newService),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries(['fetchCommissionServiceCategories', userInfo?._id]);
+                closeCreateCommissionServiceView();
+            },
+        }
+    );
+    const { commissionService, commissionServiceCategories } = useOutletContext();
+
     const { setModalInfo } = useModal();
     const { movements } = useMovement();
 
@@ -51,19 +61,48 @@ export default function CreateCommissionService({
 
 
     const [inputs, setInputs] = useState({
-        portfolios: []
+        portfolios: [],
+        quotation: [{ title: "", price: "" }],
     });
+
+    const handleQuotationChange = (index, field, value) => {
+        const updatedQuotations = [...inputs.quotation];
+        updatedQuotations[index][field] = field === "price" ? parseFloat(value) : value;
+        setInputs((prevState) => ({
+            ...prevState,
+            quotation: updatedQuotations,
+        }));
+    };
+
+    const addQuotation = () => {
+        setInputs((prevState) => ({
+            ...prevState,
+            quotation: [...prevState.quotation, { title: "", price: "" }],
+        }));
+    };
+
+    const removeQuotation = (index) => {
+        const updatedQuotations = inputs.quotation.filter((_, i) => i !== index);
+        setInputs((prevState) => ({
+            ...prevState,
+            quotation: updatedQuotations,
+        }));
+    };
+
     const [errors, setErrors] = useState({});
     const [isSubmitCreateCommissionServiceLoading, setIsSubmitCreateCommissionServiceLoading] = useState(false);
     const [isCreateNewCommissionServiceCategory, setIsCreateNewCommissionServiceCategory] = useState(false);
     const [portfolios, setPortfolios] = useState(Array(5).fill(null));
+    const navigate = useNavigate();
 
     const createCommissionRef = useRef();
+    const closeCreateCommissionServiceView = () => {
+        navigate(-1);
+    }
     useEffect(() => {
         const handler = (e) => {
             if (createCommissionRef.current && !createCommissionRef.current.contains(e.target)) {
-                setShowCreateCommissionServiceForm(false);
-                setOverlayVisible(false);
+                closeCreateCommissionServiceView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -159,44 +198,27 @@ export default function CreateCommissionService({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitCreateCommissionServiceLoading(true);
+        
         const validationErrors = validateInputs();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             setIsSubmitCreateCommissionServiceLoading(false);
             return;
         }
-
-        // Create commission service category
-        if (isCreateNewCommissionServiceCategory) {
-            try {
-                const response = await apiUtils.post("/serviceCategory/createServiceCategory", { title: inputs.newCommissionServiceCategoryTitle });
-                if (response) {
-                    const serviceCategoryId = response.data.metadata.serviceCategory._id;
-                    inputs.serviceCategoryId = serviceCategoryId;
-                }
-            } catch (error) {
-                console.error("Failed to create new commission service category:", error);
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    serverError: error.response.data.message
-                }));
-                setModalInfo({
-                    status: "error",
-                    message: error.response.data.message
-                })
-            }
-        }
-
-        const fd = createFormData(inputs, "files", portfolios);
-
+    
+        // Ensure quotation is serialized to JSON string
+        const formData = createFormData({
+            ...inputs,
+            quotation: JSON.stringify(inputs.quotation)  // Serialize quotation array
+        }, "files", portfolios);
+    
         try {
-            const response = await createMutation.mutateAsync(fd);
+            const response = await createMutation.mutateAsync(formData);
             if (response) {
                 setModalInfo({
                     status: "success",
                     message: "Thêm dịch vụ thành công"
-                })
+                });
                 setShowDeleteCommissionTosForm(false);
                 setOverlayVisible(false);
             }
@@ -208,11 +230,12 @@ export default function CreateCommissionService({
             setModalInfo({
                 status: "error",
                 message: error.response.data.message
-            })
+            });
         } finally {
             setIsSubmitCreateCommissionServiceLoading(false);
         }
     };
+    
 
     const filteredPortfolios = portfolios.filter((portfolio) => portfolio !== null);
     const displayPortfolios = portfolios.filter((portfolio) => portfolio !== null).slice(0, 5);
@@ -222,32 +245,47 @@ export default function CreateCommissionService({
     }
 
     return (
-        <div className="create-commission-service modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
-            <Link to="/help-center" className="form__help" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
-                </svg> Trợ giúp
-            </Link>
+        <div className="overlay">
+            <div className="create-commission-service modal-form type-2" ref={createCommissionRef} onClick={(e) => { e.stopPropagation(); }}>
+                <Link to="/help-center" className="form__help" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 form__help-ic">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                    </svg> Trợ giúp
+                </Link>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowCreateCommissionServiceForm(false);
-                setOverlayVisible(false);
-            }}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={closeCreateCommissionServiceView}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
 
-            <div className="modal-form--left">
-                <span>
-                    {inputs?.serviceCategoryId
-                        ? commissionServiceCategories.find((category) => category._id == inputs?.serviceCategoryId)?.title || "Thể loại"
-                        : "Thể loại"}
-                </span>
-                <h3>{inputs?.title || "Tên dịch vụ"}</h3>
-                <h4>Giá từ: <span className="highlight-text fs-18"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} VND</span></h4>
-                <hr className="mb-16 mt-16" />
-                <div className="image-container images-layout-3">
-                    {displayPortfolios.slice(0, 3).map((portfolio, index) => {
-                        if (index === 2 && displayPortfolios.length > 3) {
+                <div className="modal-form--left">
+                    <span>
+                        {inputs?.serviceCategoryId
+                            ? commissionServiceCategories.find((category) => category._id == inputs?.serviceCategoryId)?.title || "Thể loại"
+                            : "Thể loại"}
+                    </span>
+                    <h3>{inputs?.title || "Tên dịch vụ"}</h3>
+                    <h4>Giá từ: <span className="highlight-text fs-18"> {(inputs?.minPrice && formatCurrency(inputs?.minPrice)) || "x"} VND</span></h4>
+                    <hr className="mb-16 mt-16" />
+                    <div className="image-container images-layout-3">
+                        {displayPortfolios?.slice(0, 3)?.map((portfolio, index) => {
+                            if (index === 2 && displayPortfolios.length > 3) {
+                                return (
+                                    <div className="image-item">
+                                        <img
+                                            key={index}
+                                            src={
+                                                portfolio instanceof File
+                                                    ? URL.createObjectURL(portfolio)
+                                                    : portfolio
+                                            }
+                                            alt={`portfolio ${index + 1}`}
+                                        />
+                                        <div className="image-item__overlay">
+                                            +{displayPortfolios?.length - 3}
+                                        </div>
+                                    </div>
+                                );
+                            }
                             return (
                                 <div className="image-item">
                                     <img
@@ -259,243 +297,307 @@ export default function CreateCommissionService({
                                         }
                                         alt={`portfolio ${index + 1}`}
                                     />
-                                    <div className="image-item__overlay">
-                                        +{displayPortfolios?.length - 3}
-                                    </div>
                                 </div>
                             );
+                        })}
+                    </div>
+                    <p>*Lưu ý: <i>{inputs?.notes || "Lưu ý cho khách hàng"}</i></p>
+                </div>
+
+                <div className="modal-form--right">
+                    <h2 className="form__title">Thêm dịch vụ</h2>
+                    <div className="form-field required">
+                        <label htmlFor="movementId" className="form-field__label">Trường phái</label>
+                        <select
+                            name="movementId"
+                            value={inputs?.movementId || ""}
+                            onChange={handleChange}
+                            className="form-field__input"
+                        >
+                            <option value="">-- Chọn trường phái --</option>
+                            {movements?.map((movement) => (
+                                <option key={movement._id} value={movement._id}>{movement.title}</option>
+                            ))}
+                        </select>
+                        {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
+                    </div>
+                    <div className="form-field with-create-btn required">
+                        <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
+                        {
+                            !commissionServiceCategories?.length > 0 && <span className="form-field__annotation">Bạn hiện chưa có thể loại dịch vụ nào, vui lòng chọn "Thêm thể loại"</span>
                         }
-                        return (
-                            <div className="image-item">
-                                <img
-                                    key={index}
-                                    src={
-                                        portfolio instanceof File
-                                            ? URL.createObjectURL(portfolio)
-                                            : portfolio
-                                    }
-                                    alt={`portfolio ${index + 1}`}
+                        {!isCreateNewCommissionServiceCategory ? (
+                            <>
+                                <select
+                                    name="serviceCategoryId"
+                                    value={inputs?.serviceCategoryId || ""}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                >
+                                    <option value="">-- Chọn thể loại dịch vụ --</option>
+                                    {commissionServiceCategories?.map((serviceCategory) => (
+                                        <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
+                                    ))}
+                                </select>
+                                <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(true)}>Thêm thể loại</button>
+                            </>
+                        ) : (
+                            <>
+                                <input
+                                    name="newCommissionServiceCategoryTitle"
+                                    value={inputs?.newCommissionServiceCategoryTitle}
+                                    onChange={handleChange}
+                                    className="form-field__input"
+                                    placeholder="Nhập tên thể loại"
                                 />
-                            </div>
-                        );
-                    })}
-                </div>
-                <p>*Lưu ý: <i>{inputs?.notes || "Lưu ý cho khách hàng"}</i></p>
-            </div>
-
-            <div className="modal-form--right">
-                <h2 className="form__title">Thêm dịch vụ</h2>
-                <div className="form-field required">
-                    <label htmlFor="movementId" className="form-field__label">Trường phái</label>
-                    <select
-                        name="movementId"
-                        value={inputs?.movementId || ""}
-                        onChange={handleChange}
-                        className="form-field__input"
-                    >
-                        <option value="">-- Chọn trường phái --</option>
-                        {movements?.map((movement) => (
-                            <option key={movement._id} value={movement._id}>{movement.title}</option>
-                        ))}
-                    </select>
-                    {errors.movementId && <span className="form-field__error">{errors.movementId}</span>}
-                </div>
-                <div className="form-field with-create-btn required">
-                    <label htmlFor="serviceCategoryId" className="form-field__label">Thể loại</label>
-                    {
-                        !commissionServiceCategories?.length > 0 && <span className="form-field__annotation">Bạn hiện chưa có thể loại dịch vụ nào, vui lòng chọn "Thêm thể loại"</span>
-                    }
-                    {!isCreateNewCommissionServiceCategory ? (
-                        <>
-                            <select
-                                name="serviceCategoryId"
-                                value={inputs?.serviceCategoryId || ""}
-                                onChange={handleChange}
-                                className="form-field__input"
-                            >
-                                <option value="">-- Chọn thể loại dịch vụ --</option>
-                                {commissionServiceCategories.map((serviceCategory) => (
-                                    <option key={serviceCategory._id} value={serviceCategory._id}>{serviceCategory.title}</option>
-                                ))}
-                            </select>
-                            <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(true)}>Thêm thể loại</button>
-                        </>
-                    ) : (
-                        <>
-                            <input
-                                name="newCommissionServiceCategoryTitle"
-                                value={inputs?.newCommissionServiceCategoryTitle}
-                                onChange={handleChange}
-                                className="form-field__input"
-                                placeholder="Nhập tên thể loại"
-                            />
-                            <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(false)}>Hủy</button>
-                        </>
-                    )}
-                    {errors.serviceCategoryId && <span className="form-field__error">{errors.serviceCategoryId}</span>}
-                </div>
-
-                <div className="form-field required">
-                    <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
-                    <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
-                    <input
-                        id="title"
-                        name="title"
-                        value={inputs?.title}
-                        onChange={handleChange}
-                        className="form-field__input"
-                        placeholder="Nhập tên dịch vụ"
-                    />
-                    {errors.title && <span className="form-field__error">{errors.title}</span>}
-                </div>
-
-                <div className="form-field required">
-                    <label htmlFor="deliverables" className="form-field__label">Mô tả</label>
-                    <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
-                    <textarea
-                        id="deliverables"
-                        name="deliverables"
-                        value={inputs?.deliverables}
-                        onChange={handleChange}
-                        className="form-field__input"
-                        placeholder="Mô tả dịch vụ của bạn ..."
-                    />
-                    {errors.deliverables && <span className="form-field__error">{errors.deliverables}</span>}
-                </div>
-
-                <div className="form-field required">
-                    <label className="form-field__label">Tranh mẫu</label>
-                    <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
-                    {portfolios.map((portfolio, index) => {
-                        return (
-                            portfolio && (
-                                <div key={index} className="form-field__input img-preview">
-                                    <div className="img-preview--left">
-                                        <img
-                                            src={
-                                                portfolio instanceof File
-                                                    ? URL.createObjectURL(portfolio)
-                                                    : portfolio || placeholderImage
-                                            }
-                                            alt={`portfolio ${index + 1}`}
-                                            className="img-preview__img"
-                                        />
-                                        <div className="img-preview__info">
-                                            <span className="img-preview__name">
-                                                {portfolio instanceof File
-                                                    ? limitString(portfolio.name, 15)
-                                                    : "Tranh mẫu"}
-                                            </span>
-                                            <span className="img-preview__size">
-                                                {portfolio instanceof File
-                                                    ? formatFloat(bytesToKilobytes(portfolio.size), 1) + " KB"
-                                                    : ""}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="img-preview--right">
-                                        <svg
-                                            onClick={() => removeImage(index)}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="size-6 img-preview__close-ic"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            )
-                        );
-                    })}
-
-                    <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        <span>Thêm ảnh</span>
-                        <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
+                                <button className="btn btn-2" onClick={() => setIsCreateNewCommissionServiceCategory(false)}>Hủy</button>
+                            </>
+                        )}
+                        {errors.serviceCategoryId && <span className="form-field__error">{errors.serviceCategoryId}</span>}
                     </div>
 
-                    {errors.portfolios && <span className="form-field__error">{errors.portfolios}</span>}
-                </div>
-
-                <div className="form-field required">
-                    <label htmlFor="minPrice" className="form-field__label">Giá cả (VND)</label>
-                    <span className="form-field__annotation">Cho biết mức phí cơ bản của dịch vụ (không tính kèm các dịch vụ đi kèm).</span>
-                    <input
-                        type="number"
-                        name="minPrice"
-                        value={inputs?.minPrice}
-                        className="form-field__input"
-                        onChange={handleChange}
-                        placeholder="Nhập mức tối thiểu"
-                    />
-                    {errors.minPrice && <span className="form-field__error">{errors.minPrice}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label htmlFor="notes" className="form-field__label">Lưu ý</label>
-                    <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn về dịch vụ này.</span>
-                    <textarea
-                        type="text"
-                        name="notes"
-                        value={inputs?.notes}
-                        className="form-field__input"
-                        onChange={handleChange}
-                        placeholder="Nhập lưu ý ..."
-                    />
-                    {errors.notes && <span className="form-field__error">{errors.notes}</span>}
-                </div>
-
-                <div className="form-field required">
-                    <label htmlFor="termOfServiceId" className="form-field__label">Điều khoản dịch vụ</label>
-                    <select
-                        name="termOfServiceId"
-                        value={inputs?.termOfServiceId || ""}
-                        onChange={handleChange}
-                        className="form-field__input"
-                    >
-                        <option value="">-- Chọn điều khoản dịch vụ --</option>
-                        {commissionToss?.map((commissionTos) => (
-                            <option key={commissionTos._id} value={commissionTos._id}>{commissionTos.title}</option>
-                        ))}
-                    </select>
-                    {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
-                </div>
-
-                <div className="form-field">
-                    <label className="form-field__label">
+                    <div className="form-field required">
+                        <label htmlFor="title" className="form-field__label">Tên dịch vụ</label>
+                        <span className="form-field__annotation">Tên dịch vụ nên chứa những từ khóa liên quan để khách hàng tìm kiếm dịch vụ của bạn thuận lợi hơn.</span>
                         <input
-                            type="checkbox"
-                            name="isAgreeTerms"
-                            checked={inputs?.isAgreeTerms}
+                            id="title"
+                            name="title"
+                            value={inputs?.title}
                             onChange={handleChange}
-                        /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
-                    </label>
-                    {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
-                </div>
-                <div className="form-field">
-                    {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
-                </div>
-            </div>
+                            className="form-field__input"
+                            placeholder="Nhập tên dịch vụ"
+                        />
+                        {errors.title && <span className="form-field__error">{errors.title}</span>}
+                    </div>
 
-            <div className="form__submit-btn-container">
-                <button
-                    type="submit"
-                    className="form__submit-btn-item btn btn-2 btn-md"
-                    onClick={handleSubmit}
-                    disabled={isSubmitCreateCommissionServiceLoading}
-                >
-                    {isSubmitCreateCommissionServiceLoading ? (
-                        <span className="btn-spinner"></span>
-                    ) : (
-                        "Xác nhận"
-                    )}
+                    <div className="form-field required">
+                        <label htmlFor="deliverables" className="form-field__label">Mô tả</label>
+                        <span className="form-field__annotation">Ở phần này, vui lòng mô tả chi tiết những gì khách hàng có thể nhận được từ dịch vụ của bạn.</span>
+                        <textarea
+                            id="deliverables"
+                            name="deliverables"
+                            value={inputs?.deliverables}
+                            onChange={handleChange}
+                            className="form-field__input"
+                            placeholder="Mô tả dịch vụ của bạn ..."
+                        />
+                        {errors.deliverables && <span className="form-field__error">{errors.deliverables}</span>}
+                    </div>
 
-                </button>
+                    <div className="form-field required">
+                        <label className="form-field__label">Tranh mẫu</label>
+                        <span className="form-field__annotation">Cung cấp một số tranh mẫu để khách hàng hình dung chất lượng dịch vụ của bạn tốt hơn (tối thiểu 3 và tối đa 5 tác phẩm).</span>
+                        {portfolios?.map((portfolio, index) => {
+                            return (
+                                portfolio && (
+                                    <div key={index} className="form-field__input img-preview">
+                                        <div className="img-preview--left">
+                                            <img
+                                                src={
+                                                    portfolio instanceof File
+                                                        ? URL.createObjectURL(portfolio)
+                                                        : portfolio || placeholderImage
+                                                }
+                                                alt={`portfolio ${index + 1}`}
+                                                className="img-preview__img"
+                                            />
+                                            <div className="img-preview__info">
+                                                <span className="img-preview__name">
+                                                    {portfolio instanceof File
+                                                        ? limitString(portfolio.name, 15)
+                                                        : "Tranh mẫu"}
+                                                </span>
+                                                <span className="img-preview__size">
+                                                    {portfolio instanceof File
+                                                        ? formatFloat(bytesToKilobytes(portfolio.size), 1) + " KB"
+                                                        : ""}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="img-preview--right">
+                                            <svg
+                                                onClick={() => removeImage(index)}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                className="size-6 img-preview__close-ic"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                )
+                            );
+                        })}
+
+                        <div className="form-field with-ic create-link-btn btn-md" onClick={triggerFileInput}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.0" stroke="currentColor" className="size-6 form-field__ic create-link-btn__ic">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            <span>Thêm ảnh</span>
+                            <input type="file" id="file-input" style={{ display: "none" }} multiple accept="image/*" onChange={handleImageChange} className="form-field__input" />
+                        </div>
+
+                        {errors.portfolios && <span className="form-field__error">{errors.portfolios}</span>}
+                    </div>
+
+                    <div className="form-field required">
+                        <label htmlFor="minPrice" className="form-field__label">Giá cả (VND)</label>
+                        <span className="form-field__annotation">Cho biết mức phí cơ bản của dịch vụ (không tính kèm các dịch vụ đi kèm).</span>
+                        <input
+                            type="number"
+                            name="minPrice"
+                            value={inputs?.minPrice}
+                            className="form-field__input"
+                            onChange={handleChange}
+                            placeholder="Nhập mức tối thiểu"
+                        />
+                        {errors.minPrice && <span className="form-field__error">{errors.minPrice}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        <label htmlFor="notes" className="form-field__label">Lưu ý</label>
+                        <span className="form-field__annotation">Để lại lưu ý cho khách hàng của bạn về dịch vụ này.</span>
+                        <textarea
+                            type="text"
+                            name="notes"
+                            value={inputs?.notes}
+                            className="form-field__input"
+                            onChange={handleChange}
+                            placeholder="Nhập lưu ý ..."
+                        />
+                        {errors.notes && <span className="form-field__error">{errors.notes}</span>}
+                    </div>
+
+                    <div className="form-field required">
+                        <label htmlFor="termOfServiceId" className="form-field__label">Điều khoản dịch vụ</label>
+                        <select
+                            name="termOfServiceId"
+                            value={inputs?.termOfServiceId || ""}
+                            onChange={handleChange}
+                            className="form-field__input"
+                        >
+                            <option value="">-- Chọn điều khoản dịch vụ --</option>
+                            {commissionToss?.map((commissionTos) => (
+                                <option key={commissionTos._id} value={commissionTos._id}>{commissionTos.title}</option>
+                            ))}
+                        </select>
+                        {errors.termOfServiceId && <span className="form-field__error">{errors.termOfServiceId}</span>}
+                    </div>
+
+                    <div className="form-field">
+                        {errors.serverError && <span className="form-field__error">{errors.serverError}</span>}
+                    </div>
+
+                    {/* <div className="form-field">
+                        <label htmlFor="quotation" className="form-field__label">Phụ phí</label>
+                        {inputs?.quotation?.map((q, index) => (
+                            <div key={index} className="flex-justify-center flex-align-center quotation-item w-100 mb-16">
+                                <input
+                                    type="text"
+                                    placeholder="Loại phụ phí"
+                                    value={q.title}
+                                    onChange={(e) => handleQuotationChange(index, 'title', e.target.value)}
+                                    className="form-field__input w-50 mr-8"
+                                />
+                                -
+                                <input
+                                    type="number"
+                                    placeholder="Giá cả"
+                                    value={q.price}
+                                    onChange={(e) => handleQuotationChange(index, 'price', e.target.value)}
+                                    className="form-field__input w-50 ml-8"
+                                />
+                            </div>
+                        ))}
+                        <button type="button" onClick={addQuotation} className="btn btn-3 w-100 fw-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Thêm mục
+                        </button>
+                    </div> */}
+
+                    <div className="form-field">
+                        <label htmlFor="quotation" className="form-field__label">Phụ phí</label>
+                        {inputs?.quotation?.map((q, index) => (
+                            <div key={index} className="flex-justify-center flex-align-center quotation-item w-100 mb-16">
+                                <input
+                                    type="text"
+                                    placeholder="Loại phụ phí"
+                                    value={q.title}
+                                    onChange={(e) => handleQuotationChange(index, 'title', e.target.value)}
+                                    className="form-field__input w-40 mr-8"
+                                />
+                                -
+                                <input
+                                    type="number"
+                                    placeholder="Giá cả"
+                                    value={q.price}
+                                    onChange={(e) => handleQuotationChange(index, 'price', e.target.value)}
+                                    className="form-field__input w-40 ml-8"
+                                />
+                                <button type="button" onClick={() => removeQuotation(index)} className="btn btn-remove">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        ))}
+                        <button type="button" onClick={addQuotation} className="btn btn-3 w-100 fw-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Thêm mục
+                        </button>
+                    </div>
+
+                    <div className="form-field required">
+                        <label htmlFor="status" className="form-field__label">Trạng thái</label>
+                        <select
+                            name="status"
+                            value={inputs?.status || "closed"}
+                            onChange={handleChange}
+                            className="form-field__input"
+                        >
+                            <option value="open" >Đang mở</option>
+                            <option value="closed" >Tạm đóng</option>
+                        </select>
+                        {errors.status && <span className="form-field__error">{errors.status}</span>}
+                    </div>
+
+
+                    <div className="form-field">
+                        <label className="form-field__label">
+                            <input
+                                type="checkbox"
+                                name="isAgreeTerms"
+                                checked={inputs?.isAgreeTerms}
+                                onChange={handleChange}
+                            /> <span>Tôi đồng ý với các <Link to="/terms_and_policies" className="highlight-text"> điều khoản dịch vụ </Link> của Pastal</span>
+                        </label>
+                        {errors.isAgreeTerms && <span className="form-field__error">{errors.isAgreeTerms}</span>}
+                    </div>
+
+                </div>
+
+                <div className="form__submit-btn-container">
+                    <button
+                        type="submit"
+                        className="form__submit-btn-item btn btn-2 btn-md"
+                        onClick={handleSubmit}
+                        disabled={isSubmitCreateCommissionServiceLoading}
+                    >
+                        {isSubmitCreateCommissionServiceLoading ? (
+                            <span className="btn-spinner"></span>
+                        ) : (
+                            "Xác nhận"
+                        )}
+
+                    </button>
+                </div>
             </div>
         </div>
     );

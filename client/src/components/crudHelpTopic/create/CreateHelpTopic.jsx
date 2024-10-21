@@ -23,6 +23,7 @@ export default function CreateHelpTopic({
 
     const validateInputs = () => {
         let errors = {};
+        console.log(inputs)
 
         if (!isFilled(inputs.theme)) {
             errors.theme = "Vui lòng nhập theme";

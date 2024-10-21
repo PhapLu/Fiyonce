@@ -1,3 +1,4 @@
+
 export function isFilled(val) {
     return val != null && val != undefined && val.trim() !== "";
 }

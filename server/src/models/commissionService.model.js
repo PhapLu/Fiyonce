@@ -44,7 +44,18 @@ const ServiceSchema = new mongoose.Schema(
         notes: { type: String },
         isMedia: { type: Boolean, default: false },
         status: { type: String, enum: ["open", "closed", "waitList"], default: "open" },
-        artworks: [{ type: String, default:[]}],
+        artworks: [{ type: String, default: [] }],
+        quotation: [
+            {
+                title: { type: String, required: true },
+                price: { type: Number, required: true },
+                default: []
+            },
+        ],
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: true,

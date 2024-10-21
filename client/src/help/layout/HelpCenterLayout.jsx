@@ -4,6 +4,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 // Styling
 import "./HelpCenterLayout.scss";
 import HelpNavbar from "../helpNavbar/HelpNavbar";
+import Footer from "../../components/footer/Footer";
 
 export default function HelpCenterLayout() {
     const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function HelpCenterLayout() {
                 </button> */}
                 <Outlet />
             </div>
+
+            <Footer />
         </div>
     )
 }

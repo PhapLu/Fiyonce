@@ -16,15 +16,11 @@ import jwt from 'jsonwebtoken'
 
 class CommissionServiceService {
     static createCommissionService = async (talentId, req) => {
-        // 1. Check talent exists
-        const talent = await User.findById(talentId)
-        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
-        if (talent.role !== "talent")
-            throw new AuthFailureError("Bạn không có quyền thưc hiện thao tác này")
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
-            throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
-
-        // 2. Validate request body
+        const talent = await User.findById(talentId);
+        if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        if (talent.role !== "talent") throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
+        if (!talent?.cccd || !talent?.taxCode) throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này");
+    
         const {
             title,
             serviceCategoryId,
@@ -32,22 +28,32 @@ class CommissionServiceService {
             movementId,
             minPrice,
             deliverables,
-        } = req.body
+            quotation: quotationString, // Extract the serialized quotation string
+            status,
+        } = req.body;
+    
+        // Parse the quotation from JSON string to an array
+        const quotation = JSON.parse(quotationString);
+    
+        if (!Array.isArray(quotation)) {
+            throw new BadRequestError("Quotation must be an array");
+        }
+    
+        quotation.forEach((item, index) => {
+            if (typeof item.title !== 'string' || typeof item.price !== 'number') {
+                throw new BadRequestError(`Invalid quotation format at index ${index}`);
+            }
+        });
+    
         if (!req.files || !req.files.files) {
-            throw new BadRequestError("Hãy cung cấp tranh của bạn")
+            throw new BadRequestError("Hãy cung cấp tranh của bạn");
         }
-        if (
-            !title ||
-            !serviceCategoryId ||
-            !minPrice ||
-            !deliverables ||
-            !termOfServiceId ||
-            !movementId
-        ) {
-            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết")
+    
+        if (!title || !serviceCategoryId || !minPrice || !deliverables || !termOfServiceId || !movementId) {
+            throw new BadRequestError("Hãy nhập đầy đủ những thông tin cần thiết");
         }
-
-        // 3. Upload files to Cloudinary (compressed) and get their URLs
+    
+        // Upload files to Cloudinary (compressed) and get their URLs
         try {
             const uploadPromises = req.files.files.map((file) =>
                 compressAndUploadImage({
@@ -57,13 +63,11 @@ class CommissionServiceService {
                     width: 1920,
                     height: 1080,
                 })
-            )
-            const uploadResults = await Promise.all(uploadPromises)
-
-            // Generate URLs
-            const artworks = uploadResults.map((result) => result.secure_url)
-
-            // 4. Create and save commission service
+            );
+            const uploadResults = await Promise.all(uploadPromises);
+    
+            const artworks = uploadResults.map((result) => result.secure_url);
+    
             let service = new CommissionService({
                 talentId,
                 title,
@@ -73,26 +77,33 @@ class CommissionServiceService {
                 minPrice,
                 deliverables,
                 artworks,
-            })
-            await service.save()
-
-            // Populate talentId field with stageName and avatar
-            service = await service.populate("talentId", "stageName avatar")
-
+                quotation,  // Parsed array
+                status,
+            });
+    
+            await service.save();
+    
+            service = await service.populate("talentId", "stageName avatar");
+    
             return {
                 commissionService: service,
-            }
+            };
         } catch (error) {
-            console.error("Error uploading images:", error)
-            throw new Error("File upload or database save failed")
+            console.error("Error uploading images:", error);
+            throw new Error("File upload or database save failed");
         }
-    }
+    };
+    
+
+
 
     static readCommissionService = async (req, commissionServiceId) => {
         // 1. Check service
-        const service = await CommissionService.findById(commissionServiceId)
+        const service = await CommissionService.findOne({ _id: commissionServiceId, deletedAt: null })
             .populate("talentId", "fullName stageName avatar")
             .populate("termOfServiceId")
+            .populate("movementId", "_id title")
+            .populate("serviceCategoryId", "_id title")
 
         if (!service) throw new NotFoundError("Không tìm thấy dịch vụ")
 
@@ -136,6 +147,7 @@ class CommissionServiceService {
         //2. Find services
         const services = await CommissionService.find({
             talentId: talentId,
+            deletedAt: null,
         }).populate("talentId", "stageName avatar")
 
         return {
@@ -150,7 +162,7 @@ class CommissionServiceService {
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
 
         //2. Fetch all bookmarked services
-        const bookmarkedServices = await CommissionService.find({ _id: { $in: user.commissionServiceBookmarks } })
+        const bookmarkedServices = await CommissionService.find({ _id: { $in: user.commissionServiceBookmarks }, deletedAt: null })
             .populate('talentId', 'stageName avatar')
             .populate('serviceCategoryId', 'title')
             .populate('movementId', 'title')
@@ -168,7 +180,7 @@ class CommissionServiceService {
         if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
 
         // Find commissionService
-        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
+        const commissionService = await CommissionService.findOne({ _id: commissionServiceId, deletedAt: null }).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
         if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
 
         const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
@@ -210,7 +222,7 @@ class CommissionServiceService {
         console.log("PPP")
 
         //2. Fetch all bookmarked services
-        const bookmarkedServices = await CommissionService.find({ _id: { $in: user.commissionServiceBookmarks } })
+        const bookmarkedServices = await CommissionService.find({ _id: { $in: user.commissionServiceBookmarks }, deletedAt: null })
             .populate('talentId', 'stageName avatar')
             .populate('serviceCategoryId', 'title')
             .populate('movementId', 'title')
@@ -230,7 +242,7 @@ class CommissionServiceService {
         if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
 
         // Find commissionService
-        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
+        const commissionService = await CommissionService.findOne({ _id: commissionServiceId, deletedAt: null }).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
         if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
 
         const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
@@ -265,13 +277,13 @@ class CommissionServiceService {
 
     static updateCommissionService = async (talentId, commissionServiceId, req) => {
         const talent = await User.findById(talentId)
-        const service = await CommissionService.findById(commissionServiceId)
+        const service = await CommissionService.findOne({ _id: commissionServiceId, deletedAt: null })
 
         if (!talent) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
         if (!service) throw new NotFoundError('Không tìm thấy dịch vụ')
         if (!service.movementId) throw new NotFoundError('Không tìm thấy trường phái')
         if (service.talentId.toString() !== talentId) throw new BadRequestError('Bạn không có quyền thực hiện thao tác này')
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if (!talent?.cccd || !talent?.taxCode)
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
         const oldCategoryId = service.serviceCategoryId
 
@@ -300,14 +312,20 @@ class CommissionServiceService {
                 await Promise.all(publicIds.map((publicId) => deleteFileByPublicId(publicId)))
             }
 
-            const updatedService = await CommissionService.findByIdAndUpdate(
-                commissionServiceId,
+            const updatedService = await CommissionService.findOneAndUpdate(
+                {
+                    $and: [
+                        { _id: commissionServiceId }, // Match the service ID
+                        { deletedAt: null } // Ensure the service is not deleted
+                    ]
+                },
                 { $set: updates },
                 { new: true, runValidators: true }
             )
 
+
             if (oldCategoryId && oldCategoryId.toString() !== updatedService.serviceCategoryId.toString()) {
-                const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId })
+                const servicesInOldCategory = await CommissionService.find({ serviceCategoryId: oldCategoryId, deletedAt: null })
                 if (servicesInOldCategory.length === 0) {
                     await ServiceCategory.findByIdAndDelete(oldCategoryId)
                 }
@@ -325,37 +343,54 @@ class CommissionServiceService {
     static deleteCommissionService = async (talentId, commissionServiceId) => {
         // 1. Check talent and service
         const talent = await User.findById(talentId)
-        const service = await CommissionService.findById(commissionServiceId)
+        const service = await CommissionService.findOne({ _id: commissionServiceId, deletedAt: null })
+        console.log("abc")
+        console.log(service)
 
         if (!talent) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
         if (!service) throw new NotFoundError("Không tìm thấy dịch vụ")
         if (service.talentId.toString() !== talentId)
             throw new BadRequestError("Bạn không có quyền thực hiện thao tác này")
-        if(!talent.taxCode || !talent.taxCode.code || talent.taxCode.isVerified === false) 
+        if (!talent?.cccd || !talent?.taxCode)
             throw new BadRequestError("Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này")
-        
+
         // 2. Extract public IDs and delete files from Cloudinary
-        const publicIds = service.artworks.map((artwork) =>
-            extractPublicIdFromUrl(artwork)
-        )
-        await Promise.all(
-            publicIds.map((publicId) => deleteFileByPublicId(publicId))
-        )
+        // const publicIds = service.artworks.map((artwork) =>
+        //     extractPublicIdFromUrl(artwork)
+        // )
+        // await Promise.all(
+        //     publicIds.map((publicId) => deleteFileByPublicId(publicId))
+        // )
 
         // 4. Delete the service from the database
         const serviceCategoryId = service.serviceCategoryId
-        await service.deleteOne()
+
+        service.deletedAt = new Date();
+        console.log("Setting deletedAt:", service.deletedAt);
+        // await service.deleteOne()
+        await service.save();
+        console.log(service)
 
         // 5. Check if the category has other services
         const remainingServices = await CommissionService.find({
             serviceCategoryId,
+            deletedAt: null,
         })
+
+        const ct = await ServiceCategory.findById(serviceCategoryId);
+
+        console.log(remainingServices)
+        console.log(ct)
+
         if (remainingServices.length === 0) {
-            await ServiceCategory.findByIdAndDelete(serviceCategoryId)
+            await ServiceCategory.findByIdAndUpdate(
+                serviceCategoryId, // Pass the serviceCategoryId directly
+                { $set: { deletedAt: new Date() } } // Use $set to update the deletedAt field
+            );
         }
 
         return {
-            message: "Xóa dịch vụ và những thể loại liên quan thành công",
+            message: "Xóa dịch vụ thành công",
         }
     }
 
@@ -365,7 +400,7 @@ class CommissionServiceService {
         if (!user) throw new NotFoundError('Bạn cần đăng nhập để thực hiện thao tác này')
 
         // Find commissionService
-        const commissionService = await CommissionService.findById(commissionServiceId).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
+        const commissionService = await CommissionService.findOne({ _id: commissionServiceId, deletedAt: null }).populate('talentId', 'stageName avatar').populate('serviceCategoryId', 'title').populate('movementId', 'title').populate('termOfServiceId', 'title').exec()
         if (!commissionService) throw new NotFoundError('Tác phẩm không tồn tại')
 
         const userCommissionServiceBookmarkIndex = user.commissionServiceBookmarks.findIndex(commissionServiceBookmark => commissionServiceBookmark.toString() === commissionServiceId)
@@ -388,7 +423,7 @@ class CommissionServiceService {
             commissionService.bookmarks.splice(commissionServiceBookmarkIndex, 1)
             action = "unbookmark"
         }
-        
+
         await user.save()
         await commissionService.save()
 

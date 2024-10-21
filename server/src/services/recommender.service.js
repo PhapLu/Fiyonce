@@ -80,21 +80,31 @@ class RecommenderService {
 
         // Step 3: Search for case-sensitive matches in Services
         const caseSensitiveServiceResults = await CommissionService.find({
-            $or: [
-                { title: { $regex: caseSensitiveRegex } },
-                { description: { $regex: caseSensitiveRegex } },
-                { notes: { $regex: caseSensitiveRegex } },
-            ]
+            $and: [
+                { deletedAt: null }, // Condition for deletedAt == null
+                {
+                    $or: [
+                        { title: { $regex: caseSensitiveRegex } },
+                        { description: { $regex: caseSensitiveRegex } },
+                        { notes: { $regex: caseSensitiveRegex } },
+                    ],
+                }
+            ],
         }).limit(20);
 
         // Step 4: Search for case-insensitive matches excluding those already found
         const caseInsensitiveServiceResults = await CommissionService.find({
-            $or: [
-                { title: { $regex: caseInsensitiveRegex } },
-                { description: { $regex: caseInsensitiveRegex } },
-                { notes: { $regex: caseInsensitiveRegex } },
+            $and: [
+                { deletedAt: null }, // Ensure deletedAt is null
+                {
+                    $or: [
+                        { title: { $regex: caseInsensitiveRegex, $options: 'i' } }, // 'i' option for case-insensitive
+                        { description: { $regex: caseInsensitiveRegex, $options: 'i' } },
+                        { notes: { $regex: caseInsensitiveRegex, $options: 'i' } },
+                    ],
+                },
             ],
-            _id: { $nin: caseSensitiveServiceResults.map(result => result._id) } // Exclude already found results
+            _id: { $nin: caseSensitiveServiceResults.map(result => result._id) }, // Exclude already found results
         }).limit(20 - caseSensitiveServiceResults.length);
 
         // Combine service results, prioritizing case-sensitive matches
@@ -589,7 +599,7 @@ class RecommenderService {
     static readPopularCommissionServices = async (req) => {
         const q = req.query
         const filters = {
-            ...(q.movementId !== undefined && { movementId: q.movementId }),
+            ...(q.movementId !== undefined && { movementId: q.movementId }), deletedAt: null
         }
         try {
             const services = await CommissionService.find(filters)
@@ -601,6 +611,11 @@ class RecommenderService {
             // Compute the minimum and maximum values for scaling
             const [minValues, maxValues] = await Promise.all([
                 CommissionService.aggregate([
+                    {
+                        $match: {
+                            deletedAt: null, // Ensure deletedAt is null
+                        },
+                    },
                     {
                         $lookup: {
                             from: "Users",
@@ -640,6 +655,11 @@ class RecommenderService {
                     },
                 ]),
                 CommissionService.aggregate([
+                    {
+                        $match: {
+                            deletedAt: null, // Ensure deletedAt is null
+                        },
+                    },
                     {
                         $lookup: {
                             from: "Users",
@@ -768,7 +788,7 @@ class RecommenderService {
     static readLatestCommissionServices = async (req) => {
         const q = req.query
         const filters = {
-            ...(q.movementId !== undefined && { movementId: q.movementId }),
+            ...(q.movementId !== undefined && { movementId: q.movementId }), deletedAt: null
         }
         try {
             const commissionServices = await CommissionService.find(filters)
@@ -780,6 +800,11 @@ class RecommenderService {
             // Compute the minimum and maximum values for scaling
             const [minValues, maxValues] = await Promise.all([
                 CommissionService.aggregate([
+                    {
+                        $match: {
+                            deletedAt: null, // Ensure deletedAt is null
+                        },
+                    },
                     {
                         $lookup: {
                             from: "Users",
@@ -819,6 +844,11 @@ class RecommenderService {
                     },
                 ]),
                 CommissionService.aggregate([
+                    {
+                        $match: {
+                            deletedAt: null, // Ensure deletedAt is null
+                        },
+                    },
                     {
                         $lookup: {
                             from: "Users",
@@ -959,6 +989,7 @@ class RecommenderService {
             // Fetch commissionServices from users in the following list
             const commissionServices = await CommissionService.find({
                 talentId: { $in: followingIds },
+                deletedAt: null
             })
                 .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")

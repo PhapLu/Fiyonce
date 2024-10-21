@@ -14,6 +14,11 @@ const ServiceCategorySchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
+        deletedAt: {
+            type: Date,
+            default: null,
+        }
     },
     {
         timestamps: true,

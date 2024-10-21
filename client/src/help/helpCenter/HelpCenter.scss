@@ -13,6 +13,11 @@
         position: relative;
         margin-bottom: 180px;
 
+        img {
+            width: 100%;
+            height: 65vh;
+        }
+
 
         .help-theme__content {
             position: absolute;
@@ -22,8 +27,6 @@
             width: 58%;
             background-color: var(--form-bg-2-color);
             border-radius: 20px;
-
-            h1 {}
 
             .help-theme-container {
                 display: flex;
@@ -42,7 +45,9 @@
                     padding: 12px 24px;
                     width: 30%;
 
-                    .help-theme-item__title {}
+                    .help-theme-item__title {
+                        font-size: 1.8rem;
+                    }
 
                     &:hover {
                         cursor: pointer;
