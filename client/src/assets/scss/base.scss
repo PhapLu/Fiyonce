@@ -937,6 +937,14 @@ svg.btn-ic {
         right: 0;
     }
 
+    svg {
+        width: 18px;
+        height: 18px;
+        margin-left: 50%;
+        height: 28px;
+        transform: translate(-50%);
+    }
+
     .show {
         display: block;
     }
@@ -2631,6 +2639,7 @@ table {
 
             &:has(.mobile-full-width-btn) {
                 width: calc(100% - 32px);
+
                 .btn {
                     width: 100%;
                     margin-right: 0;

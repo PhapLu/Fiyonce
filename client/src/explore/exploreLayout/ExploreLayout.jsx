@@ -225,7 +225,11 @@ export default function Explore() {
 
                     <div className="scroll">
                         <div className="scroll-container" ref={scrollContainerRef}>
-                            <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
+                            <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                </svg>
+                            </button>
                             <div onClick={() => handleRecommenderChange(selectedRecommender, null)} className={`explore__filter-item scroll-item flex-align-center ${selectedMovement === null ? "active" : ""}`}>
                                 <img src="https://i.pinimg.com/564x/3d/1e/f7/3d1ef71d293b8a427a601f1e3d676dbf.jpg" alt="Tất cả" className="scroll-item__thumbnail" />
                                 <div className="explore__filter-item__details">
@@ -262,7 +266,11 @@ export default function Explore() {
                                 </div>
                             ))}
 
-                            <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>&gt;</button>
+                            <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 sm">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>

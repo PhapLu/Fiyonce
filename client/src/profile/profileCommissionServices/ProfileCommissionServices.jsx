@@ -174,7 +174,7 @@ export default function ProfileCommissionServices() {
             }
         }
     );
-    
+
     const scrollToCategory = (index) => {
         const element = categoryRefs.current[index];
         const offset = -80;
@@ -248,7 +248,9 @@ export default function ProfileCommissionServices() {
                     </button>
                     <div className="scroll">
                         <div className="scroll-container" ref={scrollContainerRef}>
-                            <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}>&lt;</button>
+                            <button className={`button button-left ${showLeftButton ? 'show' : ''}`} onClick={scrollLeft}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg></button>
                             {commissionServiceCategories?.map((category, index) => (
                                 <button
                                     className="btn btn-7 btn-md scroll-item"
@@ -258,7 +260,11 @@ export default function ProfileCommissionServices() {
                                     {category.title}
                                 </button>
                             ))}
-                            <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>&gt;</button>
+                            <button className={`button button-right ${showRightButton ? 'show' : ''}`} onClick={scrollRight}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6 sm">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
