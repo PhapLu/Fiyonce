@@ -9,12 +9,16 @@ import DenyTalentRequest from '../../components/crudTalentRequest/deny/DenyTalen
 import { resizeImageUrl } from '../../utils/imageDisplayer';
 import ZoomImage from '../../components/zoomImage/ZoomImage';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { formatCurrency, formatFloat } from '../../utils/formatter';
 
 export default function TransactionDashboard() {
     const { userInfo, socket } = useAuth()
     const [talentRequests, setTalentRequests] = useState([]);
     const { setModalInfo } = useModal();
     const queryClient = useQueryClient();
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
 
     const [talentRequest, setTalentRequest] = useState();
     const [showConfirmTalentRequest, setShowConfirmTalentRequest] = useState();
@@ -99,8 +103,24 @@ export default function TransactionDashboard() {
     };
 
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: {error.message}</div>;
+
+    const fetchTransactionOverview = async () => {
+        try {
+            const response = await apiUtils.get(`/transactionDashboard/readTransactionOverview?startDate=${startDate}&endDate=${endDate}`);
+            console.log(response.data.metadata.transactionOverview);
+            return response.data.metadata.transactionOverview;
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const { data: transactionOverview, isFetchingTransactionOverviewError, fetchingTransactionOverviewError, isFetchingTransactionOverviewLoading } = useQuery(
+        ['fetchTransactionOverview', startDate, endDate],
+        fetchTransactionOverview
+    );
+
+    if (isLoading || isFetchingTransactionOverviewLoading) return <div>Loading...</div>;
+    if (isError || isFetchingTransactionOverviewError) return <div>Error: {error.message}</div>;
 
     return (
         <div className="report-dashboard">
@@ -108,14 +128,95 @@ export default function TransactionDashboard() {
                 <div className="section-header">
                     <h3 className="section-header__title">Tổng quan</h3>
                 </div>
+                <div className="mb-16">
+                    <label htmlFor="startDate">Start Date:</label>
+                    <input
+                        type="date"
+                        id="startDate"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
+                    <label htmlFor="endDate">End Date:</label>
+                    <input
+                        type="date"
+                        id="endDate"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                    />
+
+                    <button onClick={() => queryClient.invalidateQueries('fetchTransactionOverview')}>
+                        Filter
+                    </button>
+                </div>
                 <div className="section-content overview-container">
-                    <div className="overview-item">
-                        <p className="overview-item__title">Đơn hàng vi phạm</p>
-                        <span className="overview-item__statistics">5.347</span>
+                    <div className="overview-item md">
+                        <p className="overview-item__title flex-justify-space-between">
+                            <span>Đơn hàng</span>
+                            <span>{transactionOverview?.totalOrders}</span>
+                        </p>
+
+                        <hr />
+                        <p className='flex-justify-space-between'>
+                            <span>Trực tiếp</span>
+                            <span>{transactionOverview?.totalDirectOrders}</span>
+                        </p>
+                        <p className='flex-justify-space-between'>
+                            <span>Chợ commission</span>
+                            <span>{transactionOverview?.totalIndirectOrders}</span>
+                        </p>
+                        <hr />
+                        {transactionOverview?.statusCounts?.map((status, index) => {
+                            return (
+                                <p className='flex-justify-space-between'>
+                                    <span>{status.title}</span>
+                                    <span>{status.count}</span>
+                                </p>
+                            );
+                        })}
                     </div>
-                    <div className="overview-item">
-                        <p className="overview-item__title">Người dùng vi phạm</p>
-                        <span className="overview-item__statistics">5.347</span>
+
+                    <div className="overview-item lg">
+                        <p className="overview-item__title flex-justify-space-between">
+                            <span>Doanh số</span>
+                            <span>4.5%</span>
+                        </p>
+
+                        <hr />
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng GTĐH</span>
+                            <span>{formatCurrency(transactionOverview?.achievableVolume)}</span>
+                        </p>
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng doanh thu</span>
+                            <span>{formatCurrency(transactionOverview?.estimatedAchievableIncome)}</span>
+                        </p>
+                        <hr />
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng GTĐH đã nhận</span>
+                            <span>{formatCurrency(transactionOverview?.achievedVolume)}</span>
+                        </p>
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng doanh thu đã nhận</span>
+                            <span>{formatCurrency(transactionOverview?.estimatedAchievedIncome)}</span>
+                        </p>
+                        <hr />
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng GTĐH sắp nhận</span>
+                            <span>{formatCurrency(transactionOverview?.upcomingAchievableVolume)}</span>
+                        </p>
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng doanh thu sắp nhận</span>
+                            <span>{formatCurrency(transactionOverview?.estimatedUpcomingAchievableIncome)}</span>
+                        </p>
+                        <hr />
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng GTĐH đã lỡ</span>
+                            <span>{formatCurrency(transactionOverview?.unachievableVolume)}</span>
+                        </p>
+                        <p className='flex-justify-space-between'>
+                            <span>Tổng doanh thu đã lỡ</span>
+                            <span>{formatCurrency(transactionOverview?.estimatedUnachievableIncome)}</span>
+                        </p>
                     </div>
                 </div>
             </section>

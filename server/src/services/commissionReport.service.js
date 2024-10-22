@@ -95,7 +95,7 @@ class CommissionReportService {
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
 
         //2. Get all commissionReports
-        const commissionReports = await CommissionReport.find().populate("orderId").populate("proposalId")
+        const commissionReports = await CommissionReport.find()
 
         return {
             commissionReports,

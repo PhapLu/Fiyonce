@@ -40,7 +40,6 @@ import ArtDashboard from "./dashboard/artDashboard/ArtDashboard";
 import TransactionDashboard from "./dashboard/transactionDashboard/TransactionDashboard";
 import AccountDashboard from "./dashboard/accountDashboard/AccountDashboard";
 import NewsDashboard from "./dashboard/newsDashboard/NewsDashboard";
-import ChallengeDashboard from "./dashboard/challengeDashboard/ChallengeDashboard";
 import CreatePost from "./components/crudPost/create/CreatePost";
 import UpdatePost from "./components/crudPost/update/UpdatePost";
 import DeletePost from "./components/crudPost/delete/DeletePost";
@@ -84,6 +83,7 @@ import DeleteCommissionService from "./components/crudCommissionService/delete/D
 import UpdateCommissionService from "./components/crudCommissionService/update/UpdateCommissionService.jsx";
 import UpdateCommissionServiceCategory from "./components/crudCommissionServiceCategory/update/UpdateCommissionServiceCategory.jsx";
 import DeleteCommissionServiceCategory from "./components/crudCommissionServiceCategory/delete/DeleteCommissionServiceCategory.jsx";
+import MakeDecision from "./components/crudCommissionOrder/makeDecision/MakeDecision.jsx";
 
 const queryClient = new QueryClient();
 
@@ -398,12 +398,14 @@ const routes = [
             element: <NewsDashboard />,
           },
           {
-            path: "/dashboard/challenges",
-            element: <ChallengeDashboard />,
-          },
-          {
             path: "/dashboard/reports",
             element: <ReportDashboard />,
+            children: [
+              {
+                path: "commission-reports/:commission-report-id/make-decision",
+                element: <MakeDecision />,
+              }
+            ]
           },
         ],
       },

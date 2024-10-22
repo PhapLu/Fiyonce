@@ -97,9 +97,20 @@ export default function AccountDashboard() {
         socket.emit('sendNotification', { senderId: userInfo._id, receiverId: talentRequest.userId, notification: notificationData, url: notificationData.url });
     };
 
+    const fetchAccountOverview = async () => {
+        try {
+            const response = await apiUtils.get("/accountDashboard/readAccountOverview");
+            console.log(response.data.metadata.accountOverview);
+            return response.data.metadata.accountOverview;
+        } catch (error) {
+            return null;
+        }
+    };
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: {error.message}</div>;
+    const { data: accountOverview, isFetchingAccountOverviewError, fetchingAccountOverviewError, isFetchingAccountOverviewLoading } = useQuery('fetchAccountOverview', fetchAccountOverview);
+
+    if (isLoading || isFetchingAccountOverviewLoading) return <div>Loading...</div>;
+    if (isError || isFetchingAccountOverviewError) return <div>Error: {error.message}</div>;
 
     return (
         <div className="dashboard-account">
@@ -110,23 +121,23 @@ export default function AccountDashboard() {
                 <div className="section-content overview-container">
                     <div className="overview-item">
                         <p className="overview-item__title">Người dùng</p>
-                        <span className="overview-item__statistics">5.347</span>
+                        <span className="overview-item__statistics">{accountOverview?.userCount}</span>
+                    </div>
+                    <div className="overview-item">
+                        <p className="overview-item__title">Admin</p>
+                        <span className="overview-item__statistics">{accountOverview?.adminCount}</span>
                     </div>
                     <div className="overview-item">
                         <p className="overview-item__title">Họa sĩ</p>
-                        <span className="overview-item__statistics">5.347</span>
+                        <span className="overview-item__statistics">{accountOverview?.talentCount}</span>
                     </div>
                     <div className="overview-item">
                         <p className="overview-item__title">Khách hàng</p>
-                        <span className="overview-item__statistics">5.347</span>
+                        <span className="overview-item__statistics">{accountOverview?.memberCount}</span>
                     </div>
                     <div className="overview-item">
                         <p className="overview-item__title">Yêu cầu nâng cấp tài khoản</p>
-                        <span className="overview-item__statistics">5.347</span>
-                    </div>
-                    <div className="overview-item">
-                        <p className="overview-item__title">Tài khoản bị chặn</p>
-                        <span className="overview-item__statistics">5.347</span>
+                        <span className="overview-item__statistics">{accountOverview?.talentRequestCount}</span>
                     </div>
                 </div>
             </section>
@@ -170,7 +181,7 @@ export default function AccountDashboard() {
                                     <td >{talentRequest?.taxCode}</td>
                                     <td className='flex-align-center'>
                                         {talentRequest.artworks.map((artwork, index) => (
-                                            <LazyLoadImage key={index} src={resizeImageUrl(artwork, 80)} alt={`artwork-${index}`} effect='blur' onClick={() => {setImageSrc(artwork); setShowZoomImage(true)}}/>
+                                            <LazyLoadImage key={index} src={resizeImageUrl(artwork, 80)} alt={`artwork-${index}`} effect='blur' onClick={() => { setImageSrc(artwork); setShowZoomImage(true) }} />
                                         ))}
                                     </td>
                                     <td>
@@ -191,7 +202,7 @@ export default function AccountDashboard() {
                     </tbody>
                 </table>
             </section>
-            {showZoomImage && <ZoomImage src={imageSrc} setShowZoomImage={setShowZoomImage}/>}
+            {showZoomImage && <ZoomImage src={imageSrc} setShowZoomImage={setShowZoomImage} />}
             {
                 overlayVisible && (
                     <div className="overlay">

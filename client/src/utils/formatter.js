@@ -41,11 +41,15 @@ export function formatNumber(num, digits) {
 }
 
 export function formatCurrency(val) {
-    if (!val) {
+    if (val == null) {
         return;
     }
-    // Convert the number to a string and use a regular expression to add periods as thousand separators
-    return val?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Round the value to the nearest integer
+    const roundedVal = Math.round(val);
+
+    // Convert the number to a string and use a regular expression to add commas as thousand separators
+    return roundedVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 export function formatDate(val) {

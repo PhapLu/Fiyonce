@@ -5,7 +5,7 @@ class TransactionDashboardController{
     readTransactionOverview = async(req, res, next) => {
         new SuccessResponse({
             message: 'Get transaction overview success!',
-            metadata: await TransactionDashboardService.readTransactionOverview(req.userId)
+            metadata: await TransactionDashboardService.readTransactionOverview(req.userId, req.query)
         }).send(res)
     }
 

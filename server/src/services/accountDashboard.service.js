@@ -22,11 +22,13 @@ class AccountDashboardService {
         const talentRequestCount = await TalentRequest.countDocuments({ status: "pending" })
 
         return {
-            userCount,
-            adminCount,
-            talentCount,
-            memberCount,
-            talentRequestCount,
+            accountOverview: {
+                userCount,
+                adminCount,
+                talentCount,
+                memberCount,
+                talentRequestCount,
+            }
         }
     }
 }

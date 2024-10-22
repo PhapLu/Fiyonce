@@ -48,6 +48,14 @@
                 margin: 0 0 8px 0;
                 font-weight: bold;
             }
+
+            &.md {
+                min-width: 250px;
+            }
+
+            &.lg {
+                min-width: 350px;
+            }
         }
     }
 
@@ -57,6 +65,15 @@
             height: 40px;
             border-radius: 8px;
             margin-right: 8px;
+        }
+
+        th, td {
+            min-width: 60px;
+            max-width: 120px;
+        }
+
+        .status {
+            min-width: 80px;
         }
     }
 
