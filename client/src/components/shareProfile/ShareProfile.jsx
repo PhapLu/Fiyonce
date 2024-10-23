@@ -14,14 +14,20 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
     const [shareProfileOption, setShareProfileOption] = useState("social-media");
     const [showCardVisitSide, setShowCardVisitSide] = useState("front");
 
+    console.log(profileInfo)
+    console.log(setShowMoreProfileActions)
+    console.log(setOverlayVisible)
     // Toggle display modal form
     const shareProfileRef = useRef();
+    const closeShareProfileView = () => {
+        setShowMoreProfileActions(false);
+        setOverlayVisible(false);
+    }
     useEffect(() => {
 
         const handler = (e) => {
             if (shareProfileRef.current && !shareProfileRef.current.contains(e.target)) {
-                setShowMoreProfileActions(false);
-                setOverlayVisible(false);
+                closeShareProfileView();
             }
         };
         document.addEventListener("mousedown", handler);
@@ -66,10 +72,7 @@ export default function ShareProfile({ profileInfo, setShowMoreProfileActions, s
     return (
         <div className="modal-form type-3 share-profile" ref={shareProfileRef}>
             <h2 className="form__title">Chia sẻ trang cá nhân</h2>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={() => {
-                setShowMoreProfileActions(false);
-                setOverlayVisible(false);
-            }}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-6 form__close-ic" onClick={closeShareProfileView}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <br />

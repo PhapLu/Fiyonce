@@ -38,12 +38,12 @@ export default function ProfileCommissionServices() {
 
     useEffect(() => {
         if (commissionServiceId) {
-            queryClient.invalidateQueries(['fetchCommissionOrder']); // Refetch when commissionServiceId changes
+            queryClient.invalidateQueries(['fetchCommissionService']); // Refetch when commissionServiceId changes
         }
     }, [commissionServiceId, queryClient]);
 
 
-    const fetchCommissionOrder = async () => {
+    const fetchCommissionService = async () => {
         try {
             const response = await apiUtils.get(`/commissionService/readCommissionService/${commissionServiceId}`);
             console.log(response.data.metadata.commissionService)
@@ -53,8 +53,8 @@ export default function ProfileCommissionServices() {
         }
     }
     const { data: commissionService, fetchingCommissionServiceError, isFetchingCommissionServiceError, isFetchingCommissionServiceLoading } = useQuery(
-        ['fetchCommissionOrder', commissionServiceId], // Add commissionServiceId as a dependency
-        () => fetchCommissionOrder(),
+        ['fetchCommissionService', commissionServiceId], // Add commissionServiceId as a dependency
+        () => fetchCommissionService(),
         {
             enabled: !!commissionServiceId, // Only fetch when commissionServiceId is available
             onSuccess: (data) => {

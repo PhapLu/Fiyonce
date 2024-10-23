@@ -206,9 +206,9 @@ export default function RenderPosts({ isSorting, isDisplayOwner, allowEditDelete
                 setShowShareToSocials(null); // Reset ShareToSocials state to null when clicking outside
             }
         };
-    
+
         document.addEventListener('click', handleClickOutside);
-    
+
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };

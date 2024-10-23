@@ -1,28 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./RenderNewss.scss";
 import { useQuery } from 'react-query';
 import { useRef, useState, useEffect } from 'react';
 import { apiUtils } from "../../../utils/newRequest";
 
 export default function RenderNewss() {
+    const { "news-id": newsId } = useParams();
+    console.log(newsId)
     const fetchNewss = async () => {
         try {
             const response = await apiUtils.get("/news/readNewss");
-            const publicNews = response.data.metadata.newss.filter(news => news.isPrivate === false);
+            // Filter out the current newsId and private news
+            const publicNews = response.data.metadata.newss.filter(news =>
+                news.isPrivate === false && news._id !== newsId);
             return publicNews;
         } catch (error) {
             return null;
         }
     };
 
-    const { data: newss, error, isError, isLoading } = useQuery('fetchNewss', fetchNewss, {
+    // Use React Query to fetch and cache news
+    const { data: newss, error, isError, isLoading } = useQuery(['fetchNewss', newsId], fetchNewss, {
         onError: (error) => {
             console.error('Error fetching news:', error);
-        },
-
-        onSuccess: (news) => {
-            // console.log('Fetched news:', news);
-        },
+        }
     });
 
     const scrollContainerRef = useRef(null);
@@ -86,7 +87,6 @@ export default function RenderNewss() {
     };
 
     if (isLoading) {
-        return <span>Đang tải...</span>;
     }
 
     if (isError) {

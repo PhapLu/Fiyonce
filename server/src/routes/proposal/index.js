@@ -8,6 +8,7 @@ import { uploadFields } from "../../configs/multer.config.js"
 const router = express.Router()
 //Member
 router.get('/readProposals/:orderId', asyncHandler(proposalController.readProposals))
+router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 
 //authentication
 //router.use(authenticationV2)
@@ -15,7 +16,6 @@ router.use(verifyToken)
 //CRUD
 //Talent
 router.post('/sendProposal/:orderId', asyncHandler(proposalController.sendProposal))
-router.get('/readProposal/:proposalId', asyncHandler(proposalController.readProposal))
 router.patch('/updateProposal/:proposalId', asyncHandler(proposalController.updateProposal))
 router.delete('/deleteProposal/:proposalId', asyncHandler(proposalController.deleteProposal))
 

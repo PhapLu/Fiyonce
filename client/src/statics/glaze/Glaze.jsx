@@ -6,7 +6,7 @@ export default function Glaze() {
     return (
         <div className="glaze">
             <h1 className="flex-align-center flex-justify-center"><img src={GlazeLogo} className="glaze-logo mr-16" alt="" />Bảo vệ tác phẩm nghệ thuật của bạn với Glaze</h1>
-            <span className="flex-align-center flex-justify-center"> bởi &nbsp; <Link to="/statics/about-team" className="highlight-text">Pastal Team</Link> <span className="dot-delimiter sm ml-8 mr-8"></span> Cập nhật gần nhất: 12/08/2024</span>
+            <span className="flex-align-center flex-justify-center"> bởi &nbsp; <Link to="/statics/about" className="highlight-text underlined-text">Pastal Team</Link> <span className="dot-delimiter sm ml-8 mr-8"></span> Cập nhật gần nhất: 12/08/2024</span>
             <hr />
             <h3 className="">1. Glaze là gì?</h3>
             <span>

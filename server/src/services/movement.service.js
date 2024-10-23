@@ -58,8 +58,19 @@ class MovementService {
             {
                 $lookup: {
                     from: "CommissionServices", // Assuming the collection name is 'CommissionServices'
-                    localField: "_id",
-                    foreignField: "movementId", // Assuming the field name in CommissionServices is 'movements'
+                    let: { movementId: "$_id" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$movementId", "$$movementId"] },
+                                        { $eq: ["$deletedAt", null] }  // Filter commissionServices with deletedAt == null
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: "commissionServices",
                 },
             },
@@ -71,14 +82,14 @@ class MovementService {
             },
             {
                 $project: {
-                    posts: 0, // Exclude the artworks array to reduce payload size
+                    posts: 0, // Exclude the posts array to reduce payload size
                     commissionServices: 0, // Exclude the commissionServices array to reduce payload size
                 },
             },
-        ])
+        ]);
         return {
             movements,
-        }
+        };
     }
 
     static updateMovement = async (adminId, movementId, req) => {

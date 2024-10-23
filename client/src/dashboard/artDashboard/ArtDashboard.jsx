@@ -192,7 +192,7 @@ export default function ArtDashboard() {
                     <div className="section-header">
                         <div className="section-header--left">
                             <h3 className="section-header__title">Trường phái</h3>
-                            <svg onClick={() => { setShowCreateMovementForm(true), setOverlayVisible(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 btn add-btn">
+                            <svg onClick={() => { setShowCreateMovementForm(true), setOverlayVisible(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 btn add-btn">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </div>

@@ -204,22 +204,19 @@ export default function Navbar() {
                                         <Link to="/commission-market" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/commission-market') ? "active" : "")}>
                                             Chợ Commission
                                         </Link>
-                                        <Link to="/challenges" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                        {/* <Link to="/challenges" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
                                             Thử thách
-                                        </Link>
+                                        </Link> */}
 
                                         <hr className="mt-8 mb-8" />
-                                        <Link to="/challenges" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                        <Link to="/statics/about" className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/statics/about') ? "active" : "")}>
                                             Về Pastal
                                         </Link>
-                                        <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                                        <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/help-center') ? "active" : "")}>
                                             Trung tâm trợ giúp
                                         </Link>
-                                        <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
-                                            Chính sách
-                                        </Link>
-                                        <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/challenges') ? "active" : "")}>
-                                            Điều khoản
+                                        <Link className={`hamburger-menu-item gray-bg-hover` + (location.pathname.includes('/statics/terms-of-services') ? "active" : "")}>
+                                            Chính sách & Điều khoản
                                         </Link>
                                     </ul>
                                 </div>
@@ -305,9 +302,9 @@ export default function Navbar() {
                         <li className={`navbar-link-item tablet-hide mobile-hide ` + (location.pathname.includes('/commission-market') ? "active" : "")}>
                             <Link to="/commission-market">Chợ Commission</Link>
                         </li>
-                        <li className={`navbar-link-item tablet-hide mobile-hide ` + (location.pathname.includes('/challenges') ? "active" : "")}>
+                        {/* <li className={`navbar-link-item tablet-hide mobile-hide ` + (location.pathname.includes('/challenges') ? "active" : "")}>
                             <Link to="/challenges">Thử thách</Link>
-                        </li>
+                        </li> */}
                         <hr className="navbar__veritcal-hr tablet-hide mobile-hide" />
                         {userInfo && (
                             <>
