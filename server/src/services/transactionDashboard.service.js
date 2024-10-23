@@ -163,10 +163,10 @@ class TransactionDashboardService {
 
         // 6. Extract the calculated values
         const { totalSum, averagePrice, maxPrice, minPrice } = results[0];
-
-        // 7. Calculate the estimated income as 0.45% of the total sum
-        const estimatedIncome = totalSum * 0.0045;
-
+        
+        // 7. Calculate the estimated income as 4.5% of the total sum
+        const estimatedIncome = totalSum * 0.045;
+    
         // 8. Return the results
         return {
             estimatedIncome,
