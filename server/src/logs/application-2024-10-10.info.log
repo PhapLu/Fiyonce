@@ -1,0 +1,625 @@
+2024-10-10 07:35:08::info::/v1/api/auth/users/forgotPassword::5e2c53d0-00dd-48f2-8cc1-ceffe57aa071::input-params ::POST::::{"email":"quangminhqungai@gmail.com"}
+2024-10-10 07:35:42::info::/v1/api/auth/users/forgotPassword::eea7ef30-9681-4bfa-beca-de3711e118f4::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
+2024-10-10 07:37:42::info::/v1/api/auth/users/forgotPassword::f388b1af-2559-4056-99c5-eee3d75650c9::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
+2024-10-10 07:46:15::info::/v1/api/auth/users/forgotPassword::f639b6c1-238f-472e-ac10-4e424aac3cb3::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
+2024-10-10 07:47:10::info::/v1/api/auth/users/forgotPassword::f74648fb-2773-4144-a861-5aa67e28894e::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com"}
+2024-10-10 09:02:54::info::/v1/api/user/me::6d490adc-69b6-4a17-a78e-c55468eb75b6::input-params ::GET::::{}
+2024-10-10 09:02:55::info::/v1/api/movement/readMovements::fc4d0e4b-f575-4ddd-a6d7-17bb9cbd7a27::input-params ::GET::::{}
+2024-10-10 09:02:55::info::/v1/api/news/readNewss::5d7c71c2-21ed-4102-b424-dee937f0c6d0::input-params ::GET::::{}
+2024-10-10 09:02:55::info::/v1/api/recommender/readPopularPosts::e449bbc7-f1c2-4d3f-80b1-ebd132266d15::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:02:56::info::/v1/api/recommender/readPopularPosts::8f587bd3-9dbb-4594-beb7-7787354efb35::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:02:58::info::/v1/api/movement/readMovements::0e7f3b3a-8ac1-493c-a961-20a6b417c709::input-params ::GET::::{}
+2024-10-10 09:02:58::info::/v1/api/news/readNewss::14681415-5fc4-47a3-9b3f-d7f79ed3f8a4::input-params ::GET::::{}
+2024-10-10 09:02:59::info::/v1/api/recommender/readPopularPosts::f605a20f-714b-4c2a-867b-72cf1ae2012d::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 09:03:01::info::/v1/api/movement/readMovements::0dbc230b-1e3e-4c51-973b-a2190f89fed0::input-params ::GET::::{}
+2024-10-10 09:03:01::info::/v1/api/news/readNewss::95f48ebf-97d5-4662-815e-5f9602d4095a::input-params ::GET::::{}
+2024-10-10 09:03:02::info::/v1/api/movement/readMovements::27b4a1bd-624c-42ec-b7d5-1455863490cf::input-params ::GET::::{}
+2024-10-10 09:03:02::info::/v1/api/news/readNewss::4eafc6f8-257d-41c2-ba90-9b5fe3c505cd::input-params ::GET::::{}
+2024-10-10 09:03:10::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::1651d5f1-5e72-4d75-aec8-af09b66fbb5f::input-params ::GET::::{}
+2024-10-10 09:03:10::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::53254803-32e7-4293-8999-a47b47b4a315::input-params ::GET::::{}
+2024-10-10 09:03:13::info::/v1/api/news/readNewss::fae991af-eff4-4ec6-91b2-38158e03191e::input-params ::GET::::{}
+2024-10-10 09:03:13::info::/v1/api/recommender/readPopularPosts::5beebf6e-317a-4ff6-89dd-3c91c63e14ba::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:03:14::info::/v1/api/recommender/readPopularPosts::05993d49-337f-4fb4-9b1c-35c6e7f420d3::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:03:15::info::/v1/api/recommender/readPopularPosts::775f918b-2605-4a9e-9790-16671f634cc0::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 09:03:26::info::/v1/api/movement/readMovements::d10f27cd-2817-41c9-ac08-e0aa2a2044dc::input-params ::GET::::{}
+2024-10-10 09:03:26::info::/v1/api/news/readNewss::e0197056-f455-48ec-bde0-f71395ffedbd::input-params ::GET::::{}
+2024-10-10 09:03:28::info::/v1/api/auth/users/logout::29358fb0-0492-41bc-a679-595d852a1063::input-params ::POST::::{}
+2024-10-10 09:03:28::info::/v1/api/user/me::2ed008ee-df06-4895-b603-cf57078c2a7b::input-params ::GET::::{}
+2024-10-10 09:03:28::error::/v1/api/user/me::2ed008ee-df06-4895-b603-cf57078c2a7b::403 - 3ms - Response: {"status":403,"now":1728525808177}::{"message":"Access token missing"}
+2024-10-10 09:03:37::info::/v1/api/auth/users/login::139a504c-e886-45a4-b871-936e9cf93481::input-params ::POST::::{"email":"quangminhqungai@gmail.com","password":"PhapNhat987AZ@"}
+2024-10-10 09:03:41::info::/v1/api/movement/readMovements::dbad69e7-a12e-4389-9286-53a8d10af082::input-params ::GET::::{}
+2024-10-10 09:03:41::info::/v1/api/news/readNewss::8c195988-8a14-4dc9-b0b0-3fa6e10b7819::input-params ::GET::::{}
+2024-10-10 09:03:41::info::/v1/api/user/readUserProfile/66a5a57173370474cf4eacca::561030d4-4825-4e2b-882b-72ff0838c605::input-params ::GET::::{}
+2024-10-10 09:03:41::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5a57173370474cf4eacca::6a9d3267-c216-4693-9bef-40e9529d74d6::input-params ::GET::::{}
+2024-10-10 09:03:54::info::/v1/api/movement/readMovements::ab3836b1-6e9c-4993-9cde-2dd9bed1a759::input-params ::GET::::{}
+2024-10-10 09:03:54::info::/v1/api/user/readUserProfile/66a5a57173370474cf4eacca::d602a341-7c8c-4710-98eb-126d4e621988::input-params ::GET::::{}
+2024-10-10 09:03:54::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5a57173370474cf4eacca::fbfe4773-bece-4f1c-b6c3-d92143e7c5b5::input-params ::GET::::{}
+2024-10-10 09:03:56::info::/v1/api/upload/profile/avatarOrCover/66a5a57173370474cf4eacca::c678a372-bf9a-4302-bde8-b83259d2bb5d::input-params ::POST::::{}
+2024-10-10 09:04:01::info::/v1/api/movement/readMovements::c5ebfe91-98f5-468d-af1e-5aac04ca86fb::input-params ::GET::::{}
+2024-10-10 09:04:01::info::/v1/api/user/readUserProfile/66a5a57173370474cf4eacca::f8bd225a-7be7-485e-9253-179367cb8d5e::input-params ::GET::::{}
+2024-10-10 09:04:01::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5a57173370474cf4eacca::0ced8c4e-271a-4a99-99e9-037ba86a8266::input-params ::GET::::{}
+2024-10-10 09:04:02::info::/v1/api/movement/readMovements::839eabf0-df29-4c95-aeeb-fe8852964209::input-params ::GET::::{}
+2024-10-10 09:04:02::info::/v1/api/user/readUserProfile/66a5a57173370474cf4eacca::fbe3eacf-3a1b-4c43-8f2d-7adeb53ed359::input-params ::GET::::{}
+2024-10-10 09:04:02::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5a57173370474cf4eacca::3c261ced-a5e6-48be-a83f-7aca02106ad6::input-params ::GET::::{}
+2024-10-10 09:04:08::info::/v1/api/movement/readMovements::795bc066-2c97-415f-ac62-f91a52d71e56::input-params ::GET::::{}
+2024-10-10 09:04:08::info::/v1/api/user/readUserProfile/66a5a57173370474cf4eacca::c66fcb52-129f-4639-9beb-631b463b96c1::input-params ::GET::::{}
+2024-10-10 09:04:08::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5a57173370474cf4eacca::d6139966-f336-4bbb-90b9-1601d8f4d0f0::input-params ::GET::::{}
+2024-10-10 09:04:29::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5a57173370474cf4eacca::cf92b2e0-f968-492b-84b0-502194d8a3c4::input-params ::GET::::{}
+2024-10-10 09:04:29::info::/v1/api/movement/readMovements::1ad7cb61-f231-476d-9aad-44bfe60c7030::input-params ::GET::::{}
+2024-10-10 09:04:29::info::/v1/api/user/readUserProfile/66a5a57173370474cf4eacca::92a154ea-eaed-4405-91aa-bbbeb8f901db::input-params ::GET::::{}
+2024-10-10 09:04:51::info::/v1/api/upload/profile/avatarOrCover/66a5a57173370474cf4eacca::051a4f6b-0fb3-42b6-af35-da1d19c9bd05::input-params ::POST::::{}
+2024-10-10 09:05:03::info::/v1/api/post/readPostCategoriesWithPosts/66a5a57173370474cf4eacca::fc1ebcbf-067c-4e95-9c7a-0fd67f415c32::input-params ::GET::::{}
+2024-10-10 09:05:04::info::/v1/api/news/readNewss::8be5842b-c742-40c9-ad03-4e7a9fa8aa2f::input-params ::GET::::{}
+2024-10-10 09:05:04::info::/v1/api/recommender/readPopularPosts::52873622-9ce6-4aba-8b48-3f56ee756e8e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:05:05::info::/v1/api/recommender/readPopularPosts::aee1028f-5d0a-4cc2-84dc-a6607ad2b21a::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:05:15::info::/v1/api/movement/readMovements::a2654aa3-6eb3-4bd7-9351-50a778033049::input-params ::GET::::{}
+2024-10-10 09:05:15::info::/v1/api/news/readNewss::004e69f6-d5c6-471c-8955-b5d41876f038::input-params ::GET::::{}
+2024-10-10 09:05:16::info::/v1/api/recommender/readPopularPosts::78254230-2fe8-48ce-b655-1b3ee336bdf1::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 09:05:18::info::/v1/api/recommender/readPopularPosts::9bd1b38a-6318-4139-8aec-cbbfc8708be9::input-params ::GET::::{"page":"3","limit":"10"}
+2024-10-10 09:05:23::info::/v1/api/auth/users/logout::92d819f3-5039-44a2-97b1-992a3b16a4fc::input-params ::POST::::{}
+2024-10-10 09:05:23::info::/v1/api/user/me::0d24188e-3a22-4433-8b3e-5d7d644c837d::input-params ::GET::::{}
+2024-10-10 09:05:23::error::/v1/api/user/me::0d24188e-3a22-4433-8b3e-5d7d644c837d::403 - 1ms - Response: {"status":403,"now":1728525923734}::{"message":"Access token missing"}
+2024-10-10 09:05:26::info::/v1/api/auth/google::590ebe68-7e6c-488f-a302-11cde1614055::input-params ::GET::::{}
+2024-10-10 09:06:28::info::/v1/api/movement/readMovements::551af583-1d23-468b-b47f-87203e027604::input-params ::GET::::{}
+2024-10-10 09:06:28::info::/v1/api/news/readNewss::d6a9b434-75be-4ae6-b481-2e35de0043d7::input-params ::GET::::{}
+2024-10-10 09:06:28::info::/v1/api/recommender/readPopularPosts::8ef62e67-77cd-453a-84d2-661f50a5c978::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:06:29::info::/v1/api/recommender/readPopularPosts::c6ac3b22-5213-48a8-9ec2-95d8f7ebaa7d::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:06:34::info::/v1/api/auth/google::a608c617-487a-4473-a0f5-00f1c97c60bd::input-params ::GET::::{}
+2024-10-10 09:10:10::info::/v1/api/movement/readMovements::ce1b4612-3f1f-4832-81a9-a938f691496d::input-params ::GET::::{}
+2024-10-10 09:10:10::info::/v1/api/news/readNewss::77077435-0b01-4059-9323-7f9a278e31a0::input-params ::GET::::{}
+2024-10-10 09:10:10::info::/v1/api/recommender/readPopularPosts::c6d1ad48-ecd3-409d-b866-8bc416479845::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:10:11::info::/v1/api/user/me::286367af-1977-4ff2-a4bb-7aaea125194a::input-params ::GET::::{}
+2024-10-10 09:10:11::error::/v1/api/user/me::286367af-1977-4ff2-a4bb-7aaea125194a::403 - 0ms - Response: {"status":403,"now":1728526211217}::{"message":"Access token missing"}
+2024-10-10 09:10:11::info::/v1/api/movement/readMovements::66f6e780-8acc-493c-9ecc-d32fa6710911::input-params ::GET::::{}
+2024-10-10 09:10:11::info::/v1/api/news/readNewss::123a6b96-ebb8-455c-bbbd-01d9ae735ac0::input-params ::GET::::{}
+2024-10-10 09:10:11::info::/v1/api/recommender/readPopularPosts::b50c8a78-79b3-48b5-bc6a-ec4006e04dab::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:10:13::info::/v1/api/user/me::bf07fb3d-379c-4d9f-9c9b-8f35dbc3d243::input-params ::GET::::{}
+2024-10-10 09:10:13::error::/v1/api/user/me::bf07fb3d-379c-4d9f-9c9b-8f35dbc3d243::403 - 1ms - Response: {"status":403,"now":1728526213967}::{"message":"Access token missing"}
+2024-10-10 09:10:13::info::/v1/api/movement/readMovements::05d16426-a54c-42bf-9707-0f5304a7e449::input-params ::GET::::{}
+2024-10-10 09:10:14::info::/v1/api/news/readNewss::b32653a1-3432-428a-9725-fb5d855dfe8a::input-params ::GET::::{}
+2024-10-10 09:10:14::info::/v1/api/user/me::5874cac3-57ba-4b92-aa11-7dc58181c651::input-params ::GET::::{}
+2024-10-10 09:10:14::error::/v1/api/user/me::5874cac3-57ba-4b92-aa11-7dc58181c651::403 - 0ms - Response: {"status":403,"now":1728526214511}::{"message":"Access token missing"}
+2024-10-10 09:10:14::info::/v1/api/movement/readMovements::21eba709-7d31-4f65-a81d-8975b68ddf10::input-params ::GET::::{}
+2024-10-10 09:10:14::info::/v1/api/news/readNewss::635f75b7-d2dc-4f1b-bc45-a171df42e334::input-params ::GET::::{}
+2024-10-10 09:10:16::info::/v1/api/user/me::6fdfb69c-b942-41df-bde1-44a89498fd87::input-params ::GET::::{}
+2024-10-10 09:10:16::error::/v1/api/user/me::6fdfb69c-b942-41df-bde1-44a89498fd87::403 - 1ms - Response: {"status":403,"now":1728526216144}::{"message":"Access token missing"}
+2024-10-10 09:10:16::info::/v1/api/movement/readMovements::694cbf4c-b040-4ccf-b27d-809ef0e1099d::input-params ::GET::::{}
+2024-10-10 09:10:16::info::/v1/api/news/readNewss::9537763b-0afb-4dc0-8de6-c93f0be8a010::input-params ::GET::::{}
+2024-10-10 09:10:17::info::/v1/api/user/me::99d7101e-cedd-4c2c-9151-99c38002c4da::input-params ::GET::::{}
+2024-10-10 09:10:17::error::/v1/api/user/me::99d7101e-cedd-4c2c-9151-99c38002c4da::403 - 0ms - Response: {"status":403,"now":1728526217569}::{"message":"Access token missing"}
+2024-10-10 09:10:17::info::/v1/api/movement/readMovements::a22b1b79-b3d3-4e7c-bd44-50ff276356e6::input-params ::GET::::{}
+2024-10-10 09:10:17::info::/v1/api/news/readNewss::b5990dfe-8fc3-435c-a675-b03f64505b67::input-params ::GET::::{}
+2024-10-10 09:10:19::info::/v1/api/auth/google::e9ebd579-1bfd-472f-8548-6e4cfd024383::input-params ::GET::::{}
+2024-10-10 09:14:03::info::/v1/api/movement/readMovements::374b5def-e9b6-4b12-92b9-7cfc23515c9a::input-params ::GET::::{}
+2024-10-10 09:14:03::info::/v1/api/news/readNewss::6f8d4a1c-0fc3-4506-93f3-e129e54b9bd2::input-params ::GET::::{}
+2024-10-10 09:14:03::info::/v1/api/recommender/readPopularPosts::3c671f46-d8fb-40a9-8dc3-b113b7beb2d1::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:14:04::info::/v1/api/recommender/readPopularPosts::c539d3d3-3f94-43a9-b528-31c6235ab891::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:14:06::info::/v1/api/auth/google::704ec4d4-6970-4998-9d1d-b4f3b9efb385::input-params ::GET::::{}
+2024-10-10 09:16:32::info::/v1/api/user/me::9b855f4c-a45c-4b55-ac14-78a2f8d82cbc::input-params ::GET::::{}
+2024-10-10 09:16:32::error::/v1/api/user/me::9b855f4c-a45c-4b55-ac14-78a2f8d82cbc::403 - 3ms - Response: {"status":403,"now":1728526592169}::{"message":"Access token missing"}
+2024-10-10 09:16:32::info::/v1/api/movement/readMovements::a88adb41-1888-4009-9f10-a89cb6c3e7ea::input-params ::GET::::{}
+2024-10-10 09:16:32::info::/v1/api/news/readNewss::afde9293-43b0-4ef9-b67e-d2606fceb965::input-params ::GET::::{}
+2024-10-10 09:16:34::info::/v1/api/user/me::6163b868-a427-42c2-9ee7-ee9f807c69d5::input-params ::GET::::{}
+2024-10-10 09:16:34::error::/v1/api/user/me::6163b868-a427-42c2-9ee7-ee9f807c69d5::403 - 1ms - Response: {"status":403,"now":1728526594401}::{"message":"Access token missing"}
+2024-10-10 09:16:34::info::/v1/api/movement/readMovements::7461af22-f060-4cf4-b48f-c48d09574a8b::input-params ::GET::::{}
+2024-10-10 09:16:34::info::/v1/api/news/readNewss::804fd423-f902-4c46-ad67-7a5a045ca83d::input-params ::GET::::{}
+2024-10-10 09:16:36::info::/v1/api/user/me::5ca3945b-3a4d-4908-84d7-4c606d195381::input-params ::GET::::{}
+2024-10-10 09:16:36::error::/v1/api/user/me::5ca3945b-3a4d-4908-84d7-4c606d195381::403 - 0ms - Response: {"status":403,"now":1728526596960}::{"message":"Access token missing"}
+2024-10-10 09:16:37::info::/v1/api/movement/readMovements::b1f7cee1-2452-4104-94ee-0307fd10d70e::input-params ::GET::::{}
+2024-10-10 09:16:37::info::/v1/api/user/me::190da38d-3cf0-4116-916a-b06f13c8e75c::input-params ::GET::::{}
+2024-10-10 09:16:37::error::/v1/api/user/me::190da38d-3cf0-4116-916a-b06f13c8e75c::403 - 1ms - Response: {"status":403,"now":1728526597484}::{"message":"Access token missing"}
+2024-10-10 09:16:37::info::/v1/api/news/readNewss::5749ae34-b47a-4b16-a4fc-fef7fda2d425::input-params ::GET::::{}
+2024-10-10 09:16:37::info::/v1/api/recommender/readPopularPosts::6bf7ac52-23cb-443d-b5da-1f1b86a1e9ed::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:16:38::info::/v1/api/recommender/readPopularPosts::1f894b28-5ac3-4a82-ae70-01e001532e4c::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:16:39::info::/v1/api/recommender/readPopularPosts::aecf5454-39e3-45fc-8555-dbbe48c0f357::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 09:17:39::info::/v1/api/user/me::d6c6b2e1-940c-4e8a-b1f6-1d26861f0cf7::input-params ::GET::::{}
+2024-10-10 09:17:39::error::/v1/api/user/me::d6c6b2e1-940c-4e8a-b1f6-1d26861f0cf7::403 - 0ms - Response: {"status":403,"now":1728526659166}::{"message":"Access token missing"}
+2024-10-10 09:17:39::info::/v1/api/movement/readMovements::bd58b8d7-2027-4587-b9f0-9389f85bf7c8::input-params ::GET::::{}
+2024-10-10 09:17:39::info::/v1/api/news/readNewss::813dc5d6-bf91-42a7-80da-1bd76b819b9f::input-params ::GET::::{}
+2024-10-10 09:17:41::info::/v1/api/user/me::7b29b330-90ac-42af-be0a-8c5a155c2b05::input-params ::GET::::{}
+2024-10-10 09:17:41::error::/v1/api/user/me::7b29b330-90ac-42af-be0a-8c5a155c2b05::403 - 1ms - Response: {"status":403,"now":1728526661037}::{"message":"Access token missing"}
+2024-10-10 09:17:41::info::/v1/api/movement/readMovements::db810b36-627e-4ffe-83d0-f47be02e6a99::input-params ::GET::::{}
+2024-10-10 09:17:41::info::/v1/api/news/readNewss::88931d88-b510-4815-90c9-4e35502ae1e9::input-params ::GET::::{}
+2024-10-10 09:17:41::info::/v1/api/user/me::be911014-13cf-425b-9bf4-edf83c09f7a1::input-params ::GET::::{}
+2024-10-10 09:17:41::error::/v1/api/user/me::be911014-13cf-425b-9bf4-edf83c09f7a1::403 - 0ms - Response: {"status":403,"now":1728526661542}::{"message":"Access token missing"}
+2024-10-10 09:17:41::info::/v1/api/movement/readMovements::1f101e52-d9f5-4a14-82c1-70593db9c77a::input-params ::GET::::{}
+2024-10-10 09:17:41::info::/v1/api/news/readNewss::4e5b238e-9cdc-4d80-9da6-c2f76af0df06::input-params ::GET::::{}
+2024-10-10 09:17:43::info::/v1/api/auth/google::b4efab46-6951-45d5-954f-2f3362733d7f::input-params ::GET::::{}
+2024-10-10 09:17:59::info::/v1/api/news/readNewss::5a1f2cab-5c66-422c-9c41-50ac65798cf3::input-params ::GET::::{}
+2024-10-10 09:17:59::info::/v1/api/recommender/readPopularPosts::17950ead-7303-4c21-a7bf-71ebdef73826::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:18:00::info::/v1/api/recommender/readPopularPosts::6e61f3be-6d49-4b96-8582-ee08dda3406e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:20:11::info::/v1/api/user/me::0203b50b-eb14-4965-bdc0-ce27b3922c3b::input-params ::GET::::{}
+2024-10-10 09:20:11::error::/v1/api/user/me::0203b50b-eb14-4965-bdc0-ce27b3922c3b::403 - 10ms - Response: {"status":403,"now":1728526811149}::{"message":"Access token missing"}
+2024-10-10 09:20:11::info::/v1/api/movement/readMovements::aa0cfe7e-b0fa-40f0-ac28-da2f64c386cb::input-params ::GET::::{}
+2024-10-10 09:20:11::info::/v1/api/news/readNewss::9c69d74d-1ea7-4e22-9846-bde7a911475d::input-params ::GET::::{}
+2024-10-10 09:20:11::info::/v1/api/user/me::6f28a2d7-0eb3-4e71-a293-2e9f89d04206::input-params ::GET::::{}
+2024-10-10 09:20:11::error::/v1/api/user/me::6f28a2d7-0eb3-4e71-a293-2e9f89d04206::403 - 1ms - Response: {"status":403,"now":1728526811935}::{"message":"Access token missing"}
+2024-10-10 09:20:11::info::/v1/api/movement/readMovements::e2d32a41-49eb-46ad-9b5e-47673222618d::input-params ::GET::::{}
+2024-10-10 09:20:11::info::/v1/api/news/readNewss::87ac37d2-4704-45fc-a9db-2316313896c2::input-params ::GET::::{}
+2024-10-10 09:22:46::info::/v1/api/user/me::968b8938-0ed1-4029-9a50-167686facc60::input-params ::GET::::{}
+2024-10-10 09:22:46::error::/v1/api/user/me::968b8938-0ed1-4029-9a50-167686facc60::403 - 4ms - Response: {"status":403,"now":1728526966500}::{"message":"Access token missing"}
+2024-10-10 09:22:46::info::/v1/api/movement/readMovements::61ab5052-7055-415e-b474-3283a15e6c27::input-params ::GET::::{}
+2024-10-10 09:22:46::info::/v1/api/news/readNewss::e490c2b5-b655-4d8f-a904-76b35f94f6ca::input-params ::GET::::{}
+2024-10-10 09:23:18::info::/v1/api/user/me::4ba7a592-e272-4a34-8b84-269be1f7cffc::input-params ::GET::::{}
+2024-10-10 09:23:18::error::/v1/api/user/me::4ba7a592-e272-4a34-8b84-269be1f7cffc::403 - 2ms - Response: {"status":403,"now":1728526998361}::{"message":"Access token missing"}
+2024-10-10 09:23:18::info::/v1/api/movement/readMovements::2406e376-f856-4b18-bb1e-d5c5e0cbd595::input-params ::GET::::{}
+2024-10-10 09:23:18::info::/v1/api/news/readNewss::05e0ae3f-6276-4733-9810-f550b4173cf2::input-params ::GET::::{}
+2024-10-10 09:23:20::info::/v1/api/user/me::d5949888-106f-4135-b231-27bd327281bb::input-params ::GET::::{}
+2024-10-10 09:23:20::error::/v1/api/user/me::d5949888-106f-4135-b231-27bd327281bb::403 - 0ms - Response: {"status":403,"now":1728527000108}::{"message":"Access token missing"}
+2024-10-10 09:23:20::info::/v1/api/movement/readMovements::746382a1-6c55-45e8-a00b-e0967ff1faac::input-params ::GET::::{}
+2024-10-10 09:23:20::info::/v1/api/news/readNewss::5a468583-6283-4424-835b-c3fda967421e::input-params ::GET::::{}
+2024-10-10 09:23:22::info::/v1/api/auth/google::f04c2cea-16bd-41a5-9c39-537f3c392e8f::input-params ::GET::::{}
+2024-10-10 09:23:50::info::/v1/api/news/readNewss::0f7c14c5-95bd-47e9-ac30-de0d8fa3769f::input-params ::GET::::{}
+2024-10-10 09:23:50::info::/v1/api/recommender/readPopularPosts::1e517730-7e64-4296-b159-bf0f1e4f156e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:23:51::info::/v1/api/recommender/readPopularPosts::dd47c0ca-8ce7-46a7-812f-5bc9bc6ba0fe::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:23:58::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::c4b51c02-08db-4129-9d81-8adec001059a::input-params ::GET::::{}
+2024-10-10 09:23:58::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::8ab47e25-1cae-43e8-ad17-c77a870d5db9::input-params ::GET::::{}
+2024-10-10 09:24:02::info::/v1/api/post/readPostCategoriesWithPosts/66a5f1b254ac59de697b59f9::319c4e7a-dba7-4829-8a0c-b53f945415a5::input-params ::GET::::{}
+2024-10-10 09:29:02::info::/v1/api/post/readPostCategoriesWithPosts/66a5f1b254ac59de697b59f9::84294d13-a030-4e26-b219-2cca945c3264::input-params ::GET::::{}
+2024-10-10 09:29:04::info::/v1/api/post/readPost/66a5fc8854ac59de697c8263::8df02813-b453-4e21-b586-fe4f05888e4d::input-params ::GET::::{}
+2024-10-10 09:29:06::info::/v1/api/post/readPost/66a5fc6c54ac59de697c7f07::b4df8029-3636-4d95-a29a-13594f31d8a3::input-params ::GET::::{}
+2024-10-10 09:29:08::info::/v1/api/post/readPost/66a5fc6c54ac59de697c7f07::afdb9415-1216-404c-8e46-adb5d0390fd4::input-params ::GET::::{}
+2024-10-10 09:29:17::info::/v1/api/post/readPost/66a5fc4954ac59de697c7974::c8e14b08-8335-47a7-9f3b-7d549ce8873c::input-params ::GET::::{}
+2024-10-10 09:29:41::info::/v1/api/user/me::264f0f2e-98af-4752-b43a-c9245bd1730f::input-params ::GET::::{}
+2024-10-10 09:29:41::error::/v1/api/user/me::264f0f2e-98af-4752-b43a-c9245bd1730f::403 - 0ms - Response: {"status":403,"now":1728527381638}::{"message":"Access token missing"}
+2024-10-10 09:29:41::info::/v1/api/movement/readMovements::fd92126f-1057-4975-a5b5-fd0578b46150::input-params ::GET::::{}
+2024-10-10 09:29:41::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::00d80939-cea1-4614-96cc-bdaddbe8995d::input-params ::GET::::{}
+2024-10-10 09:29:41::info::/v1/api/post/readPost/66a5fc4954ac59de697c7974::7aa1a417-17c8-4fde-9742-e92017c9ea60::input-params ::GET::::{}
+2024-10-10 09:29:41::info::/v1/api/post/readPostCategoriesWithPosts/66a5f1b254ac59de697b59f9::d7885d68-34aa-4774-a102-43763752f756::input-params ::GET::::{}
+2024-10-10 09:29:51::info::/v1/api/user/me::1c8ee80c-ebd1-488b-9df5-4bf0de7fa52c::input-params ::GET::::{}
+2024-10-10 09:29:51::error::/v1/api/user/me::1c8ee80c-ebd1-488b-9df5-4bf0de7fa52c::403 - 0ms - Response: {"status":403,"now":1728527391824}::{"message":"Access token missing"}
+2024-10-10 09:29:51::info::/v1/api/movement/readMovements::e535208b-fc6c-412c-b409-0522f4c4cf9e::input-params ::GET::::{}
+2024-10-10 09:29:51::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::b8948449-5ec9-4406-8390-b9dac548cdf3::input-params ::GET::::{}
+2024-10-10 09:29:51::info::/v1/api/post/readPostCategoriesWithPosts/66a5f1b254ac59de697b59f9::b026a40d-28ce-4bc8-b85c-119497350eb2::input-params ::GET::::{}
+2024-10-10 09:29:51::info::/v1/api/post/readPost/66a5fc4954ac59de697c7974::50a61e60-af87-4387-9069-40ff17f37f36::input-params ::GET::::{}
+2024-10-10 09:30:03::info::/v1/api/user/me::31ca4ea7-247c-4657-97a6-af86e89c8a3a::input-params ::GET::::{}
+2024-10-10 09:30:03::error::/v1/api/user/me::31ca4ea7-247c-4657-97a6-af86e89c8a3a::403 - 0ms - Response: {"status":403,"now":1728527403767}::{"message":"Access token missing"}
+2024-10-10 09:30:03::info::/v1/api/movement/readMovements::1eb5a659-5ff1-4b67-956d-f24210745c42::input-params ::GET::::{}
+2024-10-10 09:30:03::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::893b3c1e-fb84-4d2c-b5b3-3984a28445c8::input-params ::GET::::{}
+2024-10-10 09:30:03::info::/v1/api/post/readPostCategoriesWithPosts/66a5f1b254ac59de697b59f9::cea19fec-b398-4020-a593-b1ca00632c87::input-params ::GET::::{}
+2024-10-10 09:30:03::info::/v1/api/post/readPost/66a5fc4954ac59de697c7974::1cfe8bb4-246e-45b8-bc84-4fca744fda80::input-params ::GET::::{}
+2024-10-10 09:30:09::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::4f7d55d5-7e1e-466f-aea3-cf9f732e5259::input-params ::GET::::{}
+2024-10-10 09:34:55::info::/v1/api/user/me::9f3a1ab1-b58c-4cc8-b2d4-782777f8d464::input-params ::GET::::{}
+2024-10-10 09:34:55::error::/v1/api/user/me::9f3a1ab1-b58c-4cc8-b2d4-782777f8d464::403 - 0ms - Response: {"status":403,"now":1728527695752}::{"message":"Access token missing"}
+2024-10-10 09:34:55::info::/v1/api/movement/readMovements::70b6c86b-798b-4e1b-aea1-ece8ef826c8d::input-params ::GET::::{}
+2024-10-10 09:34:55::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::bca7820e-a168-4c13-a0fa-66067ae80c29::input-params ::GET::::{}
+2024-10-10 09:34:55::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::0070b193-4f83-48ce-9132-a8e043407442::input-params ::GET::::{}
+2024-10-10 09:34:56::info::/v1/api/user/me::e212e62d-eeff-476d-a341-b67dc9662b97::input-params ::GET::::{}
+2024-10-10 09:34:56::error::/v1/api/user/me::e212e62d-eeff-476d-a341-b67dc9662b97::403 - 1ms - Response: {"status":403,"now":1728527696268}::{"message":"Access token missing"}
+2024-10-10 09:34:56::info::/v1/api/movement/readMovements::4c049ba0-f2ce-44af-92d7-b0d954c10f24::input-params ::GET::::{}
+2024-10-10 09:34:56::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::802255df-ad9f-437a-8ed6-55803504bcfb::input-params ::GET::::{}
+2024-10-10 09:34:56::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::a27464fb-68de-457f-903b-21b9cd96cf15::input-params ::GET::::{}
+2024-10-10 09:35:03::info::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::5dc32c03-eb90-4828-8ae1-cc16e0f4f95d::input-params ::PATCH::::{}
+2024-10-10 09:35:03::error::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::5dc32c03-eb90-4828-8ae1-cc16e0f4f95d::401 - 0ms - Response: {"status":401,"now":1728527703597}::{"message":"You are not authenticated!"}
+2024-10-10 09:35:23::info::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::817cd73c-fafa-4661-8f8a-8cb1892fa68b::input-params ::PATCH::::{}
+2024-10-10 09:35:23::error::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::817cd73c-fafa-4661-8f8a-8cb1892fa68b::401 - 0ms - Response: {"status":401,"now":1728527723618}::{"message":"You are not authenticated!"}
+2024-10-10 09:35:25::info::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::6d333544-4cd2-4640-9cd0-1810457a9725::input-params ::PATCH::::{}
+2024-10-10 09:35:25::error::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::6d333544-4cd2-4640-9cd0-1810457a9725::401 - 0ms - Response: {"status":401,"now":1728527725573}::{"message":"You are not authenticated!"}
+2024-10-10 09:35:26::info::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::657229ae-8c9b-4b69-bb9f-d51b4ab1c1ba::input-params ::PATCH::::{}
+2024-10-10 09:35:26::error::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::657229ae-8c9b-4b69-bb9f-d51b4ab1c1ba::401 - 1ms - Response: {"status":401,"now":1728527726204}::{"message":"You are not authenticated!"}
+2024-10-10 09:35:27::info::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::9c92be99-9263-46e3-93a2-8333fcd01086::input-params ::PATCH::::{}
+2024-10-10 09:35:27::error::/v1/api/user/followUser/66a5f1b254ac59de697b59f9::9c92be99-9263-46e3-93a2-8333fcd01086::401 - 0ms - Response: {"status":401,"now":1728527727863}::{"message":"You are not authenticated!"}
+2024-10-10 09:40:00::info::/v1/api/movement/readMovements::d7fd7a9c-0657-4562-afc0-0bc17d7e50c0::input-params ::GET::::{}
+2024-10-10 09:40:00::info::/v1/api/user/me::9e6ce157-8485-41c3-970b-a924b0f2c919::input-params ::GET::::{}
+2024-10-10 09:40:00::error::/v1/api/user/me::9e6ce157-8485-41c3-970b-a924b0f2c919::403 - 6ms - Response: {"status":403,"now":1728528000153}::{"message":"Access token missing"}
+2024-10-10 09:40:00::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::5553ef9a-010e-4d13-b094-1a7b6eb94ccd::input-params ::GET::::{}
+2024-10-10 09:40:00::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::b21b396d-8d8c-43f7-ad96-cdf8b9979b29::input-params ::GET::::{}
+2024-10-10 09:40:00::info::/v1/api/user/me::4fbf9535-ec79-447d-be3f-a041b186e808::input-params ::GET::::{}
+2024-10-10 09:40:00::error::/v1/api/user/me::4fbf9535-ec79-447d-be3f-a041b186e808::403 - 2ms - Response: {"status":403,"now":1728528000513}::{"message":"Access token missing"}
+2024-10-10 09:40:00::info::/v1/api/movement/readMovements::f5b026c6-22fd-4913-a728-b342501af3ed::input-params ::GET::::{}
+2024-10-10 09:40:00::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::c57296e1-a789-45ed-882d-8b09061e8671::input-params ::GET::::{}
+2024-10-10 09:40:00::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::933790fa-fbca-4fdf-b7b0-00be8493a96f::input-params ::GET::::{}
+2024-10-10 09:49:39::info::/v1/api/user/me::11fcbc91-15e3-4a06-805b-2c9e03f54f7c::input-params ::GET::::{}
+2024-10-10 09:49:39::error::/v1/api/user/me::11fcbc91-15e3-4a06-805b-2c9e03f54f7c::403 - 4ms - Response: {"status":403,"now":1728528579181}::{"message":"Access token missing"}
+2024-10-10 09:49:39::info::/v1/api/movement/readMovements::1d921d54-083e-4055-9a2d-39729d2fbd44::input-params ::GET::::{}
+2024-10-10 09:49:39::info::/v1/api/user/readUserProfile/66a5f1b254ac59de697b59f9::98c80031-a350-42d3-8f63-d3214f118f83::input-params ::GET::::{}
+2024-10-10 09:49:39::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/66a5f1b254ac59de697b59f9::42fec61a-487e-4b61-b5e3-c7907cef248f::input-params ::GET::::{}
+2024-10-10 09:49:41::info::/v1/api/news/readNewss::69677f48-c60b-4604-9fba-2a8d1cde054f::input-params ::GET::::{}
+2024-10-10 09:49:41::info::/v1/api/recommender/readPopularPosts::5a8b5f1c-d996-47ca-8b19-fea25733b4d5::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 09:49:42::info::/v1/api/recommender/readPopularPosts::9ae4f40c-decb-41bb-be88-e3bff90d5985::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 10:00:58::info::/v1/api/user/me::9a2b2ff7-de82-4f31-976f-f5fd56e49b02::input-params ::GET::::{}
+2024-10-10 10:00:58::error::/v1/api/user/me::9a2b2ff7-de82-4f31-976f-f5fd56e49b02::403 - 2ms - Response: {"status":403,"now":1728529258812}::{"message":"Access token missing"}
+2024-10-10 10:00:59::info::/v1/api/movement/readMovements::3b06da57-9db9-4772-b17b-168576e247f6::input-params ::GET::::{}
+2024-10-10 10:00:59::info::/v1/api/news/readNewss::e6ba7acd-496b-4fc0-b47b-829dbb6e768d::input-params ::GET::::{}
+2024-10-10 10:00:59::info::/v1/api/recommender/readPopularPosts::6b55dc79-cfbe-4ca4-9bdc-d88e8d5d635c::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 10:01:00::info::/v1/api/recommender/readPopularPosts::3e405c11-544c-4cbb-8866-c76b90a431db::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 10:15:55::info::/v1/api/user/me::a594a050-95ff-4e1c-a7e4-d163ac58b94f::input-params ::GET::::{}
+2024-10-10 10:15:55::error::/v1/api/user/me::a594a050-95ff-4e1c-a7e4-d163ac58b94f::403 - 0ms - Response: {"status":403,"now":1728530155149}::{"message":"Access token missing"}
+2024-10-10 10:15:56::info::/v1/api/movement/readMovements::5b406078-5fb9-4bcd-959d-a1de00535cf4::input-params ::GET::::{}
+2024-10-10 10:15:57::info::/v1/api/news/readNewss::767aceab-231a-4af8-bb85-4c5aa98e5809::input-params ::GET::::{}
+2024-10-10 10:15:57::info::/v1/api/recommender/readPopularPosts::fb74cc80-fcfa-424d-a0ef-fd3f984d7b52::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 10:15:59::info::/v1/api/recommender/readPopularPosts::408b6a2c-c5da-407c-94e8-748dfcf8c194::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 11:21:30::info::/v1/api/user/me::127172aa-083c-49f6-bc99-5820cf3462b4::input-params ::GET::::{}
+2024-10-10 11:21:30::error::/v1/api/user/me::127172aa-083c-49f6-bc99-5820cf3462b4::403 - 2ms - Response: {"status":403,"now":1728534090354}::{"message":"Access token missing"}
+2024-10-10 11:21:30::info::/v1/api/movement/readMovements::dab23ba8-2d53-493b-a43e-0e477cbf0877::input-params ::GET::::{}
+2024-10-10 11:21:31::info::/v1/api/news/readNewss::c56f837a-ab53-4f6f-bb1a-f429991a29b6::input-params ::GET::::{}
+2024-10-10 11:21:31::info::/v1/api/recommender/readPopularPosts::317aefd9-ba5e-43a9-a9e7-b599a1f247b3::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 11:21:33::info::/v1/api/recommender/readPopularPosts::0d09e903-64c8-432e-bdcb-1cef6a120240::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 11:30:28::info::/v1/api/user/me::2937e151-0ab4-4971-afc8-39f4fa1e68b5::input-params ::GET::::{}
+2024-10-10 11:30:28::error::/v1/api/user/me::2937e151-0ab4-4971-afc8-39f4fa1e68b5::403 - 1ms - Response: {"status":403,"now":1728534628697}::{"message":"Access token missing"}
+2024-10-10 11:30:28::info::/v1/api/movement/readMovements::d9a1ab73-9d82-40e5-b0f1-e19fb94ec2a4::input-params ::GET::::{}
+2024-10-10 11:30:28::info::/v1/api/recommender/readPopularPosts::e497cdd6-7f67-42c9-b5e9-7bea633a8b87::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 11:30:28::info::/v1/api/news/readNewss::2ff2f558-021c-4029-836c-97e732d24baa::input-params ::GET::::{}
+2024-10-10 11:30:29::info::/v1/api/recommender/readPopularPosts::2d2ac5ee-47f9-4eda-af21-cd464e8967a7::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 13:09:54::info::/v1/api/user/me::1a8e5281-097d-488d-8156-4ea82a2d2ccc::input-params ::GET::::{}
+2024-10-10 13:09:54::error::/v1/api/user/me::1a8e5281-097d-488d-8156-4ea82a2d2ccc::403 - 1ms - Response: {"status":403,"now":1728540594456}::{"message":"Access token missing"}
+2024-10-10 13:09:54::info::/v1/api/movement/readMovements::604a0a6f-addf-4fc2-9081-862a5c93389f::input-params ::GET::::{}
+2024-10-10 13:09:55::info::/v1/api/news/readNewss::834f456c-32f4-411b-8d3e-8b34977dfcd0::input-params ::GET::::{}
+2024-10-10 13:09:55::info::/v1/api/recommender/readPopularPosts::d5181971-7a81-4a48-9528-ffceea9dd631::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 13:09:57::info::/v1/api/recommender/readPopularPosts::ed8ab4de-0cb4-4773-861c-c6e9399a785a::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 13:17:31::info::/v1/api/user/me::8cc21fe0-18e8-475a-8beb-d0f6180d3203::input-params ::GET::::{}
+2024-10-10 13:17:31::error::/v1/api/user/me::8cc21fe0-18e8-475a-8beb-d0f6180d3203::403 - 0ms - Response: {"status":403,"now":1728541051205}::{"message":"Access token missing"}
+2024-10-10 13:17:31::info::/v1/api/movement/readMovements::ea6c603b-860d-45f5-a0ea-41fe6ac38060::input-params ::GET::::{}
+2024-10-10 13:17:32::info::/v1/api/news/readNewss::ee6f5052-789f-49d9-b6f0-f3378b40443d::input-params ::GET::::{}
+2024-10-10 13:17:32::info::/v1/api/recommender/readPopularPosts::0d045de8-bb79-4427-b1af-70cd5826d00e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 13:17:33::info::/v1/api/recommender/readPopularPosts::61cc1a9e-b978-4bec-a53a-1717f001e76f::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:10:31::info::/v1/api/user/me::eb293294-7480-4bb8-ac2b-1888c7cae301::input-params ::GET::::{}
+2024-10-10 14:10:31::error::/v1/api/user/me::eb293294-7480-4bb8-ac2b-1888c7cae301::403 - 3ms - Response: {"status":403,"now":1728544231209}::{"message":"Access token missing"}
+2024-10-10 14:10:31::info::/v1/api/movement/readMovements::d557acea-d1cb-4b0c-b713-62cb207a520e::input-params ::GET::::{}
+2024-10-10 14:10:31::info::/v1/api/news/readNewss::8a27edb5-4ee2-4879-98e4-8b08130fb59f::input-params ::GET::::{}
+2024-10-10 14:10:32::info::/v1/api/user/me::e9997aac-e771-43ed-b5f6-ae09b408ca2c::input-params ::GET::::{}
+2024-10-10 14:10:32::error::/v1/api/user/me::e9997aac-e771-43ed-b5f6-ae09b408ca2c::403 - 3ms - Response: {"status":403,"now":1728544232230}::{"message":"Access token missing"}
+2024-10-10 14:10:32::info::/v1/api/movement/readMovements::e8038b20-817c-4503-9528-c339b7764b6d::input-params ::GET::::{}
+2024-10-10 14:10:32::info::/v1/api/news/readNewss::8e0e90da-2fab-4acd-83da-0cc5907cd64c::input-params ::GET::::{}
+2024-10-10 14:10:32::info::/v1/api/recommender/readPopularPosts::b1784cad-422d-4eb1-8801-ae27b27ae898::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:10:33::info::/v1/api/recommender/readPopularPosts::e6fd1ed1-a371-4a52-aa98-e5b901ce4b2a::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:10:34::info::/v1/api/user/me::5ed056f2-a1d9-4345-8100-fe6a268c96ca::input-params ::GET::::{}
+2024-10-10 14:10:34::error::/v1/api/user/me::5ed056f2-a1d9-4345-8100-fe6a268c96ca::403 - 1ms - Response: {"status":403,"now":1728544234758}::{"message":"Access token missing"}
+2024-10-10 14:10:34::info::/v1/api/movement/readMovements::78abc02e-9f57-4959-8841-4dbc3363fe36::input-params ::GET::::{}
+2024-10-10 14:10:34::info::/v1/api/news/readNewss::05f39ab7-56ec-4a18-888c-17cdfd854232::input-params ::GET::::{}
+2024-10-10 14:10:34::info::/v1/api/recommender/readPopularPosts::d74701fd-7258-4aa7-898c-aa813b675628::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:10:35::info::/v1/api/recommender/readPopularPosts::b1503728-bfac-462d-89bd-b9c0476dbc57::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:10:37::info::/v1/api/auth/google::a4257fc1-a96e-44a6-b1a9-ed55dca78a85::input-params ::GET::::{}
+2024-10-10 14:10:43::info::/v1/api/auth/google/callback::ecbcb9ed-14a9-4058-bcbf-d5e09b58d804::input-params ::GET::::{"code":"4/0AVG7fiR6_wAYJhYZjNTh_0Lm5AZkQOv7ztfWeu53aMPvegnA0JHCg2lytzt6dPN2LJgmAA","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"3","prompt":"consent"}
+2024-10-10 14:10:43::info::/::c16eb870-7fd7-4e3b-9497-f5c29d6710ee::input-params ::GET::::{}
+2024-10-10 14:10:43::error::/::c16eb870-7fd7-4e3b-9497-f5c29d6710ee::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-10 14:10:44::info::/favicon.ico::cae65c73-d2f0-40ca-af1d-4fdd02fd3f7d::input-params ::GET::::{}
+2024-10-10 14:10:44::error::/favicon.ico::cae65c73-d2f0-40ca-af1d-4fdd02fd3f7d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-10 14:14:14::info::/v1/api/news/readNewss::48285b07-ded7-4ad7-bec2-90c5eb006d4f::input-params ::GET::::{}
+2024-10-10 14:14:14::info::/v1/api/recommender/readPopularPosts::99f56fc3-249e-4d07-abcc-af4b7b74482d::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:14:15::info::/v1/api/recommender/readPopularPosts::416c6de6-2c1a-4084-8541-5e642cb8ac56::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:14:16::info::/v1/api/user/me::f11fde42-3116-4c0a-b0fd-d8ff63f7bafd::input-params ::GET::::{}
+2024-10-10 14:14:16::info::/v1/api/movement/readMovements::945af8e8-dda9-4b40-91c9-33255ec0434b::input-params ::GET::::{}
+2024-10-10 14:14:16::info::/v1/api/recommender/readPopularPosts::84f301fe-ef19-4bd8-bef3-f00dd201f697::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:14:16::info::/v1/api/news/readNewss::575dc7f5-889b-4e35-a1d3-f435e718eaf7::input-params ::GET::::{}
+2024-10-10 14:14:17::info::/v1/api/recommender/readPopularPosts::571017fe-799f-43e1-bd0c-174e483420f2::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:14:19::info::/v1/api/movement/readMovements::63b931e8-268f-43c9-b2c7-713d8899aaf7::input-params ::GET::::{}
+2024-10-10 14:14:19::info::/v1/api/news/readNewss::1ac205d2-245a-4224-8de6-aec2a99e4c5c::input-params ::GET::::{}
+2024-10-10 14:14:19::info::/v1/api/movement/readMovements::aeab75b4-82c1-4c6f-9bd2-a81c51a7dd63::input-params ::GET::::{}
+2024-10-10 14:14:19::info::/v1/api/news/readNewss::0d7d7184-422c-4adc-9969-c67fc339bee7::input-params ::GET::::{}
+2024-10-10 14:14:22::info::/v1/api/auth/users/logout::022e35f5-95eb-4cbb-a8df-9b9999104f91::input-params ::POST::::{}
+2024-10-10 14:14:22::info::/v1/api/user/me::5009c712-c0d9-4866-af93-b251738bfb67::input-params ::GET::::{}
+2024-10-10 14:14:22::error::/v1/api/user/me::5009c712-c0d9-4866-af93-b251738bfb67::403 - 2ms - Response: {"status":403,"now":1728544462395}::{"message":"Access token missing"}
+2024-10-10 14:14:24::info::/v1/api/auth/google::269699db-a024-4c51-b55f-972f26d5c0c4::input-params ::GET::::{}
+2024-10-10 14:14:28::info::/v1/api/auth/google/callback::351ddf9d-62ba-4566-9917-b7eedaa357dd::input-params ::GET::::{"code":"4/0AVG7fiSxyr0UDw5S7vBc2tlzTh_JrYDV4dJdntYR4vLRiPBAqcePtAKk4EKm5cqCAu4t4w","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"3","prompt":"consent"}
+2024-10-10 14:14:29::info::/::a9920489-2853-432b-8365-afba1f84cae8::input-params ::GET::::{}
+2024-10-10 14:14:29::error::/::a9920489-2853-432b-8365-afba1f84cae8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-10 14:14:50::info::/v1/api/auth/google/callback::d1ea736c-b5f7-4afe-8179-75947b68cfb8::input-params ::GET::::{"code":"4/0AVG7fiRAbhbNvHTD1Wm1ixwCxRiMuoLVbZvCyfWgD5kxACQ-uB628GHcRoFPGQ5TJaFJLg","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"3","prompt":"consent"}
+2024-10-10 14:14:52::info::/v1/api/user/me::c2c0bd37-6833-4421-bdeb-84956cfb4727::input-params ::GET::::{}
+2024-10-10 14:14:52::info::/v1/api/movement/readMovements::36f17e03-e7a6-415d-bc19-d437373fe197::input-params ::GET::::{}
+2024-10-10 14:14:53::info::/v1/api/news/readNewss::296f2c55-ab60-45ad-abda-82ac99cab7c9::input-params ::GET::::{}
+2024-10-10 14:14:53::info::/v1/api/recommender/readPopularPosts::660fffc1-0c33-4567-b10a-18839da4cb9e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:14:54::info::/v1/api/recommender/readPopularPosts::a969f132-21de-4781-8ebb-04bf25987e72::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:15:09::info::/v1/api/movement/readMovements::c94a17d2-674b-4b57-b382-c3673733b186::input-params ::GET::::{}
+2024-10-10 14:15:09::info::/v1/api/news/readNewss::e15c19bf-942f-4260-8fe2-0da77f9727e8::input-params ::GET::::{}
+2024-10-10 14:15:10::info::/v1/api/movement/readMovements::d1d59b22-45f6-4a64-90b8-60c5fea58b64::input-params ::GET::::{}
+2024-10-10 14:15:10::info::/v1/api/news/readNewss::fea41ea8-add6-46bd-a04a-a65e077e903e::input-params ::GET::::{}
+2024-10-10 14:28:56::info::/v1/api/movement/readMovements::0672d998-7644-4a9c-9c56-6c50352d289a::input-params ::GET::::{}
+2024-10-10 14:28:56::info::/v1/api/news/readNewss::9af0fcce-3dd3-49af-8745-ad92a4dcbf2b::input-params ::GET::::{}
+2024-10-10 14:30:37::info::/v1/api/movement/readMovements::d90a9963-3aff-490e-948b-852bd066222c::input-params ::GET::::{}
+2024-10-10 14:30:37::info::/v1/api/news/readNewss::2fac3950-8d77-4f96-bb3b-4f94933830fe::input-params ::GET::::{}
+2024-10-10 14:30:41::info::/v1/api/movement/readMovements::9e45b479-64f1-453c-98dc-94e92db98cf1::input-params ::GET::::{}
+2024-10-10 14:30:41::info::/v1/api/news/readNewss::24296f06-4ffb-4025-9257-66178049baf6::input-params ::GET::::{}
+2024-10-10 14:31:12::info::/v1/api/movement/readMovements::ca9a0921-1772-47d6-a5e1-ad189a621d08::input-params ::GET::::{}
+2024-10-10 14:31:12::info::/v1/api/news/readNewss::3459079e-84ca-47a0-b9ea-1941be5fd234::input-params ::GET::::{}
+2024-10-10 14:31:13::info::/v1/api/recommender/readPopularPosts::6c0aee80-a91b-4fd7-ab2d-ba76b98b9cf4::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 14:31:16::info::/v1/api/auth/users/logout::7fbad4d5-213d-410d-9397-49891bf7ffbe::input-params ::POST::::{}
+2024-10-10 14:31:16::info::/v1/api/user/me::5adff5aa-ad7c-45d3-b891-9dd775494793::input-params ::GET::::{}
+2024-10-10 14:31:16::error::/v1/api/user/me::5adff5aa-ad7c-45d3-b891-9dd775494793::403 - 2ms - Response: {"status":403,"now":1728545476901}::{"message":"Access token missing"}
+2024-10-10 14:33:56::info::/v1/api/user/me::ea852ad7-95c4-423d-9562-15838aa42c5e::input-params ::GET::::{}
+2024-10-10 14:33:56::error::/v1/api/user/me::ea852ad7-95c4-423d-9562-15838aa42c5e::403 - 2ms - Response: {"status":403,"now":1728545636280}::{"message":"Access token missing"}
+2024-10-10 14:33:56::info::/v1/api/news/readNewss::d31b5aa5-3ccc-4811-b59c-a3e7a2929363::input-params ::GET::::{}
+2024-10-10 14:33:56::info::/v1/api/movement/readMovements::d8c073cd-29ac-4fae-b763-9a6444fa20bb::input-params ::GET::::{}
+2024-10-10 14:34:03::info::/v1/api/recommender/readPopularPosts::e48e3b33-b866-453a-8efe-4a7d18050a6a::input-params ::GET::::{"page":"3","limit":"10"}
+2024-10-10 14:53:16::info::/v1/api/user/me::2fd3eb37-ac9e-4186-a470-129881f3702f::input-params ::GET::::{}
+2024-10-10 14:53:16::error::/v1/api/user/me::2fd3eb37-ac9e-4186-a470-129881f3702f::403 - 2ms - Response: {"status":403,"now":1728546796740}::{"message":"Access token missing"}
+2024-10-10 14:53:17::info::/v1/api/movement/readMovements::887d972e-6772-4b8d-a900-d699cf57b0ab::input-params ::GET::::{}
+2024-10-10 14:53:27::error::/v1/api/movement/readMovements::887d972e-6772-4b8d-a900-d699cf57b0ab::undefined - NaNms - Response: {}::{"message":"Operation `Movements.aggregate()` buffering timed out after 10000ms"}
+2024-10-10 14:53:27::info::/v1/api/news/readNewss::0f3808ee-85b9-485f-a777-86456f234914::input-params ::GET::::{}
+2024-10-10 14:53:27::info::/v1/api/recommender/readPopularPosts::b3487e27-a7c2-48fb-9d04-65fe1ef3e99f::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:53:37::error::/v1/api/news/readNewss::0f3808ee-85b9-485f-a777-86456f234914::undefined - NaNms - Response: {}::{"message":"Operation `News.find()` buffering timed out after 10000ms"}
+2024-10-10 14:53:37::error::/v1/api/recommender/readPopularPosts::b3487e27-a7c2-48fb-9d04-65fe1ef3e99f::403 - 1ms - Response: {"status":403,"now":1728546817233}::{"message":"Failed to read popular posts"}
+2024-10-10 14:53:37::info::/v1/api/recommender/readPopularPosts::d396e1f8-04ac-415f-b9ed-71e05a2c8e26::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 14:53:47::error::/v1/api/recommender/readPopularPosts::d396e1f8-04ac-415f-b9ed-71e05a2c8e26::403 - 1ms - Response: {"status":403,"now":1728546827264}::{"message":"Failed to read popular posts"}
+2024-10-10 15:53:39::info::/v1/api/user/me::561cd17c-1c31-4992-8719-2426abdf268b::input-params ::GET::::{}
+2024-10-10 15:53:39::error::/v1/api/user/me::561cd17c-1c31-4992-8719-2426abdf268b::403 - 2ms - Response: {"status":403,"now":1728550419028}::{"message":"Access token missing"}
+2024-10-10 15:53:39::info::/v1/api/movement/readMovements::36716773-3dfb-4f28-84a2-18533b9619dd::input-params ::GET::::{}
+2024-10-10 15:53:39::info::/v1/api/news/readNewss::c7537e0e-8255-47d6-a4b2-110ba5317438::input-params ::GET::::{}
+2024-10-10 15:53:39::info::/v1/api/recommender/readPopularPosts::7257787e-7368-4daf-8255-5306874f9395::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 15:53:41::info::/v1/api/recommender/readPopularPosts::88fead40-09fb-4654-8881-506bdd716be3::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 15:55:29::info::/v1/api/user/me::1137612e-6bcf-4063-99ad-fdd460e2c748::input-params ::GET::::{}
+2024-10-10 15:55:29::error::/v1/api/user/me::1137612e-6bcf-4063-99ad-fdd460e2c748::403 - 4ms - Response: {"status":403,"now":1728550529263}::{"message":"Access token missing"}
+2024-10-10 15:55:29::info::/v1/api/movement/readMovements::924e68a8-5b9b-42ff-9397-60301d5369ff::input-params ::GET::::{}
+2024-10-10 15:55:29::info::/v1/api/news/readNewss::bc96499c-765e-4359-9de1-a7004b3a0005::input-params ::GET::::{}
+2024-10-10 15:55:30::info::/v1/api/user/me::7e9f4c85-a981-4f13-8b97-b6732ea048ee::input-params ::GET::::{}
+2024-10-10 15:55:30::error::/v1/api/user/me::7e9f4c85-a981-4f13-8b97-b6732ea048ee::403 - 0ms - Response: {"status":403,"now":1728550530085}::{"message":"Access token missing"}
+2024-10-10 15:55:30::info::/v1/api/movement/readMovements::c3789f4c-68f1-40d7-8067-40190ab7b10e::input-params ::GET::::{}
+2024-10-10 15:55:30::info::/v1/api/news/readNewss::e336955a-891c-4497-ba55-1d2c8c0f2fe2::input-params ::GET::::{}
+2024-10-10 16:04:12::info::/v1/api/user/me::268ec389-e55e-4aaf-a8b0-8f8f05da11ea::input-params ::GET::::{}
+2024-10-10 16:04:12::error::/v1/api/user/me::268ec389-e55e-4aaf-a8b0-8f8f05da11ea::403 - 16ms - Response: {"status":403,"now":1728551052214}::{"message":"Access token missing"}
+2024-10-10 16:04:12::info::/v1/api/movement/readMovements::adb5dfdd-34f0-4cd4-a3c4-3a9accdd22f6::input-params ::GET::::{}
+2024-10-10 16:04:12::info::/v1/api/news/readNewss::b6ace994-cdb5-4257-b509-5db208ffafbb::input-params ::GET::::{}
+2024-10-10 16:04:14::info::/v1/api/auth/google::492c0bf9-71a0-4faa-a834-5e350625f26f::input-params ::GET::::{}
+2024-10-10 16:04:20::info::/v1/api/auth/google/callback::2019e8e8-d348-4076-a45b-a79de395a432::input-params ::GET::::{"code":"4/0AVG7fiSFn2A6SuCiiWTeqJ461qDZnYshriYDQUW9eKcFnqWDc6OzFK9YFsMgOwnzFhpEyw","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"3","prompt":"consent"}
+2024-10-10 16:04:22::info::/v1/api/user/me::4a2b1518-e275-4143-9411-61af59951276::input-params ::GET::::{}
+2024-10-10 16:04:22::info::/v1/api/movement/readMovements::1001673a-8e84-4fca-b468-8225d6543e9f::input-params ::GET::::{}
+2024-10-10 16:04:22::info::/v1/api/news/readNewss::1287c40f-dea8-46bd-8af8-cdfb031e45c1::input-params ::GET::::{}
+2024-10-10 16:04:22::info::/v1/api/recommender/readPopularPosts::00908b3a-d196-4dc8-a3da-1025212b431c::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:04:25::info::/v1/api/auth/google/callback::689f3c41-9665-40d9-b57c-07f6fe2d33af::input-params ::GET::::{"error":"access_denied"}
+2024-10-10 16:04:25::info::/users/login::1de4f96d-d39a-4732-b64c-23531776f78e::input-params ::GET::::{}
+2024-10-10 16:04:25::error::/users/login::1de4f96d-d39a-4732-b64c-23531776f78e::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-10 16:05:31::info::/v1/api/news/readNewss::b722a83b-4c7d-48aa-8886-24a9cb633188::input-params ::GET::::{}
+2024-10-10 16:05:31::info::/v1/api/recommender/readPopularPosts::d91a165a-0ba5-4c64-b05a-b66006edf236::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:05:32::info::/v1/api/recommender/readPopularPosts::d5257110-4a2c-4904-bed3-fb0690abef39::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:05:34::info::/v1/api/auth/users/logout::9d369a60-dfdb-42c5-911b-efc5a2884791::input-params ::POST::::{}
+2024-10-10 16:05:34::info::/v1/api/user/me::f4e8066c-3a91-4641-a923-1900ada0e3dd::input-params ::GET::::{}
+2024-10-10 16:05:34::error::/v1/api/user/me::f4e8066c-3a91-4641-a923-1900ada0e3dd::403 - 1ms - Response: {"status":403,"now":1728551134315}::{"message":"Access token missing"}
+2024-10-10 16:05:57::info::/v1/api/user/me::c0e8e94a-1493-4348-874c-0ef3c82624cc::input-params ::GET::::{}
+2024-10-10 16:05:57::error::/v1/api/user/me::c0e8e94a-1493-4348-874c-0ef3c82624cc::403 - 9ms - Response: {"status":403,"now":1728551157627}::{"message":"Access token missing"}
+2024-10-10 16:05:57::info::/v1/api/movement/readMovements::ec203105-6bd9-4222-986d-4283ead63aae::input-params ::GET::::{}
+2024-10-10 16:05:57::info::/v1/api/news/readNewss::626ae672-4d51-4c97-82ac-9728eaef51ad::input-params ::GET::::{}
+2024-10-10 16:05:58::info::/v1/api/user/me::5c9d0c18-e017-4c5d-9f4c-ff9026c12318::input-params ::GET::::{}
+2024-10-10 16:05:58::error::/v1/api/user/me::5c9d0c18-e017-4c5d-9f4c-ff9026c12318::403 - 2ms - Response: {"status":403,"now":1728551158069}::{"message":"Access token missing"}
+2024-10-10 16:05:58::info::/v1/api/movement/readMovements::b1919132-7dd1-458d-a4ab-83f3068ff01b::input-params ::GET::::{}
+2024-10-10 16:05:58::info::/v1/api/news/readNewss::9caf1cd2-3cc6-4fce-9a65-a8be0cf60477::input-params ::GET::::{}
+2024-10-10 16:05:58::info::/v1/api/auth/google::10062e9b-d5f6-4855-ba7f-9695f8c9e031::input-params ::GET::::{}
+2024-10-10 16:06:04::info::/v1/api/auth/google/callback::37cd53f1-820c-4a61-8fd3-714d0e329244::input-params ::GET::::{"error":"access_denied"}
+2024-10-10 16:06:04::info::/::56d103e1-77e9-47e1-82d4-b9190172b33c::input-params ::GET::::{}
+2024-10-10 16:06:04::error::/::56d103e1-77e9-47e1-82d4-b9190172b33c::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-10 16:06:17::info::/v1/api/news/readNewss::670199f8-782c-4ba2-a33e-b5bbe7258a74::input-params ::GET::::{}
+2024-10-10 16:06:17::info::/v1/api/recommender/readPopularPosts::2ef669b3-4a59-4687-adc3-af9bc15678ed::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:19::info::/v1/api/recommender/readPopularPosts::c2f6e3cd-6323-410f-a728-e6b4fc1ac282::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:19::info::/v1/api/order/readOrders::549a1811-8c3b-435b-8240-8c1a3dac67d1::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-10-10 16:06:20::info::/v1/api/news/readNewss::c25b7ed7-a1c1-49dc-8c56-8c8aca3358e8::input-params ::GET::::{}
+2024-10-10 16:06:20::info::/v1/api/recommender/readPopularPosts::1fb0d920-28a4-481e-88b3-4540b5881e78::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:21::info::/v1/api/order/readOrders::8a71d03d-9388-4260-8726-a0b12fe651d7::input-params ::GET::::{"isDirect":"false","sortBy":"createdAt","sortOrder":"desc"}
+2024-10-10 16:06:21::info::/v1/api/recommender/readPopularPosts::2e5214e5-41b5-4c79-aec6-405dec5eb42b::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:23::info::/v1/api/news/readNewss::eb475b68-8885-4171-91af-b9fd8bea6b21::input-params ::GET::::{}
+2024-10-10 16:06:23::info::/v1/api/recommender/readPopularPosts::027f2f61-1f29-401f-81a6-16db547fa651::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:23::info::/v1/api/recommender/readPopularPosts::48742e85-c16f-4c70-8dda-e47ba835f402::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 16:06:24::info::/v1/api/challenge/readChallenges::db617fad-6cf9-4e57-9316-acee04e38f8a::input-params ::GET::::{}
+2024-10-10 16:06:24::info::/v1/api/recommender/readPopularPosts::f8f84cd5-e687-4bbc-ac65-d1b917a62b86::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:37::info::/v1/api/news/readNewss::a1390ea8-81d4-4071-b8fc-263ad1a956ef::input-params ::GET::::{}
+2024-10-10 16:06:37::info::/v1/api/recommender/readPopularPosts::d4148a64-91bb-452b-b567-325a50bbfe9f::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:37::info::/v1/api/recommender/readPopularPosts::33fe34fb-5a0e-40b5-9c6e-f2ed85872723::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:06:51::info::/v1/api/news/readNewss::2cc49112-b06f-47e9-bbdd-111478880800::input-params ::GET::::{}
+2024-10-10 16:06:51::info::/v1/api/news/readNews/66a883be47ace990a76e0f83::a2a94892-5b12-4ac6-860a-f5e1e482bbe4::input-params ::GET::::{}
+2024-10-10 16:07:06::info::/v1/api/user/me::0f1486bd-47a5-4f5e-aefd-2b7732e93315::input-params ::GET::::{}
+2024-10-10 16:07:06::error::/v1/api/user/me::0f1486bd-47a5-4f5e-aefd-2b7732e93315::403 - 1ms - Response: {"status":403,"now":1728551226090}::{"message":"Access token missing"}
+2024-10-10 16:07:06::info::/v1/api/movement/readMovements::a0a25118-7fb4-4178-b7c1-c831b240dac7::input-params ::GET::::{}
+2024-10-10 16:07:06::info::/v1/api/news/readNewss::e823ca47-cd0c-4f05-9bbf-dd49e63ce9b7::input-params ::GET::::{}
+2024-10-10 16:07:06::info::/v1/api/news/readNews/66a883be47ace990a76e0f83::557e2fff-5fd9-4149-a3d0-d6c17d48512f::input-params ::GET::::{}
+2024-10-10 16:07:06::info::/v1/api/news/readNewss::cf6014ed-7244-4b62-8b34-0473dbf2a9cc::input-params ::GET::::{}
+2024-10-10 16:07:06::info::/v1/api/recommender/readPopularPosts::c47752ab-0269-4c48-bc53-7b05c6b807c5::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:07:07::info::/v1/api/recommender/readPopularPosts::300ad6e6-26c0-4d66-b6a2-f890631243d2::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 16:07:08::info::/v1/api/recommender/readPopularPosts::7de188ee-7a30-4132-95b4-4c3b01699941::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:07:09::info::/v1/api/recommender/readPopularPosts::66830e01-5434-4ee4-a095-93bb005e64ad::input-params ::GET::::{"page":"2","limit":"10"}
+2024-10-10 16:07:12::info::/v1/api/recommender/readPopularPosts::445ce365-bdce-4ae8-b732-b25577e14423::input-params ::GET::::{"page":"3","limit":"10"}
+2024-10-10 16:27:02::info::/v1/api/user/me::3908903c-8a7b-4fa8-9a00-6d136ce30207::input-params ::GET::::{}
+2024-10-10 16:27:02::error::/v1/api/user/me::3908903c-8a7b-4fa8-9a00-6d136ce30207::403 - 4ms - Response: {"status":403,"now":1728552422114}::{"message":"Access token missing"}
+2024-10-10 16:27:02::info::/v1/api/movement/readMovements::32b86367-5171-4ff8-93c9-2ea5101456c4::input-params ::GET::::{}
+2024-10-10 16:27:02::info::/v1/api/news/readNewss::de5fe976-96cc-422d-80a6-c54a115792b3::input-params ::GET::::{}
+2024-10-10 16:27:02::info::/v1/api/user/me::8dcba45a-0393-4568-8911-eb743043c3c8::input-params ::GET::::{}
+2024-10-10 16:27:02::error::/v1/api/user/me::8dcba45a-0393-4568-8911-eb743043c3c8::403 - 4ms - Response: {"status":403,"now":1728552422517}::{"message":"Access token missing"}
+2024-10-10 16:27:02::info::/v1/api/movement/readMovements::2afbfd76-91c0-4fd5-8866-df07854af59c::input-params ::GET::::{}
+2024-10-10 16:27:02::info::/v1/api/news/readNewss::60372309-b4d4-46e0-9a5a-8a1230e3e480::input-params ::GET::::{}
+2024-10-10 16:29:13::info::/v1/api/news/readNewss::a6c2f1a4-5177-4a4f-8642-db2700919bca::input-params ::GET::::{}
+2024-10-10 16:29:13::info::/v1/api/movement/readMovements::bedcf6c0-ae8e-4361-b891-2a14130cbe92::input-params ::GET::::{}
+2024-10-10 16:29:13::info::/v1/api/user/me::4e18ce0b-2b47-4360-a452-1193b7af9ddb::input-params ::GET::::{}
+2024-10-10 16:29:13::error::/v1/api/user/me::4e18ce0b-2b47-4360-a452-1193b7af9ddb::403 - 6ms - Response: {"status":403,"now":1728552553988}::{"message":"Access token missing"}
+2024-10-10 16:29:15::info::/v1/api/auth/google::a7d1df34-c37f-4b0a-ba70-2c45174a32fd::input-params ::GET::::{}
+2024-10-10 16:29:22::info::/v1/api/auth/google/callback::76e1d489-b778-403a-b567-a7efa59db4a9::input-params ::GET::::{"code":"4/0AVG7fiTot3T_NKq6R9cbtcgw2bjTuGEoukurG_K6hLxUvsj2KqSSdIBoGITfOBjB-USmnQ","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"0","prompt":"consent"}
+2024-10-10 16:29:24::info::/v1/api/user/me::175abd88-3bf8-4eff-a91d-f68d9858dc61::input-params ::GET::::{}
+2024-10-10 16:29:24::info::/v1/api/movement/readMovements::f1619ec1-df36-4be8-8fad-f289e6a80abf::input-params ::GET::::{}
+2024-10-10 16:29:24::info::/v1/api/news/readNewss::eada8a1a-7153-4948-9ba4-5caea963e478::input-params ::GET::::{}
+2024-10-10 16:29:24::info::/v1/api/recommender/readPopularPosts::58eeecf0-7472-4fd7-a74b-6939d7488c98::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:29:26::info::/v1/api/recommender/readPopularPosts::230d4947-7796-473b-9947-fd804d88a5e1::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:29:29::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::c6149585-8129-4238-ad0d-11ce60f41c2f::input-params ::GET::::{}
+2024-10-10 16:30:16::info::/v1/api/movement/readMovements::44621f66-8a59-4086-a6a3-eddd0b0db338::input-params ::GET::::{}
+2024-10-10 16:30:16::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::a0f7cb37-424a-4c67-829a-c69cf06142df::input-params ::GET::::{}
+2024-10-10 16:30:17::info::/v1/api/movement/readMovements::ae467050-c0c0-43af-abb0-9643c848957d::input-params ::GET::::{}
+2024-10-10 16:30:17::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::bd22d50c-7d05-4323-966e-4bf19d26f85b::input-params ::GET::::{}
+2024-10-10 16:31:41::info::/v1/api/movement/readMovements::eabf2f7f-ed73-4c5f-8678-7c477816b392::input-params ::GET::::{}
+2024-10-10 16:31:41::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::9e70ae81-bebf-43f1-9618-2e48ffbbac1c::input-params ::GET::::{}
+2024-10-10 16:31:59::info::/v1/api/movement/readMovements::07aa3c60-389e-4cf6-97f9-aad0c529fa33::input-params ::GET::::{}
+2024-10-10 16:31:59::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::a921aced-a7bb-4571-8963-6c5468cd548b::input-params ::GET::::{}
+2024-10-10 16:31:59::info::/v1/api/movement/readMovements::9449527a-20f3-4160-b01f-a1ec1fd3839e::input-params ::GET::::{}
+2024-10-10 16:31:59::info::/v1/api/user/readUserProfile/66a59f2c73370474cf4eaada::bca0d899-8895-4296-ba2f-33d48cb5d767::input-params ::GET::::{}
+2024-10-10 16:32:00::info::/v1/api/auth/users/logout::d57cfb46-29e4-4b57-bdf5-a94da29e119e::input-params ::POST::::{}
+2024-10-10 16:32:00::info::/v1/api/user/me::aa6fe66a-fbde-4f84-b647-ac7e0085ebc3::input-params ::GET::::{}
+2024-10-10 16:32:00::error::/v1/api/user/me::aa6fe66a-fbde-4f84-b647-ac7e0085ebc3::403 - 3ms - Response: {"status":403,"now":1728552720882}::{"message":"Access token missing"}
+2024-10-10 16:32:02::info::/v1/api/auth/google::f493bc22-da27-4a12-8268-1650635e021c::input-params ::GET::::{}
+2024-10-10 16:32:07::info::/v1/api/auth/google/callback::eb2fb0af-dd1e-42aa-975c-57f880ccc676::input-params ::GET::::{"code":"4/0AVG7fiRu_hjTRGDCYBDVPWdzlmbLRAf3WsKiGcxndCn8HCX9ObQWn87TpR9Dk0Ot02rn7A","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"2","prompt":"consent"}
+2024-10-10 16:32:09::info::/v1/api/user/me::2a6e280e-c640-4f77-842b-94a393146b4f::input-params ::GET::::{}
+2024-10-10 16:32:09::info::/v1/api/movement/readMovements::6a692df0-56ed-45f3-8607-86bd2fc4dcf8::input-params ::GET::::{}
+2024-10-10 16:32:09::info::/v1/api/news/readNewss::d7bb4773-57e6-4ee9-ab84-7f8aba8789de::input-params ::GET::::{}
+2024-10-10 16:32:09::info::/v1/api/recommender/readPopularPosts::8578ff16-8093-414d-9112-ff1537d9e9f8::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:32:10::info::/v1/api/recommender/readPopularPosts::1b711641-c418-42b4-8fe0-613546f8772d::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:32:12::info::/v1/api/auth/users/logout::a7aa95ea-2120-41c0-ab6d-5698dce4484c::input-params ::POST::::{}
+2024-10-10 16:32:12::info::/v1/api/user/me::46aa14b8-9b71-46cf-bc2d-b3bbdc20bf5a::input-params ::GET::::{}
+2024-10-10 16:32:12::error::/v1/api/user/me::46aa14b8-9b71-46cf-bc2d-b3bbdc20bf5a::403 - 0ms - Response: {"status":403,"now":1728552732648}::{"message":"Access token missing"}
+2024-10-10 16:32:14::info::/v1/api/auth/google::017a64e7-8adc-4597-8d56-7c7d015487ae::input-params ::GET::::{}
+2024-10-10 16:32:19::info::/v1/api/auth/google/callback::77e7f818-8409-4655-a7dd-53663df22cac::input-params ::GET::::{"code":"4/0AVG7fiSLUOp9AYioTh-EtGH2mrdUZHnqvzunFzJfgL_Vi1fdUNaMJNohAiJVMiW0VmPQbg","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"1","prompt":"consent"}
+2024-10-10 16:32:20::info::/v1/api/user/me::2cf818e3-607d-4f0d-b715-578fb7639e3a::input-params ::GET::::{}
+2024-10-10 16:32:21::info::/v1/api/movement/readMovements::3d777907-ae86-4853-bcae-5dee132310aa::input-params ::GET::::{}
+2024-10-10 16:32:21::info::/v1/api/news/readNewss::7277c0b8-b121-4327-a4e6-1d9af7197005::input-params ::GET::::{}
+2024-10-10 16:32:21::info::/v1/api/recommender/readPopularPosts::4a44026b-00ee-4056-b011-911d2309b7f3::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:32:22::info::/v1/api/recommender/readPopularPosts::7d5980b1-ff93-4f1f-b1f0-ac7e1758eedb::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:33:48::info::/v1/api/movement/readMovements::6d795e5b-d4fc-4dc8-9118-2e0c651c1534::input-params ::GET::::{}
+2024-10-10 16:33:48::info::/v1/api/news/readNewss::1ca41499-65df-431c-8ad2-d1bebeb09a59::input-params ::GET::::{}
+2024-10-10 16:33:48::info::/v1/api/movement/readMovements::80d6b219-34a1-4b2f-91ee-72d70fa07c9b::input-params ::GET::::{}
+2024-10-10 16:33:48::info::/v1/api/news/readNewss::ca2b8c95-9437-400c-afde-d7da91ba4db3::input-params ::GET::::{}
+2024-10-10 16:33:50::info::/v1/api/auth/users/logout::c8bfde1c-afcc-46d2-9837-0d504831c33f::input-params ::POST::::{}
+2024-10-10 16:33:50::info::/v1/api/user/me::11bfff36-ab78-4e1a-946f-251fb9dc2d19::input-params ::GET::::{}
+2024-10-10 16:33:50::error::/v1/api/user/me::11bfff36-ab78-4e1a-946f-251fb9dc2d19::403 - 1ms - Response: {"status":403,"now":1728552830656}::{"message":"Access token missing"}
+2024-10-10 16:33:59::info::/v1/api/auth/users/login::e6df537c-d1f0-4965-83b0-033f48907020::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-10-10 16:34:02::info::/v1/api/auth/users/logout::acf8559b-e297-441d-9cdb-8961afd18848::input-params ::POST::::{}
+2024-10-10 16:34:02::info::/v1/api/user/me::f31a069e-7e87-4212-b52c-99a9d3a6de97::input-params ::GET::::{}
+2024-10-10 16:34:02::error::/v1/api/user/me::f31a069e-7e87-4212-b52c-99a9d3a6de97::403 - 1ms - Response: {"status":403,"now":1728552842855}::{"message":"Access token missing"}
+2024-10-10 16:34:11::info::/v1/api/auth/google::9f970f73-3421-4a39-af44-bfbd6b022211::input-params ::GET::::{}
+2024-10-10 16:34:16::info::/v1/api/auth/google/callback::9fd58bf9-3bfa-42c7-b635-8e46dcbd2020::input-params ::GET::::{"code":"4/0AVG7fiQQhiBRN-9OPZ_FmYQv2RwhsU3LG1HqJ27RxWb_pkQtojpxDsRMceMmBevvFqn-cg","scope":"email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email","authuser":"2","prompt":"consent"}
+2024-10-10 16:34:17::info::/v1/api/user/me::d3926fc2-dee4-4bb1-8d6e-64d42c0a3eb8::input-params ::GET::::{}
+2024-10-10 16:34:18::info::/v1/api/movement/readMovements::edcbce0f-aca2-4d5d-9e2f-3327ed86b7c9::input-params ::GET::::{}
+2024-10-10 16:34:18::info::/v1/api/news/readNewss::e1cb982d-4f7f-4238-82ce-dd9bfeb7394a::input-params ::GET::::{}
+2024-10-10 16:34:18::info::/v1/api/recommender/readPopularPosts::1fdb55dd-430a-4a53-8a4c-1578443c0ff2::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:34:19::info::/v1/api/recommender/readPopularPosts::8a9aa911-7aef-43c5-a1a1-a77931d82ac8::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:35:02::info::/v1/api/movement/readMovements::c948a453-8a30-4b53-85b4-ed82b5748d09::input-params ::GET::::{}
+2024-10-10 16:35:02::info::/v1/api/news/readNewss::310402b0-bf9b-4a87-a1db-73434898b825::input-params ::GET::::{}
+2024-10-10 16:35:05::info::/v1/api/user/updateProfile/66a5ac2d73370474cf4eb369::b3142c4c-12d8-414e-b99d-d7f3b40c5644::input-params ::PATCH::::{"lastViewConversations":1728552904986}
+2024-10-10 16:35:05::info::/v1/api/conversation/readConversations::e1410e9b-e3cc-4da2-8a73-7328f640af7a::input-params ::GET::::{}
+2024-10-10 16:35:06::info::/v1/api/user/updateProfile/66a5ac2d73370474cf4eb369::40295c4b-277d-4941-8d22-0d6dfaced65a::input-params ::PATCH::::{"lastViewConversations":1728552906277}
+2024-10-10 16:35:07::info::/v1/api/user/updateProfile/66a5ac2d73370474cf4eb369::9e757ce0-740e-4b6f-a2a6-03b9415eb67e::input-params ::PATCH::::{"lastViewConversations":1728552907551}
+2024-10-10 16:35:07::info::/v1/api/conversation/readConversations::c46b1cb6-00f3-4f9d-b8bd-d19186d25660::input-params ::GET::::{}
+2024-10-10 16:35:12::info::/v1/api/user/updateProfile/66a5ac2d73370474cf4eb369::1eec6a08-25b8-4bd1-b79e-0908b8406ddc::input-params ::PATCH::::{"lastViewConversations":1728552912907}
+2024-10-10 16:59:02::info::/v1/api/user/me::f1101059-28b0-4eab-a967-5a955affbed3::input-params ::GET::::{}
+2024-10-10 16:59:03::info::/v1/api/movement/readMovements::c92d054b-d4ec-485e-8d07-8200374fc07f::input-params ::GET::::{}
+2024-10-10 16:59:03::info::/v1/api/news/readNewss::70d1e795-ece0-4153-ae3e-eca21ca44c1f::input-params ::GET::::{}
+2024-10-10 16:59:03::info::/v1/api/recommender/readPopularPosts::a57c6b66-675a-4d9f-9422-4b3a18e42465::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 16:59:04::info::/v1/api/recommender/readPopularPosts::68587d09-3cf6-45d2-b329-63ad41d9ee16::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 17:11:06::info::/v1/api/movement/readMovements::127989a8-ad89-4861-ae52-eb75a1dd8bac::input-params ::GET::::{}
+2024-10-10 17:11:06::info::/v1/api/news/readNewss::61b80e62-f7fb-48da-805c-fbfd61a9b3a3::input-params ::GET::::{}
+2024-10-10 17:11:13::info::/v1/api/movement/readMovements::19d03943-2e1f-4642-8cf6-2818f9b18746::input-params ::GET::::{}
+2024-10-10 17:11:13::info::/v1/api/news/readNewss::14d3ec55-f492-487a-a8f5-9ac09df7d6d4::input-params ::GET::::{}
+2024-10-10 17:11:17::info::/v1/api/movement/readMovements::bd8ff7cc-506e-4f75-93f3-63430267ccff::input-params ::GET::::{}
+2024-10-10 17:11:17::info::/v1/api/news/readNewss::5ef4475b-6b97-4a26-b7c6-ce5b1c7f2661::input-params ::GET::::{}
+2024-10-10 17:15:50::info::/v1/api/news/readNewss::df2aae1e-350f-4830-a829-c43b54aae481::input-params ::GET::::{}
+2024-10-10 17:15:50::info::/v1/api/movement/readMovements::615ea259-58aa-482c-a7a8-a93d2741fdde::input-params ::GET::::{}
+2024-10-10 17:32:58::info::/v1/api/movement/readMovements::6f4f444b-ac75-4f89-aef3-15160b1b9b22::input-params ::GET::::{}
+2024-10-10 17:32:58::info::/v1/api/news/readNewss::014534e8-cf70-4aa2-9dfd-9755bc6c02eb::input-params ::GET::::{}
+2024-10-10 17:33:01::info::/v1/api/notification/readNotifications::a5f5e56d-7e0e-4932-b223-531903fea8a3::input-params ::PATCH::::{}
+2024-10-10 17:33:13::info::/v1/api/movement/readMovements::0b6573d5-43c2-4dc2-a83c-c02156fe737f::input-params ::GET::::{}
+2024-10-10 17:33:13::info::/v1/api/news/readNewss::f3b66907-4a60-411b-b60b-768504d54e45::input-params ::GET::::{}
+2024-10-10 17:33:13::info::/v1/api/notification/readNotifications::3ee2e957-79ae-48ac-bac6-0ab195cc8722::input-params ::PATCH::::{}
+2024-10-10 17:33:28::info::/v1/api/movement/readMovements::9ae4b575-1a3b-4d70-b99a-2e495ce9ab01::input-params ::GET::::{}
+2024-10-10 17:33:28::info::/v1/api/news/readNewss::003ea40c-7c72-4afd-83f5-100c211b754f::input-params ::GET::::{}
+2024-10-10 17:33:28::info::/v1/api/notification/readNotifications::6eee0827-0046-45b9-b1df-2ccca1997f6f::input-params ::PATCH::::{}
+2024-10-10 17:33:28::info::/v1/api/movement/readMovements::b163b809-4e2b-4908-aa94-5cae91f94f53::input-params ::GET::::{}
+2024-10-10 17:33:28::info::/v1/api/notification/readNotifications::40ee46c9-fb9c-4e98-9b19-7b10a2e8120c::input-params ::PATCH::::{}
+2024-10-10 17:33:28::info::/v1/api/news/readNewss::33144f55-dc20-4c9b-a7ef-57f53aee13cd::input-params ::GET::::{}
+2024-10-10 17:33:30::info::/v1/api/user/me::c8691bb8-4437-44d1-bc08-5587bfb3dbee::input-params ::GET::::{}
+2024-10-10 17:33:30::info::/v1/api/movement/readMovements::41ff21cb-65f6-4b9d-903b-0f3a5c8f17c7::input-params ::GET::::{}
+2024-10-10 17:33:30::info::/v1/api/news/readNewss::bcf5f140-9a58-4cbd-bd7e-cf79f3635b35::input-params ::GET::::{}
+2024-10-10 17:33:30::info::/v1/api/recommender/readPopularPosts::faa52d63-3d63-4051-bf99-c93059aff32e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 17:33:31::info::/v1/api/recommender/readPopularPosts::323211a7-fcc6-4072-bbe7-7974faa43b6a::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 17:33:38::info::/v1/api/user/updateProfile/66a5ac2d73370474cf4eb369::3735e1c7-a024-4829-8367-93043de00e03::input-params ::PATCH::::{"lastViewConversations":1728556418137}
+2024-10-10 17:33:38::info::/v1/api/conversation/readConversations::5d88c1be-5520-48c2-9155-a6c2fd59d99c::input-params ::GET::::{}
+2024-10-10 17:33:41::info::/v1/api/conversation/readConversationWithOtherMember/66b95b9b4c12134b03def75a::7d515006-f3b6-45ec-867d-c2402d491808::input-params ::GET::::{}
+2024-10-10 17:33:52::info::/v1/api/recommender/search::d951255e-0083-42ac-a2c9-942e61ebaf13::input-params ::GET::::{"searchTerm":"b"}
+2024-10-10 17:33:52::info::/v1/api/recommender/search::bad6178b-7491-4159-b355-f5c7216c788b::input-params ::GET::::{"searchTerm":"bu"}
+2024-10-10 17:33:52::info::/v1/api/recommender/search::83cca54a-48a2-4a7c-bd80-4913d0176ed3::input-params ::GET::::{"searchTerm":"bun"}
+2024-10-10 17:33:57::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::8845ee40-7717-4442-b3da-81af05bb4451::input-params ::GET::::{}
+2024-10-10 17:33:57::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::ba38ef46-c8c9-45e5-b55e-398ea12a4c80::input-params ::GET::::{}
+2024-10-10 17:33:59::info::/v1/api/post/readPostCategoriesWithPosts/67072dfba682f2357fd702e8::73e55364-0134-40ef-8043-01f5e33ba458::input-params ::GET::::{}
+2024-10-10 17:34:07::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::761de521-2a21-4a23-b78f-b2cc308ff8df::input-params ::GET::::{}
+2024-10-10 17:34:09::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::95728967-2348-42ea-bcd1-c010cc6ff446::input-params ::GET::::{}
+2024-10-10 17:34:10::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::fee03c59-c858-4205-bc04-28feff9e8fb9::input-params ::GET::::{}
+2024-10-10 17:34:11::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::95074ff0-1712-40cf-8f3a-0bb83cd8d8cf::input-params ::GET::::{}
+2024-10-10 17:34:17::info::/v1/api/news/readNewss::00011063-2fa3-4f50-9611-1847b72439d0::input-params ::GET::::{}
+2024-10-10 17:34:17::info::/v1/api/recommender/readPopularPosts::195d90aa-327d-4b98-9a2b-65b9f66554bd::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 17:34:17::info::/v1/api/recommender/readPopularPosts::bca86222-0505-49bb-924a-8de937dc3a9e::input-params ::GET::::{"page":"1","limit":"10"}
+2024-10-10 17:34:19::info::/v1/api/recommender/search::f8a6ab1b-e7f6-441c-9ecd-bce060edaee6::input-params ::GET::::{"searchTerm":"b"}
+2024-10-10 17:34:20::info::/v1/api/recommender/search::54509394-1b73-488f-86ff-12ec9d8bc4c3::input-params ::GET::::{"searchTerm":"bu"}
+2024-10-10 17:34:20::info::/v1/api/recommender/search::4dc86c36-8ea5-4738-a3fe-e4865b686654::input-params ::GET::::{"searchTerm":"bun"}
+2024-10-10 17:34:21::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::e5091d08-4b96-4b5a-baea-49f2d73438da::input-params ::GET::::{}
+2024-10-10 17:34:21::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::372f1ffd-6095-44e6-b383-71ffeb6a3d46::input-params ::GET::::{}
+2024-10-10 17:34:23::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::e108e87b-9273-448b-93cf-a1564835b9b3::input-params ::GET::::{}
+2024-10-10 17:34:24::error::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::e108e87b-9273-448b-93cf-a1564835b9b3::undefined - NaNms - Response: {}::{"message":"Failed to read conversation"}
+2024-10-10 17:34:28::info::/v1/api/conversation/sendMessage::a13d8a94-5007-440c-a0ba-607eb4c30c2b::input-params ::PATCH::::{}
+2024-10-10 17:34:50::info::/v1/api/conversation/sendMessage::665c3a34-3adc-4ed5-9fc9-45bd8776243d::input-params ::PATCH::::{}
+2024-10-10 17:35:02::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::0c48bdd3-5a63-4e28-a8cb-c0853c857363::input-params ::GET::::{}
+2024-10-10 17:35:07::info::/v1/api/movement/readMovements::20e17995-0c58-4216-b723-cbe10e0bd016::input-params ::GET::::{}
+2024-10-10 17:35:07::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::5511059a-0ded-4257-8496-e5b7c3396e04::input-params ::GET::::{}
+2024-10-10 17:35:07::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::1fd50ec0-caa5-402c-840c-955106fad924::input-params ::GET::::{}
+2024-10-10 17:35:07::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::b24ba5f4-9f06-4702-889e-ca71cfcfae93::input-params ::GET::::{}
+2024-10-10 17:35:30::info::/v1/api/movement/readMovements::e5137eaa-1feb-4905-a000-26d467078d69::input-params ::GET::::{}
+2024-10-10 17:35:30::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::18759e4b-b87f-4906-9b9a-02094096a8d0::input-params ::GET::::{}
+2024-10-10 17:35:30::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::80c88678-2ebc-4196-bd61-b3d72ca8fec6::input-params ::GET::::{}
+2024-10-10 17:35:30::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::89345d6d-9f30-4aed-bfdc-03c8ad3e8029::input-params ::GET::::{}
+2024-10-10 17:35:32::info::/v1/api/movement/readMovements::34dc7dc2-bcc8-424e-92c2-a3087dc99d8a::input-params ::GET::::{}
+2024-10-10 17:35:32::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::e9fc2653-7ddc-4245-94c0-53e12ad8d779::input-params ::GET::::{}
+2024-10-10 17:35:32::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::27e43747-e028-4bb4-9483-790bd4c00aa6::input-params ::GET::::{}
+2024-10-10 17:35:32::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::08339c3a-c122-46aa-ab63-76d9385aa01f::input-params ::GET::::{}
+2024-10-10 17:35:33::info::/v1/api/user/me::84ca3ed3-7924-4b95-b4d3-f0b56fa98ef0::input-params ::GET::::{}
+2024-10-10 17:35:33::info::/v1/api/movement/readMovements::be6fb8d4-b3d0-4d9c-bfc0-9b8b1a467981::input-params ::GET::::{}
+2024-10-10 17:35:33::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::e1616c36-ed4b-42bb-9015-4cbb8fb846f0::input-params ::GET::::{}
+2024-10-10 17:35:33::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::23f7ff5d-fbd5-47d2-aa5b-4a6a4670cdde::input-params ::GET::::{}
+2024-10-10 17:35:34::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::7e0621e5-80a0-4064-80ed-2605460c90e5::input-params ::GET::::{}
+2024-10-10 17:35:40::info::/v1/api/conversation/sendMessage::79ed3541-2e0c-4c95-8368-725b8fd3e0c2::input-params ::PATCH::::{}
+2024-10-10 17:36:52::info::/v1/api/movement/readMovements::a5a55ce3-f498-487b-8214-f84d60b0e5ff::input-params ::GET::::{}
+2024-10-10 17:36:52::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::7037a3d3-5a26-46c8-8cfa-461d9f90b586::input-params ::GET::::{}
+2024-10-10 17:36:52::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::dbe7270c-2816-437c-8d02-b35311b0a012::input-params ::GET::::{}
+2024-10-10 17:36:52::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::de2e702b-8d39-490a-9d1c-89fd6eaf27b8::input-params ::GET::::{}
+2024-10-10 17:36:55::info::/v1/api/movement/readMovements::078537e8-43ff-47fa-b830-989cb78808a2::input-params ::GET::::{}
+2024-10-10 17:36:55::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::2f8ff8a6-7bdb-4208-95d8-aa83ec351f3a::input-params ::GET::::{}
+2024-10-10 17:36:55::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::342b491e-dd75-48b9-9f82-b8383e0e5a03::input-params ::GET::::{}
+2024-10-10 17:36:55::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::41fe1478-8523-4a5d-8b06-6603d09832e0::input-params ::GET::::{}
+2024-10-10 17:36:59::info::/v1/api/conversation/sendMessage::8cd66be8-e066-441e-94a5-9925e074dbb4::input-params ::PATCH::::{}
+2024-10-10 17:38:48::info::/v1/api/movement/readMovements::e98ddc3a-f531-4f64-b3c4-dcd49ec877bf::input-params ::GET::::{}
+2024-10-10 17:38:48::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::dce60573-41a0-41d5-84cd-7ef5f7cc697c::input-params ::GET::::{}
+2024-10-10 17:38:48::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::6a18c52c-59f5-47e4-a539-de6120ad5649::input-params ::GET::::{}
+2024-10-10 17:38:48::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::c6b6738c-56d4-4a33-a306-cdfda9319981::input-params ::GET::::{}
+2024-10-10 17:38:49::info::/v1/api/movement/readMovements::a09b7641-7123-488a-a6cc-241f310d7c26::input-params ::GET::::{}
+2024-10-10 17:38:49::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::f48ff1b9-056f-491d-996c-60a75f3a46dc::input-params ::GET::::{}
+2024-10-10 17:38:49::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::c51c3722-5a82-4c00-be62-1c1ec4529750::input-params ::GET::::{}
+2024-10-10 17:38:49::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::2bacfe94-1c51-4c9e-9776-841bbbc560bc::input-params ::GET::::{}
+2024-10-10 17:38:52::info::/v1/api/conversation/sendMessage::9180dd76-e6ba-4231-9221-e0a03fdc9e65::input-params ::PATCH::::{}
+2024-10-10 17:39:03::info::/v1/api/conversation/sendMessage::0b5cd0c3-112c-4bf9-aabb-c6004968c0c2::input-params ::PATCH::::{}
+2024-10-10 17:39:16::info::/v1/api/conversation/sendMessage::8626bdaf-394d-4734-97b8-4ce5c57503c2::input-params ::PATCH::::{}
+2024-10-10 17:39:22::info::/v1/api/conversation/sendMessage::5b8014f5-d26b-4f30-8994-1edfe81bb40b::input-params ::PATCH::::{}
+2024-10-10 17:39:28::info::/v1/api/conversation/sendMessage::dffcd465-7b03-453c-ad75-1e488f07170a::input-params ::PATCH::::{}
+2024-10-10 17:39:58::info::/v1/api/conversation/sendMessage::122a8bf5-f196-4d24-8e15-291fdce8dadd::input-params ::PATCH::::{}
+2024-10-10 17:39:58::info::/v1/api/conversation/sendMessage::6971c9e3-3fe8-436e-a105-81c6e68604f8::input-params ::PATCH::::{}
+2024-10-10 17:39:58::error::/v1/api/conversation/sendMessage::6971c9e3-3fe8-436e-a105-81c6e68604f8::undefined - NaNms - Response: {}::{"message":"Failed to send message"}
+2024-10-10 17:40:25::info::/v1/api/conversation/sendMessage::55b55452-61ff-437c-9618-a4c0932dfb11::input-params ::PATCH::::{}
+2024-10-10 17:42:43::info::/v1/api/movement/readMovements::9fb2abde-b9f9-42c6-afea-2bc110c64a57::input-params ::GET::::{}
+2024-10-10 17:42:43::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::5ebe11ec-d753-489a-bc5b-4e3725d257f2::input-params ::GET::::{}
+2024-10-10 17:42:43::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::3de28bc4-1716-4923-b70e-cd799c644bd2::input-params ::GET::::{}
+2024-10-10 17:42:43::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::58d34c00-173a-49a7-9b9a-c616eb34abef::input-params ::GET::::{}
+2024-10-10 17:42:45::info::/v1/api/movement/readMovements::e1d7d2dd-aaec-424d-b349-555f8b804175::input-params ::GET::::{}
+2024-10-10 17:42:45::info::/v1/api/conversation/readConversationWithOtherMember/67072dfba682f2357fd702e8::b479f36b-e03f-4299-a6fb-95770486f557::input-params ::GET::::{}
+2024-10-10 17:42:45::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::31fbc43e-5487-44d7-881a-a7b4f6b4954b::input-params ::GET::::{}
+2024-10-10 17:42:45::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::629cf4a7-537f-46b4-8a9a-f2a8379f3659::input-params ::GET::::{}
+2024-10-10 17:42:49::info::/v1/api/user/me::cbd96ccd-b9e4-43b0-940e-37ee71fdb3a7::input-params ::GET::::{}
+2024-10-10 17:42:49::info::/v1/api/movement/readMovements::cca4d855-f29c-49a1-a63c-7c0333fd9cb4::input-params ::GET::::{}
+2024-10-10 17:42:49::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::092d5650-9947-448e-acea-7ae950e4246c::input-params ::GET::::{}
+2024-10-10 17:42:49::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::f04b2e9f-272b-4908-ac3c-97111916e0ec::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/movement/readMovements::3c322cec-cf68-4667-bb1e-b6f04d57e144::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::17f7fe69-7ce3-4db6-a360-3de6cceb9a10::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::69d6055a-590d-41ec-837d-46b8288a3bb3::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/movement/readMovements::a1d9cc56-f421-4c77-9c84-b4ce69308761::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::4852cc77-d33b-431c-8293-47e038f797e5::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/movement/readMovements::0a4b1c9d-f4b3-45d7-a56b-8cdc0e26728b::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::690c8762-79b0-4027-bf2d-16fcf3241b05::input-params ::GET::::{}
+2024-10-10 17:42:57::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::6010b6e0-1c53-490e-b004-79c124203aa8::input-params ::GET::::{}
+2024-10-10 17:46:18::info::/v1/api/movement/readMovements::723ddef8-ffe8-448e-9f35-d6ad80721a11::input-params ::GET::::{}
+2024-10-10 17:46:18::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::eb89801a-5376-41da-953e-e4a90ca4abf4::input-params ::GET::::{}
+2024-10-10 17:46:18::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::e4d456e3-8548-4b32-b410-e6931b2dfe69::input-params ::GET::::{}
+2024-10-10 17:46:20::info::/v1/api/movement/readMovements::977fae08-4504-453b-9706-223409914e52::input-params ::GET::::{}
+2024-10-10 17:46:20::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::7bed2698-98bd-40ca-8b33-86bbbb94b1f0::input-params ::GET::::{}
+2024-10-10 17:46:20::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::b2332e52-1b9f-40ee-ac88-3faca0c7700b::input-params ::GET::::{}
+2024-10-10 17:52:33::info::/v1/api/movement/readMovements::229ec57a-b77e-4f28-93df-aa8cc90eeadb::input-params ::GET::::{}
+2024-10-10 17:52:33::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::8c527e7e-5791-4e32-a306-a6816f5a11cd::input-params ::GET::::{}
+2024-10-10 17:52:33::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::98298358-657c-4fb4-8837-b59636b3203c::input-params ::GET::::{}
+2024-10-10 18:58:29::info::/v1/api/movement/readMovements::2a52a88e-8069-493e-ae0a-a1e211c0be7c::input-params ::GET::::{}
+2024-10-10 18:58:29::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::3fe712e9-3437-4bb9-8041-561f3e04ac5c::input-params ::GET::::{}
+2024-10-10 18:58:29::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::d6e3811c-9ffa-488e-9c09-3a4af3dcce3f::input-params ::GET::::{}
+2024-10-10 18:58:30::info::/v1/api/user/me::1ff59329-5c08-47b5-9eb8-af1c2a2ece86::input-params ::GET::::{}
+2024-10-10 18:58:30::info::/v1/api/movement/readMovements::3406972e-f464-475a-a4e9-5195aabe2188::input-params ::GET::::{}
+2024-10-10 18:58:30::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::5e079ba9-53f2-4702-9d5b-f49f8a003872::input-params ::GET::::{}
+2024-10-10 18:58:30::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::d439a6c7-2919-4197-8a66-cf290f0649f9::input-params ::GET::::{}
+2024-10-10 18:58:31::info::/v1/api/movement/readMovements::d56a2e32-fd88-4e2c-bc49-28f5133ce4af::input-params ::GET::::{}
+2024-10-10 18:58:31::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::fb96ff80-2904-4e49-a490-e71e81bbb6cf::input-params ::GET::::{}
+2024-10-10 18:58:31::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::3f56551a-29e3-45dd-a3f0-39777d943536::input-params ::GET::::{}
+2024-10-10 18:58:32::info::/v1/api/movement/readMovements::e7ebba56-a176-4ec8-93e2-757668b507b3::input-params ::GET::::{}
+2024-10-10 18:58:32::info::/v1/api/user/readUserProfile/67072dfba682f2357fd702e8::240aa3e1-1e1e-4f63-a773-5e48610c93fa::input-params ::GET::::{}
+2024-10-10 18:58:32::info::/v1/api/serviceCategory/readServiceCategoriesWithServices/67072dfba682f2357fd702e8::4f0f3069-3542-49a5-b1da-728acecead9d::input-params ::GET::::{}

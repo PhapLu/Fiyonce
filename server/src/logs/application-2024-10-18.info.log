@@ -1,0 +1,19 @@
+2024-10-18 09:29:46::info::/v1/api/auth/users/login::152e9ebb-2ed7-482c-b5e8-422f3d0a294b::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-10-18 09:31:02::info::/v1/api/auth/users/login::c63a99c3-d1a0-4dbc-a3ae-5111765e74ea::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-10-18 09:31:32::info::/v1/api/order/startWipCommissionOrder/66ffac7458dd824a96ae6fdb::fb14a3bb-a5ca-47bf-816a-5ed8a24cfe36::input-params ::PATCH::::{}
+2024-10-18 09:31:32::error::/v1/api/order/startWipCommissionOrder/66ffac7458dd824a96ae6fdb::fb14a3bb-a5ca-47bf-816a-5ed8a24cfe36::401 - 0ms - Response: {"status":401,"now":1729218692597}::{"message":"Bạn không có quyền thực hiện thao tác này"}
+2024-10-18 09:32:10::info::/v1/api/auth/users/login::1b237eab-0edb-49e8-89a7-ecd91759d920::input-params ::POST::::{"email":"phapluu2k5tqt@gmail.com","password":"PhapNhat987AZ@"}
+2024-10-18 09:32:14::info::/v1/api/order/startWipCommissionOrder/66ffac7458dd824a96ae6fdb::e0b17c96-1a24-491b-b6a2-7e4991c406f1::input-params ::PATCH::::{}
+2024-10-18 09:34:51::info::/v1/api/order/addMilestone/66ffc4f0b9375d8f24cc353b::264bae2c-0bc5-4a74-8a45-2ca87eb502c7::input-params ::PATCH::::{}
+2024-10-18 09:34:51::error::/v1/api/order/addMilestone/66ffc4f0b9375d8f24cc353b::264bae2c-0bc5-4a74-8a45-2ca87eb502c7::403 - 0ms - Response: {"status":403,"now":1729218891433}::{"message":"Đơn hàng không ở trạng thái đang thực hiện"}
+2024-10-18 09:35:45::info::/v1/api/order/addMilestone/66ffac7458dd824a96ae6fdb::f128de29-3c26-43b7-af1a-e7106fed1af4::input-params ::PATCH::::{}
+2024-10-18 09:37:45::info::/v1/api/order/addMilestone/66ffac7458dd824a96ae6fdb::94136549-eb7f-4b78-8b2e-844b44712941::input-params ::PATCH::::{}
+2024-10-18 09:41:30::info::/v1/api/order/deliverOrder/66fb6fec7429f4b9fdd2d110::e7ca825b-f3d6-4a09-9b91-8d87795c9d18::input-params ::PATCH::::{}
+2024-10-18 09:41:30::error::/v1/api/order/deliverOrder/66fb6fec7429f4b9fdd2d110::e7ca825b-f3d6-4a09-9b91-8d87795c9d18::403 - 0ms - Response: {"status":403,"now":1729219290181}::{"message":"Order is not in progress"}
+2024-10-18 09:41:39::info::/v1/api/order/deliverOrder/66ffac7458dd824a96ae6fdb::d40b0e9a-0870-4938-9fbd-54ba0cf29e2b::input-params ::PATCH::::{}
+2024-10-18 10:08:50::info::/v1/api/auth/users/login::fd32bc03-9b3d-4418-90dc-d3352a541340::input-params ::POST::::{"email":"phapluu9ithd@gmail.com","password":"PhapNhat987AZ@"}
+2024-10-18 10:09:05::info::/v1/api/order/finishOrder/66ffac7458dd824a96ae6fdb::557196e4-0777-4e67-8a3f-30538d8095c0::input-params ::PATCH::::{}
+2024-10-18 10:31:50::info::/v1/api/order/finishOrder/66ffac7458dd824a96ae6fdb::cfcb64ee-bb01-4152-95b1-63c5e6996d61::input-params ::PATCH::::{}
+2024-10-18 10:31:50::error::/v1/api/order/finishOrder/66ffac7458dd824a96ae6fdb::cfcb64ee-bb01-4152-95b1-63c5e6996d61::403 - 1ms - Response: {"status":403,"now":1729222310287}::{"message":"Order is not delivered yet"}
+2024-10-18 10:32:08::info::/v1/api/order/finishOrder/66ffac7458dd824a96ae6fdb::04589974-792f-4996-adff-ec43f7142cb3::input-params ::PATCH::::{}
+2024-10-18 10:36:17::info::/v1/api/order/finishOrder/66ffac7458dd824a96ae6fdb::79717bf3-05b1-41c7-a0e9-38143b083380::input-params ::PATCH::::{}

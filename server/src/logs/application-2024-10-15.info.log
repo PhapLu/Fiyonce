@@ -1,0 +1,15 @@
+2024-10-15 15:01:14::info::/v1/api/auth/users/login::c67679ca-ea68-4d3c-8b83-f985f75686d5::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-10-15 15:03:44::info::/v1/api/transactionDashboard/calculateIncomOverview::a6a1783a-9b39-498e-8679-b5dc1b9c6eb8::input-params ::GET::::{}
+2024-10-15 15:03:44::error::/v1/api/transactionDashboard/calculateIncomOverview::a6a1783a-9b39-498e-8679-b5dc1b9c6eb8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-15 15:04:21::info::/v1/api/transactionDashboard/calculateIncomeOverview::da74a6d5-bdfb-4075-b2c8-b4ba0c9dc58b::input-params ::GET::::{}
+2024-10-15 15:04:54::info::/v1/api/transactionDashboard/readTransactionOverview::18866283-038b-421c-84ca-01257b364a82::input-params ::GET::::{}
+2024-10-15 15:16:32::info::/v1/api/reportDashboard/readReportDashboard::9457f14c-6e3d-4336-8ee1-7c1d2d4c9817::input-params ::GET::::{}
+2024-10-15 15:16:32::error::/v1/api/reportDashboard/readReportDashboard::9457f14c-6e3d-4336-8ee1-7c1d2d4c9817::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-15 15:16:40::info::/v1/api/reportDashboard/readReportOverview::fcfe1315-dc7e-475f-a72d-3beffc378779::input-params ::GET::::{}
+2024-10-15 15:17:17::info::/v1/api/accountDashboard/readAccountOverview::fa85443c-2549-44d6-828b-626e0f20efc0::input-params ::GET::::{}
+2024-10-15 15:33:16::info::/v1/api/artstryDashboard/readBadgeOverview::f1e3c563-4b97-4699-8b78-a5e5daaf3d7d::input-params ::GET::::{}
+2024-10-15 15:33:16::error::/v1/api/artstryDashboard/readBadgeOverview::f1e3c563-4b97-4699-8b78-a5e5daaf3d7d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-15 15:36:28::info::/v1/api/artistryDashboard/readBadgeOverview::35decc09-a9ca-4f3b-a4b4-d544e7343acd::input-params ::GET::::{}
+2024-10-15 15:37:45::info::/v1/api/artistryDashboard/readBadgeAchievedOverview::dbe2fa5a-29d2-4b21-815e-9a5b8e4a032c::input-params ::GET::::{}
+2024-10-15 15:42:32::info::/v1/api/artistryDashboard/readChallengeOverview::dc4eaa81-ae1e-4e74-8254-c5688a08f6c1::input-params ::GET::::{}
+2024-10-15 15:43:05::info::/v1/api/artistryDashboard/readChallengeTotalVotes::cbdba1b8-6e59-4e9d-b2ea-dec45af9c51f::input-params ::GET::::{}

@@ -1,0 +1,2 @@
+2024-10-07 16:43:39::error::/v1/api/badge/readBadges::66680cdd-2a9f-4b95-8927-b6949a75314b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-07 16:43:49::error::/v1/api/badge/readBadges::9e07e8dc-4f66-42da-b423-f7d14b3ad093::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}

@@ -1,0 +1,3 @@
+2024-10-15 15:03:44::error::/v1/api/transactionDashboard/calculateIncomOverview::a6a1783a-9b39-498e-8679-b5dc1b9c6eb8::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-15 15:16:32::error::/v1/api/reportDashboard/readReportDashboard::9457f14c-6e3d-4336-8ee1-7c1d2d4c9817::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-15 15:33:16::error::/v1/api/artstryDashboard/readBadgeOverview::f1e3c563-4b97-4699-8b78-a5e5daaf3d7d::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}

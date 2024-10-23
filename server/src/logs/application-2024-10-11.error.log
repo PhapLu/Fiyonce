@@ -1,0 +1,6 @@
+2024-10-11 08:33:02::error::/v1/api/commissionService/readCommissionService/667c18113bf313a148ba35c4::11a42fd4-9947-4668-83c1-2fbb1e02b128::404 - 2ms - Response: {"status":404,"now":1728610382648}::{"message":"Không tìm thấy dịch vụ"}
+2024-10-11 08:33:06::error::/v1/api/commissionService/readCommissionService/66742d4af3390f5f176aea6c::e84c9ff8-98e7-474d-b562-3943047e044e::404 - 3ms - Response: {"status":404,"now":1728610386112}::{"message":"Không tìm thấy dịch vụ"}
+2024-10-11 09:04:39::error::/v1/api/auth/users/login::ebcf202c-1ca6-46ec-a27b-23a04fd9843e::400 - NaNms - Response: {"expose":true,"statusCode":400,"status":400,"body":"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n","type":"entity.parse.failed"}::{"message":"Unexpected end of JSON input"}
+2024-10-11 09:05:49::error::/v1/api/review/createReview/66d3147ed855b16e5db6cd84::a251ceb4-6ccd-4d8e-bedc-903289c7fcec::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-11 09:45:09::error::/v1/api/user/readUserProfile/66a5a6a373370474cf4eae1d::45e53239-d81a-4581-8cfc-45bc07b02f04::undefined - NaNms - Response: {}::{"message":"Class constructor ObjectId cannot be invoked without 'new'"}
+2024-10-11 09:56:10::error::/v1/api/recommender/readSearchResults::e369ddf2-671a-4f7e-a95a-3f508681e1fa::403 - 1ms - Response: {"status":403,"now":1728615370313}::{"message":"Invalid search Term"}

@@ -1,0 +1,6 @@
+2024-10-07 15:42:19::info::/v1/api/auth/users/login::188b91d7-f35f-4b86-81a2-92f5015544a2::input-params ::POST::::{"email":"phapluudev2k5@gmail.com","password":"PhapNhat987AZ@!"}
+2024-10-07 15:42:31::info::/v1/api/badge/readBadges::1b36a4f0-b703-4b9b-8a4a-3eafe6b4ace1::input-params ::GET::::{}
+2024-10-07 16:43:39::info::/v1/api/badge/readBadges::66680cdd-2a9f-4b95-8927-b6949a75314b::input-params ::GET::::{}
+2024-10-07 16:43:39::error::/v1/api/badge/readBadges::66680cdd-2a9f-4b95-8927-b6949a75314b::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
+2024-10-07 16:43:49::info::/v1/api/badge/readBadges::9e07e8dc-4f66-42da-b423-f7d14b3ad093::input-params ::GET::::{}
+2024-10-07 16:43:49::error::/v1/api/badge/readBadges::9e07e8dc-4f66-42da-b423-f7d14b3ad093::404 - NaNms - Response: {"status":404}::{"message":"Not Found"}
