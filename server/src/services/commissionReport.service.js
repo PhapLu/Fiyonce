@@ -12,7 +12,7 @@ import {
 } from "../utils/cloud.util.js"
 import Order from "../models/order.model.js"
 import Proposal from "../models/proposal.model.js"
-import { sendAnnouncementEmail } from "../configs/brevo.email.config.js"
+import { sendAnnouncementEmail, sendReportEmail } from "../configs/brevo.email.config.js"
 import { formatDate } from "../utils/index.js"
 
 class CommissionReportService {
@@ -30,7 +30,6 @@ class CommissionReportService {
         const order = await Order.findById(orderId)
         if (!order) throw new BadRequestError("Không tìm thấy đơn hàng")
         const proposal = await Proposal.findOne({ orderId: orderId, talentId: order.talentChosenId })
-        console.log(proposal)
         if (!proposal) throw new BadRequestError("Bạn không thể báo cáo vi phạm ở giai đoạn này")
         
         //3. Upload files to Cloudinary if exists
@@ -248,12 +247,12 @@ class CommissionReportService {
         await commissionReport.save();
 
         //3. Send email to user and talents
-        const subject = `[PASTAL] - Kết quả xử lí vi phạm (${formatDate()})`
-        const message = `Admin đã có quyết định với báo cáo vi phạm`
+        const subject = `[PASTAL] - Thông báo về việc xử lí vi phạm (${formatDate()})`
+        const message = `Admin đã xử lí báo cáo vi phạm`
         const orderCode = `Mã đơn hàng: ${order._id.toString()}`
         const reason = `Nội dung vi phạm: ${commissionReport.content}`
-        sendAnnouncementEmail(order.memberId.email, subject, message, orderCode, reason);
-        sendAnnouncementEmail(order.talentChosenId.email, subject, message, orderCode, reason);
+        sendReportEmail(order.memberId.email, subject, message, reason);
+        sendReportEmail(order.talentChosenId.email, subject, message, reason);
 
         return {
             commissionReport,

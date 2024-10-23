@@ -181,6 +181,40 @@ class AccountReportService {
             message: "Xóa báo cáo thành công",
         }
     }
+
+    static adminMakeDecision = async (userId, accountReportId, req) => {
+        //1. Check admin and accountReport
+        const admin = await User.findById(userId)
+        const accountReport = await AccountReport.findById(accountReportId)
+
+        if (!admin) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này")
+        if (!accountReport)
+            throw new NotFoundError("Không tìm thấy báo cáo")
+        if (admin.role !== "admin")
+            throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này")
+
+        //2. Validate request body
+        const { content, evidence } = req.body
+        if (!content || !evidence)
+            throw new BadRequestError("Vui lòng cung cấp đủ thông tin")
+
+        //3. Update accountReport
+        const updatedAccountReport = await AccountReport.findByIdAndUpdate(
+            accountReportId,
+            {
+                adminDecision: {
+                    decision: content,
+                    reason: evidence,
+                    notified: true,
+                },
+            },
+            { new: true }
+        )
+
+        return {
+            accountReport: updatedAccountReport,
+        }
+    }
 }
 
 export default AccountReportService

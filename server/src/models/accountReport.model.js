@@ -17,6 +17,11 @@ const AccountReportSchema = new mongoose.Schema(
         },
         content: { type: String, required: true },
         evidences: [{ type: String, required: true }],
+        status: {
+            type: String,
+            enum: ["pending", "resolved"],
+            default: "pending",
+        },
     },{
         timestamps: true,
         collection: COLLECTION_NAME,

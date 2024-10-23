@@ -38,10 +38,7 @@ class TalentRequestService {
 
         // 3. Check if user has requested before
         const talentRequest = await TalentRequest.findOne({ userId })
-        console.log("LLL")
-        console.log(talentRequest)
         if (talentRequest) {
-            console.log("PAS")
             // Extract the artwork public_id by using cloud util function
             const publicIds = talentRequest.artworks.map((artwork) =>
                 extractPublicIdFromUrl(artwork)
@@ -51,7 +48,6 @@ class TalentRequestService {
                 publicIds.map((publicId) => deleteFileByPublicId(publicId))
             )
             // Delete the request from database
-            await talentRequest.deleteOne()
             await talentRequest.deleteOne()
         }
 

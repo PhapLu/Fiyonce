@@ -35,7 +35,6 @@ async function sendOtpEmail(to, subject, message, verificationCode) {
     }
 }
 async function sendAnnouncementEmail(to, subject, subSubject, message) {
-    const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({
@@ -67,7 +66,6 @@ async function sendAnnouncementEmail(to, subject, subSubject, message) {
 }
 
 async function sendReportEmail(to, subject, fullName, subSubject, message) {
-    const toEmail = to.replace("@gmail.com", "");
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({

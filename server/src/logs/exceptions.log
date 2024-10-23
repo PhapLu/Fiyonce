@@ -1306,3 +1306,12 @@ ReferenceError: redisCache is not defined
 2024-10-15 07:53:28::error::undefined::undefined::uncaughtException: read ECONNRESET
 Error: read ECONNRESET
     at TLSWrap.onStreamRead (node:internal/stream_base_commons:218:20)::undefined
+2024-10-19 08:27:20::error::undefined::undefined::uncaughtException: listen EADDRINUSE: address already in use :::3000
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1904:16)
+    at listenInCluster (node:net:1961:12)
+    at Server.listen (node:net:2063:7)
+    at file:///D:/Adam/OnisonProject/server/server.js:4:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:123:5)::undefined
