@@ -21,3 +21,10 @@
 2024-10-24 20:53:57::info::/v1/api/order/baocao/gov::c6011b19-7cae-4e8d-bd74-3bc19bbb7458::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
 2024-10-24 20:55:11::info::/v1/api/order/baocao/gov::aca8076b-ebdc-427f-b0e2-3448b9f8f742::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
 2024-10-24 20:55:50::info::/v1/api/order/baocao/gov::02ac6529-a6fb-44b5-9b8a-22be274de64c::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:56:28::info::/v1/api/order/baocao/gov::03e8fac9-ae75-43fb-8124-ce5cd0bf076c::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:58:25::info::/v1/api/auth/users/logout::b6dd8483-23a7-4c5c-b2ec-f686c1a20466::input-params ::POST::::{}
+2024-10-24 20:58:27::info::/v1/api/order/baocao/gov::6c3b3c96-d0e5-454a-a0a9-0470d6570e0e::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 21:00:10::info::/v1/api/order/baocao/gov::315eba98-3f38-4668-8abe-c293b8a34807::input-params ::POST::::{"UserName":"baocaoGov","PassWord":"baoCaoGov@2404!!"}
+2024-10-24 21:00:24::info::/v1/api/order/baocao/gov::fa4f6171-aeee-4bdb-bc7a-5ba4630ad294::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 21:00:24::error::/v1/api/order/baocao/gov::fa4f6171-aeee-4bdb-bc7a-5ba4630ad294::undefined - NaNms - Response: {}::{"message":"Failed to fetch report data"}
+2024-10-24 21:00:30::info::/v1/api/order/baocao/gov::9f93e9e1-4cfe-4d39-bc51-d2dbc929a7a7::input-params ::POST::::{"UserName":"baocaoGov","PassWord":"baoCaoGov@2404!!"}
