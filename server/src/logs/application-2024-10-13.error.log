@@ -1,0 +1,12 @@
+2024-10-13 10:01:16::error::/v1/api/user/me::962fc72f-a989-41d2-9444-fb4bcaf6fdcd::403 - 0ms - Response: {"status":403,"now":1728788476763}::{"message":"Access token missing"}
+2024-10-13 10:01:41::error::/v1/api/user/me::cbb32fb8-fc6b-4b52-a586-0e7583ec79b9::403 - 0ms - Response: {"status":403,"now":1728788501706}::{"message":"Access token missing"}
+2024-10-13 10:02:53::error::/v1/api/user/me::1b69a855-b956-4d89-9ab3-7bfe37081dc2::403 - 0ms - Response: {"status":403,"now":1728788573804}::{"message":"Access token missing"}
+2024-10-13 10:03:06::error::/v1/api/user/me::bc8ac9b4-c934-48e6-86a4-e9bd601930c2::403 - 0ms - Response: {"status":403,"now":1728788586328}::{"message":"Access token missing"}
+2024-10-13 10:12:59::error::/v1/api/order/updateOrder/670b355b4ec6cf4defc50bcd::e4990c31-b269-4564-b24b-cc749941ab30::undefined - NaNms - Response: {}::{"message":"Service update failed"}
+2024-10-13 10:13:54::error::/v1/api/order/updateOrder/670b355b4ec6cf4defc50bcd::f117d240-e1b7-4845-aa93-554c599b1fe9::undefined - NaNms - Response: {}::{"message":"Service update failed"}
+2024-10-13 10:15:57::error::/v1/api/order/updateOrder/670b355b4ec6cf4defc50bcd::ed0337a8-1365-4b4d-afab-f38f25c4d94e::undefined - NaNms - Response: {}::{"message":"Service update failed"}
+2024-10-13 10:17:22::error::/v1/api/order/updateOrder/670b355b4ec6cf4defc50bcd::523410af-58d9-47f3-9b69-a60ac7b6ac84::undefined - NaNms - Response: {}::{"message":"Service update failed"}
+2024-10-13 10:22:40::error::/v1/api/order/updateOrder/670b355b4ec6cf4defc50bcd::ceaef440-b059-4b02-8602-9c70f8b17ab2::undefined - NaNms - Response: {}::{"message":"Service update failed"}
+2024-10-13 10:26:58::error::/v1/api/proposal/sendProposal/670b355b4ec6cf4defc50bcd::d18a92aa-789b-4ea3-a88d-5010b955c593::403 - 2ms - Response: {"status":403,"now":1728790018616}::{"message":"Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này"}
+2024-10-13 10:27:06::error::/v1/api/proposal/sendProposal/670b355b4ec6cf4defc50bcd::991509dd-4fe7-4b17-93da-3cbb749e0d4a::403 - 0ms - Response: {"status":403,"now":1728790026583}::{"message":"Vui lòng cập nhật mã số thuế của bạn để thực hiện thao tác này"}
+2024-10-13 10:29:46::error::/v1/api/talentRequest/readMyTalentRequest::05263450-b3f8-44d0-96ef-5b260f60b468::404 - 0ms - Response: {"status":404,"now":1728790186507}::{"message":"Không tìm thấy yêu cầu nâng cấp"}

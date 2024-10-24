@@ -1,0 +1,11 @@
+2024-10-21 08:07:31::error::/v1/api/commissionService/createCommissionService::89a5d446-709d-4ead-8f17-405a08d7be76::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-10-21 08:07:40::error::/v1/api/commissionService/createCommissionService::3c3ebad9-b751-456d-a47d-b9c47fa6dcf3::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-10-21 08:07:53::error::/v1/api/commissionService/createCommissionService::71b5a7b2-8aaa-49b5-835d-7f6fda462e70::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-10-21 08:09:31::error::/v1/api/commissionService/createCommissionService::799a207d-b91b-4d48-88ae-ec619d46d30a::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-10-21 08:10:30::error::/v1/api/commissionService/createCommissionService::63364175-d681-49f8-8f6a-031585a2f3e7::undefined - NaNms - Response: {}::{"message":"File upload or database save failed"}
+2024-10-21 08:13:52::error::/v1/api/commissionService/createCommissionService::dbb73ecb-fb59-4d35-9a81-d71d49394b2a::403 - 0ms - Response: {"status":403,"now":1729473232539}::{"message":"Quotation must be an array"}
+2024-10-21 08:14:04::error::/v1/api/commissionService/createCommissionService::bede8b0a-9f89-4dc0-bed0-8967a2046551::403 - 1ms - Response: {"status":403,"now":1729473244628}::{"message":"Quotation must be an array"}
+2024-10-21 14:56:21::error::/v1/api/user/me::8365bee5-7319-4d6d-8e0d-5881c99be3eb::403 - 1ms - Response: {"status":403,"now":1729497381696}::{"message":"Access token missing"}
+2024-10-21 16:08:20::error::/v1/api/user/me::1b755450-5535-4865-8f05-c0873283801f::403 - 1ms - Response: {"status":403,"now":1729501700392}::{"message":"Access token missing"}
+2024-10-21 19:33:01::error::/v1/api/user/me::46282162-5c84-4a20-967f-d78166c85168::403 - 0ms - Response: {"status":403,"now":1729513981411}::{"message":"Access token missing"}
+2024-10-21 19:33:26::error::/v1/api/user/updateProfile/66a59f2c73370474cf4eaada::518b8d80-fc83-4555-8cff-2becc46a5f38::401 - 0ms - Response: {"status":401,"now":1729514006974}::{"message":"Bạn không có quyền thực hiện thao tác này"}
