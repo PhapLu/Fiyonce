@@ -10,6 +10,7 @@ const router = express.Router()
 
 router.get('/readOrder/:orderId', asyncHandler(orderController.readOrder))
 router.get('/readOrders', asyncHandler(orderController.readOrders))
+router.post('/baocao/gov', asyncHandler(orderController.baocaoGov))
 
 //authentication
 router.use(verifyToken)

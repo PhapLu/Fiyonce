@@ -922,11 +922,98 @@ class OrderService {
         const subSubject = `Họa sĩ ${talent.fullName} đã bàn giao sản phẩm cho đơn hàng của bạn.`
         const message = ` Bạn và họa sĩ có thể trao đổi về sản phẩm chi tiết hơn qua tin nhắn`
         sendAnnouncementEmail(member.email, subject, subSubject, message);
-
+        
         return {
             order,
         };
     }
+
+    static baocaoGov = async (body) => {
+        try {
+            // 1. Check body
+            const { UserName, Password } = body;
+            if (!UserName || !Password) throw new BadRequestError("UserName or Password is required");
+            if(UserName !== "baocaoGov" || Password !== "baoCaoGov@2404!!") throw new BadRequestError("UserName or Password is incorrect")
+            
+            // 2. Define the start of the current year
+            const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+
+            // 3. Get necessary data
+            const soLuongTruyCap = await User.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        totalViews: { $sum: "$views" }
+                    }
+                }
+            ]);
+    
+            const soNguoiBan = await User.countDocuments({ role: "talent" });
+    
+            const soNguoiBanMoi = await User.countDocuments({
+                role: "talent",
+                createdAt: { $gte: startOfYear }
+            });
+    
+            const tongSoSanPham = await CommissionService.countDocuments(); // Direct count
+    
+            const soSanPhamMoi = await CommissionService.countDocuments({
+                createdAt: { $gte: startOfYear }
+            });
+    
+            const soLuongGiaoDich = await Order.countDocuments({
+                status: { $in: ["confirmed", "in_progress", "delivered", "finished"] }
+            });
+    
+            const tongSoDonHangThanhCong = await Order.countDocuments({ status: "finished" });
+    
+            const tongSoDonHangKhongThanhCong = await Order.countDocuments({
+                status: { $in: ["rejected", "under_processing", "resolved"] }
+            });
+    
+            const tongGiaTriGiaoDich = await Proposal.aggregate([
+                {
+                    $lookup: {
+                        from: "Orders", // The collection name of the "Order" model
+                        localField: "orderId",
+                        foreignField: "_id",
+                        as: "orderDetails",
+                    },
+                },
+                {
+                    $unwind: "$orderDetails",
+                },
+                {
+                    $match: {
+                        "orderDetails.status": "finished", // Only match orders with "finished" status
+                    },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        tongGiaTriGiaoDich: { $sum: "$price" }, // Summing the price of matching proposals
+                    },
+                },
+            ]);
+    
+            return {
+                soLuongTruyCap: soLuongTruyCap[0]?.totalViews || 0,
+                soNguoiBan,
+                soNguoiBanMoi,
+                tongSoSanPham,
+                soSanPhamMoi,
+                soLuongGiaoDich,
+                tongSoDonHangThanhCong,
+                tongSoDonHangKhongThanhCong,
+                tongGiaTriGiaoDich: tongGiaTriGiaoDich[0]?.tongGiaTriGiaoDich || 0
+            };
+        } catch (error) {
+            // Handle any errors and send meaningful response
+            console.error("Error in baocaoGov: ", error);
+            throw new Error("Failed to fetch report data");
+        }
+    };
+    
 }
 
 export default OrderService

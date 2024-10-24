@@ -1,0 +1,23 @@
+2024-10-24 20:19:49::info::/v1/api/auth/users/signUp::5cbe0546-b45d-4dad-9e20-597d85b14400::input-params ::POST::::{"fullName":"Huy Nguyen","email":"testAccount1@gmail.com","password":"123456789AZ@"}
+2024-10-24 20:21:31::info::/v1/api/auth/users/verifyOtp::5b3e6910-e6c4-490e-ad14-a19f3d567105::input-params ::POST::::{"email":"testAccount1@gmail.com","otp":"416697"}
+2024-10-24 20:43:36::info::/v1/api/order/baocao/gov::0810bb35-a726-4976-98ec-738649261b64::input-params ::POST::::{}
+2024-10-24 20:43:36::error::/v1/api/order/baocao/gov::0810bb35-a726-4976-98ec-738649261b64::403 - 1ms - Response: {"status":403,"now":1729777416516}::{"message":"UserName or Password is required"}
+2024-10-24 20:44:14::info::/v1/api/order/baocao/gov::9f9b9db9-829e-4ef7-8b0f-4faa5c6d1e9b::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:44:55::info::/v1/api/order/baocao/gov::ce78dece-dbc5-4643-8df3-2ff5a861c272::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:47:35::info::/v1/api/order/baocao/gov::ce31c766-3fe8-4461-8e15-d814ad9f2c83::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:47:55::info::/v1/api/order/baocao/gov::172fb647-6297-4ba4-82ae-aff12e705f24::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:50:18::info::/v1/api/order/baocao/gov::4b182871-f8c2-4731-a8ec-f5da90f464d2::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:50:32::info::/v1/api/order/baocao/gov::e70bbf5c-87f5-4548-b334-5813b815580b::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:50:58::info::/v1/api/order/baocao/gov::4d51b858-27b2-4f0b-9fbd-83deff874062::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:51:15::info::/v1/api/order/baocao/gov::b9277f5a-3dfe-4eba-b64c-c67ac0ed1434::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:51:43::info::/v1/api/order/baocao/gov::a0584786-62b8-4187-a47d-cb5aac398cce::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:51:43::error::/v1/api/order/baocao/gov::a0584786-62b8-4187-a47d-cb5aac398cce::undefined - NaNms - Response: {}::{"message":"Failed to fetch report data"}
+2024-10-24 20:52:10::info::/v1/api/order/baocao/gov::4121102f-c613-45f9-9bf7-2b5b3aa8e0cb::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:52:36::info::/v1/api/order/baocao/gov::f9fa6b7f-3476-4086-825b-49fb9597a7de::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:53:18::info::/v1/api/order/baocao/gov::d388ad86-e568-4221-af97-d5dec8e375ab::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:53:39::error::/v1/api/order/baocao/gov::21c9cb57-fc48-4296-860d-64d29de659e5::400 - NaNms - Response: {"expose":true,"statusCode":400,"status":400,"body":"{\r\n    \"UserName\": \"baocaoGov\",\r\n}","type":"entity.parse.failed"}::{"message":"Expected double-quoted property name in JSON at position 33"}
+2024-10-24 20:53:44::info::/v1/api/order/baocao/gov::0ffeea9a-52cc-4de9-9fc5-d2822baee7d5::input-params ::POST::::{"UserName":"baocaoGov"}
+2024-10-24 20:53:44::error::/v1/api/order/baocao/gov::0ffeea9a-52cc-4de9-9fc5-d2822baee7d5::undefined - NaNms - Response: {}::{"message":"Failed to fetch report data"}
+2024-10-24 20:53:57::info::/v1/api/order/baocao/gov::c6011b19-7cae-4e8d-bd74-3bc19bbb7458::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:55:11::info::/v1/api/order/baocao/gov::aca8076b-ebdc-427f-b0e2-3448b9f8f742::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}
+2024-10-24 20:55:50::info::/v1/api/order/baocao/gov::02ac6529-a6fb-44b5-9b8a-22be274de64c::input-params ::POST::::{"UserName":"baocaoGov","Password":"baoCaoGov@2404!!"}

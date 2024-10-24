@@ -206,7 +206,7 @@ class TalentRequestService {
         if (request.cccd) {
             updatedUser.cccd = request.cccd
         }
-        updatedUser.save()
+        await updatedUser.save()
 
         // 6. Exclude password from user object
         const { password: hiddenPassword, ...userWithoutPassword } = updatedUser

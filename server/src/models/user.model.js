@@ -24,7 +24,7 @@ const UserSchema = new Schema(
         },
         bg: {
             type: String,
-            default: "/uploads/pastal_system_default_background.png",
+            default: "/uploads/pastal_system_default_background2.png",
         },
         phone: { type: String },
         address: { type: String, default: "" },

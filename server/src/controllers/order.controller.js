@@ -139,6 +139,13 @@ class OrderController {
             metadata: await OrderService.finishOrder(req.userId, req.params.orderId)
         }).send(res)
     }
+
+    baocaoGov = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Báo cáo tổng hợp',
+            metadata: await OrderService.baocaoGov(req.body)
+        }).send(res)
+    }
 }
 
 export default new OrderController()

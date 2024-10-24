@@ -31,7 +31,9 @@ class CommissionServiceService {
             quotation: quotationString, // Extract the serialized quotation string
             status,
         } = req.body;
-    
+
+        console.log(req.body);
+
         // Parse the quotation from JSON string to an array
         const quotation = JSON.parse(quotationString);
     
