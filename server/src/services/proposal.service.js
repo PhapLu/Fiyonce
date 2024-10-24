@@ -6,6 +6,9 @@ import Artwork from "../models/post.model.js"
 import Proposal from "../models/proposal.model.js"
 import CommissionService from "../models/commissionService.model.js"
 import MomoService from "./momo.service.js"
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+dotenv.config();
 
 import { User } from "../models/user.model.js"
 import {
@@ -30,7 +33,7 @@ class ProposalService {
         //2. Check if user is a talent
         if (user.role !== "talent")
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
-        if(!user.taxCode || !user.cccd) 
+        if (!user.taxCode || !user.cccd)
             throw new BadRequestError("Vui lòng bổ sung đầy đủ hồ sơ họa sĩ để thực hiện thao tác này");
 
         //3. Check if user has already given proposal for the order
@@ -55,11 +58,11 @@ class ProposalService {
         const subject = `PASTAL - Yêu cầu đặt hàng đã được chấp nhận (${formatDate()})`
         const price = `Do họa sĩ đề xuất: <span>${body.price}</span> VNĐ`
         const orderCode = `Mã đơn hàng: <span class="code">${order._id.toString()}</span>`
-        
+
         //4. Check if artworks are valid
         if (order.isDirect) {
             const commissionService = await CommissionService.findById(order.commissionServiceId)
-            
+
             //5. Send proposal
             proposal = new Proposal({
                 orderId,
@@ -74,7 +77,7 @@ class ProposalService {
             sendCommissionEmail(member.email, talent, subject, subSubject, message, orderCode, price)
         } else {
             if (body.artworks.length === 0) throw new BadRequestError("Hãy cung cấp tranh")
-            
+
             //5. Send proposal
             proposal = new Proposal({
                 orderId,
@@ -102,14 +105,29 @@ class ProposalService {
         }
     }
 
-    static readProposal = async (userId, proposalId) => {
+    static readProposal = async (req, proposalId) => {
         //1. Check if proposal, user exists
         const proposal = await Proposal.findById(proposalId)
             .populate("termOfServiceId")
             .populate("artworks", "url")
             .populate("talentId", "stageName fullName avatar");
-        const user = await User.findById(userId);
-        if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+
+        const orderId = proposal.orderId;
+        const order = await Order.findOne({ orderId })
+        if (order?.isDirect) {
+            //1. Check user logged in
+            const token = req.cookies.accessToken
+            let userId = ''
+            let user = null;
+
+            if (token) {
+                // Verify token if it exists
+                const payload = jwt.verify(token, process.env.JWT_SECRET)
+                userId = payload.id.toString()
+                user = await User.findById(userId);
+            }
+            if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
+        }
         if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng");
 
         return {
@@ -137,7 +155,7 @@ class ProposalService {
         const proposal = await Proposal.findById(proposalId);
         if (!proposal) throw new NotFoundError("Không tìm thấy hợp đồng");
         if (!user) throw new NotFoundError("Bạn cần đăng nhập để thực hiện thao tác này");
-        if(!user.taxCode || !user.cccd) 
+        if (!user.taxCode || !user.cccd)
             throw new BadRequestError("Vui lòng bổ sung đầy đủ hồ sơ họa sĩ để thực hiện thao tác này");
 
         //2. Check if user is authorized to update proposal
@@ -177,7 +195,7 @@ class ProposalService {
         //2. Check if user is authorized to delete proposal
         if (proposal.talentId.toString() !== userId)
             throw new AuthFailureError("Bạn không có quyền thực hiện thao tác này");
-        if(!user.taxCode || !user.cccd)
+        if (!user.taxCode || !user.cccd)
             throw new BadRequestError("Vui lòng bổ sung đầy đủ hồ sơ họa sĩ để thực hiện thao tác này");
 
         //3. Check status of order
@@ -295,10 +313,10 @@ class ProposalService {
         }
     }
 
-    static bindPaymentAccount = async(userId, body) => {
+    static bindPaymentAccount = async (userId, body) => {
         //1. Check if user exists
         const user = await User.findById(userId)
-        if(!user) throw new NotFoundError('User not found')
+        if (!user) throw new NotFoundError('User not found')
 
         //2. Bind payment account
         const amount = 0

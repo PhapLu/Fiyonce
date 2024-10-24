@@ -1,3 +1,4 @@
+// Imports
 import { Outlet, useOutletContext, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -41,7 +42,6 @@ export default function ExplorePosts() {
     
             // Append the movementId query parameter if it exists
             if (movementId) {
-                console.log("lll")
                 endpoint += `&movementId=${movementId}`;
             }
     
@@ -79,15 +79,13 @@ export default function ExplorePosts() {
         loadInitialPosts();
     }, [selectedRecommender, searchParams]);
 
-    // Fetch posts again if the recommender algorithm changes
-
     // Filter posts when selectedMovement changes
-    useEffect(() => {
-        if (selectedMovement && filteredPosts) {
-            const filtered = filteredPosts.filter(post => post?.movementId?._id === selectedMovement?._id);
-            setFilteredPosts(filtered);
-        }
-    }, [selectedMovement]);
+    // useEffect(() => {
+    //     if (selectedMovement && filteredPosts) {
+    //         const filtered = filteredPosts.filter(post => post?.movementId?._id === selectedMovement?._id);
+    //         setFilteredPosts(filtered);
+    //     }
+    // }, [selectedMovement]);
 
     return (
         <>

@@ -135,7 +135,7 @@ export default function Modal({ modalInfo }) {
                     {modalInfo?.status === "success" && "Thành công"}
                     {modalInfo?.status === "congrat" && "Chúc mừng"}
                     {modalInfo?.status === "error" && "Thất bại"}
-                    {modalInfo?.status === "warning" && "Cảnh báo"}
+                    {modalInfo?.status === "warning" && "Lời nhắc"}
                     {modalInfo?.status === "info" && "Thông tin"}
                 </strong>
                 <br />

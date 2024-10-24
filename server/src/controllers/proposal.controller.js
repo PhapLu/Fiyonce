@@ -12,7 +12,7 @@ class ProposalController{
     readProposal = async(req, res, next) =>{
         new SuccessResponse({
             message: 'Read an proposal',
-            metadata: await ProposalService.readProposal(req.userId, req.params.proposalId)
+            metadata: await ProposalService.readProposal(req, req.params.proposalId)
         }).send(res)
     }
 
@@ -41,13 +41,6 @@ class ProposalController{
         new SuccessResponse({
             message: 'Delete an proposal successfully!',
             metadata: await ProposalService.deleteProposal(req.userId, req.params.proposalId)
-        }).send(res)
-    }
-
-    readProposalsHistory = async(req, res, next) =>{
-        new SuccessResponse({
-            message: 'Read all Proposals of a client',
-            metadata: await ProposalService.readProposalsHistory(req.userId)
         }).send(res)
     }
 

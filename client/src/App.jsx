@@ -23,7 +23,6 @@ import InDevelopment from "./pages/inDevelopment/InDevelopment";
 import NotFound from "./pages/notFound/NotFound";
 import ExploreCommissionServices from "./explore/exploreCommissionServices/ExploreCommissionServices";
 import Layout from "./pages/layout/Layout.jsx";
-import Challenge from "./pages/challenge/Challenge.jsx";
 
 // Static pages
 import StaticLayout from "./statics/staticLayout/StaticLayout.jsx";
@@ -84,6 +83,7 @@ import UpdateCommissionService from "./components/crudCommissionService/update/U
 import UpdateCommissionServiceCategory from "./components/crudCommissionServiceCategory/update/UpdateCommissionServiceCategory.jsx";
 import DeleteCommissionServiceCategory from "./components/crudCommissionServiceCategory/delete/DeleteCommissionServiceCategory.jsx";
 import MakeDecision from "./components/crudCommissionOrder/makeDecision/MakeDecision.jsx";
+import TermsOfServices from "./statics/termsOfServices/TermsOfServices.jsx";
 
 const queryClient = new QueryClient();
 
@@ -222,7 +222,7 @@ const routes = [
           },
           {
             path: "/statics/terms-of-services",
-            element: <Glaze />,
+            element: <TermsOfServices />,
           },
           {
             path: "/statics/about",
@@ -354,11 +354,7 @@ const routes = [
         children: commissionOrderRoutes
       },
       {
-        path: "challenges",
-        element: <Challenge />,
-      },
-      {
-        path: "newss/:newsId",
+        path: "newss/:news-id",
         element: <RenderNews />,
       },
       {

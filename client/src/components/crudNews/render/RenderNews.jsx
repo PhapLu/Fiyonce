@@ -16,7 +16,7 @@ import { formatDate } from "../../../utils/formatter";
 import "./RenderNews.scss";
 
 export default function RenderNews() {
-    const { newsId } = useParams();
+    const {"news-id": newsId} = useParams();
 
     const url = "http://localhost:5173/newss/66a8f46e143aa910a3d771f9";
     const title = "";
@@ -38,7 +38,7 @@ export default function RenderNews() {
     } = useQuery(["fetchNewsById", newsId], fetchNewsById);
 
     if (isLoading) {
-        return <span className="btn-spinner"></span>
+        return;
     }
 
     return (
@@ -58,7 +58,7 @@ export default function RenderNews() {
                 <hr />
                 <br />
 
-                <div className="flex-align-center">
+                {/* <div className="flex-align-center">
                     <h4>Chia sẻ bài viết</h4>
                     <ShareSocial
                         url={window.location.href}  // Pass the current URL
@@ -70,10 +70,10 @@ export default function RenderNews() {
                         hashtags={['Pastal', 'News']}
                     />
 
-                </div>
+                </div> */}
 
                 <br />
-                <hr />
+                {/* <hr /> */}
                 <br />
 
                 <div className="">

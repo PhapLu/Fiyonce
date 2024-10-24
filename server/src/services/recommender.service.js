@@ -98,9 +98,9 @@ class RecommenderService {
                 { deletedAt: null }, // Ensure deletedAt is null
                 {
                     $or: [
-                        { title: { $regex: caseInsensitiveRegex, $options: 'i' } }, // 'i' option for case-insensitive
-                        { description: { $regex: caseInsensitiveRegex, $options: 'i' } },
-                        { notes: { $regex: caseInsensitiveRegex, $options: 'i' } },
+                        { title: { $regex: caseInsensitiveRegex } }, // No need for $options
+                        { description: { $regex: caseInsensitiveRegex } },
+                        { notes: { $regex: caseInsensitiveRegex } },
                     ],
                 },
             ],
@@ -253,120 +253,35 @@ class RecommenderService {
     };
 
     static readLatestPosts = async (req) => {
-        const q = req.query
+        const q = req.query;
+        const page = parseInt(req.query.page) || 1;  // Current page, default to 1
+        const limit = parseInt(req.query.limit) || 50;  // Number of posts per page, default to 50
+        const skip = (page - 1) * limit;
         const filters = {
             ...(q.movementId !== undefined && { movementId: q.movementId }),
-        }
+        };
+    
         try {
             const posts = await Post.find(filters)
                 .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
-                .populate("postCategoryId")
-
-            // Compute the minimum and maximum values for scaling
-            const [minMaxValues] = await Post.aggregate([
-                {
-                    $project: {
-                        likesCount: { $size: "$likes" },
-                        bookmarksCount: { $size: "$bookmarks" },
-                        viewsCount: { $size: "$views" },  // Count the number of views
-                        followersCount: { $size: { $ifNull: ["$talent.followers", []] } },  // Use $ifNull to avoid null
-                        ageInHours: {
-                            $divide: [
-                                { $subtract: [new Date(), "$createdAt"] },
-                                1000 * 60 * 60,
-                            ],
-                        },
-                    },
-                },
-                {
-                    $facet: {
-                        minValues: [
-                            {
-                                $group: {
-                                    _id: null,
-                                    minLikes: { $min: "$likesCount" },
-                                    minBookmarks: { $min: "$bookmarksCount" },
-                                    minViews: { $min: "$viewsCount" },
-                                    minFollowers: { $min: "$followersCount" },
-                                    minAge: { $min: "$ageInHours" },
-                                },
-                            },
-                        ],
-                        maxValues: [
-                            {
-                                $group: {
-                                    _id: null,
-                                    maxLikes: { $max: "$likesCount" },
-                                    maxBookmarks: { $max: "$bookmarksCount" },
-                                    maxViews: { $max: "$viewsCount" },
-                                    maxFollowers: { $max: "$followersCount" },
-                                    maxAge: { $max: "$ageInHours" },
-                                },
-                            },
-                        ],
-                    },
-                },
-            ])
-
-
-            const minValues = minMaxValues.minValues[0] || {}
-            const maxValues = minMaxValues.maxValues[0] || {}
-
-            // Ensure default values are set if there are no documents
-            const minLikesCount = minValues.minLikes || 0
-            const maxLikesCount = maxValues.maxLikes || 1 // Avoid division by zero
-            const minBookmarksCount = minValues.minBookmarks || 0
-            const maxBookmarksCount = maxValues.maxBookmarks || 1 // Avoid division by zero
-            const minViews = minValues.minViews || 0
-            const maxViews = maxValues.maxViews || 1 // Avoid division by zero
-            const minFollowersCount = minValues.minFollowers || 0
-            const maxFollowersCount = maxValues.maxFollowers || 1 // Avoid division by zero
-            const minAge = minValues.minAge || 0
-            const maxAge = maxValues.maxAge || 1 // Avoid division by zero
-
-
-
+                .populate("postCategoryId");
+    
+            // Assuming you've already calculated min/max values here
+    
             const scoredPosts = await Promise.all(
                 posts.map(async (post) => {
-                    const talent = await User.findById(post.talentId)
-
-                    // Compute scaled values
-                    const likesScaled =
-                        (post.likes.length - minLikesCount) /
-                        (maxLikesCount - minLikesCount)
-                    const viewsScaled =
-                        (post.views.length - minViews) / (maxViews - minViews)
-                    const bookmarksScaled =
-                        (post.bookmarks.length - minBookmarksCount) /
-                        (maxBookmarksCount - minBookmarksCount)
-                    const followersScaled =
-                        (talent.followers.length - minFollowersCount) /
-                        (maxFollowersCount - minFollowersCount)
-
-                    // Compute post age weight
-                    const hoursSinceCreation =
-                        (new Date() - new Date(post.createdAt)) /
-                        (60 * 60 * 1000)
-                    const scaledPostAge =
-                        1 / (hoursSinceCreation - minAge) / (maxAge - minAge)
-
-                    // Calculate engagement rate
-                    const engagementRate = post.views.length
-                        ? post.likes.length / post.views.length
-                        : 0
-
-                    // Define weights
-                    // const weights = {
-                    //     likes: 0.1,
-                    //     views: 0.1,
-                    //     followers: 0.05,
-                    //     bookmarks: 0.05,
-                    //     engagementRate: 0.1,
-                    //     postAgeWeight: 0.6,
-                    // }
-
+                    const talent = await User.findById(post.talentId);
+    
+                    // Example scaling calculations (replace with actual logic):
+                    const likesScaled = 0;  // Placeholder for likes scaling logic
+                    const viewsScaled = 0;  // Placeholder for views scaling logic
+                    const followersScaled = 0;  // Placeholder for followers scaling logic
+                    const bookmarksScaled = 0;  // Placeholder for bookmarks scaling logic
+                    const engagementRate = 0;  // Placeholder for engagement rate calculation
+                    const scaledPostAge = 1;  // Placeholder for post age scaling logic
+    
                     const weights = {
                         likes: 0,
                         views: 0,
@@ -374,240 +289,96 @@ class RecommenderService {
                         bookmarks: 0,
                         engagementRate: 0,
                         postAgeWeight: 1,
-                    }
-
-                    // Calculate the score with normalized values
+                    };
+    
+                    // Calculate the score using scaled values and weights
                     const score =
                         likesScaled * weights.likes +
                         viewsScaled * weights.views +
                         followersScaled * weights.followers +
                         bookmarksScaled * weights.bookmarks +
                         engagementRate * weights.engagementRate +
-                        scaledPostAge * weights.postAgeWeight
-
+                        scaledPostAge * weights.postAgeWeight;
+    
                     return {
                         ...post.toObject(),
                         score,
                         scaledPostAge,
                         engagementRate,
-                    }
+                    };
                 })
-            )
-
-
+            );
+    
             // Sort posts by score
-            scoredPosts.sort((a, b) => b.score - a.score)
-
-            // Select the top 20 scored posts
-            const top20Posts = scoredPosts.slice(0, 20)
-
-            // Select 30 random posts from the remaining posts
-            const remainingPosts = scoredPosts.slice(20)
-            const random30Posts = remainingPosts
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 30)
-
-            // Combine top 20 scored posts with 30 random posts
-            const finalPosts = [...top20Posts, ...random30Posts]
-
+            scoredPosts.sort((a, b) => b.score - a.score);
+    
+            // Implement pagination here
+            const paginatedPosts = scoredPosts.slice(skip, skip + limit);
+    
             return {
-                posts: finalPosts,
-            }
+                posts: paginatedPosts,
+                currentPage: page,
+                totalPages: Math.ceil(scoredPosts.length / limit),
+            };
         } catch (error) {
-            console.error("Error in readPopularPosts:", error)
-            throw new Error("Failed to read popular posts")
+            console.error("Error in readLatestPosts:", error);
+            throw new Error("Failed to read latest posts");
         }
-    }
+    };
+    
 
-    static readFollowingPosts = async (userId) => {
+    static readFollowingPosts = async (req) => {
+        const page = parseInt(req.query.page) || 1;  // Current page, default to 1
+        const limit = parseInt(req.query.limit) || 50;  // Number of posts per page, default to 50
+        const skip = (page - 1) * limit;
+
         try {
-            // Fetch the current user and their following list
-            const currentUser = await User.findById(userId)
+            const currentUser = await User.findById(req.userId);
 
-            // Extract the IDs of the users the current user is following
-            const followingIds = currentUser.following.map((user) => user._id)
+            const followingIds = currentUser.following.map((user) => user._id);
 
-            // Fetch posts from users in the following list
             const posts = await Post.find({ talentId: { $in: followingIds } })
                 .populate("talentId", "fullName stageName avatar")
                 .populate("artworks")
                 .populate("movementId")
-                .populate("postCategoryId")
-                .limit(50) // Limit the results to 50
-                .exec()
-            // Compute the minimum and maximum values for scaling
-            // const [minValues, maxValues] = await Promise.all([
-            //     Post.aggregate([
-            //         {
-            //             $match: {
-            //                 talentId: { $in: currentUser.following.map((follow) => follow._id) }
-            //             }
-            //         },
-            //         {
-            //             $lookup: {
-            //                 from: 'Users',
-            //                 localField: 'talentId',
-            //                 foreignField: '_id',
-            //                 as: 'talent'
-            //             }
-            //         },
-            //         {
-            //             $unwind: '$talent'
-            //         },
-            //         {
-            //             $project: {
-            //                 likesCount: { $size: "$likes" },
-            //                 bookmarksCount: { $size: "$bookmarks" },
-            //                 views: 1,
-            //                 followersCount: { $size: "$talent.followers" },
-            //                 ageInHours: {
-            //                     $divide: [
-            //                         { $subtract: [new Date(), "$createdAt"] },
-            //                         1000 * 60 * 60
-            //                     ]
-            //                 }
-            //             }
-            //         },
-            //         {
-            //             $group: {
-            //                 _id: null,
-            //                 minLikes: { $min: "$likesCount" },
-            //                 minBookmarks: { $min: "$bookmarksCount" },
-            //                 minViews: { $min: "$views" },
-            //                 minFollowers: { $min: "$followersCount" },
-            //                 minAge: { $min: "$ageInHours" }
-            //             }
-            //         }
-            //     ]),
-            //     Post.aggregate([
-            //         {
-            //             $match: {
-            //                 talentId: { $in: currentUser.following.map((follow) => follow._id) }
-            //             }
-            //         },
-            //         {
-            //             $lookup: {
-            //                 from: 'Users',
-            //                 localField: 'talentId',
-            //                 foreignField: '_id',
-            //                 as: 'talent'
-            //             }
-            //         },
-            //         {
-            //             $unwind: '$talent'
-            //         },
-            //         {
-            //             $project: {
-            //                 likesCount: { $size: "$likes" },
-            //                 bookmarksCount: { $size: "$bookmarks" },
-            //                 views: 1,
-            //                 followersCount: { $size: "$talent.followers" },
-            //                 ageInHours: {
-            //                     $divide: [
-            //                         { $subtract: [new Date(), "$createdAt"] },
-            //                         1000 * 60 * 60
-            //                     ]
-            //                 }
-            //             }
-            //         },
-            //         {
-            //             $group: {
-            //                 _id: null,
-            //                 maxLikes: { $max: "$likesCount" },
-            //                 maxBookmarks: { $max: "$bookmarksCount" },
-            //                 maxViews: { $max: "$views" },
-            //                 maxFollowers: { $max: "$followersCount" },
-            //                 maxAge: { $max: "$ageInHours" }
-            //             }
-            //         }
-            //     ])
-            // ])
-
-            // const min = minValues[0] || {}
-            // const max = maxValues[0] || {}
-
-            // // Ensure default values are set if there are no documents
-            // const minLikesCount = min.minLikes || 0
-            // const maxLikesCount = max.maxLikes || 1 // Avoid division by zero
-            // const minBookmarksCount = min.minBookmarks || 0
-            // const maxBookmarksCount = max.maxBookmarks || 1 // Avoid division by zero
-            // const minViews = min.minViews || 0
-            // const maxViews = max.maxViews || 1 // Avoid division by zero
-            // const minFollowersCount = min.minFollowers || 0
-            // const maxFollowersCount = max.maxFollowers || 1 // Avoid division by zero
-            // const minAge = min.minAge || 0
-            // const maxAge = max.maxAge || 1 // Avoid division by zero
-
-            // const scoredPosts = await Promise.all(
-            //     posts.map(async (post) => {
-            //         const talent = await User.findById(post.talentId)
-
-            //         // Compute scaled values
-            //         const likesScaled = (post.likes.length - minLikesCount) / (maxLikesCount - minLikesCount)
-            //         const viewsScaled = (post.views.length - minViews) / (maxViews - minViews)
-            //         const bookmarksScaled = (post.bookmarks.length - minBookmarksCount) / (maxBookmarksCount - minBookmarksCount)
-            //         const followersScaled = (talent.followers.length - minFollowersCount) / (maxFollowersCount - minFollowersCount)
-
-            //         // Compute post age weight
-            //         const hoursSinceCreation = (new Date() - new Date(post.createdAt)) / (60 * 60 * 1000)
-            //         const scaledPostAge = (hoursSinceCreation - minAge) / (maxAge - minAge)
-
-            //         // Calculate engagement rate
-            //         const engagementRate = post.views.length ? post.likes.length / post.views.length : 0
-
-            //         // Define weights
-            //         const weights = {
-            //             likes: 0.3,
-            //             views: 0.3,
-            //             followers: 0.2,
-            //             bookmarks: 0.2,
-            //             engagementRate: 0.2,
-            //         }
-
-            //         // Calculate the score with normalized values
-            //         const score =
-            //             (likesScaled * weights.likes) +
-            //             (viewsScaled * weights.views) +
-            //             (followersScaled * weights.followers) +
-            //             (bookmarksScaled * weights.bookmarks) +
-            //             (engagementRate * weights.engagementRate)
-
-            //         return { ...post.toObject(), score }
-            //     })
-            // )
-
-            // // Sort posts by score
-            // scoredPosts.sort((a, b) => b.score - a.score)
-
-            // // Return the top 50 scored posts
-            // return {
-            //     posts: scoredPosts.slice(0, 50)
-            // }
+                .populate("postCategoryId");
 
             // Randomize the posts
-            const randomPosts = posts.sort(() => 0.5 - Math.random())
+            const randomPosts = posts.sort(() => 0.5 - Math.random());
+
+            // Implement pagination here
+            const paginatedPosts = randomPosts.slice(skip, skip + limit);
 
             return {
-                posts: randomPosts,
-            }
+                posts: paginatedPosts,
+                currentPage: page,
+                totalPages: Math.ceil(randomPosts.length / limit),
+            };
         } catch (error) {
-            console.error("Error in readFollowingPosts:", error)
-            throw new Error("Failed to read following posts")
+            console.error("Error in readFollowingPosts:", error);
+            throw new Error("Failed to read following posts");
         }
-    }
+    };
+
 
     static readPopularCommissionServices = async (req) => {
-        const q = req.query
+        const q = req.query;
+        const page = parseInt(req.query.page) || 1;  // Current page, default to 1
+        const limit = parseInt(req.query.limit) || 50;  // Number of services per page, default to 50
+        const skip = (page - 1) * limit;
+    
         const filters = {
-            ...(q.movementId !== undefined && { movementId: q.movementId }), deletedAt: null
-        }
+            ...(q.movementId !== undefined && { movementId: q.movementId }),
+            deletedAt: null
+        };
+    
         try {
             const services = await CommissionService.find(filters)
                 .populate("talentId", "fullName stageName avatar")
                 .populate("serviceCategoryId")
                 .populate("termOfServiceId")
-                .populate("movementId")
-
+                .populate("movementId");
+    
             // Compute the minimum and maximum values for scaling
             const [minValues, maxValues] = await Promise.all([
                 CommissionService.aggregate([
@@ -698,49 +469,49 @@ class RecommenderService {
                         },
                     },
                 ]),
-            ])
-
-            const min = minValues[0] || {}
-            const max = maxValues[0] || {}
-
+            ]);
+    
+            const min = minValues[0] || {};
+            const max = maxValues[0] || {};
+    
             // Ensure default values are set if there are no documents
-            const minOrderCount = min.minOrderCount || 0
-            const maxOrderCount = max.maxOrderCount || 1 // Avoid division by zero
-            const minServiceViews = min.minServiceViews || 0
-            const maxServiceViews = max.maxServiceViews || 1 // Avoid division by zero
-            const minFollowersCount = min.minFollowersCount || 0
-            const maxFollowersCount = max.maxFollowersCount || 1 // Avoid division by zero
-            const minArtistViews = min.minArtistViews || 0
-            const maxArtistViews = max.maxArtistViews || 1 // Avoid division by zero
-            const minAgeInHours = min.minAgeInHours || 0
-            const maxAgeInHours = max.maxAgeInHours || 1 // Avoid division by zero
-
+            const minOrderCount = min.minOrderCount || 0;
+            const maxOrderCount = max.maxOrderCount || 1; // Avoid division by zero
+            const minServiceViews = min.minServiceViews || 0;
+            const maxServiceViews = max.maxServiceViews || 1; // Avoid division by zero
+            const minFollowersCount = min.minFollowersCount || 0;
+            const maxFollowersCount = max.maxFollowersCount || 1; // Avoid division by zero
+            const minArtistViews = min.minArtistViews || 0;
+            const maxArtistViews = max.maxArtistViews || 1; // Avoid division by zero
+            const minAgeInHours = min.minAgeInHours || 0;
+            const maxAgeInHours = max.maxAgeInHours || 1; // Avoid division by zero
+    
             const scoredServices = await Promise.all(
                 services.map(async (service) => {
-                    const talent = await User.findById(service.talentId)
-
+                    const talent = await User.findById(service.talentId);
+    
                     // Compute scaled values
                     const orderCountScaled =
                         (service.orderCount - minOrderCount) /
-                        (maxOrderCount - minOrderCount)
+                        (maxOrderCount - minOrderCount);
                     const serviceViewsScaled =
                         (service.views - minServiceViews) /
-                        (maxServiceViews - minServiceViews)
+                        (maxServiceViews - minServiceViews);
                     const followersScaled =
                         (talent.followers.length - minFollowersCount) /
-                        (maxFollowersCount - minFollowersCount)
+                        (maxFollowersCount - minFollowersCount);
                     const artistViewsScaled =
                         (talent.views - minArtistViews) /
-                        (maxArtistViews - minArtistViews)
-
+                        (maxArtistViews - minArtistViews);
+    
                     // Compute age in hours for scaling
                     const ageInHours =
                         (new Date() - new Date(service.createdAt)) /
-                        (60 * 60 * 1000)
+                        (60 * 60 * 1000);
                     const ageScaled =
                         (ageInHours - minAgeInHours) /
-                        (maxAgeInHours - minAgeInHours)
-
+                        (maxAgeInHours - minAgeInHours);
+    
                     // Define weights
                     const weights = {
                         orderCount: 0.4,
@@ -748,42 +519,38 @@ class RecommenderService {
                         followers: 0.2,
                         artistViews: 0.1,
                         age: 0.1, // Adding weight for age
-                    }
-
+                    };
+    
                     // Calculate the score with normalized values
                     const score =
                         orderCountScaled * weights.orderCount +
                         serviceViewsScaled * weights.serviceViews +
                         followersScaled * weights.followers +
                         artistViewsScaled * weights.artistViews +
-                        ageScaled * weights.age
-
-                    return { ...service.toObject(), score }
+                        ageScaled * weights.age;
+    
+                    return { ...service.toObject(), score };
                 })
-            )
-
+            );
+    
             // Sort services by score
-            scoredServices.sort((a, b) => b.score - a.score)
-
-            // Select the top 20 scored services
-            const top20Services = scoredServices.slice(0, 20)
-
-            // Select 30 random services from the remaining services
-            const remainingServices = scoredServices.slice(20)
-            const random30Services = remainingServices
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 30)
-
-            // Combine top 20 scored services with 30 random services
-            const finalServices = [...top20Services, ...random30Services]
+            scoredServices.sort((a, b) => b.score - a.score);
+    
+            // Implement pagination here: select the right services based on the page and limit
+            const paginatedServices = scoredServices.slice(skip, skip + limit);
+            console.log(paginatedServices.length)
+    
             return {
-                commissionServices: finalServices,
-            }
+                commissionServices: paginatedServices,
+                currentPage: page,
+                totalPages: Math.ceil(scoredServices.length / limit),
+            };
         } catch (error) {
-            console.error("Error in readPopularCommissionServices:", error)
-            throw new Error("Failed to read popular services")
+            console.error("Error in readPopularCommissionServices:", error);
+            throw new Error("Failed to read popular services");
         }
-    }
+    };
+    
 
     static readLatestCommissionServices = async (req) => {
         const q = req.query

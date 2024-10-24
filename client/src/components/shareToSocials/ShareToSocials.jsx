@@ -38,18 +38,33 @@ export default function ShareToSocials({ post }) {
     const url = window.location.href;
 
     const handleShare = (platform, itemId) => {
+        // Extract the base URL (excluding the query string)
+        const baseUrl = url.split('?')[0];
+
+        // Extract the query parameters (everything after the '?')
+        const queryParams = url.split('?')[1] || '';
+
+        // URL to share (base URL updated to include '/posts/itemId' and existing query params)
+        const shareUrl = `${baseUrl.replace(/\/$/, '')}/posts/${itemId}${queryParams ? `?${queryParams}` : ''}`;
+
         // URL to share
         switch (platform) {
             case 'copy':
-                navigator.clipboard.writeText(`${url}posts/${itemId}`);
-                setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
+                if (url.includes("profile-posts")) {
+                    navigator.clipboard.writeText(`${url}/${itemId}`);
+                } else {
+                    navigator.clipboard.writeText(shareUrl)
+                }
+
                 break;
             default:
                 break;
         }
 
-        setShowMorePostActions(false);
+        setModalInfo({ status: "success", message: "Đã sao chép đường dẫn" });
     };
+
+
 
     return (
         <div className="share-to-socials">

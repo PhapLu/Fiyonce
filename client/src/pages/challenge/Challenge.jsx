@@ -8,8 +8,6 @@ import RenderChallenges from "../../components/crudChallenge/render/RenderChalle
 export default function Challenge() {
 
     // Fetch all challenges
-
-
     return (
         // Landing section
         <div className="challenge">

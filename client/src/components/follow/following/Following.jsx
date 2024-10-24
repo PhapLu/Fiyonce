@@ -11,6 +11,7 @@ export default function Following({ profileInfo, setShowFollowing, setProfileInf
     const { userInfo, setUserInfo } = useAuth();
     const { setModalInfo } = useModal();
     const isProfileOwner = userInfo?._id === profileInfo._id;
+    console.log(profileInfo)
 
     // State to track loading for each button
     const [loadingStates, setLoadingStates] = useState({});
@@ -142,8 +143,8 @@ export default function Following({ profileInfo, setShowFollowing, setProfileInf
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div className="follow-container">
-                {profileInfo?.followings?.length > 0 ? (
-                    profileInfo?.followings.map((following) => (
+                {profileInfo?.following?.length > 0 ? (
+                    profileInfo?.following.map((following) => (
                         <div className="follow-item" key={following._id}>
                             <Link to={`/users/${following._id}`} className="user lg">
                                 <div className="user--left">
